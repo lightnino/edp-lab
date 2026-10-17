@@ -1,0 +1,36 @@
+# Python and local environment
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+.build/
+dist/
+.env
+.env.*
+!.env.example
+.DS_Store
+
+# Data bytes and generated artifacts (keep directory placeholders)
+data/raw/**
+!data/raw/**/
+!data/raw/**/.gitkeep
+data/staging/**
+!data/staging/.gitkeep
+data/vault/**
+!data/vault/.gitkeep
+data/marts/**
+!data/marts/.gitkeep
+data/quarantine/**
+!data/quarantine/.gitkeep
+data/local/**
+!data/local/.gitkeep
+runs/**
+!runs/.gitkeep
+reports/**
+!reports/.gitkeep
+
+# Editor
+.idea/
+.vscode/

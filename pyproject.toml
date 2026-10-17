@@ -1,0 +1,25 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "edp-lab"
+version = "0.1.0"
+description = "Deterministic EDP source integration learning lab"
+requires-python = ">=3.12,<3.13"
+dependencies = ["duckdb>=1.4,<3"]
+
+[project.optional-dependencies]
+agents = ["openai>=2", "openai-agents>=0.2"]
+
+[dependency-groups]
+dev = ["pytest>=8", "ruff>=0.9"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/edp_lab"]
+
+[tool.ruff]
+line-length = 100
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
