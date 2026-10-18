@@ -85,7 +85,7 @@ def verify_source_identity(root: Path, *, check_raw: bool = False) -> list[str]:
         if not stamp.endswith("Z"):
             raise ValueError(f"INVALID_ADMISSION_UTC {source_id}")
         try:
-            dt = datetime.fromisoformat(stamp.replace("Z", "+00:00"))
+            dt = datetime.fromisoformat(stamp)
         except ValueError as exc:
             raise ValueError(f"INVALID_ADMISSION_UTC {source_id}") from exc
         if dt.utcoffset() != timedelta(0):
@@ -169,8 +169,10 @@ def verify_source_identity(root: Path, *, check_raw: bool = False) -> list[str]:
             raise ValueError(f"INVALID_STANDALONE_LOGICAL_TABLE {source_id}: {name}")
 
     outputs = [
-        f"PASS source identity structure: {len(rows)} distinct instances; "
-        f"{len(logical)} registered logical tables",
+        (
+            f"PASS source identity structure: {len(rows)} distinct instances; "
+            f"{len(logical)} registered logical tables"
+        ),
     ]
     for sha, ids in by_hash.items():
         if len(ids) > 1:
