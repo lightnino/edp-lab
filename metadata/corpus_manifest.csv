@@ -1,1 +1,1 @@
-cohort_id,source_id,raw_relative_path,raw_sha256,acquisition_note,review_status
+source_instance_id,source_family,admitted_at_utc,introduced_cohort,raw_path,raw_sha256,real_or_controlled,variant_type,parent_source_id,ground_truth_available,schema_fingerprint,status
