@@ -1,0 +1,5 @@
+source_instance_id,source_family,admitted_at_utc,introduced_cohort,raw_path,raw_sha256,real_or_controlled,variant_type,parent_source_id,ground_truth_available,schema_fingerprint,status
+SRC000001,SEC_13F,2026-10-18T05:11:35Z,GOLD_V1,data/raw/sec/2013q2_form13f.zip,569d56e978f7dee3775e544a1e46019389e22adcf482386fcfaba51ceb6c7e84,REAL,,,FALSE,,ADMITTED
+SRC000002,NASDAQ_DIRECTORY,2026-10-18T05:11:35Z,GOLD_V1,data/raw/nasdaq/nasdaqlisted.txt,1d3656d26cfddd35363ce8022d50cbb5342ae2b1cfebee74f3c3b168b0f0f808,REAL,,,FALSE,,ADMITTED
+SRC000003,NASDAQ_DIRECTORY,2026-10-18T05:11:35Z,GOLD_V1,data/raw/nasdaq/otherlisted.txt,7f099cd61db347f2199251dfe45dc132ffc8c75bd68a91471c30e217e4265d3d,REAL,,,FALSE,,ADMITTED
+SRC000004,SEC_FSDS,2026-10-18T17:23:06Z,GOLD_V2,data/raw/sec/2010q2_fsds.zip,25f416b020fd3e62a67dbf8c6522c9f239e716099b61cf5d05a59a91ffdef1f1,REAL,,,FALSE,,ADMITTED
