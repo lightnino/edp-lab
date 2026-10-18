@@ -251,7 +251,7 @@ def verify(
         if not stamp.endswith("Z"):
             raise ValueError(f"Missing/invalid UTC admission timestamp: {src.source_instance_id}")
         try:
-            datetime.fromisoformat(stamp.replace("Z", "+00:00"))
+            datetime.fromisoformat(stamp)
         except ValueError as exc:
             raise ValueError(f"Invalid admission timestamp: {src.source_instance_id}") from exc
         raw_path = checked_raw_path(root, src.raw_path)
