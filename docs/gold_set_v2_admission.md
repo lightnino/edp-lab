@@ -43,6 +43,6 @@ The expanded reference population comprises **13 logical tables** across **four 
 
 - CI checks roster nesting, unique source IDs, unchanged GOLD_V1 records, matching source hashes and thirteen-table registration **without needing private local RAW bytes**.
 - On the original Mac, after checking out this branch (or once merged), run `uv run python -m edp_lab.ingestion.gold_set verify` to recheck the old GOLD_V1 physical byte baseline. Separately run `shasum -a 256 data/raw/sec/2010q2_fsds.zip` and compare against the manifest's SRC000004 SHA-256.
-- The existing CLI `verify-raw` currently expects `relative_path/sha256` in `source_inventory.csv` but that inventory now has semantic columns instead; this mismatch is documented for a later implementation step, **not** changed in this registration.
+- Day 2 Preflight CLI repair now routes `uv run python -m edp_lab verify-raw` through the canonical source-identity validator, which reads `corpus_manifest.csv` and the logical-table registry; `source_inventory.csv` remains a semantic inventory. The frozen admission records and original GOLD_V2 registration are unchanged.
 - Do not run `gold_set init`; the original cohort is already frozen.
 - Source registration does **not** authorize source-to-enterprise identity mapping, business key selection, or automatic cleaning. Such decisions require independently supported review and approval.
