@@ -13,9 +13,9 @@ import io
 import json
 import re
 from collections import Counter
+from collections.abc import Iterable
 from contextlib import ExitStack
 from pathlib import Path
-from typing import Iterable
 from zipfile import ZipFile
 
 from edp_lab.ingestion.source_identity import verify_source_identity
