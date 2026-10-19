@@ -5,17 +5,19 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
-from edp_lab.ingestion.inventory import verify_inventory
+from edp_lab.ingestion.source_identity import verify_source_identity
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="EDP Lab Day 1 CLI")
+    parser = argparse.ArgumentParser(description="EDP Lab deterministic CLI")
     sub = parser.add_subparsers(dest="cmd", required=True)
     sub.add_parser("check-env", help="Print Python and DuckDB versions")
-    verify = sub.add_parser("verify-raw", help="Verify original raw SHA-256 files")
-    verify.add_argument("--inventory", type=Path, default=Path("metadata/source_inventory.csv"))
+    sub.add_parser(
+        "verify-raw",
+        help="Check admitted RAW bytes and archive members against corpus_manifest.csv",
+    )
     sql = sub.add_parser("sql", help="Execute a committed SQL file in local DuckDB")
     sql.add_argument("filename", type=Path)
     args = parser.parse_args()
@@ -24,17 +26,20 @@ def main() -> int:
         import sys
 
         import duckdb
+
         print(f"Python {sys.version.split()[0]}; DuckDB {duckdb.__version__}")
         return 0
     if args.cmd == "verify-raw":
-        inventory = args.inventory
-        if not inventory.is_absolute():
-            inventory = PROJECT_ROOT / inventory
-        ok, lines = verify_inventory(PROJECT_ROOT, inventory)
+        try:
+            lines = verify_source_identity(PROJECT_ROOT, check_raw=True)
+        except (OSError, ValueError) as exc:
+            print(f"FAIL {exc}")
+            return 1
         print("\n".join(lines))
-        return 0 if ok else 1
+        return 0
     if args.cmd == "sql":
         import duckdb
+
         file = args.filename
         if not file.is_absolute():
             file = PROJECT_ROOT / file
