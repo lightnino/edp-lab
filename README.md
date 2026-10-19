@@ -19,6 +19,23 @@ Enterprise Data Platform learning lab. Day 1 source registration is frozen; Day 
 
 Run tests without raw files: tests use temporary fixtures. `verify-raw` deliberately fails if the actual files have not been placed at declared paths.
 
+## Day 2 Preflight §1.4 — Parsing and profiling conventions
+
+The V1 **definitions and provisional GOLD_V2 parser bindings** are committed in
+`metadata/profiling_conventions_v1.json`, documented at
+`docs/parsing_profiling_contract_v1.md`. Before generating an official
+profiling baseline, inspect the configuration and run:
+
+```bash
+uv run python -m edp_lab.profiling.conventions
+uv run python -m edp_lab.profiling.conventions --check-raw
+```
+
+The second command needs the four local gitignored RAW artifacts. A parser
+probe PASS checks byte identity, UTF-8 decoding, record widths, headers and
+footer accountability; it does **not** automatically approve provisional
+NULL/quote/date semantics. The production profiler is still unimplemented.
+
 ## Git boundary
 
 - **Tracked**: Python/SQL code, the canonical `metadata/corpus_manifest.csv` (admitted RAW hashes), semantic `metadata/source_inventory.csv`, `metadata/decision_log.csv`, cohort registries, tests, documentation, lockfile, nonsecret configuration.

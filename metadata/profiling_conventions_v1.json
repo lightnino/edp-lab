@@ -1,0 +1,149 @@
+{
+  "contract_version": "PARSING_PROFILING_CONTRACT_V1",
+  "profiler_version": "PROFILE_CONTRACT_V1",
+  "profiler_implementation_status": "NOT_IMPLEMENTED",
+  "parser_version_or_code_revision": "PARSER_CONFIG_V1; RECORD_GIT_COMMIT_AT_EXECUTION",
+  "duckdb_version": "1.5.6 (uv.lock; verify runtime)",
+  "dependency_versions": "CAPTURE_INSTALLED_VERSIONS_AND_UV_LOCK_SHA256_AT_EXECUTION",
+  "dependency_lockfile": "uv.lock",
+  "profiling_scope": "FULL_LOGICAL_TABLE_EXCLUDING_EXPLICITLY_ACCOUNTED_METADATA_RECORDS",
+  "sampling_method": "FULL_SCAN",
+  "sampling_seed_if_applicable": null,
+  "fingerprint_version": "SCHEMA_SHA256_V1",
+  "canonicalization_version": "RAW_HEADER_TEXT_V1",
+  "ratio_zero_denominator": "NULL",
+  "metric_formulas": {
+    "null_pct": "null_count / row_count",
+    "distinct_pct": "distinct_non_null_count / non_null_count",
+    "unique_count": "number_of_distinct_non_null_values_with_frequency_equal_to_one"
+  },
+  "precision_classes": [
+    "EXACT_FULL_SCAN",
+    "EXACT_SAMPLE",
+    "APPROXIMATE",
+    "NOT_COMPUTED"
+  ],
+  "profiles": {
+    "SEC_13F_TSV_V1": {
+      "source_format": "DELIMITED_TEXT",
+      "delimiter": "\t",
+      "has_header": true,
+      "quote": null,
+      "escape": null,
+      "encoding": "utf-8",
+      "null_tokens": [],
+      "column_names": "SOURCE_HEADER_EXACT",
+      "column_types": "ALL_TEXT",
+      "date_formats": {},
+      "timestamp_formats": {},
+      "json_format": null,
+      "json_max_depth": null,
+      "error_handling": "FAIL_CLOSED",
+      "metadata_record_policy": "NONE",
+      "validation_status": "PROVISIONAL"
+    },
+    "SEC_FSDS_TSV_V1": {
+      "source_format": "DELIMITED_TEXT",
+      "delimiter": "\t",
+      "has_header": true,
+      "quote": null,
+      "escape": null,
+      "encoding": "utf-8",
+      "null_tokens": [],
+      "column_names": "SOURCE_HEADER_EXACT",
+      "column_types": "ALL_TEXT",
+      "date_formats": {},
+      "timestamp_formats": {},
+      "json_format": null,
+      "json_max_depth": null,
+      "error_handling": "FAIL_CLOSED",
+      "metadata_record_policy": "NONE",
+      "validation_status": "PROVISIONAL"
+    },
+    "NASDAQ_PIPE_V1": {
+      "source_format": "DELIMITED_TEXT",
+      "delimiter": "|",
+      "has_header": true,
+      "quote": null,
+      "escape": null,
+      "encoding": "utf-8",
+      "null_tokens": [],
+      "column_names": "SOURCE_HEADER_EXACT",
+      "column_types": "ALL_TEXT",
+      "date_formats": {},
+      "timestamp_formats": {},
+      "json_format": null,
+      "json_max_depth": null,
+      "error_handling": "FAIL_CLOSED",
+      "metadata_record_policy": "TRAILING_FILE_CREATION_TIME",
+      "validation_status": "PROVISIONAL"
+    }
+  },
+  "assignments": [
+    {
+      "source_instance_id": "SRC000001",
+      "logical_table_name": "COVERPAGE.tsv",
+      "profile_id": "SEC_13F_TSV_V1"
+    },
+    {
+      "source_instance_id": "SRC000001",
+      "logical_table_name": "INFOTABLE.tsv",
+      "profile_id": "SEC_13F_TSV_V1"
+    },
+    {
+      "source_instance_id": "SRC000001",
+      "logical_table_name": "OTHERMANAGER.tsv",
+      "profile_id": "SEC_13F_TSV_V1"
+    },
+    {
+      "source_instance_id": "SRC000001",
+      "logical_table_name": "OTHERMANAGER2.tsv",
+      "profile_id": "SEC_13F_TSV_V1"
+    },
+    {
+      "source_instance_id": "SRC000001",
+      "logical_table_name": "SIGNATURE.tsv",
+      "profile_id": "SEC_13F_TSV_V1"
+    },
+    {
+      "source_instance_id": "SRC000001",
+      "logical_table_name": "SUBMISSION.tsv",
+      "profile_id": "SEC_13F_TSV_V1"
+    },
+    {
+      "source_instance_id": "SRC000001",
+      "logical_table_name": "SUMMARYPAGE.tsv",
+      "profile_id": "SEC_13F_TSV_V1"
+    },
+    {
+      "source_instance_id": "SRC000002",
+      "logical_table_name": "nasdaqlisted.txt",
+      "profile_id": "NASDAQ_PIPE_V1"
+    },
+    {
+      "source_instance_id": "SRC000003",
+      "logical_table_name": "otherlisted.txt",
+      "profile_id": "NASDAQ_PIPE_V1"
+    },
+    {
+      "source_instance_id": "SRC000004",
+      "logical_table_name": "sub.txt",
+      "profile_id": "SEC_FSDS_TSV_V1"
+    },
+    {
+      "source_instance_id": "SRC000004",
+      "logical_table_name": "num.txt",
+      "profile_id": "SEC_FSDS_TSV_V1"
+    },
+    {
+      "source_instance_id": "SRC000004",
+      "logical_table_name": "tag.txt",
+      "profile_id": "SEC_FSDS_TSV_V1"
+    },
+    {
+      "source_instance_id": "SRC000004",
+      "logical_table_name": "pre.txt",
+      "profile_id": "SEC_FSDS_TSV_V1"
+    }
+  ]
+}
