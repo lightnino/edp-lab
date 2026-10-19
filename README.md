@@ -1,17 +1,18 @@
 # EDP Lab
 
-Enterprise Data Platform learning lab. **Day 1: repo/environment setup, deterministic source inventory and read-only inspection only.**
+Enterprise Data Platform learning lab. Day 1 source registration is frozen; Day 2 deterministic profiling and agent tooling remain in development.
 
 ## Setup (macOS/Linux)
 
 1. Install `git`, `uv`, and Python 3.12 (uv can install Python): `uv python install 3.12`.
 2. `uv sync` (creates `.venv` and `uv.lock`; commit the lockfile).
 3. `uv run python -m edp_lab check-env`
-4. Put original three source artifacts at the paths below **without modifying the bytes**:
+4. Put the four admitted source artifacts at the paths below **without modifying the bytes**:
    - `data/raw/sec/2013q2_form13f.zip`
    - `data/raw/nasdaq/nasdaqlisted.txt`
    - `data/raw/nasdaq/otherlisted.txt`
-5. `uv run python -m edp_lab verify-raw` — compares SHA-256 to `metadata/source_inventory.csv`.
+   - `data/raw/sec/2010q2_fsds.zip`
+5. `uv run python -m edp_lab verify-raw` — verifies all admitted physical RAW SHA-256 values and archive members against `metadata/corpus_manifest.csv` and `metadata/gold_set_logical_tables_v2.csv`. This is equivalent to `uv run python -m edp_lab.ingestion.source_identity --check-raw`; the old `--inventory` CLI argument has been retired.
 6. `uv run python -m edp_lab sql sql/raw/00_healthcheck.sql` — runs deterministic SQL using local DuckDB database `data/local/edp_lab.duckdb`.
 7. `uv run pytest -q`
 8. `uv run ruff check .`
@@ -20,9 +21,9 @@ Run tests without raw files: tests use temporary fixtures. `verify-raw` delibera
 
 ## Git boundary
 
-- **Tracked**: Python/SQL code, `metadata/source_inventory.csv` (verified hashes), empty templates, tests, documentation, lockfile, nonsecret configuration.
+- **Tracked**: Python/SQL code, the canonical `metadata/corpus_manifest.csv` (admitted RAW hashes), semantic `metadata/source_inventory.csv`, `metadata/decision_log.csv`, cohort registries, tests, documentation, lockfile, nonsecret configuration.
 - **Not tracked**: RAW bytes, staging/vault/marts files, DuckDB database, runs/reports, `.env`, credentials, virtualenv.
-- `metadata/source_inventory.csv` includes three SHA-256 hashes computed from user-supplied artifacts; relative paths are **planned project paths**, not the previous uploaded paths.
+- `metadata/source_inventory.csv` holds provisional source-level semantic observations; it is **not** a SHA-256 inventory. The canonical twelve-column `metadata/corpus_manifest.csv` contains source identities, local RAW paths, and recorded SHA-256 values. `docs/decision_log.md` documents the empty, append-only decision log.
 - Git alone does not prevent modifying a local RAW file; the verifier detects byte changes, and workflow policy forbids overwrites.
 
 ## Explicit Day 1 authority boundaries
@@ -40,4 +41,4 @@ Use `.sql` files checked into `sql/<stage>/`; execute them with `uv run python -
 ## Scope notes
 
 - SEC release (`2013 Q2`) and Nasdaq directory (`2026-10-15` snapshot) are not point-in-time aligned. Do not use 2026 directory membership to assert 2013 listing status.
-- Original SEC `13F` archive has multiple TSV members with distinct grains; today only `SUBMISSION` and `INFOTABLE` are in scope for source inspection. No schema or business-key assumptions have been committed.
+- `GOLD_V2` registers 4 physical source instances and 13 logical tables (seven SEC 13F, two Nasdaq, four SEC FSDS). Four logical tables have preliminary profiles; deep profiling for all 13 is not yet complete. No enterprise business-key or mapping decisions have been committed.
