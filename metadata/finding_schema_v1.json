@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:edp-lab:finding:1.0.0",
+  "title": "EDP Lab Finding v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "finding_id", "claim", "owner", "source_refs", "evidence_refs", "finding_type", "state", "validation", "materiality", "approval_requirement"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "finding_id": {"type": "string", "pattern": "^FND-[A-Za-z0-9_-]+$"},
+    "claim": {"$ref": "#/$defs/text"},
+    "owner": {"$ref": "#/$defs/text"},
+    "source_refs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["source_instance_id", "raw_path", "raw_sha256", "locator"],
+        "properties": {
+          "source_instance_id": {"type": "string", "pattern": "^SRC[0-9]{6}$"},
+          "raw_path": {"type": "string", "pattern": "^data/raw/.+"},
+          "raw_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+          "locator": {"$ref": "#/$defs/text"}
+        }
+      }
+    },
+    "evidence_refs": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/evidence"}},
+    "finding_type": {"enum": ["MECHANICAL", "SEMANTIC", "GOVERNANCE"]},
+    "state": {"enum": ["OBSERVED", "PROPOSED", "VALIDATED", "REJECTED", "UNRESOLVED"]},
+    "validation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["scope", "method"],
+      "properties": {
+        "scope": {"$ref": "#/$defs/text"},
+        "method": {"$ref": "#/$defs/text"},
+        "evidence_refs": {"type": "array", "minItems": 1, "items": {"$ref": "#/$defs/evidence"}}
+      }
+    },
+    "materiality": {"enum": ["P0", "P1", "P2", "P3"]},
+    "approval_requirement": {"enum": ["NONE", "HUMAN_REVIEW"]},
+    "decision_ref": {"type": "string", "pattern": "^DEC-[0-9]{6}$"},
+    "reason": {"$ref": "#/$defs/text"},
+    "alternatives": {"type": "array", "minItems": 2, "items": {"$ref": "#/$defs/text"}},
+    "consequences": {"$ref": "#/$defs/text"},
+    "next_review_trigger": {"$ref": "#/$defs/text"}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"finding_type": {"enum": ["MECHANICAL", "SEMANTIC"]}}, "required": ["finding_type"]},
+      "then": {"properties": {"source_refs": {"minItems": 1}}}
+    },
+    {
+      "if": {"properties": {"finding_type": {"enum": ["SEMANTIC", "GOVERNANCE"]}}, "required": ["finding_type"]},
+      "then": {"properties": {"approval_requirement": {"const": "HUMAN_REVIEW"}}}
+    },
+    {
+      "if": {"properties": {"state": {"enum": ["VALIDATED", "REJECTED"]}}, "required": ["state"]},
+      "then": {"properties": {"validation": {"required": ["evidence_refs"]}}}
+    },
+    {
+      "if": {
+        "properties": {
+          "finding_type": {"const": "SEMANTIC"},
+          "state": {"const": "PROPOSED"},
+          "approval_requirement": {"const": "HUMAN_REVIEW"}
+        },
+        "required": ["finding_type", "state", "approval_requirement"]
+      },
+      "then": {"required": ["alternatives", "consequences"]}
+    },
+    {
+      "if": {"properties": {"state": {"enum": ["REJECTED", "UNRESOLVED"]}}, "required": ["state"]},
+      "then": {"required": ["reason"]}
+    },
+    {
+      "if": {"properties": {"state": {"const": "UNRESOLVED"}}, "required": ["state"]},
+      "then": {"required": ["next_review_trigger"]}
+    }
+  ],
+  "$defs": {
+    "text": {"type": "string", "pattern": "\\S"},
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "version", "locator"],
+      "properties": {
+        "path": {"$ref": "#/$defs/text"},
+        "version": {"$ref": "#/$defs/text"},
+        "locator": {"$ref": "#/$defs/text"}
+      }
+    }
+  }
+}
