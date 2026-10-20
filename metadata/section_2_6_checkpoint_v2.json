@@ -1,0 +1,16 @@
+{
+  "activation_path": "runs/c300-post-approval-v1/activation.json",
+  "activation_sha256": "39b3bfc5fe06dbe05f47fbd931c538730856d0fe5277e65380ea725285f88bb1",
+  "approval_packet_path": "runs/section-2-6/review-v1/approval-packet.json",
+  "approval_packet_sha256": "3873e9d07e4bcc2f357f940d05cf4fc5dc1262358b641d1debba2ef117910e05",
+  "authorization_path": "runs/c300-post-approval-v1/authorization.json",
+  "authorization_sha256": "b581884ea96b86092195e4e901a79c5b4b0047aac6e6a878b4a0c6418c0c8689",
+  "checkpoint_path": "runs/c300-post-approval-v1/checkpoint.json",
+  "checkpoint_sha256": "72a36842ba7dfceec379021e93d4e54b9d29e1d66b952bdb138fda3a242eda34",
+  "governance_sha256": "a976c7e3b3db6394873399fea24281a9f2cee796b5d3c5e69c23e1f152f1da79",
+  "operational_artifacts": "gitignored runs/; no results committed",
+  "previous_reference": "metadata/section_2_6_checkpoint_v1.json",
+  "previous_reference_sha256": "82b1675950c3a69a79703ea1b1c72bdb867cdd2b7548c2aca28a11da7dbcb00d",
+  "status": "COMPLETE_APPROVED_SCOPE_WITH_EXCLUSIONS",
+  "version": "SECTION_2_6_CHECKPOINT_REFERENCE_V2"
+}
