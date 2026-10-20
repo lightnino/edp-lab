@@ -1,6 +1,6 @@
 # EDP Lab
 
-Enterprise Data Platform learning lab. Source Identity, GOLD_V2 registration, snapshot-scoped Parsing/Profiling Freeze V2 and Governance Policy are approved. The five deterministic §2.1 profiling functions are implemented and verified on GOLD_V2. See [§2.1 completion evidence](docs/preflight_exit_checklist.md).
+Enterprise Data Platform learning lab. Source Identity, GOLD_V2 registration, snapshot-scoped Parsing/Profiling Freeze V2 and Governance Policy are approved. The five deterministic profiling functions are implemented and verified on GOLD_V2. See [profiling completion evidence](docs/preflight_exit_checklist.md).
 
 ## Setup (macOS/Linux)
 
@@ -65,5 +65,5 @@ Use `.sql` files checked into `sql/<stage>/`; execute them with `uv run python -
 ## Scope notes
 
 - SEC release (`2013 Q2`) and Nasdaq directory (`2026-10-15` snapshot) are not point-in-time aligned. Do not use 2026 directory membership to assert 2013 listing status.
-- `GOLD_V2` registers 4 physical source instances and 13 logical tables (seven SEC 13F, two Nasdaq, four SEC FSDS). §2.1 deep profiling has executed on all 13 within the frozen lexical scope. No enterprise business-key or mapping decisions have been committed.
-- C300 execution remains subject to future source admission and reviewed parser registration. The current registered reader accepts only frozen GOLD_V2 bindings; their approval does not transfer to future sources. C300 population and §2.2–§2.4 implementation are outside §2.1 completion.
+- `GOLD_V2` registers 4 physical source instances and 13 logical tables (seven SEC 13F, two Nasdaq, four SEC FSDS). Deep profiling has executed on all 13 within the frozen lexical scope. No enterprise business-key or mapping decisions have been committed.
+- C300 execution remains subject to future source admission and reviewed parser registration. The current registered reader accepts only frozen GOLD_V2 bindings; their approval does not transfer to future sources. Regression coverage is implemented and accepted; see the [regression review](docs/day2_section_2_2_regression_review.md). C300 population and later functionality remain deferred.

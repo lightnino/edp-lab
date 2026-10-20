@@ -80,13 +80,14 @@ The frozen V1 files' original NOT_IMPLEMENTED labels and the V2 freeze's histori
 configuration-only status remain intact; this new implementation explicitly uses
 the approved snapshot scope under the current implementation instruction.
 
-§2.1 execution is complete for GOLD_V2: 13 tables, 304,508 data occurrences and
+Profiling execution is complete for GOLD_V2: 13 tables, 304,508 data occurrences and
 149 column profiles, with no hash or parse failures. The retained report and
-machine-readable index are linked from [completion evidence](preflight_exit_checklist.md).
+machine-readable index are identified as local artifacts in [completion evidence](preflight_exit_checklist.md).
 The [output contract](profiling_output_contract.md) describes the implemented fields.
 
 The shared profiling functions can be reused for future C300 mechanical profiling
 once sources are admitted and their parsers are reviewed and registered. The
 current registered reader accepts only frozen GOLD_V2 bindings; neither synthetic
 fixtures nor GOLD_V2 approval grant parser authority for new snapshots. C300
-creation/execution and §2.2–§2.4 implementation are outside this completion scope.
+creation/execution and later functionality remain deferred. Regression coverage is
+implemented and accepted; see the [regression review](day2_section_2_2_regression_review.md).

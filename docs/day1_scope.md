@@ -12,7 +12,7 @@ across four physical instances. See [registration](gold_set_v2_admission.md),
 Registration and parser validation do not establish completed production profiling,
 business keys, entity resolution or C300 admission. No C300 cohort exists.
 
-Subsequent §2.1 implementation has executed all five deterministic profiling
+Subsequent profiling implementation has executed all five deterministic profiling
 functions on all 13 GOLD_V2 tables; see [completion evidence](preflight_exit_checklist.md).
 This preserves the registration boundary above. C300 execution still requires
 future admission and reviewed parser registration.

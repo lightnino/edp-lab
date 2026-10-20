@@ -23,8 +23,8 @@
 
 ## Current approved scope
 - Source Identity and GOLD_V2 registration are approved; see `docs/source_instance_identity.md` and `docs/gold_set_v2_admission.md`.
-- Snapshot-scoped lexical parsing is approved only as specified in `docs/parsing_profiling_freeze_v2.md` and DEC-000001–DEC-000005. The §2.1 profiling functions use that scope; source NULL semantics remain unresolved.
+- Snapshot-scoped lexical parsing is approved only as specified in `docs/parsing_profiling_freeze_v2.md` and DEC-000001–DEC-000005. The profiling functions use that scope; source NULL semantics remain unresolved.
 - `docs/ownership_approval_boundaries.md` and Finding Schema v1 are approved governance policy. Mechanical validation never implies semantic approval.
 - Deterministic execution within an explicitly approved rule/version/snapshot scope does not need repeated per-record review. New semantic decisions still require the review gates above.
-- The five deterministic §2.1 profiling functions are implemented; see `docs/profiling_tools.md` and `docs/profiling_output_contract.md`. GOLD_V2 execution covers 13 tables, 304,508 occurrences and 149 column profiles, with semantic NULL-dependent metrics and candidate-key eligibility NOT_COMPUTED.
-- C300 is not created; C300 execution requires future admission and reviewed parser registration. Semantic integration remains unimplemented. §2.2–§2.4 are outside this completion scope. Historical phase labels in frozen documents describe their original scope.
+- The five deterministic profiling functions are implemented; see `docs/profiling_tools.md` and `docs/profiling_output_contract.md`. GOLD_V2 execution covers 13 tables, 304,508 occurrences and 149 column profiles, with semantic NULL-dependent metrics and candidate-key eligibility NOT_COMPUTED.
+- C300 is not created; C300 execution requires future admission and reviewed parser registration. Semantic integration remains unimplemented. Regression coverage is implemented and accepted; later functionality remains deferred. Historical phase labels in frozen documents describe their original scope.

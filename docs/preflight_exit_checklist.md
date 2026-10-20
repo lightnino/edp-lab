@@ -1,11 +1,10 @@
-# §2.1 completion evidence and preflight scope
+# Profiling completion evidence and scope
 
-Status: §2.1 implementation complete, with documentation reconciled for review.
-This record covers the five deterministic profiling functions only. Full Day 2
-completion, the broader preflight checklist and §2.2–§2.4 are separate reviews;
-their implementation is not a prerequisite for §2.1 completion.
+Status: the five deterministic profiling functions are implemented and verified.
+Regression coverage is implemented and accepted; see the
+[regression review](day2_section_2_2_regression_review.md).
 
-| §2.1 requirement | Status | Evidence / boundary |
+| Profiling requirement | Status | Evidence / boundary |
 | --- | --- | --- |
 | Five independently callable functions | PASS | `profile_table`, `profile_column`, `find_duplicates`, `candidate_key_scan`, `schema_fingerprint` in `src/edp_lab/profiling/tools.py`; [usage](profiling_tools.md) |
 | Shared reader and configuration | PASS | `source_reader.py` uses the frozen GOLD_V2 configuration and reviewed lexical parser |
@@ -13,13 +12,16 @@ their implementation is not a prerequisite for §2.1 completion.
 | Deterministic machine-readable outputs | PASS | [Output contract](profiling_output_contract.md): versions, run/result hashes, actual code/environment provenance, source references and computation modes |
 | Frozen NULL policy | PASS | Semantic NULL-dependent metrics and candidate eligibility remain NOT_COMPUTED with reasons; literal measures are separately named |
 | GOLD_V2 execution | PASS | 13 tables, 304,508 data occurrences, 149 column profiles; no hash or parse failures |
-| Offline validation | PASS | 155 tests; Ruff and whitespace checks pass |
+| Offline validation | PASS | Original profiling validation: 155 tests; subsequent regression validation: 188 passed, 1 skipped (C300 not admitted); Ruff and whitespace checks pass |
 
 Existing execution evidence is retained unchanged under gitignored
-`runs/profiling/`:
+`runs/profiling/`. These local artifacts are unavailable in GitHub checkouts;
+the paths below identify retained evidence, not repository links. With the admitted
+RAW files and installed environment, reproduce using
+`.venv/bin/python -m edp_lab.profiling.run_gold` (see [usage](profiling_tools.md)):
 
-- [Execution report](../runs/profiling/execution-report-54b3bbde96ee91a6ed488269efe46ecea4d51c1fad6b0e2b82c726eb76873987.md)
-- [Machine-readable evidence index](../runs/profiling/execution-summary-54b3bbde96ee91a6ed488269efe46ecea4d51c1fad6b0e2b82c726eb76873987.json), including per-table output-file SHA-256
+- Execution report: `runs/profiling/execution-report-54b3bbde96ee91a6ed488269efe46ecea4d51c1fad6b0e2b82c726eb76873987.md`
+- Machine-readable evidence index: `runs/profiling/execution-summary-54b3bbde96ee91a6ed488269efe46ecea4d51c1fad6b0e2b82c726eb76873987.json`, including per-table output-file SHA-256
 
 Every column was profiled. Each table also ran whole-row literal duplicate checks,
 all singleton key candidates plus bounded pairs within its first three columns,
@@ -33,14 +35,12 @@ requires admitted immutable sources and reviewed parser registration; the curren
 registered reader is limited to frozen GOLD_V2 bindings. No C300 cohort or future
 parser scope is created here. The [proposed admission policy](corpus_admission_policy.md)
 retains its Human Review status; approval of that proposal and C300 execution are
-outside this §2.1 completion review.
+outside this profiling completion scope.
 
-The earlier preflight review recorded that the original broader study-plan
-checklist was unavailable locally. That limitation remains for any future exact
-review of that checklist; it does not block the narrowly scoped §2.1 completion
-confirmed by the current instruction. The [historical engineering evidence index](decision_log.md#frozen-engineering-evidence-index)
-continues to link existing approvals without invented retrospective records.
-Frozen policy documents retain their historical status statements unchanged.
+The [historical engineering evidence index](decision_log.md#frozen-engineering-evidence-index)
+retains source references for existing approvals. Frozen policy documents retain
+their historical status statements unchanged.
 
-Remaining §2.1 blockers: none identified. No §2.2, §2.3 or §2.4 implementation,
-semantic approval, API call, commit or push is part of this reconciliation.
+Remaining profiling or regression blockers: none identified. C300 admission,
+source NULL semantics, Business Keys, semantic integration and Agent functionality
+remain outside the completed scope.

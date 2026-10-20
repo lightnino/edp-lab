@@ -1,10 +1,9 @@
-# Day 2 §2.2 regression review
+# Profiling regression review
 
 Scope: preserve required regression tests only. Acceptance requirements are the
-user's §2.2 instruction and the existing frozen parsing/source/output contracts.
-No separate frozen Study Notes document or §2.2 text was found in the repository;
-its location was requested. Final comparison against that document is pending.
-This is the only documentary acceptance blocker; C300 admission is not a §2.2 gate.
+user's regression instruction and the existing frozen parsing/source/output contracts.
+Regression coverage has been reviewed against the supplied Study Notes and is ACCEPTED.
+C300 admission is not a regression acceptance gate.
 
 ## Existing coverage inventory and reuse
 
@@ -16,7 +15,7 @@ This is the only documentary acceptance blocker; C300 admission is not a §2.2 g
 | NULL policy and duplicates | `test_profiling_tools.py`, `test_profiling_conventions.py` | Existing unknown-NULL metrics and exact duplicate totals (2 groups, 5 participating rows, 3 excess), bounded witnesses, explicit synthetic NULL rules and zero denominators retained. Synthetic NULL rules do not authorize source NULL semantics. |
 | Replay | `test_profiling_tools.py::test_deterministic_replay_all_functions` | Valid same-provenance full-output equality retained. Missing independent sample ordering and changed-provenance comparison added separately. |
 | Schema fingerprint | `test_profiling_tools.py`, `test_profiling_conventions.py` | Distribution separation, order/name/type sensitivity retained. Comparison against the production hash helper alone was a weak canonicalization oracle; added independent exact UTF-8 JSON expectation. |
-| Other current tests | CLI, governance Finding contract, SQL smoke | Retained and included in full validation; no later-section functionality added. |
+| Other current tests | CLI, governance Finding contract, SQL smoke | Retained and included in full validation; no later functionality added. |
 
 ## Added coverage
 
@@ -43,7 +42,7 @@ This is the only documentary acceptance blocker; C300 admission is not a §2.2 g
   whitespace/case/Unicode-normalization/order/addition/removal/type sensitivity.
 
 No production code, registered RAW, frozen metadata/policies/membership or
-historical execution evidence changed. No §2.1 defect was identified. No test
+historical execution evidence changed. No profiling defect was identified. No test
 required actual C300 admission before this change; the new explicit skipped check
 records the unavailable cohort-specific validation.
 
@@ -62,14 +61,13 @@ Initial Ruff validation found one redundant UTF-8 encode argument in the new
 schema test; corrected before final checks. Additional whitespace checking covers
 new untracked files, which ordinary `git diff --check` does not inspect.
 
-Status: §2.2 BLOCKED for final frozen-Study-Notes comparison only; all supplied
-§2.2 regression requirements implemented and passing. Once the reference is
-provided, compare §2.2 only before acceptance. No §2.3–§2.8 requirement is used as
-an acceptance gate. C300 creation/admission and parser registration, semantic
+Status: regression coverage ACCEPTED following review against the supplied Study Notes; all
+supplied regression requirements are implemented and passing. Later functionality
+remains deferred and is not an acceptance gate. C300 is not yet admitted;
+C300 creation/admission and parser registration, semantic
 NULL resolution, Business Keys, semantic integration and Agent functionality
 remain deferred outside this change.
 
-Changed files: this review, the five new test modules listed above, and
-`tests/corpus_invariants/test_profiling_tools.py`. Changes are technically ready
-for review; final acceptance/commit readiness awaits the documentary comparison.
-No commit or push performed.
+Regression implementation: commit `af831b4`, including this review, the five test
+modules listed above and `tests/corpus_invariants/test_profiling_tools.py`.
+Acceptance follows the completed Study Notes comparison.
