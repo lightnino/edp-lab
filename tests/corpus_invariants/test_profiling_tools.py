@@ -171,6 +171,11 @@ def test_registered_reader_hash_gates_and_fidelity(tmp_path, monkeypatch):
     assert result.rows == (('001', 'x'),)
     assert result.locators[0] == {'source_line': 2, 'byte_offset': 4, 'byte_length': 6}
     (tmp_path / 'fixture.csv').write_bytes(b'a,b\n002,y\n')
+    def forbidden(*args):
+        pytest.fail('Parsing attempted before integrity validation')
+
+    # Keep the real parser for the successful read; failures must never reach it.
+    monkeypatch.setattr(reader, 'literal_records', forbidden)
     bad = reader.read_registered(tmp_path, 'SRC000001', 'fixture.csv', provenance={})
     assert bad.parse_status == 'FAIL'
     assert bad.rows == ()
@@ -178,8 +183,10 @@ def test_registered_reader_hash_gates_and_fidelity(tmp_path, monkeypatch):
     (tmp_path / 'fixture.csv').write_bytes(raw)
     monkeypatch.setattr(reader, 'read_member', lambda *args: b'a,b\n003,z\n')
     bad = reader.read_registered(tmp_path, 'SRC000001', 'fixture.csv', provenance={})
+    assert bad.parse_status == 'FAIL'
     assert 'MEMBER_SHA256_MISMATCH' in bad.errors[0]
     assert bad.rows == ()
+    assert (tmp_path / 'fixture.csv').read_bytes() == raw
 
 
 def test_failure_before_schema_is_available(tmp_path):
