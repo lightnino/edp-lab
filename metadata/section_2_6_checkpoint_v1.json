@@ -1,0 +1,12 @@
+{
+  "activation_performed": false,
+  "approval_packet_path": "runs/section-2-6/review-v1/approval-packet.json",
+  "approval_packet_sha256": "3873e9d07e4bcc2f357f940d05cf4fc5dc1262358b641d1debba2ef117910e05",
+  "checkpoint_path": "runs/section-2-6/final-v1/checkpoint.json",
+  "checkpoint_sha256": "1823fa51da8e1fca484b4acd438dca1bc7ad53243819bdfb93e4d68d0975f157",
+  "operational_artifacts": "gitignored runs/ only; no results committed",
+  "registry_fingerprint": "370e5341f3a6d0d518c28d87d95cde22ad01825a0e431d0f45d68fceb9272ba3",
+  "registry_sha256": "cf2b8a5bd81ab2e23bbf5947a47eee9b5eaaa80492e7d0648f2f105308fef083",
+  "status": "BLOCKED_PENDING_SCOPED_PARSER_APPROVAL",
+  "version": "SECTION_2_6_CHECKPOINT_REFERENCE_V1"
+}
