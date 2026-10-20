@@ -47,6 +47,13 @@ def test_column_metrics_and_ordering():
     assert all('computation_mode' in m for m in c.values())
 
 
+def test_leading_zero_ids_remain_distinct_text():
+    table = fixture(b'a,b\n001,x\n1,x\n')
+    assert table.rows == (('001', 'x'), ('1', 'x'))
+    assert value(tools.profile_column(table, 'a')['literal_statistics']['distinct_text_count']) == 2
+    assert value(tools.find_duplicates(table)['duplicate_groups']) == 0
+
+
 def test_empty_all_null_and_blank():
     empty = fixture(b'a,b\n')
     c = tools.profile_column(empty, 'a')['statistics']
@@ -105,6 +112,29 @@ def test_explicit_null_disqualifies_unique_column():
     assert not value(key['candidate_eligible'])
 
 
+@pytest.mark.parametrize('raw', [
+    b'a,b\nNULL,x\nNULL,y\n1,x\n1,y\n',
+    b'a,b\nx,NULL\ny,NULL\nx,1\ny,1\n',
+])
+@pytest.mark.parametrize('null_tokens', [('NULL',), None])
+def test_composite_null_key_eligibility(raw, null_tokens):
+    # Explicit tokens apply only to this synthetic fixture, never registered RAW.
+    table = fixture(raw, null_tokens=null_tokens)
+    scan = tools.candidate_key_scan(table, composites=[('a', 'b')])
+    key = next(c for c in scan['candidates'] if c['columns'] == ['a', 'b'])
+    assert value(key['mechanically_unique_literal']) is True
+    assert value(key['mechanically_minimal_literal']) is True
+    for name in ('non_null_eligible', 'candidate_eligible'):
+        if null_tokens is None:
+            assert key[name]['computation_mode'] == 'NOT_COMPUTED'
+            assert value(key[name]) is None
+            assert key[name]['reason']
+        else:
+            assert value(key[name]) is False
+            assert key[name]['computation_mode'] == 'EXACT_FULL_SCAN'
+    assert key['business_key_status'] == 'NOT_APPROVED_NOT_ASSESSED'
+
+
 def test_schema_order_and_distribution_separation():
     first = tools.schema_fingerprint(fixture())
     other_distribution = tools.schema_fingerprint(fixture(b'a,b\nx,y\n'))
@@ -125,6 +155,40 @@ def test_explicit_quoted_delimiter_and_multiline_locator():
     assert table.rows[1][1] == 'line1\nline2'
     assert table.locators[1] == {'source_line': 3, 'end_line': 4}
     assert fixture(b'a,b\n001,"x,y"\n').parse_status == 'FAIL'
+
+
+def test_nested_json_field_is_preserved_as_literal_text():
+    # This is a text field, not authorization for a JSON source parser or flattening.
+    payload = '{"id":"001","nested":{"id":"002","items":[{"id":"003"},null]}}'
+    raw = ('a,b\n001,"' + payload.replace('"', '""') + '"\n').encode()
+    table = fixture(raw, quote='"', null_tokens=None)
+    assert table.parse_status == 'PASS'
+    assert table.columns == ('a', 'b')
+    assert table.rows == (('001', payload),)
+    result = tools.profile_column(table, 'b', sample_size=1)
+    assert value(result['literal_statistics']['top_text_values']) == [
+        {'value': payload, 'count': 1}]
+    assert value(result['statistics']['sample']) == [
+        {'literal_value': payload, 'column': 'b',
+         'source_record': {'source_line': 2, 'end_line': 2}}]
+    assert result['source'] == table.source
+    assert result['statistics']['null_count']['computation_mode'] == 'NOT_COMPUTED'
+
+
+def test_distinct_event_ids_with_equal_payloads_preserve_both_occurrences():
+    table = fixture(b'event_id,payload\nEV001,same\nEV002,same\n',
+                    header=('event_id', 'payload'), null_tokens=None)
+    assert table.parse_status == 'PASS'
+    assert table.rows == (('EV001', 'same'), ('EV002', 'same'))
+    assert value(tools.profile_table(table)['row_count']) == 2
+    assert value(tools.find_duplicates(table)['duplicate_groups']) == 0
+    projected = tools.find_duplicates(table, ['payload'])
+    assert value(projected['duplicate_groups']) == 1
+    assert projected['groups'] == [
+        {'values': ['same'], 'frequency': 2, 'source_record_witnesses': [
+            {'source_line': 2, 'end_line': 2}, {'source_line': 3, 'end_line': 3}]}]
+    assert projected['disposition'] == 'OBSERVATION_ONLY_NO_ERROR_CLASSIFICATION_OR_REMOVAL'
+    assert len(table.rows) == 2
 
 
 @pytest.mark.parametrize('raw', [b'a,b\n1,2\n3\n', b'a,b\n1,"unclosed\n',
