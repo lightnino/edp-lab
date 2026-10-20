@@ -1,0 +1,12 @@
+{
+  "expansion_rule": "Every expansion must retain all C300 IDs and exact manifest rows",
+  "files": {
+    "C300.csv": "f052599a7cfac3b566a236965e2ab163934d4541e7b09e03da98be728c1541e4",
+    "authorization.json": "a177d2abea644be2d2bd0776712afa6cb16971eb77e84c4f914231cc11eeb5fb",
+    "corpus_manifest_v3.csv": "27ce93f363ebeb234737659e9a411927aed3dd3a674bc8a21b780e05dfdc4bdf",
+    "review.json": "387a20d29f0006dcd6c2b9587e57e5f015358aba50bfbf7fd0cc3f13ca059895"
+  },
+  "frozen_at_utc": "2026-10-20T11:08:51.473469Z",
+  "status": "FROZEN",
+  "version": "C300_ADMISSION_V1"
+}
