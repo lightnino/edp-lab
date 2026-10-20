@@ -1,6 +1,6 @@
 # EDP Lab
 
-Enterprise Data Platform learning lab. Day 1 source registration is frozen; Day 2 deterministic profiling and agent tooling remain in development.
+Enterprise Data Platform learning lab. Source Identity, GOLD_V2 registration, snapshot-scoped Parsing/Profiling Freeze V2 and Governance Policy are approved. The five deterministic §2.1 profiling functions are implemented and verified on GOLD_V2. See [§2.1 completion evidence](docs/preflight_exit_checklist.md).
 
 ## Setup (macOS/Linux)
 
@@ -19,31 +19,38 @@ Enterprise Data Platform learning lab. Day 1 source registration is frozen; Day 
 
 Run tests without raw files: tests use temporary fixtures. `verify-raw` deliberately fails if the actual files have not been placed at declared paths.
 
-## Day 2 Preflight §1.4 — Parsing and profiling conventions
+## Parsing and profiling status
 
-The V1 **definitions and provisional GOLD_V2 parser bindings** are committed in
-`metadata/profiling_conventions_v1.json`, documented at
-`docs/parsing_profiling_contract_v1.md`. Before generating an official
-profiling baseline, inspect the configuration and run:
+The immutable [V1 definitions](docs/parsing_profiling_contract_v1.md) and
+[V2 snapshot-scoped freeze](docs/parsing_profiling_freeze_v2.md) apply to all
+13 registered GOLD_V2 logical tables. DEC-000001–DEC-000005 record the approved
+lexical scope. Source NULL semantics remain unresolved; profiles retain their
+PROVISIONAL labels. The V2 freeze is a review record, not runtime activation.
+The implemented [profiling tools](docs/profiling_tools.md) share the frozen parser
+configuration and verify source hashes before parsing. GOLD_V2 execution covers
+13 tables, 304,508 data occurrences and 149 column profiles, with no hash or parse
+failures. Outputs are deterministic, versioned JSON with source provenance.
+Semantic NULL-dependent metrics and candidate-key eligibility remain NOT_COMPUTED.
+Mechanical results grant no semantic approval; see the
+[output contract](docs/profiling_output_contract.md).
+
+Offline checks use the installed environment:
 
 ```bash
-uv run python -m edp_lab.profiling.conventions
-uv run python -m edp_lab.profiling.conventions --check-raw
+.venv/bin/python -m edp_lab.profiling.conventions
+.venv/bin/python -m edp_lab.profiling.conventions --check-raw
 ```
 
-The second command needs the four local gitignored RAW artifacts. A parser
-probe PASS checks byte identity, UTF-8 decoding, record widths, headers and
-footer accountability; it does **not** automatically approve provisional
-NULL/quote/date semantics. The production profiler is still unimplemented.
+The second command requires the four local gitignored RAW artifacts.
 
 ## Git boundary
 
 - **Tracked**: Python/SQL code, the canonical `metadata/corpus_manifest.csv` (admitted RAW hashes), semantic `metadata/source_inventory.csv`, `metadata/decision_log.csv`, cohort registries, tests, documentation, lockfile, nonsecret configuration.
 - **Not tracked**: RAW bytes, staging/vault/marts files, DuckDB database, runs/reports, `.env`, credentials, virtualenv.
-- `metadata/source_inventory.csv` holds provisional source-level semantic observations; it is **not** a SHA-256 inventory. The canonical twelve-column `metadata/corpus_manifest.csv` contains source identities, local RAW paths, and recorded SHA-256 values. `docs/decision_log.md` documents the empty, append-only decision log.
+- `metadata/source_inventory.csv` holds provisional source-level semantic observations; it is **not** a SHA-256 inventory. The canonical twelve-column `metadata/corpus_manifest.csv` contains source identities, local RAW paths, and recorded SHA-256 values. `docs/decision_log.md` documents the append-only decision log and links frozen historical engineering evidence.
 - Git alone does not prevent modifying a local RAW file; the verifier detects byte changes, and workflow policy forbids overwrites.
 
-## Explicit Day 1 authority boundaries
+## Authority boundaries
 
 See `AGENTS.md`. Agents may write boilerplate and deterministic code but **must not** infer canonical mappings, choose enterprise business keys, merge enterprise identities, decide semantic equivalence, normalize identifiers automatically, or silently repair RAW anomalies.
 
@@ -58,4 +65,5 @@ Use `.sql` files checked into `sql/<stage>/`; execute them with `uv run python -
 ## Scope notes
 
 - SEC release (`2013 Q2`) and Nasdaq directory (`2026-10-15` snapshot) are not point-in-time aligned. Do not use 2026 directory membership to assert 2013 listing status.
-- `GOLD_V2` registers 4 physical source instances and 13 logical tables (seven SEC 13F, two Nasdaq, four SEC FSDS). Four logical tables have preliminary profiles; deep profiling for all 13 is not yet complete. No enterprise business-key or mapping decisions have been committed.
+- `GOLD_V2` registers 4 physical source instances and 13 logical tables (seven SEC 13F, two Nasdaq, four SEC FSDS). §2.1 deep profiling has executed on all 13 within the frozen lexical scope. No enterprise business-key or mapping decisions have been committed.
+- C300 execution remains subject to future source admission and reviewed parser registration. The current registered reader accepts only frozen GOLD_V2 bindings; their approval does not transfer to future sources. C300 population and §2.2–§2.4 implementation are outside §2.1 completion.

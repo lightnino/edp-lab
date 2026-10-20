@@ -25,8 +25,9 @@ in `docs/evaluation_contract.md`.
 
 ## Rules
 
-- The CSV starts **header-only**. This is intentional: no historical approval,
-  timestamp, or rationale is reconstructed from a guess.
+- The CSV was initially header-only. It now contains DEC-000001–DEC-000005
+  for the approved parsing freeze; no historical approval, timestamp or rationale
+  may be reconstructed from a guess.
 - Record real decisions **when they occur**, with their supporting evidence.
   An Agent's proposal must not be silently recorded as an approved business decision.
 - Keep entries append-only. Corrections/supersessions are new records that reference
@@ -45,3 +46,23 @@ in `docs/evaluation_contract.md`.
 At each consequential new identity, mapping, grain, reconciliation, model, or
 governance decision, append a row referencing the actual evidence and approval state.
 The log is designed to support later Agent run review, replay, and audit.
+
+## Frozen engineering evidence index
+
+This index links existing decisions; it adds no retrospective CSV approval rows.
+Source Identity and GOLD_V2 are accepted as approved by the current task instruction.
+Their historical approver identities and approval instants are not reconstructed.
+
+| Scope / existing decision | Retained evidence |
+| --- | --- |
+| Physical-delivery identity; member lineage; distinct controlled variants; stable IDs and immutable paths | [Source Identity](source_instance_identity.md); `metadata/corpus_manifest.csv`; `metadata/gold_set_logical_tables_v2.csv`; `tests/corpus_invariants/test_source_identity.py` |
+| Preserve GOLD_V1; expand via a separate GOLD_V2 with four physical instances / 13 tables | [GOLD_V2 admission](gold_set_v2_admission.md); [original baseline](gold_set_baseline.md); `metadata/cohorts/GOLD_V1.csv`; `metadata/cohorts/GOLD_V2.csv`; `tests/corpus_invariants/test_gold_v2_registration.py` |
+| D1–D5 snapshot lexical scope | DEC-000001–DEC-000005 in `metadata/decision_log.csv`; [V2 freeze](parsing_profiling_freeze_v2.md); exact code/config/member hashes in `metadata/parsing_profiling_freeze_v2.json` |
+| Finding states, ownership and stopping rules | [approved governance policy](ownership_approval_boundaries.md); `metadata/finding_schema_v1.json`; `tests/governance/test_finding_contract.py` |
+
+Tests demonstrate their declared mechanical invariants, not human approval.
+Whether this documentary index satisfies the frozen study plan's exact Decision
+Log evidence requirement remains pending access to that text. If it explicitly
+requires new records, Human Review must decide whether linked historical evidence
+suffices or authorize present-day records with actual recording time and known
+approval provenance. Do not backdate them.

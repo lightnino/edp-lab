@@ -90,7 +90,7 @@ for consequential decisions. Append actual proposals/unresolved decisions or
 authorized approvals when they occur, per its contract. Do not log every
 mechanical observation. Do not invent approvers or approval timestamps, revise
 historical rows, or treat a test pass, Finding, commit or schema validation as
-approval. This implementation records no approval of this proposed policy.
+approval. The policy approval is recorded at the top of this document; it grants no approval to individual findings.
 
 ## Materiality and stopping rules
 
