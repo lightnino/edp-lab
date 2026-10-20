@@ -1,0 +1,9 @@
+{
+  "checkpoint_path": "runs/databricks-native-v1/checkpoint.json",
+  "checkpoint_sha256": "74430920d6aebe2645b96b570ac74323a8897f4e20f39eb9e14160a64cc766b4",
+  "fingerprint": "e238d4cf8e324bd704063f819c2c679c4eabf862d5bf85062f7137d295a5bad5",
+  "operational_artifacts": "gitignored runs/; do not commit results or RAW",
+  "section_2_7": "COMPLETE",
+  "section_2_8": "TESTED",
+  "version": "NATIVE_NASDAQ_CHECKPOINT_V1"
+}

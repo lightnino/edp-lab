@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:edp-lab:source-observation-report:v1",
+  "title": "Source Observation Report V1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "agent_version", "binding", "source_ref", "execution_status", "tool_statuses", "population", "trace", "findings", "errors", "unresolved_questions", "side_effects", "semantic_promotions", "run_id", "result_fingerprint"],
+  "properties": {
+    "schema_version": {"const": "SOURCE_OBSERVATION_REPORT_V1"},
+    "agent_version": {"const": "EDP_ANALYST_AGENT_V0"},
+    "binding": {"type": "string"},
+    "source_ref": {"type": "object", "required": ["binding", "source_identity_fingerprint", "configuration_fingerprint"]},
+    "execution_status": {"enum": ["PASS", "FAILED", "BLOCKED"]},
+    "tool_statuses": {"type": "array", "items": {"enum": ["SUCCESS", "PARTIAL", "FAILED", "BLOCKED"]}},
+    "population": {"const": "FULL_LOGICAL_TABLE_DATA_OCCURRENCES"},
+    "trace": {"type": "array", "items": {"type": "object", "additionalProperties": false, "required": ["sequence", "request", "response"], "properties": {"sequence": {"type": "integer", "minimum": 0}, "request": {"type": "object"}, "response": {"type": "object"}}}},
+    "findings": {"type": "array", "items": {"type": "object", "additionalProperties": false, "required": ["state", "claim", "evidence_refs"], "properties": {"state": {"enum": ["OBSERVED", "PROPOSED", "VALIDATED", "REJECTED", "UNRESOLVED"]}, "claim": {"type": "string"}, "evidence_refs": {"type": "array", "items": {"type": "string"}}}}},
+    "errors": {"type": "array", "items": {"type": "string"}},
+    "unresolved_questions": {"type": "array", "items": {"type": "string"}},
+    "side_effects": {"type": "array", "maxItems": 0},
+    "semantic_promotions": {"type": "array", "maxItems": 0},
+    "run_id": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "result_fingerprint": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+  }
+}
