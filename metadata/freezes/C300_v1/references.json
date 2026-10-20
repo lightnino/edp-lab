@@ -1,0 +1,16 @@
+{
+  "version": "C300_GIT_PERSISTENCE_V1",
+  "original_freeze_directory": "runs/c300/frozen-v1",
+  "freeze_sha256": "7378b5d183cc4d45e0670eae6d501f204e62fdee02d8b345d9a910300d411835",
+  "canonical_files": {
+    "C300.csv": "metadata/cohorts/C300.csv",
+    "corpus_manifest_v3.csv": "metadata/corpus_manifest_v3.csv",
+    "freeze.json": "metadata/freezes/C300_v1/freeze.json",
+    "authorization.json": "metadata/freezes/C300_v1/authorization.json"
+  },
+  "review_packet": {
+    "path": "runs/c300/frozen-v1/review.json",
+    "sha256": "387a20d29f0006dcd6c2b9587e57e5f015358aba50bfbf7fd0cc3f13ca059895"
+  },
+  "note": "Exact copies of existing frozen metadata; no new admission, regeneration or freeze. Supporting acquisition evidence remains hash-linked in the original local review packet."
+}

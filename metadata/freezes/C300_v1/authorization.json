@@ -1,0 +1,10 @@
+{
+  "admit_and_freeze": true,
+  "approved_by": "User in this conversation",
+  "authorization_text": "I explicitly authorize admission and freezing of the exact reviewed C300 packet.",
+  "authorization_time_basis": "Time explicit user authorization was recorded by the agent; original message timestamp unavailable.",
+  "authorized_at_utc": "2026-10-20T11:08:50.623803Z",
+  "packet_sha256": "387a20d29f0006dcd6c2b9587e57e5f015358aba50bfbf7fd0cc3f13ca059895",
+  "roster_sha256": "f052599a7cfac3b566a236965e2ab163934d4541e7b09e03da98be728c1541e4",
+  "scope": "Exactly the approved 300 source instances; preserve GOLD and RAW; no later cohort freezes, semantic approvals or parser approvals."
+}
