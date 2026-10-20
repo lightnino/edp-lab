@@ -1,7 +1,11 @@
 # Ownership and approval boundaries
 
-Status: proposed governance contract, awaiting Human Review. This document does
-not approve itself, any business rule, or any source interpretation.
+Status: APPROVED governance policy. Explicit Human Review approval was confirmed
+in the project conversation on 2026-10-20 for the five Finding states, Human/Agent
+ownership boundaries, P0–P3 materiality, stopping rules, and Finding Schema v1.
+The reviewer's formal identity and precise approval timestamp were not supplied.
+This approval does not authorize any particular business rule, source interpretation,
+semantic mapping, data transformation, or new source admission.
 
 Authority remains with [AGENTS.md](../AGENTS.md), the
 [evaluation contract](evaluation_contract.md), [source identity contract](source_instance_identity.md),
@@ -143,6 +147,7 @@ or permission to run; the targeted tests check structure and guards only.
 
 Breaking changes need a separately reviewed schema version; retain prior records
 and interpretation. No finding registry, runtime transition engine or approval
-database is introduced. Open review question: does the human accept these proposed
-ownership/materiality boundaries and schema? Existing unresolved source NULL,
+database is introduced. The governance policy and Finding Schema v1 have been
+accepted through explicit Human Review; this does not approve any individual
+Finding or grant a new runtime authority. Existing unresolved source NULL,
 exporter intent and date/unit semantics remain unchanged and unapproved.
