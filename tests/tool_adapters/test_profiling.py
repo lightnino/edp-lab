@@ -119,6 +119,7 @@ def test_invalid_column_and_search_limits():
         assert result.errors
 
 
+@pytest.mark.usefixtures("owner_evidence")
 def test_registered_gold_binding_and_integrity_failure(tmp_path):
     root = Path(__file__).resolve().parents[2]
     table = read_registered(root, "SRC000002", "nasdaqlisted.txt", provenance={})
