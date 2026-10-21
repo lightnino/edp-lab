@@ -2,7 +2,9 @@
 
 **Incident ID:** EDP-INC-2026-10-21-001
 **Observed on:** 2026-10-21 (SGT)
-**Status:** OPEN — remediation evidence complete within the documented scope; awaiting explicit owner closure review and approval (§14).
+**Status:** CLOSED — explicitly approved by the experiment owner under the seven revised closure gates (§14).
+**Closed at:** 2026-10-21T20:03:15+08:00 (UTC+08:00; actual closure recording time).
+**Owner approval:** [owner approval comment](https://github.com/lightnino/edp-lab/pull/18#issuecomment-6315368530), by `lightnino` at `2026-10-21T20:00:05+08:00` (GitHub `2026-10-21T12:00:05Z`).
 **Classification:** Scope governance / admission authorization control gap
 **Decision (experiment owner):** Option 2 — preserve original 3,021 authorized-universe snapshot; exclude the 800 outside-scope instances from the current experiment through logical rollback, without deleting physical RAW.
 **Remediation state:** IMPLEMENTED for documented local execution paths; Guardrail [PR #17](https://github.com/lightnino/edp-lab/pull/17) merged as `2988c62ce7e8a92547224e8212ed74f1cec2bc94` at `2026-10-21T11:50:59Z` (19:50:59 UTC+08:00). Existing C750/C1500/C2000 freezes are historical execution evidence, not accepted scope-compliant experiment baselines.
@@ -122,7 +124,7 @@ Authorizing all 800 now, appending them to a 3,821-member expanded experiment un
 - **Admission Guardrail and Agent authorization:** IMPLEMENTED and verified for documented local paths; PR #17 merged at the SHA/time in the header. Historical and remote unguarded paths are EXCLUDED (§13).
 - **Rebuilt authorized cohorts:** DEFERRED TO DAY 3; historical cohorts remain unaccepted.
 - **Day 2 baseline retention/freeze acceptance:** DEFERRED TO DAY 2, separate from incident closure.
-- **Incident closure:** OWNER REVIEW REQUIRED. Gates 1–6 have bounded supporting evidence; gate 7 has merged implementation and the consolidated ledger, with explicit owner approval outstanding (§14).
+- **Incident closure:** CLOSED. The experiment owner explicitly approved all seven revised gates with their documented scope and limitations (§14).
 
 ## 6. Enterprise 2 PB migration analogy and required preventive controls
 
@@ -171,7 +173,7 @@ Both original SEC Bulk candidates are **QUALIFIED — OWNER_ATTESTED_PROVENANCE*
 **Historical Day 3–5 and unguarded remote execution:** EXCLUDED from approved new execution until integrated, tested and separately human-authorized. No physical disablement or ACL block is claimed.
 **Future scope/target choice and cohort rebuild:** DEFERRED TO DAY 3; no new cohort target selected here.
 **Day 2 O_C300_M1 retention/freeze acceptance:** DEFERRED TO DAY 2; no final freeze or acceptance inferred.
-**Remaining closure action:** Explicit owner review and approval under §14. No new experiment execution is authorized by this report.
+**Closure disposition:** CLOSED under explicit owner approval in §14. No new experiment execution is authorized by this report.
 
 ## 8. Supporting local evidence (original locators; bounded verification in §13)
 
@@ -232,13 +234,13 @@ This is the single current implementation ledger. Exact operational start/finish
 | Historical/remote execution paths | EXCLUDED from new approved execution | Bounded pre-merge audit; exact audit time NOT CAPTURED | §13; owner-supplied audit, not an independent persisted audit log |
 | Replacement cohorts / experimental Lossless and Stability | DEFERRED TO DAY 3 | Outside incident closure scope | Separate approved Day 3 plan required |
 | O_C300_M1 baseline retention/freeze acceptance | DEFERRED TO DAY 2 | Reported validation success does not establish final freeze | Step 4 retained completion `MAIN_720_COMPLETE_VALIDATED`, `NOT_FROZEN` |
-| Owner closure approval and incident closure | AWAITING EXPLICIT OWNER REVIEW | Approval and closure timestamp NOT RECORDED | §14; report remains OPEN |
+| Owner closure approval and incident closure | OWNER APPROVED / CLOSED | Approval `2026-10-21T20:00:05+08:00`; closure recorded `2026-10-21T20:03:15+08:00` (UTC+08:00) | [owner approval comment](https://github.com/lightnino/edp-lab/pull/18#issuecomment-6315368530); all seven revised gates and documented limitations explicitly approved; §14 |
 
 Closure is governed by the seven gates in §14. Replacement experiment execution and Day 2 baseline freeze are separate tasks, not incident-remediation prerequisites.
 
 ## 13. Independent local governance audit — 2026-10-21
 
-This section preserves the original bounded local audit and records the implemented controls at their integration points. Option 2 is implemented within the documented local scope; the incident remains OPEN for explicit owner closure review. Industry links in §9 were supplied by the owner and were not independently consulted in this offline audit.
+This section preserves the original bounded local audit and records the implemented controls at their integration points. Option 2 is implemented within the documented local scope; the incident is CLOSED under the explicit owner approval recorded in §14. Industry links in §9 were supplied by the owner and were not independently consulted in this offline audit.
 
 ### Original local audit boundary and reproducibility
 
@@ -313,7 +315,7 @@ This is bounded discovery, not universal proof of absent external execution path
 
 ### Remaining experiment work
 
-Replacement rosters, target adjustment, historical-to-replacement crosswalks, real new-cohort Lossless/Stability runs and operational measurements are **DEFERRED TO DAY 3**. O_C300_M1 baseline retention/freeze acceptance is **DEFERRED TO DAY 2**. These are outside the revised incident closure gates. The remaining incident decision is explicit owner closure approval, with accepted coverage limits reviewed under §14. The single execution ledger is §12.
+Replacement rosters, target adjustment, historical-to-replacement crosswalks, real new-cohort Lossless/Stability runs and operational measurements are **DEFERRED TO DAY 3**. O_C300_M1 baseline retention/freeze acceptance is **DEFERRED TO DAY 2**. These are outside the revised incident closure gates. The experiment owner explicitly approved incident closure with the documented coverage limits under §14. The single execution ledger is §12.
 
 Retained structural completion summaries were also inspected: N450 records zero Databricks processing jobs and deferred final M1 fit; N750/N500 explicitly record `CLEAN_QUERYABLE: NOT_RUN`, `Stability: NOT_RUN`, and zero Databricks processing jobs. These are historical checkpoint claims, not current live dependency certification.
 
@@ -321,11 +323,11 @@ Retained structural completion summaries were also inspected: N450 records zero 
 
 **Decision date:** 2026-10-21 (UTC+08:00; exact original decision time NOT CAPTURED). Authority: explicit experiment-owner revised pre-Day-3 closure instruction and latest Step 6B in-place editing instruction.
 
-**Current incident status: OPEN — evidence ready for owner closure review; explicit closure approval NOT RECORDED.** Remediation must be reviewed and closure approved before a new Day 3 experiment. Rebuilding N450/C750 and new experiment runs are deferred to Day 3; Day 2 baseline retention/freeze acceptance remains separate. Historical C750/C1500/C2000 are not approved baselines. Retain all 800 legitimate local/remote RAW and reproducible references unless a separate future retention decision changes that requirement.
+**Current incident status: CLOSED — explicit experiment-owner approval recorded.** Owner `lightnino` approved EDP-INC-2026-10-21-001 under all seven revised closure gates at `2026-10-21T20:00:05+08:00` in the [owner approval comment](https://github.com/lightnino/edp-lab/pull/18#issuecomment-6315368530). Actual closure recorded at `2026-10-21T20:03:15+08:00` (UTC+08:00). The approval expressly accepts the documented local enforcement scope, accepted test limitations and exclusion of historical unguarded remote paths. Rebuilding N450/C750 and new experiment runs are deferred to Day 3; Day 2 baseline retention/freeze acceptance remains separate. Historical C750/C1500/C2000 are not approved baselines. Retain all 800 legitimate local/remote RAW and reproducible references unless a separate future retention decision changes that requirement.
 
 ### Seven closure gates — final evidence assessment
 
-| Gate | Final disposition for owner review | Exact supporting evidence / commit | Coverage boundary |
+| Gate | Final disposition after owner review | Exact supporting evidence / commit | Coverage boundary |
 | --- | --- | --- | --- |
 | 1. Approved Universe v1 | EVIDENCE COMPLETE — OWNER APPROVED | `metadata/source_universes/approved_v1/{manifest.json,owner_authorization.json,verification.json,approval_verification_v1.json}`; manifest digest `2198f9bad9c864bf339eff515992526e22efc4230160614a8f86daf3143f463c`; commit `319281c17d957dc8d442aaa63278df0d5a1596b3` | Exact 3,021; 41 reserved; 800 excluded; C300 300/300; membership grants no admission/freeze/processing authority. |
 | 2. SEC Bulk owner qualification | EVIDENCE COMPLETE — BOTH QUALIFIED | §§11, 13, 15–16; commit `787b473a78f5bcce814bafd8675ce1a9c5edea65` | Exact two retained ZIPs only; first-party manual official-SEC-download attestation; historical publisher receipts/digests unavailable; no registration/admission. |
@@ -333,13 +335,13 @@ Retained structural completion summaries were also inspected: N450 records zero 
 | 4. Deterministic admission/freeze/processing authorization | EVIDENCE COMPLETE — IMPLEMENTED LOCAL SCOPE | §13; `docs/source_universe_guardrail.md`; PR #17 merged `2988c62ce7e8a92547224e8212ed74f1cec2bc94` | Exact identity/hash/path, qualification/holdouts, roster/capacity, owner authority and fail-closed checks; explicit local bindings; remote/historical paths excluded, not certified guarded. |
 | 5. Agent authorization boundary | EVIDENCE COMPLETE — TESTED WITHIN HOST TRUST BOUNDARY | Guardrail Agent outcomes and authorization tests; PR #17, final head `6eabe9897aa3a452bce7f279c6f5b4bbf3240d6a` | No self-approval/version/cohort injection, denial override or acquisition for quota; reviewed host installation is trusted; no autonomous authority granted. |
 | 6. Tests and historical path restrictions | EVIDENCE COMPLETE — ACCEPTED TEST LIMITATIONS DISCLOSED | Guardrail exact commands, 29 individual dispositions, final correction; PR #17 and GitHub CI; §13 pre-merge audit basis | 295 PASS/23 SKIP; targeted 23 PASS/1 SKIP; original 28 PASS/1 environmental GOLD RAW SKIP; independent missing-authority PASS; historical/remote paths EXCLUDED pending separate integration/tests/approval. No live remote Guardrail verification. |
-| 7. Merged Guardrail, ledger and explicit owner closure | IMPLEMENTATION AND EVIDENCE COMPLETE; OWNER APPROVAL REQUIRED | PR #17 merged at `2026-10-21T11:50:59Z`, merge `2988c62ce7e8a92547224e8212ed74f1cec2bc94`; consolidated ledger §12; this Incident Closure PR | Owner closure approval and actual closure timestamp are NOT RECORDED. A Codex report, evidence PASS or PR publication cannot supply approval. Gate 7 is not fully satisfied until that owner action. |
+| 7. Merged Guardrail, ledger and explicit owner closure | COMPLETE — OWNER APPROVED / CLOSED | PR #17 merged at `2026-10-21T11:50:59Z`, merge `2988c62ce7e8a92547224e8212ed74f1cec2bc94`; consolidated ledger §12; [owner approval comment](https://github.com/lightnino/edp-lab/pull/18#issuecomment-6315368530) | Explicit owner approval at `2026-10-21T20:00:05+08:00` covers all seven revised gates and documented limitations; closure recorded `2026-10-21T20:03:15+08:00` (UTC+08:00). |
 
-### Required final incident closure update
+### Final incident closure update
 
 Update current status **in place**. Do not append superseding statuses or preserve obsolete current-state ledgers; Git retains earlier versions. Preserve genuine historical events, timestamps and evidence. This replaces the earlier append-only instruction.
 
-The owner must explicitly review the proposed closure and all seven evidence gates, including the coverage restrictions. After that approval is documented with a reproducible reference, replace the existing header and ledger status with **CLOSED**, record the actual approval/closure timestamp with timezone and approval reference, and push that update to the same Closure PR. Do not predate or infer approval. Do not merge the Closure PR before recorded owner approval. No Day 3 admission, freeze, upload, profiling or processing is authorized by closure review.
+The experiment owner explicitly approved closure of this incident under the seven revised closure gates in the [owner approval comment](https://github.com/lightnino/edp-lab/pull/18#issuecomment-6315368530). The existing header, current status and final ledger have been updated in place to **CLOSED**, with separate actual approval and closure recording timestamps above. This update is for the same [Incident Closure PR #18](https://github.com/lightnino/edp-lab/pull/18). No automatic merge is authorized. No Day 3 admission, freeze, upload, profiling or processing is authorized by closure review.
 
 ## 15. Step 2 SEC Bulk qualification recovery evidence
 
@@ -420,4 +422,4 @@ For **each** ZIP, original download receipts and independent publisher digests r
 
 **SEC Bulk Qualification Recovery: COMPLETE.** This owner disposition applies to these two exact candidates only. Original investigation findings, missing-evidence observations and historical timestamps are preserved; current qualification fields are reconciled in place. Both remain members of the original **3,021 Approved Universe**; qualification changes neither universe membership nor frozen cohort membership. The earlier 2,978 ceiling excluded these two unresolved candidates; this disposition resolves that qualification exclusion, without selecting a scale target or creating admitted instances.
 
-No Source Instance IDs were allocated, RAW modified, inventory/registry changed, or source admitted into a cohort. Qualification is separate from actual admission and parser/processing approval. Incident closure remains subject to its other gates and explicit owner approval. Qualification evidence is retained in commit `787b473a78f5bcce814bafd8675ce1a9c5edea65` on `incident/closure-evidence`. The current documentation publication is authorized by Step 6B; owner incident closure approval remains separate.
+No Source Instance IDs were allocated, RAW modified, inventory/registry changed, or source admitted into a cohort. Qualification is separate from actual admission and parser/processing approval. Incident closure is now explicitly owner-approved under all seven revised gates (§14). Qualification evidence is retained in commit `787b473a78f5bcce814bafd8675ce1a9c5edea65` on `incident/closure-evidence`. The documentation publication was authorized by Step 6B; the separate explicit owner incident closure approval is recorded in §14.
