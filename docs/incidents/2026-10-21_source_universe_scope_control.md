@@ -336,3 +336,48 @@ Earlier §12 audit states are superseded below; implementation states remain PEN
 Retained structural completion summaries were also inspected: N450 records zero Databricks processing jobs and deferred final M1 fit; N750/N500 explicitly record `CLEAN_QUERYABLE: NOT_RUN`, `Stability: NOT_RUN`, and zero Databricks processing jobs. These are historical checkpoint claims, not current live dependency certification.
 
 Publication verification: GitHub PR metadata confirms `main` base, incident branch head, OPEN state and exactly the three documentation files above. Remote main was independently checked at `ddb6e47c52afa08415614dc7f341255255d9c963` before publication. The publication ledger is recorded in a subsequent documentation-only commit; the initial report commit is the immutable anchor above.
+
+## 14. Superseding Decision — Pre-Day-3 Closure
+
+**Decision date:** 2026-10-21 (UTC+08:00; exact owner-decision time not supplied).
+
+**Authority:** Explicit experiment-owner instruction to amend closure criteria for EDP-INC-2026-10-21-001.
+
+**Current incident status:** **OPEN — revised closure gates below are not yet verified.**
+
+This decision supersedes the earlier closure conditions, implementation sequencing and remediation dependencies only where they conflict with this section. All discovery evidence, root cause, original decisions, historical observations and implementation logs above remain intact. In particular, the historical `NOT_IMPLEMENTED` / `NOT IMPLEMENTED`, PENDING and NOT STARTED entries describe their recorded checkpoints; this amendment does not assert that implementation has occurred.
+
+The owner has decided:
+
+- Incident remediation must be completed and closure approved **before the new Day 3 experiment**.
+- Rebuilding N450/C750 belongs to Day 3, **not incident remediation**. Replacement cohort construction and experimental processing/acceptance previously listed as incident-closure dependencies are deferred to Day 3; they are not prerequisites to incident closure under this decision.
+- Previously frozen unauthorized C750/C1500/C2000 remain historical evidence, **not approved baselines**. Preserve their membership, hashes, commits, receipts and execution records without retroactive authorization.
+- Retain all **800 legitimate outside-scope RAW instances permanently**, including local and remote RAW and their reproducible references, unless a separate future retention decision changes that requirement. Retention grants no current experiment-processing authority.
+- The incident remains **OPEN** until all seven revised closure gates are verified and explicit owner closure approval is recorded.
+
+### Revised closure gates
+
+All seven gates are required. Documentary intent, historical receipts or a mechanical PASS alone do not establish current authorization or closure.
+
+1. **Approved Universe v1:** Preserve the original **3,021-member Approved Universe v1**, with per-member IDs and hashes, pinned universe version and snapshot digest, and explicit owner authorization tied to that exact version and membership. Retain the original inventory evidence in §8 and the 41 reserved holdouts; do not silently change membership or versions.
+2. **SEC Bulk qualification:** Both `LOCAL_SEC_BULK_COMPANYFACTS` and `LOCAL_SEC_BULK_SUBMISSIONS` retain universe membership and have **individually documented admission qualification outcomes**, supporting evidence and exact blockers or disposition. Membership is distinct from qualification; do not infer PASS. Any BLOCKED/UNRESOLVED outcome must remain explicit and supported by evidence.
+3. **800-instance preservation and exclusion:** Retain all **800 legitimate outside-scope RAW references**, reconciled to the reference appendix, with **current remote preservation evidence** and proof that they are excluded from current authorized experiment processing. Record verification time, exact coverage, paths, hashes/results and any unknowns. Historical remote readback receipts alone do not prove current remote preservation or processing exclusion.
+4. **Deterministic authorization:** Enforce deterministic admission, freeze and processing authorization against the pinned owner-authorized universe and exact frozen cohort membership, including identity/hash validation and holdout restrictions. Missing, mismatched or denied authority must fail closed; directory/prefix discovery cannot expand authorized processing.
+5. **Agent authority boundary:** Demonstrate that the Agent cannot self-approve, change universe versions or bypass authorization denial. A proposed scope/version change requires separate explicit owner authorization; an Agent assertion cannot supply that authority.
+6. **Compatibility and negative tests:** Validate guardrail compatibility tests and negative tests with actual commands, coverage and results. Explain and resolve or explicitly disposition **all previously observed 29 broad-suite failures**, with a traceable outcome for each; do not claim a clean broad suite while failures remain undispositioned. Historical Day 3 entrypoints cannot be promoted or executed as authorized entrypoints without the guardrail. Record evidence covering those entrypoints and attempted bypasses. The count of 29 is owner-supplied prior test context, not a test result independently reproduced by this documentation amendment.
+7. **Merged implementation and owner closure:** Merge the guardrail code PR, complete the incident implementation ledger with verified evidence for the gates above, and record **explicit owner closure approval** and closure timestamp. Publishing or merging this documentation amendment alone does not satisfy this gate or close the incident.
+
+### Required final incident closure update
+
+When implementation is complete, **append a superseding verified implementation status** linked to the historical observations above. Do not rewrite historical `NOT_IMPLEMENTED` entries or backfill unknown historical times as if observed. The final update must include:
+
+- Actual implementation paths and the controls enforced at each relevant admission, freeze, processing and Agent integration point.
+- Commit SHAs and merged PR URLs for the guardrail and relevant incident implementation changes.
+- Actual test commands and results, including compatibility and negative tests, historical Day 3 entrypoint coverage and the resolution or explicit disposition of each of the 29 broad-suite failures.
+- RAW verification results for all 800 retained references, including current remote preservation evidence and proof of exclusion from current authorized experiment processing, with reproducible evidence paths, verification timestamps and coverage.
+- Separate SEC Bulk qualification outcomes and evidence for both original universe entries.
+- Actual implementation start and finish timestamps with timezone; preserve UNKNOWN where a timestamp was not captured.
+- Unresolved limitations and their impact on each closure gate, including any explicit dispositions; do not silently convert unknowns into PASS.
+- Final explicit owner approval, its reproducible approval reference and the incident closure timestamp with timezone.
+
+**Scope of this amendment:** Documentation only. No code implementation, RAW modification, Day 2 change, SEC Bulk qualification, new cohort or experiment is performed or authorized by this update. All implementation and verification claims remain to be evidenced under the revised gates.
