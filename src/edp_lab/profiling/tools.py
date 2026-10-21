@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 from collections import Counter
+from functools import wraps
+from inspect import signature
 from itertools import combinations
 
 from edp_lab.profiling.conventions import reference_count_metrics
@@ -75,6 +77,24 @@ def _duplicates(table, columns, group_limit, witness_limit):
     }
 
 
+def authorized_table(function):
+    """Preserve scope denial without computing metrics on an unauthorized table."""
+    @wraps(function)
+    def guarded(table, *args, **kwargs):
+        if table.authorization_outcome is not None:
+            bound = signature(function).bind(table, *args, **kwargs)
+            bound.apply_defaults()
+            parameters = dict(bound.arguments)
+            parameters.pop('table')
+            return output(table, function.__name__, {
+                'status': 'BLOCKED', 'authorization_outcome': table.authorization_outcome,
+                'metrics': unavailable('AUTHORIZATION_REQUIRED'),
+                'rows_scanned': unavailable('AUTHORIZATION_REQUIRED')}, parameters)
+        return function(table, *args, **kwargs)
+    return guarded
+
+
+@authorized_table
 def find_duplicates(table: SourceTable, columns=None, *, group_limit=20,
                     witness_limit=3) -> dict:
     """Count exact lexical repeat occurrences; bounded evidence, exact totals."""
@@ -90,6 +110,7 @@ def find_duplicates(table: SourceTable, columns=None, *, group_limit=20,
                    "witness_limit": witness_limit})
 
 
+@authorized_table
 def profile_table(table: SourceTable) -> dict:
     """Exact occurrence/structural counts plus literal duplicate summary."""
     payload = {
@@ -103,6 +124,7 @@ def profile_table(table: SourceTable) -> dict:
     return output(table, "profile_table", payload, {})
 
 
+@authorized_table
 def profile_column(table: SourceTable, column: str, *, top_limit=10,
                    sample_size=5, sample_seed=0) -> dict:
     """Frozen semantic metrics, separately named lexical distributions/samples.
@@ -163,6 +185,7 @@ def profile_column(table: SourceTable, column: str, *, top_limit=10,
     }, parameters)
 
 
+@authorized_table
 def candidate_key_scan(table: SourceTable, *, composites=(), search_columns=None,
                        max_width=1, max_combinations=256) -> dict:
     """Single columns + supplied composites + bounded exhaustive combinations.
@@ -235,6 +258,7 @@ def candidate_key_scan(table: SourceTable, *, composites=(), search_columns=None
     }, parameters)
 
 
+@authorized_table
 def schema_fingerprint(table: SourceTable) -> dict:
     """Frozen, order-sensitive structural hash; excludes distributions/identity."""
     return output(table, "schema_fingerprint", {

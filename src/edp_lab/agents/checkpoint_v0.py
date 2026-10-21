@@ -8,6 +8,7 @@ from pathlib import Path
 
 from edp_lab.agents.analyst_v0 import observe, validate_report
 from edp_lab.ingestion.gold_set import file_sha256
+from edp_lab.ingestion.universe import UniverseGate, processing
 from edp_lab.parsers.c300_v1 import (
     VERSION,
     require_activation,
@@ -57,7 +58,8 @@ def run_gold(root: Path, output: Path):
         name = f"{binding['source_instance_id']}/{binding['logical_table_name']}"
         table = read_registered(root, binding["source_instance_id"], binding["logical_table_name"],
                                 provenance=provenance)
-        host = ProfilingAdapters({name: table}, {"local_user": {name}})
+        host = ProfilingAdapters({name: table}, {"local_user": {name}},
+                                 universe_gate=UniverseGate.load(root), cohort="GOLD_V2")
         report = observe(host, name, "local_user", table.columns)
         evaluation = evaluate(host, report, table)
         replay = observe(host, name, "local_user", table.columns)
@@ -80,11 +82,13 @@ def run_gold(root: Path, output: Path):
 
 
 def validate_c300(root: Path, registry_path: Path, output: Path):
-    output = run_directory(root, output)
     registry = json.loads(registry_path.read_bytes())
     if registry["version"] != VERSION or registry["parser_code_sha256"] != file_sha256(
             root / "src/edp_lab/parsers/c300_v1.py"):
         raise ValueError("PARSER_VERSION_OR_CODE_MISMATCH")
+    for binding in registry["bindings"]:
+        processing(root, binding, "C300")
+    output = run_directory(root, output)
     manifest = {r["source_instance_id"]: r for r in roster(root)}
     tables = []
     for binding in registry["bindings"]:

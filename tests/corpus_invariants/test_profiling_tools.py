@@ -228,11 +228,29 @@ def test_registered_reader_hash_gates_and_fidelity(tmp_path, monkeypatch):
     (tmp_path / reader.FREEZE).write_text(json.dumps({
         'effective_configuration': config, 'code_revision': {'file_sha256': {}}}))
     (tmp_path / 'fixture.csv').write_bytes(raw)
+    # A directory listing includes retained unauthorized RAW, but read_registered
+    # must open only its explicitly selected, pinned table.
+    retained = tmp_path / 'outside-universe.csv'
+    retained.write_bytes(b'unauthorized,raw\nnever,process\n')
+    assert len(list(tmp_path.glob('*.csv'))) == 2
+    from edp_lab.ingestion import universe as u
+    authority = {'schema': 'SOURCE_UNIVERSE_AUTHORITY_V1', 'universe_version': 'TEST_ONLY',
+                 'approval_reference': 'TEST_ONLY', 'inventory_reference': 'inventory',
+                 'inventory_sha256': u.sha(b'inventory'), 'member_count': 1,
+                 'members': [{'identity': 'SRC000001', 'raw_sha256': reader.digest(raw),
+                              'raw_path': 'fixture.csv', 'holdout': False}],
+                 'cohorts': {'GOLD_V2': {'identities': ['SRC000001']}}}
+    location = tmp_path/u.AUTHORITY_PATH
+    location.parent.mkdir(parents=True)
+    location.write_text(json.dumps(authority))
+    (tmp_path/'inventory').write_bytes(b'inventory')
+    monkeypatch.setattr(u, 'APPROVED_AUTHORITY_SHA256', u.sha(location.read_bytes()))
     monkeypatch.setattr(reader, 'load_candidate', lambda root: config)
     monkeypatch.setattr(reader, 'verify_source_identity', lambda *args, **kwargs: None)
     result = reader.read_registered(tmp_path, 'SRC000001', 'fixture.csv', provenance={})
     assert result.parse_status == 'PASS'
     assert result.rows == (('001', 'x'),)
+    assert retained.read_bytes() == b'unauthorized,raw\nnever,process\n'
     assert result.locators[0] == {'source_line': 2, 'byte_offset': 4, 'byte_length': 6}
     (tmp_path / 'fixture.csv').write_bytes(b'a,b\n002,y\n')
     def forbidden(*args):
@@ -259,5 +277,8 @@ def test_failure_before_schema_is_available(tmp_path):
     for call in (tools.profile_table, tools.find_duplicates, tools.candidate_key_scan,
                  tools.schema_fingerprint, lambda t: tools.profile_column(t, 'unknown')):
         result = call(table)
-        assert result['parse_status'] == 'FAIL'
-        assert result['errors']
+        assert result['parse_status'] == 'BLOCKED'
+        assert not result['errors']
+        assert result['authorization_outcome']['code'] == 'AUTHORIZATION_REQUIRED'
+        assert result['metrics']['computation_mode'] == 'NOT_COMPUTED'
+        assert result['rows_scanned']['computation_mode'] == 'NOT_COMPUTED'
