@@ -1,0 +1,63 @@
+{
+  "all_utf8_errors": [
+    {
+      "bounded_context_hex": "56455354494d454e544f532047455354c34f204445205245435552534f53204c54",
+      "field_ordinal": 2,
+      "following_hex": "4f204445",
+      "invalid_absolute_offset": 516344,
+      "invalid_hex": "c3",
+      "invalid_record_offset": 34,
+      "line": 6215,
+      "line_start": 516310,
+      "reason": "invalid continuation byte",
+      "record_bytes": 114,
+      "record_sha256": "0204d6e8cca1a45efd0ef5956cfe49766ea7ee5a1e3143e3d5a60a7eaa60591a"
+    }
+  ],
+  "assessment": "B1_SC7_N450_V2",
+  "character_meaning": "UNRESOLVED",
+  "classification_counts": {
+    "FITS_EXISTING_MODEL": 449,
+    "HUMAN_UNRESOLVED": 1
+  },
+  "data_records_byte_framing": 8530,
+  "diagnosis_reference": "runs/n450/src010128-encoding-v1/diagnosis.json",
+  "diagnosis_sha256": "7aeef5d99357cf280a550f9d8086c2c602b4ece055b6955181ed4ca5b7ef445f",
+  "diagnosis_version": "SRC010128_ENCODING_DIAGNOSIS_V1",
+  "eligible_count": 449,
+  "eligible_processing_population_reference": "metadata/evaluations/n450_b1_v1.json#eligible_processing_population",
+  "field_positions_byte_framing": 42650,
+  "frozen_membership_changed": false,
+  "held_source": "SRC010128",
+  "m2_required_by_schema_evidence": false,
+  "native_contract": {
+    "code": "/Users/lightnino/Projects/edp-lab/src/edp_lab/materialization/c300_m1.py",
+    "code_sha256": "cd2b580b56e819dee2e49933a658161ce92675fd4ba5c1abc2f9ffc3a4e1b2ea",
+    "manifest": "/Users/lightnino/Projects/edp-lab/runs/c300-m1/main_recovery_20261021_v4/collected-full/profile_run_manifest.json",
+    "manifest_sha256": "9ea9af81b04b7e9654d93feb4a3bb5c331b42a7d7cdcd5b3f8cadc9b63e80d18"
+  },
+  "native_counterfactual_byte_carrier": {
+    "error": "'utf-8' codec can't decode byte 0xc3 in position 14: invalid continuation byte",
+    "status": "REJECTED_BY_UNCHANGED_M1_VALUE_ORACLE"
+  },
+  "native_utf8_control": {
+    "bytes": 341,
+    "fields_data": 10,
+    "observed_member_sha256": "fa20f8c5f79c769624ab19da18d81e9f1df6dd19d9753d6841f2e26dc2e3cc08",
+    "ordered_record_digest": "ad6f3ba3e7c61c0f055e065b3630cfc54a8affab807bc13bc1063e1c7f867560",
+    "records_data": 2,
+    "records_total": 9
+  },
+  "original_finding_preserved": true,
+  "parser_profile_change": "NONE; existing strict UTF-8 unchanged",
+  "physical_records": 8537,
+  "prior_449_fingerprints_verified_and_reused": true,
+  "prior_449_raw_replayed": false,
+  "prior_assessment_sha256": "69941edfd7b36cffdc7fc53a33c3726f42fa0e2580b4b5b1268cd94fa796aa99",
+  "raw_sha256": "5869c2d2e76ec56302291d7812add9d8cc1a0b9788478050344e40d14927e71d",
+  "raw_unchanged": true,
+  "remaining_decision": "Provide an authoritative source charset/character interpretation, or explicitly approve a versioned opaque-byte transport value contract and its native verifier policy. Current M1 DIRECT_MAP strict UTF-8 text contract does not silently permit that substitution.",
+  "source_instance_id": "SRC010128",
+  "step3_processing_executed": false,
+  "supersedes_assessment_only": "metadata/evaluations/n450_b1_v1.json"
+}
