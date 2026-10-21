@@ -10,8 +10,13 @@ from edp_lab.ingestion import n450_authorization as auth
 from edp_lab.ingestion.universe import ScopeDenied
 
 ROOT = Path(__file__).resolve().parents[2]
+SIDE = json.loads((ROOT / 'metadata/source_universes/historical_cohort_bindings_v1.json').read_bytes())
+HOST_EVIDENCE_AVAILABLE = all((ROOT / path).exists() for path in SIDE['evidence'])
+requires_host_evidence = pytest.mark.skipif(
+    not HOST_EVIDENCE_AVAILABLE, reason='Pinned host-local C300 authority evidence unavailable')
 
 
+@requires_host_evidence
 def test_exact_packet():
     result = auth.validate_packet(ROOT)
     assert result['status'] == 'VALIDATED_NOT_AUTHORIZED'
@@ -20,7 +25,11 @@ def test_exact_packet():
 
 @pytest.mark.parametrize('action', sorted(auth.ACTIONS))
 @pytest.mark.parametrize('cohort', ['N450', 'C750'])
-def test_all_execution_boundaries_closed(action, cohort):
+def test_all_execution_boundaries_closed(action, cohort, monkeypatch):
+    # This unit exercises the missing-installation state, independently of the
+    # real owner-installed pin and separately tested host-local packet evidence.
+    monkeypatch.setattr(auth, 'validate_packet', lambda root: {})
+    monkeypatch.setattr(auth, 'OWNER_GRANT_SHA256', None)
     downstream = Mock()
     with pytest.raises(ScopeDenied, match='OWNER_EXECUTION_GRANT_NOT_INSTALLED'):
         auth.authorize(ROOT, action, [], cohort=cohort)
@@ -30,13 +39,15 @@ def test_all_execution_boundaries_closed(action, cohort):
 
 def test_agent_approval_cannot_install_grant(tmp_path, monkeypatch):
     monkeypatch.setattr(auth, 'validate_packet', lambda root: {})
+    monkeypatch.setattr(auth, 'OWNER_GRANT_SHA256', '0'*64)
     path = tmp_path / auth.OWNER_GRANT_PATH
     path.parent.mkdir(parents=True)
     path.write_text(json.dumps({'status': 'OWNER_APPROVED', 'actions': sorted(auth.ACTIONS)}))
-    with pytest.raises(ScopeDenied, match='OWNER_EXECUTION_GRANT_NOT_INSTALLED'):
+    with pytest.raises(ScopeDenied, match='OWNER_GRANT_PIN_MISMATCH'):
         auth.authorize(tmp_path, 'admission', [])
 
 
+@requires_host_evidence
 def test_changed_packet_rejected(tmp_path, monkeypatch):
     # Use real host context; change only packet location to a damaged copy.
     packet = tmp_path / 'packet'
@@ -52,6 +63,7 @@ def test_remote_notebook_stops_before_contract_or_spark():
         runpy.run_path(str(ROOT / 'notebooks/bronze_nasdaq_listed.py'))
 
 
+@requires_host_evidence
 def test_synthetic_host_grant_positive_and_exact_input_negative(tmp_path, monkeypatch):
     # Synthetic deployment pins only. Real packet and exact complete bindings.
     roster = json.loads((ROOT / auth.PACKET / 'roster.json').read_text())
@@ -91,6 +103,8 @@ def publication_context(tmp_path, monkeypatch):
 
     from edp_lab.ingestion import n450_admission as entry
 
+    if not HOST_EVIDENCE_AVAILABLE:
+        pytest.skip('Pinned host-local C300 authority evidence unavailable')
     side = json.loads(
         (ROOT / 'metadata/source_universes/historical_cohort_bindings_v1.json').read_text())
     paths = [Path(p) for p in side['evidence'] if not Path(p).is_absolute()]
