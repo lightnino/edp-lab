@@ -1,0 +1,14 @@
+{
+  "sha256": {
+    "proposals/n450-v1/REVIEW.md": "805d83b59523d25bb5a9baa2dd728a9335a0cf159f68a82f69f97d3bd722ec1e",
+    "proposals/n450-v1/c750-proposed.json": "f7994d3a4db77c3d16f8f3c805f57bd23755b165b120740b153d97b0d523eee6",
+    "proposals/n450-v1/qualification.json": "656a27c1fc994cb340b9b818ed9eb2adfd2527be79fadda1c2f8ede67949c084",
+    "proposals/n450-v1/remote-live.json": "8b46ce38d970be771ad56bbfd1a86d8eb60438852f3e9b5fe98fa57ac10f844b",
+    "proposals/n450-v1/remote.json": "5f7e4888e1f0b0b9438fb222c7ea47d9d335b5df0f7a852bf0cc45c102080add",
+    "proposals/n450-v1/roster.json": "1567d32bb1db1fedfcf5bafb4538cbbdf4bba06af460c3eb6cb075f590a5a08b",
+    "scripts/propose_n450.py": "dde83d7785188dd3a4285b41abaad8c00586f546640e8d351765ab09ebb9853c",
+    "scripts/verify_n450_proposal_remote.py": "928f3481f270fc924b30788ab45d539af89396a07ad1265ffdca07cb1b23b0ae",
+    "tests/authorization/test_n450_proposal.py": "e902578026c134116ea13fe7267ae17f15e6a6266d3d6ec0741514ce51aecff6"
+  },
+  "status": "AGENT_EVIDENCE_NOT_APPROVAL"
+}

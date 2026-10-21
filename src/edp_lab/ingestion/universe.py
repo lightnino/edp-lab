@@ -233,6 +233,11 @@ def enforce(root, identity, raw_sha256, raw_path, *, cohort=None):
 
 def processing(root, binding, cohort):
     """Host selects fixed run name; no directory discovery or request scope changes."""
+    if cohort in {"N450", "C750"}:
+        from edp_lab.ingestion.n450_authorization import authorize
+
+        enforce(root, binding["source_instance_id"], binding["raw_sha256"], binding["raw_path"])
+        return authorize(root, "processing", [binding], cohort=cohort)
     return enforce(
         root,
         binding["source_instance_id"],
