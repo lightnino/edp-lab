@@ -1,4 +1,5 @@
 """Contract, authority, evidence and replay checks without an Agent runtime."""
+import json
 from dataclasses import asdict, replace
 from pathlib import Path
 
@@ -14,6 +15,7 @@ from edp_lab.tool_adapters import (
     DuplicateParameters,
     EmptyParameters,
     ExecutionScope,
+    ProfilingAdapters,
     SourceRef,
     ToolRequest,
 )
@@ -120,9 +122,10 @@ def test_invalid_column_and_search_limits():
 
 
 @pytest.mark.usefixtures("owner_evidence")
-def test_registered_gold_binding_and_integrity_failure(tmp_path):
+def test_registered_gold_binding_with_historical_raw():
     root = Path(__file__).resolve().parents[2]
     table = read_registered(root, "SRC000002", "nasdaqlisted.txt", provenance={})
+    assert table.authorization_outcome is None
     if any("RAW_UNAVAILABLE" in error for error in table.errors):
         pytest.skip("ENVIRONMENT: historical GOLD RAW absent; authorization passed")
     assert not table.errors
@@ -130,9 +133,25 @@ def test_registered_gold_binding_and_integrity_failure(tmp_path):
     result = adapter.schema_fingerprint(request(adapter, "schema_fingerprint"))
     assert result.status == "SUCCESS"
     assert result.evidence_refs["config"]["freeze_sha256"]
-    failed = read_registered(tmp_path, "SRC000002", "nasdaqlisted.txt", provenance={})
-    adapter = authorized_host({"fixture": failed}, {"tester": {"fixture"}})
-    assert adapter.profile_table(request(adapter)).status == "FAILED"
+
+
+def test_registered_gold_missing_authority_is_blocked(tmp_path):
+    table = read_registered(tmp_path, "SRC000002", "nasdaqlisted.txt", provenance={})
+    assert table.parse_status == "BLOCKED"
+    assert table.authorization_outcome["code"] == "AUTHORIZATION_REQUIRED"
+    assert table.authorization_outcome["reason"] == "MISSING_HOST_AUTHORITY"
+    assert not table.rows and not table.errors
+    assert "raw_sha256" not in table.source
+
+    adapter = ProfilingAdapters({"fixture": table}, {"tester": {"fixture"}})
+    response = adapter.profile_table(request(adapter))
+    assert response.status == "BLOCKED"
+    assert response.approval_required
+    assert response.result is None
+    denial = json.loads(response.errors[0])
+    assert denial["code"] == "AUTHORIZATION_REQUIRED"
+    assert denial["reason"] == "MISSING_HOST_AUTHORITY"
+    assert denial["route"] == "Human Review"
 
 
 def test_host_bindings_are_isolated_from_input_and_response_mutation():

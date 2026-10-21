@@ -147,6 +147,9 @@ upload, or remote job was executed. No historical unauthorized cohort was merged
 
 ## Exact validation commands and coverage
 
+The following Step 5 results predate the final pre-merge test split. The latest
+correction results are recorded separately below.
+
 All commands run in this worktree on 2026-10-21. Interpreter/tool installation is the
 existing read-only `/Users/lightnino/Projects/edp-lab/.venv/bin/`.
 
@@ -226,7 +229,7 @@ the generator was not executed and approved artifacts were not regenerated.
 | `tests/tool_adapters/test_profiling.py::test_failed_scans_preserve_evidence_without_completed_metrics[wrong\n-FAILED-0]` | Missing authorization fixture/context | Explicit synthetic host fixture for in-memory profiling, or exact installed owner/frozen evidence for registry checks. Original assertions retained. | PASS |
 | `tests/tool_adapters/test_profiling.py::test_unresolved_semantics_are_partial_and_evidence_is_retained` | Missing authorization fixture/context | Explicit synthetic host fixture for in-memory profiling, or exact installed owner/frozen evidence for registry checks. Original assertions retained. | PASS |
 | `tests/tool_adapters/test_profiling.py::test_invalid_column_and_search_limits` | Genuine implementation regression | Fixed blanket exception classification: ordinary invalid requests return FAILED; authority-field injection remains BLOCKED. | PASS |
-| `tests/tool_adapters/test_profiling.py::test_registered_gold_binding_and_integrity_failure` | Missing authorization context, then environmental dependency | Host gate installed; positive authorization passes, but original GOLD RAW is absent. Explicit environmental skip; no fidelity or real-RAW PASS claim. | SKIP |
+| `tests/tool_adapters/test_profiling.py::test_registered_gold_binding_and_integrity_failure` | Missing authorization context, then environmental dependency | Split into an independent positive real-RAW test (environmental SKIP) and missing-authority negative test (PASS). No real-RAW fidelity PASS claim. See final pre-merge correction below. | Positive SKIP; negative PASS |
 | `tests/tool_adapters/test_profiling.py::test_host_bindings_are_isolated_from_input_and_response_mutation` | Missing authorization fixture/context | Explicit synthetic host fixture for in-memory profiling, or exact installed owner/frozen evidence for registry checks. Original assertions retained. | PASS |
 | `tests/corpus_invariants/test_c300_admission.py::test_historical_registry_supported` | Missing authorization fixture/context | Explicit synthetic host fixture for in-memory profiling, or exact installed owner/frozen evidence for registry checks. Original assertions retained. | PASS |
 | `tests/corpus_invariants/test_c300_admission.py::test_registry_rejects_historical_rewrite` | Missing authorization fixture/context | Explicit synthetic host fixture for in-memory profiling, or exact installed owner/frozen evidence for registry checks. Original assertions retained. | PASS |
@@ -242,3 +245,47 @@ Day 3 processing. Release is limited to the reviewed local guardrail and existin
 GOLD/C300 scope. Live Databricks behavior and absent real-RAW coverage remain
 UNVERIFIED; historical Day 3–5 and remote processing paths remain excluded until
 guarded and separately approved. These restrictions cannot be cleared by an Agent.
+
+## Final pre-merge test correction
+
+The pre-merge audit found that the environmental skip in the combined
+`test_registered_gold_binding_and_integrity_failure` concealed a latent fixture
+`KeyError`: its missing-authority result has no `raw_sha256`, but `authorized_host`
+requires that field. Only `tests/tool_adapters/test_profiling.py` and this evidence
+document were changed for the correction. Production Guardrail behavior, authority
+artifacts, historical evidence, frozen records and remote protections are unchanged.
+
+- `test_registered_gold_binding_with_historical_raw` retains the real SRC000002 /
+  `nasdaqlisted.txt` positive check and external owner-evidence prerequisite. It
+  explicitly checks that authorization was not denied before reporting the existing
+  environmental skip. The requested file is
+  `/Users/lightnino/Projects/edp-lab-scope-gate/data/raw/nasdaq/nasdaqlisted.txt`.
+  Registry-wide integrity verification encounters missing SRC000001
+  `data/raw/sec/2013q2_form13f.zip` first; all four local GOLD RAW files are absent.
+  These are original-universe GOLD sources, not the 800 outside-universe instances.
+- `test_registered_gold_missing_authority_is_blocked` runs independently with an
+  empty temporary root and no owner-evidence or RAW prerequisite. It invokes the
+  production reader and checks BLOCKED, AUTHORIZATION_REQUIRED,
+  MISSING_HOST_AUTHORITY, zero rows and no parser errors. It then uses the actual
+  `ProfilingAdapters` without host authority and asserts BLOCKED,
+  approval-required, no result, AUTHORIZATION_REQUIRED and Human Review. It does
+  not call `authorized_host`, fabricate a hash, inject authority or bypass the gate.
+  Its missing-authority result is never classified as ordinary parsing FAILED.
+
+Observed local results on 2026-10-21:
+
+```sh
+PYTHONPATH=src /Users/lightnino/Projects/edp-lab/.venv/bin/python -m pytest -q -rs tests/tool_adapters/test_profiling.py
+# 23 passed, 1 skipped; independent negative test PASS
+# Positive real-GOLD test: ENVIRONMENT: historical GOLD RAW absent; authorization passed
+PYTHONPATH=src /Users/lightnino/Projects/edp-lab/.venv/bin/python -m pytest -q -rs --tb=short
+# 295 passed, 23 skipped; zero failures
+/Users/lightnino/Projects/edp-lab/.venv/bin/ruff check .
+# All checks passed
+git diff --check
+# PASS
+```
+
+The independent authorization-denial coverage now executes despite missing real
+RAW. Positive real-GOLD parsing/fidelity remains unverified by this skipped test.
+No RAW was downloaded or regenerated and no processing workload was launched.
