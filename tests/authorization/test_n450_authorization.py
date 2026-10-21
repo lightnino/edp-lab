@@ -227,3 +227,97 @@ def test_admission_rejects_registration_collision(publication_context):
     with pytest.raises(ScopeDenied, match='REGISTRATION_ID_COLLISION'):
         entry.admit(root, n450, root / entry.ADMISSION)
     assert not (root / entry.ADMISSION).exists()
+
+
+@pytest.fixture
+def historical_resolver(tmp_path, monkeypatch):
+    """Synthetic pinned Universe/inventory; exercise the real alias and hash checks."""
+    from edp_lab.ingestion import universe as u
+    from edp_lab.ingestion.c300_admission import csv_bytes
+
+    physical_root = tmp_path / 'shared/data/raw'
+    monkeypatch.setattr(auth, 'HISTORICAL_RAW_ROOT', physical_root)
+    members, bindings, inventory = [], [], []
+    for i in range(300):
+        relative = f'data/raw/test/{i}.raw'
+        path = physical_root / f'test/{i}.raw'
+        path.parent.mkdir(parents=True, exist_ok=True)
+        raw = str(i).encode()
+        path.write_bytes(raw)
+        digest = auth.sha(raw)
+        identity = f'delivery-{i}'
+        members.append({'identity': identity, 'raw_path': str(path),
+                        'raw_sha256': digest, 'holdout': False})
+        bindings.append({'delivery_identity': identity, 'identity': f'SRC{i+1:06d}',
+                         'raw_path': relative, 'raw_sha256': digest})
+        inventory.append({'inventory_id': identity, 'final_path': str(path),
+                          'sha256': digest, 'bytes': str(len(raw))})
+    side = {'universe_manifest_sha256': '', 'bindings': bindings,
+            'cohorts': {'C300': {'identities': [b['identity'] for b in bindings]}}}
+    doc = {'schema': 'SOURCE_UNIVERSE_AUTHORITY_V1', 'universe_version': 'TEST_ONLY',
+           'approval_reference': 'TEST_ONLY', 'inventory_reference': 'inventory.csv',
+           'inventory_sha256': '', 'member_count': 300, 'members': members}
+
+    def install():
+        inv = csv_bytes(tuple(inventory[0]), inventory)
+        (tmp_path / 'inventory.csv').write_bytes(inv)
+        doc['inventory_sha256'] = auth.sha(inv)
+        raw = json.dumps(doc).encode()
+        side['universe_manifest_sha256'] = auth.sha(raw)
+        side_raw = json.dumps(side).encode()
+        monkeypatch.setattr(u, 'BINDINGS_SHA256', auth.sha(side_raw))
+        gate = u.UniverseGate(raw, auth.sha(raw), side_raw)
+        monkeypatch.setattr(auth.UniverseGate, 'load', classmethod(lambda cls, root: gate))
+
+    install()
+    return tmp_path, physical_root, members, bindings, inventory, install
+
+
+def test_historical_resolver_valid_shared_root(historical_resolver):
+    root, _, _, bindings, _, _ = historical_resolver
+    assert not (root / 'data/raw').exists()
+    original = json.dumps(bindings)
+    result = auth.verify_historical_bytes(root)
+    assert result['verified_sources'] == 300
+    assert result['verified_bytes'] == sum(len(str(i)) for i in range(300))
+    assert json.dumps(bindings) == original
+
+
+@pytest.mark.parametrize('failure,reason', [
+    ('wrong_path', 'C300_PHYSICAL_PATH_MISMATCH'),
+    ('traversal', 'UNSAFE_C300_REGISTRY_PATH'),
+    ('absolute_alias', 'UNSAFE_C300_REGISTRY_PATH'),
+    ('wrong_identity', 'INVALID_AUTHORITY'),
+    ('wrong_inventory_path', 'C300_INVENTORY_BINDING_MISMATCH'),
+    ('size', 'C300_RAW_INTEGRITY_MISMATCH'),
+    ('hash', 'C300_RAW_INTEGRITY_MISMATCH'),
+    ('missing', 'INVALID_OR_MISSING_C300_RAW_EVIDENCE'),
+    ('symlink_escape', 'UNSAFE_C300_PHYSICAL_PATH'),
+])
+def test_historical_resolver_fails_closed(historical_resolver, failure, reason):
+    root, physical, members, bindings, inventory, install = historical_resolver
+    path = physical / 'test/0.raw'
+    if failure == 'wrong_path':
+        members[0]['raw_path'] = str(root / 'outside.raw')
+    elif failure == 'traversal':
+        bindings[0]['raw_path'] = 'data/raw/../../outside.raw'
+    elif failure == 'absolute_alias':
+        bindings[0]['raw_path'] = str(path)
+    elif failure == 'wrong_identity':
+        bindings[0]['delivery_identity'] = 'not-authorized'
+    elif failure == 'wrong_inventory_path':
+        inventory[0]['final_path'] = str(root / 'outside.raw')
+    elif failure == 'size':
+        inventory[0]['bytes'] = '123'
+    elif failure == 'hash':
+        path.write_bytes(b'X')  # Same size; content hash must still fail.
+    elif failure == 'missing':
+        path.unlink()
+    elif failure == 'symlink_escape':
+        path.unlink()
+        outside = root / 'outside.raw'
+        outside.write_bytes(b'0')  # Correct bytes cannot authorize an outside locator.
+        path.symlink_to(outside)
+    install()
+    with pytest.raises(ScopeDenied, match=reason):
+        auth.verify_historical_bytes(root)

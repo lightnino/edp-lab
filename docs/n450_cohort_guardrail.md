@@ -134,3 +134,34 @@ Readiness-only validation on 2026-10-21:
 
 No actual worktree admission/freeze was invoked. Universe v1, historical C300,
 RAW, existing freezes and the remote verification packet remain unchanged.
+
+## Historical RAW resolver correction — 2026-10-22
+
+`verify_historical_bytes` now resolves C300 physical files from the pinned Universe
+member selected by the historical delivery identity, independently of the current
+metadata worktree. The original registry-relative alias is preserved and checked
+against its approved C300 binding. Physical paths must equal the trusted host RAW
+root `/Users/lightnino/Projects/edp-lab/data/raw` plus that relative suffix, remain
+contained after resolution, and match the pinned inventory path/hash/size. Traversal,
+wrong identities, missing files and symlink escapes fail closed. All locators are
+validated before hashing; SHA-256, exact size and descriptor metadata stability are
+checked for every source. No caller/environment override or filesystem search exists.
+
+Observed read-only verification: **300/300 PASS**, **7,632,930,175 bytes**. The previous
+0/300 finding described the Day 3 worktree-relative paths, not absent physical RAW.
+This correction does not establish storage immutability.
+
+Focused checks: `pytest -q tests/authorization/test_n450_authorization.py -k
+'historical_resolver or historical_raw_failure'` — **11 passed, 40 deselected**.
+Changed-file Ruff and `git diff --check` pass. All Universe/packet/C300 pins, both
+planned output bundles and the proposed authorization bytes/approved-target digest
+were revalidated unchanged. No Admission/Freeze entrypoint was executed.
+
+The proposed owner record remains an unapproved draft with reproducible output
+commitments. Its `implementation_commit` still names `1b08f4d`; owner review must
+also cover this resolver correction. If the owner requires the record itself to
+name the corrected implementation, regenerate and review the record/pin explicitly;
+do not silently edit or install it. Independent owner approval/host-pin installation,
+Day 2 Exit Check confirmation, explicit timestamp/storage acceptance and fresh
+remote verification remain outstanding. No authorization or historical metadata
+was modified to remove prerequisites.

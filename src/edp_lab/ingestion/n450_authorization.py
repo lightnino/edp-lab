@@ -5,7 +5,9 @@ can supply a pin or approval path. Existing historical consumers remain excluded
 """
 import csv
 import hashlib
+import io
 import json
+import os
 from pathlib import Path
 
 from edp_lab.ingestion.universe import ScopeDenied, UniverseGate, sha
@@ -21,6 +23,8 @@ PINS = {
 OWNER_GRANT_SHA256 = None
 OWNER_GRANT_PATH = Path("metadata/authorizations/n450_execution_v1.json")
 ACTIONS = {"admission", "freeze", "upload", "processing", "remote_processing"}
+# Trusted installation path; never taken from a request or environment override.
+HISTORICAL_RAW_ROOT = Path("/Users/lightnino/Projects/edp-lab/data/raw")
 
 
 def _require(condition, reason):
@@ -144,14 +148,60 @@ def verify_local_bytes(root):
 
 
 def verify_historical_bytes(root):
-    """Current complete C300 hash verification before new freeze publication."""
+    """Resolve exact pinned physical inputs while preserving registry-relative aliases."""
     root = Path(root)
     gate = UniverseGate.load(root)
-    side = json.loads(gate.bindings)
-    for row in side["bindings"]:
-        if row["identity"] in side["cohorts"]["C300"]["identities"]:
-            path = root / row["raw_path"]
-            _require(path.is_file() and not path.is_symlink(), "MISSING_OR_LINKED_C300_RAW")
+    try:
+        doc = gate.document()
+        side = json.loads(gate.bindings)
+        rows = [b for b in side["bindings"]
+                if b["identity"] in side["cohorts"]["C300"]["identities"]]
+        _require(len(rows) == len({b["identity"] for b in rows}) == 300,
+                 "C300_COUNT_MISMATCH")
+        members = {m["identity"]: m for m in doc["members"]}
+        inventory_raw = (root / doc["inventory_reference"]).read_bytes()
+        _require(sha(inventory_raw) == doc["inventory_sha256"], "INVENTORY_HASH_MISMATCH")
+        inventory_rows = list(csv.DictReader(io.StringIO(inventory_raw.decode())))
+        inventory = {r["inventory_id"]: r for r in inventory_rows}
+        _require(len(inventory) == len(inventory_rows), "DUPLICATE_INVENTORY_IDENTITY")
+        checked = []
+        # Check all identities and locators before reading any RAW bytes.
+        for row in rows:
+            relative = Path(row["raw_path"])
+            _require(not relative.is_absolute() and ".." not in relative.parts
+                     and str(relative) == row["raw_path"]
+                     and relative.parts[:2] == ("data", "raw"), "UNSAFE_C300_REGISTRY_PATH")
+            suffix = relative.relative_to("data/raw")
+            member = members[row["delivery_identity"]]
+            path = Path(member["raw_path"])
+            _require(path.is_absolute() and path == HISTORICAL_RAW_ROOT / suffix
+                     and str(path) == member["raw_path"], "C300_PHYSICAL_PATH_MISMATCH")
+            resolved = path.resolve(strict=True)
+            _require(resolved.is_relative_to(HISTORICAL_RAW_ROOT.resolve(strict=True))
+                     and resolved == HISTORICAL_RAW_ROOT.resolve(strict=True) / suffix
+                     and not path.is_symlink() and path.is_file(), "UNSAFE_C300_PHYSICAL_PATH")
+            gate.check(row["identity"], row["raw_sha256"], row["raw_path"], cohort="C300")
+            gate.check(row["delivery_identity"], row["raw_sha256"], str(path))
+            physical = inventory[row["delivery_identity"]]
+            _require(physical["final_path"] == str(path)
+                     and physical["sha256"] == row["raw_sha256"], "C300_INVENTORY_BINDING_MISMATCH")
+            size = int(physical["bytes"])
+            _require(size >= 0, "INVALID_C300_SIZE")
+            checked.append((path, row["raw_sha256"], size))
+        total = 0
+        for path, expected, size in checked:
             with path.open("rb") as stream:
+                before = os.fstat(stream.fileno())
                 actual = hashlib.file_digest(stream, "sha256").hexdigest()
-            _require(actual == row["raw_sha256"], "C300_RAW_INTEGRITY_MISMATCH")
+                after = os.fstat(stream.fileno())
+            _require(before.st_size == after.st_size == size and actual == expected
+                     and (before.st_ino, before.st_mtime_ns, before.st_ctime_ns) ==
+                         (after.st_ino, after.st_mtime_ns, after.st_ctime_ns),
+                     "C300_RAW_INTEGRITY_MISMATCH")
+            total += size
+        return {"verified_sources": len(checked), "verified_bytes": total,
+                "universe": gate.scope_reference()}
+    except (OSError, ValueError, KeyError, TypeError) as exc:
+        if isinstance(exc, ScopeDenied):
+            raise
+        raise ScopeDenied("INVALID_OR_MISSING_C300_RAW_EVIDENCE") from None
