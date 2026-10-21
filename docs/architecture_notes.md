@@ -104,6 +104,21 @@ Example: `C300` = frozen original cohort, `N450` = new records, `C750 = C300 ∪
 
 **Current implementation status:** These are future stability/replay design rules, not automated tests that already exist.
 
+### 8.1 Day 3–5 experiment design — isolate change axes (planned)
+
+Test one variable first, then its interaction with others. Freeze each historical input/output before comparison; do not conflate corpus growth, additive model change, and corrective semantics.
+
+| Model / cohort | C300 (old scope) | C750 (expanded scope) |
+|---|---|---|
+| **M1** | `O_C300_M1` — frozen baseline | `O_C750_M1` — corpus-only growth |
+| **M2 additive** | `O_C300_M2` — old-scope replay | `O_C750_M2` — combined replay |
+
+- **Day 3 — horizontal:** Add authorized N450 to reach C750; keep M1 unchanged. Compare old C300 outputs and validate new/combined scope. Do not start Stability A/B/C until `O_C300_M1` is frozen.
+- **Day 4 — vertical, intentionally exercise additive M2:** On a bounded SEC FSDS `num.txt` scope, add a typed `value_decimal` projection while preserving `lexical_value`, occurrence identity, and provenance. Verify old SQL/amounts remain equivalent and new conversion behavior is correct; replay FIN_001/FIN_002 and Tests A/B/C over the four cells. Expand to C1500 only after the small experiment is understood.
+- **Day 5 — corrective experiment:** Preserve M2, then use FIN_002's parent-equity versus equity-including-NCI distinction as a *controlled negative/repair case*; it is not evidence that approved M1/M2 was wrong. If a genuine model defect is evidenced, version a corrective candidate (M3 if justified), replay affected historical scope, rebuild dependent outputs, and classify intended versus unexpected differences. Expand toward C2000 separately.
+
+Keep source/cohort authorization independent of model approval. Do not introduce new source families, semantic mappings, and corrective logic in the same first test. The normative pass/fail criteria remain in `docs/evaluation_contract.md`.
+
 ## 9. Lineage and provenance
 
 - **Provenance:** The original evidence behind a value — source system, delivery/file, exact source record, raw hash, relevant source time and ingestion context.
