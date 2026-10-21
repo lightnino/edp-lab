@@ -3,9 +3,9 @@ import csv
 import hashlib
 import io
 import json
-from pathlib import Path
 import re
 import subprocess
+from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 LAB = Path('/Users/lightnino/Projects/edp-lab')
@@ -51,7 +51,7 @@ def main():
     assert 'QUALIFIED — OWNER_ATTESTED_PROVENANCE' in incident.decode()
     retained_path = INC / 'docs/incidents/2026-10-21_retained_raw_references.md'
     retained = read(retained_path).decode()
-    outside = re.findall(r'^## (SRC\d+)\n.*?^- RAW SHA-256: `([0-9a-f]{64})`;', retained, re.M | re.S)
+    outside = re.findall(r'^## (SRC\d+)\n.*?^- RAW SHA-256: `([0-9a-f]{64})`;', retained, re.MULTILINE | re.DOTALL)
     assert len(outside) == len({i for i, _ in outside}) == 800
     assert not ({h for _, h in outside} & {r['sha256'] for r in indexed.values()})
     held = {'CFTC_COT', 'ECB_SDMX', 'NYC_TLC_TRIPS', 'ECB_REFERENCE_RATES'}

@@ -1,23 +1,36 @@
 """Host-owned experiment authority. Requests and RAW retention confer no authority.
 
-The deployment pin is deliberately unset until reviewed evidence is installed.
+The deployment pin names the exact owner-approved Universe v1 artifact.
 Changing this pin is a human-reviewed code/configuration deployment, never a tool argument.
 """
+
 import hashlib
 import json
 from dataclasses import dataclass
 from pathlib import Path
 
-AUTHORITY_PATH = Path('metadata/source_universe_authority.json')
-APPROVED_AUTHORITY_SHA256 = None
+AUTHORITY_PATH = Path("metadata/source_universes/approved_v1/manifest.json")
+APPROVED_AUTHORITY_SHA256 = "2198f9bad9c864bf339eff515992526e22efc4230160614a8f86daf3143f463c"
+APPROVAL_SHA256 = "3307ff5c234e20b48a7a2ced6de7c54d504eb475de8ae90d4509cfd49002823d"
+BINDINGS_PATH = Path("metadata/source_universes/historical_cohort_bindings_v1.json")
+BINDINGS_SHA256 = "8ffd02e0322241c5815a629f51a6d9c1590c2baa83231808ac796a450c6f2904"
 
 
 class ScopeDenied(ValueError):
     def __init__(self, reason, **refs):
-        self.outcome = {'status': 'OUT_OF_SCOPE', 'code': 'AUTHORIZATION_REQUIRED',
-                            'decision': 'DENY', 'reason': reason, 'approval_required': True,
-                            'route': 'Human Review', 'evidence_refs': refs}
+        self.outcome = {
+            "status": "OUT_OF_SCOPE",
+            "code": "AUTHORIZATION_REQUIRED",
+            "decision": "DENY",
+            "reason": reason,
+            "approval_required": True,
+            "route": "Human Review",
+            "evidence_refs": refs,
+        }
         super().__init__(json.dumps(self.outcome, sort_keys=True))
+
+    def __str__(self):
+        return json.dumps(self.outcome, sort_keys=True)
 
 
 def sha(raw):
@@ -27,68 +40,189 @@ def sha(raw):
 @dataclass(frozen=True)
 class UniverseGate:
     """Immutable bytes pinned by trusted host, not by Agent-supplied approvals."""
+
     authority: bytes
     fingerprint: str
+    bindings: bytes | None = None
 
     @classmethod
     def load(cls, root):
         try:
             raw = (root / AUTHORITY_PATH).read_bytes()
         except OSError:
-            raise ScopeDenied('MISSING_HOST_AUTHORITY', reference=str(AUTHORITY_PATH)) from None
+            raise ScopeDenied("MISSING_HOST_AUTHORITY", reference=str(AUTHORITY_PATH)) from None
+        if sha(raw) != APPROVED_AUTHORITY_SHA256:
+            raise ScopeDenied("AUTHORITY_PIN_MISMATCH")
+        if (
+            APPROVED_AUTHORITY_SHA256
+            == "2198f9bad9c864bf339eff515992526e22efc4230160614a8f86daf3143f463c"
+        ):
+            try:
+                approval_raw = (root / json.loads(raw)["approval_reference"]).read_bytes()
+                approval = json.loads(approval_raw)
+                if not sha(approval_raw) == APPROVAL_SHA256:
+                    raise ValueError("Invalid authority evidence")
+                if not approval["status"] == "APPROVED":
+                    raise ValueError("Invalid authority evidence")
+                if not approval["manifest_sha256"] == sha(raw):
+                    raise ValueError("Invalid authority evidence")
+                side_raw = (root / BINDINGS_PATH).read_bytes()
+                if not sha(side_raw) == BINDINGS_SHA256:
+                    raise ValueError("Invalid authority evidence")
+                side = json.loads(side_raw)
+                if not side["universe_manifest_sha256"] == sha(raw):
+                    raise ValueError("Invalid authority evidence")
+                if not side["universe_version"] == "1":
+                    raise ValueError("Invalid authority evidence")
+                for path, digest in side["evidence"].items():
+                    if not sha((root / path).read_bytes()) == digest:
+                        raise ValueError("Invalid authority evidence")
+            except (OSError, ValueError, KeyError, AssertionError):
+                raise ScopeDenied("INVALID_OWNER_OR_COHORT_EVIDENCE") from None
+            return cls(raw, APPROVED_AUTHORITY_SHA256, side_raw)
         return cls(raw, APPROVED_AUTHORITY_SHA256)
 
     def document(self):
         if not self.fingerprint or sha(self.authority) != self.fingerprint:
-            raise ScopeDenied('AUTHORITY_PIN_MISMATCH')
+            raise ScopeDenied("AUTHORITY_PIN_MISMATCH")
         try:
             doc = json.loads(self.authority)
-            assert doc['schema'] == 'SOURCE_UNIVERSE_AUTHORITY_V1'
-            assert doc['universe_version'] and doc['approval_reference']
-            assert doc['inventory_reference'] and doc['inventory_sha256']
-            members = doc['members']
-            assert len(members) == doc['member_count']
-            assert len({m['identity'] for m in members}) == len(members)
-            assert all(type(m['holdout']) is bool and m['identity'] and m['raw_path']
-                       and len(m['raw_sha256']) == 64 for m in members)
-            identities = [identity for m in members
-                          for identity in [m['identity'], *[b['identity']
-                                           for b in m.get('bindings', [])]]]
-            assert len(identities) == len(set(identities))
+            if not doc["schema"] == "SOURCE_UNIVERSE_AUTHORITY_V1":
+                raise ValueError("Invalid authority evidence")
+            if not (doc["universe_version"] and doc["approval_reference"]):
+                raise ValueError("Invalid authority evidence")
+            if not (doc["inventory_reference"] and doc["inventory_sha256"]):
+                raise ValueError("Invalid authority evidence")
+            members = doc["members"]
+            if not len(members) == doc["member_count"]:
+                raise ValueError("Invalid authority evidence")
+            if not len({m["identity"] for m in members}) == len(members):
+                raise ValueError("Invalid authority evidence")
+            if not all(
+                type(m["holdout"]) is bool
+                and m["identity"]
+                and m["raw_path"]
+                and (len(m["raw_sha256"]) == 64)
+                for m in members
+            ):
+                raise ValueError("Invalid authority evidence")
+            identities = [
+                identity
+                for m in members
+                for identity in [m["identity"], *[b["identity"] for b in m.get("bindings", [])]]
+            ]
+            if not len(identities) == len(set(identities)):
+                raise ValueError("Invalid authority evidence")
+            if self.bindings is not None:
+                if not sha(self.bindings) == BINDINGS_SHA256:
+                    raise ValueError("Invalid authority evidence")
+                side = json.loads(self.bindings)
+                if not side["universe_manifest_sha256"] == self.fingerprint:
+                    raise ValueError("Invalid authority evidence")
+                indexed = {m["identity"]: m for m in members}
+                for binding in side["bindings"]:
+                    member = indexed[binding["delivery_identity"]]
+                    if not member["raw_sha256"] == binding["raw_sha256"]:
+                        raise ValueError("Invalid authority evidence")
+                    member.setdefault("bindings", []).append(binding)
+                doc["cohorts"] = side["cohorts"]
             return doc
         except (ValueError, KeyError, TypeError, AssertionError):
-            raise ScopeDenied('INVALID_AUTHORITY') from None
+            raise ScopeDenied("INVALID_AUTHORITY") from None
 
     def check(self, identity, raw_sha256, raw_path, *, cohort=None, version=None):
         doc = self.document()
-        refs = {'universe_version': doc['universe_version'], 'authority_sha256': self.fingerprint,
-                    'identity': identity, 'raw_sha256': raw_sha256, 'raw_path': raw_path, 'cohort': cohort}
-        if version is not None and version != doc['universe_version']:
-            raise ScopeDenied('UNIVERSE_VERSION_MISMATCH', **refs)
-        member = next((m for m in doc['members'] if m['identity'] == identity
-                       or any(b['identity'] == identity for b in m.get('bindings', []))), None)
+        refs = {
+            "universe_version": doc["universe_version"],
+            "authority_sha256": self.fingerprint,
+            "identity": identity,
+            "raw_sha256": raw_sha256,
+            "raw_path": raw_path,
+            "cohort": cohort,
+        }
+        if version is not None and version != doc["universe_version"]:
+            raise ScopeDenied("UNIVERSE_VERSION_MISMATCH", **refs)
+        member = next(
+            (
+                m
+                for m in doc["members"]
+                if m["identity"] == identity
+                or any((b["identity"] == identity for b in m.get("bindings", [])))
+            ),
+            None,
+        )
         if member is None:
-            raise ScopeDenied('NOT_IN_APPROVED_UNIVERSE', **refs)
-        paths = [member['raw_path']] if member['identity'] == identity else [
-            b['raw_path'] for b in member.get('bindings', []) if b['identity'] == identity]
-        if member['raw_sha256'] != raw_sha256 or raw_path not in paths:
-            raise ScopeDenied('IDENTITY_EVIDENCE_MISMATCH', **refs)
-        if member['holdout']:
-            raise ScopeDenied('RESERVED_HOLDOUT', **refs)
+            raise ScopeDenied("NOT_IN_APPROVED_UNIVERSE", **refs)
+        paths = ([member["raw_path"]] if member["identity"] == identity else []) + [
+            b["raw_path"] for b in member.get("bindings", []) if b["identity"] == identity
+        ]
+        if member["raw_sha256"] != raw_sha256 or raw_path not in paths:
+            raise ScopeDenied("IDENTITY_EVIDENCE_MISMATCH", **refs)
+        if member["holdout"]:
+            raise ScopeDenied("RESERVED_HOLDOUT", **refs)
         if cohort is not None:
-            roster = doc.get('cohorts', {}).get(cohort)
-            if not roster or identity not in roster['identities']:
-                raise ScopeDenied('NOT_IN_PINNED_COHORT', **refs)
-        return refs
+            roster = doc.get("cohorts", {}).get(cohort)
+            if not roster or not {
+                identity,
+                *[
+                    b["identity"]
+                    for b in member.get("bindings", [])
+                    if member["identity"] == identity
+                ],
+            } & set(roster["identities"]):
+                raise ScopeDenied("NOT_IN_PINNED_COHORT", **refs)
+        return {**refs, "physical_identity": member["identity"]}
+
+    def scope_reference(self):
+        doc = self.document()
+        return {
+            "universe_id": doc.get("universe_id", "TEST_ONLY"),
+            "universe_version": doc["universe_version"],
+            "universe_manifest_sha256": self.fingerprint,
+        }
+
+    def feasibility(self, requested_count, cohort):
+        doc = self.document()
+        roster = doc.get("cohorts", {}).get(cohort, {}).get("identities", [])
+        eligible = set()
+        for member in doc["members"]:
+            if not member["holdout"]:
+                aliases = {member["identity"], *[b["identity"] for b in member.get("bindings", [])]}
+                if aliases & set(roster):
+                    eligible.add(member["identity"])
+        if type(requested_count) is not int or requested_count < 0:
+            raise ScopeDenied("INVALID_REQUESTED_COUNT")
+        if requested_count > len(eligible):
+            denial = ScopeDenied(
+                "INSUFFICIENT_AUTHORIZED_SOURCES",
+                requested_count=requested_count,
+                eligible_authorized_count=len(eligible),
+                cohort=cohort,
+            )
+            denial.outcome["code"] = "INSUFFICIENT_AUTHORIZED_SOURCES"
+            raise denial
+        return len(eligible)
+
+    def validate_inputs(self, bindings, cohort):
+        """Validate the complete explicit input set before any caller opens RAW."""
+        seen = set()
+        for binding in bindings:
+            identity = binding["source_instance_id"]
+            reference = self.check(identity, binding["raw_sha256"], binding["raw_path"], cohort=cohort)
+            physical = reference["physical_identity"]
+            if physical in seen:
+                raise ScopeDenied("DUPLICATE_PHYSICAL_INPUT", identity=identity)
+            seen.add(physical)
+        return self.scope_reference()
 
     def verify_inventory(self, root):
         doc = self.document()
         try:
-            raw = (root / doc['inventory_reference']).read_bytes()
+            raw = (root / doc["inventory_reference"]).read_bytes()
         except OSError:
-            raise ScopeDenied('MISSING_INVENTORY_EVIDENCE') from None
-        if sha(raw) != doc['inventory_sha256']:
-            raise ScopeDenied('INVENTORY_HASH_MISMATCH')
+            raise ScopeDenied("MISSING_INVENTORY_EVIDENCE") from None
+        if sha(raw) != doc["inventory_sha256"]:
+            raise ScopeDenied("INVENTORY_HASH_MISMATCH")
 
 
 def enforce(root, identity, raw_sha256, raw_path, *, cohort=None):
@@ -99,5 +233,10 @@ def enforce(root, identity, raw_sha256, raw_path, *, cohort=None):
 
 def processing(root, binding, cohort):
     """Host selects fixed run name; no directory discovery or request scope changes."""
-    return enforce(root, binding['source_instance_id'], binding['raw_sha256'],
-                   binding['raw_path'], cohort=cohort)
+    return enforce(
+        root,
+        binding["source_instance_id"],
+        binding["raw_sha256"],
+        binding["raw_path"],
+        cohort=cohort,
+    )

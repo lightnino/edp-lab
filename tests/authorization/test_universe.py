@@ -74,7 +74,7 @@ def test_real_entrypoints_missing_authority(tmp_path, operation):
 
 def test_manifest_and_inventory_pins(tmp_path, monkeypatch):
     location = tmp_path/u.AUTHORITY_PATH
-    location.parent.mkdir()
+    location.parent.mkdir(parents=True)
     location.write_bytes(gate().authority)
     with pytest.raises(u.ScopeDenied, match='AUTHORITY_PIN_MISMATCH'):
         u.UniverseGate.load(tmp_path).document()
@@ -150,7 +150,7 @@ def test_c300_read_and_inspect_block_before_parser_or_raw(tmp_path):
 
 def test_actual_processing_with_host_pinned_test_evidence(tmp_path, monkeypatch):
     location = tmp_path/u.AUTHORITY_PATH
-    location.parent.mkdir()
+    location.parent.mkdir(parents=True)
     location.write_bytes(gate().authority)
     (tmp_path/'inventory.csv').write_bytes(b'test inventory')
     monkeypatch.setattr(u, 'APPROVED_AUTHORITY_SHA256', u.sha(location.read_bytes()))

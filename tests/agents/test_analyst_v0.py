@@ -1,11 +1,11 @@
 from copy import deepcopy
 
 import pytest
+from conftest import authorized_host
 
 from edp_lab.agents.analyst_v0 import observe, validate_report
 from edp_lab.agents.checkpoint_v0 import evaluate
 from edp_lab.profiling.source_reader import read_synthetic
-from edp_lab.tool_adapters import ProfilingAdapters
 
 
 def fixture_table():
@@ -16,8 +16,8 @@ def fixture_table():
 
 def test_agent_independent_expectations_replay_and_provenance():
     table = fixture_table()
+    host = authorized_host({'test': table}, {'reader': {'test'}})
     before = deepcopy(table)
-    host = ProfilingAdapters({'test': table}, {'reader': {'test'}})
     report = observe(host, 'test', 'reader', table.columns)
     assert validate_report(report)
     assert report == observe(host, 'test', 'reader', table.columns)
@@ -36,7 +36,7 @@ def test_agent_independent_expectations_replay_and_provenance():
 
 def test_denied_authority_and_tampered_report():
     table = fixture_table()
-    host = ProfilingAdapters({'test': table}, {})
+    host = authorized_host({'test': table}, {})
     report = observe(host, 'test', 'reader', table.columns)
     assert report['execution_status'] == 'BLOCKED'
     assert all(s['response']['result'] is None for s in report['trace'])
@@ -49,7 +49,7 @@ def test_denied_authority_and_tampered_report():
 def test_malformed_source_is_not_completed_population():
     table = read_synthetic(b'id\tvalue\n1\t2\nmalformed\n', delimiter='\t', quote=None,
                            null_tokens=None, expected_header=('id', 'value'), provenance={})
-    host = ProfilingAdapters({'bad': table}, {'reader': {'bad'}})
+    host = authorized_host({'bad': table}, {'reader': {'bad'}})
     report = observe(host, 'bad', 'reader', table.columns)
     assert report['execution_status'] == 'FAILED'
     assert report['tool_statuses'] == ['PARTIAL']
@@ -68,7 +68,7 @@ def test_agent_does_not_write_files_or_open_network(monkeypatch):
     from pathlib import Path
 
     table = fixture_table()
-    host = ProfilingAdapters({'test': table}, {'reader': {'test'}})
+    host = authorized_host({'test': table}, {'reader': {'test'}})
 
     def forbidden(*args, **kwargs):
         raise AssertionError('unexpected side effect')

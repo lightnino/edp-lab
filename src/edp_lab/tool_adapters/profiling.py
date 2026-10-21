@@ -242,9 +242,13 @@ class ProfilingAdapters:
             errors.append(str(exc))
             questions.append("Human Review: propose a separately approved universe/cohort version")
         except (ValueError, TypeError, KeyError, AttributeError) as exc:
-            status, approval = "BLOCKED", True
+            injection = isinstance(value, Mapping) and bool(set(value) & {
+                "approval", "cohort", "universe_version", "universe_id",
+                "universe_manifest_sha256", "universe_gate", "authority"})
+            status, approval = ("BLOCKED", True) if injection else ("FAILED", False)
             errors.append(f"INVALID_REQUEST: {exc}")
-            questions.append("Human Review: request cannot supply or modify host authority")
+            if injection:
+                questions.append("Human Review: request cannot supply or modify host authority")
         evidence = {} if result is None else {
             "source": result["source"], "config": result["config"],
             "provenance": result["provenance"], "profiling_run_id": result["run_id"],
