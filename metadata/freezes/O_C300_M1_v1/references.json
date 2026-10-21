@@ -1,0 +1,139 @@
+{
+  "exit_check": {
+    "authority": "Owner-supplied Day 2 \u00a710, with explicitly accepted scoped outcomes",
+    "requirement_evidence_mapping": [
+      {
+        "evidence": "300 frozen sources; unchanged cohort/v3 hashes",
+        "requirement": "C300 admission and source identity",
+        "status": "PASS"
+      },
+      {
+        "evidence": "732 bindings; 314164116 DATA records; 3577289411 fields; pinned versions 0",
+        "requirement": "M1 CLEAN and QUERYABLE execution",
+        "status": "PASS"
+      },
+      {
+        "evidence": "732 scoped PASS each; historical gate and downstream multiset evidence",
+        "requirement": "Lossless 1\u20135",
+        "status": "PASS"
+      },
+      {
+        "evidence": "FIN_001 2/2 and FIN_002 1/1 exact fixture; other economic fields unmodeled",
+        "requirement": "Lossless 6",
+        "status": "SCOPED_PASS"
+      },
+      {
+        "evidence": "Structural COMPLETE; statistical 304/732 sets,3261/7746 envelopes,0.532% DATA records",
+        "requirement": "Structural and statistical profiling",
+        "status": "PARTIAL_ACCEPTED"
+      },
+      {
+        "evidence": "Measured/derived results in profile_summary_day2.md; missing telemetry retained",
+        "requirement": "Performance",
+        "status": "PARTIAL_ACCEPTED"
+      },
+      {
+        "evidence": "Historical accepted scopes reused; FIN positive/negative comparator; no certification of changed historical generator revisions",
+        "requirement": "Regression",
+        "status": "PASS_FOR_RECORDED_SCOPES"
+      },
+      {
+        "evidence": "11/11 mapped authoritative artifacts verified",
+        "requirement": "Write Tasks",
+        "status": "PASS"
+      },
+      {
+        "evidence": "90-day safeguards and readback PASS; owner accepts Free Edition workspace-loss risk; independent backup waived",
+        "requirement": "Retention, reproduction and owner-approved seal",
+        "status": "PASS_WITH_ACCEPTED_LIMITATIONS"
+      }
+    ],
+    "status": "COMPLETE_WITH_ACCEPTED_PARTIAL_RESULTS"
+  },
+  "financial_evaluation": {
+    "contract": "metadata/evaluations/fin_eval_v1.json",
+    "contract_sha256": "0d8e28289b48bf84eea66d3b69b7a4574971cab73d436bcaed3b4080786e8f34",
+    "replacement_model": false,
+    "retained_evidence": {
+      "bytes": 247454,
+      "retention_protection": "UNVERIFIED; successful readback is not deletion protection",
+      "sha256": "9d0fc256970bf3815a9020bf628c960ee7f601ac6fd03596121ed211b758916d",
+      "status": "RETRIEVED_SHA256_VERIFIED",
+      "uri": "/Volumes/workspace/edp_lab/raw/c300-m1/fin_eval_v1_replay_20261021/fin-eval-v1-evidence.zip"
+    },
+    "status": "SCOPED_PASS",
+    "verification": "runs/c300-m1/fin_eval_v1/replay-2/verification.json"
+  },
+  "historical_baseline_summary_commit": "8d9d310325507c57177f934a39c68a3ba5b9b463",
+  "historical_clean_versions": {
+    "workspace.edp_lab.clean_c300_m1_bindings_main_recovery_20261021_v4_full": 0,
+    "workspace.edp_lab.clean_c300_m1_bindings_num_recovery_20261021_v1_recovery": 0,
+    "workspace.edp_lab.clean_c300_m1_records_main_recovery_20261021_v4_full": 0,
+    "workspace.edp_lab.clean_c300_m1_records_num_recovery_20261021_v1_recovery": 0
+  },
+  "historical_runtime_and_evidence": "metadata/baselines/O_C300_M1.json: completion, retained_input_manifests, combined_bundle_readback, required_export_evidence, closeout_review.supporting_evidence",
+  "model": "M1_LEXICAL_V1",
+  "queryable_definitions": "Saved queryable.json in original runtime manifests and SHOW CREATE/catalog definitions in retained FIN/supporting archives; use pinned version-0 snapshots for replay",
+  "reproduction": "Retrieve archive URIs with databricks fs cp, verify indexed SHA256 before extraction; retain original paths. Run scripts/verify_fin_eval_v1.py against saved replay-2. For SQL replay use saved definitions and pinned version-0 tables, not mutable names alone. Reuse retained original code/runtime/manifests and source hashes. Full disaster recovery is not claimed.",
+  "retention": {
+    "backup": "STOPPED; no files deleted; incomplete local copies excluded from recovery claims",
+    "bytes": 140792,
+    "evidence_uri": "/Volumes/workspace/edp_lab/raw/c300-m1/final_freeze_20261022_v1/final-retention-evidence-v1.zip",
+    "history": "Original version 0 unchanged; version 1 contains only retention property metadata",
+    "limitations": [
+      "Not WORM: privileged owner can change properties, DROP tables or delete Volume files",
+      "RAW, view definitions and evidence remain mutable; workspace loss may destroy retained remote copies",
+      "90-day settings are not indefinite retention or a disaster-recovery guarantee",
+      "Independent checkpoint backup cancelled by owner; full reconstruction after workspace loss NOT_VERIFIED"
+    ],
+    "maintenance": "Review/extend preservation before 2027-01-18 UTC; no destructive VACUUM, overwrite, DROP or baseline writer changes",
+    "owner": "Baseline owner (explicit current conversation authorization)",
+    "predictive_optimization": "DISABLED effective catalog readback, all four tables",
+    "properties": {
+      "delta.appendOnly": "true",
+      "delta.deletedFileRetentionDuration": "interval 90 days",
+      "delta.logRetentionDuration": "interval 90 days"
+    },
+    "raw": "300/300 local parent hashes match frozen manifest; 7632930175 bytes",
+    "readback": "SHA256_MATCH",
+    "sha256": "a541a990643b907334fd24b4fb8fb9d687be99ea1c522d57caf0ad91c23ed75d",
+    "status": "PASS_FOR_OWNER_APPROVED_EXPERIMENTAL_SCOPE",
+    "tables": {
+      "workspace.edp_lab.clean_c300_m1_bindings_main_recovery_20261021_v4_full": {
+        "appendOnly": true,
+        "baseline_version": 0,
+        "readable": "PASS",
+        "retention": "interval 90 days",
+        "scope": "One bounded read per original snapshot; previous full-population integrity evidence reused",
+        "statement_id": "01f1cd6c-cc0b-1a29-a852-d2e7f79c1fa4"
+      },
+      "workspace.edp_lab.clean_c300_m1_bindings_num_recovery_20261021_v1_recovery": {
+        "appendOnly": true,
+        "baseline_version": 0,
+        "readable": "PASS",
+        "retention": "interval 90 days",
+        "scope": "One bounded read per original snapshot; previous full-population integrity evidence reused",
+        "statement_id": "01f1cd6c-d4a9-1f4b-8533-fe942c7e6818"
+      },
+      "workspace.edp_lab.clean_c300_m1_records_main_recovery_20261021_v4_full": {
+        "appendOnly": true,
+        "baseline_version": 0,
+        "readable": "PASS",
+        "retention": "interval 90 days",
+        "scope": "One bounded read per original snapshot; previous full-population integrity evidence reused",
+        "statement_id": "01f1cd6c-d91b-1be7-a7bc-492bfae187eb"
+      },
+      "workspace.edp_lab.clean_c300_m1_records_num_recovery_20261021_v1_recovery": {
+        "appendOnly": true,
+        "baseline_version": 0,
+        "readable": "PASS",
+        "retention": "interval 90 days",
+        "scope": "One bounded read per original snapshot; previous full-population integrity evidence reused",
+        "statement_id": "01f1cd6c-ddbf-15d1-a7d4-a13a5a266c63"
+      }
+    },
+    "verification_scope": "Four bounded original version-0 reads plus unchanged historical full-population integrity evidence and post-protection exact FIN replay; no full recovery"
+  },
+  "rule": "C300_LITERAL_IDENTITY_V1; supplemental NUM rule C300_FSDS_NUM_QUOTE_BOUNDARY_V1",
+  "version": "O_C300_M1_REFERENCES_V1"
+}

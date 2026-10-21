@@ -1,0 +1,25 @@
+{
+  "exit_status": "COMPLETE_WITH_ACCEPTED_PARTIAL_RESULTS",
+  "files": {
+    "docs/c300_num_recovery_authority_v1.md": "2bea99217efa69ed10ce89ad7f37c7a8df4f0fc7691d85130aa6b64994474fad",
+    "docs/day2_c300_m1_readiness_v1.md": "13168d8b1906083a7d19578ea6eef157fd51c1919e0bc6067e12fe76f79ed589",
+    "metadata/cohorts/C300.csv": "f052599a7cfac3b566a236965e2ab163934d4541e7b09e03da98be728c1541e4",
+    "metadata/corpus_manifest_v3.csv": "27ce93f363ebeb234737659e9a411927aed3dd3a674bc8a21b780e05dfdc4bdf",
+    "metadata/evaluations/fin_eval_v1.json": "0d8e28289b48bf84eea66d3b69b7a4574971cab73d436bcaed3b4080786e8f34",
+    "metadata/freezes/O_C300_M1_v1/authorization.json": "fe12bb20cbd69d33934cd42d7e2b79b8638c572349c5b2632ee72c6ce935ec8b",
+    "metadata/freezes/O_C300_M1_v1/references.json": "943a2ccf3c800834608a543671a66835fddcf8ae8c681fc6bbbc0b3365657410",
+    "reports/C300_baseline.md": "9166ee81414ebfe4dee1adc7401b358a8ad2321db16bb04c92232a1e107d286a",
+    "reports/profile_summary_day2.md": "f6737ba1d9a8cbe7613576e50b2a8e1462d976ba780970fce649f4a919c7302c",
+    "sql/reconciliation/fin_eval_v1/FIN_001.sql": "8fff570eb5e233e43c731c2b9c0cb3f8ba9f55ccbce2a58666a919e3245b8058",
+    "sql/reconciliation/fin_eval_v1/FIN_002.sql": "edcb7cd0a137a083682d6b554aa597a53ddfca91f12b2982d7190d590ba89844",
+    "sql/reconciliation/fin_eval_v1/observed_expected_results.csv": "cd9cb0cf91042938833854d5a2b8a48fb3fdf36a60920292c2f670b7123be150"
+  },
+  "frozen_at_utc": "2026-10-21T16:35:32.088787+00:00",
+  "operational_evidence": {
+    "sha256": "a541a990643b907334fd24b4fb8fb9d687be99ea1c522d57caf0ad91c23ed75d",
+    "uri": "/Volumes/workspace/edp_lab/raw/c300-m1/final_freeze_20261022_v1/final-retention-evidence-v1.zip"
+  },
+  "scope": "C300/M1 lexical baseline with FIN_EVAL_V1 scoped evaluations; accepted PARTIAL metrics and Free Edition durability risk",
+  "status": "FROZEN",
+  "version": "O_C300_M1_V1"
+}

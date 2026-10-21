@@ -1,0 +1,615 @@
+{
+  "acceptance": {
+    "bindings": 732,
+    "freeze_status": "NOT_FROZEN",
+    "lossless": {
+      "1": {
+        "PASS": 732
+      },
+      "2": {
+        "PASS": 732
+      },
+      "3": {
+        "PASS": 732
+      },
+      "4": {
+        "PASS": 732
+      },
+      "5": {
+        "PASS": 732
+      },
+      "6": {
+        "NOT_APPLICABLE": 732
+      }
+    },
+    "measure_inventory_positions": 7746,
+    "newly_parsed_bindings": 291,
+    "optional_metrics_not_computed_allowed": true,
+    "physical_instances": 300,
+    "queryable": {
+      "coverage_differences": {},
+      "expected": {
+        "coverage": 732,
+        "fields": 3577289411,
+        "records": 314164116
+      },
+      "field_differences": {},
+      "full_c300_lossless_pass": true,
+      "gate_sha256": "cb9639969f2f1de1ebdedeb10aa548fa7c1ce7d356a1cc5508be4e0a0e82d6fb",
+      "observed": {
+        "coverage": 732,
+        "fields": 3577289411,
+        "records": 314164116
+      },
+      "reconstruction": "Exact downstream multisets equal previously reconstructed pinned CLEAN; all original run_ids preserved",
+      "record_differences": {},
+      "seconds": 23876.297466803,
+      "status": "PASS"
+    },
+    "retention_status": "UNVERIFIED",
+    "reused_bindings": 429,
+    "schema_fingerprints": 732,
+    "status": "ALL_EXECUTION_GATES_VALIDATED_RETENTION_UNVERIFIED",
+    "successful_day2_freeze": false,
+    "witness": {
+      "bindings": 12,
+      "exact_lexical_and_raw_reconstruction": "PASS",
+      "expected_fields": 120,
+      "failure_count": 0,
+      "fields": 120,
+      "gate_sha256": "cb9639969f2f1de1ebdedeb10aa548fa7c1ce7d356a1cc5508be4e0a0e82d6fb",
+      "result_sha256": "d5d8ae37317f9861fb075507f428218bc591e5d3bdce1888a8fa346709dbc9ae",
+      "scope": "One previously captured failure occurrence per gate-approved recovered binding; not a population statistic",
+      "source_occurrences": 12,
+      "statement_id": "01f1cd2f-27da-1626-9e08-52ae2016e0c9",
+      "status": "PASS"
+    }
+  },
+  "artifacts": [
+    {
+      "authority": "metadata/source_inventory.csv; metadata/corpus_manifest_v3.csv; metadata/cohorts/C300.csv; runs/c300-m1/lexical_20261020_v2/source_inventory_projection.csv",
+      "coverage": "Canonical identities/projection reused; C300 semantic meanings UNRESOLVED",
+      "requested": "metadata/source_inventory.csv"
+    },
+    {
+      "authority": "metadata/decision_log.csv",
+      "coverage": "DEC-000006 and approved supplemental rule DEC-000008 preserved; recovery authority in versioned contracts",
+      "requested": "metadata/decision_log.csv"
+    },
+    {
+      "authority": "/Volumes/workspace/edp_lab/raw/c300-m1/reconciled_recovery_20261021_v2/full/schema_fingerprints.parquet",
+      "coverage": "732 verified CLEAN headers; exact frozen ordered text names/types",
+      "requested": "metadata/schema_fingerprints.parquet"
+    },
+    {
+      "authority": "metadata/corpus_manifest.csv; metadata/corpus_manifest_v3.csv",
+      "coverage": "Canonical historical/additive manifests unchanged",
+      "requested": "metadata/corpus_manifest.csv and v3"
+    },
+    {
+      "authority": "metadata/cohorts/C300.csv",
+      "coverage": "Frozen 300 physical instances unchanged",
+      "requested": "metadata/cohorts/C300.csv"
+    },
+    {
+      "authority": "/Volumes/workspace/edp_lab/raw/c300-m1/stats_recovery_20261021_v2/full/table_profiles.parquet",
+      "coverage": "732 outcomes; 304 complete full-binding tool-envelope sets; resource/NULL-dependent limits explicit",
+      "requested": "metadata/table_profiles.parquet"
+    },
+    {
+      "authority": "/Volumes/workspace/edp_lab/raw/c300-m1/stats_recovery_20261021_v2/full/column_profiles.parquet",
+      "coverage": "7746 positions; 3261 full-population column envelopes; other metrics NOT_COMPUTED",
+      "requested": "metadata/column_profiles.parquet"
+    },
+    {
+      "authority": "/Volumes/workspace/edp_lab/raw/c300-m1/day2_completed_recovery_20261021_v1/profile_run_manifest.json",
+      "coverage": "Combined actual code/runtime/inputs/outputs, 732 outcomes, statistics parameters, benchmark, SQL and retention limits",
+      "requested": "metadata/profile_run_manifest.json"
+    },
+    {
+      "authority": "docs/profiling_notes.md",
+      "coverage": "Scope and recovery/metric limitations",
+      "requested": "docs/profiling_notes.md"
+    },
+    {
+      "authority": "reports/profile_summary_day2.md",
+      "coverage": "Original timeout, measured recovery, cost evidence and scaling implications",
+      "requested": "reports/profile_summary_day2.md"
+    },
+    {
+      "authority": "reports/C300_baseline.md",
+      "coverage": "Actual six-test applicability, 732 results, provenance and retention blocker",
+      "requested": "reports/C300_baseline.md"
+    }
+  ],
+  "benchmark_ref": "runs/c300-m1/day2_completed_recovery_20261021_v1/benchmark.json",
+  "benchmark_uri": "/Volumes/workspace/edp_lab/raw/c300-m1/day2_completed_recovery_20261021_v1/benchmark.json",
+  "canonical_metadata_sha256": {
+    "metadata/cohorts/C300.csv": "f052599a7cfac3b566a236965e2ab163934d4541e7b09e03da98be728c1541e4",
+    "metadata/corpus_manifest.csv": "501dcbb85dbeb5fdb59f5866e84e2401285d07594e86b4b34eb2b23a85f22e7f",
+    "metadata/corpus_manifest_v3.csv": "27ce93f363ebeb234737659e9a411927aed3dd3a674bc8a21b780e05dfdc4bdf",
+    "metadata/decision_log.csv": "0a93877f1b8faba6568db6cce171496dbe661a89ed75a20a623694902bf65db8",
+    "metadata/source_inventory.csv": "bcf914b9ba725f3c22c0d44c46549dec0914ce6c591321599073537f492ad548",
+    "runs/section-2-6/discovery-v1/bindings.proposed.json": "cf2b8a5bd81ab2e23bbf5947a47eee9b5eaaa80492e7d0648f2f105308fef083"
+  },
+  "closeout_regression": {
+    "historical_local_test_limitation": "test_actual_c300_membership compares current admission code with historical packet hashes; origin/main changed that code. Frozen packet unchanged; canonical freeze and new RAW hashes pass. Reproduction requires historical code revision.",
+    "timestamp_fix": "DEC-000008/009 UTC +00:00 normalized to equivalent Z per existing schema; no authority/decision change"
+  },
+  "closeout_review": {
+    "freeze_status": "FROZEN",
+    "git_scope": "Day 2 selected deliverables only; preserve 8d9d310 and unrelated work; merge only after CI",
+    "original_checklist": "Owner-supplied Day 2 \u00a710 authoritative",
+    "retrieval_vs_retention": "90-day CLEAN safeguards and bounded readback verified; independent disaster recovery not claimed",
+    "status": "COMPLETE_WITH_ACCEPTED_LIMITATIONS",
+    "supporting_evidence": {
+      "bytes": 367441,
+      "members": {
+        "runs/c300-m1/checkpoint_recovery_20261021_v1/run-verify-terminal.json": "b115caca71b461bd31018de3590ba0723e9d090fa9120c4b60f19ed785afdbf4",
+        "runs/c300-m1/checkpoint_recovery_20261021_v2/run-verify-terminal.json": "07a7097c98d1c7e38d5884f55d9655cde1ff1e9242fe6f0230ea409d229db3e5",
+        "runs/c300-m1/checkpoint_recovery_20261021_v2/verification-completion.json": "f0382edfe32d5692f8fefee7dfe4db8bf75fc877f266a2795dbaa4cd3bc18c11",
+        "runs/c300-m1/closeout-review-v1/artifact-readback.json": "4cf3af2aa4574057521f102aa3c717e917975aa5bf2f94fd8c5f7fea4862eb0c",
+        "runs/c300-m1/closeout-review-v1/clean_c300_m1_bindings_main_recovery_20261021_v4_full-catalog.json": "e9d29e6c892408290fb3239957743b0c965d26c7c3f15349168c93ab9b421530",
+        "runs/c300-m1/closeout-review-v1/clean_c300_m1_bindings_num_recovery_20261021_v1_recovery-catalog.json": "a922b13172c897e57597c148cb683654345421a4257037c5d8322fde24f61fe1",
+        "runs/c300-m1/closeout-review-v1/clean_c300_m1_records_main_recovery_20261021_v4_full-catalog.json": "d1c9e2c5412f4eebecabeeb5eab4396a7c06827debc0fe5d78f10a36f96c366d",
+        "runs/c300-m1/closeout-review-v1/clean_c300_m1_records_num_recovery_20261021_v1_recovery-catalog.json": "0e2a5259080a667f46dd64c9819ba5bdbb69fa05ae81aa501ab4189c0630d289",
+        "runs/c300-m1/closeout-review-v1/q_c300_m1_fields_reconciled_recovery_20261021_v2_full-catalog.json": "58f43575b95ad0f675cc4a5af37ad49797c9d8426ceb2ff5f6cfe03cf5c51d0f",
+        "runs/c300-m1/closeout-review-v1/q_c300_m1_records_reconciled_recovery_20261021_v2_full-catalog.json": "404e561f9dc9c5eae4a8413c6375ba8fe80cbb27673a7e60839f1d9326308fda",
+        "runs/c300-m1/closeout-review-v1/write-task-verification.json": "8afb1a8040a96090f42410372eef6cec50dcc079b7b4d10316a761cbd8014b87",
+        "runs/c300-m1/fin_eval_v1/evidence-readback.json": "718e9f93cdf337b483ef0805d0872c88f1a3ed71939f97aa5f4f0d65e83f78ef",
+        "runs/c300-m1/fin_eval_v1/regression-scope-audit.json": "15fd936ef0521871a5764117a02589df1f0626788db955cc5dbd172527d6e191",
+        "runs/c300-m1/lexical_20261020_v2/source_inventory_projection.csv": "84c8262d15ecd23ac713072d82bd338726eae64f3cdc5ac8cca9adf51ffe8ca3",
+        "runs/c300-m1/lexical_20261020_v3/run-full-terminal.json": "0e272e9f00c798f6b3b04337af89f6712fb2b2e0dfb365df3b261aa4907e19c3",
+        "runs/c300-m1/main_recovery_20261021_v1/run-stage-terminal.json": "89f6fc262262df3101396a8c5dc14af5a71607bbe99a0c8bea7bc042f6ea8c1c",
+        "runs/c300-m1/main_recovery_20261021_v2/run-stage-terminal.json": "69d77429ee24624d3296c805e412e055710cb4655388a03110006401c36d22e3",
+        "runs/c300-m1/main_recovery_20261021_v3/run-stage-terminal.json": "9febeb24eb5fc9c027ebbba2a92eca87a0bcb0182470a2e3ef4ebe2162562dcf",
+        "runs/c300-m1/main_recovery_20261021_v4/billing-final-request-v2.json": "2d757e49ce58603d485d2a6d1a34fcc8cdbe1d03c9419802ef4bebe2fcab96ca",
+        "runs/c300-m1/main_recovery_20261021_v4/billing-final-result.json": "07449c87295c490bc5ec09be83be64423e68fc93e90210df17410d36c77a60dc",
+        "runs/c300-m1/main_recovery_20261021_v4/billing-scope-summary-v1.json": "63ebdeee03a6078d10d64799474e32303b4eaff5622daceab926c2bbd1f1bbf0",
+        "runs/c300-m1/main_recovery_20261021_v4/delta-output-metadata-v2.json": "f6827a75c4b8df40d4d36a4b442fd5b7b7860b427b368f5c43f4d6116cc6a6dd",
+        "runs/c300-m1/main_recovery_20261021_v4/retention-verification-v1.json": "fe510de52bef1e016a268282abb54a566a22f1fa1b952f96a858b90c069b823b",
+        "runs/c300-m1/main_recovery_20261021_v4/run-clean-terminal.json": "766f7c282fcb42d82dd077559472bec8ac352d7dafc4a1ca0a084e18c7d8e62a",
+        "runs/c300-m1/main_recovery_20261021_v4/run-finish-terminal.json": "8608df834ae007e9c2b6b00cde1270edacd07792896e18021f50ef5252c43766",
+        "runs/c300-m1/main_recovery_20261021_v4/run-gate-terminal.json": "5de7135d653dfcc390332058af060c4a20fffab5143fa562990f7003c1424bae",
+        "runs/c300-m1/main_recovery_20261021_v4/run-publish-terminal.json": "abdde93d34901b83bb74b6acda8a36fe2fc900ba5e54510cefcf26df774f1fe8",
+        "runs/c300-m1/main_recovery_20261021_v4/run-query-terminal.json": "4d4c2e419901bb01db97eec909f4010b9f02c9a2441386453d93a7f93ae40a49",
+        "runs/c300-m1/main_recovery_20261021_v4/run-stage-terminal.json": "90fc8ede417bae730457d598a072b7601e41ec63a84eb6d5590c9cca652a6952",
+        "runs/c300-m1/num_recovery_20261021_v1/run-recovery-terminal.json": "aae5284c827eee27c79a1cd4aba862f0b6cf4eac13fd36faa9d8be58c74d90b9",
+        "runs/c300-m1/reconciled_20261021_v2/implementation-validation.json": "5390741f05be921dadd231f13b0f0c4df8ee9796bf01fdef5fd628f78ca580dc",
+        "runs/c300-m1/reconciled_recovery_20261021_v2/group-checkpoint-verification-v1.json": "91df48591088676b4222be878aafc139549878d8d322a1de7fe82437cfc9964a",
+        "runs/c300-m1/reconciled_recovery_20261021_v2/group-checkpoints-readback-v1.json": "119e9635ae851def98e464d762d7ccdf729bab141c81aaad6471ad21d00926ee",
+        "runs/c300-m1/reconciled_recovery_20261021_v2/run-finish-terminal.json": "e79d4e4460899373dca39318185955f089320a8a0203a2d34a7e4031dbcec4fa",
+        "runs/c300-m1/reconciled_recovery_20261021_v2/run-prepare-terminal.json": "55eeef6c27f4e3a0d1991b2b29641e99bfec5d6d2d448218759f81d183efb732",
+        "runs/c300-m1/reconciled_recovery_20261021_v2/run-query-terminal.json": "be8aa9276d3caa3e61c7b556f3cf094470994cd71b886ce7e559e9912c6c8ab7",
+        "runs/c300-m1/reconciled_recovery_20261021_v2/warehouse-witness-request.json": "3cd18d5acfab0c45fc680cf2c3ea0902bd12949a2a6c03e4350748f730be0297",
+        "runs/c300-m1/reconciled_recovery_20261021_v2/warehouse-witness-result.json": "d5d8ae37317f9861fb075507f428218bc591e5d3bdce1888a8fa346709dbc9ae",
+        "runs/c300-m1/reconciled_recovery_20261021_v2/warehouse-witness-validation.json": "44881374c72956cb89fc2b9b71d8eed66058020acd79844e97f3ec6b55f20b1e",
+        "runs/c300-m1/stats_recovery_20261021_v2/run-statistics-terminal.json": "72ebfabad113f10665d7f48f567a324bbd5e1a56d59569efd0fece13be6b8b31",
+        "scripts/replay_fin_eval_v1.py": "d30537bb07fd9f8064aeb238c394a2f700afd2511670a309c0e6e9e4565c4bd0",
+        "scripts/verify_fin_eval_v1.py": "4b728dd0762c4a151c8a03264d0afc0b67cb81675e41e0d45db19788efec43e8"
+      },
+      "retention_protection": "UNVERIFIED",
+      "sha256": "0903bb24047b95e6203eebca6b5af83441f8b94ab4a0b5addc136e9a18367e10",
+      "status": "RETRIEVED_SHA256_VERIFIED",
+      "uri": "/Volumes/workspace/edp_lab/raw/c300-m1/closeout_review_20261021_v1/supporting-evidence-v1.zip"
+    },
+    "write_tasks": {
+      "status": "PASS_FOR_11_MAPPED_DELIVERABLES",
+      "verification_archive_member": "runs/c300-m1/closeout-review-v1/write-task-verification.json"
+    }
+  },
+  "combined_bundle_readback": {
+    "artifacts": {
+      "acceptance.json": {
+        "bytes": 1840,
+        "sha256": "da86b2767ddf757c48419eb758a99ef3b4606c32af1e57ec6094e25143d20776"
+      },
+      "benchmark.json": {
+        "bytes": 36365,
+        "sha256": "eb7ffa608277c30e8b478f01043409a10d2d46fce907a248c62c36d5ec397489"
+      },
+      "performance-finding-metrics-v2.json": {
+        "bytes": 799,
+        "sha256": "5a0efce40d328cb5938c2d14018869f9935fb0bf8e0c98dc4404c2ce3e79822e"
+      },
+      "performance-finding-v2.json": {
+        "bytes": 3527,
+        "sha256": "9f34e7decf4c344650239889c6c269f86b4113caf8a1b245663c2543ce325c81"
+      },
+      "profile_run_manifest.json": {
+        "bytes": 30769,
+        "sha256": "d775ff48f124b9d7fdf631c96d78fe6b716e8ff340b91eb5f6f04e22f2df6b9f"
+      },
+      "reporting-source.py": {
+        "bytes": 36967,
+        "sha256": "76c50cdfed47bd8ac33fcdb6fc47fdeb0ae05ad26eab2e723fcb3b82d5ac235b"
+      }
+    },
+    "ref": "runs/c300-m1/day2_completed_recovery_20261021_v1/retrieval-validation-v1.json",
+    "sha256": "9f5533e4c2f7bc0b89719943e528d7dbc45b3f320ad90041b7ac0363c2140c37",
+    "status": "RETRIEVED_VERIFIED",
+    "uri": "/Volumes/workspace/edp_lab/raw/c300-m1/day2_completed_recovery_20261021_v1/retrieval-validation-v1.json"
+  },
+  "completion": {
+    "clean_validation_seconds": 0,
+    "complete_bindings": 732,
+    "coverage_bindings": 732,
+    "delta_commit_seconds": 0,
+    "eligible_bindings": 732,
+    "failed_bindings": 0,
+    "fields_data": 3577289411,
+    "freeze_status": "NOT_FROZEN",
+    "full_c300_lossless_pass": true,
+    "gate_counts": {
+      "PASS": 732
+    },
+    "lossless": {
+      "1": {
+        "PASS": 732
+      },
+      "2": {
+        "PASS": 732
+      },
+      "3": {
+        "PASS": 732
+      },
+      "4": {
+        "PASS": 732
+      },
+      "5": {
+        "PASS": 732
+      },
+      "6": {
+        "NOT_APPLICABLE": 732
+      }
+    },
+    "mandatory_status": "PASS",
+    "original_blocked_bindings": 12,
+    "phase": "full",
+    "physical_verified": 300,
+    "profiles": {
+      "column_envelopes": 0,
+      "column_rows": 7746,
+      "full_profile_bindings": 0,
+      "table_rows": 732
+    },
+    "query_validation": {
+      "coverage_differences": {},
+      "expected": {
+        "coverage": 732,
+        "fields": 3577289411,
+        "records": 314164116
+      },
+      "field_differences": {},
+      "full_c300_lossless_pass": true,
+      "gate_sha256": "cb9639969f2f1de1ebdedeb10aa548fa7c1ce7d356a1cc5508be4e0a0e82d6fb",
+      "observed": {
+        "coverage": 732,
+        "fields": 3577289411,
+        "records": 314164116
+      },
+      "reconstruction": "Exact downstream multisets equal previously reconstructed pinned CLEAN; all original run_ids preserved",
+      "record_differences": {},
+      "seconds": 23876.297466803,
+      "status": "PASS"
+    },
+    "records_data": 314164116,
+    "retention": "UNVERIFIED",
+    "reuse": "Existing CLEAN tables unchanged; combined SQL uses explicit disjoint UNION ALL",
+    "run_id": "reconciled_recovery_20261021_v2_full",
+    "runtime": {
+      "duckdb": "1.5.0",
+      "peak_rss_platform_units": 2486616,
+      "platform": "Linux-6.1.188-233.386.amzn2023.aarch64-aarch64-with-glibc2.35",
+      "pyarrow": "14.0.1",
+      "python": "3.11.10",
+      "spark": "4.2.0"
+    },
+    "seconds": 10.271971693000012,
+    "selected_bindings": 732,
+    "tables": {
+      "workspace.edp_lab.clean_c300_m1_bindings_main_recovery_20261021_v4_full": 0,
+      "workspace.edp_lab.clean_c300_m1_bindings_num_recovery_20261021_v1_recovery": 0,
+      "workspace.edp_lab.clean_c300_m1_records_main_recovery_20261021_v4_full": 0,
+      "workspace.edp_lab.clean_c300_m1_records_num_recovery_20261021_v1_recovery": 0
+    },
+    "telemetry_unavailable": [
+      "executor peak memory",
+      "DBUs",
+      "CPU/executor time",
+      "spill",
+      "shuffle"
+    ],
+    "timing_scope": "Finalization only; query seconds sum checkpoint task times; actual phase job wall retained separately",
+    "uncompressed_member_bytes": 38399105140
+  },
+  "current_decision_log_sha256": "2209fec2d5e64ae9396f3da914ae4ae2ee5b9c06e09b10dd7daa3f9099fcb871",
+  "exit_check": {
+    "authority": "Owner-supplied Day 2 \u00a710, with explicitly accepted scoped outcomes",
+    "requirement_evidence_mapping": [
+      {
+        "evidence": "300 frozen sources; unchanged cohort/v3 hashes",
+        "requirement": "C300 admission and source identity",
+        "status": "PASS"
+      },
+      {
+        "evidence": "732 bindings; 314164116 DATA records; 3577289411 fields; pinned versions 0",
+        "requirement": "M1 CLEAN and QUERYABLE execution",
+        "status": "PASS"
+      },
+      {
+        "evidence": "732 scoped PASS each; historical gate and downstream multiset evidence",
+        "requirement": "Lossless 1\u20135",
+        "status": "PASS"
+      },
+      {
+        "evidence": "FIN_001 2/2 and FIN_002 1/1 exact fixture; other economic fields unmodeled",
+        "requirement": "Lossless 6",
+        "status": "SCOPED_PASS"
+      },
+      {
+        "evidence": "Structural COMPLETE; statistical 304/732 sets,3261/7746 envelopes,0.532% DATA records",
+        "requirement": "Structural and statistical profiling",
+        "status": "PARTIAL_ACCEPTED"
+      },
+      {
+        "evidence": "Measured/derived results in profile_summary_day2.md; missing telemetry retained",
+        "requirement": "Performance",
+        "status": "PARTIAL_ACCEPTED"
+      },
+      {
+        "evidence": "Historical accepted scopes reused; FIN positive/negative comparator; no certification of changed historical generator revisions",
+        "requirement": "Regression",
+        "status": "PASS_FOR_RECORDED_SCOPES"
+      },
+      {
+        "evidence": "11/11 mapped authoritative artifacts verified",
+        "requirement": "Write Tasks",
+        "status": "PASS"
+      },
+      {
+        "evidence": "90-day safeguards and readback PASS; owner accepts Free Edition workspace-loss risk; independent backup waived",
+        "requirement": "Retention, reproduction and owner-approved seal",
+        "status": "PASS_WITH_ACCEPTED_LIMITATIONS"
+      }
+    ],
+    "status": "COMPLETE_WITH_ACCEPTED_PARTIAL_RESULTS"
+  },
+  "financial_evaluation": {
+    "contract": "metadata/evaluations/fin_eval_v1.json",
+    "contract_sha256": "0d8e28289b48bf84eea66d3b69b7a4574971cab73d436bcaed3b4080786e8f34",
+    "replacement_model": false,
+    "retained_evidence": {
+      "bytes": 247454,
+      "retention_protection": "UNVERIFIED; successful readback is not deletion protection",
+      "sha256": "9d0fc256970bf3815a9020bf628c960ee7f601ac6fd03596121ed211b758916d",
+      "status": "RETRIEVED_SHA256_VERIFIED",
+      "uri": "/Volumes/workspace/edp_lab/raw/c300-m1/fin_eval_v1_replay_20261021/fin-eval-v1-evidence.zip"
+    },
+    "status": "SCOPED_PASS",
+    "verification": "runs/c300-m1/fin_eval_v1/replay-2/verification.json"
+  },
+  "freeze": {
+    "path": "metadata/freezes/O_C300_M1_v1/freeze.json",
+    "sha256": "db710f6152c6ffe33ee2d0371e7dadc8f9ff76e67af3a8e82d807a4c7923542c"
+  },
+  "freeze_status": "FROZEN",
+  "global_day2_pass": false,
+  "historical_snapshots_note": "acceptance/completion retain original pre-seal execution receipts, including historical NOT_FROZEN fields; final status is top-level freeze_status and final seal",
+  "lossless": {
+    "1": {
+      "PASS": 732
+    },
+    "2": {
+      "PASS": 732
+    },
+    "3": {
+      "PASS": 732
+    },
+    "4": {
+      "PASS": 732
+    },
+    "5": {
+      "PASS": 732
+    },
+    "6": {
+      "contexts": 3,
+      "disposition": "SCOPED_PASS",
+      "evaluations": {
+        "FIN_001": "2/2 PASS",
+        "FIN_002": "1/1 PASS"
+      },
+      "historical_lexical_result": "completion.lossless.6 unchanged",
+      "other_fields": "PRESERVED_NOT_MODELED / NOT_APPLICABLE"
+    }
+  },
+  "manifest_ref": "/Volumes/workspace/edp_lab/raw/c300-m1/day2_completed_recovery_20261021_v1/profile_run_manifest.json",
+  "manifest_sha256": "d775ff48f124b9d7fdf631c96d78fe6b716e8ff340b91eb5f6f04e22f2df6b9f",
+  "owner_review": {
+    "baseline_status": "FROZEN_SCOPED",
+    "fin_evidence": "RETRIEVED_SHA256_VERIFIED; mutable Volume durability risk accepted",
+    "freeze_status": "FROZEN",
+    "original_notes": "Owner-supplied Day 2 \u00a710 is authoritative; no further historical search required",
+    "performance": "PARTIAL_MEASUREMENT_COVERAGE",
+    "profiling": "PARTIAL",
+    "regression": "REUSED_ACCEPTED_SCOPES_PLUS_FIN_PASS",
+    "remaining": [],
+    "retention": "PASS_FOR_OWNER_APPROVED_EXPERIMENTAL_SCOPE",
+    "retention_remediation": "Approved safeguards verified; independent recovery waived; workspace-loss risk accepted",
+    "statistical_profiling": {
+      "binding_sets": 304,
+      "bindings": 732,
+      "column_envelopes": 3261,
+      "column_positions": 7746,
+      "covered_data_record_pct": 0.5317599671376855,
+      "covered_data_records": 1670599,
+      "status": "PARTIAL"
+    },
+    "structural_profiling": "COMPLETE",
+    "write_tasks": "PASS_FOR_11_MAPPED_DELIVERABLES"
+  },
+  "performance_finding": "FND-DAY2-PERFORMANCE-TIMEOUT-001",
+  "ready_to_merge": true,
+  "recorded_at_utc": "2026-10-21T16:35:32.088787+00:00",
+  "report_sha256": {
+    "docs/profiling_notes.md": "466a766745a23dfd0e9ee34465c16e8ec3d31219d3bce7e22f7ad07f9e4ed9d0",
+    "reports/C300_baseline.md": "9166ee81414ebfe4dee1adc7401b358a8ad2321db16bb04c92232a1e107d286a",
+    "reports/day2_performance_finding.md": "1537909046e14441a0df46b16bb7fd320aad7597d401d19230104ecb0642ac4b",
+    "reports/profile_summary_day2.md": "f6737ba1d9a8cbe7613576e50b2a8e1462d976ba780970fce649f4a919c7302c"
+  },
+  "required_artifact_verification": {
+    "ref": "runs/c300-m1/day2_completed_recovery_20261021_v1/required-artifact-verification-v1.json",
+    "requested_artifact_count": 11,
+    "sha256": "33c28b09743a4187682d285f3271afd6edb6c614cc21028bc8d182bda7108c43",
+    "status": "RETRIEVED_VERIFIED",
+    "uri": "/Volumes/workspace/edp_lab/raw/c300-m1/day2_completed_recovery_20261021_v1/required-artifact-verification-v1.json"
+  },
+  "required_export_evidence": {
+    "runs/c300-m1/reconciled_recovery_20261021_v2/collected-full/schema_fingerprints.parquet": {
+      "rows": 732,
+      "schema": "binding_sha256: string\nprocessing_status: string\nschema_sha256: string\ncomputation_scope: string",
+      "sha256": "b152a3fe07a7c72c70881d995f8eb6a5a2ad5f6b979684a6feb56fc1e4080177",
+      "uri": "/Volumes/workspace/edp_lab/raw/c300-m1/reconciled_recovery_20261021_v2/full/schema_fingerprints.parquet",
+      "verification": "RETRIEVED_BYTES_SHA256_AND_PARQUET_METADATA"
+    },
+    "runs/c300-m1/stats_recovery_20261021_v2/collected-full/column_profiles.parquet": {
+      "rows": 7746,
+      "schema": "binding_sha256: string\nsource_instance_id: string\nraw_sha256: string\narchive_member: string\nprocessing_status: string\nstatistical_status: string\nreason: string\nrecords_data: int64\nfields_data: int64\nattempt_ref: string\nsampling: string\nfield_ordinal: int64\noriginal_name: string\ncomputation_mode: string\nenvelope_ref: string\nenvelope_sha256: string\nenvelope_json: string",
+      "sha256": "2bad0c2dd894f8f412e2a2bb2346cca387ac0d502affdad8194a1a4e484c5498",
+      "uri": "/Volumes/workspace/edp_lab/raw/c300-m1/stats_recovery_20261021_v2/full/column_profiles.parquet",
+      "verification": "RETRIEVED_BYTES_SHA256_AND_PARQUET_METADATA"
+    },
+    "runs/c300-m1/stats_recovery_20261021_v2/collected-full/table_profiles.parquet": {
+      "rows": 732,
+      "schema": "binding_sha256: string\nsource_instance_id: string\nraw_sha256: string\narchive_member: string\nprocessing_status: string\nstatistical_status: string\nreason: string\nrecords_data: int64\nfields_data: int64\nattempt_ref: string\nsampling: string\nenvelope_ref: string\nenvelope_sha256: string\nenvelope_json: string",
+      "sha256": "d60a6775a6411acd98d98a209d69428ec107897a1b6d30ead834ceb8830e673f",
+      "uri": "/Volumes/workspace/edp_lab/raw/c300-m1/stats_recovery_20261021_v2/full/table_profiles.parquet",
+      "verification": "RETRIEVED_BYTES_SHA256_AND_PARQUET_METADATA"
+    }
+  },
+  "retained_input_manifests": {
+    "runs/c300-m1/checkpoint_recovery_20261021_v2/verification-completion.json": {
+      "archive_member": "runs/c300-m1/checkpoint_recovery_20261021_v2/verification-completion.json",
+      "archive_uri": "/Volumes/workspace/edp_lab/raw/c300-m1/closeout_review_20261021_v1/supporting-evidence-v1.zip",
+      "sha256": "f0382edfe32d5692f8fefee7dfe4db8bf75fc877f266a2795dbaa4cd3bc18c11"
+    },
+    "runs/c300-m1/main_recovery_20261021_v4/billing-final-request-v2.json": {
+      "archive_member": "runs/c300-m1/main_recovery_20261021_v4/billing-final-request-v2.json",
+      "archive_uri": "/Volumes/workspace/edp_lab/raw/c300-m1/closeout_review_20261021_v1/supporting-evidence-v1.zip",
+      "sha256": "2d757e49ce58603d485d2a6d1a34fcc8cdbe1d03c9419802ef4bebe2fcab96ca"
+    },
+    "runs/c300-m1/main_recovery_20261021_v4/billing-final-result.json": {
+      "archive_member": "runs/c300-m1/main_recovery_20261021_v4/billing-final-result.json",
+      "archive_uri": "/Volumes/workspace/edp_lab/raw/c300-m1/closeout_review_20261021_v1/supporting-evidence-v1.zip",
+      "sha256": "07449c87295c490bc5ec09be83be64423e68fc93e90210df17410d36c77a60dc"
+    },
+    "runs/c300-m1/main_recovery_20261021_v4/billing-scope-summary-v1.json": {
+      "archive_member": "runs/c300-m1/main_recovery_20261021_v4/billing-scope-summary-v1.json",
+      "archive_uri": "/Volumes/workspace/edp_lab/raw/c300-m1/closeout_review_20261021_v1/supporting-evidence-v1.zip",
+      "sha256": "63ebdeee03a6078d10d64799474e32303b4eaff5622daceab926c2bbd1f1bbf0"
+    },
+    "runs/c300-m1/main_recovery_20261021_v4/collected-full/profile_run_manifest.json": {
+      "sha256": "9ea9af81b04b7e9654d93feb4a3bb5c331b42a7d7cdcd5b3f8cadc9b63e80d18",
+      "uri": "/Volumes/workspace/edp_lab/raw/c300-m1/main_recovery_20261021_v4/full/profile_run_manifest.json"
+    },
+    "runs/c300-m1/main_recovery_20261021_v4/delta-output-metadata-v2.json": {
+      "archive_member": "runs/c300-m1/main_recovery_20261021_v4/delta-output-metadata-v2.json",
+      "archive_uri": "/Volumes/workspace/edp_lab/raw/c300-m1/closeout_review_20261021_v1/supporting-evidence-v1.zip",
+      "sha256": "f6827a75c4b8df40d4d36a4b442fd5b7b7860b427b368f5c43f4d6116cc6a6dd"
+    },
+    "runs/c300-m1/main_recovery_20261021_v4/retention-verification-v1.json": {
+      "archive_member": "runs/c300-m1/main_recovery_20261021_v4/retention-verification-v1.json",
+      "archive_uri": "/Volumes/workspace/edp_lab/raw/c300-m1/closeout_review_20261021_v1/supporting-evidence-v1.zip",
+      "sha256": "fe510de52bef1e016a268282abb54a566a22f1fa1b952f96a858b90c069b823b"
+    },
+    "runs/c300-m1/num_recovery_20261021_v1/collected-recovery/profile_run_manifest.json": {
+      "sha256": "c565678797a42143be126087e7a24bf99bb4e74c32c2cd5e64d1be00b449baf1",
+      "uri": "/Volumes/workspace/edp_lab/raw/c300-m1/num_recovery_20261021_v1/recovery/profile_run_manifest.json"
+    },
+    "runs/c300-m1/reconciled_recovery_20261021_v2/collected-full/profile_run_manifest.json": {
+      "sha256": "28f09dd4bc20a522600089e98f9ec7042e239e1c80c100b711e9c4525cc07088",
+      "uri": "/Volumes/workspace/edp_lab/raw/c300-m1/reconciled_recovery_20261021_v2/full/profile_run_manifest.json"
+    },
+    "runs/c300-m1/reconciled_recovery_20261021_v2/group-checkpoint-verification-v1.json": {
+      "archive_member": "runs/c300-m1/reconciled_recovery_20261021_v2/group-checkpoint-verification-v1.json",
+      "archive_uri": "/Volumes/workspace/edp_lab/raw/c300-m1/closeout_review_20261021_v1/supporting-evidence-v1.zip",
+      "sha256": "91df48591088676b4222be878aafc139549878d8d322a1de7fe82437cfc9964a"
+    },
+    "runs/c300-m1/reconciled_recovery_20261021_v2/group-checkpoints-readback-v1.json": {
+      "archive_member": "runs/c300-m1/reconciled_recovery_20261021_v2/group-checkpoints-readback-v1.json",
+      "archive_uri": "/Volumes/workspace/edp_lab/raw/c300-m1/closeout_review_20261021_v1/supporting-evidence-v1.zip",
+      "sha256": "119e9635ae851def98e464d762d7ccdf729bab141c81aaad6471ad21d00926ee"
+    },
+    "runs/c300-m1/reconciled_recovery_20261021_v2/warehouse-witness-validation.json": {
+      "archive_member": "runs/c300-m1/reconciled_recovery_20261021_v2/warehouse-witness-validation.json",
+      "archive_uri": "/Volumes/workspace/edp_lab/raw/c300-m1/closeout_review_20261021_v1/supporting-evidence-v1.zip",
+      "sha256": "44881374c72956cb89fc2b9b71d8eed66058020acd79844e97f3ec6b55f20b1e"
+    },
+    "runs/c300-m1/stats_recovery_20261021_v2/collected-full/profile_run_manifest.json": {
+      "sha256": "1bd28f8a15a2fe984e77b5f65e119b58e0690c61a212cdbb6500aaae8cc9642c",
+      "uri": "/Volumes/workspace/edp_lab/raw/c300-m1/stats_recovery_20261021_v2/full/profile_run_manifest.json"
+    }
+  },
+  "retention": {
+    "backup": "STOPPED; no files deleted; incomplete local copies excluded from recovery claims",
+    "bytes": 140792,
+    "evidence_uri": "/Volumes/workspace/edp_lab/raw/c300-m1/final_freeze_20261022_v1/final-retention-evidence-v1.zip",
+    "history": "Original version 0 unchanged; version 1 contains only retention property metadata",
+    "limitations": [
+      "Not WORM: privileged owner can change properties, DROP tables or delete Volume files",
+      "RAW, view definitions and evidence remain mutable; workspace loss may destroy retained remote copies",
+      "90-day settings are not indefinite retention or a disaster-recovery guarantee",
+      "Independent checkpoint backup cancelled by owner; full reconstruction after workspace loss NOT_VERIFIED"
+    ],
+    "maintenance": "Review/extend preservation before 2027-01-18 UTC; no destructive VACUUM, overwrite, DROP or baseline writer changes",
+    "owner": "Baseline owner (explicit current conversation authorization)",
+    "predictive_optimization": "DISABLED effective catalog readback, all four tables",
+    "properties": {
+      "delta.appendOnly": "true",
+      "delta.deletedFileRetentionDuration": "interval 90 days",
+      "delta.logRetentionDuration": "interval 90 days"
+    },
+    "raw": "300/300 local parent hashes match frozen manifest; 7632930175 bytes",
+    "readback": "SHA256_MATCH",
+    "sha256": "a541a990643b907334fd24b4fb8fb9d687be99ea1c522d57caf0ad91c23ed75d",
+    "status": "PASS_FOR_OWNER_APPROVED_EXPERIMENTAL_SCOPE",
+    "tables": {
+      "workspace.edp_lab.clean_c300_m1_bindings_main_recovery_20261021_v4_full": {
+        "appendOnly": true,
+        "baseline_version": 0,
+        "readable": "PASS",
+        "retention": "interval 90 days",
+        "scope": "One bounded read per original snapshot; previous full-population integrity evidence reused",
+        "statement_id": "01f1cd6c-cc0b-1a29-a852-d2e7f79c1fa4"
+      },
+      "workspace.edp_lab.clean_c300_m1_bindings_num_recovery_20261021_v1_recovery": {
+        "appendOnly": true,
+        "baseline_version": 0,
+        "readable": "PASS",
+        "retention": "interval 90 days",
+        "scope": "One bounded read per original snapshot; previous full-population integrity evidence reused",
+        "statement_id": "01f1cd6c-d4a9-1f4b-8533-fe942c7e6818"
+      },
+      "workspace.edp_lab.clean_c300_m1_records_main_recovery_20261021_v4_full": {
+        "appendOnly": true,
+        "baseline_version": 0,
+        "readable": "PASS",
+        "retention": "interval 90 days",
+        "scope": "One bounded read per original snapshot; previous full-population integrity evidence reused",
+        "statement_id": "01f1cd6c-d91b-1be7-a7bc-492bfae187eb"
+      },
+      "workspace.edp_lab.clean_c300_m1_records_num_recovery_20261021_v1_recovery": {
+        "appendOnly": true,
+        "baseline_version": 0,
+        "readable": "PASS",
+        "retention": "interval 90 days",
+        "scope": "One bounded read per original snapshot; previous full-population integrity evidence reused",
+        "statement_id": "01f1cd6c-ddbf-15d1-a7d4-a13a5a266c63"
+      }
+    },
+    "verification_scope": "Four bounded original version-0 reads plus unchanged historical full-population integrity evidence and post-protection exact FIN replay; no full recovery"
+  },
+  "retention_status": "PASS_FOR_OWNER_APPROVED_EXPERIMENTAL_SCOPE",
+  "status": "FROZEN_SCOPED_OWNER_APPROVED",
+  "version": "C300_M1_BASELINE_SUMMARY_V1"
+}

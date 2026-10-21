@@ -66,3 +66,23 @@ Log evidence requirement remains pending access to that text. If it explicitly
 requires new records, Human Review must decide whether linked historical evidence
 suffices or authorize present-day records with actual recording time and known
 approval provenance. Do not backdate them.
+
+## C300 M1 execution
+
+DEC-000006 records explicit user authority for lexical M1 and gated QUERYABLE
+publication. See [authority](day2_c300_m1_authority.md). Supplemental NUM quote
+boundary rules remain proposed in [triage](c300_num_exception_triage_v1.md).
+
+DEC-000007 is a PROPOSED supplemental NUM quote-boundary rule supported by bounded
+witness evidence. It is not an approval; all twelve affected bindings remain
+BLOCKED pending an actual human decision and subsequent strict validation.
+
+DEC-000008 records the user’s explicit approval of DEC-000007; see [supplemental authority](c300_num_recovery_authority_v1.md). Original proposal history remains intact.
+
+DEC-000009 records explicit user approval of FIN_EVAL_V1 as a scoped read-only
+evaluation overlay; see `metadata/evaluations/fin_eval_v1.json`. M1 and the
+historical lexical Lossless results remain unchanged. Final freeze is withheld.
+
+The final closeout instruction now authorizes a selected local Day 2 commit. This
+supersedes only earlier no-commit instructions; final freeze still requires verified
+retention and explicit owner approval. No new semantic decision is recorded.
