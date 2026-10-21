@@ -132,6 +132,10 @@
     "metadata/source_inventory.csv": "bcf914b9ba725f3c22c0d44c46549dec0914ce6c591321599073537f492ad548",
     "runs/section-2-6/discovery-v1/bindings.proposed.json": "cf2b8a5bd81ab2e23bbf5947a47eee9b5eaaa80492e7d0648f2f105308fef083"
   },
+  "closeout_regression": {
+    "historical_local_test_limitation": "test_actual_c300_membership compares current admission code with historical packet hashes; origin/main changed that code. Frozen packet unchanged; canonical freeze and new RAW hashes pass. Reproduction requires historical code revision.",
+    "timestamp_fix": "DEC-000008/009 UTC +00:00 normalized to equivalent Z per existing schema; no authority/decision change"
+  },
   "closeout_review": {
     "freeze_status": "FROZEN",
     "git_scope": "Day 2 selected deliverables only; preserve 8d9d310 and unrelated work; merge only after CI",
@@ -319,7 +323,7 @@
     "timing_scope": "Finalization only; query seconds sum checkpoint task times; actual phase job wall retained separately",
     "uncompressed_member_bytes": 38399105140
   },
-  "current_decision_log_sha256": "9f1ca232f71828168922a693b6d17c99cd6a297e8c620b3aadbfb9b317d8c55d",
+  "current_decision_log_sha256": "2209fec2d5e64ae9396f3da914ae4ae2ee5b9c06e09b10dd7daa3f9099fcb871",
   "exit_check": {
     "authority": "Owner-supplied Day 2 \u00a710, with explicitly accepted scoped outcomes",
     "requirement_evidence_mapping": [
