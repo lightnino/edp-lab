@@ -4,6 +4,8 @@ import hashlib
 import json
 from pathlib import Path
 
+from edp_lab.ingestion.universe import UniverseGate, processing
+
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "runs/databricks-native-v1"
 
@@ -18,6 +20,7 @@ def save(name, value):
 
 
 def main():
+    UniverseGate.load(ROOT).verify_inventory(ROOT)
     OUT.mkdir(parents=True, exist_ok=True)
     verified = {}
     for version in (1, 2):
@@ -52,6 +55,7 @@ def main():
     registry = list(csv.DictReader((ROOT / "metadata/gold_set_logical_tables_v2.csv").open()))
     binding = next(r for r in registry if r["source_instance_id"] == "SRC000002")
     assert binding["logical_table_name"] == "nasdaqlisted.txt"
+    processing(ROOT, binding, "GOLD_V2")
     raw = ROOT / binding["raw_path"]
     assert sha(raw) == binding["raw_sha256"]
     evidence = json.loads((gold.parent / "SRC000002_nasdaqlisted.txt.json").read_bytes())

@@ -1,0 +1,27 @@
+{
+  "approval_path": "metadata/source_universes/approved_v1/owner_authorization.json",
+  "approval_sha256": "3307ff5c234e20b48a7a2ced6de7c54d504eb475de8ae90d4509cfd49002823d",
+  "assertion_author": "AGENT",
+  "checks": {
+    "active_authority_absent": true,
+    "approval_digest_matches_manifest": true,
+    "approval_reference_resolves": true,
+    "deployment_pin_unset": true,
+    "exact_owner_approved_digest": true,
+    "manifest_bytes_preserved": true,
+    "member_count": 3021,
+    "outside_universe_policy_count": 800,
+    "owner_approval_status": "APPROVED",
+    "owner_attested_sec_bulk_members": 2,
+    "prior_verification_digest_matches": true,
+    "reserved_holdouts": 41,
+    "unique_member_count": 3021
+  },
+  "limits": "Artifact and approval linkage verified locally. Prior preparation evidence preserved; no repeated source inventory or RAW scan. No admission, freeze, parser execution, processing, activation, network call or Step 5 execution.",
+  "manifest_path": "metadata/source_universes/approved_v1/manifest.json",
+  "manifest_sha256": "2198f9bad9c864bf339eff515992526e22efc4230160614a8f86daf3143f463c",
+  "preparation_verification_sha256": "46dcde3721274cd53b50d5bca2f58729cfc8646ce8e969ee79d0ac1c21f1b364",
+  "schema": "SOURCE_UNIVERSE_APPROVAL_VERIFICATION_V1",
+  "status": "PASS",
+  "verified_on": "2026-10-21"
+}

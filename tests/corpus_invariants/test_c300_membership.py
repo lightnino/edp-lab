@@ -19,6 +19,7 @@ def test_actual_c300_membership():
     assert result['freeze'] == 'FROZEN'
 
 
+@pytest.mark.usefixtures("owner_evidence")
 def test_canonical_c300_metadata_without_raw():
     result = verify_persisted_freeze(ROOT)
     assert result['members'] == 300
