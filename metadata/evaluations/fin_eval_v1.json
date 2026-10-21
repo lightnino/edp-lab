@@ -1,0 +1,65 @@
+{
+  "evaluation_version": "FIN_EVAL_V1",
+  "attached_model": "M1_LEXICAL_V1",
+  "replacement_model": false,
+  "authority": "Explicit user instruction 2026-10-21 and supplied Study Notes",
+  "disposition": "DERIVED_RECOMPUTE / RECONCILE_EXACT",
+  "numeric_type": "DECIMAL(38,4)",
+  "tolerance": "0",
+  "source_instance_id": "SRC000055",
+  "binding_sha256": "341ce895a89fe164c1cc14af2679aa0b4637f593c6887e5c4d3a74bc49bbebcd",
+  "run_id": "main_recovery_20261021_v4_full",
+  "rule_version": "C300_LITERAL_IDENTITY_V1",
+  "dimensions": {
+    "taxonomy": "us-gaap/2023",
+    "qtrs": "0",
+    "uom": "USD",
+    "segments": "",
+    "coreg": ""
+  },
+  "required_tag_cardinality": {
+    "FIN_001_V1": 4,
+    "FIN_002_V1": 5
+  },
+  "scope": "3 filing/date contexts only; other economic fields PRESERVED_NOT_MODELED",
+  "files": {
+    "sql/reconciliation/fin_eval_v1/observed_expected_results.csv": "cd9cb0cf91042938833854d5a2b8a48fb3fdf36a60920292c2f670b7123be150",
+    "sql/reconciliation/fin_eval_v1/FIN_002.sql": "edcb7cd0a137a083682d6b554aa597a53ddfca91f12b2982d7190d590ba89844",
+    "sql/reconciliation/fin_eval_v1/FIN_001.sql": "8fff570eb5e233e43c731c2b9c0cb3f8ba9f55ccbce2a58666a919e3245b8058"
+  },
+  "expected_results": "sql/reconciliation/fin_eval_v1/observed_expected_results.csv",
+  "evidence_directory": "runs/c300-m1/fin_eval_v1",
+  "freeze_status": "NOT_FROZEN",
+  "status": "SCOPED_PASS",
+  "results": {
+    "FIN_001": "2/2 PASS",
+    "FIN_002": "1/1 PASS; wrong-equity difference 1232700000.0000 detected"
+  },
+  "statement_ids": {
+    "FIN_001": "01f1cd5b-63b5-15bf-8ec4-e4dbf8e5d462",
+    "FIN_002": "01f1cd5b-6d50-1df0-98bc-50ce45dfac44"
+  },
+  "warehouse_id": "589e80595c7c8cb8",
+  "source_raw_sha256": "f075d721dde4393dabd49c1746578294ada4665ec29c85c2b3184f44f6f09187",
+  "source_member_sha256": "ebc8e2b055f893e56a4ce431ee16ef314d6be7c891e3791ae31afcaec635ba0c",
+  "snapshot_versions": {
+    "workspace.edp_lab.clean_c300_m1_bindings_main_recovery_20261021_v4_full": 0,
+    "workspace.edp_lab.clean_c300_m1_bindings_num_recovery_20261021_v1_recovery": 0,
+    "workspace.edp_lab.clean_c300_m1_records_main_recovery_20261021_v4_full": 0,
+    "workspace.edp_lab.clean_c300_m1_records_num_recovery_20261021_v1_recovery": 0
+  },
+  "evidence": {
+    "status": "RETRIEVED_SHA256_VERIFIED",
+    "uri": "/Volumes/workspace/edp_lab/raw/c300-m1/fin_eval_v1_replay_20261021/fin-eval-v1-evidence.zip",
+    "bytes": 247454,
+    "sha256": "9d0fc256970bf3815a9020bf628c960ee7f601ac6fd03596121ed211b758916d",
+    "retention_protection": "UNVERIFIED; successful readback is not deletion protection"
+  },
+  "verification_sha256": "f9fac46a6a60f1cc21e7316f04fa554d2a6b0a0abadce5d2c5cf7d5c8af6c4a9",
+  "authority_document": {
+    "sha256": "25808fe66f1eb7cf3c45a81c5bb9f2de057b0281f128626d8d32242c77136aec",
+    "archive_uri": "/Volumes/workspace/edp_lab/raw/c300-m1/fin_eval_v1_replay_20261021/fin-eval-v1-evidence.zip",
+    "archive_member": "sql/reconciliation/fin_eval_v1/Day2_FIN_Evaluation_Study_Notes.md",
+    "git_delivery": "Personal Study Notes excluded; retained in original FIN evidence archive"
+  }
+}
