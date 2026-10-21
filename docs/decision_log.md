@@ -89,12 +89,13 @@ retention and explicit owner approval. No new semantic decision is recorded.
 
 ## SRC010128 source-specific encoding approval (Day 3 / N450)
 
-DEC-000010 records the owner's explicit Option B decision: a reversible,
+DEC-000010 records the owner's explicit selection of Option B over
+Option A (quarantine). The [source-specific encoding decision](src010128_encoding_exception.md)
+contains the full A/B alternatives, advantages/costs, decision criteria,
+why B was chosen, supporting byte/name evidence, explicit limits, and the
+conditions that send the record back to quarantine. This is a reversible,
 source-and-field-specific ISO-8859-1 interpretation for the single reported
-`0xC3` byte in `SRC010128` Company Name. The full diagnosis, original
-RAW SHA-256/locator, external CVM/ANBIMA name references, and the strict
-parser/verifier/Lossless acceptance conditions are in
-[the encoding-exception decision](src010128_encoding_exception.md).
+`0xC3` byte in `SRC010128` Company Name, not a global encoding rule.
 
 **APPROVED is interpretation authority, not implementation success.**
 Preserve the initial HUMAN_UNRESOLVED finding and immutable RAW.
