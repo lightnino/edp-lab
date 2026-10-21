@@ -1,0 +1,29 @@
+[
+  {
+    "cohort": "C750",
+    "historical_clean_queryable": "NOT_ESTABLISHED_BY_THIS_SUMMARY",
+    "historical_m1": "DEFERRED_PENDING_ACCEPTED_DAY2_M1_BASELINE",
+    "historical_processing_jobs": 0,
+    "retained_800_members": 50,
+    "status": "HISTORICAL_UNACCEPTED",
+    "structural_completion": "/Users/lightnino/Projects/edp-lab-day3/runs/n450/structural-v1/completion.json"
+  },
+  {
+    "cohort": "C1500",
+    "historical_clean_queryable": "NOT_RUN",
+    "historical_m1": "NOT_RUN_DEPENDENCY_BOUNDARY",
+    "historical_processing_jobs": 0,
+    "retained_800_members": 300,
+    "status": "HISTORICAL_UNACCEPTED",
+    "structural_completion": "/Users/lightnino/Projects/edp-lab-day4/runs/n750/structural-v1/completion.json"
+  },
+  {
+    "cohort": "C2000",
+    "historical_clean_queryable": "NOT_RUN",
+    "historical_m1": "NOT_RUN_DEPENDENCY_BOUNDARY",
+    "historical_processing_jobs": 0,
+    "retained_800_members": 800,
+    "status": "HISTORICAL_UNACCEPTED",
+    "structural_completion": "/Users/lightnino/Projects/edp-lab-day5/runs/n500/structural-v1/completion.json"
+  }
+]

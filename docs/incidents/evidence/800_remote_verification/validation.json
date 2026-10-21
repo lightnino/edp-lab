@@ -1,0 +1,15 @@
+{
+  "bytes": 79225793,
+  "c300_excluded": 800,
+  "checks": "Unique coverage, current-byte hashes, byte sums, timestamp order, exclusions, input hashes, artifact hashes",
+  "hash_match": 800,
+  "hash_mismatch": 0,
+  "hash_not_checked": 0,
+  "holdouts_excluded": 41,
+  "integrity_status": "PASS",
+  "objects": 800,
+  "present": 800,
+  "size_match": 800,
+  "status": "PASS",
+  "universe_excluded": 800
+}

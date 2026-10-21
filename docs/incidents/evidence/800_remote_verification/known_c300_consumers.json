@@ -1,0 +1,27 @@
+{
+  "completion_status": "MAIN_720_COMPLETE_VALIDATED",
+  "contract": "/Users/lightnino/Projects/edp-lab/runs/c300-m1/main_recovery_20261021_v4/contract.json",
+  "current_live_status": "UNVERIFIED",
+  "freeze_status": "NOT_FROZEN",
+  "jobs": {
+    "clean": 246744902888746,
+    "finish": 281723002176292,
+    "gate": 1023109119094548,
+    "publish": 1020644587126998,
+    "query": 1124391195675962,
+    "stage": 758804395366009
+  },
+  "physical_count": 300,
+  "physical_evidence": "/Users/lightnino/Projects/edp-lab/runs/c300-m1/main_recovery_20261021_v4/collected-full/physical.json",
+  "queryable_views": [
+    "q_c300_m1_coverage_main_recovery_20261021_v4_full",
+    "q_c300_m1_fields_main_recovery_20261021_v4_full",
+    "q_c300_m1_records_main_recovery_20261021_v4_full"
+  ],
+  "retained_800_intersection": 0,
+  "scope": "Historical local retained evidence only; not live catalog certification",
+  "tables": {
+    "workspace.edp_lab.clean_c300_m1_bindings_main_recovery_20261021_v4_full": 0,
+    "workspace.edp_lab.clean_c300_m1_records_main_recovery_20261021_v4_full": 0
+  }
+}

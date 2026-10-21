@@ -1,0 +1,14 @@
+{
+  "at": "2026-10-21T10:53:49.170365+00:00",
+  "max_payload_bytes": 1360321,
+  "objects": [
+    "SRC001586",
+    "SRC001753",
+    "SRC001777",
+    "SRC001958",
+    "SRC001963",
+    "SRC001980",
+    "SRC001983"
+  ],
+  "reason": "First response incomplete/error; bounded isolated retry"
+}

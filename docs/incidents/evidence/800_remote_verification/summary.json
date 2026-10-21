@@ -1,0 +1,16 @@
+{
+  "completed_at": "2026-10-21T10:54:15.429741+00:00",
+  "first_attempt_partial_bytes": 688128,
+  "hashes": {
+    "HASH_MATCH": 800
+  },
+  "listed_bytes": 79225793,
+  "objects": 800,
+  "payload_bytes_all_attempts": 79913921,
+  "presence": {
+    "PRESENT": 800
+  },
+  "read_bytes": 79225793,
+  "retry_objects": 7,
+  "size_matches": 800
+}
