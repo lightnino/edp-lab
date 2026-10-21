@@ -9,10 +9,10 @@
 **Decision (experiment owner):** Option 2 — preserve original 3,021 authorized-universe snapshot; exclude the 800 outside-scope instances from the current experiment through logical rollback, without deleting physical RAW.
 **Remediation state:** IMPLEMENTED for documented local execution paths; Guardrail [PR #17](https://github.com/lightnino/edp-lab/pull/17) merged as `2988c62ce7e8a92547224e8212ed74f1cec2bc94` at `2026-10-21T11:50:59Z` (19:50:59 UTC+08:00). Existing C750/C1500/C2000 freezes are historical execution evidence, not accepted scope-compliant experiment baselines.
 **Retention decision:** RETAIN ALL 800 RAW objects (local and Databricks) for audit, legitimate future source-onboarding proposals and subsequent approved experiments. No deletion workflow planned.
-**Day 2:** Separate C300/M1 workstream. Historical reported checkpoint: 21/32 reconciliation groups PASS, 3 running, 8 pending, zero failures, controller PID 72896 alive, optional statistics complete (2026-10-21 16:26 Shanghai/SGT). This is a historical checkpoint, **not** a live-status assertion. Full data validation has separately been reported successful; retained completion evidence records `MAIN_720_COMPLETE_VALIDATED` and `NOT_FROZEN` (§13). O_C300_M1 baseline retention/freeze acceptance is DEFERRED TO DAY 2 and is not an incident closure prerequisite. Do not touch its worktree, jobs, controller or checkpoints.
+**Day 2 / C300:** The accepted C300 population remained separate from the historical Day 3–5 scope expansion; original source identity/path/hash compatibility is 300/300. Day 2 processing and baseline operations are not part of this incident remediation.
 
 **Publication:** Original report published in [PR #15](https://github.com/lightnino/edp-lab/pull/15), initial anchor `05854c25dfc7554e5f596b346b489ec304c80a97`; final incident status and evidence summary updated in this document on `main`. Owner closure approval is separately documented at the linked GitHub [approval comment](https://github.com/lightnino/edp-lab/pull/18#issuecomment-6315368530).
-**Evidence basis:** Original owner-supplied Codex audit and Day 3–5 summaries, the bounded local governance audit (§13), committed Steps 2–5 evidence, GitHub PR #17 metadata, and the owner-supplied pre-merge execution-isolation audit. Coverage and evidentiary limits are explicit below.
+**Evidence basis:** Original read-only investigation, owner decisions, immutable inventory/cohort evidence, approved Universe v1, Step 2/4 verification, merged Guardrail PR #17 and bounded execution audit (§§8, 11–13).
 
 ## 1. Intended versus observed scope
 
@@ -94,37 +94,24 @@ Source-family permission is not instance-level authorization: even Treasury, a p
 
 The incident does **not** prove that downstream CLEAN/QUERYABLE processed the 800 or that production data was exposed. The supplied summaries only establish admission, RAW upload, remote readback and structural profiling for Day 3–5 increments. Investigate actual dependencies before changing storage.
 
-## 5. Decision and remediation — OPTION 2 IMPLEMENTED WITH BOUNDED COVERAGE
+## 5. Decision and remediation — Option 2 implemented
 
-### Approved choice — Option 2: return to original authorized 3,021 Source Universe
+### Option 2: restore the original authorized universe
 
-On 2026-10-21 the experiment owner selected **Option 2, logical rollback first**. The current experiment must draw members only from the original, pinned 3,021-instance universe, subject to admission qualification and preservation of the 41 holdouts. An agent/engineer attempting to insert a real, well-formed, hash-verified but unauthorized instance must receive **OUT_OF_SCOPE / ADMISSION_DENIED**. Do **not** mislabel the original source as corrupt, invalid or rejected on data-quality grounds.
+On 2026-10-21, the experiment owner chose **Option 2 (logical rollback)**: preserve the original **3,021-member, owner-approved Universe v1**, its 41 holdouts and unchanged historical artifacts. The 800 later-acquired sources are legitimate, hash-verified RAW assets but **outside the current experiment**. Retain them locally and in Databricks; **no deletion, VACUUM, relocation or retrospective admission**. Historical C750/C1500/C2000 freezes remain evidence, **not approved baselines**.
 
-**Decided:**
+**Why Option 2:** **Source Estate growth is continuous; Experiment Scope changes are explicit, authorized, and versioned.** EDP Lab may grow toward millions of Source Instances and ~2 PB of enterprise data, but silent source acquisition to meet a target changes the experimental population and makes results across stages incomparable. A frozen experiment needs an independently approved universe, a qualified admitted set, and a specific authorized cohort. An otherwise valid source outside that scope must be denied as **OUT_OF_SCOPE / AUTHORIZATION_REQUIRED**, not misclassified as corrupt.
 
-1. Preserve original v1/v2 inventory and its 3,021 recorded identities/hashes as the **authorized experiment-universe reference**. No silent edits to frozen historic evidence.
-2. Mark all 800 later acquisitions as **legitimate RAW, NOT AUTHORIZED FOR CURRENT EXPERIMENT**. They remain eligible *candidates for a later explicitly approved expansion* and must not be cast as invalid source data.
-3. Mark current C750/C1500/C2000 frozen membership and processing-readiness evidence as **historical execution artifacts, NOT ACCEPTED under the restored original-universe authorization**. Preserve all Day 3–5 Git commits, freeze records, tests, and receipts; do not merge/promote them as accepted cohort versions. The code may be reused after controlled review.
-4. Preserve **all** 800 local and Databricks RAW objects and their SHA-256/provenance/upload receipts. **No physical deletion, no VACUUM, no `DROP VOLUME`, no purging.** Preserve future ability to propose these sources for C4000/C10000/larger authorized experiments. Storage retention remains subject to applicable organizational policies, but no deletion action is requested.
-5. Do not automatically classify the 800 as a normal daily 2 GB delta: that was an **analogy illustrating normal, legitimate ongoing source-estate growth**. In a production workflow any real daily increment follows its own approved CDC/source contracts; it cannot silently contaminate the frozen sample.
-6. Rebuilding affected post-C300 cohorts is **DEFERRED TO DAY 3**, with separate scoped planning and authorization; it is not an incident closure gate. Use new versioned cohort artifacts, keep old ones intact, rerun all applicable mechanical and semantic gates, and retain a crosswalk showing replaced/excluded members and consequences.
-7. Enforce the implemented mandatory **mechanical fail-closed authorized-universe admission gate** (scope ID/version, instance ID, hash, owner/grant where relevant, holdout exclusion, explicit cohort membership), independent of prompt wording. Tests must reject unauthorized but otherwise legitimate inputs and prevent wildcard/prefix scans from expanding a frozen processing run.
-8. Keep all 41 Day 13 evaluation holdouts untouched. Future sample-size selection is **DEFERRED TO DAY 3**; theoretical authorized non-holdout maximum is 2,980, both SEC Bulk candidates are now owner-qualified, resolving the historical 2,978 qualification limit without authorizing admission. Do not force C3000 or misstate 3,021 inventory count.
+### Option 1 not selected
 
-### Rejected alternative for the current experiment — Option 1
+Option 1 would expand the current universe to **3,821** by retroactively including the 800. A *separately owner-approved future version* may legitimately include some or all of them, but cannot retroactively validate these historical cohorts. The original non-holdout ceiling is **2,980**; exact C3000 would require a separate scope or target decision. That numerical limit is **not an established cause** of this incident.
 
-Authorizing all 800 now, appending them to a 3,821-member expanded experiment universe and treating existing Day 3–5 cohort freezes as accepted under that new universe **was not selected**. This does **not** prohibit a future, separately authorized universe version with some or all of these sources; it only prohibits retroactive or automatic admission to the **current** experiment.
+### Implemented disposition
 
-**Why Option 2:** Source Estate growth is continuous; Experiment Scope changes are explicit, authorized, and versioned. EDP Lab is intended to scale from hundreds to thousands and millions of Source Instances, eventually toward approximately 2 PB of enterprise data. The estate naturally grows, but each experiment requires a pre-approved versioned scope. Silent acquisition to meet a numeric target would alter the original sample design and weaken comparisons between stages. Option 2 preserves scope and reproducibility while retaining legitimate RAW. Option 1 is a valid potential design for a separately approved 3,821-member experiment, but cannot retroactively authorize historical C750/C1500/C2000 evidence. The original non-holdout maximum is 2,980; exact C3000 requires a separately approved scope or target adjustment. This numerical shortfall is **not established as the incident's cause**.
-
-### Implementation and acceptance state
-
-- **Human decision:** COMPLETED — Option 2 chosen; Approved Universe v1 owner authorization recorded in `319281c17d957dc8d442aaa63278df0d5a1596b3`.
-- **Physical RAW retention:** VERIFIED for all 800 remote objects at the Step 4 interval; local registered paths present by stat; no deletion or relocation (§13).
-- **Admission Guardrail and Agent authorization:** IMPLEMENTED and verified for documented local paths; PR #17 merged at the SHA/time in the header. Historical and remote unguarded paths are EXCLUDED (§13).
-- **Rebuilt authorized cohorts:** DEFERRED TO DAY 3; historical cohorts remain unaccepted.
-- **Day 2 baseline retention/freeze acceptance:** DEFERRED TO DAY 2, separate from incident closure.
-- **Incident closure:** CLOSED. The experiment owner explicitly approved all seven revised gates with their documented scope and limitations (§14).
+- **Universe:** Original inventory and **300/300 C300 identity/path/hash** compatibility verified; Universe v1 pinned to owner approval and SHA-256. Both SEC Bulk entries qualified under their specific owner attestations (§11); qualification itself grants no admission.
+- **RAW:** All **800/800** retained remote objects passed current presence, size and SHA-256 readback; the 800 remain excluded from Universe v1 and accepted C300.
+- **Guardrail:** Deterministic local admission, freeze, processing and Agent authorization boundaries implemented and merged in [PR #17](https://github.com/lightnino/edp-lab/pull/17); historical unguarded Day 3–5 and remote execution paths are **excluded**, not technically disabled (§13).
+- **Decision and closure:** **APPROVED / CLOSED** by the experiment owner (§14). No new experiment run is authorized by closure.
 
 ## 6. Enterprise 2 PB migration analogy and required preventive controls
 
@@ -159,21 +146,11 @@ FOR EACH run:
 
 Reconciliation should distinguish `(authorized, selected, transferred, successfully processed, blocked/quarantined)` and should fail closed when an unexpected source appears; new arrivals should enter only separately versioned incremental cohorts or formally approved source-estate change flows.
 
-## 7. Containment, ownership and remaining restrictions
+## 7. Containment and boundaries
 
-Option 2 is implemented within the documented local scope. Approved Universe v1 is pinned; the 800 retained objects are excluded from it and accepted C300; deterministic admission/freeze/processing authorization and Agent denials are tested. The exact implementation and restrictions are in §13 and [the Guardrail evidence](../source_universe_guardrail.md).
+The incident is **CLOSED**. C300 belongs to the original approved universe and remained separate from the historical Day 3–5 expansion. The retained 800 RAW objects and their audit evidence were not deleted or reclassified as bad data. Historical C750/C1500/C2000 are not accepted baselines.
 
-All 800 local/remote RAW references and historical upload/profiling dependencies are retained, without deletion, relocation or overwrite. Current remote presence/size/SHA-256 verification is 800/800, totaling **79,225,793 bytes**. This is distinct from the approximately 406.6 MB reported for entire Day 3–5 incremental uploads. Global live consumer lineage is not exhaustively established.
-
-Both original SEC Bulk candidates are **QUALIFIED — OWNER_ATTESTED_PROVENANCE**; missing historical publisher receipts and independent digests remain disclosed. Qualification grants no registration, admission or processing authority.
-
-**Decision owner:** Experiment owner; an Agent cannot approve closure or scope expansion.
-**Root cause:** Control-design and authorization-boundary failure confirmed by the instruction/policy and implementation audit, not RAW corruption or solely individual/Agent failure.
-**Day 13 holdouts:** 41/41 outside accepted C300; original 41 also absent from historical C2000.
-**Historical Day 3–5 and unguarded remote execution:** EXCLUDED from approved new execution until integrated, tested and separately human-authorized. No physical disablement or ACL block is claimed.
-**Future scope/target choice and cohort rebuild:** DEFERRED TO DAY 3; no new cohort target selected here.
-**Day 2 O_C300_M1 retention/freeze acceptance:** DEFERRED TO DAY 2; no final freeze or acceptance inferred.
-**Closure disposition:** CLOSED under explicit owner approval in §14. No new experiment execution is authorized by this report.
+The implemented Guardrail protects the specified **local** entrypoints. Historical scripts and Databricks notebooks are **excluded from new authorized runs**, but are not physically disabled or proven universally inaccessible; full remote-consumer lineage and live remote Guardrail execution were **not verified** (§13). Any later use requires separate guarded integration and owner authorization.
 
 ## 8. Supporting local evidence (original locators; bounded verification in §13)
 
@@ -197,229 +174,81 @@ Both original SEC Bulk candidates are **QUALIFIED — OWNER_ATTESTED_PROVENANCE*
 - Databricks, *Auto Loader production*: https://docs.databricks.com/aws/en/ingestion/cloud-object-storage/auto-loader/production (new-arrival tracking and incremental checkpoints, distinct from fixed experimental membership).
 - Databricks, *Expectation recommendations and advanced patterns*: https://docs.databricks.com/gcp/en/ldp/expectation-patterns (quarantine separate from accepted processing).
 
-## 10. Decision log and follow-up guardrail acceptance
+## 10. Decision and authorization record
 
-| When | Decision / observation | Evidence or owner |
+| Event | Resolution | Evidence |
 | --- | --- | --- |
-| 2026-10-21 | Inventory reconciliation exposed 800 source instances outside original 3,021 after concurrent C300 processing and Day 3–5 admissions/uploads | User-supplied read-only Codex audit |
-| 2026-10-21 | Selected Option 2: restore original 3,021 experiment universe, reject unauthorized cohort-admission attempts, preserve all historical evidence and all 800 RAW objects | Experiment owner |
-| 2026-10-21 | Corrected count semantics: two SEC bulk entries are **in the 3,021 inventory**, not yet qualified for admission; raw maximum 2,980 non-holdouts, eligible at detection 2,978 | User challenge and original inventory status audit |
-| 2026-10-21 | Retention is an affirmative owner decision: preserve all 800 legitimate RAW objects, eligible for consideration in a future authorized universe version; no Databricks cleanup/deletion plan | Experiment owner |
-| 2026-10-21 | As last reported, Day 2 C300/M1 reconciliation 21/32 PASS, 3 running, 8 pending, zero failed; no interference permitted | User-provided Codex check |
-| 2026-10-21 | Otherwise valid out-of-universe source denied; Agent denial retained for Human Review | PR #17; exact tests in `docs/source_universe_guardrail.md` |
-| 2026-10-21 | Synthetic separately approved future host version permits its roster while v1 denies it; no real v2 installed | PR #17; future-version processing-entrypoint test |
-| Future Day 3 | Replacement cohorts and Old/New/Combined Lossless/Stability evaluation | DEFERRED TO DAY 3, separate authorization |
+| Detection, 2026-10-21 | C2000 reconciled to 1,200 original + 800 outside sources; original 41 holdouts preserved | §§1–3; original source-family breakdown |
+| Owner decision | **Option 2:** preserve the original 3,021 Universe v1, retain but exclude the 800, and reject retroactive approval of historical cohort freezes | §5 |
+| Owner authorization and remediation | SEC Bulk separately qualified; original Universe v1 approved; remote 800/800 verified; local Guardrail merged | §§11–13; [PR #17](https://github.com/lightnino/edp-lab/pull/17) |
+| Owner closure | **APPROVED** | [Owner comment](https://github.com/lightnino/edp-lab/pull/18#issuecomment-6315368530) |
 
-**Incident is evidence of a boundary design failure, not evidence the extra RAW data are illegitimate. Retention is intentional: preserving them as real, auditable candidate assets enables legitimate future expansion while keeping the current experiment uncontaminated.**
+## 11. SEC Bulk — investigation and final qualification
 
+Two existing SEC Bulk ZIPs were always among the **3,021 original physical sources**. At detection they lacked contemporaneous retrieval/publisher evidence and had not been admitted. The bounded evidence recovery found no original publisher receipt or independently authenticated archive digest. The owner subsequently attested that these exact ZIPs had been **downloaded manually from the official SEC website** and expressly resolved that provenance gap under the admission policy.
 
-## 11. SEC_BULK original inventory investigation — qualification complete
+| Source in original inventory | Retained local RAW | Recorded bytes | Recorded SHA-256 | Historical archive integrity | Final qualification |
+| --- | --- | ---: | --- | --- | --- |
+| `LOCAL_SEC_BULK_COMPANYFACTS` | `data/raw/sec/bulk/companyfacts.zip` | 1,418,648,998 | `23e23cc8293fa22abda2f7d0568ee5534e149b51a77cd40171c3d834278cc902` | CRC PASS; 40,924 entries (20,462 macOS sidecars) | **QUALIFIED — OWNER_ATTESTED_PROVENANCE** |
+| `LOCAL_SEC_BULK_SUBMISSIONS` | `data/raw/sec/bulk/submissions.zip` | 1,974,869,371 | `5c75f9d996d5eea8a0e05689e28079d069a80e1632cf87ba24021da7e48d465b` | CRC PASS; 1,988,886 entries (994,443 macOS sidecars) | **QUALIFIED — OWNER_ATTESTED_PROVENANCE** |
 
-`LOCAL_SEC_BULK_COMPANYFACTS` and `LOCAL_SEC_BULK_SUBMISSIONS` remain original-universe members and are individually **QUALIFIED — OWNER_ATTESTED_PROVENANCE**, under the owner's explicit provenance-gap disposition, commit `787b473a78f5bcce814bafd8675ce1a9c5edea65`. The owner directly attested manual download from the official SEC website. This applies only to the two exact existing ZIPs, not independent proof of publisher archive identity. Their original investigation, paths, sizes, hashes, archive observations and missing evidence are preserved in §§13, 15–16. No separate admission defect was established. Qualification neither registers a Source ID nor authorizes cohort admission or processing.
+**Evidence boundary:** Original publisher receipts, acquisition UTC and independently verified SEC ZIP edition/digest remain unavailable; preserved file sizes/inode/mtime match historical observations, but no new full current-content hash or CRC was run. Owner attestation is not independent publisher verification. No new Source Instance IDs, admissions, freezes or processing were created. This is qualification of **these two retained snapshots only**, not a blanket provenance waiver.
+
+Detailed original recovery observations, source records and evidence hashes remain in [Step 2 commit `787b473`](https://github.com/lightnino/edp-lab/commit/787b473a78f5bcce814bafd8675ce1a9c5edea65) and the original Git history. **Current final disposition: QUALIFIED for both; no separate SEC Bulk control failure was established.** Source qualification changes no universe membership and does not authorize admission.
 
 ## 12. Remediation execution ledger
 
-This is the single current implementation ledger. Exact operational start/finish times are NOT CAPTURED unless stated; Git times prove commit/merge events, not inferred implementation times. All dates below are 2026-10-21; offset +08:00 is Shanghai/SGT.
+This ledger records **only incident remediation and closure**. Times are on 2026-10-21; a Git commit time is evidence of that commit, not an inferred implementation start time.
 
-| Stage | Final disposition | Actual event time / coverage | Evidence |
-| --- | --- | --- | --- |
-| Detection and Option 2 decision | COMPLETE | Day precision only; exact times NOT CAPTURED | §§1–5, owner instruction |
-| Local governance and receipt reconciliation | COMPLETE | 16:53:31.561694+08:00; investigation completed 16:55:49.956562+08:00 | §13; evidence index and retained-reference appendix |
-| Initial incident publication | VERIFIED | Commit 16:59:13+08:00; PR created 16:59:56+08:00; exact push time NOT CAPTURED | `05854c25dfc7554e5f596b346b489ec304c80a97`; PR #15 |
-| SEC Bulk qualification | COMPLETE, both OWNER_ATTESTED | Attestation recorded 18:23:20.756079+08:00; commit 18:24:00+08:00 | `787b473a78f5bcce814bafd8675ce1a9c5edea65`; §§15–16 |
-| Approved Universe v1 | OWNER APPROVED | Commit 18:37:52+08:00 | `319281c17d957dc8d442aaa63278df0d5a1596b3`; manifest and separate owner record |
-| 800 retained RAW verification | VERIFIED with bounded exclusion/lineage coverage | Listing 10:43:24.905060Z–10:43:30.685448Z; readback 10:43:51.785057Z–10:54:15.396438Z; commit 18:56:05+08:00 | `009da4fa053f4d5e3ab182fbe08510808688204c`; Step 4 report and evidence |
-| Local Guardrail and Agent boundary | IMPLEMENTED / MERGED | Implementation start/finish NOT CAPTURED; initial implementation commit `0f883e3` 17:23:55+08:00; reviewed final head `6eabe9897aa3a452bce7f279c6f5b4bbf3240d6a` committed 19:42:43+08:00; merge 19:50:59+08:00 | PR #17; merge `2988c62ce7e8a92547224e8212ed74f1cec2bc94`; §13 |
-| Regression and negative tests | COMPLETE within offline coverage | Exact run start/finish NOT CAPTURED; recorded 2026-10-21 | 295 PASS, 23 SKIP; targeted 23 PASS, 1 SKIP; exact commands/dispositions in Guardrail evidence |
-| Historical/remote execution paths | EXCLUDED from new approved execution | Bounded pre-merge audit; exact audit time NOT CAPTURED | §13; owner-supplied audit, not an independent persisted audit log |
-| Replacement cohorts / experimental Lossless and Stability | DEFERRED TO DAY 3 | Outside incident closure scope | Separate approved Day 3 plan required |
-| O_C300_M1 baseline retention/freeze acceptance | DEFERRED TO DAY 2 | Reported validation success does not establish final freeze | Step 4 retained completion `MAIN_720_COMPLETE_VALIDATED`, `NOT_FROZEN` |
-| Owner closure approval and incident closure | OWNER APPROVED / CLOSED | Approval `2026-10-21T20:00:05+08:00`; closure recorded `2026-10-21T20:03:15+08:00` (UTC+08:00) | [owner approval comment](https://github.com/lightnino/edp-lab/pull/18#issuecomment-6315368530); all seven revised gates and documented limitations explicitly approved; §14 |
-
-Closure is governed by the seven gates in §14. Replacement experiment execution and Day 2 baseline freeze are separate tasks, not incident-remediation prerequisites.
-
-## 13. Independent local governance audit — 2026-10-21
-
-This section preserves the original bounded local audit and records the implemented controls at their integration points. Option 2 is implemented within the documented local scope; the incident is CLOSED under the explicit owner approval recorded in §14. Industry links in §9 were supplied by the owner and were not independently consulted in this offline audit.
-
-### Original local audit boundary and reproducibility
-
-The following describes the original audit task, not the later Step 2–6 executions. Worktree `/Users/lightnino/Projects/edp-lab-incident`, branch `incident/source-universe-scope-control`, began clean at `ddb6e47c52afa08415614dc7f341255255d9c963`, exactly local `main` and its merge base. Remote: `origin https://github.com/lightnino/edp-lab.git`. Historical Day 3/4/5 worktrees at `c223117`, `2eee969`, `b9f5dc7` were read only. No merges/cherry-picks, code changes, RAW scans, downloads, transfers, jobs or Day 2 operational inspection occurred. GitHub publication is the only authorized network operation for this task. Local main ancestry is verified; remote main is checked during publication.
-
-Owner input: `/Users/lightnino/Downloads/2026-10-21_source_universe_scope_control_incident.md`. Original decision dates have day precision only; exact discovery, proposal and owner-decision times are UNKNOWN. The Day 2 21/32 checkpoint remains a supplied historical observation, not independently refreshed.
-
-Evidence documentation:
-
-- [Metadata and receipt hash index](2026-10-21_evidence_index.md).
-- [All 800 retained RAW references](2026-10-21_retained_raw_references.md), including per-instance acquisition identity, receipt hash, RAW hash, local path, remote path/status/time and historical processing references.
-
-Count method: compare v1/v2 inventory `(inventory_id, sha256)` sets; crosswalk C2000 manifest members through frozen packet `original_raw_path` plus exact RAW SHA-256 to inventory v2 `final_path` plus SHA-256. This is a mechanical delivery-reference join, not semantic identity inference or a new registration rule. Existing GOLD uses its retained manifest path. Inventory v1/v2 hashes match §8. Both contain 3,021 entries and identical identity/hash sets. Original completion summary records 3,015 new verified publisher deliveries, four unchanged GOLD and two unadmitted bulk candidates; zero admissions/freezes in that acquisition step. Source Instances are physical deliveries, never ZIP members or rows.
-
-The full family table in §2 is independently confirmed without corrections: original 3,021; C2000 2,000 = 1,200 original + 800 later acquisitions; unused original non-holdouts excluding GOLD and unresolved bulk 1,774; four GOLD outside C2000; 41 original holdouts; two bulk candidates. All original holdouts are absent from C2000. “Qualified unused” here means historical acquisition/selection readiness, not newly granted admission or semantic approval. At that historical checkpoint the maximum was 2,980 original non-holdouts and the qualification-limited 2,978 excluded both then-unresolved bulk entries. Both are now owner-qualified (§16). Neither number is an owner-approved new scale target.
-
-### SEC Bulk findings — separate determinations
-
-Evidence for both: `/Users/lightnino/Projects/edp-lab/runs/local_inventory/availability.json`, observed `2026-10-20T09:12:00.756956+00:00`; inventory v1/v2; completion summary `existing_bulk_candidates_unadmitted: 2`; admission evidence requirements in `docs/corpus_admission_policy.md`. These are deliberately staged candidates with no registered Source ID, not failed qualified deliveries. No evidence establishes a permanent intention to exclude them. No unsupported-ZIP admission rule or separate admission defect was established. Parser approval remains a separate later gate.
-
-| Field | LOCAL_SEC_BULK_COMPANYFACTS | LOCAL_SEC_BULK_SUBMISSIONS |
+| Completed incident step | Final status | Primary evidence |
 | --- | --- | --- |
-| Original membership | CONFIRMED | CONFIRMED |
-| Physical RAW integrity | VERIFIED in retained historical SHA/archive evidence; current bytes UNVERIFIED (no rescan) | VERIFIED in retained historical SHA/archive evidence; current bytes UNVERIFIED (no rescan) |
-| Current accessibility | Readable file; size/inode/mtime match historical record by stat | Readable file; size/inode/mtime match historical record by stat |
-| Local path | `/Users/lightnino/Projects/edp-lab/data/raw/sec/bulk/companyfacts.zip` | `/Users/lightnino/Projects/edp-lab/data/raw/sec/bulk/submissions.zip` |
-| Recorded bytes | 1,418,648,998 | 1,974,869,371 |
-| Recorded SHA-256 | `23e23cc8293fa22abda2f7d0568ee5534e149b51a77cd40171c3d834278cc902` | `5c75f9d996d5eea8a0e05689e28079d069a80e1632cf87ba24021da7e48d465b` |
-| Historical archive integrity | PASS; 40,924 members; 20,462 macOS sidecars | PASS; 1,988,886 members; 994,443 macOS sidecars |
-| Admission qualification | QUALIFIED — OWNER_ATTESTED_PROVENANCE | QUALIFIED — OWNER_ATTESTED_PROVENANCE |
-| Missing-evidence disposition | Owner accepted provenance gap for this exact ZIP; publisher receipt/digest unavailable | Owner accepted provenance gap for this exact ZIP; publisher receipt/digest unavailable |
+| Detection and Option 2 decision | **COMPLETE** | §§1–5; owner decision |
+| SEC Bulk provenance investigation and owner qualification | **QUALIFIED** (both) | §11; [commit `787b473`](https://github.com/lightnino/edp-lab/commit/787b473a78f5bcce814bafd8675ce1a9c5edea65); owner attestation recorded 18:23:20+08:00 |
+| Approved Universe v1 | **APPROVED**, 3,021 members, 41 holdouts | [commit `319281c`](https://github.com/lightnino/edp-lab/commit/319281c17d957dc8d442aaa63278df0d5a1596b3); pinned manifest/owner record |
+| 800 retained RAW remote integrity/exclusion | **VERIFIED**, 800/800 | [Step 4 commit `009da4f`](https://github.com/lightnino/edp-lab/commit/009da4fa053f4d5e3ab182fbe08510808688204c); readback 10:43:51–10:54:15Z |
+| Local Guardrail, Agent denial and regression tests | **IMPLEMENTED / PASS within tested scope** | [PR #17](https://github.com/lightnino/edp-lab/pull/17), merged `2988c62ce7e8a92547224e8212ed74f1cec2bc94` at 19:50:59+08:00; §13 |
+| Incident closure | **APPROVED / CLOSED** | [Owner approval](https://github.com/lightnino/edp-lab/pull/18#issuecomment-6315368530) at 20:00:05+08:00; closure recorded 20:03:15+08:00 |
 
-For each, historical provenance says “User-supplied local ZIP; original publisher ZIP identity unverified.” Acquisition UTC, retrieval receipt and publisher archive identity are NULL; publisher URL is a hint only. Sidecars and enclosing directories warrant qualification review but do not prove corruption, completeness of the original SEC delivery, or independent publisher provenance. Historical integrity establishes the retained ZIP's consistency, not original publisher completeness. Missing receipts prevent automatic qualification under existing rules. On available evidence this is normal explicit admission staging, not a substantiated second control failure.
+## 13. Verified Guardrail and execution boundaries
 
-Bounded recovery found no contemporaneous publisher/retrieval evidence (§15). The owner then explicitly qualified both exact ZIPs by first-party attestation (§16). The original evidence gap remains documented; no further recovery is an incident blocker, and no new ID registration or admission occurred.
+### Scope and evidence
 
-### 800-object retention and dependencies
+Approved universe: `EDP_LAB_ORIGINAL_SOURCE_UNIVERSE` v1, **3,021** exact physical identities; pinned [manifest](../../metadata/source_universes/approved_v1/manifest.json), SHA-256 `2198f9bad9c864bf339eff515992526e22efc4230160614a8f86daf3143f463c`, with separate [owner approval](../../metadata/source_universes/approved_v1/owner_authorization.json). Original inventory v1/v2 and **C300 300/300** identity/path/hash compatibility verified; 41 holdouts remain reserved. This is universe authorization, not automatic source admission or processing approval.
 
-The reference appendix identifies exactly 800 IDs. All 800 local registered paths exist by stat. All 800 acquisition receipt files match their frozen packet receipt SHA-256. All 800 retained remote receipts say `REMOTE_READBACK_SHA256_PASS`, with RAW digests matching manifest v6. Sum of those 800 receipt byte sizes is **79,225,793 bytes**; this is receipt-derived historical transfer accounting, not a current RAW measurement or the entire Day 3–5 transfer total.
+The original reconciliation compared inventory identities/SHA-256 with frozen C2000 manifests and acquisition receipts; the complete **family breakdown is preserved in §2**, with [evidence index](2026-10-21_evidence_index.md) and [800-reference appendix](2026-10-21_retained_raw_references.md).
 
-Observed dependencies: N450 (50 extra NOAA), N750 (250 extra NOAA), N500 (400 WDI + 100 Treasury), their cumulative C750/C1500/C2000 freezes and manifests v4–v6, upload receipts and targeted structural inspection evidence. Structural profiling is downstream processing and must remain preserved. Freeze-time `downstream: NOT_STARTED` describes that checkpoint only. No retained evidence reviewed establishes CLEAN/QUERYABLE execution for these 800. Step 4 subsequently verified current remote presence, sizes and SHA-256 for **800/800**, **79,225,793 bytes**, with zero missing, inaccessible, mismatched or unverified objects. Seven incomplete responses were independently retried; both attempts remain retained. See [Step 4 report](https://github.com/lightnino/edp-lab/blob/009da4fa053f4d5e3ab182fbe08510808688204c/docs/incidents/2026-10-21_800_remote_verification.md), [objects.csv](https://github.com/lightnino/edp-lab/blob/009da4fa053f4d5e3ab182fbe08510808688204c/docs/incidents/evidence/800_remote_verification/objects.csv) and [validation.json](https://github.com/lightnino/edp-lab/blob/009da4fa053f4d5e3ab182fbe08510808688204c/docs/incidents/evidence/800_remote_verification/validation.json), commit `009da4fa053f4d5e3ab182fbe08510808688204c`. Global live consumer lineage remains incompletely established. Inspected C300/M1 physical-input evidence has zero overlap with the 800; all 800 are excluded from Universe v1 and accepted C300, and all 41 holdouts are outside C300. These checks confer no remote processing authority or universal consumer isolation. No physical retention action was necessary or performed; owner retention decision is binding. Missing `original_raw_path` on some earlier packet members is explicitly marked in the appendix; candidate identity, acquisition receipt and registered RAW path remain available. No missing local path or acquisition-receipt hash mismatch was found.
+Step 4 independently verified **800/800 current remote RAW objects** for presence, size and SHA-256, totaling **79,225,793 bytes**, with no mismatches; seven incomplete responses were retried and both attempts retained. The 800 are excluded from Universe v1 and accepted C300; examined C300/M1 physical inputs had zero overlap. Historical Day 3–5 uploads and structural profiling are preserved; global live consumer lineage is **not exhaustively verified**. Evidence: [Step 4 report](https://github.com/lightnino/edp-lab/blob/009da4fa053f4d5e3ab182fbe08510808688204c/docs/incidents/2026-10-21_800_remote_verification.md), [800-object readbacks](https://github.com/lightnino/edp-lab/blob/009da4fa053f4d5e3ab182fbe08510808688204c/docs/incidents/evidence/800_remote_verification/objects.csv) and [validation](https://github.com/lightnino/edp-lab/blob/009da4fa053f4d5e3ab182fbe08510808688204c/docs/incidents/evidence/800_remote_verification/validation.json).
 
-### Exact integration points — implemented local controls and excluded paths
+### Implemented deterministic controls (local scope only)
 
-Implementation evidence: [docs/source_universe_guardrail.md](../source_universe_guardrail.md), final reviewed head `6eabe9897aa3a452bce7f279c6f5b4bbf3240d6a`, merged [PR #17](https://github.com/lightnino/edp-lab/pull/17), merge `2988c62ce7e8a92547224e8212ed74f1cec2bc94` at `2026-10-21T11:50:59Z`. GitHub metadata independently verified the merged state, head, merge SHA and timestamp during this report update.
+[Guardrail PR #17](https://github.com/lightnino/edp-lab/pull/17), merge `2988c62ce7e8a92547224e8212ed74f1cec2bc94`; detailed code/test evidence in [source_universe_guardrail.md](../source_universe_guardrail.md).
 
-| Integration point | Verified actual implementation / disposition |
+| Integration | Verified control |
 | --- | --- |
-| `src/edp_lab/ingestion/universe.py`: `UniverseGate.load`, `verify_inventory` | Pins universe bytes, independent owner approval digest/linkage, version, historical sidecar and all referenced evidence hashes; absent/changed authority fails closed. |
-| `src/edp_lab/ingestion/c300_admission.py`: `prepare`, `freeze`, `verify_registry` | Checks authorized capacity before selection/acquisition; exact delivery/registered identity, hash/path, qualification, holdouts, exact cohort and owner freeze evidence. Agent-authored permission cannot authorize freeze. No new freeze executed. |
-| `metadata/source_universes/historical_cohort_bindings_v1.json` | Hash-bound versioned sidecar separates Universe Authority, Corpus Admission and Frozen Cohort, with universe ID/version/manifest digest. Historical manifests/freezes unchanged. New packets/markers carry universe references and new freezes bind roster/corpus hashes in `universe_binding.json`. |
-| `src/edp_lab/profiling/source_reader.py:read_registered`; C300 `occurrences`; shallow `inspect`; checkpoint `validate_c300` | Validate explicit local bindings against universe/cohort identity/hash/path before RAW/parser access; existing RAW/member hashes and parser approval remain independent gates. No directory/prefix discovery can enlarge authorized inputs. |
-| `src/edp_lab/tool_adapters/profiling.py`; five profiling functions; Agent interface | Host-fixed authority cannot be supplied/switched by requests. Denials remain BLOCKED / AUTHORIZATION_REQUIRED, approval-required and Human Review; metrics NOT_COMPUTED. No self-approval, cohort/version injection, denial override or acquisition to meet count. |
-| Native contract preparation / sealing | Local contract validation does not certify remote execution. Historical remote notebooks and new native submission/processing remain EXCLUDED until guarded and separately authorized. |
-| Historical N450/N750/N500 preparers, uploaders and profilers | EXCLUDED from new approved execution, not retrofitted or physically disabled. Exact historical commits, paths and hashes are preserved in the Guardrail document. No executable dispatch for these increments is present on inspected main/PR #17. |
+| `ingestion/universe.py`; owner manifest and pinned cohort sidecar | Validate exact owner approval, universe version/digest, source identity/hash/path, 41 holdouts and cohort binding; fail closed on missing/changed evidence. |
+| `c300_admission.py`: `prepare`, `freeze`, `verify_registry` | Check authorized roster and capacity before selection/freeze; invalid or Agent-injected approval denied. |
+| `profiling/source_reader.py`; C300 reader, inspection and checkpoint; native local preparation | Check explicit eligible binding before protected local RAW/processing; parsing/RAW hash rules remain additional independent checks. |
+| `tool_adapters/profiling.py` and Agent boundary | Requests cannot self-approve, change version/roster or bypass `BLOCKED / AUTHORIZATION_REQUIRED`; Human Review required. |
 
-Approved Universe: `EDP_LAB_ORIGINAL_SOURCE_UNIVERSE`, version **1**, **3,021 members**, [manifest](../../metadata/source_universes/approved_v1/manifest.json), SHA-256 `2198f9bad9c864bf339eff515992526e22efc4230160614a8f86daf3143f463c`; [owner authorization](../../metadata/source_universes/approved_v1/owner_authorization.json) independently links that digest. Commit `319281c17d957dc8d442aaa63278df0d5a1596b3` verifies original v1/v2 identities/hashes, both owner-qualified SEC Bulk entries, 41 holdouts, exclusion of the 800 and exact C300 identity/hash/path membership **300/300**. Original frozen artifacts remain unchanged. **Universe Membership Approval does not independently authorize Admission, Freeze or Processing.** No approved manifest/approval record was edited.
+**Tests:** 295 PASS / 23 SKIP full offline suite; final targeted correction 23 PASS / 1 SKIP; Ruff, whitespace and GitHub CI **PASS**. The original 29 failures were dispositioned as **28 PASS + 1 environmental GOLD RAW SKIP**; independent missing-authority negative test PASS. The missing GOLD files prevent a real-RAW fidelity PASS and do **not** indicate corrupt 800 data or an invalid 3,021 inventory. See Guardrail evidence for exact 29-case mapping and other skip prerequisites.
 
-Negative/compatibility coverage includes otherwise valid outside-universe data, newly arrived data outside the run roster, reserved holdouts, unapproved same-family instances, hash/qualification failures, missing authority, forged freeze approval and insufficient authorized capacity. Approved local bindings remain permitted within independent parser scope. A synthetic separate future host version demonstrates potential retained-source eligibility without rewriting v1 or creating a real v2. Host code/configuration replacement by an administrator is outside the request-level trust boundary.
+### Unguarded historical and remote execution — excluded
 
-Final offline results: **295 PASSED, 23 SKIPPED**, zero unexplained failures; targeted final correction **23 PASSED, 1 SKIPPED**. Ruff and whitespace PASS; GitHub [CI run 39593988618](https://github.com/lightnino/edp-lab/actions/runs/39593988618) independently verified completed/success for the final reviewed head. Exact commands and **each of the original 29 failure dispositions** are in the Guardrail document: **28 PASS; one environmental GOLD RAW SKIP**, with its independent missing-authority negative test now PASS (BLOCKED / AUTHORIZATION_REQUIRED). The real GOLD RAW files were absent from the test worktree; that accepted limitation leaves positive real-RAW fidelity unverified. It is not evidence of an incorrect 3,021 universe, corruption of the 800 or a production Guardrail failure. SKIP is not PASS. Tests were not rerun for this documentation-only change.
+- **GitHub/main:** No N450/N750/N500 execution dispatch in the inspected main or merged PR. Historical preparers, uploaders and profilers remain in separate branches/worktrees; they are **not approved for execution**.
+- **Bounded Databricks discovery:** 0 accessible Jobs, 0 active runs, 0 pipelines; 23 historical terminal `SUBMIT_RUN` records. Retained remote notebook trees held 3 native and 24 C300/M1 notebooks; 27 notebook sources inspected. None were shown to enforce the new remote pinned-universe Guardrail.
+- **Boundary:** Historical worktrees/notebooks remain potentially manually callable. They were **not** ACL-blocked, physically disabled or proven universally inaccessible. These results are from the owner's bounded pre-merge audit summary, **not** an independently persisted full workspace audit. Future execution requires guarded integration, testing and separate authorization. No live Databricks Guardrail coverage is claimed.
 
-### Pre-merge execution-isolation audit — bounded evidence
+## 14. Closure approval
 
-The exact evidentiary basis for the following discovery counts is the **owner-supplied pre-merge audit summary in the Step 6B instruction**, corroborated for historical path exclusions by the committed Guardrail document. No separate reproducible local audit-output artifact was identified in this report's tracked evidence; these counts are not represented as independently captured logs. No new Databricks audit was started and no remote notebook was modified.
+**Status: CLOSED. Owner approval: APPROVED** ([GitHub approval](https://github.com/lightnino/edp-lab/pull/18#issuecomment-6315368530)). Approved 2026-10-21T20:00:05+08:00; closure recorded **2026-10-21T20:03:15+08:00**. Approval accepts the stated local enforcement scope, test skips and excluded unguarded historical/remote paths; it grants **no new execution authority**.
 
-- GitHub main and PR #17: no executable N450/N750/N500 dispatch; old preparers/uploaders/profilers remain in separate historical branches/worktrees.
-- Configured Databricks workspace: **0 accessible Jobs, 0 active runs, 0 pipelines, 23 retained terminal SUBMIT_RUN records**; no N450/N750/N500 workload identified in inspected run history.
-- Retained trees: **3 notebooks** under `/Shared/edp-lab-native-v1`, **24** under `/Shared/edp-lab-c300-m1`; **27 sources** inspected read-only. They are not protected by the new remote runtime Guardrail, and manually executable historical paths remain technically callable.
-
-This is bounded discovery, not universal proof of absent external execution paths. Historical Day 3–5 and unguarded remote paths are **EXCLUDED** from approved new experiment execution pending integration, testing and separate human authorization. They were not physically disabled or ACL-blocked, and live Databricks Guardrail execution was not verified. Successful RAW integrity checks do not prove global consumer isolation.
-
-### Remaining experiment work
-
-Replacement rosters, target adjustment, historical-to-replacement crosswalks, real new-cohort Lossless/Stability runs and operational measurements are **DEFERRED TO DAY 3**. O_C300_M1 baseline retention/freeze acceptance is **DEFERRED TO DAY 2**. These are outside the revised incident closure gates. The experiment owner explicitly approved incident closure with the documented coverage limits under §14. The single execution ledger is §12.
-
-Retained structural completion summaries were also inspected: N450 records zero Databricks processing jobs and deferred final M1 fit; N750/N500 explicitly record `CLEAN_QUERYABLE: NOT_RUN`, `Stability: NOT_RUN`, and zero Databricks processing jobs. These are historical checkpoint claims, not current live dependency certification.
-
-## 14. Closure criteria and owner review
-
-**Decision date:** 2026-10-21 (UTC+08:00; exact original decision time NOT CAPTURED). Authority: explicit experiment-owner revised pre-Day-3 closure instruction and latest Step 6B in-place editing instruction.
-
-**Current incident status: CLOSED — explicit experiment-owner approval recorded.** Owner `lightnino` approved EDP-INC-2026-10-21-001 under all seven revised closure gates at `2026-10-21T20:00:05+08:00` in the [owner approval comment](https://github.com/lightnino/edp-lab/pull/18#issuecomment-6315368530). Actual closure recorded at `2026-10-21T20:03:15+08:00` (UTC+08:00). The approval expressly accepts the documented local enforcement scope, accepted test limitations and exclusion of historical unguarded remote paths. Rebuilding N450/C750 and new experiment runs are deferred to Day 3; Day 2 baseline retention/freeze acceptance remains separate. Historical C750/C1500/C2000 are not approved baselines. Retain all 800 legitimate local/remote RAW and reproducible references unless a separate future retention decision changes that requirement.
-
-### Seven closure gates — final evidence assessment
-
-| Gate | Final disposition after owner review | Exact supporting evidence / commit | Coverage boundary |
-| --- | --- | --- | --- |
-| 1. Approved Universe v1 | EVIDENCE COMPLETE — OWNER APPROVED | `metadata/source_universes/approved_v1/{manifest.json,owner_authorization.json,verification.json,approval_verification_v1.json}`; manifest digest `2198f9bad9c864bf339eff515992526e22efc4230160614a8f86daf3143f463c`; commit `319281c17d957dc8d442aaa63278df0d5a1596b3` | Exact 3,021; 41 reserved; 800 excluded; C300 300/300; membership grants no admission/freeze/processing authority. |
-| 2. SEC Bulk owner qualification | EVIDENCE COMPLETE — BOTH QUALIFIED | §§11, 13, 15–16; commit `787b473a78f5bcce814bafd8675ce1a9c5edea65` | Exact two retained ZIPs only; first-party manual official-SEC-download attestation; historical publisher receipts/digests unavailable; no registration/admission. |
-| 3. 800 retained RAW integrity and exclusion | EVIDENCE COMPLETE — VERIFIED WITH BOUNDED EXCLUSION | Step 4 report; `evidence/800_remote_verification/{objects.csv,validation.json,exclusions.json,dependencies.json,known_c300_consumers.json}`; commit `009da4fa053f4d5e3ab182fbe08510808688204c` | Presence/size/SHA 800/800; 79,225,793 bytes; zero unverified; both retry attempts retained; excluded from universe/C300, zero inspected M1 overlap; global live consumer lineage not exhaustive. |
-| 4. Deterministic admission/freeze/processing authorization | EVIDENCE COMPLETE — IMPLEMENTED LOCAL SCOPE | §13; `docs/source_universe_guardrail.md`; PR #17 merged `2988c62ce7e8a92547224e8212ed74f1cec2bc94` | Exact identity/hash/path, qualification/holdouts, roster/capacity, owner authority and fail-closed checks; explicit local bindings; remote/historical paths excluded, not certified guarded. |
-| 5. Agent authorization boundary | EVIDENCE COMPLETE — TESTED WITHIN HOST TRUST BOUNDARY | Guardrail Agent outcomes and authorization tests; PR #17, final head `6eabe9897aa3a452bce7f279c6f5b4bbf3240d6a` | No self-approval/version/cohort injection, denial override or acquisition for quota; reviewed host installation is trusted; no autonomous authority granted. |
-| 6. Tests and historical path restrictions | EVIDENCE COMPLETE — ACCEPTED TEST LIMITATIONS DISCLOSED | Guardrail exact commands, 29 individual dispositions, final correction; PR #17 and GitHub CI; §13 pre-merge audit basis | 295 PASS/23 SKIP; targeted 23 PASS/1 SKIP; original 28 PASS/1 environmental GOLD RAW SKIP; independent missing-authority PASS; historical/remote paths EXCLUDED pending separate integration/tests/approval. No live remote Guardrail verification. |
-| 7. Merged Guardrail, ledger and explicit owner closure | COMPLETE — OWNER APPROVED / CLOSED | PR #17 merged at `2026-10-21T11:50:59Z`, merge `2988c62ce7e8a92547224e8212ed74f1cec2bc94`; consolidated ledger §12; [owner approval comment](https://github.com/lightnino/edp-lab/pull/18#issuecomment-6315368530) | Explicit owner approval at `2026-10-21T20:00:05+08:00` covers all seven revised gates and documented limitations; closure recorded `2026-10-21T20:03:15+08:00` (UTC+08:00). |
-
-### Final incident closure update
-
-Update current status **in place**. Do not append superseding statuses or preserve obsolete current-state ledgers; Git retains earlier versions. Preserve genuine historical events, timestamps and evidence. This replaces the earlier append-only instruction.
-
-The experiment owner explicitly approved closure of this incident under the seven revised closure gates in the [owner approval comment](https://github.com/lightnino/edp-lab/pull/18#issuecomment-6315368530). The existing header, current status and final ledger have been updated in place to **CLOSED**, with separate actual approval and closure recording timestamps above. The final report is maintained directly on `main`; the owner approval remains linked above. No Day 3 admission, freeze, upload, profiling or processing is authorized by closure review.
-
-## 15. Step 2 SEC Bulk qualification recovery evidence
-
-Recorded at **2026-10-21T18:14:10.642456+08:00** (UTC+08:00; actual recording time, not original retrieval time). Worktree `/Users/lightnino/Projects/edp-lab-incident`, branch `incident/closure-evidence`, starting commit `d216390`. Scope: only `LOCAL_SEC_BULK_COMPANYFACTS` and `LOCAL_SEC_BULK_SUBMISSIONS`. Original observations and timestamps below describe the bounded investigation; current qualification reflects the subsequent owner disposition.
-
-**Outcome: investigation COMPLETE within the bounded search; final qualification for each candidate is QUALIFIED — OWNER_ATTESTED_PROVENANCE (§16).** No authentic contemporaneous publisher/retrieval evidence was recovered in the searched records. This is a bounded negative finding, not proof that no receipt exists elsewhere. Admission is not authorized or executed.
-
-| Required determination | LOCAL_SEC_BULK_COMPANYFACTS | LOCAL_SEC_BULK_SUBMISSIONS |
-| --- | --- | --- |
-| Approved universe membership | CONFIRMED: original v1 and v2 inventories each contain 3,021 entries and this exact candidate/hash | CONFIRMED: original v1 and v2 inventories each contain 3,021 entries and this exact candidate/hash |
-| Physical RAW integrity | Historical SHA-256 and full archive CRC PASS; 1,418,648,998 bytes; 40,924 members including 20,462 macOS sidecars | Historical SHA-256 and full archive CRC PASS; 1,974,869,371 bytes; 1,988,886 members including 994,443 macOS sidecars |
-| Retained SHA-256 | `23e23cc8293fa22abda2f7d0568ee5534e149b51a77cd40171c3d834278cc902` | `5c75f9d996d5eea8a0e05689e28079d069a80e1632cf87ba24021da7e48d465b` |
-| Current physical check | Stat matches historical size/inode `170344231`/mtime_ns `1792486764931827650`; current content hash/CRC NOT RERUN | Stat matches historical size/inode `170344669`/mtime_ns `1792487319033321638`; current content hash/CRC NOT RERUN |
-| Publisher provenance | OWNER_ATTESTED official SEC manual download; independent archive identity/edition unknown | OWNER_ATTESTED official SEC manual download; independent archive identity/edition unknown |
-| Retrieval receipt | MISSING in searched evidence; original receipt/acquisition UTC NULL; current `xattr -l` succeeds with empty output | MISSING in searched evidence; original receipt/acquisition UTC NULL; current `xattr -l` succeeds with empty output |
-| Admission qualification | **QUALIFIED — OWNER_ATTESTED_PROVENANCE** | **QUALIFIED — OWNER_ATTESTED_PROVENANCE** |
-| Historical gap / final disposition | No recovered original receipt; explicitly dispositioned by owner attestation | No recovered original receipt; explicitly dispositioned by owner attestation |
-| Owner qualification authority | RECORDED in §16; actual admission remains separately gated | RECORDED in §16; actual admission remains separately gated |
-
-RAW paths remain those in §13. No full ZIP scan was repeated: existing integrity evidence is unchanged and another CRC/hash pass cannot recover missing provenance. A matching stat is not a current byte-integrity proof. Before any future ingest/admission, verify the exact retained RAW hashes under the applicable contract.
-
-### Evidence recovered and contract assessment
-
-The original local availability observation is `2026-10-20T09:12:00.756956+00:00`. Its provenance objects explicitly record NULL acquisition UTC, original retrieval receipt and publisher archive identity, and empty historical extended attributes. Local move records establish same-volume relocation from Downloads, with preserved inode and hash; they are local custody evidence, not SEC retrieval receipts. `reuse-checks.json` records zero network requests for these candidates. The completion summary explicitly records 3,021 entries, 3,015 new verified publisher deliveries, four unchanged GOLD and **two existing unadmitted bulk candidates**, zero new admissions and zero freezes at that checkpoint. The v2 `publisher=SEC` label supplies no missing receipt: both inventories retain blank publisher URL and Source Instance ID.
-
-The organization report records that `Downloads/EDP` disappeared externally, an initial empty submissions ZIP was invalid, and the extracted submissions inventory was interrupted (`FileNotFoundError CIK0002142938.json`). These historical observations remain preserved. They do not invalidate the subsequently verified retained submissions ZIP, establish delivery equivalence, or supply an original publisher identity. Directory inventories and macOS sidecars cannot establish publisher completeness or archive authenticity.
-
-Contract applied: `docs/source_instance_identity.md` identity/admission rules 2–4 and `docs/corpus_admission_policy.md` require independent delivery provenance and receipt/retrieval evidence, with explicit present-day disposition of historical gaps; `docs/c300_acquisition_tooling.md` records approval of that minimum policy. `docs/whole_lab_sources.md` explicitly keeps locally intact bulk packages with unknown publisher identity unadmitted. Policy approval and universe membership do not constitute per-delivery admission authority. Recovered evidence alone did not satisfy the complete delivery-evidence contract; the subsequent explicit owner disposition supplies the authorized qualification outcome (§16). No separate upload failure, lost authenticated receipt, or code defect is established.
-
-### Bounded search and reproducible evidence locators
-
-Searched local `runs/local_inventory`, `runs/whole_lab`, and metadata/scripts, then filename/content matches across the original worktree's `runs`/metadata/scripts (excluding large per-file JSONL inventories, log files and bytecode in that final search). Inspected original availability, initial/current archive observations, relocation records, organization/interruption/reuse records, completion summary, inventory v1/v2 and the historical review-packet evidence references. No bulk retrieval receipt appeared among matching acquisition/delivery metadata. Downloads top-level names matching companyfacts/submissions/sec/receipt yielded none; no private browser database or unrelated personal history was searched. Both current ZIP extended-attribute listings were empty. No network calls or fresh downloads occurred.
-
-Local Git history search used `git log --all -G 'companyfacts|submissions.zip|LOCAL_SEC_BULK' -- .` and acquisition/inventory/provenance/receipt commit-subject searches. The literal-name search returned only incident commits `05854c25dfc7554e5f596b346b489ec304c80a97` and `7becc7c9e7390e0995b86d4a19fb08622f1aa542`; inspection of acquisition commit `1aaf56c02f7fd5b0e3304ec06893334c8c922aed` and preliminary manifest commit `62fc3c13646c0730ef49b4221003a6d39b7761de` recovered no original bulk receipt. Git history coverage is locally available refs only; no fetch or remote search. Operational evidence is intentionally untracked. No historical receipt/timestamp was reconstructed.
-
-Content hashes measured for small evidence files in this recovery (absolute paths under `/Users/lightnino/Projects/edp-lab/`):
-
-| Evidence path relative to that root | SHA-256 |
+| Closure criterion | Result and evidence |
 | --- | --- |
-| `runs/local_inventory/availability.json` | `74773ac1841c5f2d1a21be6c3a2cb1cc09cca78a15a8750865867d7d837e46ca` |
-| `runs/local_inventory/files-before.json` | `a68d0ebda9acf3dbc7fa306f1cb367b40243bdc2b93b1b9a016171421dab69e6` |
-| `runs/local_inventory/bulk-files-current.json` | `6edb340dbdd56209cb201d726e6da9b50a07885b44aa16ba61507d3925510c26` |
-| `runs/local_inventory/move-companyfacts-zip.json` | `5997f6969400d8484313f3ac6b44078b6a3e221f154662c293aa150d2fd48859` |
-| `runs/local_inventory/move-submissions-zip.json` | `c7cd765aa181668ff0ffae3a6612f640a519aa03f81b09ab0546684669bb43d7` |
-| `runs/local_inventory/inventory-interruption.json` | `ce64afd81f61b1da230dfbf1cf73aeb3405d03ccd0a1fb6dee7c9c0197b8d568` |
-| `runs/local_inventory/organization-report.md` | `84189f41211c3f115d50c0be2963cb0c8a1352c63df09ab727ebc0686dcca173` |
-| `runs/local_inventory/reuse-checks.json` | `0a7db1d07a5726965607661735caa36d2340c1824add93f4e1b12a3608c15d99` |
-| `runs/whole_lab/candidates-v1/completion-summary.json` | `43106d9625ae744966eef22afc06b5859f44655d9026e4f6b270cda4137000c8` |
-| `runs/whole_lab/candidates-v1/whole_lab_inventory_v1.csv` | `99f09213dc17d845a4ea6e97dfd6b99fabf7e4a7f5cb618253f7040fa706ca6c` |
-| `runs/whole_lab/layout-v2/whole_lab_inventory_v2.csv` | `1dcf16137a3a3cd0be3c4f025d9e6274e2a9bba34163e121004a97b1961bc45a` |
-| `runs/whole_lab/candidates-v1/review-inventory-549769752030eec1461560156f78a67ae52453a23d4a6277025d2e679db8444c.json` | `549769752030eec1461560156f78a67ae52453a23d4a6277025d2e679db8444c` |
-| `runs/whole_lab/candidates-v1/review-inventory-06a21f4efd01debe36eaffda8c79e3bac9e8a99643638c45672299ac30bdcd69.json` | `06a21f4efd01debe36eaffda8c79e3bac9e8a99643638c45672299ac30bdcd69` |
+| 1. Original Universe v1 | **APPROVED** — 3,021 members, 41 holdouts, 800 excluded, C300 300/300; §13, commit `319281c` |
+| 2. SEC Bulk qualification | **QUALIFIED** — both exact ZIPs by owner attestation; §11, commit `787b473` |
+| 3. 800 preservation and exclusion | **VERIFIED** — 800/800 remote presence/size/SHA, approved-universe and C300 exclusion; §13, commit `009da4f` |
+| 4. Deterministic authorization | **PASS (local scope)** — pinned admission/freeze/processing checks; PR #17 |
+| 5. Agent authority boundary | **PASS (local scope)** — no self-approval or denial override; PR #17 |
+| 6. Regression and historical paths | **ACCEPTED** — 295 PASS/23 SKIP, 29 original failures dispositioned, historical/remote execution excluded; §13 |
+| 7. Merge and owner signoff | **APPROVED / CLOSED** — PR #17 merged; owner approval linked above |
 
-### Final qualification disposition after recovery
-
-The bounded investigation identified a historical provenance gap, not RAW corruption or a newly established admission defect. The owner subsequently qualified both exact ZIPs by explicit first-party attestation (§16). Both remain in the original 3,021-member universe; neither qualification allocates IDs or executes admission. The historical 2,978 qualification limitation is resolved; the absolute non-holdout maximum remains 2,980. No inventory, cohort or RAW was changed by qualification.
-
-## 16. SEC Bulk owner attestation and qualification disposition
-
-**Attestation date: 2026-10-21. Recorded at 2026-10-21T18:23:20.756079+08:00 (UTC+08:00).** Authority: the experiment owner's explicit instruction in this conversation. The original message timestamp and a separate signed attestation artifact are unavailable; the recording time is not represented as the original message or acquisition time.
-
-The owner's statement is preserved verbatim here:
-
-> Record the experiment owner's explicit first-party SEC Bulk provenance attestation above in the existing incident/closure-evidence branch.
-
-The owner expressly directed:
-
-> Set Admission Qualification for BOTH sources to QUALIFIED — OWNER_ATTESTED_PROVENANCE, under the admission policy's explicit human disposition of missing evidence.
-
-This records first-party owner-attested provenance and explicit human disposition under `docs/corpus_admission_policy.md` and `docs/source_instance_identity.md`; it does not represent independently verified SEC download logs. The owner directly attested: “User-supplied Local ZIP — Downloaded Manually by Owner Directly from the Official SEC Website.” This is also pinned in the Approved Universe v1 qualification evidence; no acquisition date or SEC archive edition is inferred. The attestation is linked only to the two existing physical ZIP references below and does not establish a general waiver for other sources.
-
-| Existing inventory ID | Existing RAW path | Recorded SHA-256 | Final Admission Qualification |
-| --- | --- | --- | --- |
-| `LOCAL_SEC_BULK_COMPANYFACTS` | `/Users/lightnino/Projects/edp-lab/data/raw/sec/bulk/companyfacts.zip` | `23e23cc8293fa22abda2f7d0568ee5534e149b51a77cd40171c3d834278cc902` | **QUALIFIED — OWNER_ATTESTED_PROVENANCE** |
-| `LOCAL_SEC_BULK_SUBMISSIONS` | `/Users/lightnino/Projects/edp-lab/data/raw/sec/bulk/submissions.zip` | `5c75f9d996d5eea8a0e05689e28079d069a80e1632cf87ba24021da7e48d465b` | **QUALIFIED — OWNER_ATTESTED_PROVENANCE** |
-
-For **each** ZIP, original download receipts and independent publisher digests remain **UNAVAILABLE**. Original acquisition UTC and independently authenticated publisher archive/snapshot identity remain unknown. Owner attestation supplies the expressly authorized human provenance disposition; it does not recover or replace those missing historical artifacts. Historical local SHA/archive integrity remains verified as documented in §§13 and 15; no new full RAW hash/CRC verification is claimed. Current hash verification remains required before any future ingestion under the existing contract.
-
-**SEC Bulk Qualification Recovery: COMPLETE.** This owner disposition applies to these two exact candidates only. Original investigation findings, missing-evidence observations and historical timestamps are preserved; current qualification fields are reconciled in place. Both remain members of the original **3,021 Approved Universe**; qualification changes neither universe membership nor frozen cohort membership. The earlier 2,978 ceiling excluded these two unresolved candidates; this disposition resolves that qualification exclusion, without selecting a scale target or creating admitted instances.
-
-No Source Instance IDs were allocated, RAW modified, inventory/registry changed, or source admitted into a cohort. Qualification is separate from actual admission and parser/processing approval. Incident closure is now explicitly owner-approved under all seven revised gates (§14). Qualification evidence is retained in commit `787b473a78f5bcce814bafd8675ce1a9c5edea65` on `incident/closure-evidence`. The documentation publication was authorized by Step 6B; the separate explicit owner incident closure approval is recorded in §14.
