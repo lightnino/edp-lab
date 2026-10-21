@@ -12,6 +12,7 @@ from pathlib import Path
 
 from edp_lab.ingestion.gold_set import HEADERS, file_sha256
 from edp_lab.ingestion.source_identity import MANIFEST, _csv_rows, verify_source_identity
+from edp_lab.ingestion.universe import UniverseGate, enforce
 from edp_lab.ingestion.whole_lab import capture_body, load_plan
 
 VERSION = "C300_ADMISSION_V1"
@@ -21,12 +22,14 @@ def verify_registry(root, manifest, *, check_raw=False, frozen=None):
     """Validate additive REAL admissions; CONTROLLED requires a future reviewed version."""
     from edp_lab.ingestion.source_identity import ID_RE, SHA_RE, _safe_path
 
+    UniverseGate.load(root).verify_inventory(root)
     rows = _csv_rows(manifest, HEADERS)
     old = _csv_rows(root / MANIFEST, HEADERS)
     require(rows[:len(old)] == old, "Historical GOLD rows changed")
     require(len({r["source_instance_id"] for r in rows}) == len(rows), "Duplicate source ID")
     require(len({r["raw_path"] for r in rows}) == len(rows), "Duplicate RAW path")
     for row in rows:
+        enforce(root, row["source_instance_id"], row["raw_sha256"], row["raw_path"])
         require(ID_RE.fullmatch(row["source_instance_id"]), "Invalid source ID")
         require(SHA_RE.fullmatch(row["raw_sha256"]), "Invalid SHA-256")
         require(_safe_path(row["raw_path"]), "Invalid RAW path")
@@ -91,6 +94,7 @@ def verify_nested(selections, selected):
 def prepare(root: Path, output: Path):
     """Verify existing draft bytes and evidence; reserve IDs without admitting them."""
     root = root.resolve()
+    UniverseGate.load(root).verify_inventory(root)
     active_path = root / "runs/whole_lab/active-inventory.json"
     active = json.loads(active_path.read_bytes())
     inventory_path = sealed(Path(active["inventory"]), active["inventory_sha256"])
@@ -131,6 +135,7 @@ def prepare(root: Path, output: Path):
         physical = by_delivery[entry["delivery_candidate_id"]]
         require(physical["status"] == "VERIFIED_CANDIDATE_FOR_ADMISSION_REVIEW",
                 "Unresolved physical eligibility")
+        enforce(root, physical["inventory_id"], physical["sha256"], physical["final_path"])
         body = capture_body(directory, record["capture"], candidate["url"])
         require(body == Path(physical["final_path"]), "Active path mismatch")
         require(body.is_relative_to(root / "data/raw"), "Not existing RAW")
@@ -198,6 +203,7 @@ def prepare(root: Path, output: Path):
 
 def freeze(root: Path, packet_path: Path, authorization: Path, output: Path):
     """Publish only against explicit authority naming the exact reviewed packet hash."""
+    UniverseGate.load(root).verify_inventory(root)
     packet = json.loads(packet_path.read_bytes())
     authority = json.loads(authorization.read_bytes())
     require(authority.get("packet_sha256") == file_sha256(packet_path), "Authority scope mismatch")
@@ -210,6 +216,9 @@ def freeze(root: Path, packet_path: Path, authorization: Path, output: Path):
     members = packet["members"]
     require(len(members) == len({m['source_instance_id'] for m in members}) == 300,
             "Invalid reviewed membership")
+    for member in members:
+        enforce(root, member["delivery_id"], member["raw_sha256"], str(root / member["raw_path"]))
+        enforce(root, member["source_instance_id"], member["raw_sha256"], member["raw_path"])
     stamp = datetime.now(UTC).isoformat().replace("+00:00", "Z")
     old = _csv_rows(root / MANIFEST, HEADERS)
     rows = list(old)

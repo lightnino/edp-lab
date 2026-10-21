@@ -7,6 +7,7 @@ import zipfile
 from pathlib import Path
 
 from edp_lab.ingestion.gold_set import file_sha256
+from edp_lab.ingestion.universe import processing
 from edp_lab.parsers.c300_v1 import (
     MAX_LINE,
     PROFILES,
@@ -19,6 +20,8 @@ from edp_lab.profiling.source_reader import canonical_hash, execution_provenance
 
 
 def inspect(root: Path, registry: dict, approval: dict | None):
+    for binding in registry["bindings"]:
+        processing(root, binding, "C300")
     require_activation(registry, approval)
     if (registry['version'] != VERSION or registry['profiles'] != PROFILES
             or registry['max_line_bytes'] != MAX_LINE

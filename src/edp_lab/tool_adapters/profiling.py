@@ -10,6 +10,7 @@ from copy import deepcopy
 from dataclasses import asdict, dataclass, field
 from typing import Literal
 
+from edp_lab.ingestion.universe import ScopeDenied
 from edp_lab.profiling import tools
 from edp_lab.profiling.source_reader import SourceTable, canonical_hash
 
@@ -183,7 +184,10 @@ class ProfilingAdapters:
     materialized tables, not the separate reader's memory or ingestion cost.
     """
 
-    def __init__(self, sources: Mapping[str, SourceTable], grants: Mapping[str, set[str]]):
+    def __init__(self, sources: Mapping[str, SourceTable], grants: Mapping[str, set[str]],
+                 *, universe_gate=None, cohort="GOLD_V2"):
+        self._universe_gate = universe_gate
+        self._cohort = cohort
         self._sources = deepcopy(dict(sources))
         self._grants = {principal: frozenset(names) for principal, names in grants.items()}
 
@@ -211,6 +215,11 @@ class ProfilingAdapters:
                 errors.append("SOURCE_UNAVAILABLE")
             else:
                 table = self._sources[binding]
+                if self._universe_gate is None:
+                    raise ScopeDenied("MISSING_HOST_AUTHORITY")
+                self._universe_gate.check(table.source["source_instance_id"],
+                                          table.source["raw_sha256"],
+                                          table.source["raw_path"], cohort=self._cohort)
                 identity["provenance"] = table.provenance
                 if request.source != self.source_ref(binding):
                     status = "BLOCKED"
@@ -228,8 +237,14 @@ class ProfilingAdapters:
                         "PARTIAL" if questions else "SUCCESS")
                     if questions:
                         warnings.append("Some requested metrics remain NOT_COMPUTED")
+        except ScopeDenied as exc:
+            status, approval = "BLOCKED", True
+            errors.append(str(exc))
+            questions.append("Human Review: propose a separately approved universe/cohort version")
         except (ValueError, TypeError, KeyError, AttributeError) as exc:
+            status, approval = "BLOCKED", True
             errors.append(f"INVALID_REQUEST: {exc}")
+            questions.append("Human Review: request cannot supply or modify host authority")
         evidence = {} if result is None else {
             "source": result["source"], "config": result["config"],
             "provenance": result["provenance"], "profiling_run_id": result["run_id"],

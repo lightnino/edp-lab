@@ -15,6 +15,7 @@ from pathlib import Path
 import duckdb
 
 from edp_lab.ingestion.source_identity import verify_source_identity
+from edp_lab.ingestion.universe import ScopeDenied, UniverseGate, processing
 from edp_lab.profiling.parser_evidence import read_member
 from edp_lab.profiling.parser_fidelity import literal_records, load_candidate
 
@@ -70,8 +71,12 @@ class SourceTable:
     accounting: dict
     errors: tuple[str, ...] = ()
 
+    authorization_outcome: dict | None = None
+
     @property
     def parse_status(self):
+        if self.authorization_outcome:
+            return "BLOCKED"
         return "FAIL" if self.errors else "PASS"
 
 
@@ -130,6 +135,7 @@ def read_registered(root: Path, source_instance_id: str, logical_table: str, *,
     accounting = {"HEADER": 0, "DATA": 0, "FOOTER": 0}
     config, columns = {}, ()
     try:
+        UniverseGate.load(root).verify_inventory(root)
         freeze_bytes = (root / FREEZE).read_bytes()
         freeze = json.loads(freeze_bytes)
         candidate = load_candidate(root)
@@ -145,6 +151,7 @@ def read_registered(root: Path, source_instance_id: str, logical_table: str, *,
                       if (t["source_instance_id"], t["logical_table_name"])
                       == (source_instance_id, logical_table))
         source = dict(source)
+        processing(root, source, "GOLD_V2")
         columns = tuple(source["expected_header"])
         profile = candidate["profiles"][source["profile_id"]]
         config = {"profile_id": source["profile_id"], "resolved_profile": profile,
@@ -163,6 +170,9 @@ def read_registered(root: Path, source_instance_id: str, logical_table: str, *,
                 rows.append(tuple(fields))
                 locators.append({"source_line": line, "byte_offset": offset,
                                  "byte_length": len(original)})
+    except ScopeDenied as exc:
+        return SourceTable(columns, (), (), source, config, provenance, None, accounting,
+                           (), exc.outcome)
     except (OSError, ValueError, KeyError, TypeError, StopIteration) as exc:
         errors.append(f"{type(exc).__name__}: {exc}")
     return SourceTable(columns, tuple(rows), tuple(locators), source, config, provenance,
