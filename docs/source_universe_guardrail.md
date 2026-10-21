@@ -187,6 +187,12 @@ positive C300 inspection-boundary test reaches the independent parser approval g
 without parsing RAW. Future-version tests monkeypatch the trusted test deployment
 pin only; no request interface can do this. No live Databricks behavior is verified.
 
+Clean-checkout CI initially exposed one additional context dependency:
+`test_canonical_c300_metadata_without_raw` calls the gated registry and therefore
+requires pinned external owner/inventory evidence even though it reads no RAW. It
+now declares the same explicit prerequisite; absence skips the evidence-dependent
+check, while present altered evidence still fails. No production gate was bypassed.
+
 Additional full-suite findings fixed: reader integrity fixture missing authorization
 context, and direct profiling of a blocked reader result attempting metrics before
 schema availability. Three pre-existing Ruff findings in the universe proposal
