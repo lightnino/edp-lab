@@ -20,7 +20,7 @@ def stable_record(row):
     return {k: v for k, v in row.items() if k != "run_id"}
 
 
-def verify_parquet(root, binding, path):
+def verify_parquet(root, binding, path, *, access=None):
     """Independent full-population interval/lexical oracle, not a second parser call.
 
     Parquet rows are checked in emitted physical order, preserving duplicates.
@@ -29,15 +29,16 @@ def verify_parquet(root, binding, path):
     import pyarrow.parquet as pq
     scoped = binding.get('profile_id') == exception.PROFILE
     if scoped:
-        exception.check_scope(root, binding)
-    if file_sha256(root / binding['raw_path']) != binding['raw_sha256']:
+        exception.check_scope(root, binding, access=access)
+    raw_path = root / binding['raw_path'] if access is None else access.path_for(binding)
+    if file_sha256(raw_path) != binding['raw_sha256']:
         raise ValueError('RAW_SHA256_MISMATCH')
     offset = count = data = fields = 0
     binding_hash = canonical_hash(binding)
     rebuilt, logical = hashlib.sha256(), hashlib.sha256()
     prefixes = {p["source_line"] for p in binding["prefix_evidence"]}
     header_line = 6 if binding["source_family"] == "SEC_EDGAR_DAILY_MASTER" else 1
-    with member_stream(root / binding["raw_path"], binding["archive_member"]) as source:
+    with member_stream(raw_path, binding["archive_member"]) as source:
         for batch in pq.ParquetFile(path).iter_batches(batch_size=2048):
             for row in batch.to_pylist():
                 count += 1
@@ -84,7 +85,7 @@ def verify_parquet(root, binding, path):
         assert not source.read(1)
     if scoped:
         assert count == 8537 and data == 8530 and fields == 42650
-    assert file_sha256(root / binding['raw_path']) == binding['raw_sha256']
+    assert file_sha256(raw_path) == binding['raw_sha256']
     assert offset == binding["uncompressed_bytes"]
     assert rebuilt.hexdigest() == binding["member_sha256"]
     return {"records_total": count, "records_data": data, "fields_data": fields,

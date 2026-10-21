@@ -32,10 +32,10 @@ def _require(condition, reason):
         raise ScopeDenied(reason)
 
 
-def validate_packet(root):
+def validate_packet(root, *, _verified_gate=None):
     """Read-only evidence validation, without RAW reads or execution authority."""
     root = Path(root)
-    gate = UniverseGate.load(root)
+    gate = UniverseGate.load(root) if _verified_gate is None else _verified_gate
     gate.verify_inventory(root)
     try:
         docs = {}
@@ -94,6 +94,9 @@ def authorize(root, action, bindings, *, cohort="N450"):
     dispatches a consumer, discovers a directory, submits a job or publishes output.
     """
     _require(action in ACTIONS and cohort in {"N450", "C750"}, "INVALID_COHORT_ACTION")
+    if action in {"processing", "remote_processing"} and cohort == "C750":
+        from edp_lab.materialization.n450_runtime import authorize_processing
+        return authorize_processing(Path(root), action, bindings)
     validate_packet(root)
     _require(OWNER_GRANT_SHA256 is not None, "OWNER_EXECUTION_GRANT_NOT_INSTALLED")
     try:
