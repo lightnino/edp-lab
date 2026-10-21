@@ -59,7 +59,7 @@ def test_synthetic_host_grant_positive_and_exact_input_negative(tmp_path, monkey
                  'raw_sha256': r['raw_sha256']} for r in roster]
     grant = {'status': 'OWNER_APPROVED', 'packet_sha256': auth.PINS,
              'universe': auth.UniverseGate.load(ROOT).scope_reference(),
-             'actions': ['admission'], 'cohort': 'N450', 'bindings': bindings}
+             'scopes': {'admission': {'cohort': 'N450', 'bindings': bindings}}}
     path = tmp_path / 'owner.json'
     path.write_text(json.dumps(grant))
     monkeypatch.setattr(auth, 'OWNER_GRANT_PATH', path)
@@ -78,3 +78,152 @@ def test_synthetic_host_grant_positive_and_exact_input_negative(tmp_path, monkey
     integrity.assert_not_called()
     with pytest.raises(ScopeDenied, match='ACTION_NOT_AUTHORIZED'):
         auth.authorize(ROOT, 'freeze', bindings)
+
+
+@pytest.fixture
+def publication_context(tmp_path, monkeypatch):
+    """Temporary metadata publications, real packet/gate, synthetic host owner pin.
+
+    RAW rehash functions are sentinels here: they were exercised independently;
+    no positive publication test claims real C300 RAW or live execution coverage.
+    """
+    import shutil
+
+    from edp_lab.ingestion import n450_admission as entry
+
+    side = json.loads(
+        (ROOT / 'metadata/source_universes/historical_cohort_bindings_v1.json').read_text())
+    paths = [Path(p) for p in side['evidence'] if not Path(p).is_absolute()]
+    paths += [Path('metadata/source_universes/historical_cohort_bindings_v1.json'),
+              Path('metadata/source_universes/approved_v1/manifest.json'),
+              Path('metadata/source_universes/approved_v1/owner_authorization.json')]
+    for path in paths:
+        (tmp_path / path).parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(ROOT / path, tmp_path / path)
+    shutil.copytree(ROOT / auth.PACKET, tmp_path / auth.PACKET)
+    roster = json.loads((tmp_path / auth.PACKET / 'roster.json').read_text())
+    n450 = [{'source_instance_id': r['source_identity'], 'raw_path': r['raw_path'],
+             'raw_sha256': r['raw_sha256']} for r in roster]
+    c750 = json.loads((tmp_path / auth.PACKET / 'c750-proposed.json').read_text())
+    grant = {'status': 'OWNER_APPROVED', 'packet_sha256': dict(auth.PINS),
+             'universe': auth.UniverseGate.load(tmp_path).scope_reference(),
+             'admitted_at_utc': '2026-10-21T00:00:00Z',
+             'registrations': [{'source_identity': r['source_identity'],
+                                'source_instance_id': f'SRC{900000+i:06d}'}
+                               for i, r in enumerate(roster)],
+             'scopes': {'admission': {'cohort': 'N450', 'bindings': n450,
+                                      'destination': str(entry.ADMISSION)},
+                        'freeze': {'cohort': 'C750', 'bindings': c750,
+                                   'destination': str(entry.FREEZE)}}}
+    admitted = entry.admission_files(tmp_path, grant)
+    frozen = entry.freeze_files(tmp_path, grant, admitted)
+    grant['scopes']['admission']['files_sha256'] = {n: auth.sha(b) for n, b in admitted.items()}
+    grant['scopes']['freeze']['files_sha256'] = {n: auth.sha(b) for n, b in frozen.items()}
+    grant_path = tmp_path / auth.OWNER_GRANT_PATH
+    grant_path.parent.mkdir(parents=True)
+
+    def install():
+        grant_path.write_text(json.dumps(grant))
+        monkeypatch.setattr(auth, 'OWNER_GRANT_SHA256', auth.sha(grant_path.read_bytes()))
+
+    install()
+    local = Mock()
+    historical = Mock()
+    monkeypatch.setattr(auth, 'verify_local_bytes', local)
+    monkeypatch.setattr(auth, 'verify_historical_bytes', historical)
+    return tmp_path, entry, grant, n450, c750, install, local, historical
+
+
+def test_actual_admission_and_freeze_synthetic_publication(publication_context):
+    root, entry, grant, n450, c750, _, local, historical = publication_context
+    protected = {p: p.read_bytes() for p in (root / 'metadata').rglob('*') if p.is_file()}
+    with pytest.raises(FileNotFoundError):
+        entry.freeze(root, c750, root / entry.FREEZE)
+    assert not (root / entry.FREEZE).exists()
+    assert entry.admit(root, n450, root / entry.ADMISSION)['status'] == 'PUBLISHED'
+    assert entry.freeze(root, c750, root / entry.FREEZE)['status'] == 'PUBLISHED'
+    local.assert_called()
+    historical.assert_called()
+    assert all(p.read_bytes() == raw for p, raw in protected.items())
+    for action, path in [('admission', entry.ADMISSION), ('freeze', entry.FREEZE)]:
+        assert {p.name: auth.sha(p.read_bytes()) for p in (root / path).iterdir()} == (
+            grant['scopes'][action]['files_sha256'])
+    with pytest.raises(ScopeDenied, match='PUBLICATION_ALREADY_EXISTS'):
+        entry.admit(root, n450, root / entry.ADMISSION)
+    with pytest.raises(ScopeDenied, match='PUBLICATION_ALREADY_EXISTS'):
+        entry.freeze(root, c750, root / entry.FREEZE)
+
+
+@pytest.mark.parametrize('action', ['admission', 'freeze'])
+@pytest.mark.parametrize('failure', ['missing', 'forged', 'outside', 'holdout', 'path', 'hash',
+                                     'duplicate', 'cohort', 'destination', 'output_hash', 'raw'])
+def test_publication_denials_before_writes(publication_context, action, failure, monkeypatch):
+    root, entry, grant, n450, c750, install, local, _historical = publication_context
+    bindings = json.loads(json.dumps(n450 if action == 'admission' else c750))
+    output = root / (entry.ADMISSION if action == 'admission' else entry.FREEZE)
+    if failure == 'missing':
+        monkeypatch.setattr(auth, 'OWNER_GRANT_SHA256', None)
+    elif failure == 'forged':
+        (root / auth.OWNER_GRANT_PATH).write_text('{"status":"OWNER_APPROVED"}')
+    elif failure in {'outside', 'holdout', 'path', 'hash', 'duplicate'}:
+        if failure == 'outside':
+            bindings[0]['source_instance_id' if action == 'admission' else 'source_identity'] = 'SRC000705'
+        elif failure == 'holdout':
+            held = next(m for m in auth.UniverseGate.load(root).document()['members'] if m['holdout'])
+            bindings[0]['source_instance_id' if action == 'admission' else 'source_identity'] = held['identity']
+        elif failure == 'path':
+            bindings[0]['raw_path'] = '/unauthorized'
+        elif failure == 'hash':
+            bindings[0]['raw_sha256'] = '0' * 64
+        else:
+            bindings[-1] = bindings[0]
+    elif failure == 'cohort':
+        grant['scopes'][action]['cohort'] = 'C300'
+        install()
+    elif failure == 'destination':
+        output = root / 'metadata/unauthorized'
+    elif failure == 'output_hash':
+        grant['scopes'][action]['files_sha256'] = {}
+        install()
+    elif failure == 'raw':
+        local.side_effect = ScopeDenied('RAW_INTEGRITY_MISMATCH')
+    # Freeze publication negatives need a completed *temporary synthetic* admission
+    # to reach output-scope validation. No actual repo admission is performed.
+    if action == 'freeze' and failure in {'destination', 'output_hash'}:
+        entry.admit(root, n450, root / entry.ADMISSION)
+    before = {str(p.relative_to(root)): p.read_bytes() for p in root.rglob('*') if p.is_file()}
+    reason = {'missing': 'OWNER_EXECUTION_GRANT_NOT_INSTALLED',
+              'forged': 'OWNER_GRANT_PIN_MISMATCH', 'cohort': 'ACTION_NOT_AUTHORIZED',
+              'destination': 'PUBLICATION_DESTINATION_MISMATCH',
+              'output_hash': 'PUBLICATION_BYTES_NOT_APPROVED',
+              'raw': 'RAW_INTEGRITY_MISMATCH'}.get(failure, 'EXACT_INPUT_SET_REQUIRED')
+    with pytest.raises(ScopeDenied, match=reason):
+        (entry.admit if action == 'admission' else entry.freeze)(root, bindings, output)
+    assert not output.exists()
+    assert {str(p.relative_to(root)): p.read_bytes() for p in root.rglob('*') if p.is_file()} == before
+
+
+def test_freeze_rejects_changed_admission(publication_context):
+    root, entry, _, n450, c750, _, _, _ = publication_context
+    entry.admit(root, n450, root / entry.ADMISSION)
+    (root / entry.ADMISSION / 'bindings.json').write_text('[]')
+    with pytest.raises(ScopeDenied, match='ADMISSION_BYTES_CHANGED'):
+        entry.freeze(root, c750, root / entry.FREEZE)
+    assert not (root / entry.FREEZE).exists()
+
+
+def test_freeze_rejects_historical_raw_failure(publication_context):
+    root, entry, _, _, c750, _, _, historical = publication_context
+    historical.side_effect = ScopeDenied('C300_RAW_INTEGRITY_MISMATCH')
+    with pytest.raises(ScopeDenied, match='C300_RAW_INTEGRITY_MISMATCH'):
+        entry.freeze(root, c750, root / entry.FREEZE)
+    assert not (root / entry.FREEZE).exists()
+
+
+def test_admission_rejects_registration_collision(publication_context):
+    root, entry, grant, n450, _, install, _, _ = publication_context
+    grant['registrations'][0]['source_instance_id'] = 'SRC000005'
+    install()
+    with pytest.raises(ScopeDenied, match='REGISTRATION_ID_COLLISION'):
+        entry.admit(root, n450, root / entry.ADMISSION)
+    assert not (root / entry.ADMISSION).exists()

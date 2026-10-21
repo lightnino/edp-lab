@@ -100,9 +100,9 @@ def authorize(root, action, bindings, *, cohort="N450"):
         _require(grant["packet_sha256"] == PINS, "GRANT_PACKET_MISMATCH")
         _require(grant["universe"] == UniverseGate.load(Path(root)).scope_reference(),
                  "GRANT_UNIVERSE_MISMATCH")
-        _require(action in grant["actions"] and cohort == grant["cohort"],
-                 "ACTION_NOT_AUTHORIZED")
-        _require(bindings == grant["bindings"], "EXACT_INPUT_SET_REQUIRED")
+        scope = grant["scopes"].get(action)
+        _require(scope is not None and cohort == scope["cohort"], "ACTION_NOT_AUTHORIZED")
+        _require(bindings == scope["bindings"], "EXACT_INPUT_SET_REQUIRED")
         roster = json.loads((Path(root) / PACKET / "roster.json").read_bytes())
         # C750 execution also needs a reviewed complete historical parser/binding
         # contract; Phase A does not manufacture one from the proposal.
@@ -120,15 +120,8 @@ def authorize(root, action, bindings, *, cohort="N450"):
             raise ScopeDenied("STORAGE_OR_PARSER_INTEGRATION_NOT_INSTALLED")
         verify_local_bytes(root)
         if action == "freeze":
-            gate = UniverseGate.load(Path(root))
-            side = json.loads(gate.bindings)
-            for row in side["bindings"]:
-                if row["identity"] in side["cohorts"]["C300"]["identities"]:
-                    path = Path(root) / row["raw_path"]
-                    with path.open("rb") as stream:
-                        actual = hashlib.file_digest(stream, "sha256").hexdigest()
-                    _require(actual == row["raw_sha256"], "C300_RAW_INTEGRITY_MISMATCH")
-        return {"status": "AUTHORIZED_PREFLIGHT_ONLY", "action": action,
+            verify_historical_bytes(root)
+        return {"status": "AUTHORIZED_PREFLIGHT_ONLY", "grant": grant, "action": action,
                 "cohort": cohort, "owner_grant_sha256": sha(raw)}
     except (OSError, KeyError, TypeError, ValueError) as exc:
         if isinstance(exc, ScopeDenied):
@@ -148,3 +141,17 @@ def verify_local_bytes(root):
         _require(actual == row["raw_sha256"] and path.stat().st_size == row["bytes"],
                  "RAW_INTEGRITY_MISMATCH")
     return result
+
+
+def verify_historical_bytes(root):
+    """Current complete C300 hash verification before new freeze publication."""
+    root = Path(root)
+    gate = UniverseGate.load(root)
+    side = json.loads(gate.bindings)
+    for row in side["bindings"]:
+        if row["identity"] in side["cohorts"]["C300"]["identities"]:
+            path = root / row["raw_path"]
+            _require(path.is_file() and not path.is_symlink(), "MISSING_OR_LINKED_C300_RAW")
+            with path.open("rb") as stream:
+                actual = hashlib.file_digest(stream, "sha256").hexdigest()
+            _require(actual == row["raw_sha256"], "C300_RAW_INTEGRITY_MISMATCH")
