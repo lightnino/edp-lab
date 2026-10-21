@@ -133,11 +133,11 @@
     "runs/section-2-6/discovery-v1/bindings.proposed.json": "cf2b8a5bd81ab2e23bbf5947a47eee9b5eaaa80492e7d0648f2f105308fef083"
   },
   "closeout_review": {
-    "freeze_status": "NOT_FROZEN",
-    "git_scope": "Selected Day 2 closeout contracts, SQL/fixture, reports, evidence references and FIN replay validation only; implementation worktree preserved; no push/merge",
-    "original_checklist": "Separate original Day 2 text not located; recorded eleven-artifact checklist, FIN study notes and actual-results study notes reconciled",
-    "retrieval_vs_retention": "Content retrieval verified; protected retention/recovery still UNVERIFIED",
-    "status": "BLOCKED",
+    "freeze_status": "FROZEN",
+    "git_scope": "Day 2 selected deliverables only; preserve 8d9d310 and unrelated work; merge only after CI",
+    "original_checklist": "Owner-supplied Day 2 \u00a710 authoritative",
+    "retrieval_vs_retention": "90-day CLEAN safeguards and bounded readback verified; independent disaster recovery not claimed",
+    "status": "COMPLETE_WITH_ACCEPTED_LIMITATIONS",
     "supporting_evidence": {
       "bytes": 367441,
       "members": {
@@ -320,6 +320,57 @@
     "uncompressed_member_bytes": 38399105140
   },
   "current_decision_log_sha256": "9f1ca232f71828168922a693b6d17c99cd6a297e8c620b3aadbfb9b317d8c55d",
+  "exit_check": {
+    "authority": "Owner-supplied Day 2 \u00a710, with explicitly accepted scoped outcomes",
+    "requirement_evidence_mapping": [
+      {
+        "evidence": "300 frozen sources; unchanged cohort/v3 hashes",
+        "requirement": "C300 admission and source identity",
+        "status": "PASS"
+      },
+      {
+        "evidence": "732 bindings; 314164116 DATA records; 3577289411 fields; pinned versions 0",
+        "requirement": "M1 CLEAN and QUERYABLE execution",
+        "status": "PASS"
+      },
+      {
+        "evidence": "732 scoped PASS each; historical gate and downstream multiset evidence",
+        "requirement": "Lossless 1\u20135",
+        "status": "PASS"
+      },
+      {
+        "evidence": "FIN_001 2/2 and FIN_002 1/1 exact fixture; other economic fields unmodeled",
+        "requirement": "Lossless 6",
+        "status": "SCOPED_PASS"
+      },
+      {
+        "evidence": "Structural COMPLETE; statistical 304/732 sets,3261/7746 envelopes,0.532% DATA records",
+        "requirement": "Structural and statistical profiling",
+        "status": "PARTIAL_ACCEPTED"
+      },
+      {
+        "evidence": "Measured/derived results in profile_summary_day2.md; missing telemetry retained",
+        "requirement": "Performance",
+        "status": "PARTIAL_ACCEPTED"
+      },
+      {
+        "evidence": "Historical accepted scopes reused; FIN positive/negative comparator; no certification of changed historical generator revisions",
+        "requirement": "Regression",
+        "status": "PASS_FOR_RECORDED_SCOPES"
+      },
+      {
+        "evidence": "11/11 mapped authoritative artifacts verified",
+        "requirement": "Write Tasks",
+        "status": "PASS"
+      },
+      {
+        "evidence": "90-day safeguards and readback PASS; owner accepts Free Edition workspace-loss risk; independent backup waived",
+        "requirement": "Retention, reproduction and owner-approved seal",
+        "status": "PASS_WITH_ACCEPTED_LIMITATIONS"
+      }
+    ],
+    "status": "COMPLETE_WITH_ACCEPTED_PARTIAL_RESULTS"
+  },
   "financial_evaluation": {
     "contract": "metadata/evaluations/fin_eval_v1.json",
     "contract_sha256": "0d8e28289b48bf84eea66d3b69b7a4574971cab73d436bcaed3b4080786e8f34",
@@ -334,8 +385,13 @@
     "status": "SCOPED_PASS",
     "verification": "runs/c300-m1/fin_eval_v1/replay-2/verification.json"
   },
-  "freeze_status": "NOT_FROZEN",
+  "freeze": {
+    "path": "metadata/freezes/O_C300_M1_v1/freeze.json",
+    "sha256": "db710f6152c6ffe33ee2d0371e7dadc8f9ff76e67af3a8e82d807a4c7923542c"
+  },
+  "freeze_status": "FROZEN",
   "global_day2_pass": false,
+  "historical_snapshots_note": "acceptance/completion retain original pre-seal execution receipts, including historical NOT_FROZEN fields; final status is top-level freeze_status and final seal",
   "lossless": {
     "1": {
       "PASS": 732
@@ -366,21 +422,16 @@
   "manifest_ref": "/Volumes/workspace/edp_lab/raw/c300-m1/day2_completed_recovery_20261021_v1/profile_run_manifest.json",
   "manifest_sha256": "d775ff48f124b9d7fdf631c96d78fe6b716e8ff340b91eb5f6f04e22f2df6b9f",
   "owner_review": {
-    "baseline_status": "BLOCKED",
-    "fin_evidence": "RETRIEVED_SHA256_VERIFIED; retention protection still UNVERIFIED",
-    "freeze_status": "NOT_FROZEN",
-    "original_notes": "Separate original text not located; supplied FIN notes and recorded original checklist reconciled",
+    "baseline_status": "FROZEN_SCOPED",
+    "fin_evidence": "RETRIEVED_SHA256_VERIFIED; mutable Volume durability risk accepted",
+    "freeze_status": "FROZEN",
+    "original_notes": "Owner-supplied Day 2 \u00a710 is authoritative; no further historical search required",
     "performance": "PARTIAL_MEASUREMENT_COVERAGE",
     "profiling": "PARTIAL",
     "regression": "REUSED_ACCEPTED_SCOPES_PLUS_FIN_PASS",
-    "remaining": [
-      "Verify retention owner/duration/expiry and deletion/lifecycle/VACUUM protections for Delta version-0, RAW and evidence",
-      "Demonstrate recovery/readback from protected storage against existing hashes/counts/lineage",
-      "Verify exact original Study Notes text when located",
-      "Owner acceptance of scoped PASS/PARTIAL outcomes before exclusive final freeze seal"
-    ],
-    "retention": "BLOCKED_UNVERIFIED",
-    "retention_remediation": "Owner-designated duration/expiry and in-place deletion/lifecycle/VACUUM/log protections, followed by verified protected readback/recovery; no large copy authorized",
+    "remaining": [],
+    "retention": "PASS_FOR_OWNER_APPROVED_EXPERIMENTAL_SCOPE",
+    "retention_remediation": "Approved safeguards verified; independent recovery waived; workspace-loss risk accepted",
     "statistical_profiling": {
       "binding_sets": 304,
       "bindings": 732,
@@ -394,11 +445,11 @@
     "write_tasks": "PASS_FOR_11_MAPPED_DELIVERABLES"
   },
   "performance_finding": "FND-DAY2-PERFORMANCE-TIMEOUT-001",
-  "ready_to_merge": false,
-  "recorded_at_utc": "2026-10-21T09:12:22.673646+00:00",
+  "ready_to_merge": true,
+  "recorded_at_utc": "2026-10-21T16:35:32.088787+00:00",
   "report_sha256": {
     "docs/profiling_notes.md": "466a766745a23dfd0e9ee34465c16e8ec3d31219d3bce7e22f7ad07f9e4ed9d0",
-    "reports/C300_baseline.md": "7ae85c4ba078a800ddc8ebfcf94eb9c1cc3e69f7d7982dbcca97136147646d35",
+    "reports/C300_baseline.md": "9166ee81414ebfe4dee1adc7401b358a8ad2321db16bb04c92232a1e107d286a",
     "reports/day2_performance_finding.md": "1537909046e14441a0df46b16bb7fd320aad7597d401d19230104ecb0642ac4b",
     "reports/profile_summary_day2.md": "f6737ba1d9a8cbe7613576e50b2a8e1462d976ba780970fce649f4a919c7302c"
   },
@@ -495,7 +546,66 @@
       "uri": "/Volumes/workspace/edp_lab/raw/c300-m1/stats_recovery_20261021_v2/full/profile_run_manifest.json"
     }
   },
-  "retention_status": "UNVERIFIED",
-  "status": "EXECUTION_VALIDATED_RETENTION_UNVERIFIED",
+  "retention": {
+    "backup": "STOPPED; no files deleted; incomplete local copies excluded from recovery claims",
+    "bytes": 140792,
+    "evidence_uri": "/Volumes/workspace/edp_lab/raw/c300-m1/final_freeze_20261022_v1/final-retention-evidence-v1.zip",
+    "history": "Original version 0 unchanged; version 1 contains only retention property metadata",
+    "limitations": [
+      "Not WORM: privileged owner can change properties, DROP tables or delete Volume files",
+      "RAW, view definitions and evidence remain mutable; workspace loss may destroy retained remote copies",
+      "90-day settings are not indefinite retention or a disaster-recovery guarantee",
+      "Independent checkpoint backup cancelled by owner; full reconstruction after workspace loss NOT_VERIFIED"
+    ],
+    "maintenance": "Review/extend preservation before 2027-01-18 UTC; no destructive VACUUM, overwrite, DROP or baseline writer changes",
+    "owner": "Baseline owner (explicit current conversation authorization)",
+    "predictive_optimization": "DISABLED effective catalog readback, all four tables",
+    "properties": {
+      "delta.appendOnly": "true",
+      "delta.deletedFileRetentionDuration": "interval 90 days",
+      "delta.logRetentionDuration": "interval 90 days"
+    },
+    "raw": "300/300 local parent hashes match frozen manifest; 7632930175 bytes",
+    "readback": "SHA256_MATCH",
+    "sha256": "a541a990643b907334fd24b4fb8fb9d687be99ea1c522d57caf0ad91c23ed75d",
+    "status": "PASS_FOR_OWNER_APPROVED_EXPERIMENTAL_SCOPE",
+    "tables": {
+      "workspace.edp_lab.clean_c300_m1_bindings_main_recovery_20261021_v4_full": {
+        "appendOnly": true,
+        "baseline_version": 0,
+        "readable": "PASS",
+        "retention": "interval 90 days",
+        "scope": "One bounded read per original snapshot; previous full-population integrity evidence reused",
+        "statement_id": "01f1cd6c-cc0b-1a29-a852-d2e7f79c1fa4"
+      },
+      "workspace.edp_lab.clean_c300_m1_bindings_num_recovery_20261021_v1_recovery": {
+        "appendOnly": true,
+        "baseline_version": 0,
+        "readable": "PASS",
+        "retention": "interval 90 days",
+        "scope": "One bounded read per original snapshot; previous full-population integrity evidence reused",
+        "statement_id": "01f1cd6c-d4a9-1f4b-8533-fe942c7e6818"
+      },
+      "workspace.edp_lab.clean_c300_m1_records_main_recovery_20261021_v4_full": {
+        "appendOnly": true,
+        "baseline_version": 0,
+        "readable": "PASS",
+        "retention": "interval 90 days",
+        "scope": "One bounded read per original snapshot; previous full-population integrity evidence reused",
+        "statement_id": "01f1cd6c-d91b-1be7-a7bc-492bfae187eb"
+      },
+      "workspace.edp_lab.clean_c300_m1_records_num_recovery_20261021_v1_recovery": {
+        "appendOnly": true,
+        "baseline_version": 0,
+        "readable": "PASS",
+        "retention": "interval 90 days",
+        "scope": "One bounded read per original snapshot; previous full-population integrity evidence reused",
+        "statement_id": "01f1cd6c-ddbf-15d1-a7d4-a13a5a266c63"
+      }
+    },
+    "verification_scope": "Four bounded original version-0 reads plus unchanged historical full-population integrity evidence and post-protection exact FIN replay; no full recovery"
+  },
+  "retention_status": "PASS_FOR_OWNER_APPROVED_EXPERIMENTAL_SCOPE",
+  "status": "FROZEN_SCOPED_OWNER_APPROVED",
   "version": "C300_M1_BASELINE_SUMMARY_V1"
 }

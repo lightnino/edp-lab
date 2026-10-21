@@ -178,73 +178,59 @@ source manifests, approval binding registry and source inventory hashes match
 existing baseline references. The decision log receives only DEC-000009; historical
 snapshot hashes remain historical, with the current digest indexed separately.
 
-## Final closeout review (before owner seal)
+## Final owner-approved closeout
 
-**Baseline disposition: BLOCKED, NOT_FROZEN.** All eleven mapped Write Task
-deliverables exist and contain their declared evidence. Structural Profiling is
-COMPLETE (732/732 bindings); Statistical Profiling is PARTIAL (304/732 sets,
-3,261/7,746 envelopes, 0.532% of DATA records). Performance is PARTIAL; actual
-MEASURED/DERIVED timings, rates and NOT_MEASURED telemetry appear in the existing
-`profile_summary_day2.md`. Partial statistical/telemetry outcomes are permissible
-under the approved scoped contract, subject to owner acceptance; missing protected
-retention is a technical freeze blocker. No full-population statistical PASS.
+**O_C300_M1: FROZEN**, within the historical lexical and FIN evaluation scopes.
+The owner's latest instruction authorizes the final seal after minimum retention
+verification and accepts the Statistical Profiling, Performance and Free Edition
+durability limitations. Earlier NOT_FROZEN/UNVERIFIED passages above describe
+historical review checkpoints, superseded by this closeout. The owner-supplied
+Day 2 §10 is authoritative; no alternative historical checklist is required.
 
-| Exit requirement | Status | Supporting evidence / remaining requirement |
+| Exit evidence mapping | Disposition | Evidence / scope |
 | --- | --- | --- |
-| Eleven Write Tasks | PASS for mapped deliverables | Existing mapping above; closeout write-task verification in supporting annex |
-| M1 execution and reconciliation | PASS within lexical scope | 732 gates, 314,164,116 records, 3,577,289,411 fields; original pinned manifests/multiset checks |
-| Lossless 1–5 | PASS within verified 732-binding scope | Historical M1 gates and downstream exact comparisons unchanged |
-| Lossless 6 | PASS within FIN_001/002 scope | 2/2 and 1/1 exact fixture matches; other economic fields unmodeled |
-| Structural Profiling | PASS / COMPLETE | 732 fingerprints (12 lexical hashes), 7,746 positions |
-| Statistical Profiling | PARTIAL | 428 missing binding sets/4,485 positions; NULL/key metrics NOT_COMPUTED |
-| Performance | PARTIAL | Scope-specific wall/rates and partial billing; no cold end-to-end, total I/O, final dollar cost or active-human timer |
-| Regression | PASS for recorded scopes | Accepted historical tests and exact FIN positive/negative replay/comparator; scope audit retained |
-| Git delivery | Local commit authorized; no push/merge | Selected closeout files only; remote main 90e067c retained unchanged; actual SHA reported by Git |
-| Original Study Notes text acceptance | BLOCKED for independent exact-text comparison | Separate original checklist not located; current FIN and actual-results notes plus recorded eleven-task checklist reconciled |
-| Present evidence retrieval | PASS | Existing exports/manifests/FIN archive SHA readbacks; small supporting annex covers otherwise local-only references |
-| Historical retention/recovery | BLOCKED | Protected owner/duration/deletion/VACUUM policy and protected recovery proof missing |
-| Final baseline seal / Day 2 Exit | BLOCKED | Requires verified retention and explicit owner acceptance before exclusive seal |
+| C300 admission and source identity | PASS | 300 frozen sources; unchanged cohort/v3 hashes |
+| M1 CLEAN and QUERYABLE execution | PASS | 732 bindings; 314164116 DATA records; 3577289411 fields; pinned versions 0 |
+| Lossless 1–5 | PASS | 732 scoped PASS each; historical gate and downstream multiset evidence |
+| Lossless 6 | SCOPED_PASS | FIN_001 2/2 and FIN_002 1/1 exact fixture; other economic fields unmodeled |
+| Structural and statistical profiling | PARTIAL_ACCEPTED | Structural COMPLETE; statistical 304/732 sets,3261/7746 envelopes,0.532% DATA records |
+| Performance | PARTIAL_ACCEPTED | Measured/derived results in profile_summary_day2.md; missing telemetry retained |
+| Regression | PASS_FOR_RECORDED_SCOPES | Historical accepted scopes reused; FIN positive/negative comparator; no certification of changed historical generator revisions |
+| Write Tasks | PASS | 11/11 mapped authoritative artifacts verified |
+| Retention, reproduction and owner-approved seal | PASS_WITH_ACCEPTED_LIMITATIONS | 90-day safeguards and readback PASS; owner accepts Free Edition workspace-loss risk; independent backup waived |
 
-### Retention inventory and smallest remediation
+Day 2 Exit is COMPLETE within these owner-accepted scopes, subject to safe Git
+integration and passing CI. This does not claim full statistical or performance
+measurement coverage, global economic reconciliation, or disaster recovery.
 
-| Artifact | Existing location and verified evidence | Protection status |
-| --- | --- | --- |
-| Original C300 RAW | `/Volumes/workspace/edp_lab/raw/c300-verified-v1/data/raw/`; all 300 parent hashes verified in historical Main physical/checkpoint evidence; 7,632,930,175 unique parent bytes | Managed Volume; retention owner, duration/expiry and deletion/lifecycle safeguards UNVERIFIED |
-| Four CLEAN Delta snapshots | Exact version-0 table names above; 100 Main + 20 NUM record files and two binding files; total recorded Delta footprint 9,787,831,179 bytes | Current catalog objects accessible; supported appendOnly feature is not enforcement; no explicit retention durations or VACUUM protections established |
-| QUERYABLE definitions | Records/fields catalog definitions checked against exact saved queryable.json SELECT text; FIN archive also preserves SHOW CREATE output | Definitions currently accessible and archived; live views remain mutable |
-| Profiles/performance/manifests | Existing combined/Main/NUM/reconciled/statistics Volume locations above; current export and manifest readbacks match original hashes | Accessible; protected retention still UNVERIFIED |
-| FIN SQL, fixtures, execution | Existing FIN archive URI/hash above; retrieved again with identical bytes | Accessible; protected retention still UNVERIFIED |
-| Supplemental pointers and historical regression | New small supporting annex indexed in O_C300_M1.json; source projection, local-only receipts, catalog observations and exact job terminal evidence | Uploaded/readback verified; same unresolved Volume retention protection |
+All four historical CLEAN tables have verified `delta.logRetentionDuration =
+interval 90 days`, `delta.deletedFileRetentionDuration = interval 90 days`, and
+`delta.appendOnly = true`. Effective predictive optimization is disabled. Version 0
+history is unchanged; version 1 is retention metadata only. Four bounded version-0
+reads succeeded. Existing population-wide reconciliation is reused, and FIN_001
+2/2 and FIN_002 1/1 match the exact fixture after protection. No full reprocessing
+or recovery was performed. RAW verification found 300/300 matching parent hashes
+(7,632,930,175 bytes). All 11 mapped Write Tasks retain their authoritative evidence.
 
-Smallest proposed remediation is to protect existing locations in place: designate
-the retention-policy owner and explicit duration/expiry; restrict baseline writers/
-deleters; exclude these tables from destructive VACUUM/optimization schedules and
-record sufficient Delta log/deleted-file retention; protect RAW/evidence lifecycle
-and deletion; then demonstrate protected readback/recovery against existing hashes,
-versions, counts and lineage. Catalog ownership alone is not policy ownership.
-Current catalog properties show predictive optimization INHERIT, not an established
-freeze exception. No properties, permissions, optimization settings or storage
-lifecycle were changed.
+Final protection SQL requests/results, before/after history, property/catalog
+readbacks, FIN witnesses and RAW verification are retained at
+`/Volumes/workspace/edp_lab/raw/c300-m1/final_freeze_20261022_v1/final-retention-evidence-v1.zip`
+(140,792 bytes; SHA-256 `a541a990643b907334fd24b4fb8fb9d687be99ea1c522d57caf0ad91c23ed75d`),
+with byte-identical readback. Original evidence URI/hash indices remain in
+`metadata/baselines/O_C300_M1.json`. Seal, authorization and references are in
+`metadata/freezes/O_C300_M1_v1/`.
 
-This proposal requires no full data copy or reprocessing. Existing footprint is
-approximately 17.421 GB (unique RAW plus four Delta table footprints, before logs/
-evidence); no incremental duplicate dataset was created. A full-copy fallback would
-add approximately that footprint plus logs/evidence and read/write operations;
-dollar cost is NOT_MEASURED and such a copy is not authorized. In-place protection
-can add log/deleted-file retention storage over time; that increment is not measured.
+Retention owner: baseline owner under the explicit current conversation approval.
+Review/extend protection before 2027-01-18 UTC; avoid destructive VACUUM, DROP,
+overwrite and baseline writer changes. These safeguards are not WORM. Privileged
+owners can override them; RAW, SQL views and evidence remain mutable. Workspace
+loss remains an accepted risk. Full independent recovery is NOT_VERIFIED and is
+explicitly waived as a freeze prerequisite. The incomplete checkpoint backup is
+excluded from recovery claims. Downloads stopped; no files were deleted.
 
-Before proceeding, the owner must accept the declared scoped PASS/PARTIAL outcomes,
-name the retention authority and protected duration, and authorize the concrete
-in-place safeguards/recovery check. Supply the original Day 2 checklist or explicitly
-accept the recorded checklist as the review authority. Only after technical retention
-verification and final owner approval may the existing freeze convention issue a
-new exclusive seal. No frozen-baseline artifact is prepared while Step 3 is blocked.
-
-Reproduction: retrieve the indexed FIN archive and supporting annex with
-`databricks fs cp dbfs:<uri> <local-path> -p edp-lab`, verify their indexed SHA-256
-before extraction, restore archive member paths, then run
-`.venv/bin/python scripts/verify_fin_eval_v1.py runs/c300-m1/fin_eval_v1/replay-2`
-for the saved SQL/fixture comparison. This is a saved-evidence check, not new SQL.
-Original model/rule/runtime bundles, RAW hashes, Delta versions and full-population
-validation remain pinned by the unchanged historical manifests. A future SQL replay
-must use the retained view definitions/pinned snapshots; a name alone is insufficient.
+Reproduction: retrieve indexed archives using `databricks fs cp dbfs:<uri>
+<local-path> -p edp-lab`; verify SHA-256 before extraction. Restore archive member
+paths and run `scripts/verify_fin_eval_v1.py` against saved replay-2 for the exact
+SQL/fixture comparison. SQL replay requires the saved view definitions and pinned
+version-0 snapshots. Historical runtime/code/input hashes and population checks
+remain in the original manifests; mutable object names alone are insufficient.
