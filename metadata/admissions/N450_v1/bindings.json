@@ -1,0 +1,2702 @@
+[
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/679d984b7ad1b595c007382a4d76aade8601150cda167f9c5ced70cb142f84ff/master.20110103.idx",
+    "raw_sha256": "3ce0063b8481331528631318ed7c9472fcd9ebb431dc1d3a229e80ac42b107e8",
+    "source_identity": "679d984b7ad1b595c007382a4d76aade8601150cda167f9c5ced70cb142f84ff",
+    "source_instance_id": "SRC010001"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/59a60011b2cb04983c2b156027c9131cc204bc2904637d61f9d45cc2b70a995d/master.20110104.idx",
+    "raw_sha256": "a27f7c78130a69affb40bf6fa37ed028af2be8ea76355a92dbd7083191e28ea2",
+    "source_identity": "59a60011b2cb04983c2b156027c9131cc204bc2904637d61f9d45cc2b70a995d",
+    "source_instance_id": "SRC010002"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/317634d043ca65481e478b67ff528847440803862824ca9e64fb3a792e2fb156/master.20110105.idx",
+    "raw_sha256": "1256b8bfc43b9a828ac5fb9dedf586a89b6ad87f788de515a109203ede767b84",
+    "source_identity": "317634d043ca65481e478b67ff528847440803862824ca9e64fb3a792e2fb156",
+    "source_instance_id": "SRC010003"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/44189c8ecd23b4987aab63add88a31d8030bc471ef29f27c5882ade0e6d426dc/master.20110106.idx",
+    "raw_sha256": "a49d7f35158d7ad2e12b7d3b16778a2d5fa431b452002d427fa9ae80a9404de9",
+    "source_identity": "44189c8ecd23b4987aab63add88a31d8030bc471ef29f27c5882ade0e6d426dc",
+    "source_instance_id": "SRC010004"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/d980d62677fe4a3f9183b02bd262b92bf1b8d8390d5bbdf927977ce36a44f3d4/master.20110107.idx",
+    "raw_sha256": "bd101af951a157c433ea8da19985868bbad7fd165a98f01c99fbe42d4dbbe986",
+    "source_identity": "d980d62677fe4a3f9183b02bd262b92bf1b8d8390d5bbdf927977ce36a44f3d4",
+    "source_instance_id": "SRC010005"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/9400757c8b98497fed4fa39d764861b867ce69d35c596ce5fc7668c1b6145c61/master.20110110.idx",
+    "raw_sha256": "31996c1b9c8bd0ff6baa439ca8c6d5e3d23cdefd863ca240252fedfabba6e55f",
+    "source_identity": "9400757c8b98497fed4fa39d764861b867ce69d35c596ce5fc7668c1b6145c61",
+    "source_instance_id": "SRC010006"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/bcc2a673f2d3dc632ca652d3be48f4c87d1de38227bf7e9e8b8855e1a48c8932/master.20110111.idx",
+    "raw_sha256": "7f7d5f797cedfe566ba64840459e097c23654b919e7e8bf2b67a36a6e1ba38f2",
+    "source_identity": "bcc2a673f2d3dc632ca652d3be48f4c87d1de38227bf7e9e8b8855e1a48c8932",
+    "source_instance_id": "SRC010007"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/e7e2d21091b7d207de6e5c433a62d855c8e0f442242e86dec6dc2d80dada1de3/master.20110112.idx",
+    "raw_sha256": "e3f25d89c09f2f0e30045181e657b3fd6316336bdfaff21ae593abf3b0312303",
+    "source_identity": "e7e2d21091b7d207de6e5c433a62d855c8e0f442242e86dec6dc2d80dada1de3",
+    "source_instance_id": "SRC010008"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/d3521e305497b6ebb7fe21144e2878d86cf34e52fd366cf1a38d98891273efa5/master.20110113.idx",
+    "raw_sha256": "f54b699082de742349066167091efe47d7dfa2ee4faab93292695d793e297768",
+    "source_identity": "d3521e305497b6ebb7fe21144e2878d86cf34e52fd366cf1a38d98891273efa5",
+    "source_instance_id": "SRC010009"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/ded2a7f55925ce838c6f0dc4202bed5a56f2cfbf92f83ebc85b9eef59ea960ce/master.20110114.idx",
+    "raw_sha256": "3494251cb829dc44e3676e0eb5f38ffca923a570885f3755b4fa413184eacf51",
+    "source_identity": "ded2a7f55925ce838c6f0dc4202bed5a56f2cfbf92f83ebc85b9eef59ea960ce",
+    "source_instance_id": "SRC010010"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/311b602e6ae54838ca1e607ea6832f95600718f79094f4090bc3eb7474610e9b/master.20110118.idx",
+    "raw_sha256": "ecd2c6c6aea28455da7c674e5bd3b72c7249267a767d2942faee92e1692bbad0",
+    "source_identity": "311b602e6ae54838ca1e607ea6832f95600718f79094f4090bc3eb7474610e9b",
+    "source_instance_id": "SRC010011"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/570577fab6fae66cb49dd73cd778727762be18bd3032d2b92a591cfc1acaef8c/master.20110119.idx",
+    "raw_sha256": "ec7820a465b1868d88891225cef573d9683153d1f0f65f4bb2936aebd8f2f15a",
+    "source_identity": "570577fab6fae66cb49dd73cd778727762be18bd3032d2b92a591cfc1acaef8c",
+    "source_instance_id": "SRC010012"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/70b4c3d7623ba23e27aef5c1be79d58e165ccf77a4ba4e80a2bd097b038f8661/master.20110120.idx",
+    "raw_sha256": "dec0bfc0432f2d8b7a06909ee3e421ccb75bb7653420ebf9be37136c2876585a",
+    "source_identity": "70b4c3d7623ba23e27aef5c1be79d58e165ccf77a4ba4e80a2bd097b038f8661",
+    "source_instance_id": "SRC010013"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/ebdeb2d466911996daca18d6f311ccb1ab074c5e5e1f5cc609cff65ee6e58e33/master.20110121.idx",
+    "raw_sha256": "295470ba6a32b02bd7a308922ed4e22bafdc8260657d063517c1d14ef2d64306",
+    "source_identity": "ebdeb2d466911996daca18d6f311ccb1ab074c5e5e1f5cc609cff65ee6e58e33",
+    "source_instance_id": "SRC010014"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/86d3de2677c957c7501d9026537fb9f64d80c703be900135a797e478553f1745/master.20110124.idx",
+    "raw_sha256": "e6a1cc0567c89a3c39bc6cbd2d396b434487c321f83fe46be1b87fa8f250e9e3",
+    "source_identity": "86d3de2677c957c7501d9026537fb9f64d80c703be900135a797e478553f1745",
+    "source_instance_id": "SRC010015"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/ff2ccaecf1dba76494155313691f018fbfe5726623b30bdee29e1ce0ad3e8987/master.20110125.idx",
+    "raw_sha256": "b7e7a2bc54e1c6ba1e1a5768d34098fbac8b07e7ae1313b5cadb13ee5e82d281",
+    "source_identity": "ff2ccaecf1dba76494155313691f018fbfe5726623b30bdee29e1ce0ad3e8987",
+    "source_instance_id": "SRC010016"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/0d791d8bd3eb19dbe8bbed0d47d8b04b45749cea52027b775319bccc42cc020e/master.20110126.idx",
+    "raw_sha256": "ce9024f49d1d415474e67163bd04dea452b83ff40e6f45b569a7b7141316797d",
+    "source_identity": "0d791d8bd3eb19dbe8bbed0d47d8b04b45749cea52027b775319bccc42cc020e",
+    "source_instance_id": "SRC010017"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/8c111424b09c0a3c3d3207e5944b1b197f5fe3f35f15c3e92008575dc3b01ada/master.20110127.idx",
+    "raw_sha256": "de9b02f83868136c35505e7bc55dcee806766bb0b29ab4aa79e39b8032e382b1",
+    "source_identity": "8c111424b09c0a3c3d3207e5944b1b197f5fe3f35f15c3e92008575dc3b01ada",
+    "source_instance_id": "SRC010018"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/947a0f579be36bae9742f2a6a7eb94cb41ffa955115ff70c0e151864121c8733/master.20110128.idx",
+    "raw_sha256": "19f61842e33545552636f31d34cc89219a972a0a1e54fb9d22de886db40e5255",
+    "source_identity": "947a0f579be36bae9742f2a6a7eb94cb41ffa955115ff70c0e151864121c8733",
+    "source_instance_id": "SRC010019"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/273982e5b22b35e9f4af8df330a68b90c01fc40a7d412fbe437172ed2d28ddee/master.20110131.idx",
+    "raw_sha256": "2fb889738d877c8d82dee8c25535f28dc864a66721281f07b4dff7103e2e9d84",
+    "source_identity": "273982e5b22b35e9f4af8df330a68b90c01fc40a7d412fbe437172ed2d28ddee",
+    "source_instance_id": "SRC010020"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/a259622f1fdd5633a6fc7b7c65bac4d2e556becb9898c7682595ea10091d70f6/master.20110201.idx",
+    "raw_sha256": "80fdf08a4220a49d5df78c30a4ccf3f4e919e3930773f3fc13e682ef87919360",
+    "source_identity": "a259622f1fdd5633a6fc7b7c65bac4d2e556becb9898c7682595ea10091d70f6",
+    "source_instance_id": "SRC010021"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/65b07e3469d7965b74116f77bef18a969830b7c6eaf8b10b6bb831241166aeca/master.20110202.idx",
+    "raw_sha256": "6bbbdab05cdeab018da865a644bbb838d2e04fd25a6ffd2d5fc41f8cb334b5cb",
+    "source_identity": "65b07e3469d7965b74116f77bef18a969830b7c6eaf8b10b6bb831241166aeca",
+    "source_instance_id": "SRC010022"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/a2fa14ff9141b4210de58d7eea63d3252590de1e6cf0341309644b30d0b7f32b/master.20110203.idx",
+    "raw_sha256": "eb79de5459e9a27ce8009480191cc2bfae3aee1392afee35063bcf41fd21d9ef",
+    "source_identity": "a2fa14ff9141b4210de58d7eea63d3252590de1e6cf0341309644b30d0b7f32b",
+    "source_instance_id": "SRC010023"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/1a5ef84fa9a6a38b473df1c5694f50461f08eb427fb0ab53f42656c75d008bf7/master.20110204.idx",
+    "raw_sha256": "0afa5d1fa9e425806f30a2c9b8ae55dea752b68b7daa1ce7a6121f9297969269",
+    "source_identity": "1a5ef84fa9a6a38b473df1c5694f50461f08eb427fb0ab53f42656c75d008bf7",
+    "source_instance_id": "SRC010024"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/4c490b9cb13e50f34a274a7704f95bfba272ab0ce9c15b71431f6914cd6312de/master.20110207.idx",
+    "raw_sha256": "6168ce5d2d4c0580579f38c5c37bbc15f19ab7cb9fec2f5600bcd3072dfe9855",
+    "source_identity": "4c490b9cb13e50f34a274a7704f95bfba272ab0ce9c15b71431f6914cd6312de",
+    "source_instance_id": "SRC010025"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/c0b78668b81a80ae507bfb21e9f09b5f59c976a9f2b3128bd3a5fb1734c89be5/master.20110208.idx",
+    "raw_sha256": "0cd18e052433fc3c53d6ff1c54b23c1c460b2a65e4f9bd6618a4966bc54b092d",
+    "source_identity": "c0b78668b81a80ae507bfb21e9f09b5f59c976a9f2b3128bd3a5fb1734c89be5",
+    "source_instance_id": "SRC010026"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/5d5d15e31e64d96aedd0b321a7dc1b57637bd478f66e5a2132a5e75593750dd3/master.20110209.idx",
+    "raw_sha256": "ee610caa27679569a0c73343524523582d322bcc565f14b2a908fb72a627ef81",
+    "source_identity": "5d5d15e31e64d96aedd0b321a7dc1b57637bd478f66e5a2132a5e75593750dd3",
+    "source_instance_id": "SRC010027"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/b1203d7c86a3c275fe68f46b48811bfca92a3cfb8af66f0d9b91327c6499a659/master.20110210.idx",
+    "raw_sha256": "6b3737c9cf49fbe42847d6942b93ee205b65333832aec1489c5b9c1dad4ed250",
+    "source_identity": "b1203d7c86a3c275fe68f46b48811bfca92a3cfb8af66f0d9b91327c6499a659",
+    "source_instance_id": "SRC010028"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/1f4967fde37ee07773658b9d3e130fc3964cb1762cc317fbd446621c28aa863c/master.20110211.idx",
+    "raw_sha256": "dbd53d208dcb2f00aa5e42e0adb5a130eb6b5aa6314d8c4e0a01d2f11de87ace",
+    "source_identity": "1f4967fde37ee07773658b9d3e130fc3964cb1762cc317fbd446621c28aa863c",
+    "source_instance_id": "SRC010029"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/09b3a90835792075c440382d7149c808bed4d3618d8ee8b0682405881e97aa50/master.20110214.idx",
+    "raw_sha256": "a693557e287a9bc44196fa5eae17ccd2e9807824a9b1cb0b849b3a3cd77a6443",
+    "source_identity": "09b3a90835792075c440382d7149c808bed4d3618d8ee8b0682405881e97aa50",
+    "source_instance_id": "SRC010030"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/2de820938cec84e6b3dffd6e718d0fb7c1f3809b9ae860a5f81e188567041c35/master.20110215.idx",
+    "raw_sha256": "fe92bee93bd2ea8f020a456d1c51503c529372f866e75f39d78e8b3f64d5f2b9",
+    "source_identity": "2de820938cec84e6b3dffd6e718d0fb7c1f3809b9ae860a5f81e188567041c35",
+    "source_instance_id": "SRC010031"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/717c8d9fd0177cd4fe331f029b6f1badef6e480c80757e07a9f58e8f02178374/master.20110216.idx",
+    "raw_sha256": "a3d72e4bb9e589762543300d5d65b67f2a0905596a293dc29e8608c89e8bfb6e",
+    "source_identity": "717c8d9fd0177cd4fe331f029b6f1badef6e480c80757e07a9f58e8f02178374",
+    "source_instance_id": "SRC010032"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/02b729a29e3e1412b70943a4fb20e139a1bfc312929803d5e7b61aa0818945b9/master.20110217.idx",
+    "raw_sha256": "59498da8373d1fe013ffa347c64922a8a759d9bdb6548d4801d1bfb54e06c514",
+    "source_identity": "02b729a29e3e1412b70943a4fb20e139a1bfc312929803d5e7b61aa0818945b9",
+    "source_instance_id": "SRC010033"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/d02f573b1218a2ef65dcb2b7ad92292affe16e38565909ebf63d9e9d2dfad00f/master.20110218.idx",
+    "raw_sha256": "baa461fb48b73c5643114c5a8d55c4fd9e3347ea16fbbe438d08874d8015b06b",
+    "source_identity": "d02f573b1218a2ef65dcb2b7ad92292affe16e38565909ebf63d9e9d2dfad00f",
+    "source_instance_id": "SRC010034"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/0f59a946e6d830bf00eecca15ec9a2fe56dfb0f50191ae41d03f9dc9e0471524/master.20110222.idx",
+    "raw_sha256": "17f423dec4791c69de6e418f156d9954d2cf253c271d8cec42b7e03f3e054f9b",
+    "source_identity": "0f59a946e6d830bf00eecca15ec9a2fe56dfb0f50191ae41d03f9dc9e0471524",
+    "source_instance_id": "SRC010035"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/7b49dc66e6efc374d77ded1071a79e1b6f611a1da36115c18967adf00c17fa3e/master.20110223.idx",
+    "raw_sha256": "f210e17a422875c0d67d1302118ded7fab625ec08aa638abdc45309c63b580c0",
+    "source_identity": "7b49dc66e6efc374d77ded1071a79e1b6f611a1da36115c18967adf00c17fa3e",
+    "source_instance_id": "SRC010036"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/f6a7a03dd0fcf7607dd50cbca059031da8c224c55ef639df7a1cc5a566973e88/master.20110224.idx",
+    "raw_sha256": "a164eb7b1717c60dcd94477cf80be5f408a0293a09ccca41969a1e5e8d3f6ff6",
+    "source_identity": "f6a7a03dd0fcf7607dd50cbca059031da8c224c55ef639df7a1cc5a566973e88",
+    "source_instance_id": "SRC010037"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/9f8ddfba241759fb102784ad1a0a0659daf0089f8df8be13496f65aa41cdbd3b/master.20110225.idx",
+    "raw_sha256": "cbb6cdebe3e40a292aca9aebcea26553d0090bef70ae6b347f11bf2f019b8943",
+    "source_identity": "9f8ddfba241759fb102784ad1a0a0659daf0089f8df8be13496f65aa41cdbd3b",
+    "source_instance_id": "SRC010038"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/ec45ef87459aa336758f945c863418d6199fd2cde6f9a9058efadf1d866fbc30/master.20110228.idx",
+    "raw_sha256": "743caf0bc2705fc2111393f9f447391e9d09e4bd6e3ff705e287852d7ecf89a6",
+    "source_identity": "ec45ef87459aa336758f945c863418d6199fd2cde6f9a9058efadf1d866fbc30",
+    "source_instance_id": "SRC010039"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/eaa5094c2510d339828f47aafade17cfc20a42b164ba98c0ad015749d81aca81/master.20110301.idx",
+    "raw_sha256": "51530408e3b70440ae7f417289b22a2fb14959c3a17183145b373ff6a23f841e",
+    "source_identity": "eaa5094c2510d339828f47aafade17cfc20a42b164ba98c0ad015749d81aca81",
+    "source_instance_id": "SRC010040"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/d036ab2431565a203fe140e463585f9ad69fa92f1e95235bb64fec453868b44b/master.20110302.idx",
+    "raw_sha256": "eac205cb6d2eb97add326d9eb5fb3844c84f091e11b721f9c73d8120ee88ef5d",
+    "source_identity": "d036ab2431565a203fe140e463585f9ad69fa92f1e95235bb64fec453868b44b",
+    "source_instance_id": "SRC010041"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/5471f216344691995776372afc907fb9e474ac139be6d0223d550dc23a09e236/master.20110303.idx",
+    "raw_sha256": "f4d2c3e4ef1a478fbdcbf02aa276247ec5e5c57066fc6e1c64693cf82b2370e2",
+    "source_identity": "5471f216344691995776372afc907fb9e474ac139be6d0223d550dc23a09e236",
+    "source_instance_id": "SRC010042"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/58527f579a3a3c8c92b56d3dd14769501120a7bf5275139122f64c70442c611f/master.20110304.idx",
+    "raw_sha256": "102f8538f9a94dab061750fd24379a7fa976f553ff93a40e08d858bacaa3a667",
+    "source_identity": "58527f579a3a3c8c92b56d3dd14769501120a7bf5275139122f64c70442c611f",
+    "source_instance_id": "SRC010043"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/c71e4383dd11181919b05a182985a97cf20ce26aa51badebf8aca240e3ceb438/master.20110307.idx",
+    "raw_sha256": "a5f7e9c72a6f0bf05a1e1a34f2b1779912960984892dc4463cee5553ba8c0ab5",
+    "source_identity": "c71e4383dd11181919b05a182985a97cf20ce26aa51badebf8aca240e3ceb438",
+    "source_instance_id": "SRC010044"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/cfba7a229740a84cc311a4004cadd7c2700bb7c509ca0272f869499ec399b5d3/master.20110308.idx",
+    "raw_sha256": "f608d6a6f9d76d4e5a805bb20d56c84f72833cb7d9e7cc79b1133fb0253f9e4c",
+    "source_identity": "cfba7a229740a84cc311a4004cadd7c2700bb7c509ca0272f869499ec399b5d3",
+    "source_instance_id": "SRC010045"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/a69f913105824122c2418c4365799ecf61ea0a497afb8bb8add3360dadf10ba7/master.20110309.idx",
+    "raw_sha256": "9e4f295c2ff0ac8b5a1b3fb679b926ce08d93c18ee3211ee6582282da2f5c79e",
+    "source_identity": "a69f913105824122c2418c4365799ecf61ea0a497afb8bb8add3360dadf10ba7",
+    "source_instance_id": "SRC010046"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/9d6b895d9b4b31241cb58b73e450bb172f830baf638ab6cb37efb3a55bfcd9dc/master.20110310.idx",
+    "raw_sha256": "c3e20a417e4b5af4302ca8a8cb5c334ea6d2106454bdf1fcbbf5d39757938fdb",
+    "source_identity": "9d6b895d9b4b31241cb58b73e450bb172f830baf638ab6cb37efb3a55bfcd9dc",
+    "source_instance_id": "SRC010047"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/afd47785815eeb03f2b46f180b1b2675c6b22df820d2e14ba0ed0ed832605ec1/master.20110311.idx",
+    "raw_sha256": "c1308d5d499a52dbbc4699b8e7c92a463ca92ec9dad11671f4ca455e62384656",
+    "source_identity": "afd47785815eeb03f2b46f180b1b2675c6b22df820d2e14ba0ed0ed832605ec1",
+    "source_instance_id": "SRC010048"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/bfabdc0e6337368822d8fce630019dc74678e53a7f084e5916992a2cdc3c21da/master.20110314.idx",
+    "raw_sha256": "9c81e0d0fa4f75c913d31fe74f2a97ba482cf37227578ba7e597a09c72e2863e",
+    "source_identity": "bfabdc0e6337368822d8fce630019dc74678e53a7f084e5916992a2cdc3c21da",
+    "source_instance_id": "SRC010049"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/8f25d6a2e379c93a8c53ac1201a9f1ebae22584e1b61afd13aa2b0210d6716b8/master.20110315.idx",
+    "raw_sha256": "7e2c6c5881b6b418e91d9ff73967be2f2d700f931c016d2a1c07162bcc181ca8",
+    "source_identity": "8f25d6a2e379c93a8c53ac1201a9f1ebae22584e1b61afd13aa2b0210d6716b8",
+    "source_instance_id": "SRC010050"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/c93f0f12ca017c30ea91441b435b57394f7282dc3d1f36387917ecdfe9475a05/master.20110316.idx",
+    "raw_sha256": "9b062fe7ad2ab6f365b55ad009fa95ba3fc9ed712cc16bba4540c1253ba45a84",
+    "source_identity": "c93f0f12ca017c30ea91441b435b57394f7282dc3d1f36387917ecdfe9475a05",
+    "source_instance_id": "SRC010051"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/94cf46918b64da289a7473f67894e0cfbc4df9e28a32785dcb0b3a32c9cb0a9d/master.20110317.idx",
+    "raw_sha256": "396a3c9b7b865b48ddec2cf371322a620bb8abea69de6a40708a5d056b3f492a",
+    "source_identity": "94cf46918b64da289a7473f67894e0cfbc4df9e28a32785dcb0b3a32c9cb0a9d",
+    "source_instance_id": "SRC010052"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/d9ba802e7593d69b6da628e82d2bf0b0f6d440857480ea0f41a7558b925316b2/master.20110318.idx",
+    "raw_sha256": "37538c9e6f7c458340408f483115f6cfe005ed9a0a6bc01b942ec7c5f61b5f16",
+    "source_identity": "d9ba802e7593d69b6da628e82d2bf0b0f6d440857480ea0f41a7558b925316b2",
+    "source_instance_id": "SRC010053"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/c5658dc1bcc1275a3cef48547a5eeed46dbf27359b533c1b43ede74f47422ac0/master.20110321.idx",
+    "raw_sha256": "afd6af69a36979f756afea45b82db291ddfd018ebcd0d1ffed518d481b37fcf9",
+    "source_identity": "c5658dc1bcc1275a3cef48547a5eeed46dbf27359b533c1b43ede74f47422ac0",
+    "source_instance_id": "SRC010054"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/614de631d6216790632419d6e42ac91c6f22f69ff8d5fbb5f5cda720eaf4b311/master.20110322.idx",
+    "raw_sha256": "01ba95dc9f54ec56eae4158ae6581641030fb0f2222117432268a4d54cc7b1e2",
+    "source_identity": "614de631d6216790632419d6e42ac91c6f22f69ff8d5fbb5f5cda720eaf4b311",
+    "source_instance_id": "SRC010055"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/f502ae16df7662d5df101497cd72edb3953c59a4acd1e94d18b4dae83a1676d6/master.20110323.idx",
+    "raw_sha256": "b9c2c8aacbe3e40373b3eb9242c8147cc1d4854f3e23d48dbc5aa029dd62de3c",
+    "source_identity": "f502ae16df7662d5df101497cd72edb3953c59a4acd1e94d18b4dae83a1676d6",
+    "source_instance_id": "SRC010056"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/d3ab5fc3ebb583bcfc10ed7c27bc0f7309a54fcf63ba3f75e79789aa31f14d53/master.20110324.idx",
+    "raw_sha256": "e8926380e421181fa43c60ac34626fb70e4db2f4609b0f11a77ae92603cb3d79",
+    "source_identity": "d3ab5fc3ebb583bcfc10ed7c27bc0f7309a54fcf63ba3f75e79789aa31f14d53",
+    "source_instance_id": "SRC010057"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/a1e295f8bb52e0892e8ee0ad4b796c90fa3285a2a1d2516dcf61c2035682d0cd/master.20110325.idx",
+    "raw_sha256": "5b4dd74e9883c4974f0ea8361f90d6cee4801eabc5fa0708b9b5dfafd46e6352",
+    "source_identity": "a1e295f8bb52e0892e8ee0ad4b796c90fa3285a2a1d2516dcf61c2035682d0cd",
+    "source_instance_id": "SRC010058"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/1dd03c0e498434f885fe191333686f77f370e3563bbfe5beab093baa088c8b49/master.20110328.idx",
+    "raw_sha256": "23300ff4394a8449fdc2e954af1bc0faec3de7818c26c256c80a8d31e0fbb75c",
+    "source_identity": "1dd03c0e498434f885fe191333686f77f370e3563bbfe5beab093baa088c8b49",
+    "source_instance_id": "SRC010059"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/622e4afc25ec2bcd2db3a15fcbe0a9aa425fd0871da44751bcf16c93982af715/master.20110329.idx",
+    "raw_sha256": "fe97897cf976987cfd0376febf1094981f4670d58f706e7f77889889b42e418b",
+    "source_identity": "622e4afc25ec2bcd2db3a15fcbe0a9aa425fd0871da44751bcf16c93982af715",
+    "source_instance_id": "SRC010060"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/be271d6fabd8148b76c69c70ba46593ff95f9f914ec1cece15b99425bced9167/master.20110330.idx",
+    "raw_sha256": "74caa2d5ff6cf465b1d5eb28b869d92531b8b81d2f5823f1a9d583709103f529",
+    "source_identity": "be271d6fabd8148b76c69c70ba46593ff95f9f914ec1cece15b99425bced9167",
+    "source_instance_id": "SRC010061"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/060198a5cb017f11d8f77d88090245420ea2ba3998329d7b5cb4c290fca52ed7/master.20110331.idx",
+    "raw_sha256": "9ce0064766022f4de39b41f8a2c59d7e98c0e06687cab89cb61cb77656a2199a",
+    "source_identity": "060198a5cb017f11d8f77d88090245420ea2ba3998329d7b5cb4c290fca52ed7",
+    "source_instance_id": "SRC010062"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/e96602df588e64657d943bd499d91e730f3a4e6eccee58babf2d5f6874e01283/master.20110401.idx",
+    "raw_sha256": "b6f3ebf76b606c82384c968863c0d276e8c00eb3982cf218163645a92c287143",
+    "source_identity": "e96602df588e64657d943bd499d91e730f3a4e6eccee58babf2d5f6874e01283",
+    "source_instance_id": "SRC010063"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/9e86a6890dde480075a684c3f772018f6a559c8536aa9705e1b1441a5aa67bdb/master.20110404.idx",
+    "raw_sha256": "a36257d03ae3ec2af0187356b8fbbf1595d83b5595091bf32cc7176347f5678f",
+    "source_identity": "9e86a6890dde480075a684c3f772018f6a559c8536aa9705e1b1441a5aa67bdb",
+    "source_instance_id": "SRC010064"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/1966360b1d15a204c014f3eb42a30f0e2ea40d30a5e2d82e251e8025fa852701/master.20110405.idx",
+    "raw_sha256": "f4e6e429b7acfc35dd01ba2c86618615653c1c75c98245ef9c2d34bd57bbf09a",
+    "source_identity": "1966360b1d15a204c014f3eb42a30f0e2ea40d30a5e2d82e251e8025fa852701",
+    "source_instance_id": "SRC010065"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/335bd8b4350c11b11177699c5eca2599fe023495f709b2916f21d66ea913c551/master.20110406.idx",
+    "raw_sha256": "957f53e91e4b1c8d4174e08d82faace6a184a238bbfff4ad81eeeffaa08f52b1",
+    "source_identity": "335bd8b4350c11b11177699c5eca2599fe023495f709b2916f21d66ea913c551",
+    "source_instance_id": "SRC010066"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/da28820417f72fbb108d44c44be2b0624b5ac2130ca820776528862214482b80/master.20110407.idx",
+    "raw_sha256": "8bffe45793c6928a8289ce5cccaf011ed7f8631f31b0ddf594f800c728a29395",
+    "source_identity": "da28820417f72fbb108d44c44be2b0624b5ac2130ca820776528862214482b80",
+    "source_instance_id": "SRC010067"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/3efe51898dbd1ffeb625f00893da30b209d70adad517f4a94bc7868f7b661887/master.20110408.idx",
+    "raw_sha256": "975373759f9336702485d19a7d7c143d2edf93883da1d36c189ec878dfeeeeb9",
+    "source_identity": "3efe51898dbd1ffeb625f00893da30b209d70adad517f4a94bc7868f7b661887",
+    "source_instance_id": "SRC010068"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/3430263628902fb3128a8dbce6fefc32004ae947b28b0f2c5128d46bc11d7028/master.20110411.idx",
+    "raw_sha256": "6a4f360b5c5ee0faaab984dfbdfd9c0543c268fb371a55a9a770e77fa37c90ac",
+    "source_identity": "3430263628902fb3128a8dbce6fefc32004ae947b28b0f2c5128d46bc11d7028",
+    "source_instance_id": "SRC010069"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/09c8a9a7646c1096775b66e126287f060908b165c8a2067c367cf100739bc5ee/master.20110412.idx",
+    "raw_sha256": "09a2f27c844899a7cef6a8c6525e1da66bcddafd58405c4d28f708fb974d5936",
+    "source_identity": "09c8a9a7646c1096775b66e126287f060908b165c8a2067c367cf100739bc5ee",
+    "source_instance_id": "SRC010070"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/6226d2cb6ee2448106496cd04f3650a5d66abf551fc77cdeb6e8e9c47d4a8e27/master.20110413.idx",
+    "raw_sha256": "09ecca1847954f2354c97d8df8399ee65f2c272ba8937d008076c30423dde831",
+    "source_identity": "6226d2cb6ee2448106496cd04f3650a5d66abf551fc77cdeb6e8e9c47d4a8e27",
+    "source_instance_id": "SRC010071"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/b93f9102183b3c6e04b93189d9233378f7023b81eec2b5f92b99aeed9acab025/master.20110414.idx",
+    "raw_sha256": "6a39c209c7c611941621105c2ce2df2cf1f25882dbd99202dc3f8830fd0c1601",
+    "source_identity": "b93f9102183b3c6e04b93189d9233378f7023b81eec2b5f92b99aeed9acab025",
+    "source_instance_id": "SRC010072"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/9398d9f31f12b4057aebd191695a5533558c4483c535ff4e6547391a7e54c305/master.20110415.idx",
+    "raw_sha256": "30976fd088e80e312bbd386828f42456afffad0466f7a06d1cc8eef92b60ac82",
+    "source_identity": "9398d9f31f12b4057aebd191695a5533558c4483c535ff4e6547391a7e54c305",
+    "source_instance_id": "SRC010073"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/d82887172a63cb0556ef0bff64417b57efcdc774cd30167ea1d4dfc447810e6d/master.20110418.idx",
+    "raw_sha256": "60bcb36515007e636e0a544850f60a39e6f0d3840df7a71eb9b00cf7b723c2d1",
+    "source_identity": "d82887172a63cb0556ef0bff64417b57efcdc774cd30167ea1d4dfc447810e6d",
+    "source_instance_id": "SRC010074"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/7b9b2b3bb765b0aea7a1be7e9bcc39233e6f4d12e5b03d95812e4ad645d44bae/master.20110419.idx",
+    "raw_sha256": "3256ac4beb131c85646ace366e92188fc7d319078c9997e7fc3130918b810412",
+    "source_identity": "7b9b2b3bb765b0aea7a1be7e9bcc39233e6f4d12e5b03d95812e4ad645d44bae",
+    "source_instance_id": "SRC010075"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/afc87cee9244c032e623b1bd8f05d2cb99ef5e1abbdb6a7f88ecdd4919439b10/master.20110420.idx",
+    "raw_sha256": "13a63d08709e96c12750ea2f8cda550d6f43064f8c8d358c7b735ace3ec3caf8",
+    "source_identity": "afc87cee9244c032e623b1bd8f05d2cb99ef5e1abbdb6a7f88ecdd4919439b10",
+    "source_instance_id": "SRC010076"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/0a11d933cc481924666b8914c94deb2b013cadecc6cf5cc1bfa7828b508a6723/master.20110421.idx",
+    "raw_sha256": "5288ef5864f227b1ad6fe78a577119148819d0ae35ee26b90fd6bb1d1f15929b",
+    "source_identity": "0a11d933cc481924666b8914c94deb2b013cadecc6cf5cc1bfa7828b508a6723",
+    "source_instance_id": "SRC010077"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/f1c91d9dba0f2837f0c7acdacf41f8d3d9085db356416583ad13e8bf9e1d4194/master.20110422.idx",
+    "raw_sha256": "7ac0f17626c94ee95e032b13a9d0ab901432fd1589fe5d5256b0e4af056a0456",
+    "source_identity": "f1c91d9dba0f2837f0c7acdacf41f8d3d9085db356416583ad13e8bf9e1d4194",
+    "source_instance_id": "SRC010078"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/bea3672fbd64b6596c9cdea53aa1ffa58f1bd68379e02a69c4bf8449d8e3b118/master.20110425.idx",
+    "raw_sha256": "f3e2eb0bc28c38fcfa4ac0ab588d308714b753a405da6fb79f89ad0095da2f00",
+    "source_identity": "bea3672fbd64b6596c9cdea53aa1ffa58f1bd68379e02a69c4bf8449d8e3b118",
+    "source_instance_id": "SRC010079"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/28962b7e79d01da67b146af52e59c8432f465549823a734a2bf7ef4f171b9878/master.20110426.idx",
+    "raw_sha256": "6a18e6d6755631be18bb8238ae00abc6e056cba06b032014d4ce8898ed8a3ba3",
+    "source_identity": "28962b7e79d01da67b146af52e59c8432f465549823a734a2bf7ef4f171b9878",
+    "source_instance_id": "SRC010080"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/9c648d1076e7df0e8a63be5a849ca2a035ef1d1eaff33053ac54aa99843ac670/master.20110427.idx",
+    "raw_sha256": "08a4ca0c5f0dfb73aa2d262f50126df5badea9a18d8ecdc9efdeeab338b4ac1b",
+    "source_identity": "9c648d1076e7df0e8a63be5a849ca2a035ef1d1eaff33053ac54aa99843ac670",
+    "source_instance_id": "SRC010081"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/f5ec7f33c6b05a20b3d0b83cd6e9c6fc7b2e71c8742670e9884848fbed508dee/master.20110428.idx",
+    "raw_sha256": "59945d4a777f02ca43026c288c0c219b87667df15ec94c039edf867e89ac9a76",
+    "source_identity": "f5ec7f33c6b05a20b3d0b83cd6e9c6fc7b2e71c8742670e9884848fbed508dee",
+    "source_instance_id": "SRC010082"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/91a9621b59e098fcd21cc9fac75ce5f8a6534700f34f06a5af2a7b84004883b1/master.20110429.idx",
+    "raw_sha256": "92f893a96a3fd5e793afe87065c2a71b105358171be845f3476f875f0d8c6b3f",
+    "source_identity": "91a9621b59e098fcd21cc9fac75ce5f8a6534700f34f06a5af2a7b84004883b1",
+    "source_instance_id": "SRC010083"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/63fe72d9e0ad31a0797e8e4e4988fc576bfb11a865f53db22920a3476e48297e/master.20110502.idx",
+    "raw_sha256": "070de33bf947ebbe1e162a27761ab74b658b28a30ebe4652de31d96844d8390f",
+    "source_identity": "63fe72d9e0ad31a0797e8e4e4988fc576bfb11a865f53db22920a3476e48297e",
+    "source_instance_id": "SRC010084"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/c1f72f1fc80a87505b892b92c0f7d42b89bcf63c4284df9227be9b9db16e5fdf/master.20110503.idx",
+    "raw_sha256": "edd7671c07516afb192c9bf56f773a5ee0d7736042d3204786bb9cffc0b14b76",
+    "source_identity": "c1f72f1fc80a87505b892b92c0f7d42b89bcf63c4284df9227be9b9db16e5fdf",
+    "source_instance_id": "SRC010085"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/d15f6630f45b5ef9e89228dbd8f026188500db6056786a9c710fc172a9230cd3/master.20110504.idx",
+    "raw_sha256": "8ede57e319253b051dcc7e67cf7135a5309265ee2434578a0a1b16f2c5b22535",
+    "source_identity": "d15f6630f45b5ef9e89228dbd8f026188500db6056786a9c710fc172a9230cd3",
+    "source_instance_id": "SRC010086"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/d9772213e052a9f09a94bba17809e7bdd3a95e277f06bb036a9da76437602329/master.20110505.idx",
+    "raw_sha256": "409e410cabf660068fbb29dbcbcee73642e85c37af5c4b64cc5de7a319fbd057",
+    "source_identity": "d9772213e052a9f09a94bba17809e7bdd3a95e277f06bb036a9da76437602329",
+    "source_instance_id": "SRC010087"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/2117daf45dcbabd810bc58dc2d413ac0c8ca376471839d9fee74c35a10ba793e/master.20110506.idx",
+    "raw_sha256": "79d85f0ac879882733605d1314c626c186056e8318bcef8ba921d7205259a1a8",
+    "source_identity": "2117daf45dcbabd810bc58dc2d413ac0c8ca376471839d9fee74c35a10ba793e",
+    "source_instance_id": "SRC010088"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/78f19ac37d5ac5a3ea529fbfde290e6b33702ad9ddf29316d77f6ec80477d36e/master.20110509.idx",
+    "raw_sha256": "b8c13ddda750a5b8a122e88a0116d8f7d2687d5256177efe43c1a8bbb63eba1c",
+    "source_identity": "78f19ac37d5ac5a3ea529fbfde290e6b33702ad9ddf29316d77f6ec80477d36e",
+    "source_instance_id": "SRC010089"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/475dcd82bbc0e512ed17a2868f8ace6af0cc853c187af51f9f1e8692b1553f57/master.20110510.idx",
+    "raw_sha256": "e70f7f884bfe88866be84190e69e86215df5520b9616962ce8dce9d5365d1e89",
+    "source_identity": "475dcd82bbc0e512ed17a2868f8ace6af0cc853c187af51f9f1e8692b1553f57",
+    "source_instance_id": "SRC010090"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/c18378e493d2fefece790928ba652341abdc20a37ddbdde6130e2057a1b0418d/master.20110511.idx",
+    "raw_sha256": "3d35cb155a80db4138c405b498cda636b81221291ccb216ee1fd171e873b67e2",
+    "source_identity": "c18378e493d2fefece790928ba652341abdc20a37ddbdde6130e2057a1b0418d",
+    "source_instance_id": "SRC010091"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/b2b5b9da1942c33d8a69aed5b67c1a7a75df2e2c6efee0bb4f9c12b9c3cf28ba/master.20110512.idx",
+    "raw_sha256": "030dda9ae14da636fdfd9dbce6ea645e109049755996a0440799824cc83cd381",
+    "source_identity": "b2b5b9da1942c33d8a69aed5b67c1a7a75df2e2c6efee0bb4f9c12b9c3cf28ba",
+    "source_instance_id": "SRC010092"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/e1c2b11e1683a0e9ae57d43da7023d5bda00b5640a51c086b4eb90861a2318bc/master.20110513.idx",
+    "raw_sha256": "98b87dbc08ba1b491717454bd75f5d3205e46f4b98dda2fee1f73832ddddab27",
+    "source_identity": "e1c2b11e1683a0e9ae57d43da7023d5bda00b5640a51c086b4eb90861a2318bc",
+    "source_instance_id": "SRC010093"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/22791622dc87e2edf81d5dd1d340f08c8d9e97eb83f95b1197e06b4faed249fd/master.20110516.idx",
+    "raw_sha256": "26accad7a87d7ba0c3180b05b4dc569aa4597f1cca7e0fa1ebbb9d6d8932034c",
+    "source_identity": "22791622dc87e2edf81d5dd1d340f08c8d9e97eb83f95b1197e06b4faed249fd",
+    "source_instance_id": "SRC010094"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/4218b4ceff914a06c20046a2c93162c7e28f8f1d42a0d06feecc4d4c93575674/master.20110517.idx",
+    "raw_sha256": "4df89b7b5089500d4d8adb4d9262f80e9693862a6e7875a7ad1ddb7eb7f86214",
+    "source_identity": "4218b4ceff914a06c20046a2c93162c7e28f8f1d42a0d06feecc4d4c93575674",
+    "source_instance_id": "SRC010095"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/e099e7739d193598180550d40149b90a20507a55671b74d724b3bb0ca1fc87a6/master.20110518.idx",
+    "raw_sha256": "161f7742ed1406a253fc5d6d6e553f363917b051bc35ebc7d30dcc131e00a483",
+    "source_identity": "e099e7739d193598180550d40149b90a20507a55671b74d724b3bb0ca1fc87a6",
+    "source_instance_id": "SRC010096"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/13ea7bbe481afe861abe5ba1c2815b1cef951044192c572eb7d2649e7901693d/master.20110519.idx",
+    "raw_sha256": "dbca65aed8bf5984cfd848edb925746f37de4a77cfde8dd4762f9f3f81bab1cc",
+    "source_identity": "13ea7bbe481afe861abe5ba1c2815b1cef951044192c572eb7d2649e7901693d",
+    "source_instance_id": "SRC010097"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/cf29b36222b985d85392e76d463ea4c612b092348f007fb9ac0a130f87dd2e47/master.20110520.idx",
+    "raw_sha256": "a01c1e1de31e4ff92eb538ba1a524a42d0d0bd9805ea8568a49c897ec6f2d403",
+    "source_identity": "cf29b36222b985d85392e76d463ea4c612b092348f007fb9ac0a130f87dd2e47",
+    "source_instance_id": "SRC010098"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/57307910169a7c02d83ad244611b932c156ed7df56857d5c68ac858f366d1f85/master.20110523.idx",
+    "raw_sha256": "a5dfebaec8defd0e3425feadd04685124a6746dc448008d4e3e5cbac930f2397",
+    "source_identity": "57307910169a7c02d83ad244611b932c156ed7df56857d5c68ac858f366d1f85",
+    "source_instance_id": "SRC010099"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/7425c41b914ea6dd3737fbd3fba62c487931d1cce45cd5d76c7f119c42b692c5/master.20110524.idx",
+    "raw_sha256": "2e52be5ed14253c2546163edca05295427ae2843219bcbb61553fcd8b4391042",
+    "source_identity": "7425c41b914ea6dd3737fbd3fba62c487931d1cce45cd5d76c7f119c42b692c5",
+    "source_instance_id": "SRC010100"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/6d99b739ebd2e094158ec24c5937c42720a72fd809102bdc14c8b424aed707d5/master.20110525.idx",
+    "raw_sha256": "93315061c24be646b2773a1033ea9f8c7871ae44af002cd3f0ef4f98944d7ca7",
+    "source_identity": "6d99b739ebd2e094158ec24c5937c42720a72fd809102bdc14c8b424aed707d5",
+    "source_instance_id": "SRC010101"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/10c22c70cc414e50ca0f5626d89e24844722841159dce6d455813932e883f44e/master.20110526.idx",
+    "raw_sha256": "e05654e650d5b692d1fc58272ebbe5362910cb3d9931de14827101026bdc7862",
+    "source_identity": "10c22c70cc414e50ca0f5626d89e24844722841159dce6d455813932e883f44e",
+    "source_instance_id": "SRC010102"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/4d083a1a5fd588d335d595d671bf943292b80e95b0406f8cf66de7636fa4ca65/master.20110527.idx",
+    "raw_sha256": "6444b85261d56dcd4853fc383366b3341be6496e1f8f0fad3e9f859872926864",
+    "source_identity": "4d083a1a5fd588d335d595d671bf943292b80e95b0406f8cf66de7636fa4ca65",
+    "source_instance_id": "SRC010103"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/e16f6fe5f8f2c4e4fe7b666b0c9fcaecdddbe1f208148cd2a660cb331977eb70/master.20110531.idx",
+    "raw_sha256": "0e52c81ed67e189cf418f696e7f49f2c24d7eb6c356fceb7bdf49a283af45a57",
+    "source_identity": "e16f6fe5f8f2c4e4fe7b666b0c9fcaecdddbe1f208148cd2a660cb331977eb70",
+    "source_instance_id": "SRC010104"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/cb9df1239ce9544b7f622f235128c851fa1d39120b56e6c0249d4fcd4aa08473/master.20110601.idx",
+    "raw_sha256": "92f3fc2ee0996bf5ad42b88915a4514bda9fd0816086dd47d71614b5f36ce51e",
+    "source_identity": "cb9df1239ce9544b7f622f235128c851fa1d39120b56e6c0249d4fcd4aa08473",
+    "source_instance_id": "SRC010105"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/db98a11f1fefc1a9936f5240e90468b232301a33e5d2c51e62671664fd8cbc0d/master.20110602.idx",
+    "raw_sha256": "85f60b7393639bb9e7baa306d795306d77a3bbec16563017e88a42ee0091206e",
+    "source_identity": "db98a11f1fefc1a9936f5240e90468b232301a33e5d2c51e62671664fd8cbc0d",
+    "source_instance_id": "SRC010106"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/d6088263ac21f9d3333799c3bf3e3e71909fedcfad4a93da2edfdbe1ad9ee809/master.20110603.idx",
+    "raw_sha256": "23cbdf627c3f460c2a2a19ee914d055446f93d5e5403877d423795ea1a2a5349",
+    "source_identity": "d6088263ac21f9d3333799c3bf3e3e71909fedcfad4a93da2edfdbe1ad9ee809",
+    "source_instance_id": "SRC010107"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/898b1ec327e7dc48e114bacf1afffa866470f1f9408522402f8f098519b8f4c2/master.20110606.idx",
+    "raw_sha256": "28feebc1fe9e5f03ef8156e37f71b3cee8a5fddf27704a494496c417033af55e",
+    "source_identity": "898b1ec327e7dc48e114bacf1afffa866470f1f9408522402f8f098519b8f4c2",
+    "source_instance_id": "SRC010108"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/7e62541f171e0e79445ff9b7c6aae716781d648d77990056a1b95aff8628a16d/master.20110607.idx",
+    "raw_sha256": "2b6eb43bbfaf025ec4ffde891ffce84f4002f3fcda57de031d22c97991146682",
+    "source_identity": "7e62541f171e0e79445ff9b7c6aae716781d648d77990056a1b95aff8628a16d",
+    "source_instance_id": "SRC010109"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/ed65691bf7a7ae96e11854b839aeafc9f1730ba831c2ed9e807c2f06ac79f871/master.20110608.idx",
+    "raw_sha256": "f84f69285f412171423b285f59a7ee4d3c64b17130eae4139aac2d9b55da88cb",
+    "source_identity": "ed65691bf7a7ae96e11854b839aeafc9f1730ba831c2ed9e807c2f06ac79f871",
+    "source_instance_id": "SRC010110"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/b5bc54e13468313e4096c995e723968e1614b90d129cd2a626913f3211d8a0b8/master.20110609.idx",
+    "raw_sha256": "a815e88de438c834382d56424903de43fa8a4e3af8556376a5d2ba5f879105c0",
+    "source_identity": "b5bc54e13468313e4096c995e723968e1614b90d129cd2a626913f3211d8a0b8",
+    "source_instance_id": "SRC010111"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/73606062e332e0847410b5a407ff11ed9f7e32ab1f2ecc79d0a6fc7971908fe4/master.20110610.idx",
+    "raw_sha256": "fadd9b21e0c45733fa6e4858e4ab48ba80a4a33f8ca766a7179251c9f5f730b5",
+    "source_identity": "73606062e332e0847410b5a407ff11ed9f7e32ab1f2ecc79d0a6fc7971908fe4",
+    "source_instance_id": "SRC010112"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/7f4eaed19e6e9adea5a10be6ba90993faf2626d82d6d142dda0d6fca75c69eac/master.20110613.idx",
+    "raw_sha256": "2d003e290385493baad80bf21a353dec94bd57409fb4f43cf459edb0bfd860ca",
+    "source_identity": "7f4eaed19e6e9adea5a10be6ba90993faf2626d82d6d142dda0d6fca75c69eac",
+    "source_instance_id": "SRC010113"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/c29ce629971151e7e00688ba55b9647467c0c0b23e49d597ca9c118f168377da/master.20110614.idx",
+    "raw_sha256": "fd81f698bc509b2b57c3c363080ca82585e4856a5154122b17322cc88de8d23b",
+    "source_identity": "c29ce629971151e7e00688ba55b9647467c0c0b23e49d597ca9c118f168377da",
+    "source_instance_id": "SRC010114"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/415e6c3cdc3e0c88aae3dc7e2f2cf28d3ded7f3c116e4f9d31be348d9edd6256/master.20110615.idx",
+    "raw_sha256": "d0e8a8af1d1de4eaea6a4365fe199770c7f2112635cdfe43dace5669140107f2",
+    "source_identity": "415e6c3cdc3e0c88aae3dc7e2f2cf28d3ded7f3c116e4f9d31be348d9edd6256",
+    "source_instance_id": "SRC010115"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/0ed6e2b310ec6362caefaa9d0960289302e0739bd9f2a1a0df27525a02c032e5/master.20110616.idx",
+    "raw_sha256": "3feac63ef558c3ca21552ac4fc06a4ce8b9e1602a166c4aeacdecb7f4fd0fa89",
+    "source_identity": "0ed6e2b310ec6362caefaa9d0960289302e0739bd9f2a1a0df27525a02c032e5",
+    "source_instance_id": "SRC010116"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/3dda9df46afa7b8c2c7c42109277d17f616cbfc4fdf60d6dda73b9cb18096684/master.20110617.idx",
+    "raw_sha256": "8b7229c8a5e7f8ec46834f4d96af2077669322ee8ac64adc07aa34c28886e5a9",
+    "source_identity": "3dda9df46afa7b8c2c7c42109277d17f616cbfc4fdf60d6dda73b9cb18096684",
+    "source_instance_id": "SRC010117"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/fcdaaf6318a92533f4f6b946ff8746ee8126b823ae3da20ca32e049d6ca94358/master.20110620.idx",
+    "raw_sha256": "c8a4e66c64f48d5cf54e873c954d555af3e77c939d85ad091dcb6ce19172f95a",
+    "source_identity": "fcdaaf6318a92533f4f6b946ff8746ee8126b823ae3da20ca32e049d6ca94358",
+    "source_instance_id": "SRC010118"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/65295ede9516d539acb63d512eebd0fd002fdc200233a01a4075f58b83267602/master.20110621.idx",
+    "raw_sha256": "8057ab6df47fb8ffd7c9ef492e4c1140c8dbd3ca7ee0ecbdf1e0cfcdcaef1bab",
+    "source_identity": "65295ede9516d539acb63d512eebd0fd002fdc200233a01a4075f58b83267602",
+    "source_instance_id": "SRC010119"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/b3cfb17a14625050a1b90ee8af102d6a6a769732c62a21bf51ff964d2ab71595/master.20110622.idx",
+    "raw_sha256": "0eb9bfe0333ecc60b46bae6fc774ae65c95889ae6d443b4d3b8061470c8e2e7f",
+    "source_identity": "b3cfb17a14625050a1b90ee8af102d6a6a769732c62a21bf51ff964d2ab71595",
+    "source_instance_id": "SRC010120"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/88e17d6eeea4c7cf20c90f6d6334fe33e6f994a66d78d63d7c7c171c5a310ec4/master.20110623.idx",
+    "raw_sha256": "70d54ef8431d74b082f26d19f28d589cb63617a90c5a34fb6d494562507bc5b3",
+    "source_identity": "88e17d6eeea4c7cf20c90f6d6334fe33e6f994a66d78d63d7c7c171c5a310ec4",
+    "source_instance_id": "SRC010121"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/fe78664d768dff9b47555a327f70d4fe332177f372bfae614d2a464abfad8fff/master.20110624.idx",
+    "raw_sha256": "2bcff8368bd71a3a0c6b162862d9c245d06aefb1ad4fc3cdc74bc237ac2c7317",
+    "source_identity": "fe78664d768dff9b47555a327f70d4fe332177f372bfae614d2a464abfad8fff",
+    "source_instance_id": "SRC010122"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/b231c20b428499ea77838de2c2f15f34b350e663c77128740e638656d20c63d7/master.20110627.idx",
+    "raw_sha256": "85ebe1ade0a9d3204f6b0cb9b46fcc13f62bce26fe1dbb693129d89a336af468",
+    "source_identity": "b231c20b428499ea77838de2c2f15f34b350e663c77128740e638656d20c63d7",
+    "source_instance_id": "SRC010123"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/baeb69668389e82f8aef1b44e90024eee0826861d71fbb87e65897feb844be3b/master.20110628.idx",
+    "raw_sha256": "143ba5807c7dbaf58ee2c6afe1267afe93b34e8bc037a96a8c83a23e84989277",
+    "source_identity": "baeb69668389e82f8aef1b44e90024eee0826861d71fbb87e65897feb844be3b",
+    "source_instance_id": "SRC010124"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/7e72bdff6b9e62f76312446bafe5b35c2c0cc74a7ff19c43d66d6cdc133956d5/master.20110629.idx",
+    "raw_sha256": "15ea65a7dbc091c5e1e971233a25392a719058e9ebc6798712a091bceeef7648",
+    "source_identity": "7e72bdff6b9e62f76312446bafe5b35c2c0cc74a7ff19c43d66d6cdc133956d5",
+    "source_instance_id": "SRC010125"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/0e013c13fdb6d14c083ba62f84b30a386f562717aec894ed5555286f8cff883c/master.20110630.idx",
+    "raw_sha256": "58652ad3990a337b32fd3e486cd141e586c0c7fede23df9756d6391fa2fa57d3",
+    "source_identity": "0e013c13fdb6d14c083ba62f84b30a386f562717aec894ed5555286f8cff883c",
+    "source_instance_id": "SRC010126"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/6deab7620771e927f6566368439f3c5a7ff42a221edfe16aeee47e367d8d6814/master.20120103.idx",
+    "raw_sha256": "f0d453a79f3d78a5b601abae23b94c37dc101aff0dd632254d854473afdef040",
+    "source_identity": "6deab7620771e927f6566368439f3c5a7ff42a221edfe16aeee47e367d8d6814",
+    "source_instance_id": "SRC010127"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/d0dc0ef10dabfaff1d02bb75b5efae1ef047e938418f08fb8cb92c1cb332e7f7/master.20120104.idx",
+    "raw_sha256": "5869c2d2e76ec56302291d7812add9d8cc1a0b9788478050344e40d14927e71d",
+    "source_identity": "d0dc0ef10dabfaff1d02bb75b5efae1ef047e938418f08fb8cb92c1cb332e7f7",
+    "source_instance_id": "SRC010128"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/1e9e016dd6e4695c04cafba86946c04e72fa763457b7825158ffa5cc85fc126f/master.20120105.idx",
+    "raw_sha256": "efe295d869a3b7c1f11e5bb569543e3f5a9f3762e7d7542920ac7c90a5cbfbe1",
+    "source_identity": "1e9e016dd6e4695c04cafba86946c04e72fa763457b7825158ffa5cc85fc126f",
+    "source_instance_id": "SRC010129"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/25cf6c507fdd8286515600c5345dbcf7e02240eede97259f9a0547ea454bc6cb/master.20120106.idx",
+    "raw_sha256": "6863dd58aa58b6361283a08c61f178e27c88e3aebf0a649998d86f5d78c435d9",
+    "source_identity": "25cf6c507fdd8286515600c5345dbcf7e02240eede97259f9a0547ea454bc6cb",
+    "source_instance_id": "SRC010130"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/2516099cd9ad9f17d1d7e6fd02db7c7de45c081e4ecb9fbc2a7a0774c7034cda/master.20120109.idx",
+    "raw_sha256": "30bc6a77f167513793abbc6c54f6ee21d9fe4d8384522bf7a97655af0b749f24",
+    "source_identity": "2516099cd9ad9f17d1d7e6fd02db7c7de45c081e4ecb9fbc2a7a0774c7034cda",
+    "source_instance_id": "SRC010131"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/d26ee28073ca8b1ee9ed87eb30f6136677b53ea5daee87ad8d7cb7b1b8950975/master.20120110.idx",
+    "raw_sha256": "51e8cb25dc4d81498a79fc579018c452a9dd73b3716909e259fbb63a3430d8ff",
+    "source_identity": "d26ee28073ca8b1ee9ed87eb30f6136677b53ea5daee87ad8d7cb7b1b8950975",
+    "source_instance_id": "SRC010132"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/fb553d82b2e8d0ff5211120f96ad57a8c035ebdd655f3219e6c37c3b169970df/master.20120111.idx",
+    "raw_sha256": "a5886a0169ec57affe2c7dd5677c23eda916f17d69c1e00447e12e02b2d582b3",
+    "source_identity": "fb553d82b2e8d0ff5211120f96ad57a8c035ebdd655f3219e6c37c3b169970df",
+    "source_instance_id": "SRC010133"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/57393c3d4b4d7d200996c62c984198130a7b3f566670c8e096089fcdc7701a5c/master.20120112.idx",
+    "raw_sha256": "3b2cd708a521d83576e15eef95c3593c997f4190887521089a67a20d355b7255",
+    "source_identity": "57393c3d4b4d7d200996c62c984198130a7b3f566670c8e096089fcdc7701a5c",
+    "source_instance_id": "SRC010134"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/e5f961edf2a61a44fa3c11f95ebddf38310124675b2ca543a61341ffe6eb76df/master.20120113.idx",
+    "raw_sha256": "e8cc5f0936c1fc946fa99cbb69e464d19473fa9fc27f9fa0a937cfe508483b11",
+    "source_identity": "e5f961edf2a61a44fa3c11f95ebddf38310124675b2ca543a61341ffe6eb76df",
+    "source_instance_id": "SRC010135"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/4e05de94a3e33ab55d7270d437e05780c0ea1287dc598f460607980bbb521c8b/master.20120117.idx",
+    "raw_sha256": "62e8d0a13315b633186019f8d98e7496a39d0b477ce26dd7a8e64b4522ecb024",
+    "source_identity": "4e05de94a3e33ab55d7270d437e05780c0ea1287dc598f460607980bbb521c8b",
+    "source_instance_id": "SRC010136"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/88ae0ba3b5426994483c946d250e1efc86fcb3d86865899af8bd41a498cff8db/master.20120118.idx",
+    "raw_sha256": "f47c2918492b27fcde56d1a109f178ca0a06455c2fe0e76d3389e848366e2bd7",
+    "source_identity": "88ae0ba3b5426994483c946d250e1efc86fcb3d86865899af8bd41a498cff8db",
+    "source_instance_id": "SRC010137"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/bac3ea22c16c83c7a9c12d9441792dd466dd4d84e454bd8c9652ce70a74e4e12/master.20120119.idx",
+    "raw_sha256": "95d99983bdaf21549dba7c38189c9a9cd72657041e1aef56a0fd88251285301f",
+    "source_identity": "bac3ea22c16c83c7a9c12d9441792dd466dd4d84e454bd8c9652ce70a74e4e12",
+    "source_instance_id": "SRC010138"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/72176203418e2e586a3503edfd2d4501aef2262afd9565961e8b9199db0834fc/master.20120120.idx",
+    "raw_sha256": "77b470b39f2ffb5df32eebf676f7306260ee18089276233e3b0ec1de46fcee45",
+    "source_identity": "72176203418e2e586a3503edfd2d4501aef2262afd9565961e8b9199db0834fc",
+    "source_instance_id": "SRC010139"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/d1ebc1c319221bde5c3b7a8820a8063b570a72d36ed7f4ffbabf85a1d88f3451/master.20120123.idx",
+    "raw_sha256": "c7a7ee3eabedd1323c154573ca04d14a4e774681467d121cb84e62ba35943460",
+    "source_identity": "d1ebc1c319221bde5c3b7a8820a8063b570a72d36ed7f4ffbabf85a1d88f3451",
+    "source_instance_id": "SRC010140"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/b47ec9ed87dcdff7769e93a481bf1cd021b5b44e7124c44d50bac85ca8428fad/master.20120124.idx",
+    "raw_sha256": "fdfe320030db4cca42b8a2d15dd6c1f77904d4db067d2f54f7396ffc7cb1e867",
+    "source_identity": "b47ec9ed87dcdff7769e93a481bf1cd021b5b44e7124c44d50bac85ca8428fad",
+    "source_instance_id": "SRC010141"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/003710b66ccd6376749ad4e4418bb77bedcd14d8220294b00f7011591de5f228/master.20120125.idx",
+    "raw_sha256": "11034611ae09462241e372d909939dcdc6866230f123a91e406fd2e9589bd31a",
+    "source_identity": "003710b66ccd6376749ad4e4418bb77bedcd14d8220294b00f7011591de5f228",
+    "source_instance_id": "SRC010142"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/2633879073b4a97f63ec214d2724432807a962a8c78810a051f619a27dd6b945/master.20120126.idx",
+    "raw_sha256": "c24e06b0e719b63e46bbfb51db3dcd906210f914d6c586c3db7e8ec72e51bf5a",
+    "source_identity": "2633879073b4a97f63ec214d2724432807a962a8c78810a051f619a27dd6b945",
+    "source_instance_id": "SRC010143"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/23f00156c632e7435f7138957be40e959ba678fb33b1b6ba632288dfd7490637/master.20120127.idx",
+    "raw_sha256": "0d83de538d9846f53bf1f31b87abc054a12a757958a0705dc3169e7bbe608524",
+    "source_identity": "23f00156c632e7435f7138957be40e959ba678fb33b1b6ba632288dfd7490637",
+    "source_instance_id": "SRC010144"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/4214f9628d4d72f04ca7d3edb2d62553a8cc9407ee501640aed2925f09b87954/master.20120130.idx",
+    "raw_sha256": "dcc7f8f66f50169b977126782bfe814429404e8b0a2733269d2c6d07de73755e",
+    "source_identity": "4214f9628d4d72f04ca7d3edb2d62553a8cc9407ee501640aed2925f09b87954",
+    "source_instance_id": "SRC010145"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/55a5fa427cdc7108a82f891efa06427ee2af83e00f4c29f3a667a2dda392d903/master.20120131.idx",
+    "raw_sha256": "8389a3389d0505c3422b7ef957dd90da936554de22977825c450a768679a5c58",
+    "source_identity": "55a5fa427cdc7108a82f891efa06427ee2af83e00f4c29f3a667a2dda392d903",
+    "source_instance_id": "SRC010146"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/bb4b82d908528a122b6c46b58c6d09f0e284ac94052709b538c5d6b948b7a9ef/master.20120201.idx",
+    "raw_sha256": "eaabc6680e539857a52d1fc25ea4e71ec36fd1949542e5e409aa0304a0958746",
+    "source_identity": "bb4b82d908528a122b6c46b58c6d09f0e284ac94052709b538c5d6b948b7a9ef",
+    "source_instance_id": "SRC010147"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/4d058fd6325577f9f5568326fd7f6a955e1245c27edfc935181cdba4c5bbb557/master.20120202.idx",
+    "raw_sha256": "e6b27926ed2ed2b0cd686698335e9b6660a30ec697e28654c51cea55e6f15c76",
+    "source_identity": "4d058fd6325577f9f5568326fd7f6a955e1245c27edfc935181cdba4c5bbb557",
+    "source_instance_id": "SRC010148"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/41bb2484aa16ee7a79cdfb7b4d244318dcd16d62ebf3332c06a814b2a5e84ed1/master.20120203.idx",
+    "raw_sha256": "969c1a5bf60530460cbfcf4924d9c81c0fc7ebcccacc3ce2f274be558e142726",
+    "source_identity": "41bb2484aa16ee7a79cdfb7b4d244318dcd16d62ebf3332c06a814b2a5e84ed1",
+    "source_instance_id": "SRC010149"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/ddbe55fab61ca21179dcc9eb419b78e89e32f32131c7ba7ba2694c5d74c2166c/master.20120206.idx",
+    "raw_sha256": "a2cd5f3610863f1e15c85f38c23a5e8fcc1780d55cc04d05075a4e52bb01820c",
+    "source_identity": "ddbe55fab61ca21179dcc9eb419b78e89e32f32131c7ba7ba2694c5d74c2166c",
+    "source_instance_id": "SRC010150"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/8df21a0caa6f45ab2e73daf6051dea066c52f12540509b8b03f9c2192a8fd6f0/master.20120207.idx",
+    "raw_sha256": "9a3901f0b8828ab6640462e89abdfb9e4ee4ae7c46f4a7a6cf348ba9edb2c435",
+    "source_identity": "8df21a0caa6f45ab2e73daf6051dea066c52f12540509b8b03f9c2192a8fd6f0",
+    "source_instance_id": "SRC010151"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/f50a40f11cee9d4cfbe6d50a55694e09e47e4085007bf0554219ad664d7ed309/master.20120208.idx",
+    "raw_sha256": "f15015e91c06bc8c02bf5d71ba81245b40657fc8147fcdf51323ccf0bd3a4226",
+    "source_identity": "f50a40f11cee9d4cfbe6d50a55694e09e47e4085007bf0554219ad664d7ed309",
+    "source_instance_id": "SRC010152"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/aca7c684ca7aeb18657efda824ed26ac844971a4f1976f328b5c8e4fe32200ec/master.20120209.idx",
+    "raw_sha256": "d9fa6121fd76a02ebbd443b5865ae5816cd857c871e5ae7882e7fba415c7589c",
+    "source_identity": "aca7c684ca7aeb18657efda824ed26ac844971a4f1976f328b5c8e4fe32200ec",
+    "source_instance_id": "SRC010153"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/f516bb7c82391eeb54117f115eb3eb56f8bfe1e819d68118d37bce1286cecd3b/master.20120210.idx",
+    "raw_sha256": "a09dcdf24f48ff225b3ae053ce76482f17c49bad6186ccfdb9407634ea3c1ee6",
+    "source_identity": "f516bb7c82391eeb54117f115eb3eb56f8bfe1e819d68118d37bce1286cecd3b",
+    "source_instance_id": "SRC010154"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/4ea78291e3a2d77d2f5c8722311228e351867b9485e26191869d693689621803/master.20120213.idx",
+    "raw_sha256": "1fbd91572eb0bc23f937174e8dc7a7db1508bb4b856adcf477d6a16103f28e3a",
+    "source_identity": "4ea78291e3a2d77d2f5c8722311228e351867b9485e26191869d693689621803",
+    "source_instance_id": "SRC010155"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/346abddd489fb3f246ce5a08119a8b9ffd7cc14629b588e90ee30707320d522c/master.20120214.idx",
+    "raw_sha256": "7dbe332f14ff15b503b74ba3cdf28584fd8893fe481937d9711dcd19636035b7",
+    "source_identity": "346abddd489fb3f246ce5a08119a8b9ffd7cc14629b588e90ee30707320d522c",
+    "source_instance_id": "SRC010156"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/33032b81c3f47e75e7894174509344fa7395885ed9276d840a5d949b73cb7a7c/master.20120215.idx",
+    "raw_sha256": "f2426d2747945bf3cd00910ab2d516b58df7d97aa41b5a33604ffdd635548b05",
+    "source_identity": "33032b81c3f47e75e7894174509344fa7395885ed9276d840a5d949b73cb7a7c",
+    "source_instance_id": "SRC010157"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/f6bf140eb53c8f176bcbf7b3def032efff9cf128ca4a52fbdd2c8dfeb50d447f/master.20120216.idx",
+    "raw_sha256": "aaa3ca9519b5ad88f81efe8737c7d8c5331f467a0ef46910784fce95e46d9889",
+    "source_identity": "f6bf140eb53c8f176bcbf7b3def032efff9cf128ca4a52fbdd2c8dfeb50d447f",
+    "source_instance_id": "SRC010158"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/c5e0aa6754f58f376bd985d5252d7502cc61b7e9b4ecb70035c5fd3feeef8ed9/master.20120217.idx",
+    "raw_sha256": "7fe91789d6ba406c45e06fd283eb3b528ee272f712e4a577b7533b5ca72a7a3f",
+    "source_identity": "c5e0aa6754f58f376bd985d5252d7502cc61b7e9b4ecb70035c5fd3feeef8ed9",
+    "source_instance_id": "SRC010159"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/32c069dffc61f516ea4e62772d8ea569c18f25fc7ab79f65ec3f4a8352029a87/master.20120221.idx",
+    "raw_sha256": "c8a38dad7d7a4ec7843f7c446021ef7ec55fe43371d228d093c924722477cf82",
+    "source_identity": "32c069dffc61f516ea4e62772d8ea569c18f25fc7ab79f65ec3f4a8352029a87",
+    "source_instance_id": "SRC010160"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/c43362238f534d89b5f6180a50d847b58b2363378fc4967c67d92a4d637261b9/master.20120222.idx",
+    "raw_sha256": "36108da8537b6b7754cfda4f48847f6691a482d083c1d2f3941a40d6b7728e08",
+    "source_identity": "c43362238f534d89b5f6180a50d847b58b2363378fc4967c67d92a4d637261b9",
+    "source_instance_id": "SRC010161"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/939dd2f6d6895906ddffbfad78ec557d35016bf7f42204fffc329c28f71f9813/master.20120223.idx",
+    "raw_sha256": "06de0a227cfc0c5f9b43b5094b329a1e85803636adab9cc9948f7a7d63201186",
+    "source_identity": "939dd2f6d6895906ddffbfad78ec557d35016bf7f42204fffc329c28f71f9813",
+    "source_instance_id": "SRC010162"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/27c5dad8f9a03573e50033b10788647211841a1f43336c2f2f6ff86e875b7a72/master.20120224.idx",
+    "raw_sha256": "2f58eccbfcc6ed4a98d6dd8daa1599c1d874e37c8d8564b8b140691d2f2e896b",
+    "source_identity": "27c5dad8f9a03573e50033b10788647211841a1f43336c2f2f6ff86e875b7a72",
+    "source_instance_id": "SRC010163"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/696f83cb4318d1ba6c392567443d3f8270ec88989a52376b7b3eaa522f96c360/master.20120227.idx",
+    "raw_sha256": "95c8f8e4c52bc7885e702d39fa80ae345a11304742079981bbd5dae2a5407110",
+    "source_identity": "696f83cb4318d1ba6c392567443d3f8270ec88989a52376b7b3eaa522f96c360",
+    "source_instance_id": "SRC010164"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/d34879c427d5737b5ee65f83d90632bceda5c2d2659a685f4b102bf6fd0d6795/master.20120228.idx",
+    "raw_sha256": "7015d555c1bef68b1cbe39a61b7d2816dd85b70a896533afe9834d33d1928895",
+    "source_identity": "d34879c427d5737b5ee65f83d90632bceda5c2d2659a685f4b102bf6fd0d6795",
+    "source_instance_id": "SRC010165"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/9cbd992843b900b6796e9b99ee5d6c1f1157c47d4c5e8ec2fd895ea169f14734/master.20120229.idx",
+    "raw_sha256": "097f613fe6837ae439b68fba8721e8dc3d8d27d0fe080b3f99be5701bb4d3d88",
+    "source_identity": "9cbd992843b900b6796e9b99ee5d6c1f1157c47d4c5e8ec2fd895ea169f14734",
+    "source_instance_id": "SRC010166"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/2891494a974f4d12cd576a433e786c50e9ef08baac58eaa9ee6c608538b19568/master.20120301.idx",
+    "raw_sha256": "6f7200e07c9a382ff26c32471f1fb71f97a4c376a6e0c67bc7311b71b9064567",
+    "source_identity": "2891494a974f4d12cd576a433e786c50e9ef08baac58eaa9ee6c608538b19568",
+    "source_instance_id": "SRC010167"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/a8c620baf46116e560baaef72b9b58968af82e377e4453f8e8cf0668f84df7f7/master.20120302.idx",
+    "raw_sha256": "363f8c4fcf193fadaafc459313c8f6e37e27627a5f2d81f0efb6a735215aae96",
+    "source_identity": "a8c620baf46116e560baaef72b9b58968af82e377e4453f8e8cf0668f84df7f7",
+    "source_instance_id": "SRC010168"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/c7a79adc52a052d53c75e1df1ec063c21c68c74686c19e70d564f24a5ce0929d/master.20120305.idx",
+    "raw_sha256": "8637e71593e39c2362c1ca284f973896beb51962ca30974979d2a16b47735657",
+    "source_identity": "c7a79adc52a052d53c75e1df1ec063c21c68c74686c19e70d564f24a5ce0929d",
+    "source_instance_id": "SRC010169"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/497b1fe323574f8846bea8f5fe0de9fcd4ee28865bc81a1e9fa7f4aac975a4eb/master.20120306.idx",
+    "raw_sha256": "dbcd0b2c37ae2cca9250cba8cc7b95d7b0cb09a0c2ba07d62c06e6c04028d0de",
+    "source_identity": "497b1fe323574f8846bea8f5fe0de9fcd4ee28865bc81a1e9fa7f4aac975a4eb",
+    "source_instance_id": "SRC010170"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/22530f241ab6d17d00848cf2443c022f25590d2af8a8b8e595d98b4477353655/master.20120307.idx",
+    "raw_sha256": "80ac4a0fb719d67d5f02db699f3401252d8f22258480bc60de06d077d91441b9",
+    "source_identity": "22530f241ab6d17d00848cf2443c022f25590d2af8a8b8e595d98b4477353655",
+    "source_instance_id": "SRC010171"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/7caa3ef7d41ea5e707f2dd1017d903322359b5ea38e2d99cd8c0623b87b990b1/master.20120308.idx",
+    "raw_sha256": "b39bb01d0eacaa2176f2f9a6b56b4872096a358564624f365afff02442d9f518",
+    "source_identity": "7caa3ef7d41ea5e707f2dd1017d903322359b5ea38e2d99cd8c0623b87b990b1",
+    "source_instance_id": "SRC010172"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/79a60fbf7011b57a29b841aa2c5ed8cc0b4dea7c8ce85560d512f858c82fc6e6/master.20120309.idx",
+    "raw_sha256": "1ab85cf64076b0fbcc74baaa9b3fe27808f45d4a88107017a5b8d2700025b881",
+    "source_identity": "79a60fbf7011b57a29b841aa2c5ed8cc0b4dea7c8ce85560d512f858c82fc6e6",
+    "source_instance_id": "SRC010173"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/b2ce156a50a884c68f747ab563f1409e03f0083fcc7a58ffc52c4eb3eb3a07a7/master.20120312.idx",
+    "raw_sha256": "2d5295f48e0b0b587bb77bd72153ce6b433ad3dbb3ad98132326b428deff0998",
+    "source_identity": "b2ce156a50a884c68f747ab563f1409e03f0083fcc7a58ffc52c4eb3eb3a07a7",
+    "source_instance_id": "SRC010174"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/7fb622ed1c3ecce90a1e5d9b24a9e5411ac4b2339f06cf22a7b716406d652ea8/master.20120313.idx",
+    "raw_sha256": "4ef43d04f8604feb16c690e0bf54318e1937a30d315e92c78888c791cb37f02d",
+    "source_identity": "7fb622ed1c3ecce90a1e5d9b24a9e5411ac4b2339f06cf22a7b716406d652ea8",
+    "source_instance_id": "SRC010175"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/b288dcc8d15c02af86c23867872af56c5bfaa21c282d24f4295e8eabc32a94f5/master.20120314.idx",
+    "raw_sha256": "aded270d505e5db66db6157dc4abed9fe9e33496c825d9e45bec785164f69528",
+    "source_identity": "b288dcc8d15c02af86c23867872af56c5bfaa21c282d24f4295e8eabc32a94f5",
+    "source_instance_id": "SRC010176"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/3bb9268290252bed6eebe2bf087585ec49a4428b10177297a919a3c296c4cd1a/master.20120315.idx",
+    "raw_sha256": "61d68190088709a64d43a92f32b009891c38782b21cd439c098e37ad2a763f59",
+    "source_identity": "3bb9268290252bed6eebe2bf087585ec49a4428b10177297a919a3c296c4cd1a",
+    "source_instance_id": "SRC010177"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/b50c1bd5abb0c006e9af31fb8e8de22ec69eea643c76299d0606eb4af5ebd68a/master.20120316.idx",
+    "raw_sha256": "104189e976be94107a1a2549925c0bc2675ff96d9a4025523814a6b6723cb433",
+    "source_identity": "b50c1bd5abb0c006e9af31fb8e8de22ec69eea643c76299d0606eb4af5ebd68a",
+    "source_instance_id": "SRC010178"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/f60f51f6e686d958f98b7e31f41a863f232ba07a18be2e8e2e80a2f586b8ec25/master.20120319.idx",
+    "raw_sha256": "d5ace027b0a24447424532aedef3a44b1b91f33b08b6795b9731697f10932959",
+    "source_identity": "f60f51f6e686d958f98b7e31f41a863f232ba07a18be2e8e2e80a2f586b8ec25",
+    "source_instance_id": "SRC010179"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/2fcc7a742d3c835aac35d3e5b57291a87c66e58bad96e38b1af60d927d2a3969/master.20120320.idx",
+    "raw_sha256": "5fd0021bf3d9279cac5cee674bfbc3d84ed92782f664f214aafbe45e98f697ab",
+    "source_identity": "2fcc7a742d3c835aac35d3e5b57291a87c66e58bad96e38b1af60d927d2a3969",
+    "source_instance_id": "SRC010180"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/c398170c33a6d9581ef33edfc3080193a58dda1de11e9c7c169638f991e2a959/master.20120321.idx",
+    "raw_sha256": "5901f63c41b29263efb5cdcf4170aa93ddabb6d7d5ba3b83df853d08b8b5cf60",
+    "source_identity": "c398170c33a6d9581ef33edfc3080193a58dda1de11e9c7c169638f991e2a959",
+    "source_instance_id": "SRC010181"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/818f57007aafe0ba10ed527d6550e28b8a61558ccbf2c202ea17a8f2f5216693/master.20120322.idx",
+    "raw_sha256": "e2dbad2cfc9df0329afee0265f58c3feead3c8e0b16187c69bdc0851a122d82f",
+    "source_identity": "818f57007aafe0ba10ed527d6550e28b8a61558ccbf2c202ea17a8f2f5216693",
+    "source_instance_id": "SRC010182"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/a3fae08e7615326a8cbc7b991015a9f72dae3af5c8b370334c7f422513b39464/master.20120323.idx",
+    "raw_sha256": "fd2a614062ee1f485b11dd81e8b4cc65f36d0712ff11257a35247ec833670df2",
+    "source_identity": "a3fae08e7615326a8cbc7b991015a9f72dae3af5c8b370334c7f422513b39464",
+    "source_instance_id": "SRC010183"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/fd3598344eb388b36829ed993c015578bcb38bc80cf4c5e89201aa559cbf4e62/master.20120326.idx",
+    "raw_sha256": "0579ca49d9222591a9446887f1f01d912a4d718dc408bd708bca41916792fa21",
+    "source_identity": "fd3598344eb388b36829ed993c015578bcb38bc80cf4c5e89201aa559cbf4e62",
+    "source_instance_id": "SRC010184"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/619d54ae66aa9fd58210baf6446d6113260935f4af68f8cea3aca00a8d2a3934/master.20120327.idx",
+    "raw_sha256": "cff902fa3572d0a3d85d74b43031cb9230a597ba8d66c0dd5c7ec3436c08b982",
+    "source_identity": "619d54ae66aa9fd58210baf6446d6113260935f4af68f8cea3aca00a8d2a3934",
+    "source_instance_id": "SRC010185"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/7217b545e96a87a282d6a50dc187beb3191cb6abd2ccb3a67a74d1ff265e98c8/master.20120328.idx",
+    "raw_sha256": "23ebc896d92a26be12e77d5dcdd53b9e40477f7da98ffe1903580203e4dfbdb5",
+    "source_identity": "7217b545e96a87a282d6a50dc187beb3191cb6abd2ccb3a67a74d1ff265e98c8",
+    "source_instance_id": "SRC010186"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/95de1b52d2d89a634cd25939d49115a08ad44c28af613254055593dc6e6bb306/master.20120329.idx",
+    "raw_sha256": "dd2e5ed61f2eae0585e9bf48fbc4ad2b52447e843c27f9efb666c72090f0054f",
+    "source_identity": "95de1b52d2d89a634cd25939d49115a08ad44c28af613254055593dc6e6bb306",
+    "source_instance_id": "SRC010187"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/b78b3cdcb44ecdac953a6c6b2e282c7dfdd1ccdea60bd78562bb02b4f7908e8b/master.20120330.idx",
+    "raw_sha256": "823e3131345709d6e9cebaade8bda7f15aca81fa21b9d1cb7e501adcd24decc8",
+    "source_identity": "b78b3cdcb44ecdac953a6c6b2e282c7dfdd1ccdea60bd78562bb02b4f7908e8b",
+    "source_instance_id": "SRC010188"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/cdd3c17657d28dfd0141a2e83eecc8d3cd04ad5e4fa4dbf1b7aa93e8e7a0737d/master.20120402.idx",
+    "raw_sha256": "4b69cf9a3e11b37ec063b64096c350a37902a96f830cc556f3e519c72cdaf977",
+    "source_identity": "cdd3c17657d28dfd0141a2e83eecc8d3cd04ad5e4fa4dbf1b7aa93e8e7a0737d",
+    "source_instance_id": "SRC010189"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/3c049d7c9cbf2cfadb8a8ff516285d3df3e5fe942b7c120c691ee7bc61308475/master.20120403.idx",
+    "raw_sha256": "af2aaae890501083434c61182c7d43f45f46a49b473cdf663477392a5df70494",
+    "source_identity": "3c049d7c9cbf2cfadb8a8ff516285d3df3e5fe942b7c120c691ee7bc61308475",
+    "source_instance_id": "SRC010190"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/8a392c01b654590b4c82667c5cb6c087f5c6631b189503a47a7296f79a178d0e/master.20120404.idx",
+    "raw_sha256": "a4d9382a717abff4bd6f8517efe27ee0f3c00c9c36ab5e56a5b6fd801d528287",
+    "source_identity": "8a392c01b654590b4c82667c5cb6c087f5c6631b189503a47a7296f79a178d0e",
+    "source_instance_id": "SRC010191"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/ff947f05f4e5edcc02350c8ee2a0e14ffaf430f85ef5fc02a224d6f548ee8a86/master.20120405.idx",
+    "raw_sha256": "6ead21a9044ac3f7b81b3c51463af8799e7edf1321962011e6fdfadf91b58af8",
+    "source_identity": "ff947f05f4e5edcc02350c8ee2a0e14ffaf430f85ef5fc02a224d6f548ee8a86",
+    "source_instance_id": "SRC010192"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/f7d71bc7284a364c5785b57f1275a85dbbe81ded70d58a8f65be5fc8776e5038/master.20120406.idx",
+    "raw_sha256": "957f99525d21349c64552ac44bec275032b326f7b21bf847361a07fa8e36f252",
+    "source_identity": "f7d71bc7284a364c5785b57f1275a85dbbe81ded70d58a8f65be5fc8776e5038",
+    "source_instance_id": "SRC010193"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/d00455161f1a39ecfd4037d0b1f34055ad31d7b893534a1125b6b6c740319688/master.20120409.idx",
+    "raw_sha256": "e427a4b0a76d4e4ef299e32542a74513e68fd63d21156966280cef5d566b246c",
+    "source_identity": "d00455161f1a39ecfd4037d0b1f34055ad31d7b893534a1125b6b6c740319688",
+    "source_instance_id": "SRC010194"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/3fdc01cbdf749a10a2735e0f8b0699ce2521347c1eca2a0b142c940329e3ce4d/master.20120410.idx",
+    "raw_sha256": "9cae244ed5db870abe17feeba85d353cd936f0f07ea5baa35583af6abba8dca4",
+    "source_identity": "3fdc01cbdf749a10a2735e0f8b0699ce2521347c1eca2a0b142c940329e3ce4d",
+    "source_instance_id": "SRC010195"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/fa5f95c145f5489518d0155923d60700909c1114c05ee341d0ddcbdb9b25fa86/master.20120411.idx",
+    "raw_sha256": "c81d4cbabadd0bf29878a9257da63de13b86994ae389ca34dc1859d94f671a29",
+    "source_identity": "fa5f95c145f5489518d0155923d60700909c1114c05ee341d0ddcbdb9b25fa86",
+    "source_instance_id": "SRC010196"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/55126fe275afb76d8e36de5e7c8b3eb4b228342558e46b54d93145ef0f8f74e3/master.20120412.idx",
+    "raw_sha256": "214239f3a4385fa68553e6866f18f10d95e13aff8059db4e109bcdd5e9f020d0",
+    "source_identity": "55126fe275afb76d8e36de5e7c8b3eb4b228342558e46b54d93145ef0f8f74e3",
+    "source_instance_id": "SRC010197"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/12453b4ff37fc523000b18c45baf43bd84d8cae4ac26fb4bb1171c66f2fc1767/master.20120413.idx",
+    "raw_sha256": "28b7298752d405c78d79f2cbe1eeb6e7e8b89fd81788522b29fcc521973b2dc3",
+    "source_identity": "12453b4ff37fc523000b18c45baf43bd84d8cae4ac26fb4bb1171c66f2fc1767",
+    "source_instance_id": "SRC010198"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/4a4e6a1ae0e735c9e691db5e75ab256176e1e20d0bbb474a76c34b78b407c822/master.20120416.idx",
+    "raw_sha256": "dc60a5d4d39bc6c5490e139155e267530b0e1efd5abe1ac52544d17b63af1e1c",
+    "source_identity": "4a4e6a1ae0e735c9e691db5e75ab256176e1e20d0bbb474a76c34b78b407c822",
+    "source_instance_id": "SRC010199"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/8929dd5ce52e68cf2f3fd7253fc00856107b1e50082267391eeb0297fb9fa0df/master.20120417.idx",
+    "raw_sha256": "4a68adc49d0ffbc7f1c04b961d2ffbf9ccda526dd6871bbc00f32b8599326343",
+    "source_identity": "8929dd5ce52e68cf2f3fd7253fc00856107b1e50082267391eeb0297fb9fa0df",
+    "source_instance_id": "SRC010200"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/05c37721e43f4b773467a52790ebe87da431d244ae3564a28051933c72c3f8c8/master.20120418.idx",
+    "raw_sha256": "a4a682358fda83a842fa70597f4afbbcb5f1d03bca1e936ad25c315b27975b27",
+    "source_identity": "05c37721e43f4b773467a52790ebe87da431d244ae3564a28051933c72c3f8c8",
+    "source_instance_id": "SRC010201"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/58adca2c94d65b5a65e61fe3334c1a1cc0942f38c6f026723b5a5de5f928f57b/master.20120419.idx",
+    "raw_sha256": "88c29c1b5229d20a904744b7bfdb9b50fcbc770694ade69a1e5ab1f4a2d02b99",
+    "source_identity": "58adca2c94d65b5a65e61fe3334c1a1cc0942f38c6f026723b5a5de5f928f57b",
+    "source_instance_id": "SRC010202"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/6f795af99cef00bbf2d8f07d3d9cb2aa9fd16c8d62190c638c35c7cd0dc8beea/master.20120420.idx",
+    "raw_sha256": "8437a875d62254b9824ff24b4aab3b43b9426766dead9b2f2b447215138df44a",
+    "source_identity": "6f795af99cef00bbf2d8f07d3d9cb2aa9fd16c8d62190c638c35c7cd0dc8beea",
+    "source_instance_id": "SRC010203"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/e9c5dacce880e91813da13dda0f7519358509589dc0223ef87b8f79f8724dc38/master.20120423.idx",
+    "raw_sha256": "1697d1a8f84d3ef71a0e415d98aff63281e52b6f779a0df043820b065560219d",
+    "source_identity": "e9c5dacce880e91813da13dda0f7519358509589dc0223ef87b8f79f8724dc38",
+    "source_instance_id": "SRC010204"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/186ec98ec7557ce8168d23891b57cd2763c84d723b41e7151c252bc2c3fe97fc/master.20120424.idx",
+    "raw_sha256": "bed0c108c0b94051549928a8242d8614997d0f8e09626d4a8cb75263df9d2c57",
+    "source_identity": "186ec98ec7557ce8168d23891b57cd2763c84d723b41e7151c252bc2c3fe97fc",
+    "source_instance_id": "SRC010205"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/f7c68b3a94c5b2fe1a75f5313e297372b50ff07cac1fb870e85db9277a841dad/master.20120425.idx",
+    "raw_sha256": "d24ca30c913287279f9ea6d944579ff89bd51302e032fb812e490c5910bb72f1",
+    "source_identity": "f7c68b3a94c5b2fe1a75f5313e297372b50ff07cac1fb870e85db9277a841dad",
+    "source_instance_id": "SRC010206"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/e9964ce9ccdefb60deea32e1f5dae64a5000f74fb677c7cb5fa027be6ed3ce09/master.20120426.idx",
+    "raw_sha256": "0e9279f8ffd09cfe49986182d80e232666d19dd12d91ffc8653cbebed86bb1c5",
+    "source_identity": "e9964ce9ccdefb60deea32e1f5dae64a5000f74fb677c7cb5fa027be6ed3ce09",
+    "source_instance_id": "SRC010207"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/61bdabc514f05a3fabd00e89679b43018befe8fbe3bce8b64ef2c0872758e506/master.20120427.idx",
+    "raw_sha256": "eaa6027f709d9bc95f7173d393f4481e42c63f9b715da6342b0b44940fd321de",
+    "source_identity": "61bdabc514f05a3fabd00e89679b43018befe8fbe3bce8b64ef2c0872758e506",
+    "source_instance_id": "SRC010208"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/37d5da9d7d2ef2d29c55d80fce6f7451f313e35b2ee72de4769125fb1abe00d1/master.20120430.idx",
+    "raw_sha256": "0c9a521c4e6061d01e89bc36b136c1b651e071364631698d266d0e11f84c1f36",
+    "source_identity": "37d5da9d7d2ef2d29c55d80fce6f7451f313e35b2ee72de4769125fb1abe00d1",
+    "source_instance_id": "SRC010209"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/0746110fc269ebc361aec1e91d2647c1ee643f4a979069faed0a651d2393adb6/master.20120501.idx",
+    "raw_sha256": "9410b2ccabfca4ab80aa0421457d8425639a0bed0f567650b35e79564f7afbec",
+    "source_identity": "0746110fc269ebc361aec1e91d2647c1ee643f4a979069faed0a651d2393adb6",
+    "source_instance_id": "SRC010210"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/8672f03064a8d310e02fd56b8243c2290a8a15c128e09fae91e99847351b0666/master.20120502.idx",
+    "raw_sha256": "82ab9cb02c740c8745cefdb5aad119ea4450db91522ce50b6b7724ecf978f1e5",
+    "source_identity": "8672f03064a8d310e02fd56b8243c2290a8a15c128e09fae91e99847351b0666",
+    "source_instance_id": "SRC010211"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/48ab57b7ca7114f6d0481a1b31b770d30aab7431ed572f9f1c17ac3f07dcd457/master.20120503.idx",
+    "raw_sha256": "e22677d35230413683cd36386caa77b35f85e2b792702528467995462207a6c1",
+    "source_identity": "48ab57b7ca7114f6d0481a1b31b770d30aab7431ed572f9f1c17ac3f07dcd457",
+    "source_instance_id": "SRC010212"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/f067ac6432f1dad57530596391c9e77fc9b22d2302b8a4167db5e9da0e059b27/master.20120504.idx",
+    "raw_sha256": "6d5aec78ca777ae243ffe712138b94085997f518319b7da26a122e42c27dd11f",
+    "source_identity": "f067ac6432f1dad57530596391c9e77fc9b22d2302b8a4167db5e9da0e059b27",
+    "source_instance_id": "SRC010213"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/d85f9a293b1c0008ee931af98be262a8a99f03bd594a9ed8e852cf0cf9890600/master.20120507.idx",
+    "raw_sha256": "6ce6a4ccd8b8f880b26812ef59b3e472a32d10dfcc8fd6f9ba2156cbeff1aced",
+    "source_identity": "d85f9a293b1c0008ee931af98be262a8a99f03bd594a9ed8e852cf0cf9890600",
+    "source_instance_id": "SRC010214"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/a2644c14809ede1e34db287c949a7af6318a5eda1d32496de2ce0163bfc22183/master.20120508.idx",
+    "raw_sha256": "7f2d289012628114b788ac87ce604d0c498d98806b4483463ac4309d9c553966",
+    "source_identity": "a2644c14809ede1e34db287c949a7af6318a5eda1d32496de2ce0163bfc22183",
+    "source_instance_id": "SRC010215"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/99afc7b981ea2619c18e9ed0050bc4d01986049d38648583a2c04a3259eb7fd7/master.20120509.idx",
+    "raw_sha256": "02af767d1b728134db7dec7af742efbedb7f6c5be88cfeca57f496629dad8914",
+    "source_identity": "99afc7b981ea2619c18e9ed0050bc4d01986049d38648583a2c04a3259eb7fd7",
+    "source_instance_id": "SRC010216"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/1dbcd3692ac73023ad3caf7244c63d81bff2b0f2207a72b76aa1872b8d68e3ef/master.20120510.idx",
+    "raw_sha256": "5787579ebed103eb6cc63ac9121c19688d8943fc9c60f7b111d6553a35201022",
+    "source_identity": "1dbcd3692ac73023ad3caf7244c63d81bff2b0f2207a72b76aa1872b8d68e3ef",
+    "source_instance_id": "SRC010217"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/65a3005e19072bf58fa56ecc72f1d7dc2613cf5ba6ab377073867a524e88e1af/master.20120511.idx",
+    "raw_sha256": "0b448b1b5582a8f1c08be382fa1dc534dc8d5fcf41d062d0318d9526f62bd1d1",
+    "source_identity": "65a3005e19072bf58fa56ecc72f1d7dc2613cf5ba6ab377073867a524e88e1af",
+    "source_instance_id": "SRC010218"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/cc5215a3c61df382671576f9417ade968d98fec7b70a6b886586c7b5f1c71c23/master.20120514.idx",
+    "raw_sha256": "21b8834ef40cdef52b8448873cf9f19e104d69930eef360ea0ca53e86025b957",
+    "source_identity": "cc5215a3c61df382671576f9417ade968d98fec7b70a6b886586c7b5f1c71c23",
+    "source_instance_id": "SRC010219"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/3d2ee6dc502ff392b700c911e833b94a08d490833ef569df0add3ad1655f7794/master.20120515.idx",
+    "raw_sha256": "fed91d2b6c1b7eee1730649e74a0a9970732489b010403d0578984471f707883",
+    "source_identity": "3d2ee6dc502ff392b700c911e833b94a08d490833ef569df0add3ad1655f7794",
+    "source_instance_id": "SRC010220"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/42535a89a396978e2081b5454e1641b538ea762af4d4bc74c5abbbaa99910399/master.20120516.idx",
+    "raw_sha256": "834eb7150b1b27e21ec9017163061d0b82441d761e46edc8f74f3e5e83954a82",
+    "source_identity": "42535a89a396978e2081b5454e1641b538ea762af4d4bc74c5abbbaa99910399",
+    "source_instance_id": "SRC010221"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/30e4a4181b8ced28caf2e206d767428a61afd8e1e84f8c7203c0d2016a69f39e/master.20120517.idx",
+    "raw_sha256": "49510c7cde29cbfb722cb85dbff8df11e29bd7a63e8e04dbad1cd0fd5e49de57",
+    "source_identity": "30e4a4181b8ced28caf2e206d767428a61afd8e1e84f8c7203c0d2016a69f39e",
+    "source_instance_id": "SRC010222"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/16b5b7686efbd91c0d34a6eb864b7cef9071eaf85fb85657ea49b732bb3f78c3/master.20120518.idx",
+    "raw_sha256": "6886152e9330257aca295351b978cccd6763394e9a870822fc8ec53e14242057",
+    "source_identity": "16b5b7686efbd91c0d34a6eb864b7cef9071eaf85fb85657ea49b732bb3f78c3",
+    "source_instance_id": "SRC010223"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/18cf0e4f1ddf045ebae1e42bd9b7802da885fd659fd47a1eb475a324c30bb05b/master.20120521.idx",
+    "raw_sha256": "f93f589b06d94582fb43009c67628bac8c263255aef03bea26118a8ea86c69bb",
+    "source_identity": "18cf0e4f1ddf045ebae1e42bd9b7802da885fd659fd47a1eb475a324c30bb05b",
+    "source_instance_id": "SRC010224"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/68b0030da35562f44c23bd54d6a0247b6d2d78233efaf2f096a4f25486bf137c/master.20120522.idx",
+    "raw_sha256": "71a9cbe14446c833c7d53a12bebf0ce3375468267b5525e640af8267a47ea28c",
+    "source_identity": "68b0030da35562f44c23bd54d6a0247b6d2d78233efaf2f096a4f25486bf137c",
+    "source_instance_id": "SRC010225"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/5414d0fa069f75bf6b5bdf2e99f4c6a310503989d3e07604367a890f747c39cc/master.20120523.idx",
+    "raw_sha256": "17784f7517b9fb5f06660848398af5aaabc5e54f331e2a8a45c09d6362804892",
+    "source_identity": "5414d0fa069f75bf6b5bdf2e99f4c6a310503989d3e07604367a890f747c39cc",
+    "source_instance_id": "SRC010226"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/e126bea6a06752c2ab20f078c3aebd67af1a8b6a62ab87f791c3db0af5a2bb9a/master.20120524.idx",
+    "raw_sha256": "667e97ab9b10aa5e773413cba27c9df4453b036e26903aaaea7e4b5327558c4a",
+    "source_identity": "e126bea6a06752c2ab20f078c3aebd67af1a8b6a62ab87f791c3db0af5a2bb9a",
+    "source_instance_id": "SRC010227"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/17653d827d3147176b95abe2e31eed8eed5aa5e63227e19662f4ac03467e0bb7/master.20120525.idx",
+    "raw_sha256": "b3d68472ad2c41671b7840ee76ea526987dd450b9d59c98bb8b97ec33c451e02",
+    "source_identity": "17653d827d3147176b95abe2e31eed8eed5aa5e63227e19662f4ac03467e0bb7",
+    "source_instance_id": "SRC010228"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/fd06611b51ccc211eb843bb512c97f7e2611ddb5dcf0c5839c11d0f4800ae7ab/master.20120529.idx",
+    "raw_sha256": "07884bdf4dceac571abc4da7b7cf0b82ee02cd1b6bd357cbd08045d349535554",
+    "source_identity": "fd06611b51ccc211eb843bb512c97f7e2611ddb5dcf0c5839c11d0f4800ae7ab",
+    "source_instance_id": "SRC010229"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/f3c039fd0ce59f102f7e7215dcc04d249e20b656eeac96e4c0b12cac31d0f7a4/master.20120530.idx",
+    "raw_sha256": "f13d357561f314b82b027efbc8072141db287431f2aa10ad1783ca3825ed4fad",
+    "source_identity": "f3c039fd0ce59f102f7e7215dcc04d249e20b656eeac96e4c0b12cac31d0f7a4",
+    "source_instance_id": "SRC010230"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/ceca440b5d10677a742dfdfa6f8473e8ed6cfe6989c37b877e6b2ca317814cde/master.20120531.idx",
+    "raw_sha256": "142921efedfe6fdbc6867e88e30f17208a524326c2c15411491efddf85e5bb6b",
+    "source_identity": "ceca440b5d10677a742dfdfa6f8473e8ed6cfe6989c37b877e6b2ca317814cde",
+    "source_instance_id": "SRC010231"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/b4053207152026477d635469c7f239da7fe2844b2fd805c4be932de2d294d6d6/master.20120601.idx",
+    "raw_sha256": "975e37e9e3fc144c15d8467e60794309a79e5df1f8a25e277f191628437a50bf",
+    "source_identity": "b4053207152026477d635469c7f239da7fe2844b2fd805c4be932de2d294d6d6",
+    "source_instance_id": "SRC010232"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/27d1f486174a773a4fc9181b037127a43a8028a6477122187dc82a05fce0d3cd/master.20120604.idx",
+    "raw_sha256": "ebc0b2391d900d8a65f45330d6f0701f205b25fc2f9687866106a4e5b3f2a605",
+    "source_identity": "27d1f486174a773a4fc9181b037127a43a8028a6477122187dc82a05fce0d3cd",
+    "source_instance_id": "SRC010233"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/ebf8714ff6dc652a7497f21f572421a2e749806d7cf1fe6b8c4b05756dd27b60/master.20120605.idx",
+    "raw_sha256": "dcffa6eb6828e03963c70c9be791476753018dc5bebda3d605ee4b9ea72a93c2",
+    "source_identity": "ebf8714ff6dc652a7497f21f572421a2e749806d7cf1fe6b8c4b05756dd27b60",
+    "source_instance_id": "SRC010234"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/15da1e70a4fb5255cf3fb5a9366ed3b1580b9e1eb81d7ebdfc64a4dd053fc561/master.20120606.idx",
+    "raw_sha256": "110f1d399f2c9e94dafab4dd559610fac9b462cc4fa61c2a9606ddec6b727919",
+    "source_identity": "15da1e70a4fb5255cf3fb5a9366ed3b1580b9e1eb81d7ebdfc64a4dd053fc561",
+    "source_instance_id": "SRC010235"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/fd8945409f522679f63310b6f46bb02728f729c96a5e0900d07e3ec2732544c4/master.20120607.idx",
+    "raw_sha256": "8b77cf61417662744f71c908723c824c28d14775107bece3af597fb3168cd106",
+    "source_identity": "fd8945409f522679f63310b6f46bb02728f729c96a5e0900d07e3ec2732544c4",
+    "source_instance_id": "SRC010236"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/2313973db54a319c0ee2e35b0b8d2cc07af025bb94eb534dfee727e0450c35db/master.20120608.idx",
+    "raw_sha256": "b3180e8e5299a5a416dfb951f6f91c9633db3fed8d81167dbfb5d9bd47f2017a",
+    "source_identity": "2313973db54a319c0ee2e35b0b8d2cc07af025bb94eb534dfee727e0450c35db",
+    "source_instance_id": "SRC010237"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/f31be691cbe547bc3bd0a3c0d3b0ab62d017cf2b6725d9349582559f5c6c1142/master.20120611.idx",
+    "raw_sha256": "942e91c10e63f2a52db91ab0048cfb771d75723e674eec336afc7e828a7efe51",
+    "source_identity": "f31be691cbe547bc3bd0a3c0d3b0ab62d017cf2b6725d9349582559f5c6c1142",
+    "source_instance_id": "SRC010238"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/2ce963cbea7f0f93354e8b1b8f13c2fe6ab31ead4e1258036ac47a47c8b32749/master.20120612.idx",
+    "raw_sha256": "963deb93d2ecd8c1754e8e5b79164c9910e84d7843a83a8ddcb565d4e750e166",
+    "source_identity": "2ce963cbea7f0f93354e8b1b8f13c2fe6ab31ead4e1258036ac47a47c8b32749",
+    "source_instance_id": "SRC010239"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/a47d5520587842325ab905be494a6e70acc98a0f7df67dbdce5d1887a6d6144d/master.20120613.idx",
+    "raw_sha256": "7390cc3938b6c0a2e3d64adb6c9691589666642771400e1675d8b2d69a625964",
+    "source_identity": "a47d5520587842325ab905be494a6e70acc98a0f7df67dbdce5d1887a6d6144d",
+    "source_instance_id": "SRC010240"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/fc1dfb856eb85f065c80c19dc55d345bff5dbef5acb802bf650b6799f2baacb7/master.20120614.idx",
+    "raw_sha256": "437290a3b1c095fbb70a132c86a875458ed134586a1709fcfce439065cb0c76b",
+    "source_identity": "fc1dfb856eb85f065c80c19dc55d345bff5dbef5acb802bf650b6799f2baacb7",
+    "source_instance_id": "SRC010241"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/7767e7c56f828087335ba480259f3de79884af3e78e68f34b080071e81554234/master.20120615.idx",
+    "raw_sha256": "44a4a33dfae15e5a143efabe4187c47bc5ccca49613825ac682f1328122b0ac4",
+    "source_identity": "7767e7c56f828087335ba480259f3de79884af3e78e68f34b080071e81554234",
+    "source_instance_id": "SRC010242"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/1e6fc16bb6feb4d251f43a2649a68198e04ba5eb1e07144429604744bae86a40/master.20120618.idx",
+    "raw_sha256": "d8c6c9a9721cb864873cd40aa0b9139b0db46eba72a6fc7111be494678fd4e4b",
+    "source_identity": "1e6fc16bb6feb4d251f43a2649a68198e04ba5eb1e07144429604744bae86a40",
+    "source_instance_id": "SRC010243"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/e48a5290a4a48f06888ac4e272f732bec75f637aa732d7da7867e7b7d64deb2e/master.20120619.idx",
+    "raw_sha256": "24c8bbf0a8df9a51dcb53c54e876bf8c301dbbd9b724a4868bcabab27c390477",
+    "source_identity": "e48a5290a4a48f06888ac4e272f732bec75f637aa732d7da7867e7b7d64deb2e",
+    "source_instance_id": "SRC010244"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/32b7b731247c1c311ae5863518bf7d49e687210abaf3e033c3fb2aac4351e5fb/master.20120620.idx",
+    "raw_sha256": "bc863d1ce5531d9a52c3e1564bcfeb9da4090772ede52496c1eb7d945f4bdb10",
+    "source_identity": "32b7b731247c1c311ae5863518bf7d49e687210abaf3e033c3fb2aac4351e5fb",
+    "source_instance_id": "SRC010245"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/b50de1c674fedf356af627957cea244256be2ac8578a9fa93e25282f6a12d85c/master.20120621.idx",
+    "raw_sha256": "9cf50ae871dc9636a8d5b867e777e6eb804351ac086100e9dfd3c39e5163d7f7",
+    "source_identity": "b50de1c674fedf356af627957cea244256be2ac8578a9fa93e25282f6a12d85c",
+    "source_instance_id": "SRC010246"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/208f4bc1e24d6a30a7c8c501df53316f7861a03a27d7a6a66194bdcd599c0744/master.20120622.idx",
+    "raw_sha256": "bcf70c542b0878bf51dfb6b4d8bfa1423d3a5b5fffa1ea517f85fa863e6902b3",
+    "source_identity": "208f4bc1e24d6a30a7c8c501df53316f7861a03a27d7a6a66194bdcd599c0744",
+    "source_instance_id": "SRC010247"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/052732e1e006ebc8f25a60e1d36ce55d9620d6159c79af0e3d4c523440b996bf/master.20120625.idx",
+    "raw_sha256": "de7f97ee8c9386e337bacf80aeddd751bb1938432102d3d96a5c4764b7480996",
+    "source_identity": "052732e1e006ebc8f25a60e1d36ce55d9620d6159c79af0e3d4c523440b996bf",
+    "source_instance_id": "SRC010248"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/c5be86cb6026e760f3fb56b4efb0cf4113ae3128e239a9c853d0456f4ba3f456/master.20120626.idx",
+    "raw_sha256": "ca0a86696b38680944450c2b15fabf0fd1f5614a0ade21423f69434d641adb3f",
+    "source_identity": "c5be86cb6026e760f3fb56b4efb0cf4113ae3128e239a9c853d0456f4ba3f456",
+    "source_instance_id": "SRC010249"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/cce13310f10dc86a7fed3cdb87fb3ea91f51fac86914dc2e227998606570f805/master.20120627.idx",
+    "raw_sha256": "a8d77cae5a1121f71a9c93cdc43c6659a3980c717b3c1756627f013f5360597c",
+    "source_identity": "cce13310f10dc86a7fed3cdb87fb3ea91f51fac86914dc2e227998606570f805",
+    "source_instance_id": "SRC010250"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/1e556a5fed1fd815984d6b59936d24ef7f68393b93b80f1bacd1bfc09900a3d2/master.20120628.idx",
+    "raw_sha256": "c819277af1a4bd919544580c1138353e9c3f12e618a3388858c2e654de0630b6",
+    "source_identity": "1e556a5fed1fd815984d6b59936d24ef7f68393b93b80f1bacd1bfc09900a3d2",
+    "source_instance_id": "SRC010251"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/f18f134149795f4069176a714ee5073fe224b257856ae2d72690eb569f9bdc9e/master.20120629.idx",
+    "raw_sha256": "b6809393ce64929f9af7d9901f1be1aa6176759634a08bbcef0e691f75effab1",
+    "source_identity": "f18f134149795f4069176a714ee5073fe224b257856ae2d72690eb569f9bdc9e",
+    "source_instance_id": "SRC010252"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/54dd99d5db1d9e15d722fea8be02db6a8dc737fa4c4b137b6ee61b96de4a1a47/master.20120702.idx",
+    "raw_sha256": "71babf7dd3d6d4798742ec126482419bb3fb4e904f81279293d023623a962c48",
+    "source_identity": "54dd99d5db1d9e15d722fea8be02db6a8dc737fa4c4b137b6ee61b96de4a1a47",
+    "source_instance_id": "SRC010253"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/7d25906681048ecb48a85f0007db05dca66c0b70fce6e668209f0e677fc850d4/master.20120703.idx",
+    "raw_sha256": "36c3c9dc2beb7ada9353ce7c64f49a789a20a1bb3e3a45da9984f4ee1c14aeca",
+    "source_identity": "7d25906681048ecb48a85f0007db05dca66c0b70fce6e668209f0e677fc850d4",
+    "source_instance_id": "SRC010254"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/30939bb70bc1c275a14ef290ceb9b3387cbe377e95c8af551eda6dd83e28ebbb/master.20120705.idx",
+    "raw_sha256": "0cd1d7deca46cf3f200236f04a89697105439c7c7c0038e5e764d9b6166a8282",
+    "source_identity": "30939bb70bc1c275a14ef290ceb9b3387cbe377e95c8af551eda6dd83e28ebbb",
+    "source_instance_id": "SRC010255"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/f8abdb9b7024d0859a4c812530df690e50c85f148680b7ef8f941ff487d162ff/master.20120706.idx",
+    "raw_sha256": "62fcc4a7e60c2e20ed9eb94c8f95db9ead58c5cc7a5d6be10725868c737f9db3",
+    "source_identity": "f8abdb9b7024d0859a4c812530df690e50c85f148680b7ef8f941ff487d162ff",
+    "source_instance_id": "SRC010256"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/5d81b456a32e4f3d5f53443fdb7285ed8b3f4fbcbc047220a087c21254a722bc/master.20120709.idx",
+    "raw_sha256": "a2a3bcea8a398c90ba4af040b17bfd04353c3243b7dbb6959b9cbfbd765ca342",
+    "source_identity": "5d81b456a32e4f3d5f53443fdb7285ed8b3f4fbcbc047220a087c21254a722bc",
+    "source_instance_id": "SRC010257"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/44b1b25ce56dd5a951bdb1d7a19abab14fc67fb197b3aae1f9273a2625149cb3/master.20120710.idx",
+    "raw_sha256": "806f4b20d081c5a2d158bbbe55e24730748ebcc3243d0dc39880c3fb78710b5d",
+    "source_identity": "44b1b25ce56dd5a951bdb1d7a19abab14fc67fb197b3aae1f9273a2625149cb3",
+    "source_instance_id": "SRC010258"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/3b27886f8a5ec859273efa90be28d7e655a7853b437c7b20ed0e8716857c9144/master.20120711.idx",
+    "raw_sha256": "062b0bab2efcfaa14cf4d44ee7898831735658037c98d87007bc8f2fe20e83b9",
+    "source_identity": "3b27886f8a5ec859273efa90be28d7e655a7853b437c7b20ed0e8716857c9144",
+    "source_instance_id": "SRC010259"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/d3793254acdce2a1343a3f4cdafd78ef5a63ad8e74a0171da17d7fab3a9a6ec3/master.20120712.idx",
+    "raw_sha256": "512287837e5a41cb68b20a472891726b1d2d74f02cfee65b47501e4dd64454dc",
+    "source_identity": "d3793254acdce2a1343a3f4cdafd78ef5a63ad8e74a0171da17d7fab3a9a6ec3",
+    "source_instance_id": "SRC010260"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/9c20c9e21055e0d5087e2abeff762ec3c0cdfbdcbd7ac5a4c2ff18ad4afee075/master.20120713.idx",
+    "raw_sha256": "f29ba6e1c519f6c74fa2e798a5070703a7a9cf3a90f39206578d4bdf55c7bd48",
+    "source_identity": "9c20c9e21055e0d5087e2abeff762ec3c0cdfbdcbd7ac5a4c2ff18ad4afee075",
+    "source_instance_id": "SRC010261"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/3a8c7df7608a82012aa1cdd5546978146b4359ca08e4a3a7bb52d9cac6d6b2fb/master.20120716.idx",
+    "raw_sha256": "57170b952d5f6ccaaee930513a4095709912fde46bc340a7db25e7876bc60da1",
+    "source_identity": "3a8c7df7608a82012aa1cdd5546978146b4359ca08e4a3a7bb52d9cac6d6b2fb",
+    "source_instance_id": "SRC010262"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/4619ce269afdfab10b1dc9c378870b790a2ffa1e82b9358890b7f6f241105833/master.20120717.idx",
+    "raw_sha256": "121e976c040efdf657334a77414e50806d92b3e025f9c58ec103aeca02bfd405",
+    "source_identity": "4619ce269afdfab10b1dc9c378870b790a2ffa1e82b9358890b7f6f241105833",
+    "source_instance_id": "SRC010263"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/13ece2d0a5f93dcb1a1579d4785d64d62f5a07171c1e962d5ee99f73313dc330/master.20120718.idx",
+    "raw_sha256": "150164a7f563099ed3a9480113dbeba501fb3098165f3f92453bbf082abef2f4",
+    "source_identity": "13ece2d0a5f93dcb1a1579d4785d64d62f5a07171c1e962d5ee99f73313dc330",
+    "source_instance_id": "SRC010264"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/c93e7826105ee2ac416a01596f1652205a728917af214397dadef7364571e295/master.20120719.idx",
+    "raw_sha256": "f4fc9862502147e3cb1cc110a0ee86b4f82a8a1b8e4a83531508dbf3f6c1a2e0",
+    "source_identity": "c93e7826105ee2ac416a01596f1652205a728917af214397dadef7364571e295",
+    "source_instance_id": "SRC010265"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/88a9682741340026e0a3162784ac8800d6b7e9f9a3c9db2d07174bf4e1c0469e/master.20120720.idx",
+    "raw_sha256": "2fbda942f8d99986e03ec64d5e7f105a93754db1d898cb52ea55fd930fafd261",
+    "source_identity": "88a9682741340026e0a3162784ac8800d6b7e9f9a3c9db2d07174bf4e1c0469e",
+    "source_instance_id": "SRC010266"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/34aa7ef64b79d1fa9475face35e2ba67242c9db02738e0cbd77598ccc09da823/master.20120723.idx",
+    "raw_sha256": "d072e72574b9aa1a79363058501cb7e7624cad19244460825b5acb68c875b5a6",
+    "source_identity": "34aa7ef64b79d1fa9475face35e2ba67242c9db02738e0cbd77598ccc09da823",
+    "source_instance_id": "SRC010267"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/0abb39673c4b309215f4a42b1f760d5d9e52ef02dc6975607343b1123011d046/master.20120724.idx",
+    "raw_sha256": "d198b27d274e66a99f4cb9cdbee2e80b74504a31524931be0e2b9380d0d42725",
+    "source_identity": "0abb39673c4b309215f4a42b1f760d5d9e52ef02dc6975607343b1123011d046",
+    "source_instance_id": "SRC010268"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/7785c00bf918dbd867ec275e91be42db7e42674cfa4498d62cdf6c4b31cb2792/master.20120725.idx",
+    "raw_sha256": "802e0a981d7b50a824a57fe4c77fe82776f83826fac854ae1643e9e6114ab940",
+    "source_identity": "7785c00bf918dbd867ec275e91be42db7e42674cfa4498d62cdf6c4b31cb2792",
+    "source_instance_id": "SRC010269"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/1fe7978acb221000f23f9e6c6fac17c80ff559ba038e630eff5352a3b220ca2f/master.20120726.idx",
+    "raw_sha256": "a898a40376e9096e78d3234f7eeacc30118984d55a0cb0ce877bc7c4beb3cfc3",
+    "source_identity": "1fe7978acb221000f23f9e6c6fac17c80ff559ba038e630eff5352a3b220ca2f",
+    "source_instance_id": "SRC010270"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/59ab1526dbbb44066c4f077a57b8e447d52614db7144c0a4df9c32fc094507d6/master.20120727.idx",
+    "raw_sha256": "773af923fb88c9df8d70a0ff2713da3e22ad6daa8ac714757a40b98d30dc75a7",
+    "source_identity": "59ab1526dbbb44066c4f077a57b8e447d52614db7144c0a4df9c32fc094507d6",
+    "source_instance_id": "SRC010271"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/224b7499dc5fc749dbc5d839200ab84979ed2c7f034b3970cf9f4910e86c3730/master.20120730.idx",
+    "raw_sha256": "724a61c58dc763cabf8897a02856e78216caece85ed2dabf9a6c23dadd0ba2f4",
+    "source_identity": "224b7499dc5fc749dbc5d839200ab84979ed2c7f034b3970cf9f4910e86c3730",
+    "source_instance_id": "SRC010272"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/da40e798a4aacb1c849147fbb0dc9802c152e23cb5158ea84bd211afd4b8d2bd/master.20120731.idx",
+    "raw_sha256": "4fd0647c5234b0cb7213044a8139c32de9b0f1ee425721bd30298aa9349621d0",
+    "source_identity": "da40e798a4aacb1c849147fbb0dc9802c152e23cb5158ea84bd211afd4b8d2bd",
+    "source_instance_id": "SRC010273"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/93188f81d278a84111d7bafd944c9b6fda436fd228710a6538f8b7eab2578a11/master.20120801.idx",
+    "raw_sha256": "1bc5f858ddcbc81110c80d13675863ffc8b58e9532c64eedef269484fa97674d",
+    "source_identity": "93188f81d278a84111d7bafd944c9b6fda436fd228710a6538f8b7eab2578a11",
+    "source_instance_id": "SRC010274"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/bddd263f8c037ef7f8f5a5edc77189cb50fc68415ae093f0b12dd36fe05f74aa/master.20120802.idx",
+    "raw_sha256": "cb468fce64202e52229bae3efd52d12739df1c88f3ccd57bfaf69ca9597d3cd0",
+    "source_identity": "bddd263f8c037ef7f8f5a5edc77189cb50fc68415ae093f0b12dd36fe05f74aa",
+    "source_instance_id": "SRC010275"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/fecaaf326ce3a47ab1b68021122d918ab9ef32b8ab714df38553051a979b9298/master.20120803.idx",
+    "raw_sha256": "0410ea553610a97ba6bec2fd2865f4e937a96d318af4068b7dddb899242754d0",
+    "source_identity": "fecaaf326ce3a47ab1b68021122d918ab9ef32b8ab714df38553051a979b9298",
+    "source_instance_id": "SRC010276"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/92ad305a979c84b92a9e92ab31557c4c69f9f45d00181aa841e3834a0249a7d1/master.20120806.idx",
+    "raw_sha256": "ad411504664d0a450a29b71679a62f1cbcf7b8306a4f049fd4f6ac7854856dfb",
+    "source_identity": "92ad305a979c84b92a9e92ab31557c4c69f9f45d00181aa841e3834a0249a7d1",
+    "source_instance_id": "SRC010277"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/e6881470e3966e1757c0c75d24e45d54f479b198a8a087fddc2255914aea38e4/master.20120807.idx",
+    "raw_sha256": "87a592054e91e2d46c2af7270c7b85258fb0635467f6a421153800524f501912",
+    "source_identity": "e6881470e3966e1757c0c75d24e45d54f479b198a8a087fddc2255914aea38e4",
+    "source_instance_id": "SRC010278"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/ca57882581cb3ed80d6fa7f33c2966051f4bf68ee33b288954ca5cff5f85bdd5/master.20120808.idx",
+    "raw_sha256": "58bce0798a4806ce6cef112695db4c60155993c459d54187b00e9d312ead2225",
+    "source_identity": "ca57882581cb3ed80d6fa7f33c2966051f4bf68ee33b288954ca5cff5f85bdd5",
+    "source_instance_id": "SRC010279"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/35b3cae5b55c74776f0048ea28faaf3bfe8c69639fa0d1978cddaefd7b60dc7e/master.20120809.idx",
+    "raw_sha256": "8eb85cb2d656d694bbd432e840a8c302f9bbe21cd0737745187e1cb2d3cd45f6",
+    "source_identity": "35b3cae5b55c74776f0048ea28faaf3bfe8c69639fa0d1978cddaefd7b60dc7e",
+    "source_instance_id": "SRC010280"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/33e7aaea91bccdc5263647b190ccf4a94532ef4d0cfd749825ef2c7c185d0274/master.20120810.idx",
+    "raw_sha256": "5a20532003c48690957e5f6bfd2689cfe20da3eb187cd1c85596d4a00c62660e",
+    "source_identity": "33e7aaea91bccdc5263647b190ccf4a94532ef4d0cfd749825ef2c7c185d0274",
+    "source_instance_id": "SRC010281"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/8dd5f44968e792e2f4195a23b3f10a6183f7aeba0edd430f6e9450cc9aeaf3ca/master.20120813.idx",
+    "raw_sha256": "026d7fb95923e5d8529c6f85dd143976101a9302e99ffd322a6906c0566fb8f7",
+    "source_identity": "8dd5f44968e792e2f4195a23b3f10a6183f7aeba0edd430f6e9450cc9aeaf3ca",
+    "source_instance_id": "SRC010282"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/5da6974519e3af993401bb8a3ce107d3b33af3fdcdbab52e4dbb0c5b60c452fc/master.20120814.idx",
+    "raw_sha256": "d58a64c664e20a226a729f472c0a33fe3fa759deab720a15dc65eb2795266637",
+    "source_identity": "5da6974519e3af993401bb8a3ce107d3b33af3fdcdbab52e4dbb0c5b60c452fc",
+    "source_instance_id": "SRC010283"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/a64b46f58c499ab5400104bff7c57195ee640e3de38b8aec9226c42e74af5101/master.20120815.idx",
+    "raw_sha256": "2d01318239204f3f719e9eaf115630bb717ad2d45f84df8224c4eca05bb54877",
+    "source_identity": "a64b46f58c499ab5400104bff7c57195ee640e3de38b8aec9226c42e74af5101",
+    "source_instance_id": "SRC010284"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/e4030b863b014511c9a8e47f5659a83f930bc663ee3d6b70d9e870bf510496af/master.20120816.idx",
+    "raw_sha256": "8243ab3ffed8dfbcc248fa95e0c217d822a535278af3787c737d93da7c59db63",
+    "source_identity": "e4030b863b014511c9a8e47f5659a83f930bc663ee3d6b70d9e870bf510496af",
+    "source_instance_id": "SRC010285"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/f39f06344e0f8f6d0601e474f05bd605536e89a9fbb5cbf53b11c326be717da2/master.20120817.idx",
+    "raw_sha256": "260fc41848fb21d5dad7b4a656bbc5e6a07632f4124717f9c1c107050f63b81c",
+    "source_identity": "f39f06344e0f8f6d0601e474f05bd605536e89a9fbb5cbf53b11c326be717da2",
+    "source_instance_id": "SRC010286"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/fe9d5ed43060545e870f640dd6d53c8083409803f785ccddca76ebb971b5f1cf/master.20120820.idx",
+    "raw_sha256": "d76a2d75052705231ed3e75ab0e71d8b23faed4e6aa513d06d8b0e31d51fa660",
+    "source_identity": "fe9d5ed43060545e870f640dd6d53c8083409803f785ccddca76ebb971b5f1cf",
+    "source_instance_id": "SRC010287"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/7e04b7228652df4181dfdbe5c40335544f166bc028d7545d55807e69cc2ba820/master.20120821.idx",
+    "raw_sha256": "9b5ba98d681987a9d70f6cc2f2206b61bcd0a71a7cbac4ea33dd8ee9941fa4b7",
+    "source_identity": "7e04b7228652df4181dfdbe5c40335544f166bc028d7545d55807e69cc2ba820",
+    "source_instance_id": "SRC010288"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/100b975898776728439ac60ab38d7059cb4ee83ea1da3c6e0efd00d21b881ce3/master.20120822.idx",
+    "raw_sha256": "41aab3aad8405f1d61549c130cca1d0c500dc203bb43b2cf4d3d1dfadc79898d",
+    "source_identity": "100b975898776728439ac60ab38d7059cb4ee83ea1da3c6e0efd00d21b881ce3",
+    "source_instance_id": "SRC010289"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/0e149d70c6208b07d0dbe7252f593624cb66e5ad8d9c207e8878469a09cd011a/master.20120823.idx",
+    "raw_sha256": "bb3201f215a632628638343b12256fc65cf184ead90e5ecf7c457db736cd58d6",
+    "source_identity": "0e149d70c6208b07d0dbe7252f593624cb66e5ad8d9c207e8878469a09cd011a",
+    "source_instance_id": "SRC010290"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/0e28ad2d9ea5192ff9c12aa710e532ef8e3bcdc81eb53b12bad1faed936d5dd6/master.20120824.idx",
+    "raw_sha256": "ad5d3c10e4ccdf0e2a8aa86bffc3f81dd2a57c78e50655b31bd04f0a1b4eccb3",
+    "source_identity": "0e28ad2d9ea5192ff9c12aa710e532ef8e3bcdc81eb53b12bad1faed936d5dd6",
+    "source_instance_id": "SRC010291"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/823a51e438d49a7dd3564ed5b2e0686e6b33c1f9cf3242c4baa062447050e7b9/master.20120827.idx",
+    "raw_sha256": "e42be33bad3b6e86668686cb2706fab8767140774a6368c2bf2bb9c89ed5c905",
+    "source_identity": "823a51e438d49a7dd3564ed5b2e0686e6b33c1f9cf3242c4baa062447050e7b9",
+    "source_instance_id": "SRC010292"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/acb71127880c11529632209f69c4eddb9248182b40024e7a0b069f2d05dac987/master.20120828.idx",
+    "raw_sha256": "811aa9c643f4a786a179c87d93adacd91b65e8053213059654837a50685d0b5d",
+    "source_identity": "acb71127880c11529632209f69c4eddb9248182b40024e7a0b069f2d05dac987",
+    "source_instance_id": "SRC010293"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/b1e968a24ba9894bcc8c32f66762b548992f6d648999a499d37a28394e741059/master.20120829.idx",
+    "raw_sha256": "2e2a1f217675b49f02658e637b5bdc27a18df0094749a8eb03ee7b5a7c40fc89",
+    "source_identity": "b1e968a24ba9894bcc8c32f66762b548992f6d648999a499d37a28394e741059",
+    "source_instance_id": "SRC010294"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/7f5436ee96ef695da8fa17c4a6d55324564bd1c79e0b2ef348b2c9ed9d27fb90/master.20120830.idx",
+    "raw_sha256": "75e30bb59ac38a8048315bcd81248e5b49461b1b77f26ec8414e84184379cf8e",
+    "source_identity": "7f5436ee96ef695da8fa17c4a6d55324564bd1c79e0b2ef348b2c9ed9d27fb90",
+    "source_instance_id": "SRC010295"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/6d6d43ff8b54fb94b250c82a5fa773b6c09aa28d9bc23fbf8b8cdd07cd702c83/master.20120831.idx",
+    "raw_sha256": "e9e390d63fff689b5df9d2ae0a9e1b5d7b3eca5462373345e4a4c738b6967726",
+    "source_identity": "6d6d43ff8b54fb94b250c82a5fa773b6c09aa28d9bc23fbf8b8cdd07cd702c83",
+    "source_instance_id": "SRC010296"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/d7838402cbec4e261898e20004a4f51fbdaf6975771bd7953e6f6b8ca0dfa9fd/master.20120904.idx",
+    "raw_sha256": "78046e5e8de66ad5e9ab269b757f8bef2284ff8bb50a3492031bae25f8460be2",
+    "source_identity": "d7838402cbec4e261898e20004a4f51fbdaf6975771bd7953e6f6b8ca0dfa9fd",
+    "source_instance_id": "SRC010297"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/5840d19839e11fae2ade29f5efd543aeca2a0da0a0602180f846f311eff79be2/master.20120905.idx",
+    "raw_sha256": "7b1a00d28a571d2c1efe17ee756da6f03abffa1198e44c6b80b08c805fa5f4ee",
+    "source_identity": "5840d19839e11fae2ade29f5efd543aeca2a0da0a0602180f846f311eff79be2",
+    "source_instance_id": "SRC010298"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/a840818a3b933698689048901db66d3b28d3892edd74dc11a9347eaae6744be8/master.20120906.idx",
+    "raw_sha256": "283ac2ee8bd608d167a719376219c1b4484e18f1eed08225f2bb59041ca66f95",
+    "source_identity": "a840818a3b933698689048901db66d3b28d3892edd74dc11a9347eaae6744be8",
+    "source_instance_id": "SRC010299"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/e546c32e0707712de45aa0830d75023b158b0b470e3e12901c68619b5a6b5eba/master.20120907.idx",
+    "raw_sha256": "472401670d4947be4b1d06bfcd73e3f6c6e50ea6a375f55562b0d2a882030b0d",
+    "source_identity": "e546c32e0707712de45aa0830d75023b158b0b470e3e12901c68619b5a6b5eba",
+    "source_instance_id": "SRC010300"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/bc4f6d43bde398c03a5b989534c49ddb30976192da4429f0b180ee2011c48da7/master.20120910.idx",
+    "raw_sha256": "1a7c93d2bbd4b7e8a71c1b1bc2b9c3fd5d2c15aaf204a3583d0410d3e0f54355",
+    "source_identity": "bc4f6d43bde398c03a5b989534c49ddb30976192da4429f0b180ee2011c48da7",
+    "source_instance_id": "SRC010301"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/4ae0914110a89acd0aaccfcc57a062d2e11eed04014feddcd85c4c64970d4886/master.20120911.idx",
+    "raw_sha256": "b727d1eb987901d6048a1922e33f8a3330df66848c1b9cc43a7e6634d5cf7154",
+    "source_identity": "4ae0914110a89acd0aaccfcc57a062d2e11eed04014feddcd85c4c64970d4886",
+    "source_instance_id": "SRC010302"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/60e1cc694755d9cdc11983b99c35daff84f10ccdd7bfabae7d867028e482a06f/master.20120912.idx",
+    "raw_sha256": "b0b2520ee5693fc99f8ebf30f1ec9857f4119e98a556b04d0d8d4c0b4af432e5",
+    "source_identity": "60e1cc694755d9cdc11983b99c35daff84f10ccdd7bfabae7d867028e482a06f",
+    "source_instance_id": "SRC010303"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/f7bbf6dd395c6b554a230a735dd316b03a5109749a719ebf0f0e248a0cdc2e39/master.20120913.idx",
+    "raw_sha256": "d656865a5de2f7e54ed934eb0164b28bffc083e88c3666aa6f5126ca8052047a",
+    "source_identity": "f7bbf6dd395c6b554a230a735dd316b03a5109749a719ebf0f0e248a0cdc2e39",
+    "source_instance_id": "SRC010304"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/f2f33d712c4637dacd22986e3d87e574288cd75e6fb1024cb1f4eae489d5c605/master.20120914.idx",
+    "raw_sha256": "443eaa1cf04501614c6824688b18d5c606164782f864b8b1dd78bce7cb92e6ac",
+    "source_identity": "f2f33d712c4637dacd22986e3d87e574288cd75e6fb1024cb1f4eae489d5c605",
+    "source_instance_id": "SRC010305"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/0d3be95b139f57f6d5b7d0f9a7709f4962677f735d23392aabbf41cde9c181a5/master.20120917.idx",
+    "raw_sha256": "1263f31b1ac3d3f4d78b5c9f9065156ad5e2ca42dae91d650711aedf4133b50d",
+    "source_identity": "0d3be95b139f57f6d5b7d0f9a7709f4962677f735d23392aabbf41cde9c181a5",
+    "source_instance_id": "SRC010306"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/d55c940ba728eb9a50f8ad553604e0dd7d7a1e343ea213a535768aa5ffb4fb38/master.20120918.idx",
+    "raw_sha256": "4e46da12b2c33a5b9f1a135934305843f2648805954d857521f3cb8cea18c5e9",
+    "source_identity": "d55c940ba728eb9a50f8ad553604e0dd7d7a1e343ea213a535768aa5ffb4fb38",
+    "source_instance_id": "SRC010307"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/9b2b94edd5ee313fe43a56e2d21a8c1ea8615758295e3862b6a056c458dd5e58/master.20120919.idx",
+    "raw_sha256": "ba84e80c0884f89c242ec5394d5a050efb4578ec5a473f365d500398eee26278",
+    "source_identity": "9b2b94edd5ee313fe43a56e2d21a8c1ea8615758295e3862b6a056c458dd5e58",
+    "source_instance_id": "SRC010308"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/15bf1836dbc4edcf182a0337727475bd6c33ea1c39b2ff35473144f203e66242/master.20120920.idx",
+    "raw_sha256": "2a04dc9e776d52416e625dde5751f666ce2b754c751840506f3acdfe0c41547c",
+    "source_identity": "15bf1836dbc4edcf182a0337727475bd6c33ea1c39b2ff35473144f203e66242",
+    "source_instance_id": "SRC010309"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/95e14aa99cc6a937346c20589aa6f2b58afd79b8a639de70b73abc855d76043a/master.20120921.idx",
+    "raw_sha256": "1e6a2652e780e7a9839361534bc4f9acdd62ea7e8060a2b01308f00e17a31307",
+    "source_identity": "95e14aa99cc6a937346c20589aa6f2b58afd79b8a639de70b73abc855d76043a",
+    "source_instance_id": "SRC010310"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/0080cc9a5278b5d87ca36ef849c2a486bc808d5e39c06b6637333aa870bd3d3e/master.20120924.idx",
+    "raw_sha256": "e27b14e45c7cf8bbf766f33b88f9ecca88043a4e07b659a2ab7294701b486ae1",
+    "source_identity": "0080cc9a5278b5d87ca36ef849c2a486bc808d5e39c06b6637333aa870bd3d3e",
+    "source_instance_id": "SRC010311"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/c30a512e4e608015ec4efd2a83742b4c97826e8f7bacc60f40d5e5c4e81ba37a/master.20120925.idx",
+    "raw_sha256": "617afc3bd3450f886c88cec6bc81ff487d20b120f4e18554979214b217066844",
+    "source_identity": "c30a512e4e608015ec4efd2a83742b4c97826e8f7bacc60f40d5e5c4e81ba37a",
+    "source_instance_id": "SRC010312"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/4bfa77e118673dae9a605e582905e6871c3d3db6139d6626f439f5f882a4582e/master.20120926.idx",
+    "raw_sha256": "616a4a2658e5c9b7afbfecb5142545c01b7025a983cb109cf635f9913a09667f",
+    "source_identity": "4bfa77e118673dae9a605e582905e6871c3d3db6139d6626f439f5f882a4582e",
+    "source_instance_id": "SRC010313"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/55bd3c9b2e34811b6d63baecc753c1529f201ed77d5ff2439152307fe2875f65/master.20120927.idx",
+    "raw_sha256": "b2951d5674dd99cf000b9da353dd6fed76fd9901ab7926147f1aec7e69dd3e57",
+    "source_identity": "55bd3c9b2e34811b6d63baecc753c1529f201ed77d5ff2439152307fe2875f65",
+    "source_instance_id": "SRC010314"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/a102d6e3177a809b542b123064a3beb096658fba2df37ebf1bfca35f2834ee90/master.20120928.idx",
+    "raw_sha256": "cced71d3055eca0cef3309e2f1b54e5fa4eca01d3ebb4c5e23514c2d4c361490",
+    "source_identity": "a102d6e3177a809b542b123064a3beb096658fba2df37ebf1bfca35f2834ee90",
+    "source_instance_id": "SRC010315"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/295405aef4fe09c864f99b433291b0052e12b60ba1f2ce91d7a48177649639f1/master.20121001.idx",
+    "raw_sha256": "63d73aed9b2985212cda17d261e943e4319843a00949b8c8d1e52fa011779219",
+    "source_identity": "295405aef4fe09c864f99b433291b0052e12b60ba1f2ce91d7a48177649639f1",
+    "source_instance_id": "SRC010316"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/09e79dd5fe65a53b22ebb348594302d68897ce3e0670462505cef42cecaf8260/master.20121002.idx",
+    "raw_sha256": "83e4b770480a8bb4b219dc366f0462184337b3fa0df4ecb787212a15770f7207",
+    "source_identity": "09e79dd5fe65a53b22ebb348594302d68897ce3e0670462505cef42cecaf8260",
+    "source_instance_id": "SRC010317"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/016fc2ba3154c6984612250365538c7211f3d974df04958258f2e6a29515a53e/master.20121003.idx",
+    "raw_sha256": "6ce8924c4901a78cb9507b7a9db1cb60db4baeb617bf93f29cdb634cf475114e",
+    "source_identity": "016fc2ba3154c6984612250365538c7211f3d974df04958258f2e6a29515a53e",
+    "source_instance_id": "SRC010318"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/48c4e06d8cf8f94e60144b5fa76e11412bd4f32076ccb6abf204e6283abacd96/master.20121004.idx",
+    "raw_sha256": "1a9999d7db3610d2bf2653e1313982a38e264d0ff3c4dd4c6a7115589b29f4fd",
+    "source_identity": "48c4e06d8cf8f94e60144b5fa76e11412bd4f32076ccb6abf204e6283abacd96",
+    "source_instance_id": "SRC010319"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/f6924e438f4fa9a912b4120df5a197e77e0d17f361b14c5694081bb2975a3df0/master.20121005.idx",
+    "raw_sha256": "d64be03e3fc120bdf5c08cf949509a22c1caefd01e2e44d0cb3c07ce75cb771a",
+    "source_identity": "f6924e438f4fa9a912b4120df5a197e77e0d17f361b14c5694081bb2975a3df0",
+    "source_instance_id": "SRC010320"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/6e8f95e04dad3b94250cdc458c42759561390c4b20faf6894fcb34fec613a01f/master.20121009.idx",
+    "raw_sha256": "1a5c88ff83945fc56a38d4cf5d0cce3e3f9b007892dbdb4a8fbfb54c87bc854d",
+    "source_identity": "6e8f95e04dad3b94250cdc458c42759561390c4b20faf6894fcb34fec613a01f",
+    "source_instance_id": "SRC010321"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/22e295e0a95c36459eb8e35ef34971ee7e8cfe78a0ffb8de61bd2b747c9550c8/master.20121010.idx",
+    "raw_sha256": "727d867fe3a46ffde9360254ab6a167b882b83640da3dfb5d23ab9b32c5cdc20",
+    "source_identity": "22e295e0a95c36459eb8e35ef34971ee7e8cfe78a0ffb8de61bd2b747c9550c8",
+    "source_instance_id": "SRC010322"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/fcbbf19dfd7fe72570413281335e5a3acbebc679455f6a2a327f78ac5df36570/master.20121011.idx",
+    "raw_sha256": "55b6280f43a49426592b823c26b450932f8050a07b466a76dee4e4c5e695056b",
+    "source_identity": "fcbbf19dfd7fe72570413281335e5a3acbebc679455f6a2a327f78ac5df36570",
+    "source_instance_id": "SRC010323"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/6bc52d5d2865f03aa6b80c65b81c25f5775c6ee45e2f70fbde3bd8c82d91ddf7/master.20121012.idx",
+    "raw_sha256": "b39bc6462491c8851de747f02e32f595d5cd44338726ec4c2618137e2f5a0c60",
+    "source_identity": "6bc52d5d2865f03aa6b80c65b81c25f5775c6ee45e2f70fbde3bd8c82d91ddf7",
+    "source_instance_id": "SRC010324"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/cc9b64918653ace5f980b63710872555d1f56af1758ec59fd90c0d6c76d3be8d/master.20121015.idx",
+    "raw_sha256": "8fe9601595de60d524aa24447e2352eb1379ba6ba7263ce74eca5528b6502ad4",
+    "source_identity": "cc9b64918653ace5f980b63710872555d1f56af1758ec59fd90c0d6c76d3be8d",
+    "source_instance_id": "SRC010325"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/446f52297da8bba3ed795586bc8431eca1bccb988ec319a4856109e79b6b4af3/master.20121016.idx",
+    "raw_sha256": "db026e5dd1292b395db318f692e898ce2e52068771860a16d4b99b2a8bd3d91b",
+    "source_identity": "446f52297da8bba3ed795586bc8431eca1bccb988ec319a4856109e79b6b4af3",
+    "source_instance_id": "SRC010326"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/f31120e448f8c66b78e7af7255e93f79da192fa550db341e6ec5ce0f14d77ee1/master.20121017.idx",
+    "raw_sha256": "dfa527f6deb85af58336b77f73043cdb25ac1b9e264e6eaeab2318c0b39c7186",
+    "source_identity": "f31120e448f8c66b78e7af7255e93f79da192fa550db341e6ec5ce0f14d77ee1",
+    "source_instance_id": "SRC010327"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/4e8a74ca8ec2d67c72d46f859e725642bdf5604b8aa03b296bf3461ae3081646/master.20121018.idx",
+    "raw_sha256": "5b0ea70decbafb6f2ae4275c00586a92222e22d3cb84db0b43bf2668d833489c",
+    "source_identity": "4e8a74ca8ec2d67c72d46f859e725642bdf5604b8aa03b296bf3461ae3081646",
+    "source_instance_id": "SRC010328"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/42057fc30d8e56b6719b7f856e6510765e16d23636857c387a080ab06d333579/master.20121019.idx",
+    "raw_sha256": "cf6988dcd1d57bd2bfd5dd68e3a018fea04c8a60db33eca8d50bca208b6dbd9e",
+    "source_identity": "42057fc30d8e56b6719b7f856e6510765e16d23636857c387a080ab06d333579",
+    "source_instance_id": "SRC010329"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/cc2b895ba1075f1d803d9350c2616ffd0f118da02fbe6034916df3def9c67ad1/master.20121022.idx",
+    "raw_sha256": "68f7824ae74ca481ab6ab774e6be6f6e28eb2b63c820fe2383eb496526b616bd",
+    "source_identity": "cc2b895ba1075f1d803d9350c2616ffd0f118da02fbe6034916df3def9c67ad1",
+    "source_instance_id": "SRC010330"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/2aa8ed7ac9d260e78b82915e907dd8a3c12f3faebc67091ce6ccdeccdfeaaaa1/master.20121023.idx",
+    "raw_sha256": "c94861461cc13bc72dc1660e69fed01990cf9157491d3ccdd8d5a483829f0691",
+    "source_identity": "2aa8ed7ac9d260e78b82915e907dd8a3c12f3faebc67091ce6ccdeccdfeaaaa1",
+    "source_instance_id": "SRC010331"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/c287f446d7ffb3f1eb4355a8ea747e9cb6e7a8f12105af4b53b561d10a8ef5b5/master.20121024.idx",
+    "raw_sha256": "b922ba9fc67978a576ce9a0c75a662e57ec3ecf2d5138a14a06d4dc465ba2946",
+    "source_identity": "c287f446d7ffb3f1eb4355a8ea747e9cb6e7a8f12105af4b53b561d10a8ef5b5",
+    "source_instance_id": "SRC010332"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/010adef6b6b1a57bca5fd5354ed22f1089b8ca00b4c7d0f1c6aec24407828869/master.20121025.idx",
+    "raw_sha256": "7cc24de0f4857acd9d1f58495267ca32696b674858b8bd8bceb4ede9ea9a3529",
+    "source_identity": "010adef6b6b1a57bca5fd5354ed22f1089b8ca00b4c7d0f1c6aec24407828869",
+    "source_instance_id": "SRC010333"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/33ef87aa942b3abc8c58c358151083c7cd81a0e410ca4448a43263434c79c6f4/master.20121026.idx",
+    "raw_sha256": "f8cbb6138eebdc3b1c746a06ebc084b30c1bcac881158c09423682e56614ecd3",
+    "source_identity": "33ef87aa942b3abc8c58c358151083c7cd81a0e410ca4448a43263434c79c6f4",
+    "source_instance_id": "SRC010334"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/cfe6e095513c9f88d700965257f3f095a071c22d55b6035eac1ca9e62ae13fc5/master.20121029.idx",
+    "raw_sha256": "2ae4a3523bb72e0612f268347485cc928e57a82e079a27ec770c5ad25f15c7f7",
+    "source_identity": "cfe6e095513c9f88d700965257f3f095a071c22d55b6035eac1ca9e62ae13fc5",
+    "source_instance_id": "SRC010335"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/f6bb915b4a8ea94b576a409f60bd36cf73285290d1a3271a6effe4d62f8233f3/master.20121030.idx",
+    "raw_sha256": "d5266cfb7ff19ac8a373e42a83a7bd5c87ba2a7f26274ecfe576137f687eee14",
+    "source_identity": "f6bb915b4a8ea94b576a409f60bd36cf73285290d1a3271a6effe4d62f8233f3",
+    "source_instance_id": "SRC010336"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/6e2a29e0aa5673362dbded416048db9a672fd5a9415d257655bb4058c7b933c2/master.20121031.idx",
+    "raw_sha256": "00309c5658659aaa091c458872ba09a9ef76e05a2376dde2633ff25ab2ca557a",
+    "source_identity": "6e2a29e0aa5673362dbded416048db9a672fd5a9415d257655bb4058c7b933c2",
+    "source_instance_id": "SRC010337"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/cb0d4248e28e278bd277454155fc4cf5375bba0165a50155f2f939d01d98100f/master.20121101.idx",
+    "raw_sha256": "86d760ee0e884f7de49aa2c0ef7ad6a58ef009b12105740a72f9ea7925c26fce",
+    "source_identity": "cb0d4248e28e278bd277454155fc4cf5375bba0165a50155f2f939d01d98100f",
+    "source_instance_id": "SRC010338"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/9ca83bf863c3dadf80b38d1c51cc10db26228d0dfe9b1694cb330f7340f9137d/master.20121102.idx",
+    "raw_sha256": "8691d53d5f36bf7c819eb2c3242ec454cea0c911df528bf9ab268c566ef0fc9d",
+    "source_identity": "9ca83bf863c3dadf80b38d1c51cc10db26228d0dfe9b1694cb330f7340f9137d",
+    "source_instance_id": "SRC010339"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/56a9fc6099757d6ab6fec99165cdccbfe8a6ab2bdc5bc7d70b5382d92f305248/master.20121105.idx",
+    "raw_sha256": "fa60c800b5047cf5bc9ba62ed004a38813ba676dacb1b19ff7a8e4ef313b5d04",
+    "source_identity": "56a9fc6099757d6ab6fec99165cdccbfe8a6ab2bdc5bc7d70b5382d92f305248",
+    "source_instance_id": "SRC010340"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/3479b71eed7b8fedf95f4dc1444d31e0ccdc403595b2694d88faa002e3600ed4/master.20121106.idx",
+    "raw_sha256": "37f6b3dc93835c6dd17b79f7a1489d291b010c34dc85788a2ef0ca1fa49daa0b",
+    "source_identity": "3479b71eed7b8fedf95f4dc1444d31e0ccdc403595b2694d88faa002e3600ed4",
+    "source_instance_id": "SRC010341"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/c7a44e732afb1f36eea9db69693d2e8b9165a73af89b4339224e75db5a0aaf40/master.20121107.idx",
+    "raw_sha256": "cd8595758cc42b5982ce7bdf77428178ce88a8b0ed0704edf73bb7b267c97041",
+    "source_identity": "c7a44e732afb1f36eea9db69693d2e8b9165a73af89b4339224e75db5a0aaf40",
+    "source_instance_id": "SRC010342"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/ec6c743847a7e1424e9c70c22907cffe6323922d16aa46d18a46bd92bf44be5d/master.20121108.idx",
+    "raw_sha256": "d4e8279540df1527eca568172e0091dbf948d5e1020dcf17b6f3958d3a3a3351",
+    "source_identity": "ec6c743847a7e1424e9c70c22907cffe6323922d16aa46d18a46bd92bf44be5d",
+    "source_instance_id": "SRC010343"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/eba5a584c22c031d0cb63db564ae2fa9c0ff16984769205f9e48f30403d0f8df/master.20121109.idx",
+    "raw_sha256": "61dec26aef6b0d7fc88884f599c5efa2856e4cdb59b74d910165fb414cde1755",
+    "source_identity": "eba5a584c22c031d0cb63db564ae2fa9c0ff16984769205f9e48f30403d0f8df",
+    "source_instance_id": "SRC010344"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/69f1f44087f677a521fd8aaf906ad43fff4e257fa5064eec67b9d3edb4bf1c56/master.20121113.idx",
+    "raw_sha256": "8df448f981bb05e482aa1d91ac2def46b403c6222ed7acba07f7e1ae28724432",
+    "source_identity": "69f1f44087f677a521fd8aaf906ad43fff4e257fa5064eec67b9d3edb4bf1c56",
+    "source_instance_id": "SRC010345"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/a7b056539a82f27d35675622355835664aaeb9d09416fbd2b861aed6c392d857/master.20121114.idx",
+    "raw_sha256": "19f59b55917ee803f97205928025dd5f41822a3629b9d0c9c3d5c785cb6b2298",
+    "source_identity": "a7b056539a82f27d35675622355835664aaeb9d09416fbd2b861aed6c392d857",
+    "source_instance_id": "SRC010346"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/9821ac9dfe7b562f0e70b91226bf28a0a2b0e51c30cfb06ed21ea7a4db2bb982/master.20121115.idx",
+    "raw_sha256": "5393ad3197435e808237e3b6ed49678924cf9d73c7f06dcaef87cebe599e8d4d",
+    "source_identity": "9821ac9dfe7b562f0e70b91226bf28a0a2b0e51c30cfb06ed21ea7a4db2bb982",
+    "source_instance_id": "SRC010347"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/ada299c114bc109384a5324fd4c9745751046a75b5ce1a3a5e2725d33e5e80ae/master.20121116.idx",
+    "raw_sha256": "28546c6dcaccb11b98a676073c61e53a6078e659011df9fd40f63d123dead9dd",
+    "source_identity": "ada299c114bc109384a5324fd4c9745751046a75b5ce1a3a5e2725d33e5e80ae",
+    "source_instance_id": "SRC010348"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/003e910234025b744a1c2e42eb9c46fed424d5aeaf661914a3db68ad3e685660/master.20121119.idx",
+    "raw_sha256": "a3faeff31dab9297bc25c8fa8785787af42f23996be233f583654cf8743e749a",
+    "source_identity": "003e910234025b744a1c2e42eb9c46fed424d5aeaf661914a3db68ad3e685660",
+    "source_instance_id": "SRC010349"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/fd4886d0300c6d8e720ec1f0627a2d02b567886f7fc09860e959e7c27a3f68a6/master.20121120.idx",
+    "raw_sha256": "2dcc9fcecc25dbcae53c5267343fcc11db4a3c203ea23f5c6b0df6ebc95584fd",
+    "source_identity": "fd4886d0300c6d8e720ec1f0627a2d02b567886f7fc09860e959e7c27a3f68a6",
+    "source_instance_id": "SRC010350"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/1bb1e82ab78b884213171034c87b07c7310b37c41c05774b89b2cc50465b072c/master.20121121.idx",
+    "raw_sha256": "09aab6da1b1b4a9c8c1800faa5b92819288aba2aecae67d58fab8aa1975ac2e8",
+    "source_identity": "1bb1e82ab78b884213171034c87b07c7310b37c41c05774b89b2cc50465b072c",
+    "source_instance_id": "SRC010351"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/4a1a55fd5b0168e7afa62c657635482ab5c217df220b6c7ed7b57c56869a8063/master.20121123.idx",
+    "raw_sha256": "a8f228c9f32741b08da8a7457b4effa0326d0c1585f3e8de8845d75a02d00598",
+    "source_identity": "4a1a55fd5b0168e7afa62c657635482ab5c217df220b6c7ed7b57c56869a8063",
+    "source_instance_id": "SRC010352"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/561c1710e4a4aa2e776bd1bd0bcf097dd332db98c3d249198c62904a6e153bcc/master.20121126.idx",
+    "raw_sha256": "bd87f5439ab2e450a501ad5c68b68b15aca25eef42fe4fd7034d4a0b3f38af9f",
+    "source_identity": "561c1710e4a4aa2e776bd1bd0bcf097dd332db98c3d249198c62904a6e153bcc",
+    "source_instance_id": "SRC010353"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/93a08d63c30caf082df027f076318350a02cde9ed57001573ce657a1311f9486/master.20121127.idx",
+    "raw_sha256": "da00de430fd5393a8a2b58cbb335bfd789408c415b112443f41bd8794f419f7b",
+    "source_identity": "93a08d63c30caf082df027f076318350a02cde9ed57001573ce657a1311f9486",
+    "source_instance_id": "SRC010354"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/8a4fa10bd5ca9e21f5da0493a05f980c41641bcd03823ce7baf9c28fd4f8d3ec/master.20121128.idx",
+    "raw_sha256": "30c38d3c02b3b1ab49b211cb979bbe6b64e5e6e6b6f73bab7b9bc9fb5aae9465",
+    "source_identity": "8a4fa10bd5ca9e21f5da0493a05f980c41641bcd03823ce7baf9c28fd4f8d3ec",
+    "source_instance_id": "SRC010355"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/16c3605997783e3337c32608f73fe9ff2f7365b112b4bc81349fff7d4469c1eb/master.20121129.idx",
+    "raw_sha256": "006597ef4a8575638c230a4a4a1e64608ee3f897dd3a6befd22d0c74c15e91cf",
+    "source_identity": "16c3605997783e3337c32608f73fe9ff2f7365b112b4bc81349fff7d4469c1eb",
+    "source_instance_id": "SRC010356"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/cad8d86f121df3adf7228550a87a5200d3a7c50b74fe17c8d573aaa746888047/master.20121130.idx",
+    "raw_sha256": "a1e94135aa610c73f149eb443d1c8a6469b7dfd07cc1eb5e3d6037369b153766",
+    "source_identity": "cad8d86f121df3adf7228550a87a5200d3a7c50b74fe17c8d573aaa746888047",
+    "source_instance_id": "SRC010357"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/318d887cbdee5100657f5b27908df637c5aa217fc863c46c9eed7daf2bc22f34/master.20121203.idx",
+    "raw_sha256": "e8f147d8f83c12a1d028977e08b3fe3cbd10cde94b4e9712e3417aa31a5ec0d3",
+    "source_identity": "318d887cbdee5100657f5b27908df637c5aa217fc863c46c9eed7daf2bc22f34",
+    "source_instance_id": "SRC010358"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/1a3e3793f9fc126dbfbb6d66f9e76a199215443cd9a61b32be58a1c80b92d129/master.20121204.idx",
+    "raw_sha256": "fb5892b648409dea4c6940b464d73c05ac1bf8bf862a3e3efc73149edc56e309",
+    "source_identity": "1a3e3793f9fc126dbfbb6d66f9e76a199215443cd9a61b32be58a1c80b92d129",
+    "source_instance_id": "SRC010359"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/301b10bf3b43a272ede2f17b2b232942d9ea5a355d618dfc2bc33fc4cba14597/master.20121205.idx",
+    "raw_sha256": "dccc770ed0b323f3644ce035626e2c83ab04918bb0da864759d76360105199e1",
+    "source_identity": "301b10bf3b43a272ede2f17b2b232942d9ea5a355d618dfc2bc33fc4cba14597",
+    "source_instance_id": "SRC010360"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/d9cf70cfbc5a65ad35f33fc0429139b7b1eab3d6df17fc18409b3ad517bddd70/master.20121206.idx",
+    "raw_sha256": "35cd85d2fb89b09db64ec75f7ccdad35a08483f78e3ca44133d6cc6e6dfd4ceb",
+    "source_identity": "d9cf70cfbc5a65ad35f33fc0429139b7b1eab3d6df17fc18409b3ad517bddd70",
+    "source_instance_id": "SRC010361"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/99a92279c9a8ff8dfe8f86a415430a3cb7098de65ff43ec68ec9e49ccbf8f0c9/master.20121207.idx",
+    "raw_sha256": "c0e5c23affd5be6bf33b8cf6c9601cf011a9e162b6187a5e2d716655ad85a042",
+    "source_identity": "99a92279c9a8ff8dfe8f86a415430a3cb7098de65ff43ec68ec9e49ccbf8f0c9",
+    "source_instance_id": "SRC010362"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/90ff6c88f9ffde9c4434dd67ec1a9308d1052c98424b701b600468585519fa21/master.20121210.idx",
+    "raw_sha256": "4f49d696bafe69d619921ddae257ce0b26d7c5c83ead5a3bee78b38ea7e0c63e",
+    "source_identity": "90ff6c88f9ffde9c4434dd67ec1a9308d1052c98424b701b600468585519fa21",
+    "source_instance_id": "SRC010363"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/e209700ccf5a934921d55efc2158c3eba36724fab9bd4a861bc525bd6b4daf67/master.20121211.idx",
+    "raw_sha256": "68bf132b3e3bf3490d86748e95f4093be7fe6f7191bbead660bedcc494d00b0a",
+    "source_identity": "e209700ccf5a934921d55efc2158c3eba36724fab9bd4a861bc525bd6b4daf67",
+    "source_instance_id": "SRC010364"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/4ee18ef284b682e571a8f47b008a58fd25fe917ebeda4b4657ff0ee63501a8c1/master.20121212.idx",
+    "raw_sha256": "12556dfce590f9cdab5cf1845c06b0dcfb6bb09c6bef0839b9356654385dcd53",
+    "source_identity": "4ee18ef284b682e571a8f47b008a58fd25fe917ebeda4b4657ff0ee63501a8c1",
+    "source_instance_id": "SRC010365"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/f6676e367b072fc24b0e93278273d0afccd967231cee3c4b7f4a71a7c99a8313/master.20121213.idx",
+    "raw_sha256": "df740b86a99281b3796ba6fbfb1184165f169cbe617964d4673fbc9b7cfc2f2b",
+    "source_identity": "f6676e367b072fc24b0e93278273d0afccd967231cee3c4b7f4a71a7c99a8313",
+    "source_instance_id": "SRC010366"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/153c848a197f888281bc622ec777003d0bc811a1b5e275455cd00265d48e597a/master.20121214.idx",
+    "raw_sha256": "64274486c5f6803a2ece2cce5efb69a6b48478587a92bf75ae792757e914e74c",
+    "source_identity": "153c848a197f888281bc622ec777003d0bc811a1b5e275455cd00265d48e597a",
+    "source_instance_id": "SRC010367"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/df1ca241b11616bc778d36289db22ab8ca56c3545216fb0d81abd6737f2512da/master.20121217.idx",
+    "raw_sha256": "6c0130cc58ef2832bbbf9ede8a8681b0e1007868bf1d9a151b547f25dff3319a",
+    "source_identity": "df1ca241b11616bc778d36289db22ab8ca56c3545216fb0d81abd6737f2512da",
+    "source_instance_id": "SRC010368"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/239cf16bfe3271c3b971c85e6551d01f1072e39e515a8284bee53d684845a6d1/master.20121218.idx",
+    "raw_sha256": "6e0fc8b0de35ea6e3ee2bd48d3d7c9bdaeb787cd1e74b4c6153879bdeb922da3",
+    "source_identity": "239cf16bfe3271c3b971c85e6551d01f1072e39e515a8284bee53d684845a6d1",
+    "source_instance_id": "SRC010369"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/6b1c17f8da64bd64b4085b0b3c9fd03a6654224dc492c179865ff4a7157b963c/master.20121219.idx",
+    "raw_sha256": "f575edc0d68ced8d7767b730a26e289d73f0aacf027e59880a93d5280e75934e",
+    "source_identity": "6b1c17f8da64bd64b4085b0b3c9fd03a6654224dc492c179865ff4a7157b963c",
+    "source_instance_id": "SRC010370"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/948411b7cd147f2a0986bfceccc6a05a0478ee147f1f4b4c315693b97ea2fd1a/master.20121220.idx",
+    "raw_sha256": "16c472c5bd474242ca1ad63de48c5731237c02e286c4bbaeab364a3a9f376f35",
+    "source_identity": "948411b7cd147f2a0986bfceccc6a05a0478ee147f1f4b4c315693b97ea2fd1a",
+    "source_instance_id": "SRC010371"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/0b915ceb40d0f19dfe8bf5190a6eeb6270684ab5558a3e68b382fb8e6fa7b9be/master.20121221.idx",
+    "raw_sha256": "b6a1841b62bfa1873d6c04edd489625524c6067190dde2206e0c714771d6db27",
+    "source_identity": "0b915ceb40d0f19dfe8bf5190a6eeb6270684ab5558a3e68b382fb8e6fa7b9be",
+    "source_instance_id": "SRC010372"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/cd4498bf030d0e792a447fcbd9f688d11e7f9ce50a7f1e17042a54d6978f70a6/master.20121226.idx",
+    "raw_sha256": "39d9413b27765aceeb6fc2f4413291d6a6a30570cfd4709dcbf552246f6c3038",
+    "source_identity": "cd4498bf030d0e792a447fcbd9f688d11e7f9ce50a7f1e17042a54d6978f70a6",
+    "source_instance_id": "SRC010373"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/be2966521a8502e9ef9030bce80435abe5215f75d5bfb00500105f4cc1fecb30/master.20121227.idx",
+    "raw_sha256": "3eaf9fe27983441dd07e45b1a824460269c6017056f619b1cf65ad6f0f548f80",
+    "source_identity": "be2966521a8502e9ef9030bce80435abe5215f75d5bfb00500105f4cc1fecb30",
+    "source_instance_id": "SRC010374"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/5ce4181307df011f4c634543a85bc9f5a33b1aec8a1d3e441f4550b136a912d3/master.20121228.idx",
+    "raw_sha256": "8272791092c4d206de2cbfe2bf186f5a49fdd0c54c8ad11959018dc99bd5ae96",
+    "source_identity": "5ce4181307df011f4c634543a85bc9f5a33b1aec8a1d3e441f4550b136a912d3",
+    "source_instance_id": "SRC010375"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/dc39f1b86d8f1c91dc7fe50b886f54f5f93431993c7417589a759dba50698313/master.20121231.idx",
+    "raw_sha256": "0c19e9a25cf65fb539f13925cc502a7714a0c44156021877534117fa6538b569",
+    "source_identity": "dc39f1b86d8f1c91dc7fe50b886f54f5f93431993c7417589a759dba50698313",
+    "source_instance_id": "SRC010376"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/25e43e59c73feabc734dc32ab1b7b3bd02b2e31ae3de6a0f12e8b1846dd03a9c/master.20130401.idx",
+    "raw_sha256": "77b9ee4f863d4ed1355c0495d6e4512622d50b3bf3fe3a4986c95b541334f45c",
+    "source_identity": "25e43e59c73feabc734dc32ab1b7b3bd02b2e31ae3de6a0f12e8b1846dd03a9c",
+    "source_instance_id": "SRC010377"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/154c8b62000382e2fbb200737568d46133d6fdcdc5b461c768d9db40867aeec5/master.20130402.idx",
+    "raw_sha256": "1ffe89fce081a3be656782654f1b8b03f7f3cde2b5cef281efe2049940db9178",
+    "source_identity": "154c8b62000382e2fbb200737568d46133d6fdcdc5b461c768d9db40867aeec5",
+    "source_instance_id": "SRC010378"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/69be36627bd9382d67eab0b35a5fb0a6a65533e2f5a391abaea6dfa156e7c735/master.20130403.idx",
+    "raw_sha256": "14767611c601ee877dd3a4aeb4987b14e5178d408777bf28e010e4ec59cca48a",
+    "source_identity": "69be36627bd9382d67eab0b35a5fb0a6a65533e2f5a391abaea6dfa156e7c735",
+    "source_instance_id": "SRC010379"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/4ee43e295f8a042a24de0d7fab3c5b6c392239a05aed192e8dace862d76f1e71/master.20130404.idx",
+    "raw_sha256": "90a55de0b256ace314f19671d0c55ea3444032019c0493981903e60dcafc970e",
+    "source_identity": "4ee43e295f8a042a24de0d7fab3c5b6c392239a05aed192e8dace862d76f1e71",
+    "source_instance_id": "SRC010380"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/89247e10a9b6e29050f687bb1f0055c6346d6cc94f6bf8ba6a1a29921db7f444/master.20130405.idx",
+    "raw_sha256": "accbb1a58ae9739ca18e41b8a58a59480cd945e7bedd243f361ea0d479f64c89",
+    "source_identity": "89247e10a9b6e29050f687bb1f0055c6346d6cc94f6bf8ba6a1a29921db7f444",
+    "source_instance_id": "SRC010381"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/d5b122ae422ad25a19e522a0a730db55ef681dc3395ea493bb3dee795aff06a9/master.20130408.idx",
+    "raw_sha256": "75ac64c611613f370c21a055c935423b23992ca2bc1be3ede922b574d878f965",
+    "source_identity": "d5b122ae422ad25a19e522a0a730db55ef681dc3395ea493bb3dee795aff06a9",
+    "source_instance_id": "SRC010382"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/6240723684abffebc1a564f4c8533db7a80674b6fed59a6d15661106a06d36ba/master.20130409.idx",
+    "raw_sha256": "c183271253aeb0046d207063e54929024e23cb5f70f0eeaab85ab8d2550941c6",
+    "source_identity": "6240723684abffebc1a564f4c8533db7a80674b6fed59a6d15661106a06d36ba",
+    "source_instance_id": "SRC010383"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/20dfe3bf9abf3956598170530cd5b01c505740c88edfba919ba5496dc780ac72/master.20130410.idx",
+    "raw_sha256": "9abddeb744ba5ad9b31287da5f496b908b470dad247692f3378a4ece81f021c7",
+    "source_identity": "20dfe3bf9abf3956598170530cd5b01c505740c88edfba919ba5496dc780ac72",
+    "source_instance_id": "SRC010384"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/75a1174a048d8484b5e494ad1127b6787e0ef02fc783bc070e93fbb5e44c79ba/master.20130411.idx",
+    "raw_sha256": "7fa316b025eeca8ec2c2c3d582bbaf18098e4c632d57c193b4e9a73d2b0ba8e8",
+    "source_identity": "75a1174a048d8484b5e494ad1127b6787e0ef02fc783bc070e93fbb5e44c79ba",
+    "source_instance_id": "SRC010385"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/07ad72462952eac25cc3ea024beb47056270f14b5375d4fc5c710b386e4f835c/master.20130412.idx",
+    "raw_sha256": "5f5ff1db4fc665108ea0ca57a0bcb83099c3b347bb0a928b0f5b443c26d1f662",
+    "source_identity": "07ad72462952eac25cc3ea024beb47056270f14b5375d4fc5c710b386e4f835c",
+    "source_instance_id": "SRC010386"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/e3c7ca3a619161359ab0e68b2bce29053f09846fbcf85d3eb3842c4e148e896e/master.20130415.idx",
+    "raw_sha256": "45511d32b46f71aba2f7d2d7dbe316d0f9dff32a9979a37724d108587b944c92",
+    "source_identity": "e3c7ca3a619161359ab0e68b2bce29053f09846fbcf85d3eb3842c4e148e896e",
+    "source_instance_id": "SRC010387"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/00fc616a8c61e95efe287719926b998687415b161a23904e6cb254bd7378194d/master.20130416.idx",
+    "raw_sha256": "57776c4bc67659bb7f9cf6d8ef73914f2346a89b63511e6de4ce87f7d2357c10",
+    "source_identity": "00fc616a8c61e95efe287719926b998687415b161a23904e6cb254bd7378194d",
+    "source_instance_id": "SRC010388"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/9c847e9e348fd52ade1319452c7b5b0f0392e9869314d6c733468acd33e2e3dc/master.20130417.idx",
+    "raw_sha256": "e7f92ecb6db8b7cca3f2d0c1495d4136c05b60a61df5ca9fa604679e59d50607",
+    "source_identity": "9c847e9e348fd52ade1319452c7b5b0f0392e9869314d6c733468acd33e2e3dc",
+    "source_instance_id": "SRC010389"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/dbbbc7fd337b9ea0630618ff81f88ccd09fb4ff5e61c63602e4d015b699999c0/master.20130418.idx",
+    "raw_sha256": "06bd03fe9daefccb56f4abea70e6a060b93c9f8c7cdc808c2d7a65536483fef1",
+    "source_identity": "dbbbc7fd337b9ea0630618ff81f88ccd09fb4ff5e61c63602e4d015b699999c0",
+    "source_instance_id": "SRC010390"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/0e5ef6d4ca8d7dddfac9f06bd7b574a92c1539e04b1cdaee644e39d2a6bbcd36/master.20130419.idx",
+    "raw_sha256": "633478415b4b31393f31c639c4caa453bd398b376009d92d0d455dea261337ca",
+    "source_identity": "0e5ef6d4ca8d7dddfac9f06bd7b574a92c1539e04b1cdaee644e39d2a6bbcd36",
+    "source_instance_id": "SRC010391"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/ddbf47be0408aa637f48eb95b296202ba1b39d169656028db30174a4ad10affd/master.20130422.idx",
+    "raw_sha256": "82c01d6e225ef5bb53dc8ab99e65a61cd9fc2398e5f0dbb312816b74abfb9f74",
+    "source_identity": "ddbf47be0408aa637f48eb95b296202ba1b39d169656028db30174a4ad10affd",
+    "source_instance_id": "SRC010392"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/b7c930273e80cab6e769484644ce18e3d3f861ce64933d5df690ab212fe6e958/master.20130423.idx",
+    "raw_sha256": "4d73c4429a74d571efd0b341ac1c8e1cf4225b49df4629629d3616744ade2547",
+    "source_identity": "b7c930273e80cab6e769484644ce18e3d3f861ce64933d5df690ab212fe6e958",
+    "source_instance_id": "SRC010393"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/14418ddb8440ec0f71864b5c1c0c7c89370eaaae21fac8d4271cee286d55e8fb/master.20130424.idx",
+    "raw_sha256": "1d786d32953a10ff290bac9975f39a0eb2e34fe980f38c049a7d6e24389211db",
+    "source_identity": "14418ddb8440ec0f71864b5c1c0c7c89370eaaae21fac8d4271cee286d55e8fb",
+    "source_instance_id": "SRC010394"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/b8e5822e6f7d6901ee50ebb840faf03208cad23012a459a52532869941bc21ef/master.20130425.idx",
+    "raw_sha256": "959caf4daba8be5a273647687d4aca5f18428c44d9abb0cbb7703a9245923134",
+    "source_identity": "b8e5822e6f7d6901ee50ebb840faf03208cad23012a459a52532869941bc21ef",
+    "source_instance_id": "SRC010395"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/ac85498acd841e042d0c1c97a994eb19dc24edb1ea39dbb51a9d914efec020a4/master.20130426.idx",
+    "raw_sha256": "d035069089791c7cf24c8447eb57133bd3444efce7babc1fb08d984b8a0442ce",
+    "source_identity": "ac85498acd841e042d0c1c97a994eb19dc24edb1ea39dbb51a9d914efec020a4",
+    "source_instance_id": "SRC010396"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/cbfa50ecf9d0866914d3c42a1701027f0084e4d14026346beb63075f73e2a8dc/master.20130429.idx",
+    "raw_sha256": "3fbfc95d440d6cc28f4c7114153b861bd44fd5793238167802dbbb31b5964657",
+    "source_identity": "cbfa50ecf9d0866914d3c42a1701027f0084e4d14026346beb63075f73e2a8dc",
+    "source_instance_id": "SRC010397"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/1f18f0d350a675726e3c6d7b643bddda4cf60b6f00fe946c2ddc4588b6b28d31/master.20130430.idx",
+    "raw_sha256": "17dd28b70432f6b587804a3673c45be6e24dc6d0918b6fca4ee446807e8d1be0",
+    "source_identity": "1f18f0d350a675726e3c6d7b643bddda4cf60b6f00fe946c2ddc4588b6b28d31",
+    "source_instance_id": "SRC010398"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/7e71eb7866886c62eb65d747a67098288e5ceeb385d231d6bc92a365ac3c3c9a/master.20130501.idx",
+    "raw_sha256": "95377f2342fa80d5bf7a8264f8f5e9409b2deba8f93cef0751e3bd6cee9275b8",
+    "source_identity": "7e71eb7866886c62eb65d747a67098288e5ceeb385d231d6bc92a365ac3c3c9a",
+    "source_instance_id": "SRC010399"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/64e8c96c7c4188968efe9e4748908abea131a3064d0436e31d7e1d313182adba/master.20130502.idx",
+    "raw_sha256": "90404f6dea9ac0f9eb9b66153d0383e00abd4f14fdce2bd1306e38a5d4db0481",
+    "source_identity": "64e8c96c7c4188968efe9e4748908abea131a3064d0436e31d7e1d313182adba",
+    "source_instance_id": "SRC010400"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/095fcfdb1e6afd6cbab80fe93f5d2578a37aab05e5f6137b150213d7a0d5a96a/master.20130503.idx",
+    "raw_sha256": "194979d65aef2b698d69486404e376b3542474938d7262bcbb2a4ddd9edf3a4c",
+    "source_identity": "095fcfdb1e6afd6cbab80fe93f5d2578a37aab05e5f6137b150213d7a0d5a96a",
+    "source_instance_id": "SRC010401"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/e0d4c2816a55052b3887b0d0ab56ae58e2f945ad4e3192c2fb0a1f88217cacc2/master.20130506.idx",
+    "raw_sha256": "d4c1f5c5b994e0dd8fa67ae8e20863de39a8381c896876f2b168f17509c21ffe",
+    "source_identity": "e0d4c2816a55052b3887b0d0ab56ae58e2f945ad4e3192c2fb0a1f88217cacc2",
+    "source_instance_id": "SRC010402"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/bd1e2438fa4ea7e2cd11e123d5cedff51b15d1dd8f14b6d32b49f7119575e37b/master.20130507.idx",
+    "raw_sha256": "f3a7eb71df7f0e76e6d189f623d8abf04870e2fca4bd1bcf4f287ab01b746702",
+    "source_identity": "bd1e2438fa4ea7e2cd11e123d5cedff51b15d1dd8f14b6d32b49f7119575e37b",
+    "source_instance_id": "SRC010403"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/397aa3f01bf9b00cdbc8714c3c0f16d5dab501b6a97d0eee89901440a63b2032/master.20130508.idx",
+    "raw_sha256": "f21e5e0383827cf0dd55309454ec2ab4dd38c9250b0257e05d72bc1ae9121579",
+    "source_identity": "397aa3f01bf9b00cdbc8714c3c0f16d5dab501b6a97d0eee89901440a63b2032",
+    "source_instance_id": "SRC010404"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/2b3d1ad8a084788af98c548b71d7a0fdfb3942e197d2c0b4dca968cdb6e63671/master.20130509.idx",
+    "raw_sha256": "06e791e4977bed2969f17f4c195bee3e17fa0d6c09693e09c839d2f8784bc753",
+    "source_identity": "2b3d1ad8a084788af98c548b71d7a0fdfb3942e197d2c0b4dca968cdb6e63671",
+    "source_instance_id": "SRC010405"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/a07cc669097bee360fac5506e1d3d1fa1e048809da4da17e9e501a214b41fdeb/master.20130510.idx",
+    "raw_sha256": "b58339e3a9c54c77e5e916c97bf174c04432ff812de235843b24d2898f877ff2",
+    "source_identity": "a07cc669097bee360fac5506e1d3d1fa1e048809da4da17e9e501a214b41fdeb",
+    "source_instance_id": "SRC010406"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/7a096f65ae06981259b43bfce78740a0148226305bdbd88829ed338ec2749bf6/master.20130513.idx",
+    "raw_sha256": "9ffaab927cbfdf8ddf3a7351aa8fa22568039a175346d3af99be8411354a0cf1",
+    "source_identity": "7a096f65ae06981259b43bfce78740a0148226305bdbd88829ed338ec2749bf6",
+    "source_instance_id": "SRC010407"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/abf0b2cc0b2b9dbae2765917869761e36446f21ec04f461dae3754080827a987/master.20130514.idx",
+    "raw_sha256": "73a337308ef35938bff6facf4520a84ea0c189593d068efe3c914af0eeb49056",
+    "source_identity": "abf0b2cc0b2b9dbae2765917869761e36446f21ec04f461dae3754080827a987",
+    "source_instance_id": "SRC010408"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/6ec8dc9df66f1ae6eba07123624d42e8c66f56602f20fa9be56170435c7d3e74/master.20130515.idx",
+    "raw_sha256": "8b914d1934813f4b4a5acec418b63791bf03f373ff17e344159a1d3a464301d3",
+    "source_identity": "6ec8dc9df66f1ae6eba07123624d42e8c66f56602f20fa9be56170435c7d3e74",
+    "source_instance_id": "SRC010409"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/ff9ba7c80457a64eb17b24947d9271a24c5967b1a845779d8df8515db4549397/master.20130516.idx",
+    "raw_sha256": "540695aa62f649361f26171f8d1b1cca02b45efd2559efbd569ea907275e2418",
+    "source_identity": "ff9ba7c80457a64eb17b24947d9271a24c5967b1a845779d8df8515db4549397",
+    "source_instance_id": "SRC010410"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/c87f2f1163324452660859439aa51efebaa6d59a475957b94c0d940c34437384/master.20130517.idx",
+    "raw_sha256": "383db6ca0d73b461e615dd54f0ee29dd495ca6bc647710bb7e6e85e7e73bd8b7",
+    "source_identity": "c87f2f1163324452660859439aa51efebaa6d59a475957b94c0d940c34437384",
+    "source_instance_id": "SRC010411"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/36019c2f80e8cf0ed4132bb2f8e22eea3898af189c8e84d921347c17291632da/master.20130520.idx",
+    "raw_sha256": "01af6286b5bb651edf8295af9f6f788f8b2951b4997bc0768b88de49fe83c0a9",
+    "source_identity": "36019c2f80e8cf0ed4132bb2f8e22eea3898af189c8e84d921347c17291632da",
+    "source_instance_id": "SRC010412"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/c1b0f552fcf1bed3aa4c22d15e7778b476a3a1bf6b15a422dd9d50bca77deb0e/master.20130521.idx",
+    "raw_sha256": "70343fb2cd97b1039e7a67d54b918701d25b2d1f4c3272b8edeb192f523897c2",
+    "source_identity": "c1b0f552fcf1bed3aa4c22d15e7778b476a3a1bf6b15a422dd9d50bca77deb0e",
+    "source_instance_id": "SRC010413"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/7f9f1fa26af730830e5dc177cc12cf0a2a98336cfa6b4fa393cf39509f7929b8/master.20130522.idx",
+    "raw_sha256": "163d8a3602f5162f9d6cec192304738db1aff8d8c9c7cf95e76fcc477c4744ae",
+    "source_identity": "7f9f1fa26af730830e5dc177cc12cf0a2a98336cfa6b4fa393cf39509f7929b8",
+    "source_instance_id": "SRC010414"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/fa82ab4d02b8844b5766fbecfca09489836f052aa94f646e69b08a0cc82107fe/master.20130523.idx",
+    "raw_sha256": "2f674271f8fa1e10d9c22b1f452b296abb0022133e1a4337abad3d0a0edeab18",
+    "source_identity": "fa82ab4d02b8844b5766fbecfca09489836f052aa94f646e69b08a0cc82107fe",
+    "source_instance_id": "SRC010415"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/1b7b7cdab2a77917cdb44bc321d9de3484ebcc26b74c837b83a9e034f17c55c7/master.20130524.idx",
+    "raw_sha256": "4a59a9071026b2d3906dad376707047bf4bcf1af832e21b9acfe38f59ab8070b",
+    "source_identity": "1b7b7cdab2a77917cdb44bc321d9de3484ebcc26b74c837b83a9e034f17c55c7",
+    "source_instance_id": "SRC010416"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/a3254a7c95d99efc0def3401367dad9b4a3a886df63efa9c3dc87b5dcdc329d8/master.20130528.idx",
+    "raw_sha256": "4d5a51873352cbfa32436785bddcc68b0cd2122f6e20617732662bd9df209730",
+    "source_identity": "a3254a7c95d99efc0def3401367dad9b4a3a886df63efa9c3dc87b5dcdc329d8",
+    "source_instance_id": "SRC010417"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/d98f5519b0b240a579567bc13787bb935e6683ac63823f9c7b3d36c2c38db2c4/master.20130529.idx",
+    "raw_sha256": "e2120b49068a756240f00a782969053a74e49039db002f365f726d0c05b27a8e",
+    "source_identity": "d98f5519b0b240a579567bc13787bb935e6683ac63823f9c7b3d36c2c38db2c4",
+    "source_instance_id": "SRC010418"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/588ad8d7d6a5019ff9dc305dcc937cad9d415d0741f276f11cb1c4a73fa94a1a/master.20130530.idx",
+    "raw_sha256": "f3e195fad745a2f6ffad352d4359431a2ad5aaec15e615b8b6149dab4509c2f5",
+    "source_identity": "588ad8d7d6a5019ff9dc305dcc937cad9d415d0741f276f11cb1c4a73fa94a1a",
+    "source_instance_id": "SRC010419"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/90b77ad748c490e34456ad092f1a89448528bbb3e72f6df0a7506e03a8dd6ca3/master.20130531.idx",
+    "raw_sha256": "8bce58722876ffa09461e1dbf6ed9213922df54d1ce21ca13a332e7ba0aa944f",
+    "source_identity": "90b77ad748c490e34456ad092f1a89448528bbb3e72f6df0a7506e03a8dd6ca3",
+    "source_instance_id": "SRC010420"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/c55318eed26e66ade7d5598de2616cb3c874a812f06cc6034b8d8b0bb3c86709/master.20130603.idx",
+    "raw_sha256": "f496d736f82aa153acc47036f9beaef04635c4ab0e35d88f3cd7de698fa9011f",
+    "source_identity": "c55318eed26e66ade7d5598de2616cb3c874a812f06cc6034b8d8b0bb3c86709",
+    "source_instance_id": "SRC010421"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/f7fce87857d39bbd41ff639a96bc74ac8ff27624405fb42974d0cdca06aa1ef3/master.20130604.idx",
+    "raw_sha256": "c49dad48c97bd493121995eec3917e9ba7e04c5fe4f37c94e44855963415bfe8",
+    "source_identity": "f7fce87857d39bbd41ff639a96bc74ac8ff27624405fb42974d0cdca06aa1ef3",
+    "source_instance_id": "SRC010422"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/dd466102dd4c1e85839b6519e453ce84ef2274b91cd3cbcb774167d1c9c5c374/master.20130605.idx",
+    "raw_sha256": "40e2826abfa3ac4035be507c37c0ed58798f2b1e176b0ad1ada424f40ea17f1e",
+    "source_identity": "dd466102dd4c1e85839b6519e453ce84ef2274b91cd3cbcb774167d1c9c5c374",
+    "source_instance_id": "SRC010423"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/8399d3a299ef7bf8dae3390e88e0a87b95803f24bf8f017ab64ff9d8884c870d/master.20130606.idx",
+    "raw_sha256": "6d35a9a76099a3d378993ac3b6945194b1d9cc1df55a793727b45c5a68b5bb1e",
+    "source_identity": "8399d3a299ef7bf8dae3390e88e0a87b95803f24bf8f017ab64ff9d8884c870d",
+    "source_instance_id": "SRC010424"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/b553346c004dc50d14cd47ed45b1f084c0fa4ecf18d8debe524c03620435df9c/master.20130607.idx",
+    "raw_sha256": "08d3570d035db613fa483b3a928705559d4a24af2289b22882b77417daca6678",
+    "source_identity": "b553346c004dc50d14cd47ed45b1f084c0fa4ecf18d8debe524c03620435df9c",
+    "source_instance_id": "SRC010425"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/0a55460171bcd7116cceec10d559a30e8739c0d827e899198e1e0c0da80398bc/master.20130610.idx",
+    "raw_sha256": "f636bfcebe188868a40418588be5d72897941e9accd0e500f7a4ff63577d86c4",
+    "source_identity": "0a55460171bcd7116cceec10d559a30e8739c0d827e899198e1e0c0da80398bc",
+    "source_instance_id": "SRC010426"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/9901f6d17c77661a98dc3acaa4db621fa001c737bd7c0326424d9543f9a4edc0/master.20130611.idx",
+    "raw_sha256": "1f6fa822d60d695a229a3e8c278f74e0d2276fe123282fdced314b42cc4f6cdb",
+    "source_identity": "9901f6d17c77661a98dc3acaa4db621fa001c737bd7c0326424d9543f9a4edc0",
+    "source_instance_id": "SRC010427"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/80b012484cb9d8975089dc57ee4d7d1c61e3e4a84f934381fb1d543db50ce651/master.20130612.idx",
+    "raw_sha256": "6987ad614e6ab5d082fcab3fee28ceae3cb673ac71b82ddb1c100fd15e71a7e7",
+    "source_identity": "80b012484cb9d8975089dc57ee4d7d1c61e3e4a84f934381fb1d543db50ce651",
+    "source_instance_id": "SRC010428"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/95081ba92a67051767a69863afe95e560ffc9107d424ed95a49a8684339c0927/master.20130613.idx",
+    "raw_sha256": "295d21205875af0baf65a09e8d3ba784655d56c55657bfcf9a6e6bdccc9c512c",
+    "source_identity": "95081ba92a67051767a69863afe95e560ffc9107d424ed95a49a8684339c0927",
+    "source_instance_id": "SRC010429"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/c196b87c650fb0fb4b2b47ddef5448c794dc325c581b71536b650a4d2d04d565/master.20130617.idx",
+    "raw_sha256": "1597299bbaf21169564c2d74eaae3045a42b645212a931535d98ee9aa97dbd34",
+    "source_identity": "c196b87c650fb0fb4b2b47ddef5448c794dc325c581b71536b650a4d2d04d565",
+    "source_instance_id": "SRC010430"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/87d2d9568ae961903d2cf1cc39b61067df01e8288d044abab5ce32d6f830a3cb/master.20130618.idx",
+    "raw_sha256": "998aa441ee7f66f298d86b02585cad26ca6725120ee9d739fa87c65deb98ed78",
+    "source_identity": "87d2d9568ae961903d2cf1cc39b61067df01e8288d044abab5ce32d6f830a3cb",
+    "source_instance_id": "SRC010431"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/f4b42e28af6e05d397d72db203c33b92048dab98743d8c55ca3ffbc28f320957/master.20130619.idx",
+    "raw_sha256": "dc5f40e7c0536456f10c5b21df13bf7c3d63f21f4b3972e5fcf3ea7f769fa6c6",
+    "source_identity": "f4b42e28af6e05d397d72db203c33b92048dab98743d8c55ca3ffbc28f320957",
+    "source_instance_id": "SRC010432"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/fd069519743c50d2ef1063da4b7865933e47c4a4ec1329814efb89bcfef4540b/master.20130620.idx",
+    "raw_sha256": "098a435ca780ae3658b04640f975c25d52e0d89269c0218322d7c19a05370916",
+    "source_identity": "fd069519743c50d2ef1063da4b7865933e47c4a4ec1329814efb89bcfef4540b",
+    "source_instance_id": "SRC010433"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/641852e04c262036998237c3ebbb5e4267c632b85b37f34a4f0ea0add1da50be/master.20130621.idx",
+    "raw_sha256": "7e81c762c9f77cdc70311246fdf139dc745b0a5da702ec1695b8b97e1b565ff5",
+    "source_identity": "641852e04c262036998237c3ebbb5e4267c632b85b37f34a4f0ea0add1da50be",
+    "source_instance_id": "SRC010434"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/3f55026e80f98eebd36c5e08ce69c2e24a30fc2ae951522ca85fbdbe6ce83908/master.20130624.idx",
+    "raw_sha256": "97c3513a920cbed33a6e167546348c571a136ade9fccca9a575e0242cd52c402",
+    "source_identity": "3f55026e80f98eebd36c5e08ce69c2e24a30fc2ae951522ca85fbdbe6ce83908",
+    "source_instance_id": "SRC010435"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/d49d0097d1e669565a69a5eccd3b8eda08cc9a453abb061b359ab17e358656c4/master.20130625.idx",
+    "raw_sha256": "22fa428e6fef7152dcd40457033cd92c6de2c6be21f3d28a5dbf434838771302",
+    "source_identity": "d49d0097d1e669565a69a5eccd3b8eda08cc9a453abb061b359ab17e358656c4",
+    "source_instance_id": "SRC010436"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/d6c0323ffec9a3a1437b8a4dc6e268ea10abd03668c56cd8b16cf4de3a0e08a8/master.20130626.idx",
+    "raw_sha256": "748800b595c3a1b9fb071eb5dde7bba16dacecf87459f5e1c7b222837964aea9",
+    "source_identity": "d6c0323ffec9a3a1437b8a4dc6e268ea10abd03668c56cd8b16cf4de3a0e08a8",
+    "source_instance_id": "SRC010437"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/4487d4fd0b524768a0aa1ac2ba42cb80fcc4d70f1e43261c5b2ba576a2ab23b3/master.20130627.idx",
+    "raw_sha256": "bbc3e747229ef4d3497101f62b32b29ab427c80a2c61a9aea1e301f642e9e779",
+    "source_identity": "4487d4fd0b524768a0aa1ac2ba42cb80fcc4d70f1e43261c5b2ba576a2ab23b3",
+    "source_instance_id": "SRC010438"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/0b6caba53d98627bde47cca3f652e4d8f32f4cb054e5a72abcfb990d09a7bf4f/master.20130628.idx",
+    "raw_sha256": "18ceabfbe44923ac19dfc6ea38dbc7f3da944cc4cd5d3ff423cc03b526766941",
+    "source_identity": "0b6caba53d98627bde47cca3f652e4d8f32f4cb054e5a72abcfb990d09a7bf4f",
+    "source_instance_id": "SRC010439"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/3aafc32d3ce0d71dad5485a6816dbe3894baeac3c1611871dcece036550bb2a1/master.20140102.idx",
+    "raw_sha256": "47f12c045ccc809821c72e94f01cf629a0f69cc2ec4111dd3b894dc65a5b00e8",
+    "source_identity": "3aafc32d3ce0d71dad5485a6816dbe3894baeac3c1611871dcece036550bb2a1",
+    "source_instance_id": "SRC010440"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/2b385e5864c34291621d35a4b50b7a44c2736d03d3b0220c036d8a7679ded82c/master.20140103.idx",
+    "raw_sha256": "88933112bf70d987a02212a1b37a89ce285ef201917b42650c3acfa0d3b0405e",
+    "source_identity": "2b385e5864c34291621d35a4b50b7a44c2736d03d3b0220c036d8a7679ded82c",
+    "source_instance_id": "SRC010441"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/7beb6e3c8e3ca5577e5078a36c58ddbf86159ecc1bdef4b4443d25232b2e77d3/master.20140106.idx",
+    "raw_sha256": "e403b19150701df37a1fa8a32b543126f1f8739b5bd005a0c106a0e5e8bc31a4",
+    "source_identity": "7beb6e3c8e3ca5577e5078a36c58ddbf86159ecc1bdef4b4443d25232b2e77d3",
+    "source_instance_id": "SRC010442"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/f345ec261e82a25c7fd9403f202a9da2c73a8be37345a25348d4bd971a6ac7d1/master.20140107.idx",
+    "raw_sha256": "5f915e5012a60e11e678be90ada7b0b73c5414b3e4c646abf08c0002fc2aef07",
+    "source_identity": "f345ec261e82a25c7fd9403f202a9da2c73a8be37345a25348d4bd971a6ac7d1",
+    "source_instance_id": "SRC010443"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/8430569737ad5222dc3cf9289ff7847b8166286a53309f10a15d6e73d0c759e9/master.20140108.idx",
+    "raw_sha256": "a236d3411e6ae44d7594bcc8908102e2397d431e19e9fa26df290ec05ad15457",
+    "source_identity": "8430569737ad5222dc3cf9289ff7847b8166286a53309f10a15d6e73d0c759e9",
+    "source_instance_id": "SRC010444"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/2733c06a8348e5a045d15df100322cc40cccfc7a3398e2c7c98e21a2f9ef1231/master.20140109.idx",
+    "raw_sha256": "91cfb42c7030815e7ab7c86eb6b058b3b6ca1346ca074dbcb167dac7635e9eef",
+    "source_identity": "2733c06a8348e5a045d15df100322cc40cccfc7a3398e2c7c98e21a2f9ef1231",
+    "source_instance_id": "SRC010445"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/f9b3e85258eca26b296094ba8ac0f1c420f149cbbadf14f41dd3ee9c79321b99/master.20140110.idx",
+    "raw_sha256": "7cf59035270959499a096920882736c7671df6561a56865024f632f9e60c686e",
+    "source_identity": "f9b3e85258eca26b296094ba8ac0f1c420f149cbbadf14f41dd3ee9c79321b99",
+    "source_instance_id": "SRC010446"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/efe6e7cd2e9ca9cef6daf2af7b619d3ca8b1ede680f568d32474441959ddcfc0/master.20140113.idx",
+    "raw_sha256": "3f64a2a636c39ce3809f12b9b25b5c1e80775ce5b9811c3ad23179326d715690",
+    "source_identity": "efe6e7cd2e9ca9cef6daf2af7b619d3ca8b1ede680f568d32474441959ddcfc0",
+    "source_instance_id": "SRC010447"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/7d3a4fa119b03f9eb7e315b2f6ff7c5211b2c8f6644e92e1a71296d06219829b/master.20140114.idx",
+    "raw_sha256": "f295c770d6e9f15637c134909714f631c3afff215d660d188334eb41de1c477d",
+    "source_identity": "7d3a4fa119b03f9eb7e315b2f6ff7c5211b2c8f6644e92e1a71296d06219829b",
+    "source_instance_id": "SRC010448"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/11b5f92db530c1327e51e3ffa170a7a3459a46effe43e9a49c1f642f78028720/master.20140115.idx",
+    "raw_sha256": "6eb98e28cb631cc3160cef00ce0bdf2711849526c922e44b4c301eca098804f3",
+    "source_identity": "11b5f92db530c1327e51e3ffa170a7a3459a46effe43e9a49c1f642f78028720",
+    "source_instance_id": "SRC010449"
+  },
+  {
+    "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/460e452a675f513a818a685c452b0e406b4fd68b8abafd426f8c250681d5fb9a/master.20140116.idx",
+    "raw_sha256": "77270e467e0eb340086dfdcfbd0524326544a5d39928e9592acb60ffe71255b5",
+    "source_identity": "460e452a675f513a818a685c452b0e406b4fd68b8abafd426f8c250681d5fb9a",
+    "source_instance_id": "SRC010450"
+  }
+]

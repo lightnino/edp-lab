@@ -60,6 +60,11 @@ def validated_occurrences(root: Path, binding: dict):
     bytes; original bytes include exact terminators. Prefix records are accounted
     separately, and all equal-looking DATA occurrences are emitted individually.
     """
+    from edp_lab.parsers import src010128_v1 as exception
+
+    scoped = binding.get('profile_id') == exception.PROFILE
+    if scoped:
+        exception.check_scope(root, binding)
     path = root / binding['raw_path']
     if file_sha256(path) != binding['raw_sha256']:
         raise ValueError('RAW_SHA256_MISMATCH')
@@ -80,8 +85,11 @@ def validated_occurrences(root: Path, binding: dict):
             content = raw.removesuffix(b'\n').removesuffix(b'\r')
             if b'\r' in content or (raw.endswith(b'\r') and not raw.endswith(b'\r\n')):
                 raise ValueError(f'UNSUPPORTED_RECORD_TERMINATOR line={number}')
-            text = content.decode('utf-8', errors='strict')
-            fields = tuple(text.split(PROFILES[family]['delimiter']))
+            if scoped:
+                fields = exception.decode_fields(binding, number, offset, raw)
+            else:
+                text = content.decode('utf-8', errors='strict')
+                fields = tuple(text.split(PROFILES[family]['delimiter']))
             if number in prefix:
                 p = prefix[number]
                 if (raw.hex() != p['raw_hex'] or offset != p['byte_offset']
@@ -97,6 +105,8 @@ def validated_occurrences(root: Path, binding: dict):
             yield RecordOccurrence(binding['source_instance_id'], binding['archive_member'],
                                    number, offset, raw, fields, kind)
             offset += len(raw)
+    if scoped and number != 8537:
+        raise ValueError('SRC010128_RECORD_COUNT_MISMATCH')
     if number < max(prefix, default=header_line):
         raise ValueError('INCOMPLETE_HEADER_OR_PREAMBLE')
     if offset != binding['uncompressed_bytes'] or sha.hexdigest() != binding['member_sha256']:

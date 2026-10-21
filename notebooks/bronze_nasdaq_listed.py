@@ -1,5 +1,7 @@
 # Databricks notebook source
 """Bounded GOLD_V2 lexical execution; no semantic normalization or deduplication."""
+raise RuntimeError("REMOTE_EXECUTION_EXCLUDED: owner-reviewed remote gate not installed")
+
 import base64
 import hashlib
 import json
