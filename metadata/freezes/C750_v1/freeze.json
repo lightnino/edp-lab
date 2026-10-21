@@ -1,0 +1,27 @@
+{
+  "files_sha256": {
+    "C300.original.csv": "f052599a7cfac3b566a236965e2ab163934d4541e7b09e03da98be728c1541e4",
+    "C750.bindings.json": "a6a9fd0cac1b5198c95375bc67cab76bab3db173fee31dd043d27ee3c56469e3",
+    "C750.csv": "81162007d42146333e2822d8c9ed2a720ebdd36422db6649291e51bd25e0d85d",
+    "N450.csv": "0116d065043859b03652bbe112a7b7558fd23fbddd184c9c7c35ec596a85e2b3",
+    "admission.json": "bd8cd434868515a30bcc4e0812fe392fe62b92a7f084dd39cc88bcea16ad305f",
+    "bindings.json": "627814be0e6da1969849d2b60a97cf2757ffa7432bccbc0562ecefad5d968474",
+    "corpus_manifest_v3.original.csv": "27ce93f363ebeb234737659e9a411927aed3dd3a674bc8a21b780e05dfdc4bdf",
+    "corpus_manifest_v4.csv": "79660035d807306b111d88be0c0f899c5ee410077e2ffe5caa27d4d9af4d372a"
+  },
+  "output_freeze": "NOT_O_C750_M1",
+  "packet_sha256": {
+    "c750-proposed.json": "f7994d3a4db77c3d16f8f3c805f57bd23755b165b120740b153d97b0d523eee6",
+    "qualification.json": "656a27c1fc994cb340b9b818ed9eb2adfd2527be79fadda1c2f8ede67949c084",
+    "remote-live.json": "8b46ce38d970be771ad56bbfd1a86d8eb60438852f3e9b5fe98fa57ac10f844b",
+    "roster.json": "1567d32bb1db1fedfcf5bafb4538cbbdf4bba06af460c3eb6cb075f590a5a08b"
+  },
+  "processing_authorization": "NOT_GRANTED",
+  "schema": "C750_COHORT_FREEZE_V1",
+  "status": "FROZEN",
+  "universe": {
+    "universe_id": "EDP_LAB_ORIGINAL_SOURCE_UNIVERSE",
+    "universe_manifest_sha256": "2198f9bad9c864bf339eff515992526e22efc4230160614a8f86daf3143f463c",
+    "universe_version": "1"
+  }
+}

@@ -20,7 +20,7 @@ PINS = {
     "remote-live.json": "8b46ce38d970be771ad56bbfd1a86d8eb60438852f3e9b5fe98fa57ac10f844b",
 }
 # Deliberately absent. Agent-generated files cannot activate these actions.
-OWNER_GRANT_SHA256 = None
+OWNER_GRANT_SHA256 = "50507c7fcde3d5d7295bfa396cd216587402c6852eb5e6d827ee3ad53beb3a48"
 OWNER_GRANT_PATH = Path("metadata/authorizations/n450_execution_v1.json")
 ACTIONS = {"admission", "freeze", "upload", "processing", "remote_processing"}
 # Trusted installation path; never taken from a request or environment override.

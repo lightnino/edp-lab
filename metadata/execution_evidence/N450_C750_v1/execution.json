@@ -1,0 +1,117 @@
+{
+  "actual_admitted_at_utc": "2026-10-21T18:28:17.544021+00:00",
+  "actual_frozen_at_utc": "2026-10-21T18:28:26.312596+00:00",
+  "admission": {
+    "files_sha256": {
+      "N450.csv": "0116d065043859b03652bbe112a7b7558fd23fbddd184c9c7c35ec596a85e2b3",
+      "admission.json": "bd8cd434868515a30bcc4e0812fe392fe62b92a7f084dd39cc88bcea16ad305f",
+      "bindings.json": "627814be0e6da1969849d2b60a97cf2757ffa7432bccbc0562ecefad5d968474",
+      "corpus_manifest_v3.original.csv": "27ce93f363ebeb234737659e9a411927aed3dd3a674bc8a21b780e05dfdc4bdf",
+      "corpus_manifest_v4.csv": "79660035d807306b111d88be0c0f899c5ee410077e2ffe5caa27d4d9af4d372a"
+    },
+    "path": "/Users/lightnino/Projects/edp-lab-day3-authorized/metadata/admissions/N450_v1",
+    "status": "PUBLISHED"
+  },
+  "admission_started_at_utc": "2026-10-21T18:28:14.046474+00:00",
+  "approved_record_sha256": "50507c7fcde3d5d7295bfa396cd216587402c6852eb5e6d827ee3ad53beb3a48",
+  "c300_preservation": "PASS",
+  "c300_raw_verification": "300 exact identities, pinned physical paths, sizes and SHA-256 verified by unchanged freeze guard",
+  "code_revision": "326ec18b164d85a8b24068ff387308af7c3d868d",
+  "counts": {
+    "C300": 300,
+    "C750": 750,
+    "N450": 450,
+    "corpus_manifest_v4": 754
+  },
+  "finished_at_utc": "2026-10-21T18:28:26.320637+00:00",
+  "freeze": {
+    "files_sha256": {
+      "C300.original.csv": "f052599a7cfac3b566a236965e2ab163934d4541e7b09e03da98be728c1541e4",
+      "C750.bindings.json": "a6a9fd0cac1b5198c95375bc67cab76bab3db173fee31dd043d27ee3c56469e3",
+      "C750.csv": "81162007d42146333e2822d8c9ed2a720ebdd36422db6649291e51bd25e0d85d",
+      "N450.csv": "0116d065043859b03652bbe112a7b7558fd23fbddd184c9c7c35ec596a85e2b3",
+      "admission.json": "bd8cd434868515a30bcc4e0812fe392fe62b92a7f084dd39cc88bcea16ad305f",
+      "bindings.json": "627814be0e6da1969849d2b60a97cf2757ffa7432bccbc0562ecefad5d968474",
+      "corpus_manifest_v3.original.csv": "27ce93f363ebeb234737659e9a411927aed3dd3a674bc8a21b780e05dfdc4bdf",
+      "corpus_manifest_v4.csv": "79660035d807306b111d88be0c0f899c5ee410077e2ffe5caa27d4d9af4d372a",
+      "freeze.json": "2d03baebe0627e612a5d823838e06bf9189d74ec6047ba85ba59b62ef47b4559"
+    },
+    "path": "/Users/lightnino/Projects/edp-lab-day3-authorized/metadata/freezes/C750_v1",
+    "status": "PUBLISHED"
+  },
+  "freeze_started_at_utc": "2026-10-21T18:28:17.544029+00:00",
+  "host_installation_observation": {
+    "approved_record_sha256": "50507c7fcde3d5d7295bfa396cd216587402c6852eb5e6d827ee3ad53beb3a48",
+    "custody_authority": "Owner explicitly attested direct trusted-local-terminal installation; execution agent observed installed bytes and pin before effectiveness.",
+    "effective_at_utc": "2026-10-21T18:00:00Z",
+    "observed_at_utc": "2026-10-21T17:26:33.947982+00:00",
+    "role": "VERIFICATION_EVIDENCE_NOT_APPROVAL",
+    "runtime_pin": "50507c7fcde3d5d7295bfa396cd216587402c6852eb5e6d827ee3ad53beb3a48"
+  },
+  "manifest_effective_at_utc": "2026-10-21T18:00:00Z",
+  "protected_metadata_sha256": {
+    "metadata/baselines/O_C300_M1.json": "bb31d9766907344621fbee06735e0a88645dc52bce1f1ceb31ecaf9dec15a714",
+    "metadata/cohorts/.gitkeep": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "metadata/cohorts/C300.csv": "f052599a7cfac3b566a236965e2ab163934d4541e7b09e03da98be728c1541e4",
+    "metadata/cohorts/GOLD_V1.csv": "61842b5ab6431c8ba79374f3b788aff387b28692766adaf91c0190a4feca596c",
+    "metadata/cohorts/GOLD_V2.csv": "3b8c223927dc0e47e0377c494ef137481b64508dcc2cdc9a69dda607dd9456dc",
+    "metadata/corpus_manifest.csv": "501dcbb85dbeb5fdb59f5866e84e2401285d07594e86b4b34eb2b23a85f22e7f",
+    "metadata/corpus_manifest_v3.csv": "27ce93f363ebeb234737659e9a411927aed3dd3a674bc8a21b780e05dfdc4bdf",
+    "metadata/decision_log.csv": "2209fec2d5e64ae9396f3da914ae4ae2ee5b9c06e09b10dd7daa3f9099fcb871",
+    "metadata/evaluations/fin_eval_v1.json": "0d8e28289b48bf84eea66d3b69b7a4574971cab73d436bcaed3b4080786e8f34",
+    "metadata/finding_schema_v1.json": "720096247ef7b4fa283a23960536a414f3ef5346ee9b64590cf5cf94486455ef",
+    "metadata/freezes/C300_v1/authorization.json": "a177d2abea644be2d2bd0776712afa6cb16971eb77e84c4f914231cc11eeb5fb",
+    "metadata/freezes/C300_v1/freeze.json": "7378b5d183cc4d45e0670eae6d501f204e62fdee02d8b345d9a910300d411835",
+    "metadata/freezes/C300_v1/references.json": "5e5476aaedc985e96d9ba4dcb72656f7719631a14dbcc57324725f0a60baf366",
+    "metadata/freezes/O_C300_M1_v1/authorization.json": "fe12bb20cbd69d33934cd42d7e2b79b8638c572349c5b2632ee72c6ce935ec8b",
+    "metadata/freezes/O_C300_M1_v1/freeze.json": "db710f6152c6ffe33ee2d0371e7dadc8f9ff76e67af3a8e82d807a4c7923542c",
+    "metadata/freezes/O_C300_M1_v1/references.json": "943a2ccf3c800834608a543671a66835fddcf8ae8c681fc6bbbc0b3365657410",
+    "metadata/gold_set_logical_tables_v2.csv": "f55cd7103847b3b2f859c9371d5e64815425a6c934b7240b37720e8a9d626ef2",
+    "metadata/ground_truth/.gitkeep": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "metadata/mappings/.gitkeep": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "metadata/native_nasdaq_checkpoint_v1.json": "e56c436d67642f9cb36f8c2f257f44a1b76ecd8886b80f387e36ea24978b374e",
+    "metadata/parser_fidelity_v2_candidate.json": "6c67018387a60fda5370cbee6b6b513efd68b3dc69c0ef5e69c32a34f6d7d140",
+    "metadata/parsing_profiling_freeze_v2.json": "6ff2e77ce91985e57f669bae9c9042808d52506598b9d36ab1e45e0629ecdf1e",
+    "metadata/profiling_conventions_v1.json": "2eb2a0673504de4fa328f04b8d72c61ba7d17ff7ac53bf1ec82831c58815b576",
+    "metadata/section_2_6_checkpoint_v1.json": "82b1675950c3a69a79703ea1b1c72bdb867cdd2b7548c2aca28a11da7dbcb00d",
+    "metadata/section_2_6_checkpoint_v2.json": "7029ce70c5ae9caaf2c8bd4d11392236f5d2928bc3edf85f2f3cd20db4cd7da7",
+    "metadata/source_inventory.csv": "bcf914b9ba725f3c22c0d44c46549dec0914ce6c591321599073537f492ad548",
+    "metadata/source_observation_report_v1.schema.json": "5277a7fb81dbbed7959da359760a76d2f00f72ab43bf509f1471b8c0f85a56ee",
+    "metadata/source_profiles/.gitkeep": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "metadata/source_profiles/nasdaq_listed.md": "2ce2b77cc88ba7d82e3479bcfd00460994008d62bf297490127f078c76fc6bcf",
+    "metadata/source_profiles/nasdaq_otherlisted.md": "054992b9d77fcc89a7b0437a92dad9275e9a5bc8f4d2fac4631726a856b45270",
+    "metadata/source_profiles/sec_infotable.md": "3c7370e3ff86bbe1b3ab396ce90b883457d95b7d2d52c5bd05cb151bf897565c",
+    "metadata/source_profiles/sec_submission.md": "797ff6755db41e900045c59891649a683226c3ec2940d12a433e042ccbb8833d",
+    "metadata/source_universes/approved_v1/README.md": "7b0c9ebee2d80a075f9e1e4c067981617a36ef04e2c9a900065c1080d953b860",
+    "metadata/source_universes/approved_v1/approval_verification_v1.json": "8b9580ec70639fbee44597a01b57eb601f5f228b372726b41ab97cc00e149088",
+    "metadata/source_universes/approved_v1/manifest.json": "2198f9bad9c864bf339eff515992526e22efc4230160614a8f86daf3143f463c",
+    "metadata/source_universes/approved_v1/manifest.sha256": "6d1cc7e8ff5c5fa254ca75d8f63fccecd258a811432313c505a026e96d11cb5e",
+    "metadata/source_universes/approved_v1/owner_authorization.json": "3307ff5c234e20b48a7a2ced6de7c54d504eb475de8ae90d4509cfd49002823d",
+    "metadata/source_universes/approved_v1/verification.json": "46dcde3721274cd53b50d5bca2f58729cfc8646ce8e969ee79d0ac1c21f1b364",
+    "metadata/source_universes/historical_cohort_bindings_v1.json": "8ffd02e0322241c5815a629f51a6d9c1590c2baa83231808ac796a450c6f2904"
+  },
+  "raw_immutability": "NOT_ESTABLISHED",
+  "raw_mutated_or_uploaded": false,
+  "readback_sha256": {
+    "admission": {
+      "N450.csv": "0116d065043859b03652bbe112a7b7558fd23fbddd184c9c7c35ec596a85e2b3",
+      "admission.json": "bd8cd434868515a30bcc4e0812fe392fe62b92a7f084dd39cc88bcea16ad305f",
+      "bindings.json": "627814be0e6da1969849d2b60a97cf2757ffa7432bccbc0562ecefad5d968474",
+      "corpus_manifest_v3.original.csv": "27ce93f363ebeb234737659e9a411927aed3dd3a674bc8a21b780e05dfdc4bdf",
+      "corpus_manifest_v4.csv": "79660035d807306b111d88be0c0f899c5ee410077e2ffe5caa27d4d9af4d372a"
+    },
+    "freeze": {
+      "C300.original.csv": "f052599a7cfac3b566a236965e2ab163934d4541e7b09e03da98be728c1541e4",
+      "C750.bindings.json": "a6a9fd0cac1b5198c95375bc67cab76bab3db173fee31dd043d27ee3c56469e3",
+      "C750.csv": "81162007d42146333e2822d8c9ed2a720ebdd36422db6649291e51bd25e0d85d",
+      "N450.csv": "0116d065043859b03652bbe112a7b7558fd23fbddd184c9c7c35ec596a85e2b3",
+      "admission.json": "bd8cd434868515a30bcc4e0812fe392fe62b92a7f084dd39cc88bcea16ad305f",
+      "bindings.json": "627814be0e6da1969849d2b60a97cf2757ffa7432bccbc0562ecefad5d968474",
+      "corpus_manifest_v3.original.csv": "27ce93f363ebeb234737659e9a411927aed3dd3a674bc8a21b780e05dfdc4bdf",
+      "corpus_manifest_v4.csv": "79660035d807306b111d88be0c0f899c5ee410077e2ffe5caa27d4d9af4d372a",
+      "freeze.json": "2d03baebe0627e612a5d823838e06bf9189d74ec6047ba85ba59b62ef47b4559"
+    }
+  },
+  "remote_verification_sha256": "72ab92b51dfec16cd0bdf11d1ff564f8158b2fb42410d6dff4d075c658b0b135",
+  "status": "PASS"
+}

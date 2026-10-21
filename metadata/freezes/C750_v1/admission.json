@@ -1,0 +1,21 @@
+{
+  "files_sha256": {
+    "N450.csv": "0116d065043859b03652bbe112a7b7558fd23fbddd184c9c7c35ec596a85e2b3",
+    "bindings.json": "627814be0e6da1969849d2b60a97cf2757ffa7432bccbc0562ecefad5d968474",
+    "corpus_manifest_v3.original.csv": "27ce93f363ebeb234737659e9a411927aed3dd3a674bc8a21b780e05dfdc4bdf",
+    "corpus_manifest_v4.csv": "79660035d807306b111d88be0c0f899c5ee410077e2ffe5caa27d4d9af4d372a"
+  },
+  "packet_sha256": {
+    "c750-proposed.json": "f7994d3a4db77c3d16f8f3c805f57bd23755b165b120740b153d97b0d523eee6",
+    "qualification.json": "656a27c1fc994cb340b9b818ed9eb2adfd2527be79fadda1c2f8ede67949c084",
+    "remote-live.json": "8b46ce38d970be771ad56bbfd1a86d8eb60438852f3e9b5fe98fa57ac10f844b",
+    "roster.json": "1567d32bb1db1fedfcf5bafb4538cbbdf4bba06af460c3eb6cb075f590a5a08b"
+  },
+  "schema": "N450_ADMISSION_V1",
+  "status": "ADMITTED",
+  "universe": {
+    "universe_id": "EDP_LAB_ORIGINAL_SOURCE_UNIVERSE",
+    "universe_manifest_sha256": "2198f9bad9c864bf339eff515992526e22efc4230160614a8f86daf3143f463c",
+    "universe_version": "1"
+  }
+}

@@ -319,12 +319,56 @@
     "verified_bytes": 7632930175,
     "verified_sources": 300
   },
+  "changed_output_commitments": {
+    "admission": {
+      "admission.json": {
+        "previous_sha256": "f8996b4e26f30d683475953a042f459b4e988420663ea276e0728ef672db84d2",
+        "sha256": "bd8cd434868515a30bcc4e0812fe392fe62b92a7f084dd39cc88bcea16ad305f"
+      },
+      "corpus_manifest_v4.csv": {
+        "previous_sha256": "c217c5825cab3d8098275cf6236ff7eaf842cf2e09673a922becf4fc3592eadf",
+        "sha256": "79660035d807306b111d88be0c0f899c5ee410077e2ffe5caa27d4d9af4d372a"
+      }
+    },
+    "freeze": {
+      "admission.json": {
+        "previous_sha256": "f8996b4e26f30d683475953a042f459b4e988420663ea276e0728ef672db84d2",
+        "sha256": "bd8cd434868515a30bcc4e0812fe392fe62b92a7f084dd39cc88bcea16ad305f"
+      },
+      "corpus_manifest_v4.csv": {
+        "previous_sha256": "c217c5825cab3d8098275cf6236ff7eaf842cf2e09673a922becf4fc3592eadf",
+        "sha256": "79660035d807306b111d88be0c0f899c5ee410077e2ffe5caa27d4d9af4d372a"
+      },
+      "freeze.json": {
+        "previous_sha256": "18446c0310f14ae4960351305f48bcc20c0a3d75a5473f30f2d6c368f3d7a447",
+        "sha256": "2d03baebe0627e612a5d823838e06bf9189d74ec6047ba85ba59b62ef47b4559"
+      }
+    }
+  },
+  "changed_record_fields": [
+    "admitted_at_utc",
+    "execution_policy",
+    "implementation_commit",
+    "scopes",
+    "timestamp_interpretation"
+  ],
   "day2_exit_check_requirement": {
     "classification": "OWNER_IMPOSED_SEQUENCING_PREREQUISITE",
     "code_enforced": false,
-    "disposition": "Preserved: owner must confirm satisfaction or explicitly revise this instruction and approve any resulting record/pin changes. Not bypassed.",
+    "disposition": "Satisfied by explicit current owner confirmation and previously inspected merged Day 2 FROZEN / COMPLETE_WITH_ACCEPTED_PARTIAL_RESULTS evidence; no repeat verification or merge performed.",
     "intrinsic_admission_freeze_dependency_found": false,
+    "main_commit": "a58763c6a5e0d51ba5dbefce5349fbf3f5e8f4d3",
+    "owner_confirmed": true,
+    "satisfied": true,
     "source": "Earlier owner instruction: We will finish Day 2 and its Exit Check before returning to Day 3 execution."
+  },
+  "effective_time_proposal": {
+    "actual_execution_times": "NOT_SET; record independently during actual execution.",
+    "current_time_observed_utc": "2026-10-21T16:56:17Z",
+    "lead_seconds": 3823,
+    "owner_approval_status": "PENDING",
+    "proposed_effective_time_utc": "2026-10-21T18:00:00Z",
+    "selection_rule": "First whole UTC hour at least 60 minutes after observed time."
   },
   "exact_transition": {
     "field": "status",
@@ -333,7 +377,7 @@
     "to": "OWNER_APPROVED"
   },
   "historical_corpus_rows": 304,
-  "implementation_commit": "568bb841292710e4f56e1d837e9f9f2a223c639b",
+  "implementation_commit": "326ec18b164d85a8b24068ff387308af7c3d868d",
   "installed_host_pin": null,
   "installed_owner_record_exists": false,
   "n450_ids_proposed": [
@@ -348,10 +392,10 @@
       "destination": "metadata/admissions/N450_v1",
       "files_sha256": {
         "N450.csv": "0116d065043859b03652bbe112a7b7558fd23fbddd184c9c7c35ec596a85e2b3",
-        "admission.json": "f8996b4e26f30d683475953a042f459b4e988420663ea276e0728ef672db84d2",
+        "admission.json": "bd8cd434868515a30bcc4e0812fe392fe62b92a7f084dd39cc88bcea16ad305f",
         "bindings.json": "627814be0e6da1969849d2b60a97cf2757ffa7432bccbc0562ecefad5d968474",
         "corpus_manifest_v3.original.csv": "27ce93f363ebeb234737659e9a411927aed3dd3a674bc8a21b780e05dfdc4bdf",
-        "corpus_manifest_v4.csv": "c217c5825cab3d8098275cf6236ff7eaf842cf2e09673a922becf4fc3592eadf"
+        "corpus_manifest_v4.csv": "79660035d807306b111d88be0c0f899c5ee410077e2ffe5caa27d4d9af4d372a"
       }
     },
     "freeze": {
@@ -361,18 +405,18 @@
         "C750.bindings.json": "a6a9fd0cac1b5198c95375bc67cab76bab3db173fee31dd043d27ee3c56469e3",
         "C750.csv": "81162007d42146333e2822d8c9ed2a720ebdd36422db6649291e51bd25e0d85d",
         "N450.csv": "0116d065043859b03652bbe112a7b7558fd23fbddd184c9c7c35ec596a85e2b3",
-        "admission.json": "f8996b4e26f30d683475953a042f459b4e988420663ea276e0728ef672db84d2",
+        "admission.json": "bd8cd434868515a30bcc4e0812fe392fe62b92a7f084dd39cc88bcea16ad305f",
         "bindings.json": "627814be0e6da1969849d2b60a97cf2757ffa7432bccbc0562ecefad5d968474",
         "corpus_manifest_v3.original.csv": "27ce93f363ebeb234737659e9a411927aed3dd3a674bc8a21b780e05dfdc4bdf",
-        "corpus_manifest_v4.csv": "c217c5825cab3d8098275cf6236ff7eaf842cf2e09673a922becf4fc3592eadf",
-        "freeze.json": "18446c0310f14ae4960351305f48bcc20c0a3d75a5473f30f2d6c368f3d7a447"
+        "corpus_manifest_v4.csv": "79660035d807306b111d88be0c0f899c5ee410077e2ffe5caa27d4d9af4d372a",
+        "freeze.json": "2d03baebe0627e612a5d823838e06bf9189d74ec6047ba85ba59b62ef47b4559"
       }
     }
   },
   "proposal_path": "proposals/n450-execution-v1/owner-record.proposed.json",
-  "proposal_sha256": "3d6dd1525249938a39dd27525c63e1cdce63dfd171ebdeb0f867372bc880d522",
-  "proposed_host_pin_after_owner_status_transition": "ed8314fb62afb9c2a2f8f99524e219c703ff22f62e51978d53a1f56f82818966",
-  "refresh_scope": "Only implementation_commit changed in the proposed owner record; all bindings, IDs, timestamps, prerequisites, storage statements, destinations and file commitments preserved.",
+  "proposal_sha256": "54ec17d6f46d0c7e98d478c6d3c86166175ba6c11e224235df5f6f11a167e376",
+  "proposed_host_pin_after_owner_status_transition": "50507c7fcde3d5d7295bfa396cd216587402c6852eb5e6d827ee3ad53beb3a48",
+  "refresh_scope": "Prospective effective time, merged implementation revision, explicit timing constraints and only timestamp-dependent manifest/marker commitments; all cohort bindings, IDs, destinations and storage limitations preserved.",
   "registration_id_check": "No collision in current metadata/proposals/docs/scripts/tests text or preserved corpus v3; proposal only, not reservations.",
   "remote_verification": {
     "current_run": "NOT_RUN_AUTHORIZATION_BOUNDARY",
@@ -381,6 +425,6 @@
     "historical_result": "450/450 EXACT_REMOTE_BYTES_PASS"
   },
   "status": "BLOCKED_PENDING_INDEPENDENT_OWNER_REVIEW",
-  "superseded_proposal_sha256": "4680686dc77e92e7ef74c7e61d68a6140a4e0527ee15ea22a2d2b9fe5ccdcbc9",
+  "superseded_proposal_sha256": "3d6dd1525249938a39dd27525c63e1cdce63dfd171ebdeb0f867372bc880d522",
   "unchanged_c300": 300
 }

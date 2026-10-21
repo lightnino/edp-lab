@@ -1,5 +1,5 @@
 {
-  "admitted_at_utc": "2026-10-21T16:12:08Z",
+  "admitted_at_utc": "2026-10-21T18:00:00Z",
   "excluded_actions": [
     "upload",
     "copy",
@@ -12,14 +12,14 @@
     "M2",
     "merge_to_main"
   ],
-  "execution_policy": "This draft confers no authority. Even an approved record requires installed host pin plus all stated prerequisites; no prerequisite is waived by the approval status.",
+  "execution_policy": "This draft confers no authority. Even an approved record requires installed host pin plus all stated prerequisites; no prerequisite is waived by the approval status. Neither Admission nor Freeze may begin before the approved prospective effective time or before independent owner authorization and trusted host-pin installation. Record actual execution times separately; never treat the prospective effective time as proof of an execution event.",
   "historical": {
     "binding_reference": "metadata/source_universes/historical_cohort_bindings_v1.json",
     "binding_sha256": "8ffd02e0322241c5815a629f51a6d9c1590c2baa83231808ac796a450c6f2904",
     "c300_roster_sha256": "f052599a7cfac3b566a236965e2ab163934d4541e7b09e03da98be728c1541e4",
     "corpus_manifest_v3_sha256": "27ce93f363ebeb234737659e9a411927aed3dd3a674bc8a21b780e05dfdc4bdf"
   },
-  "implementation_commit": "568bb841292710e4f56e1d837e9f9f2a223c639b",
+  "implementation_commit": "326ec18b164d85a8b24068ff387308af7c3d868d",
   "packet_sha256": {
     "c750-proposed.json": "f7994d3a4db77c3d16f8f3c805f57bd23755b165b120740b153d97b0d523eee6",
     "qualification.json": "656a27c1fc994cb340b9b818ed9eb2adfd2527be79fadda1c2f8ede67949c084",
@@ -4101,10 +4101,10 @@
       "destination": "metadata/admissions/N450_v1",
       "files_sha256": {
         "N450.csv": "0116d065043859b03652bbe112a7b7558fd23fbddd184c9c7c35ec596a85e2b3",
-        "admission.json": "f8996b4e26f30d683475953a042f459b4e988420663ea276e0728ef672db84d2",
+        "admission.json": "bd8cd434868515a30bcc4e0812fe392fe62b92a7f084dd39cc88bcea16ad305f",
         "bindings.json": "627814be0e6da1969849d2b60a97cf2757ffa7432bccbc0562ecefad5d968474",
         "corpus_manifest_v3.original.csv": "27ce93f363ebeb234737659e9a411927aed3dd3a674bc8a21b780e05dfdc4bdf",
-        "corpus_manifest_v4.csv": "c217c5825cab3d8098275cf6236ff7eaf842cf2e09673a922becf4fc3592eadf"
+        "corpus_manifest_v4.csv": "79660035d807306b111d88be0c0f899c5ee410077e2ffe5caa27d4d9af4d372a"
       }
     },
     "freeze": {
@@ -8167,11 +8167,11 @@
         "C750.bindings.json": "a6a9fd0cac1b5198c95375bc67cab76bab3db173fee31dd043d27ee3c56469e3",
         "C750.csv": "81162007d42146333e2822d8c9ed2a720ebdd36422db6649291e51bd25e0d85d",
         "N450.csv": "0116d065043859b03652bbe112a7b7558fd23fbddd184c9c7c35ec596a85e2b3",
-        "admission.json": "f8996b4e26f30d683475953a042f459b4e988420663ea276e0728ef672db84d2",
+        "admission.json": "bd8cd434868515a30bcc4e0812fe392fe62b92a7f084dd39cc88bcea16ad305f",
         "bindings.json": "627814be0e6da1969849d2b60a97cf2757ffa7432bccbc0562ecefad5d968474",
         "corpus_manifest_v3.original.csv": "27ce93f363ebeb234737659e9a411927aed3dd3a674bc8a21b780e05dfdc4bdf",
-        "corpus_manifest_v4.csv": "c217c5825cab3d8098275cf6236ff7eaf842cf2e09673a922becf4fc3592eadf",
-        "freeze.json": "18446c0310f14ae4960351305f48bcc20c0a3d75a5473f30f2d6c368f3d7a447"
+        "corpus_manifest_v4.csv": "79660035d807306b111d88be0c0f899c5ee410077e2ffe5caa27d4d9af4d372a",
+        "freeze.json": "2d03baebe0627e612a5d823838e06bf9189d74ec6047ba85ba59b62ef47b4559"
       }
     }
   },
@@ -8183,7 +8183,7 @@
     "raw_mutation_permitted": false,
     "raw_upload_or_copy_permitted": false
   },
-  "timestamp_interpretation": "Proposed fixed effective registration timestamp for exact output commitments; not evidence of an execution event. Owner must explicitly accept or request regeneration.",
+  "timestamp_interpretation": "Prospective admission effective time, not proposal preparation time or an observed execution timestamp. It does not assert that Admission has occurred. Independent owner approval and trusted host-pin installation must complete before this effective time; if they do not, stop and regenerate a future proposal rather than backdate Admission. Actual admission and freeze execution start/end times must be independently recorded in separate execution evidence.",
   "universe": {
     "universe_id": "EDP_LAB_ORIGINAL_SOURCE_UNIVERSE",
     "universe_manifest_sha256": "2198f9bad9c864bf339eff515992526e22efc4230160614a8f86daf3143f463c",
