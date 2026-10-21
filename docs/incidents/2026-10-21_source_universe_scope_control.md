@@ -381,3 +381,88 @@ When implementation is complete, **append a superseding verified implementation 
 - Final explicit owner approval, its reproducible approval reference and the incident closure timestamp with timezone.
 
 **Scope of this amendment:** Documentation only. No code implementation, RAW modification, Day 2 change, SEC Bulk qualification, new cohort or experiment is performed or authorized by this update. All implementation and verification claims remain to be evidenced under the revised gates.
+
+
+## 15. Execution ledger supplement — Step 2 SEC Bulk qualification recovery
+
+Recorded at **2026-10-21T18:14:10.642456+08:00** (UTC+08:00; actual recording time, not original retrieval time). Worktree `/Users/lightnino/Projects/edp-lab-incident`, branch `incident/closure-evidence`, starting commit `d216390`. Scope: only `LOCAL_SEC_BULK_COMPANYFACTS` and `LOCAL_SEC_BULK_SUBMISSIONS`. Earlier investigation and ledger checkpoints remain unchanged.
+
+**Outcome: investigation COMPLETE within the bounded search; admission qualification UNRESOLVED for each candidate.** No authentic contemporaneous publisher/retrieval evidence was recovered in the searched records. This is a bounded negative finding, not proof that no receipt exists elsewhere. Admission is not authorized or executed.
+
+| Required determination | LOCAL_SEC_BULK_COMPANYFACTS | LOCAL_SEC_BULK_SUBMISSIONS |
+| --- | --- | --- |
+| Approved universe membership | CONFIRMED: original v1 and v2 inventories each contain 3,021 entries and this exact candidate/hash | CONFIRMED: original v1 and v2 inventories each contain 3,021 entries and this exact candidate/hash |
+| Physical RAW integrity | Historical SHA-256 and full archive CRC PASS; 1,418,648,998 bytes; 40,924 members including 20,462 macOS sidecars | Historical SHA-256 and full archive CRC PASS; 1,974,869,371 bytes; 1,988,886 members including 994,443 macOS sidecars |
+| Retained SHA-256 | `23e23cc8293fa22abda2f7d0568ee5534e149b51a77cd40171c3d834278cc902` | `5c75f9d996d5eea8a0e05689e28079d069a80e1632cf87ba24021da7e48d465b` |
+| Current physical check | Stat matches historical size/inode `170344231`/mtime_ns `1792486764931827650`; current content hash/CRC NOT RERUN | Stat matches historical size/inode `170344669`/mtime_ns `1792487319033321638`; current content hash/CRC NOT RERUN |
+| Publisher provenance | UNVERIFIED: user-supplied local ZIP; publisher archive identity and edition NULL; SEC URL is a hint | UNVERIFIED: user-supplied local ZIP; publisher archive identity and edition NULL; SEC URL is a hint |
+| Retrieval receipt | MISSING in searched evidence; original receipt/acquisition UTC NULL; current `xattr -l` succeeds with empty output | MISSING in searched evidence; original receipt/acquisition UTC NULL; current `xattr -l` succeeds with empty output |
+| Admission qualification | **UNRESOLVED** | **UNRESOLVED** |
+| Exact blocker | `UNRESOLVED_ORIGINAL_DELIVERY_EVIDENCE`: no authenticated original delivery/publisher link or retrieval receipt | `UNRESOLVED_ORIGINAL_DELIVERY_EVIDENCE`: no authenticated original delivery/publisher link or retrieval receipt |
+| Owner authority needed | Explicit provenance-gap disposition/exception required to admit on present evidence; otherwise retain UNRESOLVED pending authentic evidence | Explicit provenance-gap disposition/exception required to admit on present evidence; otherwise retain UNRESOLVED pending authentic evidence |
+
+RAW paths remain those in §13. No full ZIP scan was repeated: existing integrity evidence is unchanged and another CRC/hash pass cannot recover missing provenance. A matching stat is not a current byte-integrity proof. Before any future ingest/admission, verify the exact retained RAW hashes under the applicable contract.
+
+### Evidence recovered and contract assessment
+
+The original local availability observation is `2026-10-20T09:12:00.756956+00:00`. Its provenance objects explicitly record NULL acquisition UTC, original retrieval receipt and publisher archive identity, and empty historical extended attributes. Local move records establish same-volume relocation from Downloads, with preserved inode and hash; they are local custody evidence, not SEC retrieval receipts. `reuse-checks.json` records zero network requests for these candidates. The completion summary explicitly records 3,021 entries, 3,015 new verified publisher deliveries, four unchanged GOLD and **two existing unadmitted bulk candidates**, zero new admissions and zero freezes at that checkpoint. The v2 `publisher=SEC` label supplies no missing receipt: both inventories retain blank publisher URL and Source Instance ID.
+
+The organization report records that `Downloads/EDP` disappeared externally, an initial empty submissions ZIP was invalid, and the extracted submissions inventory was interrupted (`FileNotFoundError CIK0002142938.json`). These historical observations remain preserved. They do not invalidate the subsequently verified retained submissions ZIP, establish delivery equivalence, or supply an original publisher identity. Directory inventories and macOS sidecars cannot establish publisher completeness or archive authenticity.
+
+Contract applied: `docs/source_instance_identity.md` identity/admission rules 2–4 and `docs/corpus_admission_policy.md` require independent delivery provenance and receipt/retrieval evidence, with explicit present-day disposition of historical gaps; `docs/c300_acquisition_tooling.md` records approval of that minimum policy. `docs/whole_lab_sources.md` explicitly keeps locally intact bulk packages with unknown publisher identity unadmitted. Policy approval and universe membership do not constitute per-delivery admission authority. Neither candidate satisfies the complete existing evidence contract on recovered evidence. No separate upload failure, lost authenticated receipt, or code defect is established.
+
+### Bounded search and reproducible evidence locators
+
+Searched local `runs/local_inventory`, `runs/whole_lab`, and metadata/scripts, then filename/content matches across the original worktree's `runs`/metadata/scripts (excluding large per-file JSONL inventories, log files and bytecode in that final search). Inspected original availability, initial/current archive observations, relocation records, organization/interruption/reuse records, completion summary, inventory v1/v2 and the historical review-packet evidence references. No bulk retrieval receipt appeared among matching acquisition/delivery metadata. Downloads top-level names matching companyfacts/submissions/sec/receipt yielded none; no private browser database or unrelated personal history was searched. Both current ZIP extended-attribute listings were empty. No network calls or fresh downloads occurred.
+
+Local Git history search used `git log --all -G 'companyfacts|submissions.zip|LOCAL_SEC_BULK' -- .` and acquisition/inventory/provenance/receipt commit-subject searches. The literal-name search returned only incident commits `05854c25dfc7554e5f596b346b489ec304c80a97` and `7becc7c9e7390e0995b86d4a19fb08622f1aa542`; inspection of acquisition commit `1aaf56c02f7fd5b0e3304ec06893334c8c922aed` and preliminary manifest commit `62fc3c13646c0730ef49b4221003a6d39b7761de` recovered no original bulk receipt. Git history coverage is locally available refs only; no fetch or remote search. Operational evidence is intentionally untracked. No historical receipt/timestamp was reconstructed.
+
+Content hashes measured for small evidence files in this recovery (absolute paths under `/Users/lightnino/Projects/edp-lab/`):
+
+| Evidence path relative to that root | SHA-256 |
+| --- | --- |
+| `runs/local_inventory/availability.json` | `74773ac1841c5f2d1a21be6c3a2cb1cc09cca78a15a8750865867d7d837e46ca` |
+| `runs/local_inventory/files-before.json` | `a68d0ebda9acf3dbc7fa306f1cb367b40243bdc2b93b1b9a016171421dab69e6` |
+| `runs/local_inventory/bulk-files-current.json` | `6edb340dbdd56209cb201d726e6da9b50a07885b44aa16ba61507d3925510c26` |
+| `runs/local_inventory/move-companyfacts-zip.json` | `5997f6969400d8484313f3ac6b44078b6a3e221f154662c293aa150d2fd48859` |
+| `runs/local_inventory/move-submissions-zip.json` | `c7cd765aa181668ff0ffae3a6612f640a519aa03f81b09ab0546684669bb43d7` |
+| `runs/local_inventory/inventory-interruption.json` | `ce64afd81f61b1da230dfbf1cf73aeb3405d03ccd0a1fb6dee7c9c0197b8d568` |
+| `runs/local_inventory/organization-report.md` | `84189f41211c3f115d50c0be2963cb0c8a1352c63df09ab727ebc0686dcca173` |
+| `runs/local_inventory/reuse-checks.json` | `0a7db1d07a5726965607661735caa36d2340c1824add93f4e1b12a3608c15d99` |
+| `runs/whole_lab/candidates-v1/completion-summary.json` | `43106d9625ae744966eef22afc06b5859f44655d9026e4f6b270cda4137000c8` |
+| `runs/whole_lab/candidates-v1/whole_lab_inventory_v1.csv` | `99f09213dc17d845a4ea6e97dfd6b99fabf7e4a7f5cb618253f7040fa706ca6c` |
+| `runs/whole_lab/layout-v2/whole_lab_inventory_v2.csv` | `1dcf16137a3a3cd0be3c4f025d9e6274e2a9bba34163e121004a97b1961bc45a` |
+| `runs/whole_lab/candidates-v1/review-inventory-549769752030eec1461560156f78a67ae52453a23d4a6277025d2e679db8444c.json` | `549769752030eec1461560156f78a67ae52453a23d4a6277025d2e679db8444c` |
+| `runs/whole_lab/candidates-v1/review-inventory-06a21f4efd01debe36eaffda8c79e3bac9e8a99643638c45672299ac30bdcd69.json` | `06a21f4efd01debe36eaffda8c79e3bac9e8a99643638c45672299ac30bdcd69` |
+
+### Owner decision required before any exception-based admission
+
+Pending question for the experiment owner: retain both candidates as UNRESOLVED while seeking authentic original publisher/retrieval evidence, or explicitly authorize a separately recorded provenance exception for either exact candidate/hash? Retention preserves the current evidence standard and delays qualification; an exception would accept the specified missing delivery evidence and must identify each candidate/hash, accepted unknowns and authority. No exception is inferred here, and even an exception would not allocate IDs or execute admission in this task. Fresh downloads cannot prove the original delivery.
+
+Both candidates remain in the original authorized 3,021-member universe. No inventory, manifest, cohort, Source Instance ID, RAW bytes or historical evidence was changed. The conditional 2,978/2,980 ceiling is unchanged; neither candidate adds a qualified instance. Step 2's individual findings are recorded, while owner disposition and incident closure remain pending. No push or merge performed.
+
+
+## 16. Execution ledger supplement — SEC Bulk owner attestation and qualification disposition
+
+**Attestation date: 2026-10-21. Recorded at 2026-10-21T18:23:20.756079+08:00 (UTC+08:00).** Authority: the experiment owner's explicit instruction in this conversation. The original message timestamp and a separate signed attestation artifact are unavailable; the recording time is not represented as the original message or acquisition time.
+
+The owner's statement is preserved verbatim here:
+
+> Record the experiment owner's explicit first-party SEC Bulk provenance attestation above in the existing incident/closure-evidence branch.
+
+The owner expressly directed:
+
+> Set Admission Qualification for BOTH sources to QUALIFIED — OWNER_ATTESTED_PROVENANCE, under the admission policy's explicit human disposition of missing evidence.
+
+This records first-party owner-attested provenance and explicit human disposition under `docs/corpus_admission_policy.md` and `docs/source_instance_identity.md`; it does not represent independently verified SEC download logs. No additional acquisition narrative, date, SEC archive edition or download method is inferred. The attestation is linked only to the two existing physical ZIP references below and does not establish a general waiver for other sources.
+
+| Existing inventory ID | Existing RAW path | Recorded SHA-256 | Final Admission Qualification |
+| --- | --- | --- | --- |
+| `LOCAL_SEC_BULK_COMPANYFACTS` | `/Users/lightnino/Projects/edp-lab/data/raw/sec/bulk/companyfacts.zip` | `23e23cc8293fa22abda2f7d0568ee5534e149b51a77cd40171c3d834278cc902` | **QUALIFIED — OWNER_ATTESTED_PROVENANCE** |
+| `LOCAL_SEC_BULK_SUBMISSIONS` | `/Users/lightnino/Projects/edp-lab/data/raw/sec/bulk/submissions.zip` | `5c75f9d996d5eea8a0e05689e28079d069a80e1632cf87ba24021da7e48d465b` | **QUALIFIED — OWNER_ATTESTED_PROVENANCE** |
+
+For **each** ZIP, original download receipts and independent publisher digests remain **UNAVAILABLE**. Original acquisition UTC and independently authenticated publisher archive/snapshot identity remain unknown. Owner attestation supplies the expressly authorized human provenance disposition; it does not recover or replace those missing historical artifacts. Historical local SHA/archive integrity remains verified as documented in §§13 and 15; no new full RAW hash/CRC verification is claimed. Current hash verification remains required before any future ingestion under the existing contract.
+
+**SEC Bulk Qualification Recovery: COMPLETE.** This dated owner disposition supersedes the UNRESOLVED qualification outcomes and pending owner-decision status in §§13 and 15 for these two exact candidates only. All earlier investigation findings, missing-evidence observations and historical checkpoints are preserved unchanged. Both remain members of the original **3,021 Approved Universe**; qualification changes neither universe membership nor frozen cohort membership. The earlier 2,978 ceiling excluded these two unresolved candidates; this disposition resolves that qualification exclusion, without selecting a scale target or creating admitted instances.
+
+No Source Instance IDs were allocated, RAW modified, inventory/registry changed, or source admitted into a cohort. Qualification is separate from actual admission and parser/processing approval. Incident closure remains subject to its other gates and explicit owner approval. This ledger update is committed on `incident/closure-evidence`; no push or merge is authorized or performed.
