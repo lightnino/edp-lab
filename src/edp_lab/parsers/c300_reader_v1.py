@@ -11,6 +11,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from edp_lab.ingestion.gold_set import file_sha256
+from edp_lab.ingestion.universe import processing
 from edp_lab.parsers.c300_v1 import (
     MAX_LINE,
     PROFILES,
@@ -34,6 +35,7 @@ class RecordOccurrence:
 
 
 def occurrences(root: Path, registry: dict, binding: dict, approval: dict):
+    processing(root, binding, "C300")
     require_activation(registry, approval)
     if binding.get('discovery_validation') != 'PASS':
         raise PermissionError('FAILED_BINDING_NOT_ELIGIBLE_FOR_ACTIVATION')
