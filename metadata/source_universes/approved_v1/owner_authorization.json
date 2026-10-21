@@ -1,0 +1,28 @@
+{
+  "approved_by": "OWNER (user in current conversation)",
+  "authorization_text": "I approve EDP_LAB_ORIGINAL_SOURCE_UNIVERSE version 1, manifest `metadata/source_universes/approved_v1/manifest.json`, SHA-256 `2198f9bad9c864bf339eff515992526e22efc4230160614a8f86daf3143f463c`, as the exact 3,021-member Source Universe authority.\n\nThis includes both SEC Bulk candidates qualified by owner-attested provenance, reserves the 41 Day 13 holdouts from development cohorts, and excludes the 800 outside-universe sources while retaining their RAW.\n\nThis approval authorizes universe membership only. It does not authorize new admissions, cohort freezes, parser scope or processing.",
+  "authorized_on": "2026-10-21",
+  "authorized_scope": [
+    "universe membership only"
+  ],
+  "manifest_path": "metadata/source_universes/approved_v1/manifest.json",
+  "manifest_sha256": "2198f9bad9c864bf339eff515992526e22efc4230160614a8f86daf3143f463c",
+  "not_authorized": [
+    "new admissions",
+    "cohort freezes",
+    "parser scope",
+    "processing",
+    "Guardrail activation",
+    "push",
+    "merge",
+    "Step 5"
+  ],
+  "owner_approval_evidence": "Explicit owner message in current Codex conversation on 2026-10-21; authorization_text transcribes the membership approval verbatim. No external message identifier supplied.",
+  "record_version": 1,
+  "schema": "SOURCE_UNIVERSE_OWNER_APPROVAL_V1",
+  "status": "APPROVED",
+  "supersedes_placeholder_sha256": "89777b01ff3760dd527d51048d2debc20af65ffb3bc25a8c65d9a20a7a06100a",
+  "timestamp_precision": "date; exact approval time not supplied",
+  "universe_id": "EDP_LAB_ORIGINAL_SOURCE_UNIVERSE",
+  "universe_version": "1"
+}
