@@ -2,7 +2,6 @@
 import importlib.util
 from pathlib import Path
 
-import pyarrow as pa
 import pytest
 
 from edp_lab.ingestion.universe import sha
@@ -37,6 +36,7 @@ def test_utf8_controls_have_no_false_error(raw):
 
 
 def test_reversible_surrogates_are_not_clean_string_values():
+    pa = pytest.importorskip('pyarrow')
     raw = b'company\xc3O'
     value = raw.decode('utf-8', errors='surrogateescape')
     assert value.encode('utf-8', errors='surrogateescape') == raw
@@ -44,7 +44,10 @@ def test_reversible_surrogates_are_not_clean_string_values():
         pa.array([value], type=pa.string())
 
 
+@pytest.mark.skipif(not (diagnosis.LAB / diagnosis.NATIVE_MANIFEST).exists(),
+                    reason='Local frozen native M1 evidence unavailable')
 def test_actual_frozen_native_value_oracle(tmp_path):
+    pytest.importorskip('pyarrow')
     native, _ = diagnosis.retained_native()  # verifies frozen code and manifest hashes
     good, bad = tmp_path / 'good', tmp_path / 'bad'
     good.mkdir()

@@ -1,3 +1,69 @@
+# N450 profiling and B1 model-fit assessment — remediation v3
+
+**Current outcome: 450/450 FITS_EXISTING_MODEL under the approved parser-profile
+versions; one documented field-local encoding exception. M1 is unchanged.**
+This is not 450/450 strict UTF-8 PASS or Step 3 execution.
+
+DEC-000010 (merged through PR #20) authorizes ISO-8859-1 only for Company Name
+of the pinned SRC010128 record. The authoritative decision remains unchanged in
+`docs/src010128_encoding_exception.md`; the original diagnosis is retained verbatim
+in `docs/src010128_encoding_diagnosis_v1.md`. Original B1 v1 and v2 metadata and
+all prior HUMAN_UNRESOLVED witnesses remain intact.
+
+## Verified remediation
+
+- RAW hash reverified: `5869c2d2e76ec56302291d7812add9d8cc1a0b9788478050344e40d14927e71d`.
+  Source identity and physical path match sealed admission and approved Universe v1.
+- Physical line 6215, record start 516310, exceptional byte 516344, field ordinal 2,
+  full record hash and exact Company Name byte sequence all match the decision.
+- Profile `SRC010128_COMPANY_ISO8859_1_V1` decodes only that field using ISO-8859-1;
+  the derived value is `EXPLORA INVESTIMENTOS GESTÃO DE RECURSOS LTDA`.
+  This is the approved interpretation, not independent CIK or entity verification.
+- All other fields/records retain strict UTF-8. Changed witness bytes, source/hash,
+  path, locator or header fail closed. No global Latin-1 fallback exists.
+- Full source validation: 8,537 physical records = 6 METADATA + 1 HEADER + 8,530 DATA;
+  42,650 fields. Field reconstruction (Latin-1 only for the one approved field)
+  and original occurrence intervals reproduce every record and the exact RAW hash.
+- Unchanged native M1 STRING schema and packaging were exercised using temporary
+  Parquet validation artifacts; `m1_verifier_v2.verify_parquet` independently
+  checked every field, occurrence, interval, framing record and full-source hash.
+  Deliberately altered Company Name, ordinal, locator, missing and duplicate rows
+  are rejected. No published or registered N450 CLEAN output was created.
+- Decode method, decision, profile version, original field HEX, source/record hashes
+  and locators are retained in the versioned binding's `decoding_provenance`;
+  this provenance is required before using the scoped reader/verifier.
+
+## Regression and acceptance limits
+
+All 449 prior per-source evidence fingerprints were verified against unchanged
+admitted identities/paths/hashes and reused. Three complete bounded UTF-8 controls
+(SRC010001, SRC010226, SRC010450; 11,683 DATA occurrences / 58,415 fields) were
+rechecked through the occurrence reader and temporary native-format readback.
+Their occurrence results match prior evidence exactly; the updated verifier's
+results equal the actual frozen native verifier's results. The legacy profile
+still fails on the original SRC010128 invalid byte, preserving historical behavior.
+
+Focused parser, observation, Lossless and regression checks: **50 passed**; Ruff
+passed. Full-source recovery plus the three controls took **11.309 seconds** on
+this local host. This proves scoped parser/representation/readback fidelity, not
+full N450 platform Lossless, QUERYABLE compatibility, FIN replay or Stability.
+C300 was not replayed. Protected Universe, C300, authorization, admission and cohort
+freeze metadata hashes are unchanged. RAW was neither copied nor modified.
+
+Mechanical reassessment: `metadata/evaluations/n450_b1_v3.json`. Reproducible
+acceptance driver: `scripts/validate_src010128_recovery.py`; full fingerprinted
+local evidence: `runs/n450/src010128-recovery-v3/validation.json`. Detailed results
+and temporary Parquet data are not committed to Git.
+
+**No encoding-resolution blocker remains.** Stop before Step 3. Future authorized
+execution must explicitly use the validated versioned binding/profile and updated
+verifier, pin their code/provenance, and retain existing processing authority gates.
+No N450 execution grant was created by this assessment. Frozen historical runtime
+code and outputs remain unchanged; the new verifier is the scoped successor for
+future execution, not an in-place modification of that frozen runtime.
+
+## Original assessment v1 — preserved historical result
+
 # N450 profiling and B1 model-fit assessment
 
 Outcome: **449 FITS_EXISTING_MODEL; 1 HUMAN_UNRESOLVED**. No M2 requirement has

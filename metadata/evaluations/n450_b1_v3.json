@@ -1,0 +1,163 @@
+{
+  "assessment": "B1_SC7_N450_V3",
+  "bounded_utf8_regression": {
+    "SRC010001": {
+      "comparison_to_frozen_native_oracle": "IDENTICAL",
+      "native_readback": {
+        "bytes": 424368,
+        "fields_data": 24985,
+        "observed_member_sha256": "3ce0063b8481331528631318ed7c9472fcd9ebb431dc1d3a229e80ac42b107e8",
+        "ordered_record_digest": "d096ac4af72c914c46fa7d77a8624884fa8a71bb035b2c68a6b7c628a9410d20",
+        "records_data": 4997,
+        "records_total": 5004
+      },
+      "occurrence_validation": {
+        "accounting": {
+          "DATA": 4997,
+          "HEADER": 1,
+          "METADATA": 6
+        },
+        "contiguous_occurrence_intervals": "PASS",
+        "covered_bytes": 424368,
+        "data_fields": 24985,
+        "lexical_reconstruction": "PASS"
+      }
+    },
+    "SRC010226": {
+      "comparison_to_frozen_native_oracle": "IDENTICAL",
+      "native_readback": {
+        "bytes": 287701,
+        "fields_data": 16450,
+        "observed_member_sha256": "17784f7517b9fb5f06660848398af5aaabc5e54f331e2a8a45c09d6362804892",
+        "ordered_record_digest": "16900ec3c644a5868a85d315e9d05e92bbe9c45cebea5a8f2fbf9f9b247f2c0f",
+        "records_data": 3290,
+        "records_total": 3297
+      },
+      "occurrence_validation": {
+        "accounting": {
+          "DATA": 3290,
+          "HEADER": 1,
+          "METADATA": 6
+        },
+        "contiguous_occurrence_intervals": "PASS",
+        "covered_bytes": 287701,
+        "data_fields": 16450,
+        "lexical_reconstruction": "PASS"
+      }
+    },
+    "SRC010450": {
+      "comparison_to_frozen_native_oracle": "IDENTICAL",
+      "native_readback": {
+        "bytes": 296321,
+        "fields_data": 16980,
+        "observed_member_sha256": "77270e467e0eb340086dfdcfbd0524326544a5d39928e9592acb60ffe71255b5",
+        "ordered_record_digest": "094e34430c1fe5b262f76c4425229adebb0c18618dec9b73ceff541814828229",
+        "records_data": 3396,
+        "records_total": 3403
+      },
+      "occurrence_validation": {
+        "accounting": {
+          "DATA": 3396,
+          "HEADER": 1,
+          "METADATA": 6
+        },
+        "contiguous_occurrence_intervals": "PASS",
+        "covered_bytes": 296321,
+        "data_fields": 16980,
+        "lexical_reconstruction": "PASS"
+      }
+    }
+  },
+  "classifications": {
+    "FITS_EXISTING_MODEL": 450
+  },
+  "code_sha256": {
+    "scripts/validate_src010128_recovery.py": "00fe711bcc9236c418b50892561dd1652d4cb0376bbdbc9dbf370e9024e17e84",
+    "src/edp_lab/materialization/m1_verifier_v2.py": "3155880890e83e857419dfb0b6651e54e6c9381bfe2b3e07274f47d9a1afa3c6",
+    "src/edp_lab/parsers/c300_reader_v1.py": "5a1749c571717332809eb72466a229236c0c8d9c7c415b6212ce9265452d3925",
+    "src/edp_lab/parsers/c300_v1.py": "12d794670b95f6631175840f2885790141cc244f4fcfe812d4d74f156e488b06",
+    "src/edp_lab/parsers/src010128_v1.py": "79bd6090e8142634548e8a645d86a1c6cb91e60d61fd8043549983dd0cf8a7fa"
+  },
+  "decision": "DEC-000010",
+  "eligibility_scope": "450/450 FITS_EXISTING_MODEL under approved parser-profile versions; one field-local ISO-8859-1 exception, not 450 strict UTF-8 sources. No Step 3 runtime activation or published-output Lossless claim.",
+  "eligible_n450": 450,
+  "evidence_reference": "runs/n450/src010128-recovery-v3/validation.json",
+  "evidence_sha256": "85552e580d212684654df7bd9f674726b35bd1f7cf972c442c8537a50349e7b9",
+  "finished_at_utc": "2026-10-21T19:41:34.041401+00:00",
+  "focused_tests": {
+    "command": "PYTHONPATH=src /Users/lightnino/Projects/edp-lab/.venv/bin/python -m pytest -q tests/parsers/test_src010128_recovery.py tests/parsers/test_src010128_encoding_contract.py tests/authorization/test_n450_observation.py tests/parsers/test_c300_v1.py tests/lossless",
+    "passed": 50,
+    "ruff": "PASS"
+  },
+  "lossless_scope": "Exact source/record/field/byte/provenance and temporary native Parquet readback; no published N450 CLEAN/QUERYABLE or full platform Lossless/Stability claim.",
+  "m1_model_changed": false,
+  "native_readback": {
+    "bytes": 708188,
+    "changed_company_name_rejected": true,
+    "fields_data": 42650,
+    "observed_member_sha256": "5869c2d2e76ec56302291d7812add9d8cc1a0b9788478050344e40d14927e71d",
+    "ordered_record_digest": "77754a6ac744484d905769a6a545f19656413e64900793523185788b8806fe3f",
+    "records_data": 8530,
+    "records_total": 8537
+  },
+  "original_finding_reference": "runs/n450/b1-v1/sources/SRC010128.json",
+  "original_finding_sha256": "5fa8545a2e1f6d75622f11e36dcdfe81681f3a064311507044d274c4b0368327",
+  "previous_summary_sha256": "c7f5db0cef4eb79fe425e0a483d4286d86545fce7c1379700cd37b600137f6bf",
+  "prior_assessments_preserved": [
+    "metadata/evaluations/n450_b1_v1.json",
+    "metadata/evaluations/n450_b1_v2.json"
+  ],
+  "protected_metadata_sha256": {
+    "metadata/admissions/N450_v1/corpus_manifest_v4.csv": "79660035d807306b111d88be0c0f899c5ee410077e2ffe5caa27d4d9af4d372a",
+    "metadata/authorizations/n450_execution_v1.json": "50507c7fcde3d5d7295bfa396cd216587402c6852eb5e6d827ee3ad53beb3a48",
+    "metadata/cohorts/C300.csv": "f052599a7cfac3b566a236965e2ab163934d4541e7b09e03da98be728c1541e4",
+    "metadata/corpus_manifest_v3.csv": "27ce93f363ebeb234737659e9a411927aed3dd3a674bc8a21b780e05dfdc4bdf",
+    "metadata/freezes/C750_v1/freeze.json": "2d03baebe0627e612a5d823838e06bf9189d74ec6047ba85ba59b62ef47b4559",
+    "metadata/source_universes/approved_v1/manifest.json": "2198f9bad9c864bf339eff515992526e22efc4230160614a8f86daf3143f463c"
+  },
+  "raw_mutated": false,
+  "reused_count": 449,
+  "scoped_encoding_exception_sources": 1,
+  "source_validation": {
+    "data_records": 8530,
+    "encoding_exception": {
+      "decision": "DEC-000010",
+      "decision_reference": "docs/src010128_encoding_exception.md",
+      "encoding": "iso-8859-1",
+      "field_bytes_hex": "4558504c4f524120494e56455354494d454e544f532047455354c34f204445205245435552534f53204c544441",
+      "field_ordinal": 2,
+      "invalid_byte_absolute_offset": 516344,
+      "original_finding": "metadata/evaluations/n450_b1_v1.json",
+      "original_name": "Company Name",
+      "profile_id": "SRC010128_COMPANY_ISO8859_1_V1",
+      "raw_sha256": "5869c2d2e76ec56302291d7812add9d8cc1a0b9788478050344e40d14927e71d",
+      "record_byte_offset": 516310,
+      "record_bytes": 114,
+      "record_sha256": "0204d6e8cca1a45efd0ef5956cfe49766ea7ee5a1e3143e3d5a60a7eaa60591a",
+      "scope": "Only this exact field; other fields/records remain strict UTF-8",
+      "source_identity": "d0dc0ef10dabfaff1d02bb75b5efae1ef047e938418f08fb8cb92c1cb332e7f7",
+      "source_instance_id": "SRC010128",
+      "source_line": 6215
+    },
+    "fields": 42650,
+    "lexical_byte_roundtrip": "PASS",
+    "physical_records": 8537,
+    "profile_id": "SRC010128_COMPANY_ISO8859_1_V1",
+    "reconstructed_sha256": "5869c2d2e76ec56302291d7812add9d8cc1a0b9788478050344e40d14927e71d",
+    "record_kinds": {
+      "DATA": 8530,
+      "HEADER": 1,
+      "METADATA": 6
+    },
+    "validation": "PASS",
+    "widths": {
+      "5": 8530
+    }
+  },
+  "started_at_utc": "2026-10-21T19:41:22.732732+00:00",
+  "step3_executed": false,
+  "strict_utf8_sources": 449,
+  "validated_binding_reference": "runs/n450/src010128-recovery-v3/binding.validated.json",
+  "validated_binding_sha256": "31e78b1507e81b46f2c2619f78bb03ea39247a2cb0ae4f4217730e25f7a3fa2b",
+  "wall_seconds": 11.308748960494995
+}
