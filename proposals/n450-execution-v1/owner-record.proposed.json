@@ -19,7 +19,7 @@
     "c300_roster_sha256": "f052599a7cfac3b566a236965e2ab163934d4541e7b09e03da98be728c1541e4",
     "corpus_manifest_v3_sha256": "27ce93f363ebeb234737659e9a411927aed3dd3a674bc8a21b780e05dfdc4bdf"
   },
-  "implementation_commit": "1b08f4dd2d3fedb6c7bbb03b4037dc765b3debd7",
+  "implementation_commit": "568bb841292710e4f56e1d837e9f9f2a223c639b",
   "packet_sha256": {
     "c750-proposed.json": "f7994d3a4db77c3d16f8f3c805f57bd23755b165b120740b153d97b0d523eee6",
     "qualification.json": "656a27c1fc994cb340b9b818ed9eb2adfd2527be79fadda1c2f8ede67949c084",

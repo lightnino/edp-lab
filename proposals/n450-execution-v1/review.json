@@ -308,8 +308,23 @@
       "SRC000303",
       "SRC000304"
     ],
+    "observation_context": "Historical pre-568bb84 worktree-relative path-existence check; not a current resolver failure. Retained without repeating the scan.",
     "present": 0,
     "raw_hashed": false
+  },
+  "c300_resolver_evidence": {
+    "commit": "568bb841292710e4f56e1d837e9f9f2a223c639b",
+    "reference": "docs/n450_cohort_guardrail.md",
+    "verification_repeated": false,
+    "verified_bytes": 7632930175,
+    "verified_sources": 300
+  },
+  "day2_exit_check_requirement": {
+    "classification": "OWNER_IMPOSED_SEQUENCING_PREREQUISITE",
+    "code_enforced": false,
+    "disposition": "Preserved: owner must confirm satisfaction or explicitly revise this instruction and approve any resulting record/pin changes. Not bypassed.",
+    "intrinsic_admission_freeze_dependency_found": false,
+    "source": "Earlier owner instruction: We will finish Day 2 and its Exit Check before returning to Day 3 execution."
   },
   "exact_transition": {
     "field": "status",
@@ -318,6 +333,7 @@
     "to": "OWNER_APPROVED"
   },
   "historical_corpus_rows": 304,
+  "implementation_commit": "568bb841292710e4f56e1d837e9f9f2a223c639b",
   "installed_host_pin": null,
   "installed_owner_record_exists": false,
   "n450_ids_proposed": [
@@ -354,8 +370,9 @@
     }
   },
   "proposal_path": "proposals/n450-execution-v1/owner-record.proposed.json",
-  "proposal_sha256": "4680686dc77e92e7ef74c7e61d68a6140a4e0527ee15ea22a2d2b9fe5ccdcbc9",
-  "proposed_host_pin_after_owner_status_transition": "0262c7ba235701a8f8dcf5a44de39d3b9a034f79877bbe4015668d22fdb6712f",
+  "proposal_sha256": "3d6dd1525249938a39dd27525c63e1cdce63dfd171ebdeb0f867372bc880d522",
+  "proposed_host_pin_after_owner_status_transition": "ed8314fb62afb9c2a2f8f99524e219c703ff22f62e51978d53a1f56f82818966",
+  "refresh_scope": "Only implementation_commit changed in the proposed owner record; all bindings, IDs, timestamps, prerequisites, storage statements, destinations and file commitments preserved.",
   "registration_id_check": "No collision in current metadata/proposals/docs/scripts/tests text or preserved corpus v3; proposal only, not reservations.",
   "remote_verification": {
     "current_run": "NOT_RUN_AUTHORIZATION_BOUNDARY",
@@ -364,5 +381,6 @@
     "historical_result": "450/450 EXACT_REMOTE_BYTES_PASS"
   },
   "status": "BLOCKED_PENDING_INDEPENDENT_OWNER_REVIEW",
+  "superseded_proposal_sha256": "4680686dc77e92e7ef74c7e61d68a6140a4e0527ee15ea22a2d2b9fe5ccdcbc9",
   "unchanged_c300": 300
 }

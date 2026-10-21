@@ -1,92 +1,69 @@
-# Exact N450 Admission / C750 Cohort Freeze owner review
+# Final N450 / C750 owner authorization review
 
-This packet is **not an authorization, admission, ID reservation or freeze**.
-Only metadata planning was performed using the existing implementation at
-`1b08f4dd2d3fedb6c7bbb03b4037dc765b3debd7`. No implementation was rebuilt.
+The exact record is `owner-record.proposed.json`. It remains
+`PENDING_OWNER_REVIEW`; no authority has been issued or installed.
 
-## Exact record and proposed host pin
+- Implementation: `568bb841292710e4f56e1d837e9f9f2a223c639b`.
+- Draft SHA-256: `3d6dd1525249938a39dd27525c63e1cdce63dfd171ebdeb0f867372bc880d522`.
+- Proposed approved-variant host pin: `ed8314fb62afb9c2a2f8f99524e219c703ff22f62e51978d53a1f56f82818966`.
 
-The complete ordered record is `owner-record.proposed.json`, SHA-256:
-`4680686dc77e92e7ef74c7e61d68a6140a4e0527ee15ea22a2d2b9fe5ccdcbc9`.
-It has `status: PENDING_OWNER_REVIEW`; no approver is fabricated. All 450
-physical-to-registration mappings and both complete ordered action scopes are
-included, along with every proposed output file digest and destination.
+Only `implementation_commit` changed from the previous owner-record draft.
+Complete ordered cohort bindings, registration IDs, destinations, timestamps,
+storage statements, prerequisites and all output commitments are unchanged.
+No RAW verification was repeated; the 300/300 resolver evidence is recorded in
+commit `568bb84` and `docs/n450_cohort_guardrail.md`. The original worktree-relative
+missing-file observation in `review.json` is explicitly historical, superseded by
+that resolver evidence. No cohort or historical authority record was modified.
 
-The existing gate consumes **one independently approved record containing two
-separate scopes**, rather than two separate host pins. The exact proposed approved
-variant changes only `status` from `PENDING_OWNER_REVIEW` to `OWNER_APPROVED`, using
-`edp_lab.ingestion.c300_admission.encoded` (JSON indent=2, sort_keys=True, trailing
-LF). Its proposed host pin is:
-`0262c7ba235701a8f8dcf5a44de39d3b9a034f79877bbe4015668d22fdb6712f`.
-Those approved bytes have NOT been issued or installed by the Agent. The active
-owner record does not exist, and `OWNER_GRANT_SHA256` remains `None`.
-Any change to a mapping, timestamp, storage decision, prerequisite or scope requires
-regenerating and reviewing the record and its pin. Output changes require fresh
-output commitments too.
+## Exact decisions for independent owner approval
 
-## Owner decisions embodied in the draft
+1. `scopes.admission`: N450 Admission of the exact ordered 450 members, registering
+   `SRC010001`–`SRC010450`, solely at `metadata/admissions/N450_v1/`, with every
+   output digest as recorded in the scope.
+2. `scopes.freeze`: exact C750 Cohort Freeze (unchanged C300 plus that N450), solely
+   at `metadata/freezes/C750_v1/`, with every recorded output digest. This grants
+   no O_C750_M1 output freeze or processing.
+3. Explicitly accept the fixed effective admission timestamp
+   `2026-10-21T16:12:08Z` (2026-10-22 00:12:08 Asia/Shanghai), or request regenerated
+   commitments. It is a proposed effective registration time, not an observed
+   execution timestamp.
+4. Explicitly accept the recorded metadata-only storage limitations: existing UC
+   locations are writable; RAW immutability is NOT_ESTABLISHED. Exact-byte checks
+   and a hash-bound metadata snapshot do not establish immutable RAW storage.
+   No upload, copy, relocation or RAW mutation is granted.
+5. Confirm the existing Day 2 completion / Exit Check sequencing prerequisite is
+   satisfied, or explicitly revise it and request corresponding record/pin changes.
 
-- Approve N450 Admission and C750 Cohort Freeze only. Both complete ordered
-  bindings and exact versioned metadata destinations are in the record.
-- Approve the proposed unused registration IDs `SRC010001`–`SRC010450`, in exact
-  roster order. These were checked against current metadata/proposals/docs/scripts/
-  tests text and the preserved registry; no registered identity was changed.
-- Explicitly accept or revise the proposed effective registration timestamp
-  `2026-10-21T16:12:08Z` (2026-10-22 00:12:08 Asia/Shanghai). This is a planning
-  value required by the existing deterministic output contract, not an observed
-  execution time. If actual publication time must populate that field, refresh
-  and reapprove the commitments instead of treating this value as an event time.
-- Explicitly accept the stated storage limitation for metadata-only registration
-  and cohort freeze: existing remote UC paths are writable; fresh exact-byte hashes
-  and a hash-bound metadata snapshot do **not** establish immutable RAW storage.
-  If immutable RAW protection is required, provide an approved mechanism first;
-  this packet authorizes no upload, duplication, relocation or RAW mutation.
-- Confirm Day 2 completion and Exit Check before execution. No Day 2 result or
-  completion was inferred or modified here.
+## Day 2 dependency classification
 
-## Preflight and actual state
+No intrinsic N450 Admission/C750 Cohort Freeze dependency on Day 2 Exit Check was
+found in the governing contracts or entrypoint checks. The requirement originated
+in the owner's earlier instruction: “We will finish Day 2 and its Exit Check before
+returning to Day 3 execution.” It is an **owner-imposed sequencing prerequisite**,
+not a code-enforced technical gate or a separately established general governance
+policy. It remains binding until the owner confirms satisfaction or explicitly
+changes it. The final draft preserves it; this preparation does not waive it.
+The frozen Day 2 baseline requirement for later Stability remains separate.
 
-All five user-specified fingerprints matched. The production packet validator
-confirmed 450 Universe-v1 eligible additions, no unchanged-C300 overlap, holdouts
-or outside-universe sources, and the exact C300 + N450 union of 750. The proposed
-additive manifest has 754 rows: 304 preserved GOLD/C300 rows plus 450 additions.
-All original historical manifest rows and original C300 roster bytes are preserved
-in the planned bundles. The plans were computed in memory, not published.
+## Exact host-pin instructions — owner/trusted maintainer only
 
-A metadata/path-existence check found **0/300 historical C300 RAW files present at
-the exact worktree-relative paths required by `verify_historical_bytes`**. The
-complete missing registered-ID list and pinned binding reference are in
-`review.json`. No C300 RAW hash scan was run and no alternative paths were inferred.
-Even with a valid owner grant, Freeze cannot pass that gate until the exact
-historical bindings are available for validation. No hash check may be skipped.
-The owner must direct an authorized access arrangement if these paths remain
-unavailable; this packet does not permit copying RAW or rewriting historical paths.
+After independent owner approval of the complete record and decisions above:
 
-Remote RAW verification was **not rerun** because the independent authorization
-boundary precedes it. The preserved prior evidence remains 450/450 exact-byte PASS
-at SHA-256 `8b46ce38d970be771ad56bbfd1a86d8eb60438852f3e9b5fe98fa57ac10f844b`.
-Fresh verification of every exact ledger path, size and SHA-256 is mandatory after
-valid authorization and before reuse. That check would be read-only; no compute
-job, upload or copy is authorized.
+1. Produce the approved variant by changing **only** `status` from
+   `PENDING_OWNER_REVIEW` to `OWNER_APPROVED`, using the existing
+   `edp_lab.ingestion.c300_admission.encoded` serialization: JSON indent=2,
+   sort_keys=True, trailing LF. The SHA-256 must be exactly
+   `ed8314fb62afb9c2a2f8f99524e219c703ff22f62e51978d53a1f56f82818966`.
+2. The owner/trusted host maintainer issues those independently approved bytes at
+   `metadata/authorizations/n450_execution_v1.json` and installs that exact digest
+   in `OWNER_GRANT_SHA256` through the trusted host deployment workflow.
+   Do not install the pending draft's digest as an execution pin.
+3. Any other record edit requires recalculation and renewed independent review.
+   Timestamp/registration/output changes also require refreshed output commitments.
 
-Actual N450 admissions: **0**. Actual frozen C750: **none**. Existing accepted C300:
-300; preserved corpus v3: 304 including GOLD. No new manifest or freeze path exists.
-All hashes in the proposed scopes are **future output commitments**, not evidence
-of publication. `review.json` lists those commitments without materializing them.
-
-## Minimal next owner/host action — stop boundary
-
-1. Independently review and approve the exact record and explicit decisions above,
-   including confirming the Day 2 prerequisite, or request precise revisions.
-2. An owner/trusted host maintainer must issue the approved record at
-   `metadata/authorizations/n450_execution_v1.json` and install its independently
-   approved digest in `OWNER_GRANT_SHA256` through the trusted deployment workflow.
-   For the exact status-only variant above, the digest is `0262c7ba235701a8f8dcf5a44de39d3b9a034f79877bbe4015668d22fdb6712f`.
-   This Agent has neither issued that record nor installed the proposed pin.
-3. Resolve the missing C300 binding availability before requesting Freeze, without
-   weakening historical checks or the no-copy/no-relocation boundary.
-
-After those conditions are met, revalidate authority and exact bytes, perform the
-fresh remote verification, and invoke the existing guarded entrypoints. This
-review packet itself cannot activate those operations. No profiling, M1/CLEAN,
-QUERYABLE, Lossless, Stability, M2 or merge is authorized.
+No active record or host pin has been installed. No admission/freeze was executed.
+Readiness is **READY FOR OWNER REVIEW; BLOCKED FOR EXECUTION**. After valid authority
+is installed and prerequisites are satisfied, fresh remote verification of all 450
+exact paths/sizes/hashes and execution-time local integrity checks are still required
+before invoking the guarded entrypoints. No profiling, M1, QUERYABLE, Lossless,
+Stability, M2 or merge is included.
