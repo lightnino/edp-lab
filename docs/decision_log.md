@@ -86,3 +86,20 @@ historical lexical Lossless results remain unchanged. Final freeze is withheld.
 The final closeout instruction now authorizes a selected local Day 2 commit. This
 supersedes only earlier no-commit instructions; final freeze still requires verified
 retention and explicit owner approval. No new semantic decision is recorded.
+
+## SRC010128 source-specific encoding approval (Day 3 / N450)
+
+DEC-000010 records the owner's explicit selection of Option B over
+Option A (quarantine). The [source-specific encoding decision](src010128_encoding_exception.md)
+contains the full A/B alternatives, advantages/costs, decision criteria,
+why B was chosen, supporting byte/name evidence, explicit limits, and the
+conditions that send the record back to quarantine. This is a reversible,
+source-and-field-specific ISO-8859-1 interpretation for the single reported
+`0xC3` byte in `SRC010128` Company Name, not a global encoding rule.
+
+**APPROVED is interpretation authority, not implementation success.**
+Preserve the initial HUMAN_UNRESOLVED finding and immutable RAW.
+The 450/450 FITS_EXISTING_MODEL outcome is conditional on actual bounded
+validation; it is not a strict UTF-8 PASS. No source-universe or cohort
+admission, M1 change, blanket file encoding, entity/CIK equivalence, or
+reprocessing of 449 unchanged sources is implied.
