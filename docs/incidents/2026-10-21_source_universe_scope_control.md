@@ -324,7 +324,8 @@ Earlier §12 audit states are superseded below; implementation states remain PEN
 | Local investigation started | Start timestamp not captured | This task; SEC Bulk and 800 receipt audit read only |
 | Count and 800 receipt reconciliation completed | 2026-10-21T16:53:31.561694+08:00 | §13 and reference appendix; 800 retained receipt hash/readback matches; current remote integrity UNVERIFIED |
 | SEC Bulk investigation completed; freeze/hash audit completed | 2026-10-21T16:55:49.956562+08:00 | §13, evidence index; provenance UNRESOLVED for both, historical physical integrity VERIFIED; three increment freeze file sets/canonical rosters/manifests match |
-| Incident documentation commit and GitHub branch/PR | PENDING | Publication receipts to be appended after actual success |
+| Incident documentation committed | 2026-10-21T16:59:13+08:00 | `05854c25dfc7554e5f596b346b489ec304c80a97`; required commit message; documentation only; whitespace/credential checks clean |
+| GitHub branch published / PR opened | PR created 2026-10-21T16:59:56+08:00; branch push completed before PR creation (exact push timestamp not captured) | [Branch](https://github.com/lightnino/edp-lab/tree/incident/source-universe-scope-control); [PR #15](https://github.com/lightnino/edp-lab/pull/15), OPEN against main; publication VERIFIED, not merged |
 | Admission gate implementation started/completed | PENDING | No implementation performed |
 | Guardrail regression tests executed | PENDING | NOT RUN |
 | Agent authorization tests executed | PENDING | NOT RUN |
@@ -333,3 +334,5 @@ Earlier §12 audit states are superseded below; implementation states remain PEN
 | Incident closure approved | PENDING | OPEN; closure criteria §12 apply |
 
 Retained structural completion summaries were also inspected: N450 records zero Databricks processing jobs and deferred final M1 fit; N750/N500 explicitly record `CLEAN_QUERYABLE: NOT_RUN`, `Stability: NOT_RUN`, and zero Databricks processing jobs. These are historical checkpoint claims, not current live dependency certification.
+
+Publication verification: GitHub PR metadata confirms `main` base, incident branch head, OPEN state and exactly the three documentation files above. Remote main was independently checked at `ddb6e47c52afa08415614dc7f341255255d9c963` before publication. The publication ledger is recorded in a subsequent documentation-only commit; the initial report commit is the immutable anchor above.
