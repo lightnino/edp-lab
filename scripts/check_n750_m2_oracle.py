@@ -8,8 +8,6 @@ import re
 from decimal import Decimal
 from pathlib import Path
 
-import pyarrow.parquet as pq
-
 ROOT = Path(__file__).resolve().parents[1]
 BASE = ROOT / "runs/n750/step8-v1"
 OUT = ROOT / "runs/c1500-m2-stability/v1/local-oracle.json"
@@ -44,6 +42,8 @@ def oracle(text: str | None, present: bool, null_marker: bool):
 
 
 def main() -> None:
+    import pyarrow.parquet as pq
+
     old = json.loads((ROOT / "metadata/freezes/C750_v1/C750.bindings.json").read_bytes())
     new = json.loads((ROOT / "metadata/admissions/N750_v1/bindings.json").read_bytes())
     combined = json.loads((ROOT / "metadata/freezes/C1500_v1/C1500.bindings.json").read_bytes())
