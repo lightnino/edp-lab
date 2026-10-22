@@ -90,3 +90,57 @@ def test_c3_requires_recorded_owner_budget_before_operational_pass():
     assert c3["required"]
     assert any("owner-accepted" in x for x in c3["requires"])
     assert "do not choose retroactive" in suite["operational_threshold_policy"]
+
+from edp_lab.evaluation.stability_m1_v1 import operational_acceptance_failures
+
+
+def operational_sample(**updates):
+    """Synthetic receipts: not a statement that a Databricks run has passed."""
+    values = {
+        "expected_bindings": 2,
+        "completed_binding_ids": ["N1", "N2"],
+        "reprocessed_completed_bindings": 0,
+        "historical_replays": 0,
+        "publication_exact_readback": True,
+        "stage_wall_seconds": {
+            "processing": 5.0,
+            "clean_publication": 2.0,
+            "queryable_validation": 10.0,
+        },
+        "approved_stage_budgets_seconds": {
+            "processing": 10.0,
+            "clean_publication": 10.0,
+            "queryable_validation": 20.0,
+        },
+    }
+    values.update(updates)
+    return operational_acceptance_failures(**values)
+
+
+def test_c3_accepts_complete_idempotent_in_budget_synthetic_receipts():
+    assert operational_sample() == []
+
+
+def test_c3_rejects_missing_or_duplicated_binding_and_unwanted_replay():
+    failures = operational_sample(
+        completed_binding_ids=["N1", "N1"],
+        historical_replays=1,
+        reprocessed_completed_bindings=1,
+        publication_exact_readback=False,
+    )
+    assert any("C3.1" in f for f in failures)
+    assert any("C3.2" in f for f in failures)
+    assert any("C3.3" in f for f in failures)
+
+
+def test_c3_does_not_invent_budgets_and_rejects_out_of_budget():
+    assert any("no prior configured" in x for x in operational_sample(
+        approved_stage_budgets_seconds=None
+    ))
+    assert any("queryable_validation" in x for x in operational_sample(
+        approved_stage_budgets_seconds={
+            "processing": 10.0,
+            "clean_publication": 10.0,
+            "queryable_validation": 2.0,
+        }
+    ))
