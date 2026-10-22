@@ -1,0 +1,29 @@
+{
+  "schema": "OPERATIONAL_BUDGET_V1",
+  "status": "PROPOSED_PENDING_APPLICABILITY_APPROVAL",
+  "owner_selected_multiplier": 10,
+  "origin": "Day 4 Step 8 retained request/result and local build measurements",
+  "origin_receipts": {
+    "raw": "runs/n750/step8-v1/raw/completion.json",
+    "clean": "runs/n750/step8-v1/clean/completion.json",
+    "publication": "runs/n750/step8-v1/publication/"
+  },
+  "formula": "budget_seconds = reference_observed_seconds * 10",
+  "phases": {
+    "remote_raw_resolution_readback": {"observed_seconds": 675.667, "prospective_max_seconds": 6756.670},
+    "local_clean_build_readback": {"observed_seconds": 45.890, "prospective_max_seconds": 458.900},
+    "sql_table_creation": {"observed_seconds": 55.145, "prospective_max_seconds": 551.450},
+    "sql_delta_validation": {"observed_seconds": 91.842, "prospective_max_seconds": 918.420},
+    "sql_views_counts": {"observed_seconds": 27.862, "prospective_max_seconds": 278.620},
+    "sql_coverage_lineage": {"observed_seconds": 43.465, "prospective_max_seconds": 434.650}
+  },
+  "sql_phase_total": {"observed_seconds": 218.314, "prospective_max_seconds": 2183.140},
+  "measurement_method": "Local monotonic remote resolution and CLEAN/readback durations; SQL local request-to-result intervals, not internal Spark executor time",
+  "reference_workload": {"cohort": "N750", "sources": 750, "remote_verified_bytes": 269323425, "sec_data_records": 3047639, "sec_data_fields": 15238195, "xml_properties": 21616},
+  "prospective_scope": "Comparable future workload using the same timing definitions only; different source composition or volume requires a separately approved applicability or workload-normalized rule",
+  "prospective_effective_date": "PENDING_OWNER_APPROVAL",
+  "day5_n500_applicability": "PENDING_WORKLOAD_COMPARABILITY_DECISION",
+  "day4_c3_4": "BLOCKED",
+  "telemetry": {"remote_reused": 450, "remote_uploaded": 300, "remote_verified": 750, "cpu": "UNAVAILABLE", "memory": "UNAVAILABLE", "dbu": "UNAVAILABLE", "cost": "UNAVAILABLE", "provider_internal_retries": "UNAVAILABLE"},
+  "interpretation": "Initial engineering envelope, not a statistical SLA or universal ceiling"
+}

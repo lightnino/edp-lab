@@ -1,0 +1,196 @@
+{
+  "category": "L6-A_SOURCE_NATIVE_NUMERIC_INTEGRITY",
+  "controls": {
+    "TRY_001_V1": {
+      "actual_rows": [
+        [
+          "TRY_001_V1",
+          "SRC010451",
+          "249",
+          "249",
+          "15",
+          "15",
+          "3735",
+          "3735",
+          "3704",
+          "3704",
+          "31",
+          "31",
+          "0",
+          "0"
+        ],
+        [
+          "TRY_001_V1",
+          "SRC010452",
+          "249",
+          "249",
+          "28",
+          "28",
+          "6972",
+          "6972",
+          "6848",
+          "6848",
+          "124",
+          "124",
+          "0",
+          "0"
+        ],
+        [
+          "TRY_001_V1",
+          "SRC010453",
+          "747",
+          "747",
+          "1",
+          "1",
+          "747",
+          "747",
+          "747",
+          "747",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "TRY_001_V1",
+          "SRC010454",
+          "249",
+          "249",
+          "5",
+          "5",
+          "1245",
+          "1245",
+          "1245",
+          "1245",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        [
+          "TRY_001_V1",
+          "SRC010455",
+          "249",
+          "249",
+          "1",
+          "1",
+          "249",
+          "249",
+          "249",
+          "249",
+          "0",
+          "0",
+          "0",
+          "0"
+        ]
+      ],
+      "discrepancies": [],
+      "request_ref": "runs/treasury-lossless6/v1/TRY_001-request.json",
+      "response_ref": "runs/treasury-lossless6/v1/TRY_001-result.json",
+      "response_sha256": "fc7e2877b46da9e1bc35e28e9759a402e3351da6107b5b78c3dfb935fabda09c",
+      "sql_request_sha256": "e7a13512a6086f75c4d1bf6cda9ee4ce313f39e6896aabd707d072f5cafa1b23",
+      "sql_template_sha256": "3caa3ab3cc206056cd69b19979391d3aa1e8689ec6bf1e95babc678f9f13a206",
+      "statement_id": "01f1ce52-80ed-121e-b17c-422332dd84a6",
+      "status": "PASS"
+    },
+    "TRY_002_V1": {
+      "actual_rows": [
+        [
+          "TRY_002_V1",
+          "12793",
+          "12793",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ]
+      ],
+      "discrepancies": [],
+      "request_ref": "runs/treasury-lossless6/v1/TRY_002-request.json",
+      "response_ref": "runs/treasury-lossless6/v1/TRY_002-result.json",
+      "response_sha256": "fe57fcf90c7a3199d691885c96449bdac7e1100a4b5d8d9dfb7a71025bd9ab69",
+      "sql_request_sha256": "7ede746cd279b7c6b159e4a05443df81c23cf4d275594225e53a304e3d54c7be",
+      "sql_template_sha256": "6d22797e609f53fb36af6691712d4e74f4a0210fd7988c53627f0df2bc96c948",
+      "statement_id": "01f1ce52-938d-1b25-9c6b-1a25b69aa7a7",
+      "status": "PASS"
+    },
+    "TRY_003_V1": {
+      "actual_rows": [
+        [
+          "TRY_003_V1",
+          "12948",
+          "12948",
+          "12793",
+          "12793",
+          "155",
+          "155",
+          "0",
+          "0",
+          "0",
+          "0",
+          "249",
+          "0"
+        ]
+      ],
+      "discrepancies": [],
+      "request_ref": "runs/treasury-lossless6/v1/TRY_003-request.json",
+      "response_ref": "runs/treasury-lossless6/v1/TRY_003-result.json",
+      "response_sha256": "fb7e1cfdf7c8732b2b0c0b2538ac2ab265f86313fc5deff5474f23dd0bc32f44",
+      "sql_request_sha256": "9ff8c1b565886cd3b3baa31f926e14031937695d3702ea2ff41d6a988ae8010f",
+      "sql_template_sha256": "f687b07d28003e5a6aa1868de7931e43c5ad63e697ba4b9a80b4f735d14a9c2d",
+      "statement_id": "01f1ce52-969a-176c-83db-baa08e5415c9",
+      "status": "PASS"
+    },
+    "TRY_004_V1": {
+      "actual_rows": [
+        [
+          "TRY_004_V1",
+          "34564",
+          "0",
+          "0",
+          "12793",
+          "5"
+        ]
+      ],
+      "discrepancies": [],
+      "request_ref": "runs/treasury-lossless6/v1/TRY_004_corrected-request.json",
+      "response_ref": "runs/treasury-lossless6/v1/TRY_004_corrected-result.json",
+      "response_sha256": "8aeba6bd3e083f7019db64d4cd2e49db17d03f33ebdc463c04648147b19700c8",
+      "sql_request_sha256": "b84463b392d84b4152c2a3e2d4c13ccb37a18cc093ed4270a872686ac17fb8f4",
+      "sql_template_sha256": "383cb468ebecbcf53eed6390f6ef4ed8ca1794c092093c64066f5ad01372a4ff",
+      "statement_id": "01f1ce52-aaa1-121e-a11d-2b4ce9bb7956",
+      "status": "PASS"
+    }
+  },
+  "economic_integration": "NOT_IMPLEMENTED",
+  "failed_initial_try_004_ref": "runs/treasury-lossless6/v1/TRY_004-result.json",
+  "fixture_ref": "metadata/evaluations/fixtures/treasury_lossless6_expected_v1.json",
+  "fixture_sha256": "176fd0be7d52a2f29a0ae54e58c7cd965d95b8c15106553982811f4ed47658a8",
+  "l3_field_level_approval": "PENDING",
+  "l3_inventory_ref": "metadata/evaluations/treasury_l3_inventory_v1.json",
+  "live_table_identity_checks": {
+    "m1_xml": {
+      "delta_id": "c818b141-23b8-4bf2-b4a5-8c2ae44a59df",
+      "detail_response_sha256": "1cfb112bca32abe5fbd54aff13e5f6991805110ce8d2a7435bb025b2a53a87c1",
+      "detail_statement_id": "01f1ce53-26fb-155d-b284-ae35620b3bb0",
+      "history_response_sha256": "574b14f0771a92a52ebe9cff83d4cb298e5c0e9616cd7dd19c5a555e04e11583",
+      "history_statement_id": "01f1ce53-2cc3-1e11-a342-411eeec1e16a",
+      "latest_version": 0
+    },
+    "m2_typed": {
+      "delta_id": "abba3c2a-f7ae-43cf-ab4c-e87b933f306c",
+      "detail_response_sha256": "e35a95f511a491772be6ce62a94a140d7c93702d0b7e6515b4f63019abdd07f3",
+      "detail_statement_id": "01f1ce53-2675-1fc0-a1ec-adae49024e08",
+      "history_response_sha256": "f3d3fc59eef9805932025bc6ecb82544cf9fd70d7a111a5e8dc97f7afb97f8a0",
+      "history_statement_id": "01f1ce53-2d38-1ada-ae2f-a3fd7b533010",
+      "latest_version": 0
+    }
+  },
+  "runtime_summary_ref": "runs/treasury-lossless6/v1/runtime-summary.json",
+  "runtime_summary_sha256": "e61e865afe70d77690b57d6c22c3224081b1cce89814424110fe999c790d76cd",
+  "schema": "TREASURY_LOSSLESS6_V1",
+  "scope": "Original five SRC010451\u2013SRC010455 Treasury XML sources at N750 Step 8 Delta version 0",
+  "status": "PASS",
+  "step9_reuse_sha256": "35de975fa2e4fcc038cf8de811869bc43657c09ec842bb2db048af73974637d0"
+}
