@@ -115,6 +115,22 @@ Do not silently collapse repeated source occurrences because their visible field
 
 **Scope rule:** Whenever a candidate model/corpus requires revalidation, apply the same applicable Lossless 1–6 to the **old scope**, **new scope**, and **combined scope**, as specified by the replay/validation decision below. A pass on separate cohorts does not imply the combined corpus passes.
 
+### 2.2 Mandatory Lossless 6 financial regression suite — FIN V2
+
+**Current evaluation requirement, effective after the Day 2 FIN_EVAL_V1 closeout:** FIN_001_V1 (two filing/date contexts) and FIN_002_V1 (one filing/date context, including the wrong-equity negative control) are permanent, mandatory **Lossless 6** regression cases for any candidate corpus containing the frozen C300. This includes C750 and every later nested cohort. They are not optional examples or merely a historical annotation. The pinned SQL, expected fixture, source/run/snapshot scope and evaluation evidence remain `metadata/evaluations/fin_eval_v1.json` and `sql/reconciliation/fin_eval_v1/`. This changes the **evaluation-suite version**, not the M1 lexical data/model version.
+
+The versioned application contract is `metadata/evaluations/lossless6_fin_suite_v2.json`. For each expansion:
+
+- **A / old C300:** execute or verify the three FIN cases on the original pinned Day 2 snapshots; independently require exact expected values, zero tolerance, negative-control detection and unchanged lineage.
+- **B2 / new-only sources:** execute a **Lossless 6 measure-applicability and noninterference check** against the actual newly admitted structures. Inventory economic measures and declared reconciliation rules; fail if an applicable measure is silently omitted. Where new sources are filing-index-only, verify that zero modeled economic measures are eligible and that their identifiers cannot accidentally enter FIN equations. Report this check as `PASS` **only with verified zero-eligible-measure evidence**; this means applicability/noninterference PASS, **not** an invented numeric-equation PASS for the new sources.
+- **C / combined corpus:** execute FIN_001/002 on the actual combined candidate and original C300, compare the three numeric results and their source/run/locator/lineage witnesses in both directions, and require zero difference. A positive result is `PASS` for the **fixed FIN regression suite**, separate from the coverage of other economic measures.
+- Every wider economic field requires a declared grain/unit/date/metric control under L3 or an honest `PRESERVED_NOT_MODELED` disposition. The three FIN cases do not prove enterprise-wide financial reconciliation.
+
+This FIN V2 rule **supersedes older applicability-only presentation of Lossless 6 in current/future scorecards**, but never mutates historical Day 2 execution results, previously signed evidence, or their SHA-256 references. Do not label the **mandatory FIN suite** `NOT_APPLICABLE` merely because a new cohort contributes no modeled economic measure; instead report its applicability and noninterference checks explicitly. Do not fabricate a numerical reconciliation or a `PASS` before the required checks execute.
+
+Cross-source Stability C2 and operational Stability C3 remain **separate** from Lossless 6. Within M1's source-preserving scope, start with the bounded C2 regression controls of source-ID disjointness, no implicit merge/deduplication and C300-vs-combined FIN value/lineage invariance. Do not infer enterprise entity equivalence without declared rules. C3 requires real execution/recovery measurements and explicit acceptance thresholds; FIN_001/002 alone cannot establish operational acceptance.
+
+
 ## 3. STABILITY — Normative Requirements S1–S9
 
 **Invariant:** Growth in the admitted source population or model evolution must not silently destroy accepted identities, semantics, relationships, outputs or consumer contracts. New evidence can justify correcting a wrong previous abstraction. Stability does **not** mean M1 or its output is permanently correct or unchangeable.
