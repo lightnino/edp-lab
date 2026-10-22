@@ -1,0 +1,129 @@
+{
+  "artifact": {
+    "kind": "REUSED_PROFILE_NO_RESCAN",
+    "path": "/Users/lightnino/Projects/edp-lab/runs/profiling/SRC000004_sub.txt_18531d094cde39975df1eebec4abe2573f44556109d81111bb6df76873623e77.json",
+    "sha256": "4bcce97ed2191e512f29e03ae8a0bf04bea9bc7af016d562f9b0f9a2cb193469"
+  },
+  "artifact_pointer": "columns[*].statistics.sample.value; exact shared source_record locators",
+  "columns": [
+    "adsh",
+    "cik",
+    "period",
+    "form"
+  ],
+  "limits": [
+    "Not full SUB population; no new RAW read or profiling",
+    "Distinct adsh determinants make FD consistency vacuous beyond these five rows",
+    "No source NULL or business FD/key approval"
+  ],
+  "locators": [
+    {
+      "byte_length": 278,
+      "byte_offset": 18111,
+      "source_line": 65
+    },
+    {
+      "byte_length": 278,
+      "byte_offset": 23753,
+      "source_line": 84
+    },
+    {
+      "byte_length": 253,
+      "byte_offset": 79903,
+      "source_line": 281
+    },
+    {
+      "byte_length": 280,
+      "byte_offset": 87390,
+      "source_line": 308
+    },
+    {
+      "byte_length": 267,
+      "byte_offset": 96846,
+      "source_line": 341
+    }
+  ],
+  "null_tokens": null,
+  "rows": [
+    [
+      "0000797468-10-000039",
+      "797468",
+      "20100331",
+      "10-Q"
+    ],
+    [
+      "0000950123-10-042821",
+      "1453090",
+      "20100331",
+      "10-Q"
+    ],
+    [
+      "0001193125-10-093422",
+      "9892",
+      "20100331",
+      "10-Q"
+    ],
+    [
+      "0001104659-10-019793",
+      "1324404",
+      "20091231",
+      "8-K"
+    ],
+    [
+      "0001193125-10-116393",
+      "1316631",
+      "20091231",
+      "8-K"
+    ]
+  ],
+  "selection": "REUSED_CACHED_SEEDED_FIVE_SAMPLE_OCCURRENCES; four projected fields only",
+  "source": {
+    "archive_member": "sub.txt",
+    "expected_header": [
+      "adsh",
+      "cik",
+      "name",
+      "sic",
+      "countryba",
+      "stprba",
+      "cityba",
+      "zipba",
+      "bas1",
+      "bas2",
+      "baph",
+      "countryma",
+      "stprma",
+      "cityma",
+      "zipma",
+      "mas1",
+      "mas2",
+      "countryinc",
+      "stprinc",
+      "ein",
+      "former",
+      "changed",
+      "afs",
+      "wksi",
+      "fye",
+      "form",
+      "period",
+      "fy",
+      "fp",
+      "filed",
+      "accepted",
+      "prevrpt",
+      "detail",
+      "instance",
+      "nciks",
+      "aciks"
+    ],
+    "footer": null,
+    "logical_table_name": "sub.txt",
+    "member_sha256": "fca0ff4bf873b46245ac3ca3524f6be6083852cdc7e97a12f307df636834a3e8",
+    "profile_id": "SEC_FSDS_TSV_V2_CANDIDATE",
+    "raw_path": "data/raw/sec/2010q2_fsds.zip",
+    "raw_sha256": "25f416b020fd3e62a67dbf8c6522c9f239e716099b61cf5d05a59a91ffdef1f1",
+    "source_instance_id": "SRC000004"
+  },
+  "version": "BOUNDED_FSDS_SUB_OBSERVATIONS_V1"
+}
