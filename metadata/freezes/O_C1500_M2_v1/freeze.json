@@ -1,0 +1,38 @@
+{
+  "schema": "O_C1500_M2_RESULT_FREEZE_V1",
+  "version": "O_C1500_M2_V1",
+  "recorded_at_utc": "2026-10-22T20:48:37.824Z",
+  "status": "FROZEN_BY_EXPLICIT_HUMAN_OVERRIDE",
+  "result_frozen": true,
+  "freeze_type": "GIT_EVIDENCE_AND_APPROVAL_MARKER_ONLY",
+  "result_scope": "EXACT_C1500_SOURCE_PRESERVING_M2_PINNED_OUTPUT",
+  "physical_sources": 1500,
+  "operational_bindings": 1932,
+  "input_and_evidence_refs": "metadata/freezes/O_C1500_M2_v1/references.json",
+  "human_authorization": "metadata/freezes/O_C1500_M2_v1/authorization.json",
+  "original_assessment": "metadata/evaluations/o_c1500_m2_freeze_assessment_v1.json",
+  "post_decision_assessment": "metadata/evaluations/o_c1500_m2_freeze_assessment_v2.json",
+  "result_acceptance": "ACCEPTED_BY_OWNER_OVERRIDE_WITH_EXCEPTIONS",
+  "technical_checks": {
+    "scoped_B2_1": "PASS",
+    "scoped_C1": "PASS",
+    "fin": "PASS_RETAINED",
+    "treasury_try": "PASS_RETAINED",
+    "C3_4": "OWNER_ACCEPTED_EXCEPTION_NOT_TECHNICAL_PASS"
+  },
+  "non_implemented": {
+    "Treasury_L6_B": "NOT_IMPLEMENTED",
+    "enterprise_semantics": "NOT_APPROVED"
+  },
+  "runtime": {
+    "new_databricks_write": "NOT_RUN",
+    "new_live_readback": "NOT_RUN",
+    "delta_table_property_protection": "NOT_RUN",
+    "durable_archive": "NOT_CREATED",
+    "data_immutability": "NOT_VERIFIED",
+    "historical_version_0_ids": "PINNED_IN_HISTORICAL_ASSESSMENT"
+  },
+  "preserve_original_V1_status": "CANDIDATE",
+  "downstream_consumption_guard": "Only source-preserving result and exact pinned version-0 snapshot references are accepted; economic, canonical and new workload claims require independent authorization",
+  "exit_ref": "metadata/evaluations/day4_exit_v2.json"
+}

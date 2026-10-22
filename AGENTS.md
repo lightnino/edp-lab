@@ -52,3 +52,10 @@ These priorities do not rewrite frozen historical contracts or weaken existing s
 
 ### Scoped C300 parser approval
 The user approved mechanical, read-only lexical parsing and shallow inspection of exactly the 720 PASS bindings in approval packet SHA-256 `3873e9d07e4bcc2f357f940d05cf4fc5dc1262358b641d1debba2ef117910e05`. This explicit subsequent authority supersedes only the earlier statement that C300 parser execution is unapproved for these bindings. The other 12 FSDS `num.txt` bindings remain FAILED/BLOCKED with their evidence intact. No semantic NULL interpretation, business key, canonical mapping or modification to RAW, GOLD or frozen C300 is approved. Preserve the original packet membership and historical checkpoints; see `metadata/section_2_6_checkpoint_v2.json` for the post-approval evidence reference.
+
+## Day 4 subsequent owner authorization (2026-10-23 SGT)
+
+- The original Day 4 Step 13 CANDIDATE and Exit V1 PARTIAL assessments remain historical evidence. The requesting owner subsequently authorized an explicit **bounded source-preserving O_C1500_M2 result freeze by human override**, recorded in `metadata/freezes/O_C1500_M2_v1/`, and a **Day 4 COMPLETE_BY_HUMAN_OVERRIDE_WITH_EXCEPTIONS** closeout in `metadata/evaluations/day4_exit_v2.json`.
+- Standing **10× C3.4 phase budget** is approved **only for future comparably measured N750-like workloads**, until explicit supersession; see `metadata/authorizations/day4_c3_4_budget_approval_v1.json`. No automatic new workload applicability or retrospective technical C3.4 PASS.
+- The 50 source/QName Treasury L3 dispositions and B2.1/C1 source-preserving PASS were separately approved in PR #48. The 155 structural MISSING outcomes are not corrupt records. Treasury L6-B remains NOT_IMPLEMENTED; no canonical economic or entity semantics are approved.
+- This Git freeze marker records a human decision and pinned version-0 references; it does not assert that new Databricks readback, physical write protection, independent archive, or WORM immutability was performed. Those controls must be separately verified before any stronger retention claim.

@@ -1,3 +1,5 @@
+> **Subsequent owner decision (2026-10-23 SGT):** The historical PARTIAL assessment below is preserved as written. See [Day 4 owner-override closeout](day4_owner_override_closeout.md) and [Exit V2](../metadata/evaluations/day4_exit_v2.json) for the later bounded source-preserving freeze and COMPLETE_BY_HUMAN_OVERRIDE_WITH_EXCEPTIONS decision. No retroactive C3.4 technical PASS or Treasury economic integration is claimed.
+
 # Day 4 exit — partial
 
 Steps 11–14 were evaluated in order. [Performance](../reports/day4_performance_operating_model.md) is **PERFORMANCE_MEASURED** with explicit missing cost, end-to-end and active-review metrics. [Eight write tasks](day4_eight_write_tasks.md) are **WRITE_TASKS_COMPLETE** as bounded evidence/proposal artifacts, without semantic approval. [O_C1500_M2 freeze assessment](o_c1500_m2_freeze_assessment.md) is **CANDIDATE**, not RESULT_FROZEN. This [exit record](../metadata/evaluations/day4_exit_v1.json) is **PARTIAL**.

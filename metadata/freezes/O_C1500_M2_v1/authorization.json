@@ -1,0 +1,28 @@
+{
+  "schema": "O_C1500_M2_OWNER_OVERRIDE_AUTHORIZATION_V1",
+  "recorded_at_utc": "2026-10-22T20:48:37.824Z",
+  "authority": "Owner explicitly instructs force result freeze by human intervention, Day 4 exit because freeze, and merge all accepted work into main, in current conversation",
+  "approved_by": "Requesting project owner via active ChatGPT conversation (not independently cryptographically signed)",
+  "approved_scope": "EXACT_PINNED_C1500_SOURCE_PRESERVING_ADDITIVE_M2_RESULT",
+  "override_reason": "Close out source-preserving experimental result despite absent historical preapproved C3.4 threshold; scoped B2.1/C1 approvals were provided via PR #48.",
+  "decision": "FREEZE_BY_EXPLICIT_HUMAN_OVERRIDE_AND_CLOSE_DAY4_WITH_DECLARED_EXCEPTIONS",
+  "accepted_risks": [
+    "Day 4 C3.4 has owner-approved standing 10x budget now, not a retrospectively established technical PASS",
+    "Previously pinned Databricks version-0 tables, views and receipts were not reverified live in this closeout",
+    "No fresh operational archive, Delta protection metadata, immutable snapshot or Databricks readback was created",
+    "The frozen label is a Git evidence/decision marker, not physical WORM or a promise of indefinite retention"
+  ],
+  "guardrails": [
+    "Freeze only the pinned source-preserving projection; no new data or semantic promotion",
+    "Treasury L6-B economic integration remains NOT_IMPLEMENTED",
+    "Preserve historical V1 original results and all 50 source/QName dispositions",
+    "No fake corrections to 155 independently verified structural absences",
+    "Do not assert a 10x SLA, end-to-end measurement or production immutability"
+  ],
+  "references": [
+    "metadata/evaluations/treasury_l3_owner_scope_decision_v1.json",
+    "metadata/evaluations/c1500_m2_stability_scoped_v3_owner_acceptance.json",
+    "metadata/authorizations/day4_c3_4_budget_approval_v1.json",
+    "metadata/evaluations/o_c1500_m2_freeze_assessment_v1.json"
+  ]
+}

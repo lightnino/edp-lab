@@ -1,0 +1,31 @@
+{
+  "schema": "O_C1500_M2_RESULT_FREEZE_ASSESSMENT_V2_OWNER_OVERRIDE",
+  "status": "RESULT_FROZEN_BY_HUMAN_OVERRIDE",
+  "original_v1_status": "CANDIDATE_RETAINED_UNCHANGED",
+  "result_frozen": true,
+  "accepted_scope": "SOURCE_PRESERVING_ADDITIVE_M2_ONLY",
+  "technical_acceptance": {
+    "B2_1_SOURCE_PRESERVING": "PASS_FROM_OWNER_SCOPED_V3",
+    "C1_SOURCE_PRESERVING": "PASS_FROM_OWNER_SCOPED_V3",
+    "L1_to_L5": "PASS_RETAINED",
+    "FIN_001": "2/2_PASS_RETAINED",
+    "FIN_002": "1/1_PASS_RETAINED",
+    "TRY_001_to_004": "4/4_PASS_RETAINED",
+    "C3_4": "NOT_RETROACTIVELY_PROVEN_OWNER_OVERRIDE"
+  },
+  "owner_approval": {
+    "treasury_50": "APPROVED_SOURCE_PRESERVING_ONLY",
+    "performance_10x": "APPROVED_STANDING_COMPARABLE_FUTURE_WORKLOAD_POLICY",
+    "freeze": "EXPLICIT_HUMAN_OVERRIDE"
+  },
+  "fixed_inputs_and_pins": "metadata/evaluations/o_c1500_m2_freeze_assessment_v1.json",
+  "freeze": "metadata/freezes/O_C1500_M2_v1/freeze.json",
+  "exceptions": [
+    "TREASURY_L6_B_NOT_IMPLEMENTED",
+    "DAY4_C3_4_NOT_A_TECHNICAL_PASS",
+    "NO_NEW_LIVE_DATABRICKS_OR_PROTECTION_READBACK",
+    "NO_ENTERPRISE_SEMANTIC_APPROVAL"
+  ],
+  "acceptance_basis": "Human owner explicitly waives the performance preapproval as a retrospective freeze blocker; accepts the recorded risk without altering test results.",
+  "recorded_at_utc": "2026-10-22T20:48:37.824Z"
+}
