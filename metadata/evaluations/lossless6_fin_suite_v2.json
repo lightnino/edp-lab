@@ -1,0 +1,59 @@
+{
+  "schema": "LOSSLESS_6_FIN_SUITE_V2",
+  "status": "OWNER_DIRECTED_EVALUATION_REQUIREMENT",
+  "effective_from": "FIN_EVAL_V1_DAY2_CLOSEOUT",
+  "model": "M1_LEXICAL_V1",
+  "model_change": false,
+  "test_family": "LOSSLESS_6",
+  "control_contract": "docs/evaluation_contract.md#22-mandatory-lossless-6-financial-regression-suite--fin-v2",
+  "pinned_historical_fin_contract": "metadata/evaluations/fin_eval_v1.json",
+  "fixture_root": "sql/reconciliation/fin_eval_v1",
+  "mandatory_cases": [
+    {
+      "id": "FIN_001_V1",
+      "contexts": 2,
+      "expected": "Exact independent fixture, zero tolerance"
+    },
+    {
+      "id": "FIN_002_V1",
+      "contexts": 1,
+      "expected": "Exact independent fixture, zero tolerance; wrong-parent-equity negative control"
+    }
+  ],
+  "mandatory_at_each_corpus_expansion": true,
+  "cohorts_containing_frozen_c300": [
+    "C300",
+    "C750",
+    "C1500",
+    "C2000",
+    "C3000"
+  ],
+  "scope_rules": {
+    "A_C300": [
+      "Compare three FIN case results and original 13 lineage witnesses against frozen Day2 expected fixtures",
+      "Zero unexpected changes to C300 model, snapshots, source identity or SQL meaning"
+    ],
+    "B2_new_only": [
+      "Run actual economic-measure applicability inventory against new-source schemas and declared model rules",
+      "PASS only when every applicable measure has a declared reconciliation or retained-not-modeled disposition",
+      "For SEC Daily Master filing-index-only sources, prove zero modeled economic measures and no leakage into FIN equations",
+      "An applicability PASS is not a claim of numeric reconciliation on these sources"
+    ],
+    "C_combined": [
+      "Execute three mandatory FIN contexts on C300 and actual combined output",
+      "Require exact fixture equality, negative control, source/run/locator/lineage witnesses, and zero old-versus-combined differences",
+      "Require independent full multiset source/record/field and duplicate-preservation checks"
+    ]
+  },
+  "status_semantics": {
+    "FIN_suite_PASS": "All mandatory FIN cases executed/verified on corresponding present outputs and equal expected fixtures",
+    "new_only_applicability_PASS": "Economic measure coverage audited; missing eligible measures forbidden; noneconomic input does not trigger fake numeric reconciliation",
+    "broader_economic_coverage": "Separate explicit controls/dispositions; not implied by the three FIN cases",
+    "not_yet_executed": "Do not assert PASS"
+  },
+  "independent_stability": {
+    "C2": "Minimal controls: source namespace integrity; no unintended cross-source merge, split or collapse; source/lineage-stable FIN regression. Not enterprise canonical entity integration.",
+    "C3": "Operational timings, completion and resume/replay evidence plus explicit accepted thresholds. FIN cases alone are insufficient."
+  },
+  "historical_evidence_policy": "Preserve historical NOT_APPLICABLE outputs and FIN_EVAL_V1 overlay verbatim; publish versioned current/future scorecards. Never retroactively rewrite frozen Day2 or PR23 records."
+}
