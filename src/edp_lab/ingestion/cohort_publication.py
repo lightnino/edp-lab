@@ -35,6 +35,8 @@ def inside(root, raw, prefix="metadata/"):
     root = Path(root).resolve()
     path = root / relative
     require(path.resolve().is_relative_to(root), "UNSAFE_COHORT_PATH")
+    require(not any(p.is_symlink() for p in (path, *path.parents) if p != root),
+            "UNSAFE_COHORT_PATH")
     return path
 
 
@@ -116,9 +118,10 @@ def prepare(root, plan):
     require(set(plan["baseline_sha256"]) ==
             {"baseline_roster", "baseline_bindings", "baseline_manifest", "baseline_freeze"},
             "BASELINE_SHA_SCOPE_MISMATCH")
-    require(plan["admission_path"] == f"metadata/admissions/{increment}_v1" and
-            plan["freeze_path"] == f"metadata/freezes/{combined}_v1",
-            "COHORT_DESTINATION_MISMATCH")
+    require(re.fullmatch(rf"metadata/admissions/{increment}_v[1-9][0-9]*",
+                         plan["admission_path"]) and
+            re.fullmatch(rf"metadata/freezes/{combined}_v[1-9][0-9]*",
+                         plan["freeze_path"]), "COHORT_DESTINATION_MISMATCH")
     require(plan["manifest_version"] >= 4 and
             isinstance(plan["manifest_version"], int), "INVALID_MANIFEST_VERSION")
     all_rows = old_manifest + new_rows

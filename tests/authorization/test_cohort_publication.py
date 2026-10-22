@@ -152,8 +152,8 @@ def test_different_cohort_size_same_code(world):
     plan["combined"] = "C4"
     plan["increment_count"] = 2
     plan["combined_count"] = 4
-    plan["admission_path"] = "metadata/admissions/N2_v1"
-    plan["freeze_path"] = "metadata/freezes/C4_v1"
+    plan["admission_path"] = "metadata/admissions/N2_v2"
+    plan["freeze_path"] = "metadata/freezes/C4_v3"
     plan["selected"].append({
         "source_identity": "phy2", "source_instance_id": "SRC000004",
         "physical_raw_path": "/approved/phy2", "raw_path": "data/raw/new2",
