@@ -170,3 +170,35 @@ def test_destination_escape_denied(world):
     plan["admission_path"] = "metadata/admissions/../../unsafe"
     with pytest.raises(ScopeDenied, match="COHORT_DESTINATION_MISMATCH"):
         c.prepare(root, plan)
+
+
+def test_real_frozen_c750_layout_accepts_generic_increment(monkeypatch):
+    """Check current accepted C750 file/layout contract with a mocked new source."""
+    from pathlib import Path
+
+    monkeypatch.setattr(c, "UniverseGate", FakeGate)
+    root = Path(__file__).resolve().parents[2]
+    files = {
+        "baseline_roster": "metadata/freezes/C750_v1/C750.csv",
+        "baseline_bindings": "metadata/freezes/C750_v1/C750.bindings.json",
+        "baseline_manifest": "metadata/admissions/N450_v1/corpus_manifest_v4.csv",
+        "baseline_freeze": "metadata/freezes/C750_v1/freeze.json",
+    }
+    plan = {
+        "version": "COHORT_ADDITIVE_V1",
+        "baseline": "C750", "increment": "N1", "combined": "C751",
+        **files,
+        "baseline_sha256": {k: sha((root / v).read_bytes()) for k, v in files.items()},
+        "baseline_count": 750, "increment_count": 1, "combined_count": 751,
+        "manifest_version": 4, "admission_path": "metadata/admissions/N1_v1",
+        "freeze_path": "metadata/freezes/C751_v1",
+        "admitted_at_utc": "2026-10-22T10:00:00Z",
+        "selected": [{
+            "source_identity": "phy1", "source_instance_id": "SRC000755",
+            "physical_raw_path": "/approved/phy1", "raw_path": "data/raw/new1",
+            "raw_sha256": "c" * 64, "family": "TEST",
+        }],
+    }
+    outputs = c.prepare(root, plan)
+    assert len(c.read_csv(outputs["admission"]["corpus_manifest_v5.csv"])) == 755
+    assert len(c.read_csv(outputs["freeze"]["C751.csv"])) == 751
