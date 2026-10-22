@@ -54,7 +54,7 @@ def resolve(roster, evidence):
 
         # Existing Day 3/4/5 verified receipts carry this exact basis. Future
         # upload receipts may use explicit remote status + actual SHA instead.
-        legacy_verified = (receipt.get("basis") == "REUSED_PRIOR_REMOTE_READBACK"
+        legacy_verified = (str(receipt.get("basis", "")).startswith("REUSED_PRIOR_REMOTE_READBACK")
                            and receipt.get("receipt") and
                            receipt.get("verified_at_utc"))
         live_verified = (receipt.get("remote_status") == "EXACT_REMOTE_BYTES_PASS"
