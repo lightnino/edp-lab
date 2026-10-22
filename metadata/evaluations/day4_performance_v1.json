@@ -1,0 +1,38 @@
+{
+  "schema": "DAY4_PERFORMANCE_V1",
+  "status": "PERFORMANCE_MEASURED",
+  "scope": "Retained C750, N750 and logical C1500 evidence; no new processing or end-to-end C1500 run",
+  "population": {
+    "C750": {"physical_sources": 750, "operational_bindings": 1182, "data_records": 316063821, "original_fields": 3586787936, "m2_typed_occurrences": 176060325, "source_families": "historical C300 FSDS/13F and N450; see frozen roster", "raw_bytes": "UNAVAILABLE_IN_COMPARABLE_AGGREGATE"},
+    "N750": {"physical_sources": 750, "operational_bindings": 750, "sec_sources": 745, "treasury_sources": 5, "verified_raw_bytes": 269323425, "sec_data_records": 3047639, "sec_physical_lines": 3052854, "sec_data_fields": 15238195, "treasury_properties": 21616, "m2_evaluations": 12948, "m2_valid": 12793, "m2_missing": 155},
+    "C1500": {"physical_sources": 1500, "operational_bindings": 1932, "source_data_records": 319111460, "original_fields_and_properties": 3602047747, "m2_typed_occurrences_historical": 176060325, "m2_evaluations_new": 12948, "single_end_to_end_processing_run": false}
+  },
+  "measured_seconds": {
+    "N750_remote_resolution_readback": 675.667,
+    "N750_local_clean_build_readback": 45.890,
+    "N750_sql_table_creation": 55.145,
+    "N750_sql_delta_validation": 91.842,
+    "N750_sql_views_counts": 27.862,
+    "N750_sql_coverage_lineage": 43.465,
+    "N750_sql_request_result_total_nonoverlap": 218.314,
+    "historical_M2_failed_preflight_job_wall": 123.203,
+    "historical_M2_successful_build_job_wall": 553.273,
+    "historical_M2_verification_job_wall": 801.190,
+    "N450_full_processing_job_elapsed": 789.068,
+    "N450_clean_job_elapsed": 558.359,
+    "C750_queryable_validation_job_elapsed": 8911.604
+  },
+  "throughput": {
+    "N750_remote_verified_raw_bytes_per_second": 398603.787,
+    "N750_remote_verified_sources_per_hour": 3996.051,
+    "N750_local_clean_sec_data_records_per_second": 66411.833,
+    "N750_local_clean_original_sec_fields_plus_xml_properties_per_second": 332530.203,
+    "formula": "phase-specific numerator / measured phase seconds; M2 independent conversion throughput UNAVAILABLE"
+  },
+  "reliability": {"N750_complete": 750, "N750_partial": 0, "N750_failed": 0, "N750_reused_remote_objects": 450, "N750_uploaded_original_objects": 300, "N750_no_overwrite": true, "N750_failed_job_recovery": "NOT_OBSERVED", "historical_M2_failed_preflight_run": 693588401750111, "historical_M2_successful_build_run": 910030711554960, "historical_M2_verify_run": 426457626095564, "provider_internal_retry_telemetry": "UNAVAILABLE"},
+  "human": {"agent_proposals": 23, "review_required": 8, "consequential_requests_recorded": 3, "responses_recorded": 0, "semantic_approvals": 0, "active_review_time": "UNMEASURED", "manual_operational_time": "UNAVAILABLE"},
+  "resources": {"N750_cpu": "UNAVAILABLE", "N750_memory": "UNAVAILABLE", "N750_DBU": "UNAVAILABLE", "N750_cost": "UNAVAILABLE", "historical_M2_DBU": "UNAVAILABLE", "historical_M2_cost": "UNAVAILABLE", "N450_driver_cpu_seconds_processing_clean_queryable": [239.418, 163.455, 51.903], "N450_driver_peak_RSS_original_platform_units": [2476496, 2503592, 2393812]},
+  "evidence": {"N750_RAW_completion_sha256": "c58a1a36d99b71d79948ea5a41b82069df40d78d8797611411516de52255ac86", "N750_CLEAN_completion_sha256": "a95af935e8b1bdc043e2e458a01a582130642746a4cb1b8579b922bec6560fbb", "C1500_roster_sha256": "810c6898df0cb5e5c478305f71c190ffe4a7c7a2bb40133efa79a16de630e703", "step8": "docs/n750_step8_execution.md", "step9": "metadata/evaluations/c1500_m2_stability_v1.json", "step9_supplement": "metadata/evaluations/c1500_m2_stability_scoped_v2.json", "historical_M2": "metadata/baselines/O_C750_M2_v1.json", "N450_C750": "docs/c750_stability_v2_evaluation.md", "agent": "metadata/evaluations/agent_v2/quality_regression_step10_v1.json"},
+  "budget": {"ref": "metadata/evaluations/operational_budget_v1.json", "status": "PROPOSED_PENDING_APPLICABILITY_APPROVAL", "historical_day4_C3_4": "BLOCKED"},
+  "limitations": ["No comparable C750 aggregate RAW byte total in inspected tracked summaries", "No independent timed M2 conversion phase", "No measured C1500 end-to-end run", "SQL intervals are client request-to-result, not Spark executor time", "Day 2 performance finding/profile and C750 scale reports named in task absent from this checkout", "No labor, DBU or monetary efficiency claim"]
+}
