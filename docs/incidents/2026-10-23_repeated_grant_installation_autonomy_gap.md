@@ -44,7 +44,7 @@ The remote 300 are **UNVERIFIED**, not proven missing, corrupt, or out of univer
 
 ## 5. Day 5 required remediation
 
-Implement the minimum **policy-enforced, bounded authorization envelope** in [Day 5 remediation plan](../day5_bounded_autonomy_authorization_plan.md), reusing the existing UniverseGate/owner-approval/typed tool enforcement as far as practical:
+Day 5 must implement the minimum **policy-enforced, bounded authorization envelope**, reusing the existing UniverseGate/owner-approval/typed tool enforcement as far as practical:
 
 - Human approves a **specific** immutable source/cohort/version scope, authorized operation set, permitted outputs/environment/principal and expiry or revocation policy **once per bounded workflow** (not once per internal processing phase).
 - Trusted policy store/anchor is independent of Agent code and requests. New approved scopes or consequential business/model decisions still require fresh owner approval. Agent cannot approve itself.
