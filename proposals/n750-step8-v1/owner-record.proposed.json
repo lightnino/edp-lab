@@ -1,0 +1,67 @@
+{
+  "approved_contract": {
+    "decision": "DEC-000013",
+    "model": "M2_ADDITIVE_TYPED_NUMERIC_V1",
+    "numeric_rule": "EXACT_DECIMAL_38_4_V1",
+    "treasury_source_rule": "TREASURY_RATE_QNAME_SCOPE_V1"
+  },
+  "authorized_population": {
+    "cohort": "N750",
+    "count": 750,
+    "source_ids": "SRC010451-SRC011200",
+    "source_types": {
+      "SEC_EDGAR_DAILY_MASTER": 745,
+      "TREASURY_ANNUAL_XML": 5
+    }
+  },
+  "input_files_sha256": {
+    "docs/m2_additive_typed_numeric_v1.md": "a65e87be22415def12333e4d5e291a2fc8f4a87e4dc886e0d89a3c7c1f2225cb",
+    "metadata/admissions/N750_v1/N750.csv": "1346b66e25bea73266d68520eef6d8bcdcdf2db657fd4cd844d7591f1c819cf3",
+    "metadata/admissions/N750_v1/bindings.json": "3f052fd203513cfdfaab00554fe36128690381f0a740b63ac8e1360571bb93e8",
+    "metadata/authorizations/n750_admission_v1.json": "46488e49d34abd2160ad15089581c01c74325714e6d8cc57a27eb1d8e3bd5001",
+    "metadata/freezes/C1500_v1/C1500.bindings.json": "810c6898df0cb5e5c478305f71c190ffe4a7c7a2bb40133efa79a16de630e703",
+    "metadata/freezes/C1500_v1/freeze.json": "1645c7a4735c55cfdbbdc0ee2e471698dfbbf1d8cb22f7b3bd632bbcb8d2add9",
+    "proposals/n750-publication-v1/remote-evidence-unresolved.json": "c615fd758b16147243418f9a035a3fe42a94d784e264fc73b3c036337ce25aa9",
+    "proposals/n750-step1-v3/plan.json": "a2b05f838ca3ba5914b2ca1c863b688b04c367647c5d31a8236f3abf0ae3946f",
+    "proposals/n750-step1-v3/qualification.json": "46e0ecd4f39519cd6f1e07c20bfe51ef7cb79dc69d88bf37567f546fda152a8a",
+    "src/edp_lab/materialization/typed_numeric_v1.py": "ae06d39409c2542273f269356a5905553b08621546de2bda6c972b22bc50d507"
+  },
+  "remote_readiness_at_proposal": {
+    "previously_verified": 450,
+    "require_fresh_independent_sha256_per_source": true,
+    "unverified": 300
+  },
+  "schema": "COHORT_OWNER_GRANT_V1",
+  "scope_limitations": [
+    "Frozen N750 membership, source identities and RAW hashes are immutable under this grant; no new admission, substitution or cohort freeze.",
+    "Find exact existing remote objects first. Upload only the original local RAW bytes of the 300 previously unverified sources when an exact remote object is not found and local SHA-256 equals the frozen binding. Independently read back and SHA-verify every remote object before that source is processed.",
+    "Process only per-source authorized and verified N750 RAW to versioned CLEAN and QUERYABLE outputs. SEC Daily Master retains M1 lexical representation. Treasury XML receives minimal parser support and M2 Decimal projection only for the exact source/property allowlists in the pinned contract.",
+    "Preserve original lexical values, source occurrences, missing versus present-empty XML properties, identity, multiplicity, locators and lineage. No binary-float intermediate, silent rounding, unit conversion, deduplication or inferred financial identity.",
+    "Run applicable Lossless 1-6, exact Decimal outcome checks, independent persisted readback and SQL checks before publication claims. Lossless 6 economic reconciliation requires a separately approved relationship, grain and units.",
+    "No modification or repointing of historical C750 M1/M2 outputs, M1 contracts, source RAW, or existing owner grants; no semantic STTM/Crosswalk/Entity promotion, Step 9 evaluation or main merge."
+  ],
+  "scopes": {
+    "processing": {
+      "eligible": "All and only the 750 sources in pinned N750 bindings, each after independent matching remote RAW SHA-256",
+      "operations": [
+        "RAW_TO_CLEAN",
+        "M1_LEXICAL",
+        "M2_TREASURY_ALLOWLIST",
+        "VERSIONED_QUERYABLE_PUBLICATION",
+        "INDEPENDENT_READBACK_AND_SQL_VALIDATION"
+      ],
+      "output_boundary": "Separate versioned N750 CLEAN/QUERYABLE outputs under existing Databricks Delta/view conventions; no historical table/view overwrite"
+    },
+    "remote_raw_resolution": {
+      "eligible": "Only the exact 300-source complement of qualification.json remote_reuse within the pinned frozen N750 bindings",
+      "operations": [
+        "locate_exact_remote_object",
+        "verify_local_original_sha256_if_upload_needed",
+        "upload_exact_original_if_needed",
+        "independent_remote_readback_sha256"
+      ],
+      "remote_destination": "Existing approved Databricks RAW location; exact source identity and frozen hash retained"
+    }
+  },
+  "status": "PENDING_OWNER_REVIEW"
+}
