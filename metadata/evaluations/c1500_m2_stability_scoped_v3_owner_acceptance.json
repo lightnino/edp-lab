@@ -1,0 +1,47 @@
+{
+  "schema": "C1500_M2_STABILITY_SCOPED_V3_OWNER_ACCEPTANCE",
+  "status": "SOURCE_PRESERVING_ACCEPTANCE_EVALUATED",
+  "original_step9_v1": "metadata/evaluations/c1500_m2_stability_v1.json",
+  "original_step9_v1_disposition": "STABILITY_EVALUATED_FULL_ACCEPTANCE_BLOCKED_UNCHANGED",
+  "step9_supplement_v2": "metadata/evaluations/c1500_m2_stability_scoped_v2.json",
+  "original_step9_supplement_v2_disposition": "L6_A_PASS_B2_1_C1_PENDING_AT_THAT_TIME_UNCHANGED",
+  "owner_decision_ref": "metadata/evaluations/treasury_l3_owner_scope_decision_v1.json",
+  "source_roster_ref": "metadata/freezes/C1500_v1/C1500.bindings.json",
+  "original_inventory_ref": "metadata/evaluations/treasury_l3_inventory_v1.json",
+  "source_scope": {
+    "physical_sources": 1500,
+    "treasury_sources": 5,
+    "treasury_l3_fields": 50,
+    "treasury_m2_evaluations": 12948,
+    "treasury_valid": 12793,
+    "treasury_missing": 155
+  },
+  "actual_evidence_reused": {
+    "lossless_1_to_5": "PASS_SCOPED",
+    "fin_001": "2/2_PASS",
+    "fin_002": "1/1_PASS",
+    "treasury_try_001_to_004": "4/4_PASS_LIVE_RECEIPTS_VERIFIED",
+    "historical_lineage_witnesses": "13/13",
+    "combined_bidirectional_full_schema_comparisons": "8/8_ZERO_DIFFERENCES",
+    "A1_to_A4": "PASS",
+    "B2_2_to_B2_4": "PASS",
+    "C2_1_to_C2_4": "PASS",
+    "C3_1_to_C3_3": "PASS"
+  },
+  "scoped_results": {
+    "B2_1_SOURCE_PRESERVING": "PASS",
+    "C1_SOURCE_PRESERVING": "PASS"
+  },
+  "conditions": "PASS for the exact version-pinned source-native lexical/DECIMAL(38,4) representation and L3 PRESERVED_NOT_MODELED scope only; no economic relationships approved. Reuse of previous immutable runs and SQL results; not a new Databricks execution.",
+  "preserved_limits": {
+    "B2_1_FULL_ECONOMIC": "NOT_IMPLEMENTED",
+    "C1_FULL_ECONOMIC": "NOT_IMPLEMENTED",
+    "C3_4_DAY4": "BLOCKED",
+    "budget_10x": "PROPOSED_PENDING_APPLICABILITY_APPROVAL",
+    "result_freeze": "CANDIDATE_NOT_FROZEN",
+    "day4_exit": "PARTIAL",
+    "full_c1500_acceptance": "NOT_CLAIMED"
+  },
+  "main_integration_policy": "Code, evidence and bounded scoped findings may be merged to main with PARTIAL status; main merge is not evidence of output result freeze, economic integration or C3.4 PASS.",
+  "no_replay": true
+}
