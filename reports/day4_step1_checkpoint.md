@@ -9,6 +9,7 @@ Do not treat this checkpoint as a cohort freeze, admission or completion marker.
 - Reusable, cohort-parameterized admission/freeze code and synthetic/current-C750-layout tests merged into this **Day 4 branch** by PR #30.
 - Legacy Day 2/3 N450/C750 code and accepted freeze bytes remain unchanged.
 - PR #30 CI: 348 passed, 124 skipped; Ruff PASS. (Read current workflow result for authoritative status.)
+- PR #31 generalizes destination versions (_v1, _v2, etc.); CI tests and Ruff PASS. Merged into the same Day 4 branch.
 
 ## Source-selection facts reported by the existing Codex run, NOT independently reproduced here
 
