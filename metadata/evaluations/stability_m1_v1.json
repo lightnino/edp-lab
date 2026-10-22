@@ -1,0 +1,125 @@
+{
+  "schema": "STABILITY_M1_V1",
+  "version": "1.0",
+  "model": "M1_LEXICAL_V1",
+  "evaluation_authority": "docs/evaluation_contract.md",
+  "fin_suite": "metadata/evaluations/lossless6_fin_suite_v2.json",
+  "persistent": true,
+  "applicability": "C750 and all later nested cohorts preserving an M1 lexical historical baseline",
+  "boundary": "M1 source-preserving stability; canonical enterprise semantic integration not claimed",
+  "tests": [
+    {
+      "id": "C2.1",
+      "name": "Identity isolation",
+      "required": true,
+      "requires": [
+        "exact old/new cohort membership",
+        "per-binding source/hash/run integrity",
+        "zero source ID or binding namespace collisions"
+      ],
+      "expected": "zero incompatible namespace collisions and zero original-source reassignment"
+    },
+    {
+      "id": "C2.2",
+      "name": "No false merge/split",
+      "required": true,
+      "requires": [
+        "full-schema, source+locator-aware old/new/combined multiset comparison both directions",
+        "retained duplicate occurrence multiplicity",
+        "negative-control unit fixture that demonstrably fails on key collapse"
+      ],
+      "expected": "zero lost, multiplied or coalesced occurrences; negative-control failure detected"
+    },
+    {
+      "id": "C2.3",
+      "name": "Historical projection",
+      "required": true,
+      "requires": [
+        "C750 projection onto frozen previous binding/run/source population",
+        "field/record/lineage multiset comparison versus frozen version-0 snapshot both directions",
+        "new cohort projection comparison versus verified new outputs"
+      ],
+      "expected": "zero old projection differences, zero new projection differences"
+    },
+    {
+      "id": "C2.4",
+      "name": "FIN noninterference",
+      "required": true,
+      "requires": [
+        "FIN_001 2/2 on baseline and combined candidate",
+        "FIN_002 1/1 and wrong-equity negative control",
+        "exact numeric fixture and 13 frozen lineage witnesses in both environments"
+      ],
+      "expected": "same exact fixture amounts, zero economic differences and zero historical witness differences"
+    },
+    {
+      "id": "C3.1",
+      "name": "Execution completeness",
+      "required": true,
+      "requires": [
+        "eligible new-binding manifest",
+        "per-binding COMPLETE receipts and hashes",
+        "zero missing/extra terminal outcomes"
+      ],
+      "expected": "eligible_count == complete_count == unique_receipts; zero errors"
+    },
+    {
+      "id": "C3.2",
+      "name": "Frozen historical preservation",
+      "required": true,
+      "requires": [
+        "unchanged old snapshot identities, versions and output fingerprints",
+        "historical processing replay count"
+      ],
+      "expected": "no unexpected historical processing replay and zero data mutation"
+    },
+    {
+      "id": "C3.3",
+      "name": "Recovery and idempotency",
+      "required": true,
+      "requires": [
+        "checkpoint reuse and authoritative receipt hashes",
+        "failed job and resumed job logs where relevant",
+        "exclusive publication and final exact Delta readback"
+      ],
+      "expected": "zero duplicate processing of successful checkpoints and zero duplicate output effects"
+    },
+    {
+      "id": "C3.4",
+      "name": "Operational threshold acceptance",
+      "required": true,
+      "requires": [
+        "actual wall time and throughput for processing, CLEAN and QUERYABLE",
+        "checkpoint/retry and human review counts",
+        "available resource, cost and DBU telemetry or explicit unavailability",
+        "owner-accepted prospective runtime limits or pre-existing configured hard timeouts"
+      ],
+      "expected": "all declared budgets met with measured evidence, no unexplained missing phase; absent optional provider metrics explicitly disclosed"
+    }
+  ],
+  "statuses": [
+    "PASS",
+    "FAIL",
+    "BLOCKED",
+    "NOT_IMPLEMENTED",
+    "NOT_APPLICABLE"
+  ],
+  "promotion_scope": "C_M1_SOURCE_PRESERVING_PASS only when all required C2/C3 tests and A/B2/C1/FIN V2 PASS",
+  "enterprise_scope": "No canonical business-key selection/entity resolution or enterprise semantics PASS",
+  "historical_integrity": "No changes to frozen Day2/C300 baseline or merged PR23 original results",
+  "operational_threshold_policy": "C3.4 needs explicit budget acceptance or applicable pre-existing configured job timeout; do not choose retroactive convenient numbers",
+  "metric_schema": [
+    "binding_complete",
+    "source_count",
+    "record_count",
+    "field_count",
+    "phase_wall_seconds",
+    "throughput",
+    "retries",
+    "checkpoint_reuse",
+    "old_replay",
+    "available_dbu_cpu_memory_cost",
+    "human_review",
+    "missing_metrics"
+  ]
+}
