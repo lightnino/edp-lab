@@ -4,8 +4,8 @@ import json
 import pytest
 
 from edp_lab.ingestion import cohort_publication as c
-from edp_lab.ingestion.gold_set import HEADERS
 from edp_lab.ingestion.c300_admission import csv_bytes, encoded
+from edp_lab.ingestion.gold_set import HEADERS
 from edp_lab.ingestion.universe import ScopeDenied, sha
 
 
