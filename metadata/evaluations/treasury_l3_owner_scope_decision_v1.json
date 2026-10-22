@@ -1,0 +1,446 @@
+{
+  "schema": "TREASURY_L3_OWNER_SCOPE_DECISION_V1",
+  "decision_status": "APPROVED_SOURCE_PRESERVING_ONLY",
+  "decision_basis": {
+    "request": "User explicitly directed resolution of the 50 Treasury PRESERVED_NOT_MODELED decisions and B2.1/C1 before merging to main, in the active conversation.",
+    "effective_scope": "Exact pinned 50 source/QName fields only",
+    "date_singapore": "2026-10-23",
+    "recorded_by": "ChatGPT acting on the requesting project owner's instruction; not an independent cryptographic signature"
+  },
+  "original_inventory_path": "metadata/evaluations/treasury_l3_inventory_v1.json",
+  "original_inventory_sha256": "99b5e9cc7513eb8ec5182bb356eca382751019dbe4e268fbe1956fe7ce99474a",
+  "authorized_population": {
+    "physical_sources": 5,
+    "selected_source_specific_qnames": 50,
+    "source_ids": [
+      "SRC010451",
+      "SRC010452",
+      "SRC010453",
+      "SRC010454",
+      "SRC010455"
+    ]
+  },
+  "approved_disposition": "PRESERVED_NOT_MODELED",
+  "disposition_meaning": "The source-native Treasury XML lexical values and exact additive DECIMAL(38,4) projections are preserved. Values are not promoted to canonical economic measures; no inferred grain, units, date/time normalization, rate/yield equivalence, mapping, aggregate, derived financial relationship or reconciliation equation.",
+  "approvals": [
+    {
+      "source_instance_id": "SRC010451",
+      "source_identity": "63d9d0beb1bbee0079928bfb710339f0032859cc0ecbf5cccafe3b49429d0581",
+      "raw_sha256": "fb2f64bcaa9c2041f5601460f5d67bf2ebf51083331e75192a7d48ece0db3ed9",
+      "property_qname": "{http://schemas.microsoft.com/ado/2007/08/dataservices}BC_1MONTH",
+      "l3_disposition": "PRESERVED_NOT_MODELED",
+      "owner_decision": "APPROVED_SOURCE_PRESERVING_ONLY"
+    },
+    {
+      "source_instance_id": "SRC010451",
+      "source_identity": "63d9d0beb1bbee0079928bfb710339f0032859cc0ecbf5cccafe3b49429d0581",
+      "raw_sha256": "fb2f64bcaa9c2041f5601460f5d67bf2ebf51083331e75192a7d48ece0db3ed9",
+      "property_qname": "{http://schemas.microsoft.com/ado/2007/08/dataservices}BC_1_5MONTH",
+      "l3_disposition": "PRESERVED_NOT_MODELED",
+      "owner_decision": "APPROVED_SOURCE_PRESERVING_ONLY"
+    },
+    {
+      "source_instance_id": "SRC010451",
+      "source_identity": "63d9d0beb1bbee0079928bfb710339f0032859cc0ecbf5cccafe3b49429d0581",
+      "raw_sha256": "fb2f64bcaa9c2041f5601460f5d67bf2ebf51083331e75192a7d48ece0db3ed9",
+      "property_qname": "{http://schemas.microsoft.com/ado/2007/08/dataservices}BC_2MONTH",
+      "l3_disposition": "PRESERVED_NOT_MODELED",
+      "owner_decision": "APPROVED_SOURCE_PRESERVING_ONLY"
+    },
+    {
+      "source_instance_id": "SRC010451",
+      "source_identity": "63d9d0beb1bbee0079928bfb710339f0032859cc0ecbf5cccafe3b49429d0581",
+      "raw_sha256": "fb2f64bcaa9c2041f5601460f5d67bf2ebf51083331e75192a7d48ece0db3ed9",
+      "property_qname": "{http://schemas.microsoft.com/ado/2007/08/dataservices}BC_3MONTH",
+      "l3_disposition": "PRESERVED_NOT_MODELED",
+      "owner_decision": "APPROVED_SOURCE_PRESERVING_ONLY"
+    },
+    {
+      "source_instance_id": "SRC010451",
+      "source_identity": "63d9d0beb1bbee0079928bfb710339f0032859cc0ecbf5cccafe3b49429d0581",
+      "raw_sha256": "fb2f64bcaa9c2041f5601460f5d67bf2ebf51083331e75192a7d48ece0db3ed9",
+      "property_qname": "{http://schemas.microsoft.com/ado/2007/08/dataservices}BC_4MONTH",
+      "l3_disposition": "PRESERVED_NOT_MODELED",
+      "owner_decision": "APPROVED_SOURCE_PRESERVING_ONLY"
+    },
+    {
+      "source_instance_id": "SRC010451",
+      "source_identity": "63d9d0beb1bbee0079928bfb710339f0032859cc0ecbf5cccafe3b49429d0581",
+      "raw_sha256": "fb2f64bcaa9c2041f5601460f5d67bf2ebf51083331e75192a7d48ece0db3ed9",
+      "property_qname": "{http://schemas.microsoft.com/ado/2007/08/dataservices}BC_6MONTH",
+      "l3_disposition": "PRESERVED_NOT_MODELED",
+      "owner_decision": "APPROVED_SOURCE_PRESERVING_ONLY"
+    },
+    {
+      "source_instance_id": "SRC010451",
+      "source_identity": "63d9d0beb1bbee0079928bfb710339f0032859cc0ecbf5cccafe3b49429d0581",
+      "raw_sha256": "fb2f64bcaa9c2041f5601460f5d67bf2ebf51083331e75192a7d48ece0db3ed9",
+      "property_qname": "{http://schemas.microsoft.com/ado/2007/08/dataservices}BC_1YEAR",
+      "l3_disposition": "PRESERVED_NOT_MODELED",
+      "owner_decision": "APPROVED_SOURCE_PRESERVING_ONLY"
+    },
+    {
+      "source_instance_id": "SRC010451",
+      "source_identity": "63d9d0beb1bbee0079928bfb710339f0032859cc0ecbf5cccafe3b49429d0581",
+      "raw_sha256": "fb2f64bcaa9c2041f5601460f5d67bf2ebf51083331e75192a7d48ece0db3ed9",
+      "property_qname": "{http://schemas.microsoft.com/ado/2007/08/dataservices}BC_2YEAR",
+      "l3_disposition": "PRESERVED_NOT_MODELED",
+      "owner_decision": "APPROVED_SOURCE_PRESERVING_ONLY"
+    },
+    {
+      "source_instance_id": "SRC010451",
+      "source_identity": "63d9d0beb1bbee0079928bfb710339f0032859cc0ecbf5cccafe3b49429d0581",
+      "raw_sha256": "fb2f64bcaa9c2041f5601460f5d67bf2ebf51083331e75192a7d48ece0db3ed9",
+      "property_qname": "{http://schemas.microsoft.com/ado/2007/08/dataservices}BC_3YEAR",
+      "l3_disposition": "PRESERVED_NOT_MODELED",
+      "owner_decision": "APPROVED_SOURCE_PRESERVING_ONLY"
+    },
+    {
+      "source_instance_id": "SRC010451",
+      "source_identity": "63d9d0beb1bbee0079928bfb710339f0032859cc0ecbf5cccafe3b49429d0581",
+      "raw_sha256": "fb2f64bcaa9c2041f5601460f5d67bf2ebf51083331e75192a7d48ece0db3ed9",
+      "property_qname": "{http://schemas.microsoft.com/ado/2007/08/dataservices}BC_5YEAR",
+      "l3_disposition": "PRESERVED_NOT_MODELED",
+      "owner_decision": "APPROVED_SOURCE_PRESERVING_ONLY"
+    },
+    {
+      "source_instance_id": "SRC010451",
+      "source_identity": "63d9d0beb1bbee0079928bfb710339f0032859cc0ecbf5cccafe3b49429d0581",
+      "raw_sha256": "fb2f64bcaa9c2041f5601460f5d67bf2ebf51083331e75192a7d48ece0db3ed9",
+      "property_qname": "{http://schemas.microsoft.com/ado/2007/08/dataservices}BC_7YEAR",
+      "l3_disposition": "PRESERVED_NOT_MODELED",
+      "owner_decision": "APPROVED_SOURCE_PRESERVING_ONLY"
+    },
+    {
+      "source_instance_id": "SRC010451",
+      "source_identity": "63d9d0beb1bbee0079928bfb710339f0032859cc0ecbf5cccafe3b49429d0581",
+      "raw_sha256": "fb2f64bcaa9c2041f5601460f5d67bf2ebf51083331e75192a7d48ece0db3ed9",
+      "property_qname": "{http://schemas.microsoft.com/ado/2007/08/dataservices}BC_10YEAR",
+      "l3_disposition": "PRESERVED_NOT_MODELED",
+      "owner_decision": "APPROVED_SOURCE_PRESERVING_ONLY"
+    },
+    {
+      "source_instance_id": "SRC010451",
+      "source_identity": "63d9d0beb1bbee0079928bfb710339f0032859cc0ecbf5cccafe3b49429d0581",
+      "raw_sha256": "fb2f64bcaa9c2041f5601460f5d67bf2ebf51083331e75192a7d48ece0db3ed9",
+      "property_qname": "{http://schemas.microsoft.com/ado/2007/08/dataservices}BC_20YEAR",
+      "l3_disposition": "PRESERVED_NOT_MODELED",
+      "owner_decision": "APPROVED_SOURCE_PRESERVING_ONLY"
+    },
+    {
+      "source_instance_id": "SRC010451",
+      "source_identity": "63d9d0beb1bbee0079928bfb710339f0032859cc0ecbf5cccafe3b49429d0581",
+      "raw_sha256": "fb2f64bcaa9c2041f5601460f5d67bf2ebf51083331e75192a7d48ece0db3ed9",
+      "property_qname": "{http://schemas.microsoft.com/ado/2007/08/dataservices}BC_30YEAR",
+      "l3_disposition": "PRESERVED_NOT_MODELED",
+      "owner_decision": "APPROVED_SOURCE_PRESERVING_ONLY"
+    },
+    {
+      "source_instance_id": "SRC010451",
+      "source_identity": "63d9d0beb1bbee0079928bfb710339f0032859cc0ecbf5cccafe3b49429d0581",
+      "raw_sha256": "fb2f64bcaa9c2041f5601460f5d67bf2ebf51083331e75192a7d48ece0db3ed9",
+      "property_qname": "{http://schemas.microsoft.com/ado/2007/08/dataservices}BC_30YEARDISPLAY",
+      "l3_disposition": "PRESERVED_NOT_MODELED",
+      "owner_decision": "APPROVED_SOURCE_PRESERVING_ONLY"
+    },
+    {
+      "source_instance_id": "SRC010452",
+      "source_identity": "be4ecba6635cccaa39f23a4a3905198433e25a60040cc3a64e686fcf60731f9c",
+      "raw_sha256": "5f20dd1fad2627facce863a2a3d3258278f2119fef61028e85e0cf75a244df16",
+      "property_qname": "{http://schemas.microsoft.com/ado/2007/08/dataservices}ROUND_B1_CLOSE_4WK_2",
+      "l3_disposition": "PRESERVED_NOT_MODELED",
+      "owner_decision": "APPROVED_SOURCE_PRESERVING_ONLY"
+    },
+    {
+      "source_instance_id": "SRC010452",
+      "source_identity": "be4ecba6635cccaa39f23a4a3905198433e25a60040cc3a64e686fcf60731f9c",
+      "raw_sha256": "5f20dd1fad2627facce863a2a3d3258278f2119fef61028e85e0cf75a244df16",
+      "property_qname": "{http://schemas.microsoft.com/ado/2007/08/dataservices}ROUND_B1_CLOSE_6WK_2",
+      "l3_disposition": "PRESERVED_NOT_MODELED",
+      "owner_decision": "APPROVED_SOURCE_PRESERVING_ONLY"
+    },
+    {
+      "source_instance_id": "SRC010452",
+      "source_identity": "be4ecba6635cccaa39f23a4a3905198433e25a60040cc3a64e686fcf60731f9c",
+      "raw_sha256": "5f20dd1fad2627facce863a2a3d3258278f2119fef61028e85e0cf75a244df16",
+      "property_qname": "{http://schemas.microsoft.com/ado/2007/08/dataservices}ROUND_B1_CLOSE_8WK_2",
+      "l3_disposition": "PRESERVED_NOT_MODELED",
+      "owner_decision": "APPROVED_SOURCE_PRESERVING_ONLY"
+    },
+    {
+      "source_instance_id": "SRC010452",
+      "source_identity": "be4ecba6635cccaa39f23a4a3905198433e25a60040cc3a64e686fcf60731f9c",
+      "raw_sha256": "5f20dd1fad2627facce863a2a3d3258278f2119fef61028e85e0cf75a244df16",
+      "property_qname": "{http://schemas.microsoft.com/ado/2007/08/dataservices}ROUND_B1_CLOSE_13WK_2",
+      "l3_disposition": "PRESERVED_NOT_MODELED",
+      "owner_decision": "APPROVED_SOURCE_PRESERVING_ONLY"
+    },
+    {
+      "source_instance_id": "SRC010452",
+      "source_identity": "be4ecba6635cccaa39f23a4a3905198433e25a60040cc3a64e686fcf60731f9c",
+      "raw_sha256": "5f20dd1fad2627facce863a2a3d3258278f2119fef61028e85e0cf75a244df16",
+      "property_qname": "{http://schemas.microsoft.com/ado/2007/08/dataservices}ROUND_B1_CLOSE_17WK_2",
+      "l3_disposition": "PRESERVED_NOT_MODELED",
+      "owner_decision": "APPROVED_SOURCE_PRESERVING_ONLY"
+    },
+    {
+      "source_instance_id": "SRC010452",
+      "source_identity": "be4ecba6635cccaa39f23a4a3905198433e25a60040cc3a64e686fcf60731f9c",
+      "raw_sha256": "5f20dd1fad2627facce863a2a3d3258278f2119fef61028e85e0cf75a244df16",
+      "property_qname": "{http://schemas.microsoft.com/ado/2007/08/dataservices}ROUND_B1_CLOSE_26WK_2",
+      "l3_disposition": "PRESERVED_NOT_MODELED",
+      "owner_decision": "APPROVED_SOURCE_PRESERVING_ONLY"
+    },
+    {
+      "source_instance_id": "SRC010452",
+      "source_identity": "be4ecba6635cccaa39f23a4a3905198433e25a60040cc3a64e686fcf60731f9c",
+      "raw_sha256": "5f20dd1fad2627facce863a2a3d3258278f2119fef61028e85e0cf75a244df16",
+      "property_qname": "{http://schemas.microsoft.com/ado/2007/08/dataservices}ROUND_B1_CLOSE_52WK_2",
+      "l3_disposition": "PRESERVED_NOT_MODELED",
+      "owner_decision": "APPROVED_SOURCE_PRESERVING_ONLY"
+    },
+    {
+      "source_instance_id": "SRC010452",
+      "source_identity": "be4ecba6635cccaa39f23a4a3905198433e25a60040cc3a64e686fcf60731f9c",
+      "raw_sha256": "5f20dd1fad2627facce863a2a3d3258278f2119fef61028e85e0cf75a244df16",
+      "property_qname": "{http://schemas.microsoft.com/ado/2007/08/dataservices}ROUND_B1_YIELD_4WK_2",
+      "l3_disposition": "PRESERVED_NOT_MODELED",
+      "owner_decision": "APPROVED_SOURCE_PRESERVING_ONLY"
+    },
+    {
+      "source_instance_id": "SRC010452",
+      "source_identity": "be4ecba6635cccaa39f23a4a3905198433e25a60040cc3a64e686fcf60731f9c",
+      "raw_sha256": "5f20dd1fad2627facce863a2a3d3258278f2119fef61028e85e0cf75a244df16",
+      "property_qname": "{http://schemas.microsoft.com/ado/2007/08/dataservices}ROUND_B1_YIELD_6WK_2",
+      "l3_disposition": "PRESERVED_NOT_MODELED",
+      "owner_decision": "APPROVED_SOURCE_PRESERVING_ONLY"
+    },
+    {
+      "source_instance_id": "SRC010452",
+      "source_identity": "be4ecba6635cccaa39f23a4a3905198433e25a60040cc3a64e686fcf60731f9c",
+      "raw_sha256": "5f20dd1fad2627facce863a2a3d3258278f2119fef61028e85e0cf75a244df16",
+      "property_qname": "{http://schemas.microsoft.com/ado/2007/08/dataservices}ROUND_B1_YIELD_8WK_2",
+      "l3_disposition": "PRESERVED_NOT_MODELED",
+      "owner_decision": "APPROVED_SOURCE_PRESERVING_ONLY"
+    },
+    {
+      "source_instance_id": "SRC010452",
+      "source_identity": "be4ecba6635cccaa39f23a4a3905198433e25a60040cc3a64e686fcf60731f9c",
+      "raw_sha256": "5f20dd1fad2627facce863a2a3d3258278f2119fef61028e85e0cf75a244df16",
+      "property_qname": "{http://schemas.microsoft.com/ado/2007/08/dataservices}ROUND_B1_YIELD_13WK_2",
+      "l3_disposition": "PRESERVED_NOT_MODELED",
+      "owner_decision": "APPROVED_SOURCE_PRESERVING_ONLY"
+    },
+    {
+      "source_instance_id": "SRC010452",
+      "source_identity": "be4ecba6635cccaa39f23a4a3905198433e25a60040cc3a64e686fcf60731f9c",
+      "raw_sha256": "5f20dd1fad2627facce863a2a3d3258278f2119fef61028e85e0cf75a244df16",
+      "property_qname": "{http://schemas.microsoft.com/ado/2007/08/dataservices}ROUND_B1_YIELD_17WK_2",
+      "l3_disposition": "PRESERVED_NOT_MODELED",
+      "owner_decision": "APPROVED_SOURCE_PRESERVING_ONLY"
+    },
+    {
+      "source_instance_id": "SRC010452",
+      "source_identity": "be4ecba6635cccaa39f23a4a3905198433e25a60040cc3a64e686fcf60731f9c",
+      "raw_sha256": "5f20dd1fad2627facce863a2a3d3258278f2119fef61028e85e0cf75a244df16",
+      "property_qname": "{http://schemas.microsoft.com/ado/2007/08/dataservices}ROUND_B1_YIELD_26WK_2",
+      "l3_disposition": "PRESERVED_NOT_MODELED",
+      "owner_decision": "APPROVED_SOURCE_PRESERVING_ONLY"
+    },
+    {
+      "source_instance_id": "SRC010452",
+      "source_identity": "be4ecba6635cccaa39f23a4a3905198433e25a60040cc3a64e686fcf60731f9c",
+      "raw_sha256": "5f20dd1fad2627facce863a2a3d3258278f2119fef61028e85e0cf75a244df16",
+      "property_qname": "{http://schemas.microsoft.com/ado/2007/08/dataservices}ROUND_B1_YIELD_52WK_2",
+      "l3_disposition": "PRESERVED_NOT_MODELED",
+      "owner_decision": "APPROVED_SOURCE_PRESERVING_ONLY"
+    },
+    {
+      "source_instance_id": "SRC010452",
+      "source_identity": "be4ecba6635cccaa39f23a4a3905198433e25a60040cc3a64e686fcf60731f9c",
+      "raw_sha256": "5f20dd1fad2627facce863a2a3d3258278f2119fef61028e85e0cf75a244df16",
+      "property_qname": "{http://schemas.microsoft.com/ado/2007/08/dataservices}CS_4WK_CLOSE_AVG",
+      "l3_disposition": "PRESERVED_NOT_MODELED",
+      "owner_decision": "APPROVED_SOURCE_PRESERVING_ONLY"
+    },
+    {
+      "source_instance_id": "SRC010452",
+      "source_identity": "be4ecba6635cccaa39f23a4a3905198433e25a60040cc3a64e686fcf60731f9c",
+      "raw_sha256": "5f20dd1fad2627facce863a2a3d3258278f2119fef61028e85e0cf75a244df16",
+      "property_qname": "{http://schemas.microsoft.com/ado/2007/08/dataservices}CS_4WK_YIELD_AVG",
+      "l3_disposition": "PRESERVED_NOT_MODELED",
+      "owner_decision": "APPROVED_SOURCE_PRESERVING_ONLY"
+    },
+    {
+      "source_instance_id": "SRC010452",
+      "source_identity": "be4ecba6635cccaa39f23a4a3905198433e25a60040cc3a64e686fcf60731f9c",
+      "raw_sha256": "5f20dd1fad2627facce863a2a3d3258278f2119fef61028e85e0cf75a244df16",
+      "property_qname": "{http://schemas.microsoft.com/ado/2007/08/dataservices}CS_6WK_CLOSE_AVG",
+      "l3_disposition": "PRESERVED_NOT_MODELED",
+      "owner_decision": "APPROVED_SOURCE_PRESERVING_ONLY"
+    },
+    {
+      "source_instance_id": "SRC010452",
+      "source_identity": "be4ecba6635cccaa39f23a4a3905198433e25a60040cc3a64e686fcf60731f9c",
+      "raw_sha256": "5f20dd1fad2627facce863a2a3d3258278f2119fef61028e85e0cf75a244df16",
+      "property_qname": "{http://schemas.microsoft.com/ado/2007/08/dataservices}CS_6WK_YIELD_AVG",
+      "l3_disposition": "PRESERVED_NOT_MODELED",
+      "owner_decision": "APPROVED_SOURCE_PRESERVING_ONLY"
+    },
+    {
+      "source_instance_id": "SRC010452",
+      "source_identity": "be4ecba6635cccaa39f23a4a3905198433e25a60040cc3a64e686fcf60731f9c",
+      "raw_sha256": "5f20dd1fad2627facce863a2a3d3258278f2119fef61028e85e0cf75a244df16",
+      "property_qname": "{http://schemas.microsoft.com/ado/2007/08/dataservices}CS_8WK_CLOSE_AVG",
+      "l3_disposition": "PRESERVED_NOT_MODELED",
+      "owner_decision": "APPROVED_SOURCE_PRESERVING_ONLY"
+    },
+    {
+      "source_instance_id": "SRC010452",
+      "source_identity": "be4ecba6635cccaa39f23a4a3905198433e25a60040cc3a64e686fcf60731f9c",
+      "raw_sha256": "5f20dd1fad2627facce863a2a3d3258278f2119fef61028e85e0cf75a244df16",
+      "property_qname": "{http://schemas.microsoft.com/ado/2007/08/dataservices}CS_8WK_YIELD_AVG",
+      "l3_disposition": "PRESERVED_NOT_MODELED",
+      "owner_decision": "APPROVED_SOURCE_PRESERVING_ONLY"
+    },
+    {
+      "source_instance_id": "SRC010452",
+      "source_identity": "be4ecba6635cccaa39f23a4a3905198433e25a60040cc3a64e686fcf60731f9c",
+      "raw_sha256": "5f20dd1fad2627facce863a2a3d3258278f2119fef61028e85e0cf75a244df16",
+      "property_qname": "{http://schemas.microsoft.com/ado/2007/08/dataservices}CS_13WK_CLOSE_AVG",
+      "l3_disposition": "PRESERVED_NOT_MODELED",
+      "owner_decision": "APPROVED_SOURCE_PRESERVING_ONLY"
+    },
+    {
+      "source_instance_id": "SRC010452",
+      "source_identity": "be4ecba6635cccaa39f23a4a3905198433e25a60040cc3a64e686fcf60731f9c",
+      "raw_sha256": "5f20dd1fad2627facce863a2a3d3258278f2119fef61028e85e0cf75a244df16",
+      "property_qname": "{http://schemas.microsoft.com/ado/2007/08/dataservices}CS_13WK_YIELD_AVG",
+      "l3_disposition": "PRESERVED_NOT_MODELED",
+      "owner_decision": "APPROVED_SOURCE_PRESERVING_ONLY"
+    },
+    {
+      "source_instance_id": "SRC010452",
+      "source_identity": "be4ecba6635cccaa39f23a4a3905198433e25a60040cc3a64e686fcf60731f9c",
+      "raw_sha256": "5f20dd1fad2627facce863a2a3d3258278f2119fef61028e85e0cf75a244df16",
+      "property_qname": "{http://schemas.microsoft.com/ado/2007/08/dataservices}CS_17WK_CLOSE_AVG",
+      "l3_disposition": "PRESERVED_NOT_MODELED",
+      "owner_decision": "APPROVED_SOURCE_PRESERVING_ONLY"
+    },
+    {
+      "source_instance_id": "SRC010452",
+      "source_identity": "be4ecba6635cccaa39f23a4a3905198433e25a60040cc3a64e686fcf60731f9c",
+      "raw_sha256": "5f20dd1fad2627facce863a2a3d3258278f2119fef61028e85e0cf75a244df16",
+      "property_qname": "{http://schemas.microsoft.com/ado/2007/08/dataservices}CS_17WK_YIELD_AVG",
+      "l3_disposition": "PRESERVED_NOT_MODELED",
+      "owner_decision": "APPROVED_SOURCE_PRESERVING_ONLY"
+    },
+    {
+      "source_instance_id": "SRC010452",
+      "source_identity": "be4ecba6635cccaa39f23a4a3905198433e25a60040cc3a64e686fcf60731f9c",
+      "raw_sha256": "5f20dd1fad2627facce863a2a3d3258278f2119fef61028e85e0cf75a244df16",
+      "property_qname": "{http://schemas.microsoft.com/ado/2007/08/dataservices}CS_26WK_CLOSE_AVG",
+      "l3_disposition": "PRESERVED_NOT_MODELED",
+      "owner_decision": "APPROVED_SOURCE_PRESERVING_ONLY"
+    },
+    {
+      "source_instance_id": "SRC010452",
+      "source_identity": "be4ecba6635cccaa39f23a4a3905198433e25a60040cc3a64e686fcf60731f9c",
+      "raw_sha256": "5f20dd1fad2627facce863a2a3d3258278f2119fef61028e85e0cf75a244df16",
+      "property_qname": "{http://schemas.microsoft.com/ado/2007/08/dataservices}CS_26WK_YIELD_AVG",
+      "l3_disposition": "PRESERVED_NOT_MODELED",
+      "owner_decision": "APPROVED_SOURCE_PRESERVING_ONLY"
+    },
+    {
+      "source_instance_id": "SRC010452",
+      "source_identity": "be4ecba6635cccaa39f23a4a3905198433e25a60040cc3a64e686fcf60731f9c",
+      "raw_sha256": "5f20dd1fad2627facce863a2a3d3258278f2119fef61028e85e0cf75a244df16",
+      "property_qname": "{http://schemas.microsoft.com/ado/2007/08/dataservices}CS_52WK_CLOSE_AVG",
+      "l3_disposition": "PRESERVED_NOT_MODELED",
+      "owner_decision": "APPROVED_SOURCE_PRESERVING_ONLY"
+    },
+    {
+      "source_instance_id": "SRC010452",
+      "source_identity": "be4ecba6635cccaa39f23a4a3905198433e25a60040cc3a64e686fcf60731f9c",
+      "raw_sha256": "5f20dd1fad2627facce863a2a3d3258278f2119fef61028e85e0cf75a244df16",
+      "property_qname": "{http://schemas.microsoft.com/ado/2007/08/dataservices}CS_52WK_YIELD_AVG",
+      "l3_disposition": "PRESERVED_NOT_MODELED",
+      "owner_decision": "APPROVED_SOURCE_PRESERVING_ONLY"
+    },
+    {
+      "source_instance_id": "SRC010453",
+      "source_identity": "567fe9b2558e4fbfd6655b72e5ea00ae6f3f750986ce2c253bd589ddb7280805",
+      "raw_sha256": "c5ecec4d443cf0e160ea42e585e3f1abb237587c5a8094ee33ce7c9fc350b2f8",
+      "property_qname": "{http://schemas.microsoft.com/ado/2007/08/dataservices}RATE",
+      "l3_disposition": "PRESERVED_NOT_MODELED",
+      "owner_decision": "APPROVED_SOURCE_PRESERVING_ONLY"
+    },
+    {
+      "source_instance_id": "SRC010454",
+      "source_identity": "3d78318e471a446a4e49022d13f7642cce3dbb94cb15dd5360561f19622750be",
+      "raw_sha256": "68f58df186f47f20c349d276ae501b97c94cfb2a09cc36453f4c95288322ec66",
+      "property_qname": "{http://schemas.microsoft.com/ado/2007/08/dataservices}TC_5YEAR",
+      "l3_disposition": "PRESERVED_NOT_MODELED",
+      "owner_decision": "APPROVED_SOURCE_PRESERVING_ONLY"
+    },
+    {
+      "source_instance_id": "SRC010454",
+      "source_identity": "3d78318e471a446a4e49022d13f7642cce3dbb94cb15dd5360561f19622750be",
+      "raw_sha256": "68f58df186f47f20c349d276ae501b97c94cfb2a09cc36453f4c95288322ec66",
+      "property_qname": "{http://schemas.microsoft.com/ado/2007/08/dataservices}TC_7YEAR",
+      "l3_disposition": "PRESERVED_NOT_MODELED",
+      "owner_decision": "APPROVED_SOURCE_PRESERVING_ONLY"
+    },
+    {
+      "source_instance_id": "SRC010454",
+      "source_identity": "3d78318e471a446a4e49022d13f7642cce3dbb94cb15dd5360561f19622750be",
+      "raw_sha256": "68f58df186f47f20c349d276ae501b97c94cfb2a09cc36453f4c95288322ec66",
+      "property_qname": "{http://schemas.microsoft.com/ado/2007/08/dataservices}TC_10YEAR",
+      "l3_disposition": "PRESERVED_NOT_MODELED",
+      "owner_decision": "APPROVED_SOURCE_PRESERVING_ONLY"
+    },
+    {
+      "source_instance_id": "SRC010454",
+      "source_identity": "3d78318e471a446a4e49022d13f7642cce3dbb94cb15dd5360561f19622750be",
+      "raw_sha256": "68f58df186f47f20c349d276ae501b97c94cfb2a09cc36453f4c95288322ec66",
+      "property_qname": "{http://schemas.microsoft.com/ado/2007/08/dataservices}TC_20YEAR",
+      "l3_disposition": "PRESERVED_NOT_MODELED",
+      "owner_decision": "APPROVED_SOURCE_PRESERVING_ONLY"
+    },
+    {
+      "source_instance_id": "SRC010454",
+      "source_identity": "3d78318e471a446a4e49022d13f7642cce3dbb94cb15dd5360561f19622750be",
+      "raw_sha256": "68f58df186f47f20c349d276ae501b97c94cfb2a09cc36453f4c95288322ec66",
+      "property_qname": "{http://schemas.microsoft.com/ado/2007/08/dataservices}TC_30YEAR",
+      "l3_disposition": "PRESERVED_NOT_MODELED",
+      "owner_decision": "APPROVED_SOURCE_PRESERVING_ONLY"
+    },
+    {
+      "source_instance_id": "SRC010455",
+      "source_identity": "59a456d521bc98ef7375758272f827cb50bf90f3218b415eb49678e99cf860ae",
+      "raw_sha256": "e58a45134fe5a857028f7ee3381d07fbc56a7aa248dfd45df5721478e67d5a1e",
+      "property_qname": "{http://schemas.microsoft.com/ado/2007/08/dataservices}RATE",
+      "l3_disposition": "PRESERVED_NOT_MODELED",
+      "owner_decision": "APPROVED_SOURCE_PRESERVING_ONLY"
+    }
+  ],
+  "numeric_test_basis": {
+    "suite": "metadata/evaluations/lossless6_suite_v3.json",
+    "historical_fin": "FIN_001_V1 and FIN_002_V1 PASS",
+    "treasury_try": [
+      "TRY_001_V1",
+      "TRY_002_V1",
+      "TRY_003_V1",
+      "TRY_004_V1"
+    ],
+    "stability_v2": "metadata/evaluations/c1500_m2_stability_scoped_v2.json"
+  },
+  "out_of_scope": {
+    "treasury_economic_integration": "NOT_IMPLEMENTED",
+    "day4_c3_4": "BLOCKED",
+    "prospective_budget": "PROPOSED_PENDING_APPLICABILITY_APPROVAL",
+    "canonical_mapping": "NOT_APPROVED",
+    "day4_result_freeze": "CANDIDATE_NOT_FROZEN"
+  },
+  "immutable_existing_receipts": true
+}
