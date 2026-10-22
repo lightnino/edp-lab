@@ -1,0 +1,25 @@
+{
+  "schema": "DAY4_EXIT_V2_OWNER_OVERRIDE",
+  "status": "COMPLETE_BY_HUMAN_OVERRIDE_WITH_EXCEPTIONS",
+  "day4_workstream_closed": true,
+  "result_frozen": true,
+  "result_freeze_ref": "metadata/freezes/O_C1500_M2_v1/freeze.json",
+  "original_exit_v1": "metadata/evaluations/day4_exit_v1.json",
+  "original_exit_status": "PARTIAL_RETAINED_UNCHANGED",
+  "step11": "PERFORMANCE_MEASURED_PARTIAL_METRICS",
+  "step12": "WRITE_TASKS_COMPLETE_BOUNDED_ARTIFACT_SCOPE",
+  "step13": "RESULT_FROZEN_BY_HUMAN_OVERRIDE",
+  "step14": "DAY4_CLOSED_WITH_EXPLICIT_EXCEPTIONS",
+  "owner_c3_4_decision": "APPROVED_STANDING_BUDGET_SCOPE_WITH_RETROSPECTIVE_WAIVER",
+  "c3_4_historical_technical_result": "BLOCKED_IN_ORIGINAL_V1_NOT_RELABELED_PASS",
+  "scoped_stability": "B2_1_C1_SOURCE_PRESERVING_PASS_PR48",
+  "treasury_economic_integration": "NOT_IMPLEMENTED",
+  "integration": {
+    "base_main_before_changes": "9c27ded410a78fa38aaf6989e08e16e4b9f6701c",
+    "target_branch": "main",
+    "mechanism": "REVIEW_AND_MERGE_DAY4_OWNER_OVERRIDE_PR",
+    "merger_proof": "GITHUB_MERGE_EVENT_REQUIRED; NO CLAIM OF MERGE UNTIL EVENT"
+  },
+  "completion_definition": "Owner-approved experimental source-preserving Day 4 closeout; not broader semantic completeness, complete operational measurements or physical retention hardening",
+  "recorded_at_utc": "2026-10-22T20:48:37.824Z"
+}

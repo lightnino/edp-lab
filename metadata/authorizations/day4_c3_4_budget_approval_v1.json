@@ -1,0 +1,46 @@
+{
+  "schema": "DAY4_C3_4_BUDGET_OWNER_APPROVAL_V1",
+  "version": "1",
+  "status": "APPROVED",
+  "recorded_at_utc": "2026-10-22T20:48:37.824Z",
+  "authority": "Explicit owner instruction in current conversation: 'i want day 4c3.4 permanently adopted as 批准范围' and 'RESULT FREEZE ... FORCE FREEZE IT (HUMAN INTERVENSION)'",
+  "approved_by": "Requesting project owner via active ChatGPT conversation (not independently cryptographically signed)",
+  "approved_policy": "10X_OBSERVED_PHASE_BUDGET_V1",
+  "effective_date_singapore": "2026-10-23",
+  "validity": "STANDING_APPROVAL_UNTIL_EXPLICITLY_SUPERSEDED; VERSIONED; NEVER SILENTLY EXPANDED",
+  "technical_basis": "metadata/evaluations/operational_budget_v1.json",
+  "multiplier": 10,
+  "reference_workload": {
+    "cohort": "N750",
+    "sources": 750,
+    "remote_verified_bytes": 269323425,
+    "sec_data_records": 3047639,
+    "sec_data_fields": 15238195,
+    "xml_properties": 21616
+  },
+  "approved_applicability": "Future work with the same phase definitions and demonstrably comparable source mix, execution/runtime, stage boundaries and workload scale; compare and record applicability BEFORE running. Different workloads require explicit additional scope approval.",
+  "phase_limits_seconds": {
+    "remote_raw_resolution_readback": 6756.67,
+    "local_clean_build_readback": 458.9,
+    "sql_table_creation": 551.45,
+    "sql_delta_validation": 918.42,
+    "sql_views_counts": 278.62,
+    "sql_coverage_lineage": 434.65,
+    "sql_phase_total_nonoverlap": 2183.14
+  },
+  "day4_c3_4_decision": "APPROVED_SCOPE_AND_OWNER_ACCEPTED_AS_EXCEPTION",
+  "retrospective_test_outcome": "NOT_TESTED_AGAINST_PREAPPROVED_THRESHOLD; NO_RETROACTIVE_TECHNICAL_PASS",
+  "applicability_day5_n500": "CONDITIONAL_ON_DOCUMENTED_COMPARABILITY; NOT_AUTOMATIC",
+  "measurement_limits": [
+    "Threshold is an engineering envelope, not a statistical SLA",
+    "No comparable single end-to-end C1500 performance measurement",
+    "CPU, memory, DBU, financial cost and active reviewer time unavailable",
+    "No cross-cohort linear extrapolation or claim of 10x observed speedup"
+  ],
+  "explicitly_unapproved": [
+    "Treasury economic L6-B",
+    "Source transformation or RAW correction",
+    "New workload/phase profiles by default",
+    "Backdated technical C3.4 PASS"
+  ]
+}

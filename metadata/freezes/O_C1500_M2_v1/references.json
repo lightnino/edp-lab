@@ -1,0 +1,39 @@
+{
+  "schema": "O_C1500_M2_OVERRIDE_FREEZE_REFERENCES_V1",
+  "recorded_at_utc": "2026-10-22T20:48:37.824Z",
+  "baseline_main_before_closeout": "9c27ded410a78fa38aaf6989e08e16e4b9f6701c",
+  "candidate_assessment": "metadata/evaluations/o_c1500_m2_freeze_assessment_v1.json",
+  "accepted_scoped_step9": "metadata/evaluations/c1500_m2_stability_scoped_v3_owner_acceptance.json",
+  "approved_50_fields": "metadata/evaluations/treasury_l3_owner_scope_decision_v1.json",
+  "c3_4_authority": "metadata/authorizations/day4_c3_4_budget_approval_v1.json",
+  "source_roster": "metadata/freezes/C1500_v1/C1500.bindings.json",
+  "source_roster_sha256": "810c6898df0cb5e5c478305f71c190ffe4a7c7a2bb40133efa79a16de630e703",
+  "source_membership_sha256": "d3b02109268ce77bcd07f6f5f455fb7e4a1989319b2cf60867e372ffc3b87ae5",
+  "numeric_contract": "M2_ADDITIVE_TYPED_NUMERIC_V1 / EXACT_DECIMAL_38_4_V1",
+  "combined_candidate_sql": "sql/stability/c1500_m2_v1/combined_candidate.sql",
+  "combined_candidate_sql_sha256": "e6b7c70bfcaefc09199daca0563e36263b49f27b4e69b17de55bbd4a8036db01",
+  "permanent_lossless6": "metadata/evaluations/lossless6_suite_v3.json",
+  "pins_inherited_without_copying_or_mutating": "metadata/evaluations/o_c1500_m2_freeze_assessment_v1.json:file_pins_sha256,output_pins,runtime_receipts",
+  "evidence_summary": {
+    "physical_sources": 1500,
+    "operational_bindings": 1932,
+    "treasury_l3_dispositions_approved": 50,
+    "treasury_m2_evaluations": 12948,
+    "valid": 12793,
+    "structural_missing": 155,
+    "fin_001": "2/2 PASS",
+    "fin_002": "1/1 PASS",
+    "treasury_try": "4/4 PASS",
+    "historical_lineage_witnesses": "13/13",
+    "combined_multiset": "8/8 directions zero difference"
+  },
+  "reproduced_live_databricks": "NOT_RUN_IN_THIS_CLOSEOUT",
+  "operational_protection": "NOT_INSTALLED_OR_LIVE_VERIFIED_IN_THIS_CLOSEOUT",
+  "immutable_runtime_data_claim": "VERSION_0_REFERENCE_PINNED_FROM_PRIOR_RECEIPTS_NOT_INDEPENDENTLY_IMMUTABLE",
+  "retention_limit": "No WORM, backup, full storage-recovery or indefinite Delta retention guarantee. Git cannot protect Databricks from privileged writes, VACUUM or deletion.",
+  "historical_preservation": [
+    "Do not edit original V1 CANDIDATE assessment or PARTIAL exit",
+    "Do not overwrite original M1 freezes",
+    "Do not alter RAW, C1500 roster, source hashes, pinned SQL or Delta tables"
+  ]
+}
