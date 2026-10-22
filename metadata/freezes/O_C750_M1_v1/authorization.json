@@ -1,0 +1,25 @@
+{
+  "approval": "Freeze the actual validated M1 result and close out the declared experimental run when existing result-integrity requirements pass; commit, CI and merge.",
+  "authority": "Explicit owner DAY 3 STEP 5C Final Result Freeze, GitHub Merge and Exit instruction",
+  "excluded": [
+    "Day 4",
+    "RAW ingestion",
+    "historical processing replay",
+    "M1 change",
+    "enterprise semantic approval"
+  ],
+  "existing_mechanism": "Same compact authorization/references/freeze-marker convention as O_C300_M1; no new host pin, grant installation, future effective time or waiting period.",
+  "limits": [
+    "Enterprise semantic integration NOT_IMPLEMENTED; no entity merge/business correctness claim.",
+    "General business FD testing NOT_IMPLEMENTED; normalized mini schema DEFERRED.",
+    "Statistical profiling bounded/partial; unresolved semantic NULL-dependent metrics and candidate eligibility NOT_COMPUTED.",
+    "FIN V2 PASS covers mandatory three historical financial contexts and full new-cohort applicability/noninterference; wider economic fields PRESERVED_NOT_MODELED.",
+    "Performance PARTIAL_MEASURED; corpus/stage differences prohibit cold full-cohort speedup or source-count linear-scaling claims.",
+    "Cost, executor resources and human-review count/person/minutes UNAVAILABLE where not supported.",
+    "One approved SRC010128 field-local decoding exception; original failures and V1 BLOCKED assessment preserved.",
+    "Finite managed-storage retention; privileged deletion/workspace-loss risk remains, not WORM/independent disaster recovery. No full reconstruction after workspace loss claimed."
+  ],
+  "preservation": "Reuse existing 90-day Delta log/data retention, append-only, disabled effective table predictive optimization, bounded original-snapshot reads and retained evidence SHA readback. Only N450 protection metadata changed.",
+  "recorded_at_utc": "2026-10-22T09:49:51.164391+00:00",
+  "version": "O_C750_M1_AUTHORIZATION_V1"
+}
