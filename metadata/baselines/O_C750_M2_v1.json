@@ -1,0 +1,777 @@
+{
+  "FIN": {
+    "FIN_001": "2/2 PASS; pinned M1, M2 lexical, M2 typed and C300 logical subset identical to fixture",
+    "FIN_002": "1/1 PASS; wrong-equity difference 1232700000.0000 preserved",
+    "lineage_witnesses": 13
+  },
+  "authority": "DEC-000014; explicit owner historical scope extension of DEC-000013",
+  "binding_fingerprints": [
+    {
+      "binding_sha256": "047a058de9ea331d13c0f8a48dfa39ecaf3852a881b3432ad36f65ae17b8a561",
+      "count": 2518948,
+      "sha_head_sum": "1453138615557310424187986",
+      "sha_tail_sum": "1452649224781000017563419"
+    },
+    {
+      "binding_sha256": "14cc8d86190f4f92ab040925bf388b0430aa96a31fb2d27b7575ddc550f9cd32",
+      "count": 3705078,
+      "sha_head_sum": "2135985965231399701188137",
+      "sha_tail_sum": "2135994448212111706366234"
+    },
+    {
+      "binding_sha256": "18bb94b57b35cf0cf01442c59f2aa7c32ea38eda538ec09aba47dccc4b217e48",
+      "count": 2699630,
+      "sha_head_sum": "1557066389510932786035649",
+      "sha_tail_sum": "1556824502157952808065701"
+    },
+    {
+      "binding_sha256": "19a9c50a72630ae7fa0ed98858b44252ca1a9c66848d2fa60f51fe7d6de31cd9",
+      "count": 3095513,
+      "sha_head_sum": "1783990458309369108044878",
+      "sha_tail_sum": "1783577700867078112122445"
+    },
+    {
+      "binding_sha256": "1d63efaf93eed66c9dc59af00223d1e132f332eaf91d8d3853b49f2aeed26e68",
+      "count": 2780517,
+      "sha_head_sum": "1602453938671593359687033",
+      "sha_tail_sum": "1602238361983030095882803"
+    },
+    {
+      "binding_sha256": "25e12d13f0601091018694d4c800397d089a6678c4317ae4d7ecf6b28081c75f",
+      "count": 2663988,
+      "sha_head_sum": "1535522370485456776149511",
+      "sha_tail_sum": "1534792129051276165847162"
+    },
+    {
+      "binding_sha256": "27838dc2f2a2083d169bd34627b681665ea0a3f055170bec7a3eb7c96a85f549",
+      "count": 2963091,
+      "sha_head_sum": "1707587019085068236805976",
+      "sha_tail_sum": "1708044688064323543015214"
+    },
+    {
+      "binding_sha256": "2bbbb96b5dfe5eee42682a096cad78aeb1fd627e3fd9860f7d5cee5acb74270f",
+      "count": 3174261,
+      "sha_head_sum": "1829003100881525021303978",
+      "sha_tail_sum": "1828661206802120541215102"
+    },
+    {
+      "binding_sha256": "341ce895a89fe164c1cc14af2679aa0b4637f593c6887e5c4d3a74bc49bbebcd",
+      "count": 3572434,
+      "sha_head_sum": "2058636274718051520074578",
+      "sha_tail_sum": "2059062240848105808289372"
+    },
+    {
+      "binding_sha256": "3b480fda379e12cc2a2ea87d1b7ca184218173426add4a7777c820fc141ae1ed",
+      "count": 3072093,
+      "sha_head_sum": "1771236781867107074430769",
+      "sha_tail_sum": "1771387342250585999877390"
+    },
+    {
+      "binding_sha256": "3e019d6dbfcc45c13c8fd27156d83192c1e38ef14524da21e58d2e17e6540912",
+      "count": 3428670,
+      "sha_head_sum": "1977035925574567222166127",
+      "sha_tail_sum": "1976370756836177066547225"
+    },
+    {
+      "binding_sha256": "3e9fea22b9ced597578349d96f37ca69d0df8c312cb41eb2db7cbbe7a26f3726",
+      "count": 2394508,
+      "sha_head_sum": "1379906664020113552563602",
+      "sha_tail_sum": "1380202002611265586872954"
+    },
+    {
+      "binding_sha256": "48df61f49dd20f872f89f88776efafdd9602ddc6e2231f2f473c1fc8a2dbd3d0",
+      "count": 3658551,
+      "sha_head_sum": "2108384765769852545171746",
+      "sha_tail_sum": "2109466562023297349698522"
+    },
+    {
+      "binding_sha256": "4c31160a13729f427e15e60f8f7175e8312596237c6b1617df703f144bc5fade",
+      "count": 690483,
+      "sha_head_sum": "398403010546636706850453",
+      "sha_tail_sum": "398310976910357168027516"
+    },
+    {
+      "binding_sha256": "54c47c4f0d6793d327c3bb998d6c8b6a1393a819014c601a0f0a55d53cad8fd5",
+      "count": 3393990,
+      "sha_head_sum": "1956807769032146091666598",
+      "sha_tail_sum": "1956981436444442026741290"
+    },
+    {
+      "binding_sha256": "5b9a51e99b4a1cc9b8395e941f78779226f3537add16b0c9a889923faab1d868",
+      "count": 2681097,
+      "sha_head_sum": "1545705822344894986212234",
+      "sha_tail_sum": "1545464060587242755251472"
+    },
+    {
+      "binding_sha256": "6cac8758ec8f069a3a686d8c9217f77fe295681ee93ccc093b1a5c9a4692d119",
+      "count": 498885,
+      "sha_head_sum": "287751909502274312318830",
+      "sha_tail_sum": "287505697499724016819007"
+    },
+    {
+      "binding_sha256": "6de5a1e0334caa36aa547f5d9e534eb00d449b45ce62413c6240b0b274953f38",
+      "count": 2629893,
+      "sha_head_sum": "1516835560478726460101725",
+      "sha_tail_sum": "1515993612548528166397761"
+    },
+    {
+      "binding_sha256": "767526701e6358aba99bd4632d91c70c716a94f9342c4a759b686d816420fe9f",
+      "count": 2321869,
+      "sha_head_sum": "1338337356132072562397022",
+      "sha_tail_sum": "1338800232852338167990271"
+    },
+    {
+      "binding_sha256": "784366b71b52132cdbecf44826170008d3c514f9d26764ab3200ff615386bdb3",
+      "count": 3521878,
+      "sha_head_sum": "2030259510570416840001266",
+      "sha_tail_sum": "2031032117804785665629765"
+    },
+    {
+      "binding_sha256": "7c86ac8bb4b7f6546207eee168faf330e0102387c855a56a0a14eda70521db8a",
+      "count": 2025154,
+      "sha_head_sum": "1168332448630418390209508",
+      "sha_tail_sum": "1167084566026519406502944"
+    },
+    {
+      "binding_sha256": "7cae60a4c16cef1b930e11544acf3cf33e4a0bedd40b5d2aa1247131eff88c48",
+      "count": 3409930,
+      "sha_head_sum": "1965727952984106496974852",
+      "sha_tail_sum": "1966314806287678120372822"
+    },
+    {
+      "binding_sha256": "7f5f4cb06183f320880b32ad59487184547d8b330df26fc46c560ad54862e683",
+      "count": 3426170,
+      "sha_head_sum": "1974412877959083434948438",
+      "sha_tail_sum": "1974680767319830578021995"
+    },
+    {
+      "binding_sha256": "833f0e6a72dbeb80544f175e2db6ca3ccab9b902178962862aa259264a37a5b7",
+      "count": 2816079,
+      "sha_head_sum": "1623432791943405004278482",
+      "sha_tail_sum": "1623015962466810978071110"
+    },
+    {
+      "binding_sha256": "8c77e08b3220481f2f0202d6eab9253a82db7c3d7b119490fa58e1da940b8efd",
+      "count": 2814446,
+      "sha_head_sum": "1621604617849947611948970",
+      "sha_tail_sum": "1622745426434892792258278"
+    },
+    {
+      "binding_sha256": "8d733d8c7b1eb89dec9f57b67af6787a3256e288a4b8403eb884a3508ac8ba1e",
+      "count": 3072555,
+      "sha_head_sum": "1770854946517890333722383",
+      "sha_tail_sum": "1771580594241148112051439"
+    },
+    {
+      "binding_sha256": "95b5061b156a44cca75a77998fd3a2ba4444e49919139720f5e72da3e14282a9",
+      "count": 2407915,
+      "sha_head_sum": "1388352406834634638779860",
+      "sha_tail_sum": "1388541948950550325148522"
+    },
+    {
+      "binding_sha256": "9658c4a2ff1de3610dac0bb34c90c7007fc985a943749419f09cb39c8547db8b",
+      "count": 2627253,
+      "sha_head_sum": "1514269241043571948236604",
+      "sha_tail_sum": "1513998293127356682495623"
+    },
+    {
+      "binding_sha256": "a2c8d9145e37de66e1694823b1b2ac19fe2e04b1d186d525dbc796973f978aba",
+      "count": 2833915,
+      "sha_head_sum": "1633605049223601529406075",
+      "sha_tail_sum": "1633425548993332959886218"
+    },
+    {
+      "binding_sha256": "a8af7f704eda39cf4850b705d443083198a8b00a681f5e6ca8adc31a57cb623a",
+      "count": 2562710,
+      "sha_head_sum": "1476764479087192233229725",
+      "sha_tail_sum": "1476703489865408821980260"
+    },
+    {
+      "binding_sha256": "abef73551123f9db1d31d8581dec4607d48e63db2b14e8a82226bcac1e887144",
+      "count": 2957329,
+      "sha_head_sum": "1705078264631422122612673",
+      "sha_tail_sum": "1704057511149598373666965"
+    },
+    {
+      "binding_sha256": "ac996d196301c11b011362088c11977a977c2d3ef2b84ed0f02096f357539854",
+      "count": 2940236,
+      "sha_head_sum": "1696014456494493398959526",
+      "sha_tail_sum": "1695450403930668233011369"
+    },
+    {
+      "binding_sha256": "adbc3961cb56889522421052a7ac9239f837279afe26d63041b14eed3d9b0198",
+      "count": 2936590,
+      "sha_head_sum": "1693260344891635440750271",
+      "sha_tail_sum": "1692373742160696707407946"
+    },
+    {
+      "binding_sha256": "af33e2bb4d0d9a4865b52606c0157fe1fe3a60305ac37489317523bf3895b859",
+      "count": 3543392,
+      "sha_head_sum": "2042602835340326073627339",
+      "sha_tail_sum": "2042466262537806253082251"
+    },
+    {
+      "binding_sha256": "b46377813c080a5cb05e009a0be028b9bf335c0a029b49ffca15d1e34f6bba76",
+      "count": 3264632,
+      "sha_head_sum": "1880954883528374964808767",
+      "sha_tail_sum": "1881558985083639809593860"
+    },
+    {
+      "binding_sha256": "bd049d14a09f7fc65ad1e35f2f77a775195e0b5a8a8955c90d2a66cfcd25a0f4",
+      "count": 3156166,
+      "sha_head_sum": "1820187651173549124392366",
+      "sha_tail_sum": "1819255615453619162075786"
+    },
+    {
+      "binding_sha256": "bf2f5418c28747d2cea80c9155afaaa5c01c195394b96f6f997743071b6675fa",
+      "count": 3699124,
+      "sha_head_sum": "2131808999728420567462547",
+      "sha_tail_sum": "2132853611510495598234709"
+    },
+    {
+      "binding_sha256": "c2cc9de3fe4e78477b67407dddb5064d7099f579a423c7740170c7a45601e5c6",
+      "count": 3033024,
+      "sha_head_sum": "1748403499363842265332924",
+      "sha_tail_sum": "1748688547295219692165219"
+    },
+    {
+      "binding_sha256": "ccc49e0dfa060a7e58a9924d76a18576ae929c96113836cff238acada1ca758f",
+      "count": 3389370,
+      "sha_head_sum": "1953125301653810048393361",
+      "sha_tail_sum": "1953293921924171533505470"
+    },
+    {
+      "binding_sha256": "ce519e97015143adae66a257533e6441b49003b5ebf63786ccdbc8a0ec173120",
+      "count": 3720081,
+      "sha_head_sum": "2144213216060943604442193",
+      "sha_tail_sum": "2144125015299378720396244"
+    },
+    {
+      "binding_sha256": "ce6788fde9c36167b7b9a7e901b52b993c5e39eb271d0f3b373b4ecd59f8ac82",
+      "count": 2868109,
+      "sha_head_sum": "1654257618481759354851009",
+      "sha_tail_sum": "1653390542197159691878541"
+    },
+    {
+      "binding_sha256": "d0b1141a3100e65cc20bea801bdbd5a6e3a00efa8eb6b0983cacc08784ed7c4c",
+      "count": 3047158,
+      "sha_head_sum": "1755786806614259184667096",
+      "sha_tail_sum": "1757148756086628140056775"
+    },
+    {
+      "binding_sha256": "d1d300f6e60d34888f9365c8bc891e3b134c773ac5ac0fc2f0e858c89a085870",
+      "count": 2370332,
+      "sha_head_sum": "1366569243946600571693188",
+      "sha_tail_sum": "1366302293499294191480354"
+    },
+    {
+      "binding_sha256": "d443fc575c73f9f4b8bb7d740c4609ab6b582f18a06d45f31b281446cd790046",
+      "count": 2816279,
+      "sha_head_sum": "1622563204250358834035945",
+      "sha_tail_sum": "1622811138965839682058256"
+    },
+    {
+      "binding_sha256": "d57ed5c8e4965fb7f944b20aed7dfeeddee9529bf21a15fc658bdefb6b3a4630",
+      "count": 3172372,
+      "sha_head_sum": "1829128476231453239505975",
+      "sha_tail_sum": "1829115578307293213997702"
+    },
+    {
+      "binding_sha256": "e0783a95487f7765df28d162ad80d437abc2983a77bd4fff0baacee8a0ffee6a",
+      "count": 3832977,
+      "sha_head_sum": "2208944727626271572066460",
+      "sha_tail_sum": "2210054603864730000366834"
+    },
+    {
+      "binding_sha256": "e1160d303fe0fe1b7f6ee4b9987bba2ac0555d9b1d3fd09f67b3eddd741f9467",
+      "count": 3229151,
+      "sha_head_sum": "1861057721371981261460985",
+      "sha_tail_sum": "1862300852767415412860915"
+    },
+    {
+      "binding_sha256": "e307487023397ac4231bd9ab696f49a448eb3e9589e49fd0dffcc1b3dd402337",
+      "count": 3483361,
+      "sha_head_sum": "2008231170902359351625759",
+      "sha_tail_sum": "2006958136129237156998817"
+    },
+    {
+      "binding_sha256": "e6bb6e6355af329d277680fbd4cb74d03aae125393d29b985979a24622f0f0ea",
+      "count": 2999818,
+      "sha_head_sum": "1728686270994884987791632",
+      "sha_tail_sum": "1729354157629387506919731"
+    },
+    {
+      "binding_sha256": "e96cce39ab3aee2feea7f7c5c14e711d515903dc0fffedd27919669bf2a90138",
+      "count": 3097400,
+      "sha_head_sum": "1785734520592535138705436",
+      "sha_tail_sum": "1785763942979373004201535"
+    },
+    {
+      "binding_sha256": "ebb285aa5b39bb02606c45d10e6b76bb672c5738b7ba786e4c2bd56d86f1c207",
+      "count": 3081119,
+      "sha_head_sum": "1777401941390311012195996",
+      "sha_tail_sum": "1776584472234556463518444"
+    },
+    {
+      "binding_sha256": "ecca995af3522bff0ab85e4d2c8ff1c6a6e201f28ca3a62d0c53201a34868832",
+      "count": 3428694,
+      "sha_head_sum": "1975444040636769111517060",
+      "sha_tail_sum": "1975997750819766790920676"
+    },
+    {
+      "binding_sha256": "f26199d3c918af4121b9533895c0e36f9ea31a1a51d0f14ef618ce475d765c9c",
+      "count": 3094866,
+      "sha_head_sum": "1784085889150985552369987",
+      "sha_tail_sum": "1783292400972974050593849"
+    },
+    {
+      "binding_sha256": "f36152ac19b2d8331fc6d3612646309cc05c199821760f6fed729b698971314c",
+      "count": 2227859,
+      "sha_head_sum": "1284567678108296126837269",
+      "sha_tail_sum": "1285244874025057111723954"
+    },
+    {
+      "binding_sha256": "f603bcaf00695f34095ea7a23acd3ed47a8d326119b0feb33d33167dd8d4a107",
+      "count": 2588598,
+      "sha_head_sum": "1492135898404409186090044",
+      "sha_tail_sum": "1492322685316073015820705"
+    },
+    {
+      "binding_sha256": "f720e9fd2e58985ef45530e1d5a2bdf01e53d0bc81b78203e14eaa96bebf4081",
+      "count": 2943353,
+      "sha_head_sum": "1696398396227269888389693",
+      "sha_tail_sum": "1696954314072374352199936"
+    },
+    {
+      "binding_sha256": "f7f960b89f8e75bc2bdf569b6508fb4518e759b1f8cd2caf59f082daabd38113",
+      "count": 3322479,
+      "sha_head_sum": "1915474038540474393462073",
+      "sha_tail_sum": "1915057210372623573229105"
+    },
+    {
+      "binding_sha256": "fcbc08bd2dadaef449d39200775141de19508428a8bf6640089e1a2efc5e5302",
+      "count": 3099352,
+      "sha_head_sum": "1786185642540145002208437",
+      "sha_tail_sum": "1786686857707817570240141"
+    },
+    {
+      "binding_sha256": "ffb84d44f803c09acd6b2caddff2da315ed3aab469a59cd60bd2e23d1035ba6b",
+      "count": 2780346,
+      "sha_head_sum": "1602907592711428648522490",
+      "sha_tail_sum": "1602422331824479204636264"
+    },
+    {
+      "binding_sha256": "fff4169a5f6e1c12d46814301e8c95691d54b3f500554a751866a7f18961be7c",
+      "count": 2475254,
+      "sha_head_sum": "1427599973333969129729496",
+      "sha_tail_sum": "1426360512099655787489564"
+    }
+  ],
+  "boundaries": [
+    "No historical RAW replay or separate C300 ETL",
+    "No M1 schema/data/snapshot/view overwrite or repoint",
+    "No N750 or C1500 processing",
+    "No financial unit conversion or semantic mapping",
+    "Not a Step 9 freeze; stop before Steps 7\u20139; no main merge"
+  ],
+  "checks": {
+    "M1_unchanged": "PASS",
+    "independent_native_decimal_oracle": "PASS",
+    "source_field_except_all_both_directions": "PASS",
+    "unique_occurrence_keys": "PASS"
+  },
+  "conversion_rule": "EXACT_DECIMAL_38_4_V1",
+  "evidence": {
+    "bytes": 698455,
+    "readback": "SHA256_MATCH",
+    "sha256": "85fd7c2be09b98a4852ce376dbf5293f44b13256f6dd3db57f0bf4234522ebf7",
+    "uri": "/Volumes/workspace/edp_lab/raw/day4-m2/historical_v1/historical-c750-m2-evidence-v1.zip",
+    "verification_member": "runs/historical-m2/v1/verification.json",
+    "verification_sha256": "d9855eb7d23903248899f1c6b3a8a9159b6731c07e7f840850db84c74f5f88ee"
+  },
+  "exceptions": [
+    "Initial preflight stopped before output because SQL location was empty; all six exact frozen UC IDs/locations independently verified. Corrected metadata guard retained original pins and failed deployment.",
+    "6653850 BLANK values retain original TEXT with no Decimal; source NULL meaning remains unresolved."
+  ],
+  "fingerprint_method": "Per binding: count and sums of first/last 15 hex digits of SHA256(Spark to_json(struct(all output columns))). Diagnostic order-independent fingerprints; full exact equality checked separately via bidirectional EXCEPT ALL.",
+  "implementation": {
+    "converter_sha256": "ae06d39409c2542273f269356a5905553b08621546de2bda6c972b22bc50d507",
+    "notebook": "notebooks/historical_c750_m2.py",
+    "notebook_sha256": "3d4b7f95db46ee29c5f13f9a058f8a0331a8ff34d9c54073847dcdf6c2c2b3a0",
+    "runtime_sha256": "d14aea176d0bfe54da0d670083d8be4776071d846b6622723b923ad7d634f979",
+    "runtime_uri": "/Volumes/workspace/edp_lab/raw/day4-m2/historical_v1/runtime-v2.zip"
+  },
+  "input_freeze": "metadata/freezes/O_C750_M1_v1/references.json",
+  "input_freeze_sha256": "be2001860d5900b64bc4bdc3178b7367d54cbb89e7de703e515fd4c9cb1d5a50",
+  "input_snapshots": {
+    "workspace.edp_lab.clean_c300_m1_bindings_main_recovery_20261021_v4_full": 0,
+    "workspace.edp_lab.clean_c300_m1_bindings_num_recovery_20261021_v1_recovery": 0,
+    "workspace.edp_lab.clean_c300_m1_records_main_recovery_20261021_v4_full": 0,
+    "workspace.edp_lab.clean_c300_m1_records_num_recovery_20261021_v1_recovery": 0,
+    "workspace.edp_lab.clean_n450_m1_bindings_n450_step3_v1": 0,
+    "workspace.edp_lab.clean_n450_m1_records_n450_step3_v1": 0
+  },
+  "logical_population": {
+    "C300_DATA_records": 314164116,
+    "C300_typed_occurrences": 176060325,
+    "C750_DATA_records": 316063821,
+    "N450_typed_occurrences": 0,
+    "count_basis": "Frozen accepted DATA population plus one-to-one LEFT JOIN proof; no new full original-population count",
+    "separate_C300_ETL_jobs": 0
+  },
+  "model": "M2_ADDITIVE_TYPED_NUMERIC_V1",
+  "outcomes": {
+    "BLANK": 6653850,
+    "INVALID": 0,
+    "MISSING": 0,
+    "NULL_UNRESOLVED": 0,
+    "OVERFLOW": 0,
+    "SCALE_EXCEEDED": 0,
+    "VALID": 169406475
+  },
+  "output": {
+    "C300_logical_subset_view": "workspace.edp_lab.o_c300_m2_records_historical_20261022_v1",
+    "C750_records_view": "workspace.edp_lab.o_c750_m2_records_historical_20261022_v1",
+    "bytes_at_build": 1907726118,
+    "data_version": 0,
+    "definition_sha256": {
+      "workspace.edp_lab.o_c300_m2_records_historical_20261022_v1": "30b4df8805302aa79e4ee68d4edfe7b681851b2ea19e51c4ac4576da5a314896",
+      "workspace.edp_lab.o_c750_m2_records_historical_20261022_v1": "142173e5d040da20a78a342a7266525a965b1bf8659774405212f59bd654604f"
+    },
+    "delta_id": "2cb01f9b-9c72-4451-bfb1-d36d415edba4",
+    "files_at_build": 54,
+    "schema_sha256": "66fcce063dcb238df9bf7346701322623a89709c894194ce947f648dbeff8889",
+    "storage_location": "s3://dbstorage-prod-fou7bxa3rw/uc/088be824-cc54-47cf-bcde-d5de77bbe82d/c70027fc-e5bb-494b-8bb6-fc7e574b7e96/__unitystorage/catalogs/071909d2-4a9e-4544-ae70-bae91db83992/tables/ca98ccc6-1e42-4234-83fb-72728da5045e",
+    "table": "workspace.edp_lab.typed_c750_m2_historical_20261022_v1",
+    "uc_table_id": "ca98ccc6-1e42-4234-83fb-72728da5045e"
+  },
+  "runtime": {
+    "RAW_replays": 0,
+    "build_code_seconds": 532.3479335308075,
+    "build_job_wall_seconds": 553.273,
+    "build_run": 910030711554960,
+    "failed_preflight_run": 693588401750111,
+    "failed_preflight_seconds": 123.203,
+    "historical_projection_writes": 1,
+    "python": "3.11.10 (main, Sep  7 2024, 18:35:41) [GCC 11.4.0]",
+    "resource_billing": "Not measured",
+    "spark": "4.2.0",
+    "verify_code_seconds": 782.016619682312,
+    "verify_job_wall_seconds": 801.19,
+    "verify_run": 426457626095564
+  },
+  "scope": {
+    "archive_member": "num.txt",
+    "bindings": 60,
+    "field_ordinal": 9,
+    "inventory": [
+      {
+        "binding_sha256": "4c31160a13729f427e15e60f8f7175e8312596237c6b1617df703f144bc5fade",
+        "records_data": 690483,
+        "source_instance_id": "SRC000005"
+      },
+      {
+        "binding_sha256": "6cac8758ec8f069a3a686d8c9217f77fe295681ee93ccc093b1a5c9a4692d119",
+        "records_data": 498885,
+        "source_instance_id": "SRC000006"
+      },
+      {
+        "binding_sha256": "7c86ac8bb4b7f6546207eee168faf330e0102387c855a56a0a14eda70521db8a",
+        "records_data": 2025154,
+        "source_instance_id": "SRC000007"
+      },
+      {
+        "binding_sha256": "f36152ac19b2d8331fc6d3612646309cc05c199821760f6fed729b698971314c",
+        "records_data": 2227859,
+        "source_instance_id": "SRC000008"
+      },
+      {
+        "binding_sha256": "18bb94b57b35cf0cf01442c59f2aa7c32ea38eda538ec09aba47dccc4b217e48",
+        "records_data": 2699630,
+        "source_instance_id": "SRC000009"
+      },
+      {
+        "binding_sha256": "95b5061b156a44cca75a77998fd3a2ba4444e49919139720f5e72da3e14282a9",
+        "records_data": 2407915,
+        "source_instance_id": "SRC000010"
+      },
+      {
+        "binding_sha256": "833f0e6a72dbeb80544f175e2db6ca3ccab9b902178962862aa259264a37a5b7",
+        "records_data": 2816079,
+        "source_instance_id": "SRC000011"
+      },
+      {
+        "binding_sha256": "e6bb6e6355af329d277680fbd4cb74d03aae125393d29b985979a24622f0f0ea",
+        "records_data": 2999818,
+        "source_instance_id": "SRC000012"
+      },
+      {
+        "binding_sha256": "bd049d14a09f7fc65ad1e35f2f77a775195e0b5a8a8955c90d2a66cfcd25a0f4",
+        "records_data": 3156166,
+        "source_instance_id": "SRC000013"
+      },
+      {
+        "binding_sha256": "f720e9fd2e58985ef45530e1d5a2bdf01e53d0bc81b78203e14eaa96bebf4081",
+        "records_data": 2943353,
+        "source_instance_id": "SRC000014"
+      },
+      {
+        "binding_sha256": "ebb285aa5b39bb02606c45d10e6b76bb672c5738b7ba786e4c2bd56d86f1c207",
+        "records_data": 3081119,
+        "source_instance_id": "SRC000015"
+      },
+      {
+        "binding_sha256": "e96cce39ab3aee2feea7f7c5c14e711d515903dc0fffedd27919669bf2a90138",
+        "records_data": 3097400,
+        "source_instance_id": "SRC000016"
+      },
+      {
+        "binding_sha256": "e307487023397ac4231bd9ab696f49a448eb3e9589e49fd0dffcc1b3dd402337",
+        "records_data": 3483361,
+        "source_instance_id": "SRC000017"
+      },
+      {
+        "binding_sha256": "8c77e08b3220481f2f0202d6eab9253a82db7c3d7b119490fa58e1da940b8efd",
+        "records_data": 2814446,
+        "source_instance_id": "SRC000018"
+      },
+      {
+        "binding_sha256": "adbc3961cb56889522421052a7ac9239f837279afe26d63041b14eed3d9b0198",
+        "records_data": 2936590,
+        "source_instance_id": "SRC000019"
+      },
+      {
+        "binding_sha256": "ac996d196301c11b011362088c11977a977c2d3ef2b84ed0f02096f357539854",
+        "records_data": 2940236,
+        "source_instance_id": "SRC000020"
+      },
+      {
+        "binding_sha256": "f7f960b89f8e75bc2bdf569b6508fb4518e759b1f8cd2caf59f082daabd38113",
+        "records_data": 3322479,
+        "source_instance_id": "SRC000021"
+      },
+      {
+        "binding_sha256": "f603bcaf00695f34095ea7a23acd3ed47a8d326119b0feb33d33167dd8d4a107",
+        "records_data": 2588598,
+        "source_instance_id": "SRC000022"
+      },
+      {
+        "binding_sha256": "ffb84d44f803c09acd6b2caddff2da315ed3aab469a59cd60bd2e23d1035ba6b",
+        "records_data": 2780346,
+        "source_instance_id": "SRC000023"
+      },
+      {
+        "binding_sha256": "1d63efaf93eed66c9dc59af00223d1e132f332eaf91d8d3853b49f2aeed26e68",
+        "records_data": 2780517,
+        "source_instance_id": "SRC000024"
+      },
+      {
+        "binding_sha256": "2bbbb96b5dfe5eee42682a096cad78aeb1fd627e3fd9860f7d5cee5acb74270f",
+        "records_data": 3174261,
+        "source_instance_id": "SRC000025"
+      },
+      {
+        "binding_sha256": "3e9fea22b9ced597578349d96f37ca69d0df8c312cb41eb2db7cbbe7a26f3726",
+        "records_data": 2394508,
+        "source_instance_id": "SRC000026"
+      },
+      {
+        "binding_sha256": "d1d300f6e60d34888f9365c8bc891e3b134c773ac5ac0fc2f0e858c89a085870",
+        "records_data": 2370332,
+        "source_instance_id": "SRC000027"
+      },
+      {
+        "binding_sha256": "9658c4a2ff1de3610dac0bb34c90c7007fc985a943749419f09cb39c8547db8b",
+        "records_data": 2627253,
+        "source_instance_id": "SRC000028"
+      },
+      {
+        "binding_sha256": "19a9c50a72630ae7fa0ed98858b44252ca1a9c66848d2fa60f51fe7d6de31cd9",
+        "records_data": 3095513,
+        "source_instance_id": "SRC000029"
+      },
+      {
+        "binding_sha256": "767526701e6358aba99bd4632d91c70c716a94f9342c4a759b686d816420fe9f",
+        "records_data": 2321869,
+        "source_instance_id": "SRC000030"
+      },
+      {
+        "binding_sha256": "fff4169a5f6e1c12d46814301e8c95691d54b3f500554a751866a7f18961be7c",
+        "records_data": 2475254,
+        "source_instance_id": "SRC000031"
+      },
+      {
+        "binding_sha256": "047a058de9ea331d13c0f8a48dfa39ecaf3852a881b3432ad36f65ae17b8a561",
+        "records_data": 2518948,
+        "source_instance_id": "SRC000032"
+      },
+      {
+        "binding_sha256": "c2cc9de3fe4e78477b67407dddb5064d7099f579a423c7740170c7a45601e5c6",
+        "records_data": 3033024,
+        "source_instance_id": "SRC000033"
+      },
+      {
+        "binding_sha256": "25e12d13f0601091018694d4c800397d089a6678c4317ae4d7ecf6b28081c75f",
+        "records_data": 2663988,
+        "source_instance_id": "SRC000034"
+      },
+      {
+        "binding_sha256": "6de5a1e0334caa36aa547f5d9e534eb00d449b45ce62413c6240b0b274953f38",
+        "records_data": 2629893,
+        "source_instance_id": "SRC000035"
+      },
+      {
+        "binding_sha256": "5b9a51e99b4a1cc9b8395e941f78779226f3537add16b0c9a889923faab1d868",
+        "records_data": 2681097,
+        "source_instance_id": "SRC000036"
+      },
+      {
+        "binding_sha256": "8d733d8c7b1eb89dec9f57b67af6787a3256e288a4b8403eb884a3508ac8ba1e",
+        "records_data": 3072555,
+        "source_instance_id": "SRC000037"
+      },
+      {
+        "binding_sha256": "d443fc575c73f9f4b8bb7d740c4609ab6b582f18a06d45f31b281446cd790046",
+        "records_data": 2816279,
+        "source_instance_id": "SRC000038"
+      },
+      {
+        "binding_sha256": "abef73551123f9db1d31d8581dec4607d48e63db2b14e8a82226bcac1e887144",
+        "records_data": 2957329,
+        "source_instance_id": "SRC000039"
+      },
+      {
+        "binding_sha256": "f26199d3c918af4121b9533895c0e36f9ea31a1a51d0f14ef618ce475d765c9c",
+        "records_data": 3094866,
+        "source_instance_id": "SRC000040"
+      },
+      {
+        "binding_sha256": "fcbc08bd2dadaef449d39200775141de19508428a8bf6640089e1a2efc5e5302",
+        "records_data": 3099352,
+        "source_instance_id": "SRC000041"
+      },
+      {
+        "binding_sha256": "a8af7f704eda39cf4850b705d443083198a8b00a681f5e6ca8adc31a57cb623a",
+        "records_data": 2562710,
+        "source_instance_id": "SRC000042"
+      },
+      {
+        "binding_sha256": "ce6788fde9c36167b7b9a7e901b52b993c5e39eb271d0f3b373b4ecd59f8ac82",
+        "records_data": 2868109,
+        "source_instance_id": "SRC000043"
+      },
+      {
+        "binding_sha256": "27838dc2f2a2083d169bd34627b681665ea0a3f055170bec7a3eb7c96a85f549",
+        "records_data": 2963091,
+        "source_instance_id": "SRC000044"
+      },
+      {
+        "binding_sha256": "3b480fda379e12cc2a2ea87d1b7ca184218173426add4a7777c820fc141ae1ed",
+        "records_data": 3072093,
+        "source_instance_id": "SRC000045"
+      },
+      {
+        "binding_sha256": "a2c8d9145e37de66e1694823b1b2ac19fe2e04b1d186d525dbc796973f978aba",
+        "records_data": 2833915,
+        "source_instance_id": "SRC000046"
+      },
+      {
+        "binding_sha256": "d57ed5c8e4965fb7f944b20aed7dfeeddee9529bf21a15fc658bdefb6b3a4630",
+        "records_data": 3172372,
+        "source_instance_id": "SRC000047"
+      },
+      {
+        "binding_sha256": "ccc49e0dfa060a7e58a9924d76a18576ae929c96113836cff238acada1ca758f",
+        "records_data": 3389370,
+        "source_instance_id": "SRC000048"
+      },
+      {
+        "binding_sha256": "b46377813c080a5cb05e009a0be028b9bf335c0a029b49ffca15d1e34f6bba76",
+        "records_data": 3264632,
+        "source_instance_id": "SRC000049"
+      },
+      {
+        "binding_sha256": "d0b1141a3100e65cc20bea801bdbd5a6e3a00efa8eb6b0983cacc08784ed7c4c",
+        "records_data": 3047158,
+        "source_instance_id": "SRC000050"
+      },
+      {
+        "binding_sha256": "e1160d303fe0fe1b7f6ee4b9987bba2ac0555d9b1d3fd09f67b3eddd741f9467",
+        "records_data": 3229151,
+        "source_instance_id": "SRC000051"
+      },
+      {
+        "binding_sha256": "af33e2bb4d0d9a4865b52606c0157fe1fe3a60305ac37489317523bf3895b859",
+        "records_data": 3543392,
+        "source_instance_id": "SRC000052"
+      },
+      {
+        "binding_sha256": "3e019d6dbfcc45c13c8fd27156d83192c1e38ef14524da21e58d2e17e6540912",
+        "records_data": 3428670,
+        "source_instance_id": "SRC000053"
+      },
+      {
+        "binding_sha256": "54c47c4f0d6793d327c3bb998d6c8b6a1393a819014c601a0f0a55d53cad8fd5",
+        "records_data": 3393990,
+        "source_instance_id": "SRC000054"
+      },
+      {
+        "binding_sha256": "341ce895a89fe164c1cc14af2679aa0b4637f593c6887e5c4d3a74bc49bbebcd",
+        "records_data": 3572434,
+        "source_instance_id": "SRC000055"
+      },
+      {
+        "binding_sha256": "bf2f5418c28747d2cea80c9155afaaa5c01c195394b96f6f997743071b6675fa",
+        "records_data": 3699124,
+        "source_instance_id": "SRC000056"
+      },
+      {
+        "binding_sha256": "ecca995af3522bff0ab85e4d2c8ff1c6a6e201f28ca3a62d0c53201a34868832",
+        "records_data": 3428694,
+        "source_instance_id": "SRC000057"
+      },
+      {
+        "binding_sha256": "7f5f4cb06183f320880b32ad59487184547d8b330df26fc46c560ad54862e683",
+        "records_data": 3426170,
+        "source_instance_id": "SRC000058"
+      },
+      {
+        "binding_sha256": "784366b71b52132cdbecf44826170008d3c514f9d26764ab3200ff615386bdb3",
+        "records_data": 3521878,
+        "source_instance_id": "SRC000059"
+      },
+      {
+        "binding_sha256": "14cc8d86190f4f92ab040925bf388b0430aa96a31fb2d27b7575ddc550f9cd32",
+        "records_data": 3705078,
+        "source_instance_id": "SRC000060"
+      },
+      {
+        "binding_sha256": "48df61f49dd20f872f89f88776efafdd9602ddc6e2231f2f473c1fc8a2dbd3d0",
+        "records_data": 3658551,
+        "source_instance_id": "SRC000061"
+      },
+      {
+        "binding_sha256": "7cae60a4c16cef1b930e11544acf3cf33e4a0bedd40b5d2aa1247131eff88c48",
+        "records_data": 3409930,
+        "source_instance_id": "SRC000062"
+      },
+      {
+        "binding_sha256": "ce519e97015143adae66a257533e6441b49003b5ebf63786ccdbc8a0ec173120",
+        "records_data": 3720081,
+        "source_instance_id": "SRC000063"
+      },
+      {
+        "binding_sha256": "e0783a95487f7765df28d162ad80d437abc2983a77bd4fff0baacee8a0ffee6a",
+        "records_data": 3832977,
+        "source_instance_id": "SRC000064"
+      }
+    ],
+    "occurrences": 176060325,
+    "original_name": "value",
+    "source_family": "SEC_FSDS",
+    "sources": 60
+  },
+  "source_rule": "FSDS_NUM_VALUE_SCOPE_V1",
+  "status": "HISTORICAL_M2_VALIDATED",
+  "version": "O_C750_M2_ADDITIVE_TYPED_PROJECTION_V1"
+}
