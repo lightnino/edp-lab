@@ -1,0 +1,109 @@
+{
+  "business_aliases_still_proposed": [
+    "S05",
+    "S06"
+  ],
+  "canonical_promotions": 0,
+  "case_count": 23,
+  "dimensions": {
+    "CROSSWALK": 4,
+    "ER": 8,
+    "STTM": 11
+  },
+  "ground_truth_commit": "31fd869c697e3afd6611838794513a3fcf64e927",
+  "ground_truth_sha256": "9ba83190b260b1bb5ac7feb0043fa7591b9da846f49a40be0d7fe6c4428477fd",
+  "limits": [
+    "Hand-curated, same-session rules; no blinded/out-of-sample accuracy claim",
+    "No independent human adjudication of semantic truth",
+    "MATCH native-token/representation labels do not approve canonical entity relations",
+    "No LLM SDK/API calls or autonomous model inference",
+    "No new profiling or M2 replay; GOLD examples remain supplementary evidence"
+  ],
+  "local_candidate_and_scoring_seconds": 0.0031740404665470123,
+  "metrics": {
+    "candidate_label": {
+      "confusion_matrix": {
+        "MATCH": {
+          "MATCH": 7,
+          "NON_MATCH": 0,
+          "UNRESOLVED": 0
+        },
+        "NON_MATCH": {
+          "MATCH": 0,
+          "NON_MATCH": 10,
+          "UNRESOLVED": 0
+        },
+        "UNRESOLVED": {
+          "MATCH": 0,
+          "NON_MATCH": 0,
+          "UNRESOLVED": 6
+        }
+      },
+      "correct": 23,
+      "false_match_ids": [],
+      "false_split_ids": [],
+      "premature_resolution_ids": [],
+      "total": 23
+    },
+    "name_only_baseline_label": {
+      "confusion_matrix": {
+        "MATCH": {
+          "MATCH": 3,
+          "NON_MATCH": 4,
+          "UNRESOLVED": 0
+        },
+        "NON_MATCH": {
+          "MATCH": 5,
+          "NON_MATCH": 5,
+          "UNRESOLVED": 0
+        },
+        "UNRESOLVED": {
+          "MATCH": 4,
+          "NON_MATCH": 2,
+          "UNRESOLVED": 0
+        }
+      },
+      "correct": 8,
+      "false_match_ids": [
+        "S10",
+        "E03",
+        "E07",
+        "E09",
+        "E10"
+      ],
+      "false_split_ids": [
+        "S01",
+        "S02",
+        "S05",
+        "S06"
+      ],
+      "premature_resolution_ids": [
+        "S08",
+        "S11",
+        "E05",
+        "E06",
+        "E11",
+        "E12"
+      ],
+      "total": 23
+    }
+  },
+  "proposals_sha256": "c76aac70b3ea8018d9f8e1c68834430bcf37e098d365525e3fe8bc457076d73f",
+  "runtime_observation": "perf_counter interval covers candidate generation, validation and scoring; excludes source evidence preparation/imports; not human review time",
+  "states": {
+    "PROPOSED": 2,
+    "REJECTED": 10,
+    "UNRESOLVED": 6,
+    "VALIDATED": 5
+  },
+  "status": "AGENT_PROPOSALS_EVALUATED",
+  "unresolved_ids": [
+    "S08",
+    "S11",
+    "E05",
+    "E06",
+    "E11",
+    "E12"
+  ],
+  "version": "BOUNDED_AGENT_V2_EVALUATION_V1"
+}

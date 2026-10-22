@@ -1,0 +1,63 @@
+{
+  "active_human_review_seconds": null,
+  "actual_responses_observed": 0,
+  "decision_log_ref": "DEC-000015",
+  "ground_truth_remains_fixed": true,
+  "other_unresolved_ids": [
+    "S11",
+    "E11",
+    "E12"
+  ],
+  "proposed_schema_aliases": [
+    "S05",
+    "S06"
+  ],
+  "requests": [
+    {
+      "alternatives": [
+        "Keep UNRESOLVED pending independent source evidence",
+        "Reject the proposed equivalence candidate"
+      ],
+      "case_id": "E05",
+      "consequences": "Source distinctions and original occurrences remain; no canonical promotion or production join",
+      "decision": null,
+      "question": "Does repeated CUSIP support canonical security identity across the filing times?",
+      "source_evidence_refs": [
+        "holding170",
+        "holding316"
+      ]
+    },
+    {
+      "alternatives": [
+        "Keep UNRESOLVED pending independent source evidence",
+        "Reject the proposed equivalence candidate"
+      ],
+      "case_id": "E06",
+      "consequences": "Source distinctions and original occurrences remain; no canonical promotion or production join",
+      "decision": null,
+      "question": "Do the distinct Mirae USA/Hong Kong reporting parties represent one canonical legal manager?",
+      "source_evidence_refs": [
+        "cover100",
+        "cover104"
+      ]
+    },
+    {
+      "alternatives": [
+        "Keep UNRESOLVED pending independent source evidence",
+        "Reject the proposed equivalence candidate"
+      ],
+      "case_id": "S08",
+      "consequences": "Source distinctions and original occurrences remain; no canonical promotion or production join",
+      "decision": null,
+      "question": "Do BC_30YEAR and BC_30YEARDISPLAY have approved business-measure equivalence?",
+      "source_evidence_refs": [
+        "SRC010451"
+      ]
+    }
+  ],
+  "requests_sent": 3,
+  "scope_authorization": "User Step 7 authorizes read-only candidate discovery/evaluation only; no canonical identity approval inferred",
+  "semantic_approvals": [],
+  "status": "PENDING_HUMAN_REVIEW",
+  "time_basis": "UNMEASURED; elapsed waiting time is not active human review time"
+}
