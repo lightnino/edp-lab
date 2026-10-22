@@ -20,7 +20,7 @@ manifest rows preserved and 750 appended (1,504 total).
 
 Completed physical qualification was reused, not rerun. Retained remote SHA
 readback covers 450 selected sources; the other 300 are not represented as remotely
-verified. Required remote scope must be reconciled before publication. No RAW was
+verified. Remote availability and SHA verification remain mandatory before Step 8 processing. No RAW was
 uploaded, parsed or processed. All original local edits remain preserved in their
 original worktree; no competing publisher was copied.
 
@@ -34,7 +34,7 @@ before Step 14.
 
 ## Latest remote-resolution attempt
 
-Status: **BLOCKED — 300 sources have no verifiable remote location**.
+Historical remote-resolution outcome: **300 remote locations UNVERIFIED**.
 [Per-source outcomes](../proposals/n750-publication-v1/remote-evidence-resolution.json)
 record 0 additional checksum passes and 300 blocked sources. Retained upload
 receipt hashes and live metadata inventory hashes are recorded. No matching
@@ -44,5 +44,7 @@ read, downloaded or uploaded. Existing verified coverage remains 450/750.
 
 Selection PR #32 merged into integration at
 `352bd4d203cfbcfb308cb03106bb18e0f98e6f7f`. Publication PR #33 remains draft.
-Remote resolution must precede final owner approval/installation. Step 1 is not
-complete; Step 2 is not started.
+The owner clarified that remote resolution is a Step 8 pre-processing gate, not
+a Step 1 admission prerequisite. The evidence above is preserved without a remote
+PASS claim. Step 1 awaits exact owner approval/installation and actual publication
+readback. Step 2 is not started.

@@ -1,59 +1,44 @@
 # Exact publication record — owner review pending
 
 Selection PR #32 merged into `day4/additive-m2` at
-`352bd4d203cfbcfb308cb03106bb18e0f98e6f7f`. The publisher from PRs #30/#31
-is unchanged. `owner-record.proposed.json` binds the accepted selection plan,
-five admission and four freeze output hashes, implementation and caller hashes.
-`review.json` records the proposed and expected approved SHA-256 values.
+`352bd4d203cfbcfb308cb03106bb18e0f98e6f7f`. PR #33 remains draft. The publisher
+from PRs #30/#31 and the accepted 750-source selection remain unchanged.
+
+## Explicit scope amendment
+
+[Admission boundary amendment](admission-boundary-amendment.md) implements the
+owner's clarification: Step 1 requires qualified local RAW identity/SHA/provenance,
+Universe membership, disjointness, historical preservation and exact approved
+metadata publication/readback. Remote availability/SHA verification is mandatory
+before Step 8 processing. It is not a Step 1 publication prerequisite.
+
+Remote evidence remains 450 VERIFIED / 300 UNVERIFIED, with no mismatches
+established. The unchanged `remote-evidence-resolution.json` records the earlier
+location search; its BLOCKED labels describe remote verification, not physical
+admission validity. No remote PASS is inferred. Step 8 must not process unverified
+sources. Remote mapping is handled separately; no further search is performed.
+
+## Exact owner approval and installation
+
+`owner-record.proposed.json` binds this amendment, exact plan, existing evidence,
+implementation/caller hashes, five admission outputs and four freeze outputs.
+`review.json` contains final proposed/expected-approved SHA-256 values and the
+exact trusted installation command. All previous owner-record SHAs are obsolete.
+The selected sources, plan and expected publication bytes have not changed.
 
 The installer follows the existing trusted-terminal procedure: owner execution
 changes only the existing OWNER_GRANT_PATH / OWNER_GRANT_SHA256 constants and
 creates the approved successor record. It preserves the prior N450 record,
 rejects unexpected implementation changes, and performs no publication itself.
-The agent has NOT run this installer or created an approved record. Old local
-grant SHA values are obsolete.
+The agent has NOT run it or created an approved record.
 
-Before publication, resolve the requirement in `docs/cohort_publication.md`:
-“Before actual publication, qualified remote RAW SHA/readback and the exact
-owner-approved source selection must exist outside proposal text.” Retained
-checksums cover 450 sources (5 Treasury, 445 SEC). The exact 300 SEC sources
-lacking retained remote evidence are in `remote-evidence-unresolved.json`.
-A successful read-only Databricks volume listing does not close this gap.
-This is not a claim the objects are absent. No upload or RAW processing was done.
-Supply existing checksum evidence for these identities, or make an explicit
-owner decision on whether remote availability is a physical-admission requirement
-versus a later processing prerequisite. No such decision has been fabricated.
-
-Once prerequisites are resolved and the owner independently reviews the exact
-record, the exact install command and expected approved SHA are in `review.json`.
-After installation the existing publisher can be called using:
+After explicit approval and trusted installation:
 
 ```sh
 PYTHONPATH=src /Users/lightnino/Projects/edp-lab/.venv/bin/python scripts/publish_cohort.py proposals/n750-step1-v3/plan.json admission
 PYTHONPATH=src /Users/lightnino/Projects/edp-lab/.venv/bin/python scripts/publish_cohort.py proposals/n750-step1-v3/plan.json freeze
 ```
 
-Do not run publication until the above prerequisite is resolved. Independent
-readback and historical seal verification still follow actual publication.
-`C1500_COHORT_PASS` is not claimed. This package must not be merged as completed
-Step 1 while approval or integrity prerequisites remain unresolved. No Step 2.
-
-## Remote-resolution attempt — blocked
-
-`remote-evidence-resolution.json` records an explicit result for each of the 300
-SEC sources. No retained checksum receipt matched any of their approved hashes.
-Live read-only inventories of the three existing N450/N750/N500 upload roots
-contained 450/750/500 objects respectively, with no matching source basenames.
-Native top-level files also had no match. Historical result directories were
-not searched as alternative RAW locations; global absence is not claimed.
-
-Result: 0 additional checksum PASS, 300 BLOCKED_NO_VERIFIABLE_REMOTE_LOCATION,
-0 observed checksum mismatches (no corresponding object bytes could be located).
-The previous 450 accepted readbacks remain reused; 750/750 is NOT established.
-No bytes were downloaded, uploaded, parsed, profiled or processed.
-
-STOPPED per owner instruction. Supply exact existing remote object locations or
-retained checksum evidence for the listed identities. No requirement is waived.
-The proposed/expected-approved record hashes have not changed, but approval and
-installation are not requested yet: remote evidence must be resolved first.
-PR #33 remains draft and must not merge. Admission/freeze have not occurred.
+Actual publication, independent exact readback and historical preservation checks
+must precede `C1500_COHORT_PASS` and merging PR #33 into `day4/additive-m2`.
+Step 2 is not started; no merge to main is authorized.

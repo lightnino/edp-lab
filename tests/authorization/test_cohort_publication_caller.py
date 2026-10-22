@@ -36,6 +36,12 @@ def test_final_record_matches_accepted_plan_and_code():
     grant = json.loads(raw)
     review = json.loads((packet / 'review.json').read_bytes())
     assert grant['status'] == 'PENDING_OWNER_REVIEW'
+    original_scope = json.loads(
+        (ROOT / 'proposals/n750-step1-v3/grant.proposed.json').read_bytes())
+    assert grant['scopes'] == original_scope['scopes']
+    assert grant['remote_processing_readiness'] == {
+        'verified': 450, 'unverified': 300, 'mismatches_established': False,
+        'required_before': 'STEP_8_PROCESSING', 'unverified_processing': 'PROHIBITED'}
     assert sha(raw) == review['proposed_record_sha256']
     assert grant['plan_sha256'] == sha((ROOT / 'proposals/n750-step1-v3/plan.json').read_bytes())
     for relative, digest in grant['execution_files_sha256'].items():

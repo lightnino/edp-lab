@@ -33,8 +33,12 @@ Synthetic sizes and the actual Day 3 C750 input-layout contract are tested in
 Boundaries:
 - This is a metadata publication implementation; it does **not** upload RAW,
   approve sources, authorize processing, or freeze an M1/M2 output result.
-- Before actual publication, qualified remote RAW SHA/readback and the exact
-  owner-approved source selection must exist outside proposal text.
+- Step 1 admission requires verified local RAW identity, SHA-256, provenance,
+  Approved Universe v1 membership, disjointness, holdout exclusion, historical
+  preservation and exact owner-approved metadata publication/readback.
+- Remote RAW availability and SHA verification are mandatory before Step 8
+  processing, rather than before Step 1 metadata publication. Unverified sources
+  must not be processed. Remote status must retain its actual evidence coverage.
 - Never claim Step 1 PASS without actual N750 admission, C1500 input freeze
   and post-publication verification.
 - Step 14 is the only planned Day 4 -> main merge boundary.

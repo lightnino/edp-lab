@@ -1,5 +1,9 @@
 {
   "execution_files_sha256": {
+    "docs/cohort_publication.md": "362ece772bf839463ca75a8ad80a95bfe21501ce80f0fe7d9008bd6135936a5b",
+    "proposals/n750-publication-v1/admission-boundary-amendment.md": "672dc75d8622a3c4638f746bad397a72b8c9e563b97f5b2a8507b51431987c37",
+    "proposals/n750-publication-v1/remote-evidence-resolution.json": "53ab0c5a13f174b0a91350d54c0c42611d0787963c09a450a9f0848b43ebf36b",
+    "proposals/n750-publication-v1/remote-evidence-unresolved.json": "c615fd758b16147243418f9a035a3fe42a94d784e264fc73b3c036337ce25aa9",
     "proposals/n750-step1-v3/plan.json": "a2b05f838ca3ba5914b2ca1c863b688b04c367647c5d31a8236f3abf0ae3946f",
     "proposals/n750-step1-v3/qualification.json": "46e0ecd4f39519cd6f1e07c20bfe51ef7cb79dc69d88bf37567f546fda152a8a",
     "proposals/n750-step1-v3/review-index.json": "afa339cfeac31f591d9a493508b84780b73ffe86aa879c17984c37f0a656c077",
@@ -8,10 +12,18 @@
     "src/edp_lab/ingestion/cohort_publication.py": "345f187ded4ada3fa3b628e9fd45aa7868b50dfde4b2557f3ac8714b46df31bd"
   },
   "plan_sha256": "a2b05f838ca3ba5914b2ca1c863b688b04c367647c5d31a8236f3abf0ae3946f",
+  "remote_processing_readiness": {
+    "mismatches_established": false,
+    "required_before": "STEP_8_PROCESSING",
+    "unverified": 300,
+    "unverified_processing": "PROHIBITED",
+    "verified": 450
+  },
   "schema": "COHORT_OWNER_GRANT_V1",
   "scope_limitations": [
-    "Metadata admission and input cohort freeze only; no RAW upload, parsing, processing or result freeze.",
-    "Retained remote SHA readback covers all five Treasury and 445 SEC sources; 300 SEC sources lack remote readback evidence. Required remote prerequisite remains unresolved; approval alone is not publication PASS."
+    "Step 1 metadata admission and input cohort freeze only; no RAW upload, parsing, profiling, processing or result freeze.",
+    "Step 1 requires verified local RAW identity/SHA/provenance, Universe membership, disjointness and historical preservation; remote availability/SHA verification is mandatory before Step 8 processing, not before Step 1 publication.",
+    "Remote evidence remains 450 VERIFIED / 300 UNVERIFIED; no mismatches established; Step 8 must not process unverified sources."
   ],
   "scopes": {
     "admission": {
