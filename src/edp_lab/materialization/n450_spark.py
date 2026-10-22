@@ -36,6 +36,17 @@ def differences(left, right):
     return left.exceptAll(right).unionAll(right.exceptAll(left)).limit(1).count()
 
 
+def verify_c300_identity(spark, table, contract):
+    """Compare the original Delta/UC identities and their pinned representations."""
+    expected = contract['c300_table_identities'][table]
+    detail = spark.sql(f'DESCRIBE DETAIL {table}').first()
+    require(detail['format'] == 'delta' and detail['id'] == expected['delta_id']
+            and detail['properties']['io.unitycatalog.tableId'] == expected['uc_table_id']
+            and detail['location'] in (expected['detail_location'],
+                                       contract['c300_storage_locations'][table]),
+            'C300_TABLE_REPLACED')
+
+
 def table_version(spark, table):
     require(table in TABLES, 'UNAUTHORIZED_TABLE')
     return int(spark.sql(f'DESCRIBE HISTORY {table}').first()['version'])
@@ -109,8 +120,8 @@ def clean_publish(spark, root, approved, access, base):
                 'PARTIAL_OR_EXISTING_PUBLICATION_REQUIRES_NEW_VERSION')
         # Exclusive Delta mode, never replace/overwrite. A second-table failure is
         # incomplete publication; the first table is preserved and not repaired.
-        records.write.format('delta').mode('errorifexists').saveAsTable(TABLES[0])
-        bindings.write.format('delta').mode('errorifexists').saveAsTable(TABLES[1])
+        records.write.format('delta').mode('error').saveAsTable(TABLES[0])
+        bindings.write.format('delta').mode('error').saveAsTable(TABLES[1])
         versions = {t: table_version(spark, t) for t in TABLES}
     require(set(versions) == set(TABLES) and all(table_version(spark, t) == versions[t]
                                                for t in TABLES), 'OUTPUT_TABLE_VERSION_CHANGED')
@@ -264,9 +275,8 @@ def query_publish(spark, root, approved, base):
         VIEWS[1]: sum(b['fields_data'] for b in reuse if b['binding_sha256'] in approved_c300)
                   + sum(g['tests']['1']['expected']['fields_data'] for g in approved_new),
         VIEWS[2]: 1182}
-    for table, identity in contract['c300_storage_locations'].items():
-        detail = spark.sql(f'DESCRIBE DETAIL {table}').first()
-        require(detail['location'] == identity, 'C300_TABLE_REPLACED')
+    for table in contract['c300_storage_locations']:
+        verify_c300_identity(spark, table, contract)
     for name, sql in plan.items():
         # Full native multiset comparison, partitioned by exact binding groups to
         # retain bounded validation checkpoints; no sampling/count-only PASS.
@@ -317,8 +327,7 @@ def run(spark, root, phase):
     access = ProcessingAccess(root, bindings)
     started, clock, cpu_clock = datetime.now(UTC).isoformat(), time.perf_counter(), time.process_time()
     for table, version in contract['c300_versions'].items():
-        detail = spark.sql(f'DESCRIBE DETAIL {table}').first()
-        require(detail['location'] == contract['c300_storage_locations'][table], 'C300_TABLE_REPLACED')
+        verify_c300_identity(spark, table, contract)
         spark.read.option('versionAsOf', version).table(table).limit(1).count()
     # All fresh remote hashes precede any new runtime output/checkpoint.
     for entry in entries:
@@ -361,8 +370,7 @@ def run(spark, root, phase):
                   wall_seconds=time.perf_counter()-clock, driver_cpu_seconds=time.process_time()-cpu_clock,
                   peak_rss_platform_units=resource.getrusage(resource.RUSAGE_SELF).ru_maxrss,
                   runtime={'python': platform.python_version(), 'spark': spark.version,
-                           'pyarrow': __import__('pyarrow').__version__,
-                           'duckdb': __import__('duckdb').__version__},
+                           'pyarrow': __import__('pyarrow').__version__},
                   contract_sha256=file_sha256(root / 'proposals/n450-processing-v2/contract.json'),
                   runtime_sha256=contract['runtime_sha256'],
                   unavailable_telemetry=['DBUs', 'executor CPU', 'executor peak RSS'],

@@ -58,6 +58,12 @@ def build(destination):
                      'notebooks/clean_n450_m1.py'):
         include(relative, (ROOT / relative).read_bytes())
     aliases = {}
+    authority = json.loads((ROOT / 'metadata/source_universes/approved_v1/manifest.json').read_bytes())
+    inventory_raw = Path(authority['inventory_reference']).read_bytes()
+    assert sha(inventory_raw) == authority['inventory_sha256']
+    inventory_alias = '.evidence/' + authority['inventory_sha256']
+    aliases[authority['inventory_reference']] = inventory_alias
+    include(inventory_alias, inventory_raw)
     side = json.loads((ROOT / 'metadata/source_universes/historical_cohort_bindings_v1.json').read_bytes())
     for logical, digest in side['evidence'].items():
         if Path(logical).is_absolute():
@@ -80,13 +86,24 @@ def build(destination):
     assert sha(gate_raw) == manifest['artifacts']['lossless-gate.json']['sha256']
     gate_path = '.evidence/' + sha(gate_raw)
     include(gate_path, gate_raw)
-    identities = {}
+    identities, table_identities = {}, {}
+    detail_ref = 'runs/c300-m1/main_recovery_20261021_v4/delta-output-metadata-v2.json'
+    detail_raw = (LAB / detail_ref).read_bytes()
+    assert sha(detail_raw) == baseline['closeout_review']['supporting_evidence']['members'][detail_ref]
+    detail_path = '.evidence/' + sha(detail_raw)
+    include(detail_path, detail_raw)
+    historical_details = json.loads(detail_raw)['tables']
     versions = original['C300_snapshot_versions']
     for table in versions:
         ref = 'runs/c300-m1/closeout-review-v1/' + table.split('.')[-1] + '-catalog.json'
         raw = (LAB / ref).read_bytes()
         assert sha(raw) == baseline['closeout_review']['supporting_evidence']['members'][ref]
-        identities[table] = json.loads(raw)['storage_location']
+        catalog = json.loads(raw)
+        identities[table] = catalog['storage_location']
+        detail = historical_details[table]['detail']
+        assert json.loads(detail['properties'])['io.unitycatalog.tableId'] == catalog['table_id']
+        table_identities[table] = {'delta_id': detail['id'], 'uc_table_id': catalog['table_id'],
+                                   'detail_location': detail['location']}
     host_raw = (ROOT / 'src/edp_lab/ingestion/n450_authorization.py').read_bytes()
     host_sha = sha(host_template(host_raw))
     rendered = (ROOT / 'notebooks/clean_n450_m1.py').read_text().replace(
@@ -96,7 +113,7 @@ def build(destination):
     submissions = {}
     for phase in PHASES:
         submission = {'run_name': 'n450-m1-step3-'+phase, 'timeout_seconds': 28800 if phase == 'query' else 3600,
-            'idempotency_token': 'n450-m1-step3-v1-'+phase,
+            'idempotency_token': 'n450-m1-step3-v1-'+phase+('-exact-path-v1' if phase == 'smoke' else '-clean-write-fix-v1' if phase == 'publish' else ''),
             'tasks': [{'task_key': phase, 'timeout_seconds': 28800 if phase == 'query' else 3600, 'max_retries': 0,
                 'notebook_task': {'notebook_path': WORKSPACE+'/runtime', 'source': 'WORKSPACE',
                                   'base_parameters': {'phase': phase}}}]}
@@ -119,9 +136,10 @@ def build(destination):
         'processing_bindings': prefix + '/processing-bindings.proposed.json',
         'c300_reuse': prefix + '/c300-reuse.proposed.json',
         'c300_versions': versions, 'c300_storage_locations': identities, 'c300_gate': gate_path,
+        'c300_table_identities': table_identities, 'c300_detail_evidence': detail_path,
         'evidence_aliases': aliases, 'files_sha256': files, 'host_template_sha256': host_sha,
         'runtime_sha256': sha(runtime.read_bytes()), 'notebook_sha256': sha(rendered),
-        'dependency_policy': 'Use existing workspace duckdb/pyarrow/Spark; fail before outputs if '
+        'dependency_policy': 'Use existing workspace pyarrow/Spark; DuckDB is offline-only. Fail before outputs if '
             'missing. No pip/network dependency installation. Record actual versions.',
         'permissions': {'RAW': 'READ_ONLY_EXACT_450_OBJECTS', 'C300': 'READ_ONLY_VERSION_0',
             'deployment': ['runtime.zip', 'contract.json', 'owner-record.approved.json',
@@ -162,7 +180,7 @@ def build(destination):
     installed_host = re.sub(r'^OWNER_GRANT_SHA256 = .*$', 'OWNER_GRANT_SHA256 = "'+pin+'"',
                             installed_host, flags=re.MULTILINE)
     installed_host = re.sub(r'^OWNER_GRANT_PATH = .*$',
-        'OWNER_GRANT_PATH = Path("metadata/authorizations/n450_processing_v1.json")',
+        'OWNER_GRANT_PATH = Path("metadata/authorizations/n450_processing_v5.json")',
         installed_host, flags=re.MULTILINE)
     review = {'status': 'READY_FOR_OWNER_REVIEW_NOT_INSTALLED', 'contract_sha256': sha(contract_raw),
         'proposed_record_sha256': sha(pending_raw), 'expected_approved_record_host_pin': pin,
@@ -170,7 +188,7 @@ def build(destination):
         'host_template_sha256': host_sha, 'expected_installed_host_code_sha256': sha(installed_host.encode()),
         'submission_sha256': submissions, 'new_processing_bindings': 450,
         'reused_C300_bindings': 732, 'physical_C750': 750, 'logical_bindings': 1182,
-        'host_record_path': 'metadata/authorizations/n450_processing_v1.json',
+        'host_record_path': 'metadata/authorizations/n450_processing_v5.json',
         'installed': False, 'remote_deployed': False}
     import shlex
     installer = """#!/bin/sh
@@ -198,11 +216,11 @@ source = host.read_bytes()
 assert sha(host_template(source)) == '__TEMPLATE__', 'Host code differs from reviewed implementation'
 updated, n = re.subn(r'^OWNER_GRANT_SHA256 = .*$', 'OWNER_GRANT_SHA256 = "__PIN__"', source.decode(), flags=re.MULTILINE)
 assert n == 1
-updated, n = re.subn(r'^OWNER_GRANT_PATH = .*$', 'OWNER_GRANT_PATH = Path("metadata/authorizations/n450_processing_v1.json")', updated, flags=re.MULTILINE)
+updated, n = re.subn(r'^OWNER_GRANT_PATH = .*$', 'OWNER_GRANT_PATH = Path("metadata/authorizations/n450_processing_v5.json")', updated, flags=re.MULTILINE)
 assert n == 1
 updated = updated.encode()
 assert sha(updated) == '__HOST__' and host_template(updated) == host_template(source)
-target = Path('metadata/authorizations/n450_processing_v1.json')
+target = Path('metadata/authorizations/n450_processing_v5.json')
 if target.exists():
     assert target.read_bytes() == approved, 'Existing processing record differs; STOP'
 else:

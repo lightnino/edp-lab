@@ -29,7 +29,10 @@ def prepared(tmp_path_factory):
     if not (ROOT / 'runs/n450/step3-scope-v1/execution-scope.proposed.json').exists():
         pytest.skip('Local sealed Step 3 scope evidence unavailable')
     destination = tmp_path_factory.mktemp('offline-prepared') / 'packet'
+    installed = ROOT / 'metadata/authorizations/n450_processing_v1.json'
+    before = installed.read_bytes() if installed.exists() else None
     load_script('prepare_n450_m1_runtime').build(destination)
+    assert (installed.read_bytes() if installed.exists() else None) == before
     return destination
 
 
@@ -52,7 +55,10 @@ def installed_test_host(tmp_path, monkeypatch, prepared):
     return root, grant, entries, install
 
 
-def test_existing_admission_pin_does_not_grant_processing():
+def test_existing_admission_pin_does_not_grant_processing(monkeypatch):
+    monkeypatch.setattr(auth, 'OWNER_GRANT_PATH', Path('metadata/authorizations/n450_execution_v1.json'))
+    monkeypatch.setattr(auth, 'OWNER_GRANT_SHA256',
+                        '50507c7fcde3d5d7295bfa396cd216587402c6852eb5e6d827ee3ad53beb3a48')
     with pytest.raises(ScopeDenied, match='ACTION_NOT_AUTHORIZED'):
         auth.authorize(ROOT, 'remote_processing', [], cohort='C750')
 
@@ -64,6 +70,36 @@ def test_complete_authorized_registry_and_c300_reuse(installed_test_host):
     assert len(approved['entries']) == 450 and len(approved['reuse']) == 732
     assert set(approved['contract']['c300_versions'].values()) == {0}
     assert not (root / 'output').exists()
+
+
+def test_packaged_inventory_without_host_path(prepared, monkeypatch):
+    root = prepared / 'payload'
+    contract = runtime.load_contract(root)
+    gate = runtime.snapshot_gate(root, contract)
+    doc = gate.document()
+    original_read = Path.read_bytes
+
+    def read_without_mac_path(path):
+        assert str(path) != doc['inventory_reference'], 'Mac-local inventory read'
+        return original_read(path)
+
+    monkeypatch.setattr(Path, 'read_bytes', read_without_mac_path)
+    gate.verify_inventory(root)
+    alias = root / '.evidence' / doc['inventory_sha256']
+    raw = alias.read_bytes()
+    try:
+        alias.write_bytes(b'changed')
+        with pytest.raises(ScopeDenied, match='INVENTORY_HASH_MISMATCH'):
+            gate.verify_inventory(root)
+        alias.unlink()
+        with pytest.raises(ScopeDenied, match='MISSING_INVENTORY_EVIDENCE'):
+            gate.verify_inventory(root)
+    finally:
+        alias.write_bytes(raw)
+    changed = copy.deepcopy(contract)
+    changed['evidence_aliases'][doc['inventory_reference']] = doc['inventory_reference']
+    with pytest.raises(ScopeDenied, match='UNAPPROVED_METADATA_ALIAS'):
+        runtime.snapshot_gate(root, changed)
 
 
 @pytest.mark.parametrize('kind', ['missing', 'forged', 'reordered', 'duplicate', 'subset', 'code'])
@@ -173,7 +209,7 @@ def test_fixed_submit_permissions_no_arbitrary_remote_operations():
     controller = load_script('run_n450_m1')
     for phase in runtime.PHASES:
         good = {'run_name': 'n450-m1-step3-'+phase, 'timeout_seconds': 28800 if phase == 'query' else 3600,
-            'idempotency_token': 'n450-m1-step3-v1-'+phase,
+            'idempotency_token': 'n450-m1-step3-v1-'+phase+('-exact-path-v1' if phase == 'smoke' else '-clean-write-fix-v1' if phase == 'publish' else ''),
             'tasks': [{'task_key': phase, 'timeout_seconds': 28800 if phase == 'query' else 3600, 'max_retries': 0,
                 'notebook_task': {'notebook_path': runtime.WORKSPACE+'/runtime', 'source': 'WORKSPACE',
                                   'base_parameters': {'phase': phase}}}]}
@@ -281,7 +317,10 @@ def test_reader_and_independent_verifier_access_adapter(installed_test_host, tmp
 
 
 @pytest.mark.parametrize('entrypoint', ['clean_publish', 'query_publish'])
-def test_publication_entrypoints_reject_old_admission_grant(entrypoint):
+def test_publication_entrypoints_reject_old_admission_grant(entrypoint, monkeypatch):
+    monkeypatch.setattr(auth, 'OWNER_GRANT_PATH', Path('metadata/authorizations/n450_execution_v1.json'))
+    monkeypatch.setattr(auth, 'OWNER_GRANT_SHA256',
+                        '50507c7fcde3d5d7295bfa396cd216587402c6852eb5e6d827ee3ad53beb3a48')
     from edp_lab.materialization import n450_spark
     function = getattr(n450_spark, entrypoint)
     args = (None, ROOT, {'entries': []})
@@ -362,13 +401,19 @@ def test_cold_remote_bootstrap_guard_offline(installed_test_host, prepared, tmp_
         target = base/('runtime.zip' if damage == 'runtime' else 'contract.json')
         target.write_bytes(target.read_bytes()+b'changed')
     expected = runtime.load_contract(root)['host_template_sha256']
-    code = '''import importlib.util,json,sys
+    code = '''import importlib.abc,importlib.util,json,sys
 from pathlib import Path
+class RejectDuckDB(importlib.abc.MetaPathFinder):
+    def find_spec(self, fullname, path=None, target=None):
+        if fullname.split('.')[0] == 'duckdb':
+            raise AssertionError('Packaged Spark runtime imported DuckDB')
+sys.meta_path.insert(0, RejectDuckDB())
 spec=importlib.util.spec_from_file_location('offline_boot',sys.argv[1])
 m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m)
 root=m.boot(Path(sys.argv[2]),sys.argv[3])
 from edp_lab.ingestion import n450_authorization as a
 from edp_lab.materialization.n450_runtime import load_contract
+from edp_lab.materialization.n450_spark import run
 c=load_contract(root);e=json.loads((root/c['processing_bindings']).read_bytes())
 r=a.authorize(root,'remote_processing',[x['registered_binding'] for x in e],cohort='C750')
 print(r['status'])
@@ -398,7 +443,7 @@ def test_generated_owner_script_is_inert_and_syntax_valid(prepared):
     review = json.loads((prepared/'review.json').read_bytes())
     assert sha(script.read_bytes()) == review['owner_installer_sha256']
     assert json.loads((prepared/'owner-record.proposed.json').read_bytes())['status'] == 'PENDING_OWNER_REVIEW'
-    assert not (ROOT/'metadata/authorizations/n450_processing_v1.json').exists()
+    assert not (prepared/'owner-record.approved.json').exists()
 
 
 def test_bounded_validation_groups_and_verified_check_reuse(tmp_path, monkeypatch):
@@ -427,3 +472,69 @@ def test_bounded_validation_groups_and_verified_check_reuse(tmp_path, monkeypatc
         checkpoint_validation(base, other, lambda: 1)
     assert not (path.parent/(canonical_hash(other)+'.json')).exists()
     assert list(path.parent.glob('*-failed-*.json'))
+
+
+@pytest.mark.parametrize('change', [None, 'delta_id', 'uc_id', 'location', 'format'])
+def test_c300_identity_uses_frozen_detail_representation(change):
+    """Blank historical location is accepted only with both original identities."""
+    from edp_lab.materialization.n450_spark import verify_c300_identity
+
+    evidence_path = ROOT / 'runs/n450/step3-exact-path-v1/comparison.json'
+    if not evidence_path.exists():
+        pytest.skip('Targeted live C300 metadata evidence unavailable')
+    evidence = json.loads(evidence_path.read_bytes())
+    for i, table in enumerate(evidence['tables']):
+        result = json.loads((ROOT / f'runs/n450/step3-exact-path-v1/{i}-detail-result.json').read_bytes())
+        names = [c['name'] for c in result['manifest']['schema']['columns']]
+        detail = dict(zip(names, result['result']['data_array'][0]))
+        detail['properties'] = json.loads(detail['properties'])
+        contract = {'c300_storage_locations': {table['table']: table['expected_storage_location']},
+                    'c300_table_identities': {table['table']: {
+                        'delta_id': table['delta_id'], 'uc_table_id': table['catalog_table_id'],
+                        'detail_location': table['baseline_detail_location']}}}
+        if change == 'delta_id':
+            detail['id'] = 'different-delta-table'
+        elif change == 'uc_id':
+            detail['properties']['io.unitycatalog.tableId'] = 'different-uc-table'
+        elif change == 'location':
+            detail['location'] = 's3://different/table'
+        elif change == 'format':
+            detail['format'] = 'parquet'
+        from types import SimpleNamespace
+        spark = SimpleNamespace(sql=lambda statement, detail=detail: SimpleNamespace(first=lambda: detail))
+        if change is None:
+            verify_c300_identity(spark, table['table'], contract)
+        else:
+            with pytest.raises(ScopeDenied, match='C300_TABLE_REPLACED'):
+                verify_c300_identity(spark, table['table'], contract)
+
+
+def test_exact_approved_paths_across_both_roots(installed_test_host, monkeypatch):
+    from types import SimpleNamespace
+
+    root, _, entries, _ = installed_test_host
+    access = runtime.ProcessingAccess(root, [e['registered_binding'] for e in entries])
+    paths = {Path(e['remote_raw_path'].removeprefix('dbfs:')): e['expected_raw_bytes']
+             for e in entries}
+    assert len(paths) == 450
+    assert sum('/n750-raw-' in str(p) for p in paths) == 55
+    # Simulate only file metadata at the exact approved UC paths; no RAW copied.
+    original = {name: getattr(Path, name) for name in ('is_file', 'is_symlink', 'resolve', 'stat')}
+    monkeypatch.setattr(Path, 'is_file', lambda p: True if p in paths else original['is_file'](p))
+    monkeypatch.setattr(Path, 'is_symlink', lambda p: False if p in paths else original['is_symlink'](p))
+    monkeypatch.setattr(Path, 'resolve', lambda p, **kw: p if p in paths else original['resolve'](p, **kw))
+    monkeypatch.setattr(Path, 'stat', lambda p, **kw: SimpleNamespace(st_size=paths[p])
+                        if p in paths else original['stat'](p, **kw))
+    for e in entries:
+        assert access.path_for(e['registered_binding']) == Path(e['remote_raw_path'].removeprefix('dbfs:'))
+    # Even a sibling path in either approved root cannot be substituted.
+    for index in (0, 395):
+        entry = access.entries[entries[index]['binding_sha256']]
+        before = entry['remote_raw_path']
+        access.entries[entry['binding_sha256']] = {**entry, 'remote_raw_path': before + '.unapproved'}
+        with pytest.raises(ScopeDenied, match='UNREGISTERED_PROCESSING_BINDING'):
+            access.validate_entry(entry)
+        access.entries[entry['binding_sha256']] = entry
+    changed = {**entries[0]['registered_binding'], 'raw_sha256': '0'*64}
+    with pytest.raises(ScopeDenied, match='UNREGISTERED_PROCESSING_BINDING'):
+        access.path_for(changed)

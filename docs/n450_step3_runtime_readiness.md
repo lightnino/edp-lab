@@ -1,5 +1,8 @@
 # N450 / C750 M1 runtime readiness
 
+Historical readiness checkpoint. Subsequent authorized execution and its evidence
+are recorded in [N450 / C750 execution evidence](n450_c750_execution_evidence.md).
+
 This is preparation only. No processing grant is installed, no remote deployment
 or job has run, and no native production CLEAN/QUERYABLE output is claimed.
 Original Step 3 scope proposal remains at `runs/n450/step3-scope-v1/`, fingerprint

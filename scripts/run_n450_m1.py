@@ -11,10 +11,18 @@ from edp_lab.ingestion import n450_authorization as auth
 from edp_lab.ingestion.universe import sha
 from edp_lab.materialization.n450_runtime import BASE, CONTRACT, PHASES, WORKSPACE, require
 
+# Exact failed deployment eligible for the authorized exact-path correction only.
+PREVIOUS_DEPLOYMENT = {
+    'runtime.zip': '5b073834c0950ec09212c9fab52b1c754953e3cc8345ebf2cfb221750e481ac0',
+    'contract.json': '3b0e59c79f2eafb3ba78be5c3ece96b4c18e4177361c84d1f875fa5bf2b6b037',
+    'owner-record.approved.json': '3fd9c5a6ccb62ffd79610a84dc8ac8cb78f674581a2edcfbd23d18da50e91654',
+    'n450_authorization.host.py': '8a8123b24b3c8bc30983af76b9ad519e2f4fe9dd345719fb645192f69a9eb9b1',
+}
+
 
 def validate_submission(phase, submission):
     expected = {'run_name': 'n450-m1-step3-'+phase, 'timeout_seconds': 28800 if phase == 'query' else 3600,
-        'idempotency_token': 'n450-m1-step3-v1-'+phase,
+        'idempotency_token': 'n450-m1-step3-v1-'+phase+('-exact-path-v1' if phase == 'smoke' else '-clean-write-fix-v1' if phase == 'publish' else ''),
         'tasks': [{'task_key': phase, 'timeout_seconds': 28800 if phase == 'query' else 3600, 'max_retries': 0,
             'notebook_task': {'notebook_path': WORKSPACE+'/runtime', 'source': 'WORKSPACE',
                               'base_parameters': {'phase': phase}}}]}
@@ -92,11 +100,15 @@ def main():
         for name, source in sources.items():
             target = 'dbfs:' + BASE + '/' + name
             if name in names:
-                require(sha(cli('fs', 'cat', target)) == sha(source.read_bytes()),
-                        'EXISTING_DEPLOYMENT_HASH_MISMATCH')
+                current = sha(cli('fs', 'cat', target))
+                if current != sha(source.read_bytes()):
+                    require(current == PREVIOUS_DEPLOYMENT[name], 'EXISTING_DEPLOYMENT_HASH_MISMATCH')
+                    cli('fs', 'cp', str(source), target, '--overwrite')
+                    require(sha(cli('fs', 'cat', target)) == sha(source.read_bytes()),
+                            'DEPLOYMENT_READBACK_MISMATCH')
             else:
                 cli('fs', 'cp', str(source), target)  # no --overwrite
-        # No overwrite flag; repeat deployment is allowed only for identical source.
+        # Notebook bytes are unchanged by the inventory correction.
         cli('workspace', 'mkdirs', WORKSPACE)
         listing = json.loads(cli('workspace', 'list', WORKSPACE, '-o', 'json'))
         deployed = any(item['path'] == WORKSPACE+'/runtime' for item in listing)

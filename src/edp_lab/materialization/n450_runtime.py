@@ -20,6 +20,7 @@ from edp_lab.ingestion.universe import (
     AUTHORITY_PATH,
     BINDINGS_PATH,
     BINDINGS_SHA256,
+    ScopeDenied,
     UniverseGate,
     sha,
 )
@@ -68,6 +69,19 @@ def host_template(raw):
     return text.encode()
 
 
+class PackagedInventoryGate(UniverseGate):
+    """Read the original inventory bytes from their pinned package location."""
+
+    def verify_inventory(self, root):
+        doc = self.document()
+        try:
+            raw = (Path(root) / '.evidence' / doc['inventory_sha256']).read_bytes()
+        except OSError:
+            raise ScopeDenied('MISSING_INVENTORY_EVIDENCE') from None
+        if sha(raw) != doc['inventory_sha256']:
+            raise ScopeDenied('INVENTORY_HASH_MISMATCH')
+
+
 def snapshot_gate(root, contract):
     """Verify identical authority bytes via explicit hash-addressed metadata aliases.
 
@@ -84,12 +98,16 @@ def snapshot_gate(root, contract):
             and json.loads(approval)['manifest_sha256'] == sha(raw), 'INVALID_OWNER_AUTHORITY')
     require(side['universe_manifest_sha256'] == sha(raw) and side['universe_version'] == '1',
             'INVALID_COHORT_AUTHORITY')
+    inventory = '.evidence/' + document['inventory_sha256']
+    require(contract['evidence_aliases'].get(document['inventory_reference']) == inventory
+            and contract['files_sha256'].get(inventory) == document['inventory_sha256'],
+            'UNAPPROVED_METADATA_ALIAS')
     for logical, digest in side['evidence'].items():
         relative = contract['evidence_aliases'].get(logical, logical)
         require(relative == logical if not Path(logical).is_absolute()
                 else relative == '.evidence/' + digest, 'UNAPPROVED_METADATA_ALIAS')
         require(sha((root / relative).read_bytes()) == digest, 'AUTHORITY_EVIDENCE_CHANGED')
-    return UniverseGate(raw, sha(raw), side_raw)
+    return PackagedInventoryGate(raw, sha(raw), side_raw)
 
 
 def load_contract(root):
@@ -216,8 +234,13 @@ class ProcessingAccess:
                 'UNREGISTERED_PROCESSING_BINDING')
         self.validate_entry(entry)
         remote = entry['remote_raw_path']
-        require(remote.startswith('dbfs:/Volumes/workspace/edp_lab/raw/n450-raw-v1-4a4585f6b03d/')
-                and '..' not in Path(remote).parts, 'UNAPPROVED_REMOTE_PATH')
+        # Exact entry membership was checked against the owner-pinned registry,
+        # frozen identity and remote hash evidence during authorization. Storage
+        # roots do not define membership: 55 approved objects live under N750.
+        require(remote.startswith('dbfs:/Volumes/workspace/edp_lab/raw/')
+                and '..' not in Path(remote).parts
+                and str(Path(remote.removeprefix('dbfs:'))) == remote.removeprefix('dbfs:'),
+                'UNAPPROVED_REMOTE_PATH')
         path = Path(remote.removeprefix('dbfs:'))
         require(not path.is_symlink() and path.resolve() == path and path.is_file()
                 and path.stat().st_size == entry['expected_raw_bytes'], 'REMOTE_RAW_LOCATION_OR_SIZE')
