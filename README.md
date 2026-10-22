@@ -1,5 +1,8 @@
 # EDP Lab
 
+> **Post-closeout (2026-10-23 SGT):** Day 4 has a new [explicit owner-override closeout](docs/day4_owner_override_closeout.md), [result-freeze V1](metadata/freezes/O_C1500_M2_v1/freeze.json) and [Exit V2](metadata/evaluations/day4_exit_v2.json). Source-preserving freeze is a Git evidence marker, not a newly verified Databricks storage freeze. The historical CANDIDATE/PARTIAL records remain unchanged.
+
+
 Enterprise Data Platform learning lab. Source Identity, GOLD_V2 registration, snapshot-scoped Parsing/Profiling Freeze V2 and Governance Policy are approved. The five deterministic profiling functions are implemented and verified on GOLD_V2. See [profiling completion evidence](docs/preflight_exit_checklist.md).
 
 ## Setup (macOS/Linux)
