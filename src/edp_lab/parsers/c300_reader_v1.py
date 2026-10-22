@@ -53,7 +53,7 @@ def occurrences(root: Path, registry: dict, binding: dict, approval: dict):
     yield from validated_occurrences(root, binding)
 
 
-def validated_occurrences(root: Path, binding: dict):
+def validated_occurrences(root: Path, binding: dict, *, access=None):
     """Engineering validation iterator; not an activation or profiling entry point.
 
     Hash gates precede the first record. Locators refer to uncompressed member
@@ -64,8 +64,8 @@ def validated_occurrences(root: Path, binding: dict):
 
     scoped = binding.get('profile_id') == exception.PROFILE
     if scoped:
-        exception.check_scope(root, binding)
-    path = root / binding['raw_path']
+        exception.check_scope(root, binding, access=access)
+    path = root / binding['raw_path'] if access is None else access.path_for(binding)
     if file_sha256(path) != binding['raw_sha256']:
         raise ValueError('RAW_SHA256_MISMATCH')
     with member_stream(path, binding['archive_member']) as stream:

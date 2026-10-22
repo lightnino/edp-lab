@@ -33,13 +33,16 @@ def check_binding(binding):
             'SRC010128_PROFILE_BINDING_MISMATCH')
 
 
-def check_scope(root: Path, binding):
+def check_scope(root: Path, binding, *, access=None):
     """Check sealed admission, physical location and Universe before opening RAW."""
     from edp_lab.ingestion import n450_authorization as auth
 
     check_binding(binding)
     require(binding.get('decoding_provenance') == provenance(binding),
             'SRC010128_DECODING_PROVENANCE_REQUIRED')
+    if access is not None:
+        access.path_for(binding)  # Installed authority, exact registry and remote identity.
+        return
     auth.validate_packet(root)
     grant_raw = (root / auth.OWNER_GRANT_PATH).read_bytes()
     require(hashlib.sha256(grant_raw).hexdigest() == auth.OWNER_GRANT_SHA256,

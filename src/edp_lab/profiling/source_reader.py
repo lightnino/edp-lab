@@ -12,8 +12,6 @@ from dataclasses import dataclass
 from importlib.metadata import distributions
 from pathlib import Path
 
-import duckdb
-
 from edp_lab.ingestion.source_identity import verify_source_identity
 from edp_lab.ingestion.universe import ScopeDenied, UniverseGate, processing
 from edp_lab.profiling.parser_evidence import read_member
@@ -33,6 +31,8 @@ def canonical_hash(value: object) -> str:
 
 def execution_provenance(root: Path) -> dict:
     """Capture actual code/dependencies, including uncommitted code contents."""
+    import duckdb
+
     def git(*args):
         result = subprocess.run(["git", "-C", str(root), *args], capture_output=True,
                                 text=True, check=False)
