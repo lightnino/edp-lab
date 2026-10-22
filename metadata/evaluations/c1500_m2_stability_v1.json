@@ -1,0 +1,299 @@
+{
+  "authority": [
+    "docs/evaluation_contract.md",
+    "metadata/evaluations/stability_m1_v1.json",
+    "metadata/evaluations/lossless6_fin_suite_v2.json"
+  ],
+  "combined_candidate": {
+    "bidirectional_full_schema_differences": [
+      {
+        "differences": 0,
+        "direction": "candidate_minus_pinned",
+        "scope": "NEW_N750_M2_EVALUATION"
+      },
+      {
+        "differences": 0,
+        "direction": "pinned_minus_candidate",
+        "scope": "NEW_N750_M2_EVALUATION"
+      },
+      {
+        "differences": 0,
+        "direction": "candidate_minus_pinned",
+        "scope": "NEW_N750_SEC_RECORD"
+      },
+      {
+        "differences": 0,
+        "direction": "pinned_minus_candidate",
+        "scope": "NEW_N750_SEC_RECORD"
+      },
+      {
+        "differences": 0,
+        "direction": "candidate_minus_pinned",
+        "scope": "NEW_N750_XML_PROPERTY"
+      },
+      {
+        "differences": 0,
+        "direction": "pinned_minus_candidate",
+        "scope": "NEW_N750_XML_PROPERTY"
+      },
+      {
+        "differences": 0,
+        "direction": "candidate_minus_pinned",
+        "scope": "OLD_C750_RECORD"
+      },
+      {
+        "differences": 0,
+        "direction": "pinned_minus_candidate",
+        "scope": "OLD_C750_RECORD"
+      }
+    ],
+    "counts": {
+      "NEW_N750_M2_EVALUATION": {
+        "incomplete_envelopes": 0,
+        "occurrences": 12948,
+        "sources": 5
+      },
+      "NEW_N750_SEC_RECORD": {
+        "incomplete_envelopes": 0,
+        "occurrences": 3052854,
+        "sources": 745
+      },
+      "NEW_N750_XML_PROPERTY": {
+        "incomplete_envelopes": 0,
+        "occurrences": 21616,
+        "sources": 5
+      },
+      "OLD_C750_RECORD": {
+        "incomplete_envelopes": 0,
+        "occurrences": 316063821,
+        "sources": 750
+      }
+    },
+    "multiset_statement_id": "01f1ce49-0eae-1efb-afbc-ab3234bc183a",
+    "statement_id": "01f1ce46-c419-1872-a44c-ac5a17128975"
+  },
+  "decimal": {
+    "evaluations": 12948,
+    "mismatches": 0,
+    "outcomes": {
+      "MISSING": 155,
+      "VALID": 12793
+    },
+    "present_empty": {},
+    "structurally_absent": {
+      "SRC010451": 31,
+      "SRC010452": 124
+    }
+  },
+  "difference_classification": {
+    "EXPECTED_ADDITIVE": "approved typed Decimal and outcome/version columns",
+    "UNCHANGED": "historical M1 and source/run/locator fields",
+    "UNEXPLAINED_REGRESSION": 0,
+    "UNRESOLVED": "Treasury economic semantics, source NULL meaning and wider financial relationships"
+  },
+  "evidence_locations": {
+    "candidate_sql": "sql/stability/c1500_m2_v1/combined_candidate.sql",
+    "combined_counts_request": "runs/c1500-m2-stability/v1/combined-counts-request.json",
+    "combined_counts_result": "runs/c1500-m2-stability/v1/combined-counts-result.json",
+    "combined_multiset_request": "runs/c1500-m2-stability/v1/combined-full-schema-multiset-null-v2-request.json",
+    "combined_multiset_result": "runs/c1500-m2-stability/v1/combined-full-schema-multiset-null-v2-result.json",
+    "fin_001_result": "runs/c1500-m2-stability/v1/fin-001-combined-result.json",
+    "fin_002_result": "runs/c1500-m2-stability/v1/fin-002-combined-result.json",
+    "fin_projection_sql": "sql/stability/c1500_m2_v1/fin_candidate_prefix.sql",
+    "fin_typed_raw_witnesses_result": "runs/c1500-m2-stability/v1/fin-typed-raw-witnesses-result.json",
+    "fin_witnesses_result": "runs/c1500-m2-stability/v1/fin-witnesses-result.json",
+    "historical_archive": "/Volumes/workspace/edp_lab/raw/day4-m2/historical_v1/historical-c750-m2-evidence-v1.zip",
+    "historical_c300_view_result": "runs/c1500-m2-stability/v1/historical-c300-view-definition-result.json",
+    "historical_c750_view_result": "runs/c1500-m2-stability/v1/historical-view-definition-result.json",
+    "historical_m1_references": "metadata/freezes/O_C750_M1_v1/references.json",
+    "historical_m2_baseline": "metadata/baselines/O_C750_M2_v1.json",
+    "historical_typed_detail_result": "runs/c1500-m2-stability/v1/historical-typed-detail-result.json",
+    "historical_typed_history_result": "runs/c1500-m2-stability/v1/historical-typed-history-result.json",
+    "historical_verification": "runs/historical-m2/v1/verification.json",
+    "local_oracle": "runs/c1500-m2-stability/v1/local-oracle.json",
+    "n750_clean_completion": "runs/n750/step8-v1/clean/completion.json",
+    "n750_delta_readback": "runs/n750/step8-v1/publication/delta-readback.json",
+    "n750_live_verify": "runs/n750/step8-v1/live-verify-v1.json",
+    "n750_queryable": "runs/n750/step8-v1/publication/queryable.json",
+    "n750_raw_completion": "runs/n750/step8-v1/raw/completion.json",
+    "treasury_feed_metadata": "runs/c1500-m2-stability/v1/treasury-feed-metadata.json"
+  },
+  "evidence_sha256": {
+    "candidate_sql": "e6b7c70bfcaefc09199daca0563e36263b49f27b4e69b17de55bbd4a8036db01",
+    "combined_counts_request": "1c0aa5a59b1512d87c816b46817f686906f7b965551f0bc689e39563d8f9b1a0",
+    "combined_counts_result": "a8ee635d7ce2ea682937990063722633c6672a33af24c4c4b511ce84a6779f68",
+    "combined_multiset_request": "24dd56cbea35e3bbbd103fa4971b9189ba42222cd09ad03b95b4049af658102c",
+    "combined_multiset_result": "a1b722fe45baac163b4eabfd424b41643cb6b293afd8f81e636cab8deec57bf6",
+    "fin_001_result": "0a392612b72aeac7dd3d7a3333d3dad1dc7318861820e0ddfa2cf9c3ae862654",
+    "fin_002_result": "5c32ee5fbd6b08fd0d240e0045a84f1ca3d3782df2d967efb91f9a2a32afed38",
+    "fin_projection_sql": "34b446fcda0a056865508d5d0bfe2c812f91efbfc820d0e03cfeafd310a6cfd2",
+    "fin_typed_raw_witnesses_result": "9d4026a995ff6e1731a85b934136a72e9707870e6fc59c02115a4abb67b42d18",
+    "fin_witnesses_result": "ac86c1e6a6917df5f86b8f13b95a1e801eb0e42efa430c3e84c5058a9108f1ef",
+    "historical_archive": "85fd7c2be09b98a4852ce376dbf5293f44b13256f6dd3db57f0bf4234522ebf7",
+    "historical_c300_view_result": "7bd4564b6993c9ecdc901ebc728ede6ccfd6f5b7f96633e1547a2919a604c1a0",
+    "historical_c750_view_result": "6017f6bd5c4b288636d3adbfdabcbc6e5e16109c5a2a8683ebd8d16a36cce4fd",
+    "historical_m1_references": "be2001860d5900b64bc4bdc3178b7367d54cbb89e7de703e515fd4c9cb1d5a50",
+    "historical_m2_baseline": "2ddba37c75ae5a2d207e6511b8f57bef6eb47a6dd9d359ad8c0e1e83bf4c85ee",
+    "historical_typed_detail_result": "d761e9ac254c16793b836daea8433d5c0b06301ed7202901eaef3614275b194b",
+    "historical_typed_history_result": "ceff5dce74ac028eced99add841add3c29c67b143d7874d51d698c4a03431ce3",
+    "historical_verification": "d9855eb7d23903248899f1c6b3a8a9159b6731c07e7f840850db84c74f5f88ee",
+    "local_oracle": "afe1b2b30d8d8e430adc960bc05352f4ed17e2c171261fcca8a65a058e9d4690",
+    "n750_clean_completion": "a95af935e8b1bdc043e2e458a01a582130642746a4cb1b8579b922bec6560fbb",
+    "n750_delta_readback": "a99f2ca46886c439ecbdffff24b5cb14223ea7dff741331d4ec0d974c2e4bd96",
+    "n750_live_verify": "7cbefeb505f0dd98bfee911d47a234522c8d5158b86f4104c0f6867094d80e7f",
+    "n750_queryable": "32f0cdb08fe6fbebc28e763783a832f73268c40254876c2debfd6b001cd3e6d8",
+    "n750_raw_completion": "c58a1a36d99b71d79948ea5a41b82069df40d78d8797611411516de52255ac86",
+    "treasury_feed_metadata": "02ca8fe054a194d7971b269a70ad4339786c617a0eaf2628693e9d0a24bf53e6"
+  },
+  "fin": {
+    "FIN_001": "2/2 PASS",
+    "FIN_002": "1/1 PASS",
+    "exact_fixture_differences": 0,
+    "lineage_witnesses": 13,
+    "wrong_equity_difference": "1232700000.0000"
+  },
+  "full_acceptance": "BLOCKED",
+  "lossless": {
+    "combined_1_to_5": "PASS",
+    "combined_mandatory_fin_6": "PASS",
+    "combined_treasury_economic_6": "NOT_IMPLEMENTED",
+    "new_1_to_5": "PASS",
+    "new_treasury_economic_6": "NOT_IMPLEMENTED",
+    "old_1_to_5": "PASS",
+    "old_mandatory_fin_6": "PASS"
+  },
+  "model_versions": {
+    "decimal_rule": "EXACT_DECIMAL_38_4_V1",
+    "historical_source_rule": "FSDS_NUM_VALUE_SCOPE_V1",
+    "lexical": "M1_LEXICAL_V1",
+    "treasury_source_rule": "TREASURY_RATE_QNAME_SCOPE_V1",
+    "typed": "M2_ADDITIVE_TYPED_NUMERIC_V1"
+  },
+  "no_new_tables_or_historical_replay": true,
+  "operational": {
+    "clean_sec_data_records_per_second": 66411.8326432774,
+    "clean_seconds": 45.89,
+    "clean_source_fields_per_second": 332530.20265853126,
+    "clean_sources_per_second": 16.343429941163652,
+    "cpu_memory_dbu_cost": "UNAVAILABLE",
+    "historical_m2_build_run_id": 910030711554960,
+    "historical_m2_failed_preflight_run_id": 693588401750111,
+    "historical_m2_verify_run_id": 426457626095564,
+    "human_review_event_count_duration": "UNAVAILABLE",
+    "owner_processing_grant_artifacts": 1,
+    "prior_approved_runtime_budget": "UNAVAILABLE",
+    "provider_internal_retry_attempts": "UNAVAILABLE",
+    "publication_intervals_seconds": {
+      "coverage_lineage": 43.465,
+      "create": 55.145,
+      "delta_validate": 91.842,
+      "views": 27.862
+    },
+    "remote_reused": 450,
+    "remote_seconds": 675.667,
+    "remote_sources_per_second": 1.110014252583003,
+    "remote_uploaded": 300,
+    "remote_verified": 750,
+    "remote_verified_bytes_per_second": 398603.787072626,
+    "step8_clean_run_id": "n750_step8_v1",
+    "step8_indexed_failed_sql_results": 0,
+    "step8_observed_failed_job_recovery": "NOT_APPLICABLE",
+    "step8_sql_succeeded_receipts": 80,
+    "warehouse_id": "589e80595c7c8cb8"
+  },
+  "output_pins": {
+    "historical_m1_delta_ids": {
+      "workspace.edp_lab.clean_c300_m1_bindings_main_recovery_20261021_v4_full": "64f35e9a-902b-48c8-ba37-45749c16b478",
+      "workspace.edp_lab.clean_c300_m1_bindings_num_recovery_20261021_v1_recovery": "e82a1986-6bd0-4431-b7e3-110842612223",
+      "workspace.edp_lab.clean_c300_m1_records_main_recovery_20261021_v4_full": "0c92f52d-7de3-4e77-940f-92efe735a7b5",
+      "workspace.edp_lab.clean_c300_m1_records_num_recovery_20261021_v1_recovery": "c7fdfcf6-af29-4573-bec9-21817fc3e201",
+      "workspace.edp_lab.clean_n450_m1_bindings_n450_step3_v1": "a835120b-7149-43fb-9f26-4dc50462be16",
+      "workspace.edp_lab.clean_n450_m1_records_n450_step3_v1": "ceb867ff-e93e-4c23-b778-c312900fc4a5"
+    },
+    "historical_m1_input_versions": {
+      "workspace.edp_lab.clean_c300_m1_bindings_main_recovery_20261021_v4_full": 0,
+      "workspace.edp_lab.clean_c300_m1_bindings_num_recovery_20261021_v1_recovery": 0,
+      "workspace.edp_lab.clean_c300_m1_records_main_recovery_20261021_v4_full": 0,
+      "workspace.edp_lab.clean_c300_m1_records_num_recovery_20261021_v1_recovery": 0,
+      "workspace.edp_lab.clean_n450_m1_bindings_n450_step3_v1": 0,
+      "workspace.edp_lab.clean_n450_m1_records_n450_step3_v1": 0
+    },
+    "historical_m2_delta_id": "2cb01f9b-9c72-4451-bfb1-d36d415edba4",
+    "historical_m2_table": "workspace.edp_lab.typed_c750_m2_historical_20261022_v1",
+    "historical_m2_uc_id": "ca98ccc6-1e42-4234-83fb-72728da5045e",
+    "historical_m2_version": 0,
+    "n750_tables": {
+      "coverage": {
+        "delta_id": "b5960f3d-c7db-43dd-9b67-be7e53a9be8c",
+        "delta_version": 0,
+        "location": "",
+        "name": "workspace.edp_lab.clean_n750_source_coverage_step8_v1",
+        "row_count": 750
+      },
+      "m2": {
+        "delta_id": "abba3c2a-f7ae-43cf-ab4c-e87b933f306c",
+        "delta_version": 0,
+        "location": "",
+        "name": "workspace.edp_lab.clean_n750_m2_treasury_rates_step8_v1",
+        "row_count": 12948
+      },
+      "sec": {
+        "delta_id": "a02e488f-7be4-4b40-9b64-0585e6f6e962",
+        "delta_version": 0,
+        "location": "",
+        "name": "workspace.edp_lab.clean_n750_m1_sec_records_step8_v1",
+        "row_count": 3052854
+      },
+      "xml": {
+        "delta_id": "c818b141-23b8-4bf2-b4a5-8c2ae44a59df",
+        "delta_version": 0,
+        "location": "",
+        "name": "workspace.edp_lab.clean_n750_m1_treasury_properties_step8_v1",
+        "row_count": 21616
+      }
+    }
+  },
+  "population": {
+    "combined_execution_bindings": 1932,
+    "combined_source_roster_entries": 1500,
+    "combined_sources": 1500,
+    "new_execution_bindings": 750,
+    "new_source_roster_entries": 750,
+    "new_sources": 750,
+    "old_execution_bindings_reused": 1182,
+    "old_source_roster_entries": 750,
+    "old_sources": 750
+  },
+  "schema": "C1500_M2_STABILITY_EVALUATION_V1",
+  "start_merge_sha": "2177f32a0434d2b75fa69a9eafbb2b601676fac7",
+  "status": "STABILITY_EVALUATED",
+  "statuses": {
+    "A1": "PASS",
+    "A2": "PASS",
+    "A3": "PASS",
+    "A4": "PASS",
+    "B2.1": "BLOCKED",
+    "B2.2": "PASS",
+    "B2.3": "PASS",
+    "B2.4": "PASS",
+    "C1": "BLOCKED",
+    "C2.1": "PASS",
+    "C2.2": "PASS",
+    "C2.3": "PASS",
+    "C2.4": "PASS",
+    "C3.1": "PASS",
+    "C3.2": "PASS",
+    "C3.3": "PASS",
+    "C3.4": "BLOCKED"
+  },
+  "stop_before_step_10": true,
+  "treasury_economic_reconciliation": "NOT_IMPLEMENTED",
+  "unresolved": [
+    "Treasury observation grain",
+    "Treasury explicit units and time basis",
+    "rate/yield meaning and exact reconciliation equation",
+    "enterprise entity identity and cross-source equivalence",
+    "prospective operational performance budget"
+  ],
+  "validated_scope": "C1500 source-preserving M1 lexical and approved additive M2 typed projections at exact pinned outputs"
+}
