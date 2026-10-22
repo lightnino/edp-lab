@@ -1,33 +1,33 @@
-# Day 4 Step 1 — N750/C1500 execution checkpoint
+# Day 4 Step 1 — recovered selection checkpoint
 
-Status: **BLOCKED — waiting for exact Codex selection, trusted grant and authoritative publication**.
-Do not treat this checkpoint as a cohort freeze, admission or completion marker.
+Status: **WAITING_FOR_OWNER_APPROVAL — selection recovered; publication not executed**.
+This is not an admission, freeze or Step 1 completion marker.
 
-## Completed in GitHub
+PRs #30/#31 are merged into `day4/additive-m2`; their reusable publisher is reused
+unchanged. Step 0 remains accepted; no baseline evaluation was repeated.
 
-- Step 0 baseline verified against merged Day 2/3 freeze artifacts: `reports/day4_step0_baseline.md`.
-- Reusable, cohort-parameterized admission/freeze code and synthetic/current-C750-layout tests merged into this **Day 4 branch** by PR #30.
-- Legacy Day 2/3 N450/C750 code and accepted freeze bytes remain unchanged.
-- PR #30 CI: 348 passed, 124 skipped; Ruff PASS. (Read current workflow result for authoritative status.)
-- PR #31 generalizes destination versions (_v1, _v2, etc.); CI tests and Ruff PASS. Merged into the same Day 4 branch.
+Recovered packet: [review](../proposals/n750-step1-v3/REVIEW.md),
+[exact plan](../proposals/n750-step1-v3/plan.json),
+[qualification](../proposals/n750-step1-v3/qualification.json),
+[hash index](../proposals/n750-step1-v3/review-index.json).
 
-## Source-selection facts reported by the existing Codex run, NOT independently reproduced here
+750 mechanically qualified sources comprise 5 Treasury XML and 745 SEC Daily
+Master; 269,323,425 bytes. Exact Universe membership, zero historical overlap,
+41 excluded holdouts and baseline pins are checked by portable tests. The
+production read-only planner validated the original pinned inventory and proposed
+output hashes: 750 new registrations; 1,500 combined identities; 754 historical
+manifest rows preserved and 750 appended (1,504 total).
 
-- Qualified proposed increment: 750, comprising 5 Treasury XML + 745 SEC Daily Master.
-- 269,323,425 source bytes; zero C750 overlap, all 41 holdouts preserved.
-- Combined 1,500 proposed physical identities.
-- Base v4 corpus manifest 754 existing registration rows; new v5 would have 1,504 registration rows.
+Completed physical qualification was reused, not rerun. Retained remote SHA
+readback covers 450 selected sources; the other 300 are not represented as remotely
+verified. Required remote scope must be reconciled before publication. No RAW was
+uploaded, parsed or processed. All original local edits remain preserved in their
+original worktree; no competing publisher was copied.
 
-## Missing authoritative inputs and execution results
+Pending: final exact owner record/trusted installation, actual exclusive-create
+admission and cohort freeze, complete publication readback and historical seal
+comparison. Older local owner-record hashes are obsolete. Proposed output hashes
+do not establish publication. No `C1500_COHORT_PASS` is claimed.
 
-- Codex local `runs/day4/n750-selection-v1/selection.proposed.json` and `result.json`.
-- Codex local `proposals/n750-execution-v1/REVIEW.md`, exact owner record, registration mapping and expected output SHA-256 values.
-- Trusted owner approval and installation for the final, regenerated exact scope.
-- Actual published `metadata/admissions/N750_v1` and `metadata/freezes/C1500_v1` with independent readback.
-- Databricks LIVE source/checksum evidence cannot be accessed through the available GitHub connector.
-
-The previously proposed owner-record SHA-256 was `217124dc2d0947f813892dd7f5d19dc257386b0bc18b23b9e37d4bcd92bede6a`. Do not use it if the final review packet or output bytes have changed.
-
-**Step 1 exit remains NOT ACHIEVED.** Next action: put the exact proposal/qualification files onto this branch (without RAW files), regenerate the owner-approved scope against the generic publisher, obtain trusted installation, execute admission and freeze, verify exact published bytes, and only then declare `C1500_COHORT_PASS`.
-
-Do not start Step 2. Do not merge Day 4 into main before the final Day 4 Step 14 exit.
+Step 2 NOT STARTED. Package PRs target the Day 4 integration branch; no main merge
+before Step 14.
