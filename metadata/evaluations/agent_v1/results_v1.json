@@ -1,0 +1,1202 @@
+{
+  "keys": {
+    "candidates": [
+      {
+        "business_key_status": "NOT_APPROVED_NOT_ASSESSED",
+        "candidate_eligible": {
+          "computation_mode": "NOT_COMPUTED",
+          "reason": "Authoritative serialized source NULL semantics remain unresolved (D1/D5).",
+          "value": null
+        },
+        "columns": [
+          "adsh"
+        ],
+        "mechanically_minimal_literal": {
+          "computation_mode": "EXACT_FULL_SCAN",
+          "value": true
+        },
+        "mechanically_unique_literal": {
+          "computation_mode": "EXACT_FULL_SCAN",
+          "value": true
+        },
+        "minimality_scope": "ALL_NONEMPTY_PROPER_SUBSETS_EXACT_LITERAL_EQUALITY",
+        "non_null_eligible": {
+          "computation_mode": "NOT_COMPUTED",
+          "reason": "Authoritative serialized source NULL semantics remain unresolved (D1/D5).",
+          "value": null
+        },
+        "row_count": {
+          "computation_mode": "EXACT_FULL_SCAN",
+          "value": 5
+        }
+      },
+      {
+        "business_key_status": "NOT_APPROVED_NOT_ASSESSED",
+        "candidate_eligible": {
+          "computation_mode": "NOT_COMPUTED",
+          "reason": "Authoritative serialized source NULL semantics remain unresolved (D1/D5).",
+          "value": null
+        },
+        "columns": [
+          "cik"
+        ],
+        "mechanically_minimal_literal": {
+          "computation_mode": "EXACT_FULL_SCAN",
+          "value": true
+        },
+        "mechanically_unique_literal": {
+          "computation_mode": "EXACT_FULL_SCAN",
+          "value": true
+        },
+        "minimality_scope": "ALL_NONEMPTY_PROPER_SUBSETS_EXACT_LITERAL_EQUALITY",
+        "non_null_eligible": {
+          "computation_mode": "NOT_COMPUTED",
+          "reason": "Authoritative serialized source NULL semantics remain unresolved (D1/D5).",
+          "value": null
+        },
+        "row_count": {
+          "computation_mode": "EXACT_FULL_SCAN",
+          "value": 5
+        }
+      },
+      {
+        "business_key_status": "NOT_APPROVED_NOT_ASSESSED",
+        "candidate_eligible": {
+          "computation_mode": "NOT_COMPUTED",
+          "reason": "Authoritative serialized source NULL semantics remain unresolved (D1/D5).",
+          "value": null
+        },
+        "columns": [
+          "period"
+        ],
+        "mechanically_minimal_literal": {
+          "computation_mode": "EXACT_FULL_SCAN",
+          "value": false
+        },
+        "mechanically_unique_literal": {
+          "computation_mode": "EXACT_FULL_SCAN",
+          "value": false
+        },
+        "minimality_scope": "ALL_NONEMPTY_PROPER_SUBSETS_EXACT_LITERAL_EQUALITY",
+        "non_null_eligible": {
+          "computation_mode": "NOT_COMPUTED",
+          "reason": "Authoritative serialized source NULL semantics remain unresolved (D1/D5).",
+          "value": null
+        },
+        "row_count": {
+          "computation_mode": "EXACT_FULL_SCAN",
+          "value": 5
+        }
+      },
+      {
+        "business_key_status": "NOT_APPROVED_NOT_ASSESSED",
+        "candidate_eligible": {
+          "computation_mode": "NOT_COMPUTED",
+          "reason": "Authoritative serialized source NULL semantics remain unresolved (D1/D5).",
+          "value": null
+        },
+        "columns": [
+          "form"
+        ],
+        "mechanically_minimal_literal": {
+          "computation_mode": "EXACT_FULL_SCAN",
+          "value": false
+        },
+        "mechanically_unique_literal": {
+          "computation_mode": "EXACT_FULL_SCAN",
+          "value": false
+        },
+        "minimality_scope": "ALL_NONEMPTY_PROPER_SUBSETS_EXACT_LITERAL_EQUALITY",
+        "non_null_eligible": {
+          "computation_mode": "NOT_COMPUTED",
+          "reason": "Authoritative serialized source NULL semantics remain unresolved (D1/D5).",
+          "value": null
+        },
+        "row_count": {
+          "computation_mode": "EXACT_FULL_SCAN",
+          "value": 5
+        }
+      },
+      {
+        "business_key_status": "NOT_APPROVED_NOT_ASSESSED",
+        "candidate_eligible": {
+          "computation_mode": "NOT_COMPUTED",
+          "reason": "Authoritative serialized source NULL semantics remain unresolved (D1/D5).",
+          "value": null
+        },
+        "columns": [
+          "period",
+          "form"
+        ],
+        "mechanically_minimal_literal": {
+          "computation_mode": "EXACT_FULL_SCAN",
+          "value": false
+        },
+        "mechanically_unique_literal": {
+          "computation_mode": "EXACT_FULL_SCAN",
+          "value": false
+        },
+        "minimality_scope": "ALL_NONEMPTY_PROPER_SUBSETS_EXACT_LITERAL_EQUALITY",
+        "non_null_eligible": {
+          "computation_mode": "NOT_COMPUTED",
+          "reason": "Authoritative serialized source NULL semantics remain unresolved (D1/D5).",
+          "value": null
+        },
+        "row_count": {
+          "computation_mode": "EXACT_FULL_SCAN",
+          "value": 5
+        }
+      },
+      {
+        "business_key_status": "NOT_APPROVED_NOT_ASSESSED",
+        "candidate_eligible": {
+          "computation_mode": "NOT_COMPUTED",
+          "reason": "Authoritative serialized source NULL semantics remain unresolved (D1/D5).",
+          "value": null
+        },
+        "columns": [
+          "adsh",
+          "period"
+        ],
+        "mechanically_minimal_literal": {
+          "computation_mode": "EXACT_FULL_SCAN",
+          "value": false
+        },
+        "mechanically_unique_literal": {
+          "computation_mode": "EXACT_FULL_SCAN",
+          "value": true
+        },
+        "minimality_scope": "ALL_NONEMPTY_PROPER_SUBSETS_EXACT_LITERAL_EQUALITY",
+        "non_null_eligible": {
+          "computation_mode": "NOT_COMPUTED",
+          "reason": "Authoritative serialized source NULL semantics remain unresolved (D1/D5).",
+          "value": null
+        },
+        "row_count": {
+          "computation_mode": "EXACT_FULL_SCAN",
+          "value": 5
+        }
+      }
+    ],
+    "config": {
+      "input_sha256": "5ec1eb54f2dbf3f81979c1ed60be7332d8eb73b8e68e294834ec850808294f82",
+      "selection": "REUSED_CACHED_SEEDED_FIVE_SAMPLE_OCCURRENCES; four projected fields only"
+    },
+    "empty_population_policy": "NO_KEY_CLAIM",
+    "equality": "EXACT_LITERAL_TEXT_TUPLE",
+    "errors": [],
+    "function": "candidate_key_scan",
+    "output_version": "PROFILING_OUTPUT_V1",
+    "parameters": {
+      "composites": [
+        [
+          "form",
+          "period"
+        ],
+        [
+          "adsh",
+          "period"
+        ]
+      ],
+      "max_combinations": 256,
+      "max_width": 1,
+      "search_columns": [
+        "adsh",
+        "cik",
+        "period",
+        "form"
+      ]
+    },
+    "parse_status": "PASS",
+    "population": {
+      "accounting": {
+        "supplied_occurrences": 5,
+        "whole_table": false
+      },
+      "preserves_multiplicity": true,
+      "sample_size": null,
+      "sampling_method": "REUSED_CACHED_SEEDED_FIVE_SAMPLE_OCCURRENCES; four projected fields only",
+      "sampling_seed": null,
+      "scope": "DECLARED_INPUT_OCCURRENCES_ONLY"
+    },
+    "provenance": {
+      "artifact": {
+        "kind": "REUSED_PROFILE_NO_RESCAN",
+        "path": "/Users/lightnino/Projects/edp-lab/runs/profiling/SRC000004_sub.txt_18531d094cde39975df1eebec4abe2573f44556109d81111bb6df76873623e77.json",
+        "sha256": "4bcce97ed2191e512f29e03ae8a0bf04bea9bc7af016d562f9b0f9a2cb193469"
+      },
+      "pointer": "columns[*].statistics.sample.value; exact shared source_record locators"
+    },
+    "result_sha256": "d3af56731454667a106a3c1c00d75da411c89c933a07b647d0a79b349f9dff1f",
+    "rows_scanned": {
+      "computation_mode": "EXACT_FULL_SCAN",
+      "value": 5
+    },
+    "run_id": "d0b91c1417318f2c357558acc578e9fdb87ce5b3be036fa2eaf8c1a7689c2880",
+    "search_complete_within_bounds": true,
+    "source": {
+      "archive_member": "sub.txt",
+      "expected_header": [
+        "adsh",
+        "cik",
+        "name",
+        "sic",
+        "countryba",
+        "stprba",
+        "cityba",
+        "zipba",
+        "bas1",
+        "bas2",
+        "baph",
+        "countryma",
+        "stprma",
+        "cityma",
+        "zipma",
+        "mas1",
+        "mas2",
+        "countryinc",
+        "stprinc",
+        "ein",
+        "former",
+        "changed",
+        "afs",
+        "wksi",
+        "fye",
+        "form",
+        "period",
+        "fy",
+        "fp",
+        "filed",
+        "accepted",
+        "prevrpt",
+        "detail",
+        "instance",
+        "nciks",
+        "aciks"
+      ],
+      "footer": null,
+      "logical_table_name": "sub.txt",
+      "member_sha256": "fca0ff4bf873b46245ac3ca3524f6be6083852cdc7e97a12f307df636834a3e8",
+      "profile_id": "SEC_FSDS_TSV_V2_CANDIDATE",
+      "raw_path": "data/raw/sec/2010q2_fsds.zip",
+      "raw_sha256": "25f416b020fd3e62a67dbf8c6522c9f239e716099b61cf5d05a59a91ffdef1f1",
+      "source_instance_id": "SRC000004"
+    }
+  },
+  "observations_sha256": "5ec1eb54f2dbf3f81979c1ed60be7332d8eb73b8e68e294834ec850808294f82",
+  "result_sha256": "4347602a71bb8b79f75c3716fdce660d7f4361b08a4869d080b27ab31c41e25f",
+  "semantic_promotions": [],
+  "side_effects": [],
+  "supported_fd": {
+    "blank_occurrences": 0,
+    "blank_witnesses": [],
+    "business_fd_status": "NOT_APPROVED_NOT_ASSESSED",
+    "business_key_status": "NOT_APPROVED_NOT_ASSESSED",
+    "config": {
+      "input_sha256": "5ec1eb54f2dbf3f81979c1ed60be7332d8eb73b8e68e294834ec850808294f82",
+      "selection": "REUSED_CACHED_SEEDED_FIVE_SAMPLE_OCCURRENCES; four projected fields only"
+    },
+    "counterexamples": [],
+    "counterexamples_truncated": false,
+    "determinant_groups": 5,
+    "duplicate_xy_excess": 0,
+    "equality": "EXACT_LITERAL_TUPLES_NO_NULL_OR_BLANK_EXCLUSION",
+    "errors": [],
+    "function": "declared_fd",
+    "input_occurrences_sha256": "167fe90f64aea363e80bcbae375bc8941a1a3e2e431d94ed2522ca1bc1ef18c6",
+    "interpretation_status": "UNRESOLVED",
+    "join_risk_scope": "Hypothetical self equality join on X; no join executed or approved",
+    "literal_self_join_pairs": 5,
+    "literal_status": "PASS",
+    "max_occurrences_per_determinant": 1,
+    "null_or_missing_occurrences": 0,
+    "null_rules_known": false,
+    "null_witnesses": [],
+    "output_version": "PROFILING_OUTPUT_V1",
+    "parameters": {
+      "dependents": [
+        "cik",
+        "period"
+      ],
+      "determinants": [
+        "adsh"
+      ],
+      "group_limit": 10
+    },
+    "parse_status": "PASS",
+    "population": {
+      "accounting": {
+        "supplied_occurrences": 5,
+        "whole_table": false
+      },
+      "preserves_multiplicity": true,
+      "sample_size": null,
+      "sampling_method": "REUSED_CACHED_SEEDED_FIVE_SAMPLE_OCCURRENCES; four projected fields only",
+      "sampling_seed": null,
+      "scope": "DECLARED_INPUT_OCCURRENCES_ONLY"
+    },
+    "provenance": {
+      "artifact": {
+        "kind": "REUSED_PROFILE_NO_RESCAN",
+        "path": "/Users/lightnino/Projects/edp-lab/runs/profiling/SRC000004_sub.txt_18531d094cde39975df1eebec4abe2573f44556109d81111bb6df76873623e77.json",
+        "sha256": "4bcce97ed2191e512f29e03ae8a0bf04bea9bc7af016d562f9b0f9a2cb193469"
+      },
+      "pointer": "columns[*].statistics.sample.value; exact shared source_record locators"
+    },
+    "repeated_determinant_groups": 0,
+    "result_sha256": "121ec82de3479321b799f86c69c755338b9ed2d1e31e1302214a74f90f92b07d",
+    "rows_scanned": {
+      "computation_mode": "EXACT_FULL_SCAN",
+      "value": 5
+    },
+    "run_id": "6735888fb205c1f6e8ee6b0a6801b1a6cc9c9451d1082aed8bbe177517e9e0d5",
+    "semantic_promotions": [],
+    "side_effects": [],
+    "source": {
+      "archive_member": "sub.txt",
+      "expected_header": [
+        "adsh",
+        "cik",
+        "name",
+        "sic",
+        "countryba",
+        "stprba",
+        "cityba",
+        "zipba",
+        "bas1",
+        "bas2",
+        "baph",
+        "countryma",
+        "stprma",
+        "cityma",
+        "zipma",
+        "mas1",
+        "mas2",
+        "countryinc",
+        "stprinc",
+        "ein",
+        "former",
+        "changed",
+        "afs",
+        "wksi",
+        "fye",
+        "form",
+        "period",
+        "fy",
+        "fp",
+        "filed",
+        "accepted",
+        "prevrpt",
+        "detail",
+        "instance",
+        "nciks",
+        "aciks"
+      ],
+      "footer": null,
+      "logical_table_name": "sub.txt",
+      "member_sha256": "fca0ff4bf873b46245ac3ca3524f6be6083852cdc7e97a12f307df636834a3e8",
+      "profile_id": "SEC_FSDS_TSV_V2_CANDIDATE",
+      "raw_path": "data/raw/sec/2010q2_fsds.zip",
+      "raw_sha256": "25f416b020fd3e62a67dbf8c6522c9f239e716099b61cf5d05a59a91ffdef1f1",
+      "source_instance_id": "SRC000004"
+    },
+    "status": "AMBIGUOUS",
+    "violating_groups": 0
+  },
+  "v2_examples": [
+    {
+      "agent_version": "EDP_CANDIDATE_AGENT_V2_BOUNDED_V1",
+      "alternatives": [
+        "Retain source distinctions and leave semantic relation unresolved",
+        "Reject current equivalence candidate; revisit only with new source evidence"
+      ],
+      "candidate_label": "MATCH",
+      "candidate_target": {
+        "field": "cik",
+        "grain": "identifier text",
+        "namespace": "SEC_CIK",
+        "occurrence": "fsds_sub281",
+        "role": "FSDS registrant",
+        "time": "",
+        "unit": "",
+        "value": "9892",
+        "witness": "fsds_sub281"
+      },
+      "case_id": "V1_USEFUL_SCHEMA_CONTEXT",
+      "compatibility": {
+        "grain": "LITERAL_EQUAL",
+        "time": "UNRESOLVED",
+        "unit": "UNRESOLVED"
+      },
+      "conflicting_evidence": [
+        "role: 'filing manager' versus 'FSDS registrant'",
+        "occurrence: 'submission161' versus 'fsds_sub281'"
+      ],
+      "consequences": "No mapping/crosswalk/identity promotion or production join occurs in either case",
+      "dimension": "STTM",
+      "human_review_required": true,
+      "input_fingerprint": "5839d238459805b5b091bdb70e89440e09eaafba648f542c8810ed75dfbe7cae",
+      "name_only_baseline_label": "NON_MATCH",
+      "promotion_eligible": false,
+      "question": "identifier_storage_slot",
+      "reason": "Namespaced TEXT slot candidate; preserve distinct values and entity roles; bounded V1 structural evidence attached; no business FD/key approval",
+      "required_transformation": "COPY_TEXT_WITH_NAMESPACE_AND_ROLE; no value normalization",
+      "result_fingerprint": "277b783121db5dd4d2ec0cfcfde9ac2b20a880449f2bbeb6a3f74eaa94f7eb61",
+      "review_question": "Should this candidate be retained unresolved or rejected pending evidence?",
+      "semantic_promotions": [],
+      "side_effects": [],
+      "source_field": {
+        "field": "CIK",
+        "grain": "identifier text",
+        "namespace": "SEC_CIK",
+        "occurrence": "submission161",
+        "role": "filing manager",
+        "time": "",
+        "unit": "",
+        "value": "0001488106",
+        "witness": "submission161"
+      },
+      "state": "PROPOSED",
+      "supporting_evidence": [
+        {
+          "locator": {
+            "byte_length": 63,
+            "byte_offset": 10204,
+            "source_line": 161
+          },
+          "source": {
+            "archive_member": "SUBMISSION.tsv",
+            "expected_header": [
+              "ACCESSION_NUMBER",
+              "FILING_DATE",
+              "SUBMISSIONTYPE",
+              "CIK",
+              "PERIODOFREPORT"
+            ],
+            "footer": null,
+            "logical_table_name": "SUBMISSION.tsv",
+            "member_sha256": "94494b45570e698a13b700a510b818d0008ccaa86a93786adb37676433113d2d",
+            "profile_id": "SEC_13F_TSV_V2_CANDIDATE",
+            "raw_path": "data/raw/sec/2013q2_form13f.zip",
+            "raw_sha256": "569d56e978f7dee3775e544a1e46019389e22adcf482386fcfaba51ceb6c7e84",
+            "source_instance_id": "SRC000001"
+          },
+          "witness": "submission161"
+        },
+        {
+          "locator": {
+            "byte_length": 253,
+            "byte_offset": 79903,
+            "source_line": 281
+          },
+          "source": {
+            "archive_member": "sub.txt",
+            "expected_header": [
+              "adsh",
+              "cik",
+              "name",
+              "sic",
+              "countryba",
+              "stprba",
+              "cityba",
+              "zipba",
+              "bas1",
+              "bas2",
+              "baph",
+              "countryma",
+              "stprma",
+              "cityma",
+              "zipma",
+              "mas1",
+              "mas2",
+              "countryinc",
+              "stprinc",
+              "ein",
+              "former",
+              "changed",
+              "afs",
+              "wksi",
+              "fye",
+              "form",
+              "period",
+              "fy",
+              "fp",
+              "filed",
+              "accepted",
+              "prevrpt",
+              "detail",
+              "instance",
+              "nciks",
+              "aciks"
+            ],
+            "footer": null,
+            "logical_table_name": "sub.txt",
+            "member_sha256": "fca0ff4bf873b46245ac3ca3524f6be6083852cdc7e97a12f307df636834a3e8",
+            "profile_id": "SEC_FSDS_TSV_V2_CANDIDATE",
+            "raw_path": "data/raw/sec/2010q2_fsds.zip",
+            "raw_sha256": "25f416b020fd3e62a67dbf8c6522c9f239e716099b61cf5d05a59a91ffdef1f1",
+            "source_instance_id": "SRC000004"
+          },
+          "witness": "fsds_sub281"
+        },
+        {
+          "function": "declared_fd",
+          "parameters": {
+            "dependents": [
+              "cik",
+              "period"
+            ],
+            "determinants": [
+              "adsh"
+            ],
+            "group_limit": 10
+          },
+          "population": {
+            "accounting": {
+              "supplied_occurrences": 5,
+              "whole_table": false
+            },
+            "preserves_multiplicity": true,
+            "sample_size": null,
+            "sampling_method": "REUSED_CACHED_SEEDED_FIVE_SAMPLE_OCCURRENCES; four projected fields only",
+            "sampling_seed": null,
+            "scope": "DECLARED_INPUT_OCCURRENCES_ONLY"
+          },
+          "result_sha256": "121ec82de3479321b799f86c69c755338b9ed2d1e31e1302214a74f90f92b07d",
+          "source": {
+            "archive_member": "sub.txt",
+            "expected_header": [
+              "adsh",
+              "cik",
+              "name",
+              "sic",
+              "countryba",
+              "stprba",
+              "cityba",
+              "zipba",
+              "bas1",
+              "bas2",
+              "baph",
+              "countryma",
+              "stprma",
+              "cityma",
+              "zipma",
+              "mas1",
+              "mas2",
+              "countryinc",
+              "stprinc",
+              "ein",
+              "former",
+              "changed",
+              "afs",
+              "wksi",
+              "fye",
+              "form",
+              "period",
+              "fy",
+              "fp",
+              "filed",
+              "accepted",
+              "prevrpt",
+              "detail",
+              "instance",
+              "nciks",
+              "aciks"
+            ],
+            "footer": null,
+            "logical_table_name": "sub.txt",
+            "member_sha256": "fca0ff4bf873b46245ac3ca3524f6be6083852cdc7e97a12f307df636834a3e8",
+            "profile_id": "SEC_FSDS_TSV_V2_CANDIDATE",
+            "raw_path": "data/raw/sec/2010q2_fsds.zip",
+            "raw_sha256": "25f416b020fd3e62a67dbf8c6522c9f239e716099b61cf5d05a59a91ffdef1f1",
+            "source_instance_id": "SRC000004"
+          }
+        },
+        {
+          "function": "candidate_key_scan",
+          "parameters": {
+            "composites": [
+              [
+                "form",
+                "period"
+              ],
+              [
+                "adsh",
+                "period"
+              ]
+            ],
+            "max_combinations": 256,
+            "max_width": 1,
+            "search_columns": [
+              "adsh",
+              "cik",
+              "period",
+              "form"
+            ]
+          },
+          "population": {
+            "accounting": {
+              "supplied_occurrences": 5,
+              "whole_table": false
+            },
+            "preserves_multiplicity": true,
+            "sample_size": null,
+            "sampling_method": "REUSED_CACHED_SEEDED_FIVE_SAMPLE_OCCURRENCES; four projected fields only",
+            "sampling_seed": null,
+            "scope": "DECLARED_INPUT_OCCURRENCES_ONLY"
+          },
+          "result_sha256": "d3af56731454667a106a3c1c00d75da411c89c933a07b647d0a79b349f9dff1f",
+          "source": {
+            "archive_member": "sub.txt",
+            "expected_header": [
+              "adsh",
+              "cik",
+              "name",
+              "sic",
+              "countryba",
+              "stprba",
+              "cityba",
+              "zipba",
+              "bas1",
+              "bas2",
+              "baph",
+              "countryma",
+              "stprma",
+              "cityma",
+              "zipma",
+              "mas1",
+              "mas2",
+              "countryinc",
+              "stprinc",
+              "ein",
+              "former",
+              "changed",
+              "afs",
+              "wksi",
+              "fye",
+              "form",
+              "period",
+              "fy",
+              "fp",
+              "filed",
+              "accepted",
+              "prevrpt",
+              "detail",
+              "instance",
+              "nciks",
+              "aciks"
+            ],
+            "footer": null,
+            "logical_table_name": "sub.txt",
+            "member_sha256": "fca0ff4bf873b46245ac3ca3524f6be6083852cdc7e97a12f307df636834a3e8",
+            "profile_id": "SEC_FSDS_TSV_V2_CANDIDATE",
+            "raw_path": "data/raw/sec/2010q2_fsds.zip",
+            "raw_sha256": "25f416b020fd3e62a67dbf8c6522c9f239e716099b61cf5d05a59a91ffdef1f1",
+            "source_instance_id": "SRC000004"
+          }
+        }
+      ],
+      "validation_scope": "Exact bounded question and supplied observations; not canonical approval"
+    },
+    {
+      "agent_version": "EDP_CANDIDATE_AGENT_V2_BOUNDED_V1",
+      "alternatives": [
+        "Retain source distinctions and leave semantic relation unresolved",
+        "Reject current equivalence candidate; revisit only with new source evidence"
+      ],
+      "candidate_label": "UNRESOLVED",
+      "candidate_target": {
+        "field": "cik",
+        "grain": "SUB filing",
+        "namespace": "SEC_CIK",
+        "occurrence": "SRC000004/sub.txt/281",
+        "role": "registrant",
+        "time": "20100331",
+        "unit": "",
+        "value": "9892",
+        "witness": "sub281"
+      },
+      "case_id": "V1_UNSAFE_FORM_RELATION",
+      "compatibility": {
+        "grain": "LITERAL_EQUAL",
+        "time": "LITERAL_EQUAL",
+        "unit": "UNRESOLVED"
+      },
+      "conflicting_evidence": [
+        "occurrence: 'SRC000004/sub.txt/84' versus 'SRC000004/sub.txt/281'",
+        "LIMITATION: no canonical approval, validity interval or cardinality proof",
+        "Declared FD is violated or has no evidence"
+      ],
+      "consequences": "No mapping/crosswalk/identity promotion or production join occurs in either case",
+      "dimension": "ER",
+      "human_review_required": true,
+      "input_fingerprint": "e201f9a5427a9bfba25dabb161898461b630a4881825a0f2c0a6517e03dbc9b7",
+      "name_only_baseline_label": "MATCH",
+      "promotion_eligible": false,
+      "question": "canonical_entity",
+      "reason": "No independently approved canonical or temporal equivalence rule; bounded V1 structural evidence attached; no business FD/key approval",
+      "required_transformation": "NO_ENTITY_MERGE_AUTHORIZED; identity rules unresolved",
+      "result_fingerprint": "86d52059bd841e12b5acf5d8cc5bf83272705537fe76f59457fa42d9fe20d57a",
+      "review_question": "Should this candidate be retained unresolved or rejected pending evidence?",
+      "semantic_promotions": [],
+      "side_effects": [],
+      "source_field": {
+        "field": "cik",
+        "grain": "SUB filing",
+        "namespace": "SEC_CIK",
+        "occurrence": "SRC000004/sub.txt/84",
+        "role": "registrant",
+        "time": "20100331",
+        "unit": "",
+        "value": "1453090",
+        "witness": "sub84"
+      },
+      "state": "UNRESOLVED",
+      "supporting_evidence": [
+        {
+          "locator": {
+            "byte_length": 278,
+            "byte_offset": 23753,
+            "source_line": 84
+          },
+          "source": {
+            "archive_member": "sub.txt",
+            "expected_header": [
+              "adsh",
+              "cik",
+              "name",
+              "sic",
+              "countryba",
+              "stprba",
+              "cityba",
+              "zipba",
+              "bas1",
+              "bas2",
+              "baph",
+              "countryma",
+              "stprma",
+              "cityma",
+              "zipma",
+              "mas1",
+              "mas2",
+              "countryinc",
+              "stprinc",
+              "ein",
+              "former",
+              "changed",
+              "afs",
+              "wksi",
+              "fye",
+              "form",
+              "period",
+              "fy",
+              "fp",
+              "filed",
+              "accepted",
+              "prevrpt",
+              "detail",
+              "instance",
+              "nciks",
+              "aciks"
+            ],
+            "footer": null,
+            "logical_table_name": "sub.txt",
+            "member_sha256": "fca0ff4bf873b46245ac3ca3524f6be6083852cdc7e97a12f307df636834a3e8",
+            "profile_id": "SEC_FSDS_TSV_V2_CANDIDATE",
+            "raw_path": "data/raw/sec/2010q2_fsds.zip",
+            "raw_sha256": "25f416b020fd3e62a67dbf8c6522c9f239e716099b61cf5d05a59a91ffdef1f1",
+            "source_instance_id": "SRC000004"
+          },
+          "witness": "sub84"
+        },
+        {
+          "locator": {
+            "byte_length": 253,
+            "byte_offset": 79903,
+            "source_line": 281
+          },
+          "source": {
+            "archive_member": "sub.txt",
+            "expected_header": [
+              "adsh",
+              "cik",
+              "name",
+              "sic",
+              "countryba",
+              "stprba",
+              "cityba",
+              "zipba",
+              "bas1",
+              "bas2",
+              "baph",
+              "countryma",
+              "stprma",
+              "cityma",
+              "zipma",
+              "mas1",
+              "mas2",
+              "countryinc",
+              "stprinc",
+              "ein",
+              "former",
+              "changed",
+              "afs",
+              "wksi",
+              "fye",
+              "form",
+              "period",
+              "fy",
+              "fp",
+              "filed",
+              "accepted",
+              "prevrpt",
+              "detail",
+              "instance",
+              "nciks",
+              "aciks"
+            ],
+            "footer": null,
+            "logical_table_name": "sub.txt",
+            "member_sha256": "fca0ff4bf873b46245ac3ca3524f6be6083852cdc7e97a12f307df636834a3e8",
+            "profile_id": "SEC_FSDS_TSV_V2_CANDIDATE",
+            "raw_path": "data/raw/sec/2010q2_fsds.zip",
+            "raw_sha256": "25f416b020fd3e62a67dbf8c6522c9f239e716099b61cf5d05a59a91ffdef1f1",
+            "source_instance_id": "SRC000004"
+          },
+          "witness": "sub281"
+        },
+        {
+          "function": "declared_fd",
+          "parameters": {
+            "dependents": [
+              "cik"
+            ],
+            "determinants": [
+              "form"
+            ],
+            "group_limit": 10
+          },
+          "population": {
+            "accounting": {
+              "supplied_occurrences": 5,
+              "whole_table": false
+            },
+            "preserves_multiplicity": true,
+            "sample_size": null,
+            "sampling_method": "REUSED_CACHED_SEEDED_FIVE_SAMPLE_OCCURRENCES; four projected fields only",
+            "sampling_seed": null,
+            "scope": "DECLARED_INPUT_OCCURRENCES_ONLY"
+          },
+          "result_sha256": "0a309a69e0cd61f15f363b00fd0c7bb6131e8abd8087a5a2f6543ec6fb5ad5f0",
+          "source": {
+            "archive_member": "sub.txt",
+            "expected_header": [
+              "adsh",
+              "cik",
+              "name",
+              "sic",
+              "countryba",
+              "stprba",
+              "cityba",
+              "zipba",
+              "bas1",
+              "bas2",
+              "baph",
+              "countryma",
+              "stprma",
+              "cityma",
+              "zipma",
+              "mas1",
+              "mas2",
+              "countryinc",
+              "stprinc",
+              "ein",
+              "former",
+              "changed",
+              "afs",
+              "wksi",
+              "fye",
+              "form",
+              "period",
+              "fy",
+              "fp",
+              "filed",
+              "accepted",
+              "prevrpt",
+              "detail",
+              "instance",
+              "nciks",
+              "aciks"
+            ],
+            "footer": null,
+            "logical_table_name": "sub.txt",
+            "member_sha256": "fca0ff4bf873b46245ac3ca3524f6be6083852cdc7e97a12f307df636834a3e8",
+            "profile_id": "SEC_FSDS_TSV_V2_CANDIDATE",
+            "raw_path": "data/raw/sec/2010q2_fsds.zip",
+            "raw_sha256": "25f416b020fd3e62a67dbf8c6522c9f239e716099b61cf5d05a59a91ffdef1f1",
+            "source_instance_id": "SRC000004"
+          }
+        },
+        {
+          "function": "candidate_key_scan",
+          "parameters": {
+            "composites": [
+              [
+                "form",
+                "period"
+              ],
+              [
+                "adsh",
+                "period"
+              ]
+            ],
+            "max_combinations": 256,
+            "max_width": 1,
+            "search_columns": [
+              "adsh",
+              "cik",
+              "period",
+              "form"
+            ]
+          },
+          "population": {
+            "accounting": {
+              "supplied_occurrences": 5,
+              "whole_table": false
+            },
+            "preserves_multiplicity": true,
+            "sample_size": null,
+            "sampling_method": "REUSED_CACHED_SEEDED_FIVE_SAMPLE_OCCURRENCES; four projected fields only",
+            "sampling_seed": null,
+            "scope": "DECLARED_INPUT_OCCURRENCES_ONLY"
+          },
+          "result_sha256": "d3af56731454667a106a3c1c00d75da411c89c933a07b647d0a79b349f9dff1f",
+          "source": {
+            "archive_member": "sub.txt",
+            "expected_header": [
+              "adsh",
+              "cik",
+              "name",
+              "sic",
+              "countryba",
+              "stprba",
+              "cityba",
+              "zipba",
+              "bas1",
+              "bas2",
+              "baph",
+              "countryma",
+              "stprma",
+              "cityma",
+              "zipma",
+              "mas1",
+              "mas2",
+              "countryinc",
+              "stprinc",
+              "ein",
+              "former",
+              "changed",
+              "afs",
+              "wksi",
+              "fye",
+              "form",
+              "period",
+              "fy",
+              "fp",
+              "filed",
+              "accepted",
+              "prevrpt",
+              "detail",
+              "instance",
+              "nciks",
+              "aciks"
+            ],
+            "footer": null,
+            "logical_table_name": "sub.txt",
+            "member_sha256": "fca0ff4bf873b46245ac3ca3524f6be6083852cdc7e97a12f307df636834a3e8",
+            "profile_id": "SEC_FSDS_TSV_V2_CANDIDATE",
+            "raw_path": "data/raw/sec/2010q2_fsds.zip",
+            "raw_sha256": "25f416b020fd3e62a67dbf8c6522c9f239e716099b61cf5d05a59a91ffdef1f1",
+            "source_instance_id": "SRC000004"
+          }
+        }
+      ],
+      "validation_scope": "Exact bounded question and supplied observations; not canonical approval"
+    }
+  ],
+  "version": "BOUNDED_DECLARED_FD_EVALUATION_V1",
+  "violated_fd": {
+    "blank_occurrences": 0,
+    "blank_witnesses": [],
+    "business_fd_status": "NOT_APPROVED_NOT_ASSESSED",
+    "business_key_status": "NOT_APPROVED_NOT_ASSESSED",
+    "config": {
+      "input_sha256": "5ec1eb54f2dbf3f81979c1ed60be7332d8eb73b8e68e294834ec850808294f82",
+      "selection": "REUSED_CACHED_SEEDED_FIVE_SAMPLE_OCCURRENCES; four projected fields only"
+    },
+    "counterexamples": [
+      {
+        "determinant_values": [
+          "10-Q"
+        ],
+        "distinct_dependent_tuples": 3,
+        "occurrences": 3,
+        "witnesses": [
+          {
+            "dependent_values": [
+              "1453090"
+            ],
+            "locator": {
+              "byte_length": 278,
+              "byte_offset": 23753,
+              "source_line": 84
+            }
+          },
+          {
+            "dependent_values": [
+              "797468"
+            ],
+            "locator": {
+              "byte_length": 278,
+              "byte_offset": 18111,
+              "source_line": 65
+            }
+          }
+        ]
+      },
+      {
+        "determinant_values": [
+          "8-K"
+        ],
+        "distinct_dependent_tuples": 2,
+        "occurrences": 2,
+        "witnesses": [
+          {
+            "dependent_values": [
+              "1316631"
+            ],
+            "locator": {
+              "byte_length": 267,
+              "byte_offset": 96846,
+              "source_line": 341
+            }
+          },
+          {
+            "dependent_values": [
+              "1324404"
+            ],
+            "locator": {
+              "byte_length": 280,
+              "byte_offset": 87390,
+              "source_line": 308
+            }
+          }
+        ]
+      }
+    ],
+    "counterexamples_truncated": false,
+    "determinant_groups": 2,
+    "duplicate_xy_excess": 0,
+    "equality": "EXACT_LITERAL_TUPLES_NO_NULL_OR_BLANK_EXCLUSION",
+    "errors": [],
+    "function": "declared_fd",
+    "input_occurrences_sha256": "167fe90f64aea363e80bcbae375bc8941a1a3e2e431d94ed2522ca1bc1ef18c6",
+    "interpretation_status": "UNRESOLVED",
+    "join_risk_scope": "Hypothetical self equality join on X; no join executed or approved",
+    "literal_self_join_pairs": 13,
+    "literal_status": "VIOLATED",
+    "max_occurrences_per_determinant": 3,
+    "null_or_missing_occurrences": 0,
+    "null_rules_known": false,
+    "null_witnesses": [],
+    "output_version": "PROFILING_OUTPUT_V1",
+    "parameters": {
+      "dependents": [
+        "cik"
+      ],
+      "determinants": [
+        "form"
+      ],
+      "group_limit": 10
+    },
+    "parse_status": "PASS",
+    "population": {
+      "accounting": {
+        "supplied_occurrences": 5,
+        "whole_table": false
+      },
+      "preserves_multiplicity": true,
+      "sample_size": null,
+      "sampling_method": "REUSED_CACHED_SEEDED_FIVE_SAMPLE_OCCURRENCES; four projected fields only",
+      "sampling_seed": null,
+      "scope": "DECLARED_INPUT_OCCURRENCES_ONLY"
+    },
+    "provenance": {
+      "artifact": {
+        "kind": "REUSED_PROFILE_NO_RESCAN",
+        "path": "/Users/lightnino/Projects/edp-lab/runs/profiling/SRC000004_sub.txt_18531d094cde39975df1eebec4abe2573f44556109d81111bb6df76873623e77.json",
+        "sha256": "4bcce97ed2191e512f29e03ae8a0bf04bea9bc7af016d562f9b0f9a2cb193469"
+      },
+      "pointer": "columns[*].statistics.sample.value; exact shared source_record locators"
+    },
+    "repeated_determinant_groups": 2,
+    "result_sha256": "0a309a69e0cd61f15f363b00fd0c7bb6131e8abd8087a5a2f6543ec6fb5ad5f0",
+    "rows_scanned": {
+      "computation_mode": "EXACT_FULL_SCAN",
+      "value": 5
+    },
+    "run_id": "5a5c2f4fc1dd26aaa0562315b833d828d58518a282fbb050732532c26e94e4b7",
+    "semantic_promotions": [],
+    "side_effects": [],
+    "source": {
+      "archive_member": "sub.txt",
+      "expected_header": [
+        "adsh",
+        "cik",
+        "name",
+        "sic",
+        "countryba",
+        "stprba",
+        "cityba",
+        "zipba",
+        "bas1",
+        "bas2",
+        "baph",
+        "countryma",
+        "stprma",
+        "cityma",
+        "zipma",
+        "mas1",
+        "mas2",
+        "countryinc",
+        "stprinc",
+        "ein",
+        "former",
+        "changed",
+        "afs",
+        "wksi",
+        "fye",
+        "form",
+        "period",
+        "fy",
+        "fp",
+        "filed",
+        "accepted",
+        "prevrpt",
+        "detail",
+        "instance",
+        "nciks",
+        "aciks"
+      ],
+      "footer": null,
+      "logical_table_name": "sub.txt",
+      "member_sha256": "fca0ff4bf873b46245ac3ca3524f6be6083852cdc7e97a12f307df636834a3e8",
+      "profile_id": "SEC_FSDS_TSV_V2_CANDIDATE",
+      "raw_path": "data/raw/sec/2010q2_fsds.zip",
+      "raw_sha256": "25f416b020fd3e62a67dbf8c6522c9f239e716099b61cf5d05a59a91ffdef1f1",
+      "source_instance_id": "SRC000004"
+    },
+    "status": "VIOLATED",
+    "violating_groups": 2
+  }
+}
