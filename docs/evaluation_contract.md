@@ -288,6 +288,22 @@ New-cohort evaluation may discover a defect that triggers a return to Test A, as
 
 Example: C300 has `NASDAQ:ABC`, N450 has `NYSE:ABC`; both pass individual Lossless checks. A combined join merges the entities solely because ticker text equals `ABC`. **C2 fails** unless independent evidence actually establishes equivalence.
 
+### 5.1 Permanent M1 source-preserving C2/C3 minimum — STABILITY_M1_V1
+
+For M1 with **no approved canonical entity/enterprise semantic integration**, the permanent cross-cohort acceptance is the versioned **C2.1–C2.4** and **C3.1–C3.4** in `metadata/evaluations/stability_m1_v1.json`. Apply to C750 and later nested cohorts, retaining the previous frozen cohort as a historical regression baseline. These checks do **not** narrow or replace the broader enterprise semantic obligations of C2 when a business-semantic model and its rules are introduced.
+
+- **C2.1 Identity isolation:** previous/new source-instance namespaces disjoint; identities, binding-to-source mappings and RAW hashes immutable; no namespace collision.
+- **C2.2 No false merge/split:** combined CLEAN/QUERYABLE preserve full source/locator-aware **multisets**, including cross-source equal-looking values and intra-source repeats; one deliberate collision/deduplication-negative-control test must fail when source identity or occurrence is dropped. The synthetic negative control supplements, but does not substitute for, actual-C750 binding/record/field multiset comparisons.
+- **C2.3 Historical projection:** projecting combined output onto the exact old binding/run/source population yields the frozen historical multiset, including original lineage and source locators; zero differences in **both** directions. Prove the added cohort is exact too.
+- **C2.4 FIN noninterference:** run mandatory `FIN_001_V1` (2 contexts) and `FIN_002_V1` (1 context plus negative control) on frozen historical and combined candidate; require identical expected amounts, zero-tolerance equations and historical lineage witnesses. Reuse immutable `LOSSLESS_6_FIN_SUITE_V2`; this is an **additional cross-cohort regression assertion**, not a replacement for Lossless 6.
+- **C3.1 Completion:** all eligible new bindings have exactly one verified terminal COMPLETE outcome with no missing/extra checkpoint.
+- **C3.2 Historical preservation:** no unnecessary replay/rewrite of previously frozen processing, tables or version-pinned historical query results; any justified replay needs a separately approved change and blast radius.
+- **C3.3 Recovery/idempotency:** interrupted runs reuse verified checkpoints; failed publication attempts do not create duplicate tables/records, while successful outputs have exact readback.
+- **C3.4 Operational acceptance:** record measured stage wall times, source/data throughput, available CPU/resource/cost telemetry, human-review and retry volume; explicitly inventory absent provider metrics. Check completion and runtime against **versioned, owner-accepted phase budget(s)** or configured hard time limits; do not manufacture a threshold after observing a result. No unsupported blanket CPU/DBU/cost PASS.
+  
+**Status convention:** `C2_M1_SOURCE_PRESERVING_PASS` or `C3_M1_OPERATIONAL_PASS` may be reported only after their respective evidence-backed checks complete. `C_M1_SOURCE_PRESERVING_PASS` requires A, B2, combined Lossless 1–6, C2.1–C2.4 and C3.1–C3.4 to pass within declared scope. It is **not** `C_ENTERPRISE_SEMANTICS_PASS`. Retain immutable historical Step 4 V1 evidence; publish a separate V2 evaluation with new fingerprints and links, never rewrite signed old results. Step 5A may supply the performance/budget acceptance evidence before C3.4 is final.
+
+
 ## 6. Promotion and Result Reporting
 
 | Scenario | Promotion condition |
