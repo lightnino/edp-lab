@@ -1,0 +1,21 @@
+{
+  "bytes": 269323425,
+  "combined_count": 1500,
+  "composition": {
+    "SEC_EDGAR_DAILY_MASTER": 745,
+    "TREASURY_ANNUAL_XML": 5
+  },
+  "files_sha256": {
+    "grant.proposed.json": "32624fc6adb606eb86f341b1c60a1b23558d81f44fe5d9cdca142e049edf464f",
+    "plan.json": "a2b05f838ca3ba5914b2ca1c863b688b04c367647c5d31a8236f3abf0ae3946f",
+    "qualification.json": "46e0ecd4f39519cd6f1e07c20bfe51ef7cb79dc69d88bf37567f546fda152a8a",
+    "roster.json": "6bdbb5ec2e03f8685491abc5ae1d5fe0b3d87f7c89c3ff6b844ebdc10e69c4c1"
+  },
+  "historical_rows": 754,
+  "implementation_sha256": "345f187ded4ada3fa3b628e9fd45aa7868b50dfde4b2557f3ac8714b46df31bd",
+  "proposed_manifest_rows": 1504,
+  "remote_unverified": 300,
+  "remote_verified": 450,
+  "selected": 750,
+  "status": "PROPOSED_NOT_ADMITTED_NOT_FROZEN"
+}
