@@ -1,0 +1,52 @@
+{
+  "execution_files_sha256": {
+    "docs/cohort_publication.md": "362ece772bf839463ca75a8ad80a95bfe21501ce80f0fe7d9008bd6135936a5b",
+    "proposals/n750-publication-v1/admission-boundary-amendment.md": "672dc75d8622a3c4638f746bad397a72b8c9e563b97f5b2a8507b51431987c37",
+    "proposals/n750-publication-v1/remote-evidence-resolution.json": "53ab0c5a13f174b0a91350d54c0c42611d0787963c09a450a9f0848b43ebf36b",
+    "proposals/n750-publication-v1/remote-evidence-unresolved.json": "c615fd758b16147243418f9a035a3fe42a94d784e264fc73b3c036337ce25aa9",
+    "proposals/n750-step1-v3/plan.json": "a2b05f838ca3ba5914b2ca1c863b688b04c367647c5d31a8236f3abf0ae3946f",
+    "proposals/n750-step1-v3/qualification.json": "46e0ecd4f39519cd6f1e07c20bfe51ef7cb79dc69d88bf37567f546fda152a8a",
+    "proposals/n750-step1-v3/review-index.json": "afa339cfeac31f591d9a493508b84780b73ffe86aa879c17984c37f0a656c077",
+    "proposals/n750-step1-v3/roster.json": "6bdbb5ec2e03f8685491abc5ae1d5fe0b3d87f7c89c3ff6b844ebdc10e69c4c1",
+    "scripts/publish_cohort.py": "33f4f69579519b2677176eafa98ca74b46f502782e9e570053206adca0283c31",
+    "src/edp_lab/ingestion/cohort_publication.py": "345f187ded4ada3fa3b628e9fd45aa7868b50dfde4b2557f3ac8714b46df31bd"
+  },
+  "plan_sha256": "a2b05f838ca3ba5914b2ca1c863b688b04c367647c5d31a8236f3abf0ae3946f",
+  "remote_processing_readiness": {
+    "mismatches_established": false,
+    "required_before": "STEP_8_PROCESSING",
+    "unverified": 300,
+    "unverified_processing": "PROHIBITED",
+    "verified": 450
+  },
+  "schema": "COHORT_OWNER_GRANT_V1",
+  "scope_limitations": [
+    "Step 1 metadata admission and input cohort freeze only; no RAW upload, parsing, profiling, processing or result freeze.",
+    "Step 1 requires verified local RAW identity/SHA/provenance, Universe membership, disjointness and historical preservation; remote availability/SHA verification is mandatory before Step 8 processing, not before Step 1 publication.",
+    "Remote evidence remains 450 VERIFIED / 300 UNVERIFIED; no mismatches established; Step 8 must not process unverified sources."
+  ],
+  "scopes": {
+    "admission": {
+      "cohort": "N750",
+      "destination": "metadata/admissions/N750_v1",
+      "files_sha256": {
+        "N750.csv": "1346b66e25bea73266d68520eef6d8bcdcdf2db657fd4cd844d7591f1c819cf3",
+        "admission.json": "edbf1a035aaa6eef25ffbaccd4cc494775e3da57202b35ab74041f9e17a923ee",
+        "bindings.json": "3f052fd203513cfdfaab00554fe36128690381f0a740b63ac8e1360571bb93e8",
+        "corpus_manifest_v4.original.csv": "79660035d807306b111d88be0c0f899c5ee410077e2ffe5caa27d4d9af4d372a",
+        "corpus_manifest_v5.csv": "8e9f2d85728e8372efead68a15efe47343e715372c626b8e0bc4c27736df5089"
+      }
+    },
+    "freeze": {
+      "cohort": "C1500",
+      "destination": "metadata/freezes/C1500_v1",
+      "files_sha256": {
+        "C1500.bindings.json": "810c6898df0cb5e5c478305f71c190ffe4a7c7a2bb40133efa79a16de630e703",
+        "C1500.csv": "d3b02109268ce77bcd07f6f5f455fb7e4a1989319b2cf60867e372ffc3b87ae5",
+        "C750.original.csv": "81162007d42146333e2822d8c9ed2a720ebdd36422db6649291e51bd25e0d85d",
+        "freeze.json": "1645c7a4735c55cfdbbdc0ee2e471698dfbbf1d8cb22f7b3bd632bbcb8d2add9"
+      }
+    }
+  },
+  "status": "OWNER_APPROVED"
+}

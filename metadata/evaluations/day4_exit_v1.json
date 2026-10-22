@@ -1,0 +1,34 @@
+{
+  "schema": "DAY4_EXIT_V1",
+  "status": "PARTIAL",
+  "step11": "PERFORMANCE_MEASURED",
+  "step11_ref": "metadata/evaluations/day4_performance_v1.json",
+  "step12": "WRITE_TASKS_COMPLETE_BOUNDED_ARTIFACT_SCOPE",
+  "step12_ref": "docs/day4_eight_write_tasks.md",
+  "step13": "CANDIDATE",
+  "step13_ref": "metadata/evaluations/o_c1500_m2_freeze_assessment_v1.json",
+  "result_frozen": false,
+  "main_merge": "NOT_ELIGIBLE_NOT_ATTEMPTED",
+  "main_ref_at_review": "origin/main 51d2324a955c2de619570f8dab1d40369530b4e9",
+  "day4_integration_start": "435a8f427c98d329fd2d3dcccee26d83fccb27f0",
+  "local_validation": {
+    "existing_full_pytest": "499 passed, 77 skipped",
+    "targeted_with_new_day4_tests": "12 passed",
+    "ruff": "PASS",
+    "cohort_nesting": "300 < 750 < 1500 PASS",
+    "candidate_file_sha256_pins": "22/22 PASS",
+    "retained_step8_and_try_receipt_hashes": "PASS",
+    "live_databricks_replay": "NOT_RUN_VALID_PINNED_RECEIPTS_REUSED"
+  },
+  "pending": [
+    "50 Treasury source/QName L3 owner dispositions and associated scoped B2.1/C1 source-preserving acceptance",
+    "Treasury economic L6-B grain, units, time basis, compatible population, mapping and exact equation/tolerance/expected result if economic integration is claimed",
+    "Day 4 C3.4 remains BLOCKED; prospective 10x budget applicability/effective scope not approved"
+  ],
+  "preserved": [
+    "Historical Step 9 V1 and scoped V2 outcomes unchanged",
+    "Historical C300/C750 M1 result freezes unchanged",
+    "No O_C1500_M2 result freeze marker or Databricks write",
+    "No main merge"
+  ]
+}

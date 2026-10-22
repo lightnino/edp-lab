@@ -1,0 +1,217 @@
+{
+  "cases": [
+    {
+      "evidence_refs": [
+        "fsds54",
+        "fsds54"
+      ],
+      "expected_label": "MATCH",
+      "id": "S01",
+      "reason": "Approved exact numeric representation; preserve original value and USD/tag/period context, not a new monetary interpretation."
+    },
+    {
+      "evidence_refs": [
+        "SRC010451",
+        "SRC010451"
+      ],
+      "expected_label": "MATCH",
+      "id": "S02",
+      "reason": "Approved exact numeric representation from a named Treasury property; no percent/fraction conversion."
+    },
+    {
+      "evidence_refs": [
+        "fsds54",
+        "SRC010451"
+      ],
+      "expected_label": "NON_MATCH",
+      "id": "S03",
+      "reason": "A financial fact amount and daily rate are not interchangeable measures merely because both admit Decimal."
+    },
+    {
+      "evidence_refs": [
+        "holding4229",
+        "fsds54"
+      ],
+      "expected_label": "NON_MATCH",
+      "id": "S04",
+      "reason": "A direct untransformed same-measure mapping conflicts with source unit scale, holding-vs-fact grain and time; no conversion is authorized."
+    },
+    {
+      "evidence_refs": [
+        "submission161",
+        "fsds_sub281"
+      ],
+      "expected_label": "MATCH",
+      "id": "S05",
+      "reason": "CIK/cik are candidate field-name variants for namespaced source-native TEXT storage only. Roles and actual different values remain separate; no entity match."
+    },
+    {
+      "evidence_refs": [
+        "submission161",
+        "cover100"
+      ],
+      "expected_label": "MATCH",
+      "id": "S06",
+      "reason": "Same accession and literal reported-period text in two source members; bounded alias candidate, not historical date alignment."
+    },
+    {
+      "evidence_refs": [
+        "submission161",
+        "submission161"
+      ],
+      "expected_label": "NON_MATCH",
+      "id": "S07",
+      "reason": "Same row supplies distinct date roles and distinct date text; filing date cannot replace reported period."
+    },
+    {
+      "evidence_refs": [
+        "SRC010451",
+        "SRC010451"
+      ],
+      "expected_label": "UNRESOLVED",
+      "id": "S08",
+      "reason": "Equal 4.79 values do not establish business equivalence of display versus underlying rate fields; no independently approved rule."
+    },
+    {
+      "evidence_refs": [
+        "SRC010452",
+        "SRC010452"
+      ],
+      "expected_label": "NON_MATCH",
+      "id": "S09",
+      "reason": "Distinct CLOSE/YIELD properties and 4.26/4.33 values refute direct identical rate mapping; no convention conversion inferred."
+    },
+    {
+      "evidence_refs": [
+        "fsds60",
+        "fsds54"
+      ],
+      "expected_label": "NON_MATCH",
+      "id": "S10",
+      "reason": "NUM value is not uniformly money: pure and USD plus distinct tags/periods cannot be conflated."
+    },
+    {
+      "evidence_refs": [
+        "SRC010454",
+        "SRC010455"
+      ],
+      "expected_label": "UNRESOLVED",
+      "id": "S11",
+      "reason": "Real-yield tenor and real long-term average have separate source context; a business relationship requires documentation, not shared Decimal type."
+    },
+    {
+      "evidence_refs": [
+        "submission161",
+        "cover100"
+      ],
+      "expected_label": "MATCH",
+      "id": "E01",
+      "reason": "Exact same accession token within the same archive is source-native filing linkage evidence, not canonical identity approval."
+    },
+    {
+      "evidence_refs": [
+        "submission161",
+        "holding170"
+      ],
+      "expected_label": "NON_MATCH",
+      "id": "E02",
+      "reason": "CIK and CUSIP are distinct namespaces/roles, not interchangeable identifiers."
+    },
+    {
+      "evidence_refs": [
+        "holding170",
+        "holding316"
+      ],
+      "expected_label": "NON_MATCH",
+      "id": "E03",
+      "reason": "Same CUSIP 037833100 but different accessions, holding SKs, values and locators: two occurrences, not duplicates to merge."
+    },
+    {
+      "evidence_refs": [
+        "holding170",
+        "holding316"
+      ],
+      "expected_label": "MATCH",
+      "id": "E04",
+      "reason": "Same nonempty CUSIP token in the declared source namespace; only the token observation matches, not holding occurrences or canonical securities."
+    },
+    {
+      "evidence_refs": [
+        "holding170",
+        "holding316"
+      ],
+      "expected_label": "UNRESOLVED",
+      "id": "E05",
+      "reason": "Canonical security identity across filing/reporting times needs temporal validity and supported entity policy; equal tokens alone are insufficient."
+    },
+    {
+      "evidence_refs": [
+        "cover100",
+        "cover104"
+      ],
+      "expected_label": "UNRESOLVED",
+      "id": "E06",
+      "reason": "Mirae USA/Hong Kong share a name stem but have different supplied names, addresses and FORM13FFILENUMBER. Parent/group versus legal-entity equivalence is unapproved."
+    },
+    {
+      "evidence_refs": [
+        "cover100",
+        "cover104"
+      ],
+      "expected_label": "NON_MATCH",
+      "id": "E07",
+      "reason": "Different exact accession tokens remain different source-native filings despite common prefix and reported date; no authoritative-amendment selection."
+    },
+    {
+      "evidence_refs": [
+        "submission103",
+        "submission104"
+      ],
+      "expected_label": "MATCH",
+      "id": "E08",
+      "reason": "Repeated CIK 0001121477 is the same native identifier text across two records; no canonical manager merge or timeless identity is inferred."
+    },
+    {
+      "evidence_refs": [
+        "submission103",
+        "submission104"
+      ],
+      "expected_label": "NON_MATCH",
+      "id": "E09",
+      "reason": "Same CIK but different accession, period and physical occurrence; do not collapse filings or choose an amendment as authoritative."
+    },
+    {
+      "evidence_refs": [
+        "listing10",
+        "listing11"
+      ],
+      "expected_label": "NON_MATCH",
+      "id": "E10",
+      "reason": "AAC.U and AAC.W are distinct full source-native listing tokens; stem stripping loses the supplied distinction."
+    },
+    {
+      "evidence_refs": [
+        "listing10",
+        "listing11"
+      ],
+      "expected_label": "UNRESOLVED",
+      "id": "E11",
+      "reason": "Source descriptions distinguish unit and warrant terms. A shared issuer/stem does not authorize canonical security equivalence or inferred unit composition."
+    },
+    {
+      "evidence_refs": [
+        "holding170",
+        "holding316"
+      ],
+      "expected_label": "UNRESOLVED",
+      "id": "E12",
+      "reason": "Both FIGI fields are empty. Missing identifiers cannot support canonical identity; blank semantics and alternate identifiers do not justify an automatic merge."
+    }
+  ],
+  "independence_limit": "Prepared by the execution host from source evidence before Agent proposals; not independently human-adjudicated, randomized, blinded or a general ER benchmark.",
+  "inputs_sha256": "293a16b9be2837823afb163835607bb0d5350b0718d533961f577a394ed8d396",
+  "label_scope": "MATCH/NON_MATCH refer to the exact question: lexical/schema/native token or occurrence constraints. Canonical identity questions without independent approval are UNRESOLVED.",
+  "recorded_at_utc": "2026-10-22T15:28:10.293063Z",
+  "status": "LABELS_FIXED_BEFORE_AGENT_IMPLEMENTATION_OR_EVALUATION",
+  "version": "EVIDENCE_FIRST_GROUND_TRUTH_V1"
+}

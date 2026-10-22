@@ -1,0 +1,9 @@
+{
+  "approved_record_sha256": "46488e49d34abd2160ad15089581c01c74325714e6d8cc57a27eb1d8e3bd5001",
+  "expected_installed_host_sha256": "b81a4cb31a848e2e4aca620efa1bb15dcccb104d98c2d366f632d4a69fa3d0c5",
+  "installer_sha256": "e88b8a6992019ac818366491b6d5e36a280d315db6497a7c1c619481dbc9602e",
+  "owner_install_command": "sh /Users/lightnino/Projects/edp-lab-day3-authorized/runs/day4/integration-worktree/proposals/n750-publication-v1/install-owner.sh",
+  "proposed_record_sha256": "dd3d5db867c3247c101271d6d6f389385e1add88dd1c42bf615e7e02b5951e15",
+  "remote_evidence_gap": 300,
+  "status": "WAITING_FOR_OWNER_APPROVAL"
+}

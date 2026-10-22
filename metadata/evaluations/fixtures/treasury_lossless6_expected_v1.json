@@ -1,0 +1,131 @@
+{
+  "fin": {
+    "FIN_001_contexts": 2,
+    "FIN_002_contexts": 1,
+    "lineage_witnesses": 13,
+    "wrong_equity_difference": "1232700000.0000"
+  },
+  "origin": "Owner-approved TRY_001\u2013004 independent expected fixture and original approved source-specific QName contract; no M2 candidate output used",
+  "schema": "TREASURY_LOSSLESS6_EXPECTED_V1",
+  "source_binding_file": "metadata/admissions/N750_v1/bindings.json",
+  "sources": [
+    {
+      "entries": 249,
+      "evaluations": 3735,
+      "missing": 31,
+      "qnames": [
+        "{http://schemas.microsoft.com/ado/2007/08/dataservices}BC_1MONTH",
+        "{http://schemas.microsoft.com/ado/2007/08/dataservices}BC_1_5MONTH",
+        "{http://schemas.microsoft.com/ado/2007/08/dataservices}BC_2MONTH",
+        "{http://schemas.microsoft.com/ado/2007/08/dataservices}BC_3MONTH",
+        "{http://schemas.microsoft.com/ado/2007/08/dataservices}BC_4MONTH",
+        "{http://schemas.microsoft.com/ado/2007/08/dataservices}BC_6MONTH",
+        "{http://schemas.microsoft.com/ado/2007/08/dataservices}BC_1YEAR",
+        "{http://schemas.microsoft.com/ado/2007/08/dataservices}BC_2YEAR",
+        "{http://schemas.microsoft.com/ado/2007/08/dataservices}BC_3YEAR",
+        "{http://schemas.microsoft.com/ado/2007/08/dataservices}BC_5YEAR",
+        "{http://schemas.microsoft.com/ado/2007/08/dataservices}BC_7YEAR",
+        "{http://schemas.microsoft.com/ado/2007/08/dataservices}BC_10YEAR",
+        "{http://schemas.microsoft.com/ado/2007/08/dataservices}BC_20YEAR",
+        "{http://schemas.microsoft.com/ado/2007/08/dataservices}BC_30YEAR",
+        "{http://schemas.microsoft.com/ado/2007/08/dataservices}BC_30YEARDISPLAY"
+      ],
+      "raw_path": "data/raw/treasury/treasury_annual_xml/63d9d0beb1bbee0079928bfb710339f0032859cc0ecbf5cccafe3b49429d0581/daily_treasury_yield_curve_2025.xml",
+      "raw_sha256": "fb2f64bcaa9c2041f5601460f5d67bf2ebf51083331e75192a7d48ece0db3ed9",
+      "source_identity": "63d9d0beb1bbee0079928bfb710339f0032859cc0ecbf5cccafe3b49429d0581",
+      "source_instance_id": "SRC010451",
+      "valid": 3704
+    },
+    {
+      "entries": 249,
+      "evaluations": 6972,
+      "missing": 124,
+      "qnames": [
+        "{http://schemas.microsoft.com/ado/2007/08/dataservices}ROUND_B1_CLOSE_4WK_2",
+        "{http://schemas.microsoft.com/ado/2007/08/dataservices}ROUND_B1_CLOSE_6WK_2",
+        "{http://schemas.microsoft.com/ado/2007/08/dataservices}ROUND_B1_CLOSE_8WK_2",
+        "{http://schemas.microsoft.com/ado/2007/08/dataservices}ROUND_B1_CLOSE_13WK_2",
+        "{http://schemas.microsoft.com/ado/2007/08/dataservices}ROUND_B1_CLOSE_17WK_2",
+        "{http://schemas.microsoft.com/ado/2007/08/dataservices}ROUND_B1_CLOSE_26WK_2",
+        "{http://schemas.microsoft.com/ado/2007/08/dataservices}ROUND_B1_CLOSE_52WK_2",
+        "{http://schemas.microsoft.com/ado/2007/08/dataservices}ROUND_B1_YIELD_4WK_2",
+        "{http://schemas.microsoft.com/ado/2007/08/dataservices}ROUND_B1_YIELD_6WK_2",
+        "{http://schemas.microsoft.com/ado/2007/08/dataservices}ROUND_B1_YIELD_8WK_2",
+        "{http://schemas.microsoft.com/ado/2007/08/dataservices}ROUND_B1_YIELD_13WK_2",
+        "{http://schemas.microsoft.com/ado/2007/08/dataservices}ROUND_B1_YIELD_17WK_2",
+        "{http://schemas.microsoft.com/ado/2007/08/dataservices}ROUND_B1_YIELD_26WK_2",
+        "{http://schemas.microsoft.com/ado/2007/08/dataservices}ROUND_B1_YIELD_52WK_2",
+        "{http://schemas.microsoft.com/ado/2007/08/dataservices}CS_4WK_CLOSE_AVG",
+        "{http://schemas.microsoft.com/ado/2007/08/dataservices}CS_4WK_YIELD_AVG",
+        "{http://schemas.microsoft.com/ado/2007/08/dataservices}CS_6WK_CLOSE_AVG",
+        "{http://schemas.microsoft.com/ado/2007/08/dataservices}CS_6WK_YIELD_AVG",
+        "{http://schemas.microsoft.com/ado/2007/08/dataservices}CS_8WK_CLOSE_AVG",
+        "{http://schemas.microsoft.com/ado/2007/08/dataservices}CS_8WK_YIELD_AVG",
+        "{http://schemas.microsoft.com/ado/2007/08/dataservices}CS_13WK_CLOSE_AVG",
+        "{http://schemas.microsoft.com/ado/2007/08/dataservices}CS_13WK_YIELD_AVG",
+        "{http://schemas.microsoft.com/ado/2007/08/dataservices}CS_17WK_CLOSE_AVG",
+        "{http://schemas.microsoft.com/ado/2007/08/dataservices}CS_17WK_YIELD_AVG",
+        "{http://schemas.microsoft.com/ado/2007/08/dataservices}CS_26WK_CLOSE_AVG",
+        "{http://schemas.microsoft.com/ado/2007/08/dataservices}CS_26WK_YIELD_AVG",
+        "{http://schemas.microsoft.com/ado/2007/08/dataservices}CS_52WK_CLOSE_AVG",
+        "{http://schemas.microsoft.com/ado/2007/08/dataservices}CS_52WK_YIELD_AVG"
+      ],
+      "raw_path": "data/raw/treasury/treasury_annual_xml/be4ecba6635cccaa39f23a4a3905198433e25a60040cc3a64e686fcf60731f9c/daily_treasury_bill_rates_2025.xml",
+      "raw_sha256": "5f20dd1fad2627facce863a2a3d3258278f2119fef61028e85e0cf75a244df16",
+      "source_identity": "be4ecba6635cccaa39f23a4a3905198433e25a60040cc3a64e686fcf60731f9c",
+      "source_instance_id": "SRC010452",
+      "valid": 6848
+    },
+    {
+      "entries": 747,
+      "evaluations": 747,
+      "missing": 0,
+      "qnames": [
+        "{http://schemas.microsoft.com/ado/2007/08/dataservices}RATE"
+      ],
+      "raw_path": "data/raw/treasury/treasury_annual_xml/567fe9b2558e4fbfd6655b72e5ea00ae6f3f750986ce2c253bd589ddb7280805/daily_treasury_long_term_rate_2025.xml",
+      "raw_sha256": "c5ecec4d443cf0e160ea42e585e3f1abb237587c5a8094ee33ce7c9fc350b2f8",
+      "source_identity": "567fe9b2558e4fbfd6655b72e5ea00ae6f3f750986ce2c253bd589ddb7280805",
+      "source_instance_id": "SRC010453",
+      "valid": 747
+    },
+    {
+      "entries": 249,
+      "evaluations": 1245,
+      "missing": 0,
+      "qnames": [
+        "{http://schemas.microsoft.com/ado/2007/08/dataservices}TC_5YEAR",
+        "{http://schemas.microsoft.com/ado/2007/08/dataservices}TC_7YEAR",
+        "{http://schemas.microsoft.com/ado/2007/08/dataservices}TC_10YEAR",
+        "{http://schemas.microsoft.com/ado/2007/08/dataservices}TC_20YEAR",
+        "{http://schemas.microsoft.com/ado/2007/08/dataservices}TC_30YEAR"
+      ],
+      "raw_path": "data/raw/treasury/treasury_annual_xml/3d78318e471a446a4e49022d13f7642cce3dbb94cb15dd5360561f19622750be/daily_treasury_real_yield_curve_2025.xml",
+      "raw_sha256": "68f58df186f47f20c349d276ae501b97c94cfb2a09cc36453f4c95288322ec66",
+      "source_identity": "3d78318e471a446a4e49022d13f7642cce3dbb94cb15dd5360561f19622750be",
+      "source_instance_id": "SRC010454",
+      "valid": 1245
+    },
+    {
+      "entries": 249,
+      "evaluations": 249,
+      "missing": 0,
+      "qnames": [
+        "{http://schemas.microsoft.com/ado/2007/08/dataservices}RATE"
+      ],
+      "raw_path": "data/raw/treasury/treasury_annual_xml/59a456d521bc98ef7375758272f827cb50bf90f3218b415eb49678e99cf860ae/daily_treasury_real_long_term_2025.xml",
+      "raw_sha256": "e58a45134fe5a857028f7ee3381d07fbc56a7aa248dfd45df5721478e67d5a1e",
+      "source_identity": "59a456d521bc98ef7375758272f827cb50bf90f3218b415eb49678e99cf860ae",
+      "source_instance_id": "SRC010455",
+      "valid": 249
+    }
+  ],
+  "totals": {
+    "entries": 1743,
+    "evaluations": 12948,
+    "missing": 155,
+    "source_specific_qnames": 50,
+    "sources": 5,
+    "valid": 12793
+  }
+}

@@ -20,8 +20,8 @@ PINS = {
     "remote-live.json": "8b46ce38d970be771ad56bbfd1a86d8eb60438852f3e9b5fe98fa57ac10f844b",
 }
 # Deliberately absent. Agent-generated files cannot activate these actions.
-OWNER_GRANT_SHA256 = "de242d3754688288cb174fbfde2f8cbc6594fc80b36a8d6281726ca9479322e7"
-OWNER_GRANT_PATH = Path("metadata/authorizations/n450_processing_v6.json")
+OWNER_GRANT_SHA256 = "46488e49d34abd2160ad15089581c01c74325714e6d8cc57a27eb1d8e3bd5001"
+OWNER_GRANT_PATH = Path("metadata/authorizations/n750_admission_v1.json")
 ACTIONS = {"admission", "freeze", "upload", "processing", "remote_processing"}
 # Trusted installation path; never taken from a request or environment override.
 HISTORICAL_RAW_ROOT = Path("/Users/lightnino/Projects/edp-lab/data/raw")

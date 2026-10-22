@@ -1,0 +1,1807 @@
+{
+  "count": 300,
+  "meaning": "Missing retained remote readback evidence, not proof that objects are absent.",
+  "sources": [
+    {
+      "bytes": 479473,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/46de7eecff04107f25938b887af28c04e7376e7d30e3f06c6435880cb8dd2766/master.20160202.idx",
+      "raw_sha256": "94effe3c29396adbad02c4c110794a96ce3670cc26ccddbb0d37932ceb1befe9",
+      "source_identity": "46de7eecff04107f25938b887af28c04e7376e7d30e3f06c6435880cb8dd2766"
+    },
+    {
+      "bytes": 444726,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/267d895218c5d78414c9b41e68f580c77ea75c7b68e8e32ffe90bec7c429aa4d/master.20160203.idx",
+      "raw_sha256": "c4a0a0bec4b74ddf1fbb57679a137e531950dd708507a03793a4075e99374d76",
+      "source_identity": "267d895218c5d78414c9b41e68f580c77ea75c7b68e8e32ffe90bec7c429aa4d"
+    },
+    {
+      "bytes": 365945,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/3ce3e3894c64bfc01aa62233472e95e845eeefc877f8e9deefa872bdc531ffff/master.20160204.idx",
+      "raw_sha256": "46020a8c14454025a0ec98bdcf09a1c0ca64fe636ff3e472d64cbc8cbd000b0a",
+      "source_identity": "3ce3e3894c64bfc01aa62233472e95e845eeefc877f8e9deefa872bdc531ffff"
+    },
+    {
+      "bytes": 429642,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/c81348af75239ebb1f4e37880f849f96ab04e9a2f5e1143bbe1f114e0869c411/master.20160205.idx",
+      "raw_sha256": "61d4d06e3bcbb0a67e2466ce9ab0793783a755df1a3e0825448f14ad953d7e2f",
+      "source_identity": "c81348af75239ebb1f4e37880f849f96ab04e9a2f5e1143bbe1f114e0869c411"
+    },
+    {
+      "bytes": 401071,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/f75bea8a1f8ab46e2452823e3d237c4a3869cdff29b4035403d5e8c8f2a643b7/master.20160208.idx",
+      "raw_sha256": "a0307a77b4a514abba7d878ecfeea84be86077fe76c27086082a67e3a4fd6eec",
+      "source_identity": "f75bea8a1f8ab46e2452823e3d237c4a3869cdff29b4035403d5e8c8f2a643b7"
+    },
+    {
+      "bytes": 647986,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/2ee8125b2d365f4da8f74821b1157410757504a004ce8897d56e426b83d7f99c/master.20160209.idx",
+      "raw_sha256": "5771033754ed7aba6968cac7aaf3c42f7ed9072cf6d353928638f2832400e935",
+      "source_identity": "2ee8125b2d365f4da8f74821b1157410757504a004ce8897d56e426b83d7f99c"
+    },
+    {
+      "bytes": 778839,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/22cc97ad0fc9cda0f4a521088a46350ef65549c3ff022260a71ffc5aa0e8f25e/master.20160210.idx",
+      "raw_sha256": "6aa2718d8f4ef3c0803fc4534a1dcbb2aae68dd8c73e3d04c805002e04d4b314",
+      "source_identity": "22cc97ad0fc9cda0f4a521088a46350ef65549c3ff022260a71ffc5aa0e8f25e"
+    },
+    {
+      "bytes": 842816,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/9a6109fa429bd1b1f0b089345b7b37d136d9e8bc2498c8ab092865acdcd7401f/master.20160211.idx",
+      "raw_sha256": "12957a3e566cd80cd154e5da8e4322d94ace586b32ed322b08f6f666e6746efa",
+      "source_identity": "9a6109fa429bd1b1f0b089345b7b37d136d9e8bc2498c8ab092865acdcd7401f"
+    },
+    {
+      "bytes": 1131818,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/8a3fed113b59d2988ca64558f6e4544e4080b109d2c99f81213dfd4f4f583f20/master.20160212.idx",
+      "raw_sha256": "c934987f5a001ba8db5a008b81996ab123207ec8490e6eade67f594431016ab5",
+      "source_identity": "8a3fed113b59d2988ca64558f6e4544e4080b109d2c99f81213dfd4f4f583f20"
+    },
+    {
+      "bytes": 1314024,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/9877aee14b9fc626ec1fce2d865799ff4b5dd393b6f9a45fc6f3aa0e885dbc8d/master.20160216.idx",
+      "raw_sha256": "a0a7c742651757ab9d94d4aac2fa054ff3c18fb7927163801d1c02e5c81fd018",
+      "source_identity": "9877aee14b9fc626ec1fce2d865799ff4b5dd393b6f9a45fc6f3aa0e885dbc8d"
+    },
+    {
+      "bytes": 535423,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/344a4a1e7df6638edea8095982294ea051ba57f1cf7f54a0a220cb80bc379b0d/master.20160217.idx",
+      "raw_sha256": "a1d53845995852658e1a8fd0eaaa7000d6a5242a0ecb88228f0652c10aefff16",
+      "source_identity": "344a4a1e7df6638edea8095982294ea051ba57f1cf7f54a0a220cb80bc379b0d"
+    },
+    {
+      "bytes": 440950,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/c07c79e480758b8e48439ebb836bcd507ecb204e1f50d6f28d7a9d69b94e1313/master.20160218.idx",
+      "raw_sha256": "1e818b32a9d7e9760f48063d453c0632be5d9529ab740fe98bac231fe8baa182",
+      "source_identity": "c07c79e480758b8e48439ebb836bcd507ecb204e1f50d6f28d7a9d69b94e1313"
+    },
+    {
+      "bytes": 403404,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/b7f68b0fe9011c19af8fd758e89962c3aa6501442bd43bde9c7bb8b94bccad3c/master.20160219.idx",
+      "raw_sha256": "d05c0b9abe3f44fac02f824b0e02935f4663b02f977f20b9ff7db74b7275bb5f",
+      "source_identity": "b7f68b0fe9011c19af8fd758e89962c3aa6501442bd43bde9c7bb8b94bccad3c"
+    },
+    {
+      "bytes": 409945,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/a7f72819c55e781d9a64057ae4031181f837581bdbd639c376ed4314e2a8dbd5/master.20160222.idx",
+      "raw_sha256": "bc4290aec3263a2d6b2f57b0770ecee145ad03b52721fccbcda39f6018b28cae",
+      "source_identity": "a7f72819c55e781d9a64057ae4031181f837581bdbd639c376ed4314e2a8dbd5"
+    },
+    {
+      "bytes": 464537,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/46c474e5151dab3797e03ab0da58163173f6580e35c1e300005747b5e90c7078/master.20160223.idx",
+      "raw_sha256": "8c00e7886fa4490fc21b55ed3821ad77746d8d7e16ac33430045a87ce9446e3c",
+      "source_identity": "46c474e5151dab3797e03ab0da58163173f6580e35c1e300005747b5e90c7078"
+    },
+    {
+      "bytes": 409022,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/69dd3eb0a1843433c4cc9ba17f4ef6d7c0c354ee2a13131086a79e3bf2e6ab9a/master.20160224.idx",
+      "raw_sha256": "84713b79bac29429078695c117dcbee235ded1168e7c07acba1477aa204f6ad2",
+      "source_identity": "69dd3eb0a1843433c4cc9ba17f4ef6d7c0c354ee2a13131086a79e3bf2e6ab9a"
+    },
+    {
+      "bytes": 480759,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/031b095a5b8fdfdcbb1a3c9fd6e31fdcabf43e1e583975382c6a0ff99e2dc1f4/master.20160225.idx",
+      "raw_sha256": "6b75c254418d74dbba2d842895fbb31da44bbe544dc99610d2558f42653ffac1",
+      "source_identity": "031b095a5b8fdfdcbb1a3c9fd6e31fdcabf43e1e583975382c6a0ff99e2dc1f4"
+    },
+    {
+      "bytes": 719530,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/d7ffeba2d2f768a998188d07553d4f23eb2fd6aac68e90c8e3a54ba218ee2be6/master.20160226.idx",
+      "raw_sha256": "57eb4ceaab27f7ec8f4312d0808de6a01c2f53f4d831675be990285cf89e75ca",
+      "source_identity": "d7ffeba2d2f768a998188d07553d4f23eb2fd6aac68e90c8e3a54ba218ee2be6"
+    },
+    {
+      "bytes": 743736,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/71a6e1ad932a18975fa118f575fd3a0e2a04a07a79e696dcf22d3cd3478c1497/master.20160229.idx",
+      "raw_sha256": "520e37896d527324863943f2250ddc0a45193d9046f63e3bff4b44a7c6d212cb",
+      "source_identity": "71a6e1ad932a18975fa118f575fd3a0e2a04a07a79e696dcf22d3cd3478c1497"
+    },
+    {
+      "bytes": 583438,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/a9bcb10991af2552503f1cf98002f2cc1902151225b91f6b879e3cc37988eacb/master.20160301.idx",
+      "raw_sha256": "5864ae7b90f9d308ff4242aa81e4db19a43699652435dbf21f437253ec045d50",
+      "source_identity": "a9bcb10991af2552503f1cf98002f2cc1902151225b91f6b879e3cc37988eacb"
+    },
+    {
+      "bytes": 507927,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/2806c28297c18c4b994045b9640cac1fb8c8de4af6cfb380a4f753c3f403a991/master.20160302.idx",
+      "raw_sha256": "c19bf3c297b9ee03d1b306eeecf7732cbe6b09b8f5222a529207bb6f92d89feb",
+      "source_identity": "2806c28297c18c4b994045b9640cac1fb8c8de4af6cfb380a4f753c3f403a991"
+    },
+    {
+      "bytes": 548026,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/7c210ae46dc9cb38868585316979ac05a2b43d0fc27627a308544576a9e71740/master.20160303.idx",
+      "raw_sha256": "e3ef6d6924a98b8f8d3205a372d2b40af56ff4170bd9689d6f4c08ae3470c8d9",
+      "source_identity": "7c210ae46dc9cb38868585316979ac05a2b43d0fc27627a308544576a9e71740"
+    },
+    {
+      "bytes": 372734,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/cffe1c68f9a15364f34d27c8589ab845baedb6d685c7415e748f8243e229c4d1/master.20160304.idx",
+      "raw_sha256": "2f98a2b08fb4655ac93bc6a04e72fab8cc17eb522b67085d059510615c0c26d8",
+      "source_identity": "cffe1c68f9a15364f34d27c8589ab845baedb6d685c7415e748f8243e229c4d1"
+    },
+    {
+      "bytes": 378799,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/03e71644f9500337a7862a17a462bbf2d2e99e15095b139705fff7eec4df61c0/master.20160307.idx",
+      "raw_sha256": "f6b00a2a008b7691f027a320eeb48b3630fcc04c3ba8a438141afa4efd582be9",
+      "source_identity": "03e71644f9500337a7862a17a462bbf2d2e99e15095b139705fff7eec4df61c0"
+    },
+    {
+      "bytes": 391671,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/d36a8fcb4f8fd438ef5029ce4576c74a8c437ee82f0496deeb8306d27f45458b/master.20160308.idx",
+      "raw_sha256": "3499af35948c3d0de07751f778515f5438bc9c01ce1e7075a3fbdd1772b71225",
+      "source_identity": "d36a8fcb4f8fd438ef5029ce4576c74a8c437ee82f0496deeb8306d27f45458b"
+    },
+    {
+      "bytes": 364360,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/39f81b11b75d0f90a3cd3468c6f1e686f901e41051e537d3612876eadf2d7ccd/master.20160309.idx",
+      "raw_sha256": "37042d7e66bab50c719f51d0bbf6f91d10896fe62b8a59cc5477ca3661913d98",
+      "source_identity": "39f81b11b75d0f90a3cd3468c6f1e686f901e41051e537d3612876eadf2d7ccd"
+    },
+    {
+      "bytes": 368781,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/64c5e1fc06b5896d6c438b1fcfaf9446bfe5531e4bd80476f19bf03c370cfeec/master.20160310.idx",
+      "raw_sha256": "72354070daa9b7e334147d321e3640833a2d40356f71194b21a064b3a7018363",
+      "source_identity": "64c5e1fc06b5896d6c438b1fcfaf9446bfe5531e4bd80476f19bf03c370cfeec"
+    },
+    {
+      "bytes": 381776,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/eaf57fc44e54a12c79a7e146026402a4b544fbc6e51593035ac7385011ddfd7e/master.20160311.idx",
+      "raw_sha256": "4be3d6980d04a3b03aca40e501a6657a9fe208e76876bbc78627fc9071edd7c0",
+      "source_identity": "eaf57fc44e54a12c79a7e146026402a4b544fbc6e51593035ac7385011ddfd7e"
+    },
+    {
+      "bytes": 382210,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/89961637c40f82b4c13b348c72b427c6eb70bb236729c5dc1abe4fc84a6502a3/master.20160314.idx",
+      "raw_sha256": "1d7f73a692e76ac1790761dd0098cd31b20f9527789fa0064f74da16092f6e52",
+      "source_identity": "89961637c40f82b4c13b348c72b427c6eb70bb236729c5dc1abe4fc84a6502a3"
+    },
+    {
+      "bytes": 349196,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/2a086a634e209afbd984443941bcfa5b024803f116478347036d7ebe1b266fe0/master.20160315.idx",
+      "raw_sha256": "31ed747751cf7f9bf00f148ee90ef485d1baef199a8831ba84327689764e8f53",
+      "source_identity": "2a086a634e209afbd984443941bcfa5b024803f116478347036d7ebe1b266fe0"
+    },
+    {
+      "bytes": 344345,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/d98b341402cf141019d9172922c45e5433869c7732003aafd37cb36905798479/master.20160316.idx",
+      "raw_sha256": "096823910bbc3d768bfca8e065fce47aed60f9ba025e92b1c0efc01a196c0a02",
+      "source_identity": "d98b341402cf141019d9172922c45e5433869c7732003aafd37cb36905798479"
+    },
+    {
+      "bytes": 364900,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/0c365a1e3b0ba8a1366706d068b9dbbece92b309db90c7f9618e74dabdf0a379/master.20160317.idx",
+      "raw_sha256": "f9fea7e30a234a6fc9928cc9c1b7239eeb9daee49c5cdef6a0c1ff963c449532",
+      "source_identity": "0c365a1e3b0ba8a1366706d068b9dbbece92b309db90c7f9618e74dabdf0a379"
+    },
+    {
+      "bytes": 395073,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/c90f5e12e96ca222e9a8a48f565ee6821f4741cd446f6cebf0d63be3f1a8431b/master.20160318.idx",
+      "raw_sha256": "3eeff3efe64cf0f0dbbbc819f4d524dd8f4e12a16b9c4335ca8703deee30213c",
+      "source_identity": "c90f5e12e96ca222e9a8a48f565ee6821f4741cd446f6cebf0d63be3f1a8431b"
+    },
+    {
+      "bytes": 308115,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/d7c40b91b5c6b0486be5395206db2e50782f16f8000bde0f1adbbc5969b60dfd/master.20160321.idx",
+      "raw_sha256": "13ffe1787ca82d28817a3d6847a0e25d4241b0dec9f11bd86f6bb870abceaac5",
+      "source_identity": "d7c40b91b5c6b0486be5395206db2e50782f16f8000bde0f1adbbc5969b60dfd"
+    },
+    {
+      "bytes": 301599,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/fd3573207d5e198fc7bcf68582c167016618592e6364955623188e6f6288db7d/master.20160322.idx",
+      "raw_sha256": "02b57f538bbc7dcc5e896903793fad35cfac85afd05b94aac7df9ea31dc108fd",
+      "source_identity": "fd3573207d5e198fc7bcf68582c167016618592e6364955623188e6f6288db7d"
+    },
+    {
+      "bytes": 328432,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/28f0f20e71a7c0478e5a1267e45be0fdb051399de31b665f2b173bd20994b772/master.20160323.idx",
+      "raw_sha256": "faf83849ec1ed78e9e9c94ca5e2dcd0f0c088826acfb846bf5336fa404c188f1",
+      "source_identity": "28f0f20e71a7c0478e5a1267e45be0fdb051399de31b665f2b173bd20994b772"
+    },
+    {
+      "bytes": 341304,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/0c5b5d90defd14f96c17be7bf004745a16f3877e1acc47affd7af73123fb175e/master.20160324.idx",
+      "raw_sha256": "1a7f84ca090af0207044331c9e6a4adcf03160798ff9e1582cca6eab174555d3",
+      "source_identity": "0c5b5d90defd14f96c17be7bf004745a16f3877e1acc47affd7af73123fb175e"
+    },
+    {
+      "bytes": 237772,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/fd0e17390a51cc4050bedc521528c062a27682b832489793c82983c754bb039f/master.20160325.idx",
+      "raw_sha256": "8008c7f5db0a003861e9af72a6729a61a289ad1af895047ec30b8a7ecb353ab7",
+      "source_identity": "fd0e17390a51cc4050bedc521528c062a27682b832489793c82983c754bb039f"
+    },
+    {
+      "bytes": 340879,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/77e4ba02caee285e912bdf4441a57aa7faf2cdd1c8a03201e2245eec5d3074b1/master.20160328.idx",
+      "raw_sha256": "1d8f309dc7e743349009e2dd69deff5aa77a542b72c1924e5ac9683302a71c90",
+      "source_identity": "77e4ba02caee285e912bdf4441a57aa7faf2cdd1c8a03201e2245eec5d3074b1"
+    },
+    {
+      "bytes": 351236,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/42599ffe4221139497102e5ec42d202fcdb88d55b38c4e785dbda42685d4a728/master.20160329.idx",
+      "raw_sha256": "c7c8085e036cc05f108fd93fee3ed7a45f7801b37508f354469661f8fa03085c",
+      "source_identity": "42599ffe4221139497102e5ec42d202fcdb88d55b38c4e785dbda42685d4a728"
+    },
+    {
+      "bytes": 473726,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/5d5cbb866c540a26ff23551c03ad7bfe978deb771efe395925878e30539bb36c/master.20160330.idx",
+      "raw_sha256": "c4dd3329219ece5b95e839cd415d05d9935a65452c9c4999ff82a780360eefb9",
+      "source_identity": "5d5cbb866c540a26ff23551c03ad7bfe978deb771efe395925878e30539bb36c"
+    },
+    {
+      "bytes": 449489,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/2a13a4997356708a770bab4ec68288660935e943942286d8e81abc88209c788b/master.20160401.idx",
+      "raw_sha256": "fcb6f12c97d15e7080f42b16ac56a179f432b89d10374c41c2d2c43257af9b2f",
+      "source_identity": "2a13a4997356708a770bab4ec68288660935e943942286d8e81abc88209c788b"
+    },
+    {
+      "bytes": 522937,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/dce487294793c3842043f443106b41fc46298676dace5f8d16dcc42864128e89/master.20160404.idx",
+      "raw_sha256": "266f6ac0301779c1b871f50bb5d4ed07b301cef679725bb818d5efe00092b830",
+      "source_identity": "dce487294793c3842043f443106b41fc46298676dace5f8d16dcc42864128e89"
+    },
+    {
+      "bytes": 440286,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/c27e51b598e505c7a90a9939694ada63fa8581a5896cf1ac093afe53b07b20d1/master.20160405.idx",
+      "raw_sha256": "21bbe1b7deb94e10e6be04c9d6eba899bd41cbe46c66c13157a5125501ceb5e4",
+      "source_identity": "c27e51b598e505c7a90a9939694ada63fa8581a5896cf1ac093afe53b07b20d1"
+    },
+    {
+      "bytes": 222611,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/481a0baa00f15de9300d19c376ea50114f1f45e1e694bc56b2234aa0c4a8c629/master.20160406.idx",
+      "raw_sha256": "432ba702b3c56c67d01716cc5d4f83e26f32ef7ea44ce518971d33e533f3baf5",
+      "source_identity": "481a0baa00f15de9300d19c376ea50114f1f45e1e694bc56b2234aa0c4a8c629"
+    },
+    {
+      "bytes": 226752,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/3fdabdfb1909bdb8979104fa10d113074a5e8f1a696b96710242e6a6cf679742/master.20160407.idx",
+      "raw_sha256": "1c5fe96879d3cda000a5addfe8380319f0fe907c4f8a73347da118e337081240",
+      "source_identity": "3fdabdfb1909bdb8979104fa10d113074a5e8f1a696b96710242e6a6cf679742"
+    },
+    {
+      "bytes": 255034,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/a31883552445cefc5f887c8b7cac43a09ac4677ef778c6be90180ad0ad205698/master.20160408.idx",
+      "raw_sha256": "0473e80f31f4bee023d155c394ed63151cb400e408dbafa81b4cb2d0ea147d21",
+      "source_identity": "a31883552445cefc5f887c8b7cac43a09ac4677ef778c6be90180ad0ad205698"
+    },
+    {
+      "bytes": 251104,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/9ebe3158e6af8c879a350479b8a9e20e2446705df655f11d047b72408f4c8aaf/master.20160411.idx",
+      "raw_sha256": "09ee9a379c366547c1861f814647d2fc873e5468a5c89b14d74df240ab19952e",
+      "source_identity": "9ebe3158e6af8c879a350479b8a9e20e2446705df655f11d047b72408f4c8aaf"
+    },
+    {
+      "bytes": 209159,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/775b5fc6ce0d9eab4c332389e64d3570abdbc9ea02c8fee1f19dd555cda45c6f/master.20160412.idx",
+      "raw_sha256": "fc2168788f12bd38c281287d2ddaaaa9e2f6cc0365c8eb467a6abf7eb8aed04b",
+      "source_identity": "775b5fc6ce0d9eab4c332389e64d3570abdbc9ea02c8fee1f19dd555cda45c6f"
+    },
+    {
+      "bytes": 208694,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/8e140d59bccc14273d173be057dac59437940c8b23e6591c3c36b591ba57d1a0/master.20160413.idx",
+      "raw_sha256": "e9817876b8bb76a0bc2fc6872c870bc79bf520f50343288e0f34ba2cc49acc7e",
+      "source_identity": "8e140d59bccc14273d173be057dac59437940c8b23e6591c3c36b591ba57d1a0"
+    },
+    {
+      "bytes": 362021,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/03ed4c31ec871ef27f7b1335f6ac56ea04c2b47acedfd310721a3374bf8deeb9/master.20160414.idx",
+      "raw_sha256": "c7dc866453f27a6a5fb0ad2ee348f64e67fc810cb050c3c90d8de6bfd6dd2410",
+      "source_identity": "03ed4c31ec871ef27f7b1335f6ac56ea04c2b47acedfd310721a3374bf8deeb9"
+    },
+    {
+      "bytes": 260756,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/ee29df4d2f37f5e0dd130a1a051101dc0d64faef529c854a0923a57b38486f55/master.20160415.idx",
+      "raw_sha256": "5ca7dbd943c2d1c4d4bdf8d51621daf28990abcae274d0ead7730721e2e5fef8",
+      "source_identity": "ee29df4d2f37f5e0dd130a1a051101dc0d64faef529c854a0923a57b38486f55"
+    },
+    {
+      "bytes": 237603,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/a97f3940ca55dff5e8ff5fa42b8cb27bd707212ba6da07a1ce0d41cafa892a24/master.20160418.idx",
+      "raw_sha256": "c1d58a0d56be4e1e8d59140e293640d0677f2ab120f0753ebaf9e46f96b54f15",
+      "source_identity": "a97f3940ca55dff5e8ff5fa42b8cb27bd707212ba6da07a1ce0d41cafa892a24"
+    },
+    {
+      "bytes": 265429,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/c8f6c933061c304a41e244079a3b06f9a6aa6d49a149124167ea2985ee8659f6/master.20160419.idx",
+      "raw_sha256": "455df97f04ffe560f0f6b00163bb8a0ba2a725126dfd3023670831a5979bc074",
+      "source_identity": "c8f6c933061c304a41e244079a3b06f9a6aa6d49a149124167ea2985ee8659f6"
+    },
+    {
+      "bytes": 211182,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/7900704545056f7767fc4944b7cea1bd5b505104bd339025ed3185c9d1931f65/master.20160420.idx",
+      "raw_sha256": "a68e6687e0f65d992c09ed1a11b6cda7d62af136c58ee9b8f61fb64d9f46a990",
+      "source_identity": "7900704545056f7767fc4944b7cea1bd5b505104bd339025ed3185c9d1931f65"
+    },
+    {
+      "bytes": 313770,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/bec3da1b91660cdec8fabb56386962cb7c6ff0a82873030a2da6770fb5e61ed3/master.20160421.idx",
+      "raw_sha256": "4c2adf27b92f4f29b1fe6f8966a0caae8e4e6aa49b9813aeb3f6d1baa5eed7d8",
+      "source_identity": "bec3da1b91660cdec8fabb56386962cb7c6ff0a82873030a2da6770fb5e61ed3"
+    },
+    {
+      "bytes": 261620,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/e171763196a3c2b085e7f4ec16ff5b970705a7949b67618f9d26ba19b8664de5/master.20160422.idx",
+      "raw_sha256": "87e8796153979ea1c39f3606551fb701e582eb074f94fc8a3366b574f62de497",
+      "source_identity": "e171763196a3c2b085e7f4ec16ff5b970705a7949b67618f9d26ba19b8664de5"
+    },
+    {
+      "bytes": 268676,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/2a67186ffb264f70f497775571631feb6a462ef893337ebba12035704c8cbaf5/master.20160425.idx",
+      "raw_sha256": "6be25fb860c1cb0fedf5d27a537073d43ff7bed77e4cb4c356bb5db23b745ddf",
+      "source_identity": "2a67186ffb264f70f497775571631feb6a462ef893337ebba12035704c8cbaf5"
+    },
+    {
+      "bytes": 313305,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/c09d1cb1e88aea6e27002ebe5e8bd5945b5401dcd152274c24f5d05b12fa44bc/master.20160426.idx",
+      "raw_sha256": "04b81b43099281c126183794216a5edef99a5fc11571f9d92e5a848757666543",
+      "source_identity": "c09d1cb1e88aea6e27002ebe5e8bd5945b5401dcd152274c24f5d05b12fa44bc"
+    },
+    {
+      "bytes": 370237,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/6852f94ac5812abad8c277e29743beb59e872b8dee8c25e8be3531917a6b82e6/master.20160427.idx",
+      "raw_sha256": "1760957b95cc010d670812163a8b8fa68c067c560a0c9a5f401d487f8e14e67a",
+      "source_identity": "6852f94ac5812abad8c277e29743beb59e872b8dee8c25e8be3531917a6b82e6"
+    },
+    {
+      "bytes": 498364,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/912f578b64646c836e1c136b04d6d979aa0ccc68b11416d297300aad101c0fdb/master.20160428.idx",
+      "raw_sha256": "645c202549dd9f28d7e854632b40405b5ec2a336ad94c007afcf589ab6184ae1",
+      "source_identity": "912f578b64646c836e1c136b04d6d979aa0ccc68b11416d297300aad101c0fdb"
+    },
+    {
+      "bytes": 735034,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/ec50290c23e54217903db35c6671b362d05a37ec4d37cd260fad9b7a7fea1d3d/master.20160429.idx",
+      "raw_sha256": "87ddd4fa89a3628055c77fe38d0e65fafd5ea36569e00202a442a986a05dd07a",
+      "source_identity": "ec50290c23e54217903db35c6671b362d05a37ec4d37cd260fad9b7a7fea1d3d"
+    },
+    {
+      "bytes": 468435,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/56462d1f683e5cd11701bc5dc4c8a273a14af0689a744e37b5e8170a75bf98f9/master.20160502.idx",
+      "raw_sha256": "813f49f3ef9d4f1990b87ba1f169257311e092400bd16f5d6881fb0e19902413",
+      "source_identity": "56462d1f683e5cd11701bc5dc4c8a273a14af0689a744e37b5e8170a75bf98f9"
+    },
+    {
+      "bytes": 430500,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/8a61ceb179964c1bd1035fc497e12395e6ac228a68c60b48eb8431482782768b/master.20160503.idx",
+      "raw_sha256": "d8151dd9ef8b6160da269d93f5cee8be54869c7a4666a9f47c7d6c3a70711244",
+      "source_identity": "8a61ceb179964c1bd1035fc497e12395e6ac228a68c60b48eb8431482782768b"
+    },
+    {
+      "bytes": 449086,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/0ee69f9e5dc1ea553e9c767a0d8fc46649f18240bbeeecea52d8235bf34d1cd6/master.20160504.idx",
+      "raw_sha256": "1d53e9ba0ca1bbf6c3f033ab98e3dc9c513c3876820beab800cb2cf777436913",
+      "source_identity": "0ee69f9e5dc1ea553e9c767a0d8fc46649f18240bbeeecea52d8235bf34d1cd6"
+    },
+    {
+      "bytes": 470944,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/603fe4f4fd208dfe704839b812745ad0f2420d1a9951d368d57954e47efc215b/master.20160505.idx",
+      "raw_sha256": "0e6deb1736d83eeeedbe4900910441a6ede356a68b0b94e3ff99b3157753cb70",
+      "source_identity": "603fe4f4fd208dfe704839b812745ad0f2420d1a9951d368d57954e47efc215b"
+    },
+    {
+      "bytes": 422884,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/4feeeb46dbc4dc75b5223208519c2056789994f44fbde71bfa95cd891da517df/master.20160506.idx",
+      "raw_sha256": "a8bf2f200fa25626fb9c84b76b1ee834dcc2a9e256321726e85e2459a5d1dae7",
+      "source_identity": "4feeeb46dbc4dc75b5223208519c2056789994f44fbde71bfa95cd891da517df"
+    },
+    {
+      "bytes": 401822,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/424027b760e858eba55a81a717096e3479e3a2a42f2bb0c6b6b81294e474bff9/master.20160509.idx",
+      "raw_sha256": "f93d96271e6e1872f0e2ad05fec87b6829db508f718a9453b808493348e88f45",
+      "source_identity": "424027b760e858eba55a81a717096e3479e3a2a42f2bb0c6b6b81294e474bff9"
+    },
+    {
+      "bytes": 455653,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/67050e557be672f122c362e8376cfb7a97546d6d0adbdf10861d8c16f8454e73/master.20160510.idx",
+      "raw_sha256": "d18cf8173204f1dba344dbe27d228c424e33cfd524cae4640d82ecd46dae302d",
+      "source_identity": "67050e557be672f122c362e8376cfb7a97546d6d0adbdf10861d8c16f8454e73"
+    },
+    {
+      "bytes": 418777,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/222f58a991f66172de8afe7c32ca207dc0b2ab58fc8bd49fbfd37cadf74867df/master.20160511.idx",
+      "raw_sha256": "6febb45be74bd674180c6966b4a4bbf4946808ac46b97bcb1cd5ea77e09701c4",
+      "source_identity": "222f58a991f66172de8afe7c32ca207dc0b2ab58fc8bd49fbfd37cadf74867df"
+    },
+    {
+      "bytes": 454836,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/4d625e27e87bbc0090097d08442706353287c5bb309cfd08837134d080049dc7/master.20160512.idx",
+      "raw_sha256": "5e37f6602b17025e022861792200035e9ce9c7d4fed52915d6b8031c1dfb7225",
+      "source_identity": "4d625e27e87bbc0090097d08442706353287c5bb309cfd08837134d080049dc7"
+    },
+    {
+      "bytes": 502534,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/963032742848534c4720a611b8ed122701071a193c0fd3fcd4bda85551f3443c/master.20160513.idx",
+      "raw_sha256": "223f2edee9d7218fc063c5323f255148f738af80588923ca38c75350848d71a2",
+      "source_identity": "963032742848534c4720a611b8ed122701071a193c0fd3fcd4bda85551f3443c"
+    },
+    {
+      "bytes": 598116,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/c03c9216b86bea6ed6d42d85278b2963104bf3455fac5170c1488694d9cd585e/master.20160516.idx",
+      "raw_sha256": "f2006d2ef69990270b038d3b76f99d298094676b2e45da22b54d461b565fbe39",
+      "source_identity": "c03c9216b86bea6ed6d42d85278b2963104bf3455fac5170c1488694d9cd585e"
+    },
+    {
+      "bytes": 408588,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/a6627dca6f43bb82c22f1493f48ad2458018df45d15d302a12d46b57899d9cac/master.20160517.idx",
+      "raw_sha256": "db17a1685f6c93a152b1255c88e71618f966916b95bbac839d9e2402b85eab93",
+      "source_identity": "a6627dca6f43bb82c22f1493f48ad2458018df45d15d302a12d46b57899d9cac"
+    },
+    {
+      "bytes": 287963,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/4b5fe78c8fe7d443dac05517a26ef54932aa55c925c1d8c3f7f8abd4b335ea0a/master.20160518.idx",
+      "raw_sha256": "018cee0b8648aa3d435a0990ed265108b22d938482e20d1992ff1aceb8ff82c5",
+      "source_identity": "4b5fe78c8fe7d443dac05517a26ef54932aa55c925c1d8c3f7f8abd4b335ea0a"
+    },
+    {
+      "bytes": 320594,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/09e39ed13200d3d5a3bbbd0cf3db0c115a702fe58d392ab4912f3526f2d73c16/master.20160519.idx",
+      "raw_sha256": "33053572a3d46f3c5d0bedd7e953d1c324c8b896a1a324d9af253378f4554637",
+      "source_identity": "09e39ed13200d3d5a3bbbd0cf3db0c115a702fe58d392ab4912f3526f2d73c16"
+    },
+    {
+      "bytes": 354533,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/3d5b3dc3df2092db9aaec2f140e686cb8c7c41c93bc68e2c5109f793623f5c6b/master.20160520.idx",
+      "raw_sha256": "96a8bbb079f83a20ce553eead93f6b26d570a34a00c552c26ffe8b7fd4bc213d",
+      "source_identity": "3d5b3dc3df2092db9aaec2f140e686cb8c7c41c93bc68e2c5109f793623f5c6b"
+    },
+    {
+      "bytes": 345389,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/3576053f4ee461de0e62b09513a46f83570c86ddaba4a5dcb73d972cbb790fc0/master.20160523.idx",
+      "raw_sha256": "a201a72017e6c5381349705d8ca65aff54de0e67ab590973a1c257b53b6a09a3",
+      "source_identity": "3576053f4ee461de0e62b09513a46f83570c86ddaba4a5dcb73d972cbb790fc0"
+    },
+    {
+      "bytes": 285541,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/702153be087250632c61f0eff51f274e6b9b89414528ecd1a4f8ba10a7b0f912/master.20160524.idx",
+      "raw_sha256": "3908145b99c9d2daf5adec4ded13e700376b78647974b409efef56cbe005228a",
+      "source_identity": "702153be087250632c61f0eff51f274e6b9b89414528ecd1a4f8ba10a7b0f912"
+    },
+    {
+      "bytes": 304816,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/b72a3d590c9c0f9b8039dc3e67f1bff8f8abb9912b831f269938fc4e1f8b1ea5/master.20160525.idx",
+      "raw_sha256": "32d8969a03d255928360faf5f7c11cbfe1b3e862688a52b306bd76f531a29c6c",
+      "source_identity": "b72a3d590c9c0f9b8039dc3e67f1bff8f8abb9912b831f269938fc4e1f8b1ea5"
+    },
+    {
+      "bytes": 413457,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/512cafdc630757f1b20c5499b541a2bb48fb13d631710bd586df8c2e02922287/master.20160526.idx",
+      "raw_sha256": "d9a4c76fa8e99766b24384275e4a67425428a8e3b2f997c15211acffaa6a240a",
+      "source_identity": "512cafdc630757f1b20c5499b541a2bb48fb13d631710bd586df8c2e02922287"
+    },
+    {
+      "bytes": 419545,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/df1f739ce7a28f5ff4a1d88d5686cf78e38012323ff8f80d1d80c8b3dda75df0/master.20160527.idx",
+      "raw_sha256": "4fb5a2628a38890388974a49708878249491cb3f2ded73db106ea2a7ae783bf6",
+      "source_identity": "df1f739ce7a28f5ff4a1d88d5686cf78e38012323ff8f80d1d80c8b3dda75df0"
+    },
+    {
+      "bytes": 404734,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/b838d14575efa7c1780214506cee478eafc20f3391ba7bfe16bd6e23f2c015d6/master.20160531.idx",
+      "raw_sha256": "6ca5d81bf57b2dd7701281544e3ace2c92e60f1914e5e86caca279b7b965a40e",
+      "source_identity": "b838d14575efa7c1780214506cee478eafc20f3391ba7bfe16bd6e23f2c015d6"
+    },
+    {
+      "bytes": 365357,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/b12f4781c3bb76d8a0c2198b91292945fb42d34593e12675405e3912fd31b35e/master.20160601.idx",
+      "raw_sha256": "4e7bf39db2ce928934938245b7b07426abcdf32e12424ec3d53e25523687dbcb",
+      "source_identity": "b12f4781c3bb76d8a0c2198b91292945fb42d34593e12675405e3912fd31b35e"
+    },
+    {
+      "bytes": 388524,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/ae7172b0818c41515dfb4642b66428ded233cf3bb867409b1117d57af1947978/master.20160602.idx",
+      "raw_sha256": "492e57c83dd0e97550d1e6683234d80cc66dc8faf66c0ac5e9fb74145cfb8f15",
+      "source_identity": "ae7172b0818c41515dfb4642b66428ded233cf3bb867409b1117d57af1947978"
+    },
+    {
+      "bytes": 402888,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/a08dbc11bb51870a95110ef4e9c417151f06c0cec8b4c1f4fa71802d44bc2510/master.20160603.idx",
+      "raw_sha256": "f907f6327d53df51c9c4ef7bc828ff153e6a80d2e16a5c6bcf633b688dfc1212",
+      "source_identity": "a08dbc11bb51870a95110ef4e9c417151f06c0cec8b4c1f4fa71802d44bc2510"
+    },
+    {
+      "bytes": 282519,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/7e3a52c4a794423118f4f2365779b5c53b8a0725e4d0713aa8971e089a819d35/master.20160606.idx",
+      "raw_sha256": "508058522ce22d7f84fe815e61751a5fd4d0bf4ff4a256d035cb41ddbf5b4177",
+      "source_identity": "7e3a52c4a794423118f4f2365779b5c53b8a0725e4d0713aa8971e089a819d35"
+    },
+    {
+      "bytes": 288535,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/4813dad7554084db12b1b399c8527ebcd2a3e468451caab6107d421623c081d8/master.20160607.idx",
+      "raw_sha256": "65465a9688e32f4ff7392adc586bb4b01395888006a7252fafdd214bffdd3313",
+      "source_identity": "4813dad7554084db12b1b399c8527ebcd2a3e468451caab6107d421623c081d8"
+    },
+    {
+      "bytes": 258071,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/2fa14f9a67529749beaf9e72fa47ffa4f61a3cebf3523c9826f817506cbc4b0f/master.20160608.idx",
+      "raw_sha256": "939f95fb4d2e3a2c939fc73ba6f7f7578d6dabd0e0fdf44a5d0a86dc9a4ae74f",
+      "source_identity": "2fa14f9a67529749beaf9e72fa47ffa4f61a3cebf3523c9826f817506cbc4b0f"
+    },
+    {
+      "bytes": 286639,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/cb25e28f9aa525e8bf25be7f8d7f5e5f6aab32c5b6b6ecb661a82b0aeff73629/master.20160609.idx",
+      "raw_sha256": "ba52bb216742ec09a3561281b67dcc98c0e3c0a06e59247a0753b68db6d54fc9",
+      "source_identity": "cb25e28f9aa525e8bf25be7f8d7f5e5f6aab32c5b6b6ecb661a82b0aeff73629"
+    },
+    {
+      "bytes": 302573,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/c71dbf938bc9be758dea54403f16b373a362db6942c1aa7eec944f2181f85246/master.20160610.idx",
+      "raw_sha256": "2066a207b1fd209ecb36563e28426564bae9463f08f763bd45f6db85a2c3cc8e",
+      "source_identity": "c71dbf938bc9be758dea54403f16b373a362db6942c1aa7eec944f2181f85246"
+    },
+    {
+      "bytes": 249797,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/7a43725a324a954c99c21c18f98242d4db330f8055363a7287599d03ff3c465e/master.20160613.idx",
+      "raw_sha256": "b427e9e83162da9fbe1835cd6cd4960852761c2abe764308b30332baefceb4bd",
+      "source_identity": "7a43725a324a954c99c21c18f98242d4db330f8055363a7287599d03ff3c465e"
+    },
+    {
+      "bytes": 266206,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/57f3afcb22d5549587778315ac3deb0596f7af5ec4acff10cdc028d01b97d6d8/master.20160614.idx",
+      "raw_sha256": "3e2b00c702fcf9d5aef3c21e3494c412981cfd8bfb58f0e51ea297de08680a57",
+      "source_identity": "57f3afcb22d5549587778315ac3deb0596f7af5ec4acff10cdc028d01b97d6d8"
+    },
+    {
+      "bytes": 244186,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/695a391b877ba458eed83ccd1795897fa250059d8a472532bd42c1e8d9f6c4b5/master.20160615.idx",
+      "raw_sha256": "8c909c7e8066be4dbc17dccea4efd2e9079dc9b99d08c1c590a6a6b325ea3d68",
+      "source_identity": "695a391b877ba458eed83ccd1795897fa250059d8a472532bd42c1e8d9f6c4b5"
+    },
+    {
+      "bytes": 281336,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/fc629b3863174001946765f078621caa91aa7abae6d52a7632dd1a6b285af25a/master.20160616.idx",
+      "raw_sha256": "b132fda27621fba8178645740715eed30f478241532243848405b610272458df",
+      "source_identity": "fc629b3863174001946765f078621caa91aa7abae6d52a7632dd1a6b285af25a"
+    },
+    {
+      "bytes": 273821,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/366fa29a42636e887492edc890da60047029582072816c0cbf33ef6372462b4b/master.20160617.idx",
+      "raw_sha256": "a6ab221a15f95b36d94bacb77c06a97d06ae9ab91c28b3fb148670ac10f6fd6d",
+      "source_identity": "366fa29a42636e887492edc890da60047029582072816c0cbf33ef6372462b4b"
+    },
+    {
+      "bytes": 233785,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/f3df409a66285fd1475ec02ba30b082020f2c538a4e549325f556a3ab03c306d/master.20160620.idx",
+      "raw_sha256": "83fc34b6fcd8a83c9d508dab424d4ed61808654581c2a1b8c0b8801bfc0a4d86",
+      "source_identity": "f3df409a66285fd1475ec02ba30b082020f2c538a4e549325f556a3ab03c306d"
+    },
+    {
+      "bytes": 253988,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/4059dce282404a9190c0734d85ab61a0bb4afd5ceff74db71c14289c1d7ba8d2/master.20160621.idx",
+      "raw_sha256": "1179f4e62f74db6f41ee953f9c13f4a24afaf94eb60747d16d3c1f41e38d84ac",
+      "source_identity": "4059dce282404a9190c0734d85ab61a0bb4afd5ceff74db71c14289c1d7ba8d2"
+    },
+    {
+      "bytes": 196149,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/458ed3422fcd0d4583699b5549c55bee5ca851d1e7c76d6c9add2cdd851f5454/master.20160622.idx",
+      "raw_sha256": "c4077d44a3ad4cbde67b0273c68468b95597d92be03a9592848b4c33e84fb62e",
+      "source_identity": "458ed3422fcd0d4583699b5549c55bee5ca851d1e7c76d6c9add2cdd851f5454"
+    },
+    {
+      "bytes": 250807,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/0118d2efecb02b427035cd68bc9c044d355774f146fd77e45d7e4d9c644d7549/master.20160623.idx",
+      "raw_sha256": "73a878c12751e45e664c3367541c63db4b32e3dba2ff8e5adb81987faee779af",
+      "source_identity": "0118d2efecb02b427035cd68bc9c044d355774f146fd77e45d7e4d9c644d7549"
+    },
+    {
+      "bytes": 262563,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/a52f7c525c49f3740624e793bd279bada54c6f7cdad2c3edd7fce231868a20aa/master.20160624.idx",
+      "raw_sha256": "4e7e8bc05645e4f919a2199a3b38ba6d8c730327f4ab36e8e1431b3da606a7fd",
+      "source_identity": "a52f7c525c49f3740624e793bd279bada54c6f7cdad2c3edd7fce231868a20aa"
+    },
+    {
+      "bytes": 271602,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/ea3a2801c87bee6e8b8fe2441e3f3fa9f42f45a522bd69f89b6b75739ff30772/master.20160627.idx",
+      "raw_sha256": "b5b22e50e218087616fc8708971d9ef87f9b92db0f0aa7a63383f1ff0319afa1",
+      "source_identity": "ea3a2801c87bee6e8b8fe2441e3f3fa9f42f45a522bd69f89b6b75739ff30772"
+    },
+    {
+      "bytes": 266670,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/3253e2a743281da117399dc2ffd2ba3aed98c02f24fcd69373e781e649aee98c/master.20160628.idx",
+      "raw_sha256": "fdec7908e9e550af5a4b8fd67ba51f892e308a47ae99f8c29d51fd485e22eb8c",
+      "source_identity": "3253e2a743281da117399dc2ffd2ba3aed98c02f24fcd69373e781e649aee98c"
+    },
+    {
+      "bytes": 316159,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/d29494db1f618732b49f1337866bb6f87bbbed2a8347f4e9d6dccc4335324ab7/master.20160629.idx",
+      "raw_sha256": "c4fbd66d11fbda4468c6464c1630ebe0ea6bf7b1df619a1dabf440020abd1733",
+      "source_identity": "d29494db1f618732b49f1337866bb6f87bbbed2a8347f4e9d6dccc4335324ab7"
+    },
+    {
+      "bytes": 400145,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/88dec6a820889c3a96526b69965f738aedaa5ba91a0941c7cf964397ea928240/master.20160701.idx",
+      "raw_sha256": "3fbd13ae2b27f1b3314f989f5236b4410aa4f24abd2836650bb0473b529c5b5f",
+      "source_identity": "88dec6a820889c3a96526b69965f738aedaa5ba91a0941c7cf964397ea928240"
+    },
+    {
+      "bytes": 563971,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/e1b63c9ff11c83c8ca6421c1a9047f1c0e5cf1e8066bb72d6834996078240a9c/master.20160705.idx",
+      "raw_sha256": "52f4330920b1a83551db4be931d1a5e134623bdf978e2279d77c360adb32535d",
+      "source_identity": "e1b63c9ff11c83c8ca6421c1a9047f1c0e5cf1e8066bb72d6834996078240a9c"
+    },
+    {
+      "bytes": 374467,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/b23b14a62841414ea27603abb6d1e68bbb0456929358ff084d6b06995eccc898/master.20160706.idx",
+      "raw_sha256": "cad06fd7480afa1b6a1578339f47e744713385fbb57002c2560ab2f94061b754",
+      "source_identity": "b23b14a62841414ea27603abb6d1e68bbb0456929358ff084d6b06995eccc898"
+    },
+    {
+      "bytes": 212465,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/5ee52ce88d3712623ea28a2e1080c1415ecaa040db4db71fc21e3ff5e9eb35be/master.20160707.idx",
+      "raw_sha256": "e384a27da0878cf5c4fbbc3226ef3700fa7ccbf53d5d823f8e884c181839af72",
+      "source_identity": "5ee52ce88d3712623ea28a2e1080c1415ecaa040db4db71fc21e3ff5e9eb35be"
+    },
+    {
+      "bytes": 308488,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/50d75394763229aa078a64f545ef2305f3fb6d73f7b937854f58c8c4c76645a8/master.20160708.idx",
+      "raw_sha256": "2dcef81f649674c97df4125d80aa6fa4a5040681cbf7282d70415edbafbf9673",
+      "source_identity": "50d75394763229aa078a64f545ef2305f3fb6d73f7b937854f58c8c4c76645a8"
+    },
+    {
+      "bytes": 253936,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/62fd02049fd03345f2563c4c77d406bfa9c290b3eb4766c1200382eb4c411889/master.20160711.idx",
+      "raw_sha256": "c25082578497238c81ff31ea0e504fafa8152ef779130e6b4a8f912f837bad78",
+      "source_identity": "62fd02049fd03345f2563c4c77d406bfa9c290b3eb4766c1200382eb4c411889"
+    },
+    {
+      "bytes": 196517,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/f778f18697c2dd940853ea8ed1417fb823fae069939c6eaf94c80d7778e84ac6/master.20160712.idx",
+      "raw_sha256": "7b548cb0e982805f785d8010e3f6e6f979b807e40030e4641407f91e77d26381",
+      "source_identity": "f778f18697c2dd940853ea8ed1417fb823fae069939c6eaf94c80d7778e84ac6"
+    },
+    {
+      "bytes": 167689,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/b437d4a3e7346c326bcfa39b22a8c3259483c79f0030b95d84978069e4080215/master.20160713.idx",
+      "raw_sha256": "5968c9ade9b46b159c46a75ce2acf73a22dcf9bd79d73ed9013c40f242638554",
+      "source_identity": "b437d4a3e7346c326bcfa39b22a8c3259483c79f0030b95d84978069e4080215"
+    },
+    {
+      "bytes": 190249,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/bb724db2e4bd0a1ca87f77c293454247f00824392a6a942dff1a5b38988312bc/master.20160714.idx",
+      "raw_sha256": "783a0c2addc85a00440422addb5b2df0f0ec94c025e42c48edfcaa5f82deada9",
+      "source_identity": "bb724db2e4bd0a1ca87f77c293454247f00824392a6a942dff1a5b38988312bc"
+    },
+    {
+      "bytes": 234535,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/0040244e548bfceaadbf44d6d3afa357ae727694b9625a5cafa2aee4ecb85a4b/master.20160715.idx",
+      "raw_sha256": "d32b9e0c09c371a5df75ec0a860b3691764eab0c451b5a7aff9b42efa7cf1dd4",
+      "source_identity": "0040244e548bfceaadbf44d6d3afa357ae727694b9625a5cafa2aee4ecb85a4b"
+    },
+    {
+      "bytes": 194938,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/df08531f2d77bde7873520a03f4e6c6477e7e20778508889b45552e2c202258f/master.20160718.idx",
+      "raw_sha256": "bfdc1ca8ca0d5284c098eef76b60bcf7757de93a35ee3d2a6e4200fb06c6ff33",
+      "source_identity": "df08531f2d77bde7873520a03f4e6c6477e7e20778508889b45552e2c202258f"
+    },
+    {
+      "bytes": 236451,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/4442fe8a806eff0f2e14fb4776611d1ad131054c49bd7b95c4f87040f6bd20d9/master.20160719.idx",
+      "raw_sha256": "00ebfb5848eaacda53adc8b4e6123688e8b80ef6f4a492caf732d2864d240468",
+      "source_identity": "4442fe8a806eff0f2e14fb4776611d1ad131054c49bd7b95c4f87040f6bd20d9"
+    },
+    {
+      "bytes": 214127,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/fc9cd2e55754b87df9591209a99726b828b9d664257f774e5855f9a9c6797152/master.20160720.idx",
+      "raw_sha256": "979eee98d5f917e60573f0dd7f9181fd1b96c1639649a9f32c1ef2dbbc94c7f1",
+      "source_identity": "fc9cd2e55754b87df9591209a99726b828b9d664257f774e5855f9a9c6797152"
+    },
+    {
+      "bytes": 204881,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/6bdc71ba542cbc5b396872d3168299f0c8933048af8cfe5df2281e85760b37af/master.20160721.idx",
+      "raw_sha256": "ba1a585acb9bbfa48c5a887968674bebe712994776bb065a2e3bf39deef13723",
+      "source_identity": "6bdc71ba542cbc5b396872d3168299f0c8933048af8cfe5df2281e85760b37af"
+    },
+    {
+      "bytes": 232544,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/b7a7743423e9fc90bddd52a906c842f3d5ad7ebdb899dd2d2c6359db972ee50a/master.20160722.idx",
+      "raw_sha256": "9433e1e2b907b26f0e00bf445195f4530d8fd09aa757118faf862b2699ae2371",
+      "source_identity": "b7a7743423e9fc90bddd52a906c842f3d5ad7ebdb899dd2d2c6359db972ee50a"
+    },
+    {
+      "bytes": 276056,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/2dc5f26043c5a12a48751b28ea0d97e06b1e15016f52e865112b8aa259558cd2/master.20160725.idx",
+      "raw_sha256": "ae9ffb43fe03540c1cfdf10b023c9472974e41ef0511b36c2256eacc65ec6491",
+      "source_identity": "2dc5f26043c5a12a48751b28ea0d97e06b1e15016f52e865112b8aa259558cd2"
+    },
+    {
+      "bytes": 255953,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/71e0e0b7bc28857e7534cedbb65b931ec2f726aea320173a1fbdc6a05997da0c/master.20160726.idx",
+      "raw_sha256": "2e923f4ef763b04a2953654a1816a2b37e642d36c7b6fd9fd10570c30eb41bcc",
+      "source_identity": "71e0e0b7bc28857e7534cedbb65b931ec2f726aea320173a1fbdc6a05997da0c"
+    },
+    {
+      "bytes": 267438,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/1b0c6732d5274badab5992713564d595ad560330f30a3bf0f580eaf9527090a6/master.20160727.idx",
+      "raw_sha256": "5b729c344419118a160f72458eaee3adec265b3e644c2d910239f7a897e0a375",
+      "source_identity": "1b0c6732d5274badab5992713564d595ad560330f30a3bf0f580eaf9527090a6"
+    },
+    {
+      "bytes": 340942,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/1f9e3d7ea57f330f09409d04ecfd0b0e302d7fceaf39c521a84ed01018051d8c/master.20160728.idx",
+      "raw_sha256": "62112c3a65ef4f1e4f1408672933d062290f9b2e3cc84e40bc6e2cc9547a9ba1",
+      "source_identity": "1f9e3d7ea57f330f09409d04ecfd0b0e302d7fceaf39c521a84ed01018051d8c"
+    },
+    {
+      "bytes": 385173,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/106df776068f809e6ef4e41a583238f6761fbd13b46752cbf68bde4448660f2e/master.20160729.idx",
+      "raw_sha256": "834b51ae6d7148ecc13ec0da8f3dab6a7526b36548ee09ae24c9518c02c01d9f",
+      "source_identity": "106df776068f809e6ef4e41a583238f6761fbd13b46752cbf68bde4448660f2e"
+    },
+    {
+      "bytes": 355859,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/7723bc7cc8e861863b44c59e37f3e160bc6cf923ece5cc34404fd088061a3173/master.20160801.idx",
+      "raw_sha256": "049f3cd559e8447e37091c15d1f0bba89b583392b3614dfea30414c0f9d0202a",
+      "source_identity": "7723bc7cc8e861863b44c59e37f3e160bc6cf923ece5cc34404fd088061a3173"
+    },
+    {
+      "bytes": 374055,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/3fd5eceded87b4f294aa641265cbfab49f715aa3dd857b3de8b95c2f870bd745/master.20160802.idx",
+      "raw_sha256": "dbe683ccb89edb2e9ab1f508a58c721f40230821ddc24c6d694f9657f08b04a3",
+      "source_identity": "3fd5eceded87b4f294aa641265cbfab49f715aa3dd857b3de8b95c2f870bd745"
+    },
+    {
+      "bytes": 374247,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/524c51a99bb2f1b5a00e6d2fafc5c085b69355943e512fad06c927c6abc1f622/master.20160803.idx",
+      "raw_sha256": "13e5303789e43cff92eca2c3f95d08e49648a67aaae509fb46130e1913893de0",
+      "source_identity": "524c51a99bb2f1b5a00e6d2fafc5c085b69355943e512fad06c927c6abc1f622"
+    },
+    {
+      "bytes": 349554,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/4b0adbeb7f4dbea0b3fcbfd812a16120c3ab614beaefa7570237114f8437e972/master.20160804.idx",
+      "raw_sha256": "0d74d51f8142e8bf28656f1146ddc551ad3383d63c5252fd6a6b0e69f9605efe",
+      "source_identity": "4b0adbeb7f4dbea0b3fcbfd812a16120c3ab614beaefa7570237114f8437e972"
+    },
+    {
+      "bytes": 361331,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/d020ffbec8e0991de8f28e6d417763098aa86575922287d8fd89a1f6f715eb11/master.20160805.idx",
+      "raw_sha256": "31ec682c8aaedacac156c74d5f69bb20f08d2cd1dba71ce3ffa16617c6621c73",
+      "source_identity": "d020ffbec8e0991de8f28e6d417763098aa86575922287d8fd89a1f6f715eb11"
+    },
+    {
+      "bytes": 344450,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/f20bec0cf713cd10e86d8d182ad3fbdfac691fc022a528bd172bd66610b54570/master.20160808.idx",
+      "raw_sha256": "729410af0f2681dc80cd0348f5e08c1b08f128ef1e02616254916b092c41254c",
+      "source_identity": "f20bec0cf713cd10e86d8d182ad3fbdfac691fc022a528bd172bd66610b54570"
+    },
+    {
+      "bytes": 407759,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/afb5ae674be59de7414745c10b139f8146733f9bae9ac033aaf643b65ccf7a84/master.20160809.idx",
+      "raw_sha256": "3ba268dfecda20467e4a0b1afde56a620a0a16f23e2596b7c7b08932f520cf43",
+      "source_identity": "afb5ae674be59de7414745c10b139f8146733f9bae9ac033aaf643b65ccf7a84"
+    },
+    {
+      "bytes": 320916,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/d5bc1117d6920dc899ddd39ae0ca1ff11a3d6b56340cf2d304f6ab522d9901da/master.20160810.idx",
+      "raw_sha256": "a777ed5cb24977fbdc4ef005d7ae1e3d390bbbb95223a7b4732cc6478fcd5087",
+      "source_identity": "d5bc1117d6920dc899ddd39ae0ca1ff11a3d6b56340cf2d304f6ab522d9901da"
+    },
+    {
+      "bytes": 332745,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/13e58d90f7270e0bebf8559b0256d4a9d9a05fa7fa94265dae20eabd642444d7/master.20160811.idx",
+      "raw_sha256": "978cafd421931ea64de8eff6449ced72adfde5e43c81623c8d4e6e58bc53915b",
+      "source_identity": "13e58d90f7270e0bebf8559b0256d4a9d9a05fa7fa94265dae20eabd642444d7"
+    },
+    {
+      "bytes": 385558,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/991438c2b74f6e093c0d5d18628367ead769f10e252d17daa445b6334d0f8fa5/master.20160812.idx",
+      "raw_sha256": "1e132b2d1b16189638927d7dcf8ea1a4d8f930e73df006c2cc324c9a75c69f6f",
+      "source_identity": "991438c2b74f6e093c0d5d18628367ead769f10e252d17daa445b6334d0f8fa5"
+    },
+    {
+      "bytes": 500042,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/4a6f2dac9f5b43e556e65735eb3301c6cb2771bcf3a4135e74e12ecc0903d0cb/master.20160815.idx",
+      "raw_sha256": "dc56b2080e0292de84c7a20b332a6ebb641f5624579599255ed7ac1d374d48b4",
+      "source_identity": "4a6f2dac9f5b43e556e65735eb3301c6cb2771bcf3a4135e74e12ecc0903d0cb"
+    },
+    {
+      "bytes": 320273,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/f9e93bfebe651dddd50633cd00a25baa2d5f9f015bf15c0a466f0de2b4c964cc/master.20160816.idx",
+      "raw_sha256": "b3c7402ae4d6199290ce00ece1d599c8a4f3319a9538937c53a216d450ae7b88",
+      "source_identity": "f9e93bfebe651dddd50633cd00a25baa2d5f9f015bf15c0a466f0de2b4c964cc"
+    },
+    {
+      "bytes": 302846,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/5c8dfe7d85f736b18728d42bb4d8dcc1ec4fd29a8291794e3c4142381cd93be5/master.20160817.idx",
+      "raw_sha256": "2260a8ac186e95cf25cad458809558fa9629dd67fb64eaefa7e74dc5f035e391",
+      "source_identity": "5c8dfe7d85f736b18728d42bb4d8dcc1ec4fd29a8291794e3c4142381cd93be5"
+    },
+    {
+      "bytes": 225440,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/280916b97b5d692ff363ae725b07aa4a6fb51f65d37059ad779c109c542c158a/master.20160818.idx",
+      "raw_sha256": "ce09a0958db14a132f1e547554a6df0691745954d2369c432fb0ed75c7df1942",
+      "source_identity": "280916b97b5d692ff363ae725b07aa4a6fb51f65d37059ad779c109c542c158a"
+    },
+    {
+      "bytes": 240258,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/3d085906599146473a51c26c8c2b488e458b943a03fe3630c4a1db77b01d5663/master.20160819.idx",
+      "raw_sha256": "a7b64d7759479af4821d851202f22341e7c7cb32060ae44dcfd97b40915d43fd",
+      "source_identity": "3d085906599146473a51c26c8c2b488e458b943a03fe3630c4a1db77b01d5663"
+    },
+    {
+      "bytes": 248156,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/98aa1feac9b14498248ecb429ed756fafdcc85cc6a0738cc1cc6453895b000be/master.20160822.idx",
+      "raw_sha256": "698b8de08ef8e516f7ff43418ddd5e3a24f30a0db6ec751e1e69b59c3bb4b23a",
+      "source_identity": "98aa1feac9b14498248ecb429ed756fafdcc85cc6a0738cc1cc6453895b000be"
+    },
+    {
+      "bytes": 207509,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/d54be0d711c5e00d749f1d7e8036206e4e3076cd7b200540631cbe6c2fa2b13c/master.20160823.idx",
+      "raw_sha256": "327c71f0fb9907d78785e50646ae91cf58992f7ff27ff04f2aebdc95ffaa903f",
+      "source_identity": "d54be0d711c5e00d749f1d7e8036206e4e3076cd7b200540631cbe6c2fa2b13c"
+    },
+    {
+      "bytes": 222532,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/18cb6c7c055435da0f3b1bc2563fa1def5d07f3bb2bea954840d4a62a09b98b9/master.20160824.idx",
+      "raw_sha256": "5eced660a21698db4323e5ebf9529c138e4178bd568e3232cc1451decadbac98",
+      "source_identity": "18cb6c7c055435da0f3b1bc2563fa1def5d07f3bb2bea954840d4a62a09b98b9"
+    },
+    {
+      "bytes": 236454,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/ceec405a1706e9a556ef59f966ea194b5fee40b2f0473a38031828ff8f51eb0f/master.20160825.idx",
+      "raw_sha256": "fd936c68ba6b1ffb42b44ed3ce692ccf8cbf7697dd8cb37e9a377f43d2035fd7",
+      "source_identity": "ceec405a1706e9a556ef59f966ea194b5fee40b2f0473a38031828ff8f51eb0f"
+    },
+    {
+      "bytes": 359817,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/81132cfe7955b34e1ce3a061365a08b8ad035bdd1179edc3f13a6801b6559f36/master.20160826.idx",
+      "raw_sha256": "6b137a6a0e253a6e02a5186ba86c4c40655fa0519c03de9cfaa4048141ef977c",
+      "source_identity": "81132cfe7955b34e1ce3a061365a08b8ad035bdd1179edc3f13a6801b6559f36"
+    },
+    {
+      "bytes": 321042,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/348138e4227f6ac667f510c4ffdfab6ac32440a022cd4ade862a0ca11ba9c654/master.20160829.idx",
+      "raw_sha256": "f604f1f07467653ca96ca5b32bbd6eb44f98d4302ee44f558795c219cb6f37ec",
+      "source_identity": "348138e4227f6ac667f510c4ffdfab6ac32440a022cd4ade862a0ca11ba9c654"
+    },
+    {
+      "bytes": 270920,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/27ae220abd0b0cd73af20904667cdba473cab54f15a05c76b0edf3b9c4e20c13/master.20160830.idx",
+      "raw_sha256": "580d0b1d6ab4c2bb4b5855f1bea3c89d09df05f7aa533b3dc004718d2db76e4c",
+      "source_identity": "27ae220abd0b0cd73af20904667cdba473cab54f15a05c76b0edf3b9c4e20c13"
+    },
+    {
+      "bytes": 259258,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/0a6b4340c478fb80c9252b5293a8e2068883c918961348043e6f922d40582a39/master.20160831.idx",
+      "raw_sha256": "dc62017ad6670e687eb7d2f2d2217769fe97bc4acf459e6a3fc263fe7ddd4d76",
+      "source_identity": "0a6b4340c478fb80c9252b5293a8e2068883c918961348043e6f922d40582a39"
+    },
+    {
+      "bytes": 280859,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/f71841e8c3695ccc76008df1407264105eb257a064e26c180e46ad283daee991/master.20160901.idx",
+      "raw_sha256": "40384c4a46c0e49e101ee0fe972a2d87448957d5f22c5d3c4df593f9c09e5ea0",
+      "source_identity": "f71841e8c3695ccc76008df1407264105eb257a064e26c180e46ad283daee991"
+    },
+    {
+      "bytes": 316767,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/14f89d4b51f51a2915327aa0362b4a38f16d1a718674124b645fd72d42639b9d/master.20160902.idx",
+      "raw_sha256": "16f17f3537003be233ef5f8bbcd6249e9c18647ae533e9455116b9e3edad8bdb",
+      "source_identity": "14f89d4b51f51a2915327aa0362b4a38f16d1a718674124b645fd72d42639b9d"
+    },
+    {
+      "bytes": 283850,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/5e4c7a8b59f8c0445f30f0df7a641c96b8204490671bc3267d7b4c27b09ee2e2/master.20160906.idx",
+      "raw_sha256": "5ead15c996de092b3a1c7f23849a8a550a7c13f06ea189cf9cfc4e098b587b56",
+      "source_identity": "5e4c7a8b59f8c0445f30f0df7a641c96b8204490671bc3267d7b4c27b09ee2e2"
+    },
+    {
+      "bytes": 280717,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/85bda4d4bc9c2152d093da65a4b58f276cba95125ee221e7c19f0bc004d8503d/master.20160907.idx",
+      "raw_sha256": "20a20f0bec44b8df0a9b6dbb3eba603244ad8bd0b9223647806fd49c4a447945",
+      "source_identity": "85bda4d4bc9c2152d093da65a4b58f276cba95125ee221e7c19f0bc004d8503d"
+    },
+    {
+      "bytes": 312984,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/d8bf5c31d138aef46baedd9087f86d4ee7dd622d5159c7984eb607151e25e60e/master.20160908.idx",
+      "raw_sha256": "504e96b340e5943389590da67ddfa801bf7d34b37616d5e71be6f338f12ac074",
+      "source_identity": "d8bf5c31d138aef46baedd9087f86d4ee7dd622d5159c7984eb607151e25e60e"
+    },
+    {
+      "bytes": 258308,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/e29ce2dca22f500145d9f326aa7e88500743766f10859c5c23dc99e53a6f03e5/master.20160909.idx",
+      "raw_sha256": "e3e7a8e917a47e6f42c30698279960c912bbb3e5ff952c6cadce890d53cd951f",
+      "source_identity": "e29ce2dca22f500145d9f326aa7e88500743766f10859c5c23dc99e53a6f03e5"
+    },
+    {
+      "bytes": 231196,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/45181d3778a7e931b3fbd552b4c29fb01d6235c6df8f185a1982e39b4cfc17e8/master.20160912.idx",
+      "raw_sha256": "2a80fb72c08e4c98cae3c2fe07ea801bb17a1394166d2c1d3171cb67fc5dae94",
+      "source_identity": "45181d3778a7e931b3fbd552b4c29fb01d6235c6df8f185a1982e39b4cfc17e8"
+    },
+    {
+      "bytes": 237401,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/03a9a08a38a484c8fdb1a57db617423371fb9bc7900f916da9a429cc2358c8a4/master.20160913.idx",
+      "raw_sha256": "571512e9423f0050bc2a63347824cfd79f304ec070cfdee91c5439b3da1aa351",
+      "source_identity": "03a9a08a38a484c8fdb1a57db617423371fb9bc7900f916da9a429cc2358c8a4"
+    },
+    {
+      "bytes": 220753,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/1d0b8a5fbb510e7c3469cddc948147fd684010a724e314dbc7d023d9676acf20/master.20160914.idx",
+      "raw_sha256": "d96fa0475780194629eb1e76728b5bc6a0ffc9eb0582174e4961c4724db5728c",
+      "source_identity": "1d0b8a5fbb510e7c3469cddc948147fd684010a724e314dbc7d023d9676acf20"
+    },
+    {
+      "bytes": 207112,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/40cc7578d73b6cec4d41f18f851096c1b9ba265d0fb1b63a893c094bea409a0c/master.20160915.idx",
+      "raw_sha256": "02573ed58716f45aa08eb432e246786ab6176449d88918a872b4693869ac460e",
+      "source_identity": "40cc7578d73b6cec4d41f18f851096c1b9ba265d0fb1b63a893c094bea409a0c"
+    },
+    {
+      "bytes": 262159,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/be4b89d7d291160431967101c06829a60b94a5a4af70f9c3564c2304a46de066/master.20160916.idx",
+      "raw_sha256": "a54ec9db291857616baf4fdd09fcf86d8597223e39edb28612a658a4d3f258c4",
+      "source_identity": "be4b89d7d291160431967101c06829a60b94a5a4af70f9c3564c2304a46de066"
+    },
+    {
+      "bytes": 263671,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/6b4b2e6da744919413039c4f7ca727d837dd4770b41bfdf1b5270fab34cdd6cd/master.20160919.idx",
+      "raw_sha256": "526bfc5a66b7d0898a6578905c9c4fafe78734a4f348a3fba0e95539e71d3793",
+      "source_identity": "6b4b2e6da744919413039c4f7ca727d837dd4770b41bfdf1b5270fab34cdd6cd"
+    },
+    {
+      "bytes": 193061,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/5eab582fbceae7ae7e2252253f65f66e7d96271997834d884a53f0e337ad70ca/master.20160920.idx",
+      "raw_sha256": "bdc0f3e6c9274aaf29b15382f0b8c826c0bdd2708616afc47b5782ddf0e3d9ed",
+      "source_identity": "5eab582fbceae7ae7e2252253f65f66e7d96271997834d884a53f0e337ad70ca"
+    },
+    {
+      "bytes": 196829,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/d4299e6c5fdf88a5b46b14efb8bbc742dba91bef52a9b03ebf3f5eddd5a8c5e5/master.20160921.idx",
+      "raw_sha256": "14e599a704ad13e1afb92be75897c79f34287cf998d0adbbe5a0e65f700c9af1",
+      "source_identity": "d4299e6c5fdf88a5b46b14efb8bbc742dba91bef52a9b03ebf3f5eddd5a8c5e5"
+    },
+    {
+      "bytes": 197237,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/104bfac27f9dffd60f7bbc9aa6fa62c7577e569bada12896036d0c626909982c/master.20160922.idx",
+      "raw_sha256": "52ac86271e2f64dcb3b37a1294a62f443b87e2721cd9dd25586992ecb3e745f9",
+      "source_identity": "104bfac27f9dffd60f7bbc9aa6fa62c7577e569bada12896036d0c626909982c"
+    },
+    {
+      "bytes": 250195,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/961ba2fa49238805d8ecff3db32a20c526b84de7368ed32ab957bdb4d6d2d9cf/master.20160923.idx",
+      "raw_sha256": "10409d1dce17ccfdf87aa0cba9198c048f1670007011ef445cf9c9b09111cd36",
+      "source_identity": "961ba2fa49238805d8ecff3db32a20c526b84de7368ed32ab957bdb4d6d2d9cf"
+    },
+    {
+      "bytes": 252803,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/343b21dfcf69abbe733dc6665d6e8af6b94757fa8ee6c9086830ef0c91e504d6/master.20160926.idx",
+      "raw_sha256": "6b8ab5a08bea2fef2af7c7025d3917a50115862623fbd5d54672b7cb8c669bc1",
+      "source_identity": "343b21dfcf69abbe733dc6665d6e8af6b94757fa8ee6c9086830ef0c91e504d6"
+    },
+    {
+      "bytes": 245014,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/861bfc0e7bd95adb741e1d6980a6fcbd52221da0b8481ae1b67fdaec5f4851be/master.20160927.idx",
+      "raw_sha256": "e381048d300e4398ba4f60cc3ffb6c6f7eb8f6a9e168a2a74f5f62516f58facd",
+      "source_identity": "861bfc0e7bd95adb741e1d6980a6fcbd52221da0b8481ae1b67fdaec5f4851be"
+    },
+    {
+      "bytes": 263490,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/bd5fe545be13dea4096e23b1e5598e9ffa1c40925908d7beb1ea78a8421e61f8/master.20160928.idx",
+      "raw_sha256": "9cefb2c3d07bc5df33d337a87af9daf25d03f97b518a92b38286e7a8ea33aaac",
+      "source_identity": "bd5fe545be13dea4096e23b1e5598e9ffa1c40925908d7beb1ea78a8421e61f8"
+    },
+    {
+      "bytes": 279937,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/0553b3ecdca7404666d81a7e9aeac3ceea54f582111ae660987bc9435b659566/master.20160929.idx",
+      "raw_sha256": "a477b6d8420762a0ed24ef5273709d60da6d916bde870d7e937a0e7212e3f7a1",
+      "source_identity": "0553b3ecdca7404666d81a7e9aeac3ceea54f582111ae660987bc9435b659566"
+    },
+    {
+      "bytes": 302958,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/39dc7f502c199b68754e354d8425a33bb379214d7078d5a12523ba7bc59ffe6f/master.20160930.idx",
+      "raw_sha256": "501a630c815e58f56d2fe3d38ef2c1628fdaf5d1ad1adada5040f23736f519c4",
+      "source_identity": "39dc7f502c199b68754e354d8425a33bb379214d7078d5a12523ba7bc59ffe6f"
+    },
+    {
+      "bytes": 343021,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/96e3f44745363257208b1a4545ca0ceb553f7a5d8db9005940a34fffc6ac8f6a/master.20161003.idx",
+      "raw_sha256": "2ac7b3a3b207d04ed0cf9118ac591cfb380cecc5a1070f7fa762d933d98e892a",
+      "source_identity": "96e3f44745363257208b1a4545ca0ceb553f7a5d8db9005940a34fffc6ac8f6a"
+    },
+    {
+      "bytes": 536612,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/d930715ec49eb329121fe4ad780781fedc1af6b606261f40118669501c1921af/master.20161004.idx",
+      "raw_sha256": "317331b1c91f6bb65d6e80a0e493b5ec5f0a07e5bed381f901bddd5e4918994e",
+      "source_identity": "d930715ec49eb329121fe4ad780781fedc1af6b606261f40118669501c1921af"
+    },
+    {
+      "bytes": 305635,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/9901dd4cc4595bd42a4edb4661397e5534ab71b3fd73e1575d03d97375eb4b22/master.20161005.idx",
+      "raw_sha256": "435457971b0df9c0f78967daa43c19ca819f537ea748297ee150be33c317b9da",
+      "source_identity": "9901dd4cc4595bd42a4edb4661397e5534ab71b3fd73e1575d03d97375eb4b22"
+    },
+    {
+      "bytes": 220493,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/53c10dd07bda1e3a9f131aa0d5a8d0334e0216c6bef6e1900231ab3c4eb0f428/master.20161006.idx",
+      "raw_sha256": "962eaa8f350a908fc347a68cf2f70cf11c9471b96b5ae3dc183eb745bd493b86",
+      "source_identity": "53c10dd07bda1e3a9f131aa0d5a8d0334e0216c6bef6e1900231ab3c4eb0f428"
+    },
+    {
+      "bytes": 303680,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/83a6ceda191175dd46dee6e3bb5bface66a512e0971fde6420d176d22429cfc9/master.20161007.idx",
+      "raw_sha256": "0b4a01a946bfa701c41ac2cea3920c77f427479ec9ddaec7277ea759e18e7cb0",
+      "source_identity": "83a6ceda191175dd46dee6e3bb5bface66a512e0971fde6420d176d22429cfc9"
+    },
+    {
+      "bytes": 341347,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/5a98bec9a16ba6a25b05e1a11a6206f2a87807d296b89bdc14e75693c38ce0f4/master.20161011.idx",
+      "raw_sha256": "e5c9a327a9c97b9857a14f9c8599db1efff6cc65c93216e29245395fdc55955a",
+      "source_identity": "5a98bec9a16ba6a25b05e1a11a6206f2a87807d296b89bdc14e75693c38ce0f4"
+    },
+    {
+      "bytes": 172181,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/1cbe662374d0d81d07aeef7e53f4d6f5fb33c9a7e9fc33ce4565fc06ece7b97b/master.20161012.idx",
+      "raw_sha256": "b0c34505edc068af142033c634f66b3d6da6aef8a04c903c5e5fbb2f0edd4ef8",
+      "source_identity": "1cbe662374d0d81d07aeef7e53f4d6f5fb33c9a7e9fc33ce4565fc06ece7b97b"
+    },
+    {
+      "bytes": 178009,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/6d1244574aa5ce2135369cdbb651392cfbc5f244b9afa8aaf6836880176f7955/master.20161013.idx",
+      "raw_sha256": "9f8df52bc25be10c3b5b6497e8ee4b8cf9fa2b0598f0a28fa4114e7009ac2a3d",
+      "source_identity": "6d1244574aa5ce2135369cdbb651392cfbc5f244b9afa8aaf6836880176f7955"
+    },
+    {
+      "bytes": 199190,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/c9b940d2fcdcfa1dfb39cc9c7014faee15148f58baa8780143b7668c2be3bcd1/master.20161014.idx",
+      "raw_sha256": "93efa02e8debd11d39d1d243de957c269d9bbee8cd347dc8794858679f44e94c",
+      "source_identity": "c9b940d2fcdcfa1dfb39cc9c7014faee15148f58baa8780143b7668c2be3bcd1"
+    },
+    {
+      "bytes": 207914,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/f9be16eb40efdeac6a83580e4469f0f00720f86ff09dbaa4edc95f399345f6a0/master.20161017.idx",
+      "raw_sha256": "8dd4c06e1c27c858add09a0993344eb854212c815798a5c890cfbe78a7fb3dfe",
+      "source_identity": "f9be16eb40efdeac6a83580e4469f0f00720f86ff09dbaa4edc95f399345f6a0"
+    },
+    {
+      "bytes": 213591,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/3fa9dbb6353ae342049816516f1aeaae92c40f83e29aec1c61faee6355d67591/master.20161018.idx",
+      "raw_sha256": "4a9df9fe45fee39af488edf41f94120deca795d8850d7e268bd2a1635cdec6e3",
+      "source_identity": "3fa9dbb6353ae342049816516f1aeaae92c40f83e29aec1c61faee6355d67591"
+    },
+    {
+      "bytes": 171512,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/9d9e7e224bc747ddcc1a13dd8874ccd0d8cfe4ece746f2316be39b0c6abb4f35/master.20161019.idx",
+      "raw_sha256": "fef0ab9b93682bd57bd0b9a1cbc9f82e9cca55e4bde5deafe95f840cb8a47fea",
+      "source_identity": "9d9e7e224bc747ddcc1a13dd8874ccd0d8cfe4ece746f2316be39b0c6abb4f35"
+    },
+    {
+      "bytes": 181821,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/5a33809d808db99ac13ee5b2ce50f76d655b16e5bc08293df844bc37d06fc600/master.20161020.idx",
+      "raw_sha256": "681b763214ed2b292c49687fc906de365d131bb4904febbb2a3f1c8f119d1247",
+      "source_identity": "5a33809d808db99ac13ee5b2ce50f76d655b16e5bc08293df844bc37d06fc600"
+    },
+    {
+      "bytes": 209495,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/3d7641b3339fafa8f22bcf932c930c9f9a4cfe1b53dc4992a366220123242c70/master.20161021.idx",
+      "raw_sha256": "8aa42c9be1082d8df7e24a6a552dab1e78b62569687190eca77acb5427c5138b",
+      "source_identity": "3d7641b3339fafa8f22bcf932c930c9f9a4cfe1b53dc4992a366220123242c70"
+    },
+    {
+      "bytes": 208383,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/56c8efa3800c4ae8acd8ce69bd6542a41eea1dc19b80bdb7cdcac9903d4cf34d/master.20161024.idx",
+      "raw_sha256": "c02a904b91c83285a39d68c078eeb1bce16c66cdab24fc3ae5e48ca66568392a",
+      "source_identity": "56c8efa3800c4ae8acd8ce69bd6542a41eea1dc19b80bdb7cdcac9903d4cf34d"
+    },
+    {
+      "bytes": 240078,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/71a09a8241196127e6f610ef20bbcf9a965626845b2a62774a5be5a1b4514a48/master.20161025.idx",
+      "raw_sha256": "78efd3807985d9c3caeb917533f0bb3721c4b3a817a720dea097f4b44b8df7a5",
+      "source_identity": "71a09a8241196127e6f610ef20bbcf9a965626845b2a62774a5be5a1b4514a48"
+    },
+    {
+      "bytes": 231096,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/fa72a3270e47e42f04215f69e18c01436afab0e8bf83a0212c01caebb925c280/master.20161026.idx",
+      "raw_sha256": "2e5690df8a2ee7a419ec188f2a13bf75092efa51dee9b3f894e0abc4297add01",
+      "source_identity": "fa72a3270e47e42f04215f69e18c01436afab0e8bf83a0212c01caebb925c280"
+    },
+    {
+      "bytes": 311526,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/8ba86fa7605203e1bab45abbb5852ba729e7a46f22f330f7dc2c4c631f7eb4d5/master.20161027.idx",
+      "raw_sha256": "ddfe232d54071dd715f0ffd705bdef93590208d019e129a608cace6b1d4500fd",
+      "source_identity": "8ba86fa7605203e1bab45abbb5852ba729e7a46f22f330f7dc2c4c631f7eb4d5"
+    },
+    {
+      "bytes": 306453,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/32cd9c7c1dd40a95e9c6b774296cd3d5cbe5e4a175bc3977b84ba5d7d90ef2e0/master.20161028.idx",
+      "raw_sha256": "b62acaee32ac206d98db88055b080875175534f8a4508ac53467c90460d381c1",
+      "source_identity": "32cd9c7c1dd40a95e9c6b774296cd3d5cbe5e4a175bc3977b84ba5d7d90ef2e0"
+    },
+    {
+      "bytes": 322958,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/36e32609c1201449d6624f1ba9cdf219aa559bf2c36deb0daf67bf9365abe491/master.20161031.idx",
+      "raw_sha256": "2521a7c30c8535ade7fc5a992f7bac1149a794caf9f85e7ede4a2b29ba2b8441",
+      "source_identity": "36e32609c1201449d6624f1ba9cdf219aa559bf2c36deb0daf67bf9365abe491"
+    },
+    {
+      "bytes": 324448,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/a9bbf6decb3e74f05f2971447479cc7716cfe5221276c3e9a6a7f7775b0fb6cb/master.20161101.idx",
+      "raw_sha256": "4ce083fe139fab436b18acd94e0a7a130c31deab4aa10360d3b1b79749195d69",
+      "source_identity": "a9bbf6decb3e74f05f2971447479cc7716cfe5221276c3e9a6a7f7775b0fb6cb"
+    },
+    {
+      "bytes": 359379,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/87b80a823299ecac3a639b530215718b6d2ffb55e23810216b423f38091e3fdf/master.20161102.idx",
+      "raw_sha256": "8d75abaa350135507b4c4599e37068550ec845e467bd9bbf1641058fcc40d324",
+      "source_identity": "87b80a823299ecac3a639b530215718b6d2ffb55e23810216b423f38091e3fdf"
+    },
+    {
+      "bytes": 414987,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/f77552128fb3d2499830fa784c3bd965dc17f4e96c5c53e2cdd88343e9b553f2/master.20161103.idx",
+      "raw_sha256": "961608a15cf3dadde34d128dc4fb9449759b0dcef8d81e38392b3bd74ab0797d",
+      "source_identity": "f77552128fb3d2499830fa784c3bd965dc17f4e96c5c53e2cdd88343e9b553f2"
+    },
+    {
+      "bytes": 309804,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/139193e4d28f1541f61826c957c5fe1ea1a95aa8bfcf04fe6536eebcf303ed50/master.20161104.idx",
+      "raw_sha256": "b58681c9d89994bd6b21d3dedd2a5c3a9ba5a49a65282cb5b981432141817c59",
+      "source_identity": "139193e4d28f1541f61826c957c5fe1ea1a95aa8bfcf04fe6536eebcf303ed50"
+    },
+    {
+      "bytes": 340429,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/5aec4793b702dc9c122bd68f1b53437f56c9f91fce0e51c18f6a5d3b2c85bb25/master.20161107.idx",
+      "raw_sha256": "450e6e7b64d4e93594f87b28af8689c3ddf871624e093b4b6e9c994620d86194",
+      "source_identity": "5aec4793b702dc9c122bd68f1b53437f56c9f91fce0e51c18f6a5d3b2c85bb25"
+    },
+    {
+      "bytes": 315324,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/33582d96b1ef79cf22c9c30f053217b869f28b2d2683a4e2ad3e6ec988f4d607/master.20161108.idx",
+      "raw_sha256": "5c3ab2fcb661d6b5ee0329ce83088c75af14c970a6b91a8564f4b95fcdf65ffe",
+      "source_identity": "33582d96b1ef79cf22c9c30f053217b869f28b2d2683a4e2ad3e6ec988f4d607"
+    },
+    {
+      "bytes": 333551,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/a7c0857a4dcf6e808bb30ea2460278d34dace3b5bf584e1e82fec6391d9af558/master.20161109.idx",
+      "raw_sha256": "072851c99359cf1cc6076d24d92ae837ec88a31368c94f880bb5551497f22349",
+      "source_identity": "a7c0857a4dcf6e808bb30ea2460278d34dace3b5bf584e1e82fec6391d9af558"
+    },
+    {
+      "bytes": 420967,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/da6a0f130173690f698a61e2ec314f767db1d8260bd5d17348ac534bbe81b2d6/master.20161110.idx",
+      "raw_sha256": "2df10a7fd78d950fa90b96f191911bffb1cc924f55b1f932b85f9bc264c17263",
+      "source_identity": "da6a0f130173690f698a61e2ec314f767db1d8260bd5d17348ac534bbe81b2d6"
+    },
+    {
+      "bytes": 799271,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/e1ddc5e49bd9e300de4bee5bab077cc5fd14c52c436be330f95ad40d9699283f/master.20161114.idx",
+      "raw_sha256": "16a5088e5c0a36ab0f45612c6bf39379a0423d8c6839512d7fd070d748768fc5",
+      "source_identity": "e1ddc5e49bd9e300de4bee5bab077cc5fd14c52c436be330f95ad40d9699283f"
+    },
+    {
+      "bytes": 432374,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/cf8328c374fe587d1d90267071c4229d5ea992e3deb43c21a65b13da00b605f2/master.20161115.idx",
+      "raw_sha256": "8730fe2f5e8705e220c737437391d06b50b2c9a7f5c353f4db70c66bda1ac054",
+      "source_identity": "cf8328c374fe587d1d90267071c4229d5ea992e3deb43c21a65b13da00b605f2"
+    },
+    {
+      "bytes": 292685,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/b8d25662ef7fb2f14b782adb36e16124858a87c495274e266f213ae83f357273/master.20161116.idx",
+      "raw_sha256": "a6a5acfc538dbbf8d10143a476542912ca977bc3b89aa1221dacc4f7a635f7a0",
+      "source_identity": "b8d25662ef7fb2f14b782adb36e16124858a87c495274e266f213ae83f357273"
+    },
+    {
+      "bytes": 311365,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/adde03256ffc36a427b1d7255e2a1d7d2efc86416ba5bab0c02ea38d3e09402c/master.20161117.idx",
+      "raw_sha256": "dd31bc506ad5a67504cbf34112d8c94b01db3c57e449663c506c8fb117923a89",
+      "source_identity": "adde03256ffc36a427b1d7255e2a1d7d2efc86416ba5bab0c02ea38d3e09402c"
+    },
+    {
+      "bytes": 287428,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/ef3b58723ce1c71f1627c8071d3033fa7a3c39231f124431e5ddd2d9d90962bd/master.20161118.idx",
+      "raw_sha256": "7d4d7654c846a508d4c28db09fc36d08ceb324b2119f9d75e1661feb532dbc5c",
+      "source_identity": "ef3b58723ce1c71f1627c8071d3033fa7a3c39231f124431e5ddd2d9d90962bd"
+    },
+    {
+      "bytes": 290214,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/ad56131ac3aefd3df5611eec6183766313841be81d3ed31e825226ebed9cfd17/master.20161121.idx",
+      "raw_sha256": "768afe2cf13d741913e6c64609d7d1d394d80dfbf649db60a7ec5920040acec8",
+      "source_identity": "ad56131ac3aefd3df5611eec6183766313841be81d3ed31e825226ebed9cfd17"
+    },
+    {
+      "bytes": 340275,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/550e5ad1f25d5e2a1c5cd38925c58a9cc0331cca66ed6a90f343dfa554ec3302/master.20161122.idx",
+      "raw_sha256": "f67749d3fb68dd988c9739a12f390cedd19e15c526b70eea4ba755da9bf1c973",
+      "source_identity": "550e5ad1f25d5e2a1c5cd38925c58a9cc0331cca66ed6a90f343dfa554ec3302"
+    },
+    {
+      "bytes": 319561,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/39e265bd967cd1744a6be3483f6f18fe40b45acb9ba9df21f0241ec974602e5b/master.20161123.idx",
+      "raw_sha256": "a350b7b7f7104340af1a7e01d8751af1d9c9183910ae0ce47dc7115bec5602e0",
+      "source_identity": "39e265bd967cd1744a6be3483f6f18fe40b45acb9ba9df21f0241ec974602e5b"
+    },
+    {
+      "bytes": 108835,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/d8039a0fd6f3d4622defdf3e3e205af5de25e623e6b70a7e82a100f0dbe5d488/master.20161125.idx",
+      "raw_sha256": "03841580b66df2574fefd5e47d4251178efae30e1f33cbca2e9f2d8c324818eb",
+      "source_identity": "d8039a0fd6f3d4622defdf3e3e205af5de25e623e6b70a7e82a100f0dbe5d488"
+    },
+    {
+      "bytes": 261644,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/7adcc80e81abee8103a1ecd5898ff256b460df3780042cb711aafba1b046a605/master.20161128.idx",
+      "raw_sha256": "30b395b426d7aae5a0aff96a8f8fe837b0c9a97b7fd866720be9a95aa420db0b",
+      "source_identity": "7adcc80e81abee8103a1ecd5898ff256b460df3780042cb711aafba1b046a605"
+    },
+    {
+      "bytes": 270505,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/b355cfbd4aaf85286fdb1c446f2f88c9b96ae6e558327664d2676f5d5514c43e/master.20161129.idx",
+      "raw_sha256": "431bf6c69aae6344228f6d6df7f4b73242cfd99b4c0f604be4391a4dc5544b48",
+      "source_identity": "b355cfbd4aaf85286fdb1c446f2f88c9b96ae6e558327664d2676f5d5514c43e"
+    },
+    {
+      "bytes": 278808,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/b985102a531a773ef1f74d9b88656f777074fac42124d47cf2bf84bf9f7e51e5/master.20161130.idx",
+      "raw_sha256": "f37723c398e50f20aa24fb0d964811d27b94e0507677c356b76c826d1010e494",
+      "source_identity": "b985102a531a773ef1f74d9b88656f777074fac42124d47cf2bf84bf9f7e51e5"
+    },
+    {
+      "bytes": 353291,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/9b2e128c1428015772bb30f71d86b51701e273d2438d8bce0da248a07e3840ea/master.20161201.idx",
+      "raw_sha256": "2e08385a77cadc8230b69825c5a5f78b5e6b8c509466dd9911275c6372417c00",
+      "source_identity": "9b2e128c1428015772bb30f71d86b51701e273d2438d8bce0da248a07e3840ea"
+    },
+    {
+      "bytes": 332042,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/06a3a414c08ba0bcd69aeee66e04fcff0a0994334c768ac1eebafeff05476e52/master.20161202.idx",
+      "raw_sha256": "4853d291d86462f0f2d67df475f5ca7a4b785b4ee0c91ca7aae6fc54cd3b124e",
+      "source_identity": "06a3a414c08ba0bcd69aeee66e04fcff0a0994334c768ac1eebafeff05476e52"
+    },
+    {
+      "bytes": 374742,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/45127502730be9ff1fc5bf64c2b41f45ee878340eebf5d8b0749e3fb672accc0/master.20161205.idx",
+      "raw_sha256": "8514bb7c916a2653d4076a560ebfce4bbd590c6f9df32647c49117a7f2a2df6a",
+      "source_identity": "45127502730be9ff1fc5bf64c2b41f45ee878340eebf5d8b0749e3fb672accc0"
+    },
+    {
+      "bytes": 272650,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/7e2bb6edb599f51dc250d12b4f5229e0c431eae24c69fe0bb207f0e43bbf5532/master.20161206.idx",
+      "raw_sha256": "b215e8850f8398323c4a196bb71d1b6abefda49221b4f843cb98472a33d7d7aa",
+      "source_identity": "7e2bb6edb599f51dc250d12b4f5229e0c431eae24c69fe0bb207f0e43bbf5532"
+    },
+    {
+      "bytes": 287320,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/9e239b106a38edb503cc647ff5b9b0e88dabd533a384aa774d11f08f74366c43/master.20161207.idx",
+      "raw_sha256": "e3f9fe85ae96855013573af6570703987a7d2c579e1b1c25f81146ae9f2587d9",
+      "source_identity": "9e239b106a38edb503cc647ff5b9b0e88dabd533a384aa774d11f08f74366c43"
+    },
+    {
+      "bytes": 260867,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/de072b103d88e6d5876705c7576b318c9ad5b86b9e55e70a861db90cc11171b0/master.20161208.idx",
+      "raw_sha256": "a208f87ab0206a412fba8b91072d98a436953d56e4bdc0ac9f7a420c7302a17b",
+      "source_identity": "de072b103d88e6d5876705c7576b318c9ad5b86b9e55e70a861db90cc11171b0"
+    },
+    {
+      "bytes": 300823,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/ac520a89077b1089c3363a60623b5cec7c62944cee71f794875f5790808139cf/master.20161209.idx",
+      "raw_sha256": "46fffa7bdfd8d5cdd9f431adfddc34a04434d81eaf09393d527db8067b3c0e09",
+      "source_identity": "ac520a89077b1089c3363a60623b5cec7c62944cee71f794875f5790808139cf"
+    },
+    {
+      "bytes": 259292,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/4100f7540df3b346b21fb5b8f5f3fc6e2bd5b36733cba01ad364b1017148d659/master.20161212.idx",
+      "raw_sha256": "358b756e9f9dc60e057b44e4e4f249a5277cfd5fb5fa26ccfe8b3fa1d787ebe1",
+      "source_identity": "4100f7540df3b346b21fb5b8f5f3fc6e2bd5b36733cba01ad364b1017148d659"
+    },
+    {
+      "bytes": 313088,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/dbc15e2d19aa348b3ad2b61ba3c60d63c2834ca6afc839ede7f3e09157cfd4fb/master.20161213.idx",
+      "raw_sha256": "2969e9c902310047bed11689b1c441c1b0a47560cc60a052b7015df4047f7dcd",
+      "source_identity": "dbc15e2d19aa348b3ad2b61ba3c60d63c2834ca6afc839ede7f3e09157cfd4fb"
+    },
+    {
+      "bytes": 222498,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/da348f7afed780ed205314bc8c7badb3d0804154afcb465d4cd6df314ac3dc47/master.20161214.idx",
+      "raw_sha256": "47f741d13807d95d8fa9c74d3f4821ff086c3b622b886ce5c7b99b21b6439ded",
+      "source_identity": "da348f7afed780ed205314bc8c7badb3d0804154afcb465d4cd6df314ac3dc47"
+    },
+    {
+      "bytes": 296780,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/41a14f49614067a33fa90d92920ccf4b93c03510d760ca7879b27d9025eec644/master.20161215.idx",
+      "raw_sha256": "d472c2ac257e2b260c8196da21243d0535fbd1e9ca6643e0b173b9e16dcede70",
+      "source_identity": "41a14f49614067a33fa90d92920ccf4b93c03510d760ca7879b27d9025eec644"
+    },
+    {
+      "bytes": 321247,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/8c4938557e6b37df45fbe96d184ee508009f57bdaa32d068c74c745d9de099c7/master.20161216.idx",
+      "raw_sha256": "2f95acc42ae8634643c3d13bfe674ca8b42079ef70ce998d4011c9764fa655bb",
+      "source_identity": "8c4938557e6b37df45fbe96d184ee508009f57bdaa32d068c74c745d9de099c7"
+    },
+    {
+      "bytes": 281883,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/0f542bcac32f5a09a0fcce7e455826f22456fc8fa9f447795a1d3c425570b2ea/master.20161219.idx",
+      "raw_sha256": "8d0ad5e3fbc26a7dbc0ff4f3ac4ca0ab8aa362140813096003f85b377ab84dbe",
+      "source_identity": "0f542bcac32f5a09a0fcce7e455826f22456fc8fa9f447795a1d3c425570b2ea"
+    },
+    {
+      "bytes": 256827,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/099720ff89b771ad4aaab1d80844dccb0099111fa8b747d6e7982a0e629e5398/master.20161220.idx",
+      "raw_sha256": "a3283ec153aa1bbc7175da5d01602ef1d12d90d404bda88ca1e90efa2e2ea682",
+      "source_identity": "099720ff89b771ad4aaab1d80844dccb0099111fa8b747d6e7982a0e629e5398"
+    },
+    {
+      "bytes": 246814,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/664758087d62a46c8fb5be3731e217a5e91f1365d2e328519e03ade83766e2b9/master.20161221.idx",
+      "raw_sha256": "d4e519d398e8a4fdc3f951694c5338738256d1e408cb02d8ab2bd155964cef2f",
+      "source_identity": "664758087d62a46c8fb5be3731e217a5e91f1365d2e328519e03ade83766e2b9"
+    },
+    {
+      "bytes": 280932,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/f316e16b4046c4d14ddd50fabd5a785a307d916e10ba0100074e5724cad05f5d/master.20161222.idx",
+      "raw_sha256": "0be09a486b7308bc1f9c337319eaf1d2ec8babcefcce7478d15c516f0c04dfad",
+      "source_identity": "f316e16b4046c4d14ddd50fabd5a785a307d916e10ba0100074e5724cad05f5d"
+    },
+    {
+      "bytes": 182029,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/6d1e4162f8bd961c12d438fd18c8622cbc5aa51280f38b5c755834fe1f142bd1/master.20161223.idx",
+      "raw_sha256": "ef8d43cf5e01e64826682a9368117bf93da295c5948c082a7fa8a550e9562de8",
+      "source_identity": "6d1e4162f8bd961c12d438fd18c8622cbc5aa51280f38b5c755834fe1f142bd1"
+    },
+    {
+      "bytes": 179326,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/e169698b6d6f4df9a0a402f413c14e2b1a366c23a703c89c9cd20ddb679993b1/master.20161227.idx",
+      "raw_sha256": "75cadb87f3db4e5c4c01c9ab494fb8dbfedb7283ee8a70219acc36d4ebe306ed",
+      "source_identity": "e169698b6d6f4df9a0a402f413c14e2b1a366c23a703c89c9cd20ddb679993b1"
+    },
+    {
+      "bytes": 213617,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/ccb4158d5b203989a9d478502a4f44aed9e8d767130ec6a510056a3cea432f7a/master.20161228.idx",
+      "raw_sha256": "ae7ab50540914eb872bf2fdfaf46de57995ae8471473396b06cb4384223ec54a",
+      "source_identity": "ccb4158d5b203989a9d478502a4f44aed9e8d767130ec6a510056a3cea432f7a"
+    },
+    {
+      "bytes": 273347,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/cbfee004ba43501eeccf4c8b97ff88d934221b431def6e10afc0f638733a7b61/master.20161229.idx",
+      "raw_sha256": "2594821225383d70e4e4de4b78f18028bfd6e654a46582e3e7d31ccac4feaf29",
+      "source_identity": "cbfee004ba43501eeccf4c8b97ff88d934221b431def6e10afc0f638733a7b61"
+    },
+    {
+      "bytes": 225175,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/1f8648e44f28b8188d989c668f9814399dd4fae0130350a4625702205cc06d6a/master.20161230.idx",
+      "raw_sha256": "3528f94f1a207594c6d61a4ade9e91eb8258405b511389902b399815a3a98155",
+      "source_identity": "1f8648e44f28b8188d989c668f9814399dd4fae0130350a4625702205cc06d6a"
+    },
+    {
+      "bytes": 432502,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/2244d012b5a19acd2b8b70fb3169d2e550e1ae31861bda9b2609488082ac1a09/master.20170103.idx",
+      "raw_sha256": "93c1d6d60d2e113a3197047ffa1ca4fa732cfaf9c7d560262ccd4f08f692bd98",
+      "source_identity": "2244d012b5a19acd2b8b70fb3169d2e550e1ae31861bda9b2609488082ac1a09"
+    },
+    {
+      "bytes": 676832,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/ab9509f9444d443ce3f643d16137263df6df4a684f134ff06f508078df7eb281/master.20170104.idx",
+      "raw_sha256": "078522a8c0d9a019c561159023a6feb557f4010d77518df9931d1e40a1d7ea12",
+      "source_identity": "ab9509f9444d443ce3f643d16137263df6df4a684f134ff06f508078df7eb281"
+    },
+    {
+      "bytes": 524040,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/6d89129a3e5ea0f45942a6581474ac03e07f4b69aede362f909658939de7b381/master.20170105.idx",
+      "raw_sha256": "875662ef806ba656e0f847a93f28680fd7cd9fab6ce6d3976196b7cf01cf608d",
+      "source_identity": "6d89129a3e5ea0f45942a6581474ac03e07f4b69aede362f909658939de7b381"
+    },
+    {
+      "bytes": 308899,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/82044e82b39f0cc400b19f9b029b453fa7461c66d05a6eb39d13f1a01945fc9e/master.20170106.idx",
+      "raw_sha256": "80aefa127186da65a163a5e768a0c2235318dd8df907ff7c562e5f313dbb6c2d",
+      "source_identity": "82044e82b39f0cc400b19f9b029b453fa7461c66d05a6eb39d13f1a01945fc9e"
+    },
+    {
+      "bytes": 373868,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/5312ab985f9c0a3fc4d0ba01f924ab9dc697c3cac8e82659a4938953b202c1b1/master.20170109.idx",
+      "raw_sha256": "49b02e7b4a600444012844685201690e107efa037034b82dd4a3738d0ab93862",
+      "source_identity": "5312ab985f9c0a3fc4d0ba01f924ab9dc697c3cac8e82659a4938953b202c1b1"
+    },
+    {
+      "bytes": 288203,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/4bc46a60337840d877c3939b4260c3e74094f53b760423af3fb86cc7d01ee2c3/master.20170110.idx",
+      "raw_sha256": "af316ba06e71d082586c44b64a66e3c3b17e87452486349af4d9395af228bdde",
+      "source_identity": "4bc46a60337840d877c3939b4260c3e74094f53b760423af3fb86cc7d01ee2c3"
+    },
+    {
+      "bytes": 214623,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/a6c6a7c4812afd04461b63f673943641281756d1983fa6b1220c183a8795c1de/master.20170111.idx",
+      "raw_sha256": "24a2051092082c579a1019c3ed0b8febda342bdab0fc06aa895de329510c8c71",
+      "source_identity": "a6c6a7c4812afd04461b63f673943641281756d1983fa6b1220c183a8795c1de"
+    },
+    {
+      "bytes": 297566,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/da1ec7c843ce760fc5978164362656b83c03290f13ecefc610ff6188afb2b7f3/master.20170112.idx",
+      "raw_sha256": "9b20ab7a7af08c9eb2513b6af1f0b2afd4a6fb9a307d7214faf34a1374768409",
+      "source_identity": "da1ec7c843ce760fc5978164362656b83c03290f13ecefc610ff6188afb2b7f3"
+    },
+    {
+      "bytes": 278817,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/33a852ece6a4daec911f36091b5d720c1e367ea197915e981346136dff3a4827/master.20170113.idx",
+      "raw_sha256": "90a3642abeda7ae5f7fcdc5c83473f564459e4fc7b4df611fb85f1edaac31a93",
+      "source_identity": "33a852ece6a4daec911f36091b5d720c1e367ea197915e981346136dff3a4827"
+    },
+    {
+      "bytes": 344506,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/aff81428e37273df45956698a99ba1120082f21fe129aa860f93f34402daa7bb/master.20170117.idx",
+      "raw_sha256": "fdf3471329bf85f4f866842b04ca39c907813fe1aa0b571dc876dc2a5a7097ba",
+      "source_identity": "aff81428e37273df45956698a99ba1120082f21fe129aa860f93f34402daa7bb"
+    },
+    {
+      "bytes": 316326,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/fdc43a2fd1109871727ab6569fb7b234d21326f93cc597d22a9985e551f03c3f/master.20170118.idx",
+      "raw_sha256": "2c5f15cb3214f50b9fa38bca9256b156417134a4dfacac4c1eb35286953659d3",
+      "source_identity": "fdc43a2fd1109871727ab6569fb7b234d21326f93cc597d22a9985e551f03c3f"
+    },
+    {
+      "bytes": 318481,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/6fdc72454cde70948f6d9c892803dadb2d5e9572bfa0b4dc1c08b6a1d28e54c8/master.20170119.idx",
+      "raw_sha256": "bf5328a9e2497864bc6bf0f1dc763025be072f4f7f0cbe3ac8e9c0ce8f8488e3",
+      "source_identity": "6fdc72454cde70948f6d9c892803dadb2d5e9572bfa0b4dc1c08b6a1d28e54c8"
+    },
+    {
+      "bytes": 273997,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/7fce7c475cbd3e1c2ada4d59a91898050fe2e7072a9e4e75b65baf75d47f1d8e/master.20170120.idx",
+      "raw_sha256": "518e27d214ac5ce869be258172c7223b601442c69ed820a3ae5bdabe87a71be3",
+      "source_identity": "7fce7c475cbd3e1c2ada4d59a91898050fe2e7072a9e4e75b65baf75d47f1d8e"
+    },
+    {
+      "bytes": 271393,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/847e9bab2d16afd8be386754092fc695b950ef04a55a3829072d21ae3a527676/master.20170123.idx",
+      "raw_sha256": "460e444a6774ded1da03d75535722091d1258159d3ed0f6794f456685ccbea91",
+      "source_identity": "847e9bab2d16afd8be386754092fc695b950ef04a55a3829072d21ae3a527676"
+    },
+    {
+      "bytes": 316116,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/e32350442d864630c2d3cbc22adaa7c2b4d25544f35ba3eef9aaa4f94ac6f394/master.20170124.idx",
+      "raw_sha256": "b2f976535b34968d33f19569817912f93d2be69ca4a185b3fb66af424a7251e7",
+      "source_identity": "e32350442d864630c2d3cbc22adaa7c2b4d25544f35ba3eef9aaa4f94ac6f394"
+    },
+    {
+      "bytes": 329820,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/b0282062cdee065b1d167ae3e233d676cdae6b67eb59639985ad04a10e5276e1/master.20170125.idx",
+      "raw_sha256": "6ea73e5adeefc600aeeb6b96a0f892696630d2e8d721b398d51fc985cb27b1f1",
+      "source_identity": "b0282062cdee065b1d167ae3e233d676cdae6b67eb59639985ad04a10e5276e1"
+    },
+    {
+      "bytes": 380234,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/6e91cf40833a5ff3e844e2f4a9927ea6a34aa9b8b827272c3c2c16bdf5ba4560/master.20170126.idx",
+      "raw_sha256": "5478bc208c4c8e9f66488aa2f2f0650a3a9f5c0b1a1922dbddd3bfbe81d2f0ae",
+      "source_identity": "6e91cf40833a5ff3e844e2f4a9927ea6a34aa9b8b827272c3c2c16bdf5ba4560"
+    },
+    {
+      "bytes": 459575,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/0867bbeb08765f99ac11812a491fbf95f3260a5483894ba30e8a2342c7d1a71a/master.20170127.idx",
+      "raw_sha256": "d52d6cfb755c395aea9e17e6feffdba826563fc2cd984e578d4df9bbc06f380a",
+      "source_identity": "0867bbeb08765f99ac11812a491fbf95f3260a5483894ba30e8a2342c7d1a71a"
+    },
+    {
+      "bytes": 444267,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/88cbb8496983308d7455bd741272185ef45034ece4dd4f74bd74f32f7c90b343/master.20170130.idx",
+      "raw_sha256": "f69c952c67055e7ae988d0c1d2c5ac2f04efcc252357e669c800838ac535739a",
+      "source_identity": "88cbb8496983308d7455bd741272185ef45034ece4dd4f74bd74f32f7c90b343"
+    },
+    {
+      "bytes": 412617,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/cdd752eb6709704bf72f2967b0e7eebee26f7803f35b1d1a60f01000b7d5aa37/master.20170131.idx",
+      "raw_sha256": "87d5d8a3a6037316079f42f439f2614f9da93e34468d21d8c9b6a9693ca325e5",
+      "source_identity": "cdd752eb6709704bf72f2967b0e7eebee26f7803f35b1d1a60f01000b7d5aa37"
+    },
+    {
+      "bytes": 413500,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/f2937265b63b892f11259ddbe718a83817e7bf71c9b373f87f112afd01325a32/master.20170201.idx",
+      "raw_sha256": "bd089de3cdeabbf06bc8014704185f6acafe9d9609d1ca6cd6dd3af4d2471580",
+      "source_identity": "f2937265b63b892f11259ddbe718a83817e7bf71c9b373f87f112afd01325a32"
+    },
+    {
+      "bytes": 422694,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/c8938ad39ab525b2d6d09fb03e92fb321dcd198ee46fbd8880b8285c879be5df/master.20170202.idx",
+      "raw_sha256": "03b9a04c6a4ac55b7367c83e20debece4b485b9659a8d3794766fecbe0147c07",
+      "source_identity": "c8938ad39ab525b2d6d09fb03e92fb321dcd198ee46fbd8880b8285c879be5df"
+    },
+    {
+      "bytes": 476297,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/235ef74923dce53316912b3bddcebc996eeab2e1703e1d1014c51e6502a2cba8/master.20170203.idx",
+      "raw_sha256": "b4346039fb1e0ca7c54abd4043496ddf31eac5b72dc80d9ffbe65445791895eb",
+      "source_identity": "235ef74923dce53316912b3bddcebc996eeab2e1703e1d1014c51e6502a2cba8"
+    },
+    {
+      "bytes": 375211,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/143698db2dfade4866ddffd21b167e9e204e8da8584e3e53686852fb1563d6d5/master.20170206.idx",
+      "raw_sha256": "3f1016b0aebeba1c5273e80525ffb58b22fda82d8ddc78e93f191ea2f7c00ea8",
+      "source_identity": "143698db2dfade4866ddffd21b167e9e204e8da8584e3e53686852fb1563d6d5"
+    },
+    {
+      "bytes": 509109,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/f818fab31ea7f12f0ae13cded7ff047196a7f0ae988a812a7b73a04326526223/master.20170207.idx",
+      "raw_sha256": "b93488dce3382fd7fe269fe7fddf4fd4b5d7d216e4790cce3b2cb2016193b5de",
+      "source_identity": "f818fab31ea7f12f0ae13cded7ff047196a7f0ae988a812a7b73a04326526223"
+    },
+    {
+      "bytes": 441326,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/cbd7a53897ae04b62cc80d276c6de6bc94bdd0c05bfd55cbbde7058281906447/master.20170208.idx",
+      "raw_sha256": "787f2ff62e3b974fce4d4a9a26f68329b9b9232ee28756b7bb924c406f43e9cb",
+      "source_identity": "cbd7a53897ae04b62cc80d276c6de6bc94bdd0c05bfd55cbbde7058281906447"
+    },
+    {
+      "bytes": 721127,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/f9c8889345806ffed7ba1140b900314dea3c7fa93a422e0d20bf8b014c9d5ae0/master.20170209.idx",
+      "raw_sha256": "e346235232e3ebc4ad62fe6fcaa192b91c66a11642caf408a7c64aac2388c00a",
+      "source_identity": "f9c8889345806ffed7ba1140b900314dea3c7fa93a422e0d20bf8b014c9d5ae0"
+    },
+    {
+      "bytes": 837170,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/8b10d1a90392518cf34bb595dfb26ee96d68609605e686bbfc5bd211fff90474/master.20170210.idx",
+      "raw_sha256": "4639b8fd09e8a183fb4809b8ba41ea269bb20847ee58992ea309d36091cf2c28",
+      "source_identity": "8b10d1a90392518cf34bb595dfb26ee96d68609605e686bbfc5bd211fff90474"
+    },
+    {
+      "bytes": 836777,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/05b0684cb476e367cfb644764713e0acace59633c7dc149897438adfb4dce731/master.20170213.idx",
+      "raw_sha256": "01e138915cda63c428804f58a65afb33273d279fdd5c36adb4596bc24949f17f",
+      "source_identity": "05b0684cb476e367cfb644764713e0acace59633c7dc149897438adfb4dce731"
+    },
+    {
+      "bytes": 1459234,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/c79324e1f7ca7b12d9ef8ed0eec2380ac5205c7a8d6fc9fca2eae436418a1e57/master.20170214.idx",
+      "raw_sha256": "8fdd881f7c8087094b4b600fb9aac0d3dee0794383c4a42be7c7586ccc7518aa",
+      "source_identity": "c79324e1f7ca7b12d9ef8ed0eec2380ac5205c7a8d6fc9fca2eae436418a1e57"
+    },
+    {
+      "bytes": 489227,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/b42746ebea25d2e3953ace615231e56b9b3b96cf1b7a8807147d35e5d36330e9/master.20170215.idx",
+      "raw_sha256": "cd5c70c9010db6f527f7ab1b6b548d64ef8595ac2c2e72dfaa264b319a637954",
+      "source_identity": "b42746ebea25d2e3953ace615231e56b9b3b96cf1b7a8807147d35e5d36330e9"
+    },
+    {
+      "bytes": 403720,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/3f774ca016be99f8bc5fb915250fc4fa9b2bd65c4e8e08e09bb58879e5c28b63/master.20170216.idx",
+      "raw_sha256": "1c9d9817be00f5cc736db329c7843f97db257c398f3d0f45cad72e3dfe838401",
+      "source_identity": "3f774ca016be99f8bc5fb915250fc4fa9b2bd65c4e8e08e09bb58879e5c28b63"
+    },
+    {
+      "bytes": 475962,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/908f0cd95d38ac4422bec1f5ce96c787b55b0b08b1d549d96d8c9518c5ad3778/master.20170217.idx",
+      "raw_sha256": "7cb22149811f334034649309245037c7a0cb59d8c658ae28b018d0742a36a1aa",
+      "source_identity": "908f0cd95d38ac4422bec1f5ce96c787b55b0b08b1d549d96d8c9518c5ad3778"
+    },
+    {
+      "bytes": 475644,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/b83f9fac6d628e211bf07921ff31e75205eef086fc31e55659f1c854fe6979a6/master.20170221.idx",
+      "raw_sha256": "2617738afe594b77898b18c49770a589a6c40152c0dee37cf8dc51ad373bb887",
+      "source_identity": "b83f9fac6d628e211bf07921ff31e75205eef086fc31e55659f1c854fe6979a6"
+    },
+    {
+      "bytes": 447012,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/e9eb3df47f136d16561c1d034296448ca439c7c9195910b71a9b703ceb0467e6/master.20170222.idx",
+      "raw_sha256": "90947968700cd64926c056f1a4874735d72deb837bce0833a94081f2e1dfeefa",
+      "source_identity": "e9eb3df47f136d16561c1d034296448ca439c7c9195910b71a9b703ceb0467e6"
+    },
+    {
+      "bytes": 478640,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/4eb21258b47405c03cc849b5d14731a5c9523d0168fccb2da8045f4efc10dd01/master.20170223.idx",
+      "raw_sha256": "2f4f27dc257d993a19e35dae7e204a049dd8939af01fad79c29ce1c595ecc146",
+      "source_identity": "4eb21258b47405c03cc849b5d14731a5c9523d0168fccb2da8045f4efc10dd01"
+    },
+    {
+      "bytes": 553740,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/34ba219820765a00ecb6c732bf70f79ec3015cff6e79f1d80ec1cb54de64026b/master.20170224.idx",
+      "raw_sha256": "d302ebf710709f2370a287867c70a53313da036deb518ba19dc869c1b9f771d6",
+      "source_identity": "34ba219820765a00ecb6c732bf70f79ec3015cff6e79f1d80ec1cb54de64026b"
+    },
+    {
+      "bytes": 552336,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/466d4388645391f51e2ca814e186748035a9d26e330645a69dda1f3d73583efa/master.20170227.idx",
+      "raw_sha256": "63067d83d3e3791cfa3c5bea31ed574804d9f5663f0caac6776d4b5423c6f65b",
+      "source_identity": "466d4388645391f51e2ca814e186748035a9d26e330645a69dda1f3d73583efa"
+    },
+    {
+      "bytes": 717569,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/e2615841e7a2c525779942791a944187d184ea9e189f05871354bbe4e3f680f5/master.20170228.idx",
+      "raw_sha256": "d10dec9ce4f20f6780a639a1ebc019b7971a44d17ba4d5c7a398f290c182ecf1",
+      "source_identity": "e2615841e7a2c525779942791a944187d184ea9e189f05871354bbe4e3f680f5"
+    },
+    {
+      "bytes": 697339,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/352e6232f32296a038a0d61b545ffda1e55fcd5ee40c96d2f453d31bd6798965/master.20170301.idx",
+      "raw_sha256": "e8e4ad3e9ccdbbb467994d10807cca46b8ebeff8101fc5caf3d74f193b0b5d5d",
+      "source_identity": "352e6232f32296a038a0d61b545ffda1e55fcd5ee40c96d2f453d31bd6798965"
+    },
+    {
+      "bytes": 587895,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/fb18d6cddc10a388c49051764f570b82534686643e5a538f7eb027b80e43e66d/master.20170302.idx",
+      "raw_sha256": "a0872740d6d2eaa8a256e1697a4870b21c24b709a8a2a9d87d3241b4bd076640",
+      "source_identity": "fb18d6cddc10a388c49051764f570b82534686643e5a538f7eb027b80e43e66d"
+    },
+    {
+      "bytes": 650947,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/7469c2ae92f4aa3dd3b953542992af2cfdbec46e3068d14138198690d50564b5/master.20170303.idx",
+      "raw_sha256": "073d29f34cb6e3f6ef45d4663bbc63b53c804e15606d9bdf03b56734ba7cc74a",
+      "source_identity": "7469c2ae92f4aa3dd3b953542992af2cfdbec46e3068d14138198690d50564b5"
+    },
+    {
+      "bytes": 369215,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/74b5be3be91e3beb8d346228ad166f4debe908c33be70e6d89fdcc21b04cd8ad/master.20170306.idx",
+      "raw_sha256": "3b01afb47fa77dccb4d85744a03f0644e33d5049c6af56ba092e7900d3cc57c2",
+      "source_identity": "74b5be3be91e3beb8d346228ad166f4debe908c33be70e6d89fdcc21b04cd8ad"
+    },
+    {
+      "bytes": 491416,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/890c5636812b5d041f988b1c0cf8830196e6f35538846f67963b9837012cd525/master.20170307.idx",
+      "raw_sha256": "28d8cf185386e6a0b323d9872b575df2a32879c616a4c5e5bb1f98128020f2d0",
+      "source_identity": "890c5636812b5d041f988b1c0cf8830196e6f35538846f67963b9837012cd525"
+    },
+    {
+      "bytes": 330548,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/c13339cda86ea5a92b036b3ece07afa05adc5ad0459869ad040c14744cc0f1f2/master.20170308.idx",
+      "raw_sha256": "d61da1fd357b69a73ca16962711dc92ecde68d8c2933a9a9e80a4a9cc0dc055a",
+      "source_identity": "c13339cda86ea5a92b036b3ece07afa05adc5ad0459869ad040c14744cc0f1f2"
+    },
+    {
+      "bytes": 423798,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/389cf35689c93a0868c2ed3343290788553458e644eea4cb655e119693845113/master.20170309.idx",
+      "raw_sha256": "252fd1b3439c122d14cd3dd6addaf67f5799a3b64dc2bebc16dbad29f03b7896",
+      "source_identity": "389cf35689c93a0868c2ed3343290788553458e644eea4cb655e119693845113"
+    },
+    {
+      "bytes": 428838,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/2efbbfad05f9dfcfbb68d8060d6fc71f66143714dc6a105dd16df0b7fcb58ff7/master.20170310.idx",
+      "raw_sha256": "d655757115928908e644c3c2ef96be56d9993e35525689682806e99710672980",
+      "source_identity": "2efbbfad05f9dfcfbb68d8060d6fc71f66143714dc6a105dd16df0b7fcb58ff7"
+    },
+    {
+      "bytes": 372192,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/82ad911fcd6fd270e00230a0f55021308570a63d58cb450f5a8a26adf71161ef/master.20170313.idx",
+      "raw_sha256": "cc2e0bfaa62d1dd66c491f371bfe00479a81e0c0068d68f9a72b9203daeeb44b",
+      "source_identity": "82ad911fcd6fd270e00230a0f55021308570a63d58cb450f5a8a26adf71161ef"
+    },
+    {
+      "bytes": 350384,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/97113167e032cf62cc57fb5e02a7b687d5e6c1639697c1f37dd97ff848d93b6c/master.20170314.idx",
+      "raw_sha256": "a064eb63a5f00e8c0e0097dff0a800167f843b2d0c96b8f685fb49cc4dbe09a3",
+      "source_identity": "97113167e032cf62cc57fb5e02a7b687d5e6c1639697c1f37dd97ff848d93b6c"
+    },
+    {
+      "bytes": 362417,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/e8d562503b2520b098d88c1d7c5de942f886bfd6b2318cf8d6733006242882c7/master.20170315.idx",
+      "raw_sha256": "e6a39bb537eadf304be106dac951b9cfaa5f2d967684ebec397d6bd1b87b3a98",
+      "source_identity": "e8d562503b2520b098d88c1d7c5de942f886bfd6b2318cf8d6733006242882c7"
+    },
+    {
+      "bytes": 419371,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/c72f007dc8fb30c51a8e37c2993056dfe26b615ffeb431a2f4c9d72fce7e2168/master.20170316.idx",
+      "raw_sha256": "9269e47688ab85e481e46896bd2cb9689151dcfab017caa90f14548b62d9ae13",
+      "source_identity": "c72f007dc8fb30c51a8e37c2993056dfe26b615ffeb431a2f4c9d72fce7e2168"
+    },
+    {
+      "bytes": 428799,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/6c7ec067f38062c5f31597db9d26f71c7f933010e1e9343ffcf5588d979c7690/master.20170317.idx",
+      "raw_sha256": "0cd2b1de9df804cb9e8c33650ebc7da21d9fae06034f1b45096f6028a82831b0",
+      "source_identity": "6c7ec067f38062c5f31597db9d26f71c7f933010e1e9343ffcf5588d979c7690"
+    },
+    {
+      "bytes": 370704,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/321678720584b033863a3448646fa20a23cb81ad4f190b71088d738b84d567b0/master.20170320.idx",
+      "raw_sha256": "645970accdf506c1bde3b09ff28993d6d04f92c6b4dd8a4b7c3dc07e94153d38",
+      "source_identity": "321678720584b033863a3448646fa20a23cb81ad4f190b71088d738b84d567b0"
+    },
+    {
+      "bytes": 311081,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/57e223e8722b734832393facfb66f6457e484f0a37cc0fe9953c644a71ea7c2b/master.20170321.idx",
+      "raw_sha256": "ca3382ca67ba1bf6af20c6786250725a0cb9ef49e0dcd62b87e1e35a48fdbb50",
+      "source_identity": "57e223e8722b734832393facfb66f6457e484f0a37cc0fe9953c644a71ea7c2b"
+    },
+    {
+      "bytes": 318657,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/0f5edf1b3a2f8be33abaf4290c767bf0da512616156239d32effc8a6ce907eb9/master.20170322.idx",
+      "raw_sha256": "81d0a62442f70a45106af5ac1d6a45585b8e84aa2b63bb80923e224c320cf5c7",
+      "source_identity": "0f5edf1b3a2f8be33abaf4290c767bf0da512616156239d32effc8a6ce907eb9"
+    },
+    {
+      "bytes": 315915,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/755993807e16b6a7094002553ce3ff7606ae5d2649f604e5d6146e2a71e0f974/master.20170323.idx",
+      "raw_sha256": "73b80df3d07cd20848355f4429d0bda36604651cf0380f1c828dbc1d435130df",
+      "source_identity": "755993807e16b6a7094002553ce3ff7606ae5d2649f604e5d6146e2a71e0f974"
+    },
+    {
+      "bytes": 305370,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/44a43463e5048a1b2b75a1c389230b15f91d877fe946da833565eec883128b5c/master.20170324.idx",
+      "raw_sha256": "c457ecefb0ba2c039c893e5d761931e0e4805db1db8f06603206b3d8426ac52c",
+      "source_identity": "44a43463e5048a1b2b75a1c389230b15f91d877fe946da833565eec883128b5c"
+    },
+    {
+      "bytes": 288558,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/0301c4cba67b0b36d4d82d71c23f39251a565704be6c8262cbf6dcf161908ad1/master.20170327.idx",
+      "raw_sha256": "4998541394a5587a4da6d328dbb92f6d73191b17bcbaa791d8308882ea69b7df",
+      "source_identity": "0301c4cba67b0b36d4d82d71c23f39251a565704be6c8262cbf6dcf161908ad1"
+    },
+    {
+      "bytes": 396309,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/bd908e6f73b4ca61f871215b49c71d0bb15c0d802b135c6adb4424eb9e6316f9/master.20170328.idx",
+      "raw_sha256": "6857242e073c8b3d19b840a688c9acad3bf183a75d38e137e9692c67a6081a3a",
+      "source_identity": "bd908e6f73b4ca61f871215b49c71d0bb15c0d802b135c6adb4424eb9e6316f9"
+    },
+    {
+      "bytes": 312861,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/1016f2b037cc63937a1aa2c47e1d3398132cafe7bf09e474b950e4134541ff79/master.20170329.idx",
+      "raw_sha256": "40c9da35a04d1fbf865584bc2d16ea80ee0774f581a97d96419d037da0654efe",
+      "source_identity": "1016f2b037cc63937a1aa2c47e1d3398132cafe7bf09e474b950e4134541ff79"
+    },
+    {
+      "bytes": 406740,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/63da63a105b89066e456475b2bbffbc81fb5d279f5b8c805961c8ae0ab4cb9d0/master.20170330.idx",
+      "raw_sha256": "5fa84cc4b878f535184ea92fb3825e94f22d68fe4976c72dca32f23e218afbf0",
+      "source_identity": "63da63a105b89066e456475b2bbffbc81fb5d279f5b8c805961c8ae0ab4cb9d0"
+    },
+    {
+      "bytes": 447250,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/31de958fd06fdb0d9696b721f088cc6c0776229ed98286fea6ad8aec8f79c7ad/master.20170331.idx",
+      "raw_sha256": "95159f4729fb7df97b12710e944f1274fb902c6c941065fed7dba92d26f4b82c",
+      "source_identity": "31de958fd06fdb0d9696b721f088cc6c0776229ed98286fea6ad8aec8f79c7ad"
+    },
+    {
+      "bytes": 431457,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/216376ec5b0e42c610076c001c245936f3ffc0a74d0cb8869db8de38d25def79/master.20170403.idx",
+      "raw_sha256": "b5be5fa0a79aa8fa4a6b605468464bb2d4f6471d62175cbcf42e3b44556df59b",
+      "source_identity": "216376ec5b0e42c610076c001c245936f3ffc0a74d0cb8869db8de38d25def79"
+    },
+    {
+      "bytes": 640781,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/851f6183675e0751c6b2996f45fe7dbe1074a63178d7d6886e8e885b454a6953/master.20170404.idx",
+      "raw_sha256": "3ed1cb9ca4c98ea07cebf1b9493074bb42f7e48d0a3b46d07cb954fe9ef77a7d",
+      "source_identity": "851f6183675e0751c6b2996f45fe7dbe1074a63178d7d6886e8e885b454a6953"
+    },
+    {
+      "bytes": 379340,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/3b0cb3b300c40a1e793344c6b3aa6993012b65ac6c022e04cc4c7483e4f10b05/master.20170405.idx",
+      "raw_sha256": "050e82dc6b2d21d4de19d57a386722a35239e63b3a5b6bf30288b378479f79f2",
+      "source_identity": "3b0cb3b300c40a1e793344c6b3aa6993012b65ac6c022e04cc4c7483e4f10b05"
+    },
+    {
+      "bytes": 301862,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/448684b76a8ea0bcdae8c673722cb17c7793c1fab9d7be0378185a0381a6f927/master.20170406.idx",
+      "raw_sha256": "7e53ce6bcdf7ae13c831c43af8c8087fc0b723c44fe65dc4bcaed3c369280a14",
+      "source_identity": "448684b76a8ea0bcdae8c673722cb17c7793c1fab9d7be0378185a0381a6f927"
+    },
+    {
+      "bytes": 372037,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/4d08cc2330f990551a1076ec3c6f87a6eb921d40ad51e20b78747d2e0d5194e6/master.20170407.idx",
+      "raw_sha256": "52a36e969562fa951451beefeb45a49025334535e8cd29a7f8e942f67a9c6991",
+      "source_identity": "4d08cc2330f990551a1076ec3c6f87a6eb921d40ad51e20b78747d2e0d5194e6"
+    },
+    {
+      "bytes": 349705,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/f81035b60b024b269e8aec6bf3adc3948a529fca39dba3f9a0f4f250a8b03b31/master.20170410.idx",
+      "raw_sha256": "5a4f70f29f6a8a17e3d33ebe7fdf2726a4552e218ce95d7b4cbbbf86e6a89f83",
+      "source_identity": "f81035b60b024b269e8aec6bf3adc3948a529fca39dba3f9a0f4f250a8b03b31"
+    },
+    {
+      "bytes": 223398,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/1eb177f10bbc67178509476d6fc41997ec651c1c14d0f1a06bac7d799dec6a4a/master.20170411.idx",
+      "raw_sha256": "17086360c40d4ef082c64cdfc1e00f7fa4ce2baab6625935592d2bcc62e1e6a8",
+      "source_identity": "1eb177f10bbc67178509476d6fc41997ec651c1c14d0f1a06bac7d799dec6a4a"
+    },
+    {
+      "bytes": 223490,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/df184d87267b1cf2343429312879173899bd2da86ecd42e64cc4730ef0a05aef/master.20170412.idx",
+      "raw_sha256": "76de30da7ec7cb5fe329a68f622a2e7f5fd5270635849ea343cb917feabb6f88",
+      "source_identity": "df184d87267b1cf2343429312879173899bd2da86ecd42e64cc4730ef0a05aef"
+    },
+    {
+      "bytes": 285478,
+      "raw_path": "/Users/lightnino/Projects/edp-lab/data/raw/sec/sec_edgar_daily_master/0cc243bd44a35b6a776ee0efa0acfed59a3003e72cc0ef6b7013951852209232/master.20170413.idx",
+      "raw_sha256": "4b911cfd03fbd0687b896ee9b91b5f0cc6775db8e8e5cc873ddcf5ccd4be9ffb",
+      "source_identity": "0cc243bd44a35b6a776ee0efa0acfed59a3003e72cc0ef6b7013951852209232"
+    }
+  ],
+  "status": "NOT_VERIFIED_REMOTE"
+}

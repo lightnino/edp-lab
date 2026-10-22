@@ -1,0 +1,159 @@
+{
+  "agent_quality": "AGENT_QUALITY_MEASURED_23_OF_23_CURATED",
+  "basis": "Step 13 assessment; no owner approval inferred and no Delta write or replay",
+  "exceptions": [
+    "No economic integration acceptance",
+    "Historical C3.4 remains BLOCKED",
+    "No owner decision for 50 field-level Treasury L3 dispositions or scoped B2.1/C1 acceptance",
+    "No approved applicable prospective budget"
+  ],
+  "file_pins_sha256": {
+    "docs/day4_eight_write_tasks.md": "1f571df89dc10200f9131eabad94124e44d7a60d03f9778a7aa2e580d968a724",
+    "metadata/baselines/O_C750_M2_v1.json": "2ddba37c75ae5a2d207e6511b8f57bef6eb47a6dd9d359ad8c0e1e83bf4c85ee",
+    "metadata/cohorts/C1500.csv": "d3b02109268ce77bcd07f6f5f455fb7e4a1989319b2cf60867e372ffc3b87ae5",
+    "metadata/entity_crosswalk.csv": "8d366e787890a7d4fbe964572cc8ec05a8729398adb3c8782cb764291f889358",
+    "metadata/evaluations/agent_v2/ground_truth_v1.json": "9ba83190b260b1bb5ac7feb0043fa7591b9da846f49a40be0d7fe6c4428477fd",
+    "metadata/evaluations/agent_v2/quality_regression_step10_v1.json": "17e98723fd423ed73e3e841ad8356c14f645ba8271d8bcc928bee44189258a9c",
+    "metadata/evaluations/c1500_m2_stability_scoped_v2.json": "9106448f5de58841e28ffdeea22b3ed9f626856be4956a6e6afd2e07dbe7ac13",
+    "metadata/evaluations/c1500_m2_stability_v1.json": "35de975fa2e4fcc038cf8de811869bc43657c09ec842bb2db048af73974637d0",
+    "metadata/evaluations/day4_performance_v1.json": "044bc224bc5d9a017859ef52d00e5edc54bdf3c46eb47ac090bbc513a7c26264",
+    "metadata/evaluations/lossless6_suite_v3.json": "a8462e04b60ea51e781fc42d68d452d1bdc37f9078587ec86d4263b4e01e5c71",
+    "metadata/evaluations/operational_budget_v1.json": "60bde10c25a49c5c2ce2d4fe1d9673a137d9b694cb2c7cd9fe326d68ecccbcd5",
+    "metadata/evaluations/treasury_l3_inventory_v1.json": "99b5e9cc7513eb8ec5182bb356eca382751019dbe4e268fbe1956fe7ce99474a",
+    "metadata/freezes/C1500_v1/C1500.bindings.json": "810c6898df0cb5e5c478305f71c190ffe4a7c7a2bb40133efa79a16de630e703",
+    "metadata/freezes/C1500_v1/C1500.csv": "d3b02109268ce77bcd07f6f5f455fb7e4a1989319b2cf60867e372ffc3b87ae5",
+    "metadata/freezes/C1500_v1/freeze.json": "1645c7a4735c55cfdbbdc0ee2e471698dfbbf1d8cb22f7b3bd632bbcb8d2add9",
+    "metadata/freezes/O_C300_M1_v1/freeze.json": "db710f6152c6ffe33ee2d0371e7dadc8f9ff76e67af3a8e82d807a4c7923542c",
+    "metadata/freezes/O_C750_M1_v1/freeze.json": "564f8fa1038fe2b72ae8e72aa170dfc0a6ffad69e4d3d18f05d53ff3c755fb89",
+    "metadata/freezes/O_C750_M1_v1/references.json": "be2001860d5900b64bc4bdc3178b7367d54cbb89e7de703e515fd4c9cb1d5a50",
+    "metadata/ground_truth/controlled_variants.csv": "d633b41f771189d951b30a6e300f7074c7ce95994559a62454c171307dd1c8f6",
+    "metadata/sttm.csv": "a51894dc6211bfe3a36c3d512583f7851ab89f3c8b4e34edff5bd76f97250235",
+    "sql/stability/c1500_m2_v1/combined_candidate.sql": "e6b7c70bfcaefc09199daca0563e36263b49f27b4e69b17de55bbd4a8036db01",
+    "sql/stability/c1500_m2_v1/fin_candidate_prefix.sql": "34b446fcda0a056865508d5d0bfe2c812f91efbfc820d0e03cfeafd310a6cfd2"
+  },
+  "freeze_gate": "BLOCKED_BY_REQUIRED_SCOPED_ACCEPTANCE",
+  "lossless": {
+    "FIN_001": "2/2 PASS",
+    "FIN_002": "1/1 PASS",
+    "L1_to_L5": "PASS_SOURCE_PRESERVING_SCOPE",
+    "L6_A": "PASS_ORIGINAL_FIVE_TREASURY_SOURCES",
+    "L6_B": "NOT_IMPLEMENTED",
+    "TRY_001_to_004": {
+      "TRY_001_V1": "PASS",
+      "TRY_002_V1": "PASS",
+      "TRY_003_V1": "PASS",
+      "TRY_004_V1": "PASS"
+    }
+  },
+  "main_merge_eligible": false,
+  "model": {
+    "FSDS_rule": "FSDS_NUM_VALUE_SCOPE_V1 / EXACT_DECIMAL_38_4_V1",
+    "M1": "unchanged frozen historical snapshots",
+    "M2": "M2_ADDITIVE_TYPED_NUMERIC_V1",
+    "Treasury_rule": "TREASURY_RATE_QNAME_SCOPE_V1 / EXACT_DECIMAL_38_4_V1"
+  },
+  "output_pins": {
+    "historical_m1_delta_ids": {
+      "workspace.edp_lab.clean_c300_m1_bindings_main_recovery_20261021_v4_full": "64f35e9a-902b-48c8-ba37-45749c16b478",
+      "workspace.edp_lab.clean_c300_m1_bindings_num_recovery_20261021_v1_recovery": "e82a1986-6bd0-4431-b7e3-110842612223",
+      "workspace.edp_lab.clean_c300_m1_records_main_recovery_20261021_v4_full": "0c92f52d-7de3-4e77-940f-92efe735a7b5",
+      "workspace.edp_lab.clean_c300_m1_records_num_recovery_20261021_v1_recovery": "c7fdfcf6-af29-4573-bec9-21817fc3e201",
+      "workspace.edp_lab.clean_n450_m1_bindings_n450_step3_v1": "a835120b-7149-43fb-9f26-4dc50462be16",
+      "workspace.edp_lab.clean_n450_m1_records_n450_step3_v1": "ceb867ff-e93e-4c23-b778-c312900fc4a5"
+    },
+    "historical_m1_input_versions": {
+      "workspace.edp_lab.clean_c300_m1_bindings_main_recovery_20261021_v4_full": 0,
+      "workspace.edp_lab.clean_c300_m1_bindings_num_recovery_20261021_v1_recovery": 0,
+      "workspace.edp_lab.clean_c300_m1_records_main_recovery_20261021_v4_full": 0,
+      "workspace.edp_lab.clean_c300_m1_records_num_recovery_20261021_v1_recovery": 0,
+      "workspace.edp_lab.clean_n450_m1_bindings_n450_step3_v1": 0,
+      "workspace.edp_lab.clean_n450_m1_records_n450_step3_v1": 0
+    },
+    "historical_m2_delta_id": "2cb01f9b-9c72-4451-bfb1-d36d415edba4",
+    "historical_m2_table": "workspace.edp_lab.typed_c750_m2_historical_20261022_v1",
+    "historical_m2_uc_id": "ca98ccc6-1e42-4234-83fb-72728da5045e",
+    "historical_m2_version": 0,
+    "n750_tables": {
+      "coverage": {
+        "delta_id": "b5960f3d-c7db-43dd-9b67-be7e53a9be8c",
+        "delta_version": 0,
+        "location": "",
+        "name": "workspace.edp_lab.clean_n750_source_coverage_step8_v1",
+        "row_count": 750
+      },
+      "m2": {
+        "delta_id": "abba3c2a-f7ae-43cf-ab4c-e87b933f306c",
+        "delta_version": 0,
+        "location": "",
+        "name": "workspace.edp_lab.clean_n750_m2_treasury_rates_step8_v1",
+        "row_count": 12948
+      },
+      "sec": {
+        "delta_id": "a02e488f-7be4-4b40-9b64-0585e6f6e962",
+        "delta_version": 0,
+        "location": "",
+        "name": "workspace.edp_lab.clean_n750_m1_sec_records_step8_v1",
+        "row_count": 3052854
+      },
+      "xml": {
+        "delta_id": "c818b141-23b8-4bf2-b4a5-8c2ae44a59df",
+        "delta_version": 0,
+        "location": "",
+        "name": "workspace.edp_lab.clean_n750_m1_treasury_properties_step8_v1",
+        "row_count": 21616
+      }
+    }
+  },
+  "owner_decisions": {
+    "C1500_economic_integration": "NOT_IMPLEMENTED",
+    "Treasury_50_source_QName_L3": "PENDING",
+    "prospective_10x_budget_applicability": "PENDING",
+    "scoped_source_preserving_acceptance": "PENDING"
+  },
+  "performance": "PERFORMANCE_MEASURED_WITH_UNAVAILABLE_COST_AND_NO_DAY4_C3_4_PASS",
+  "population": {
+    "C300_subset_C750_subset_C1500": true,
+    "bindings": 1932,
+    "bindings_sha256": "810c6898df0cb5e5c478305f71c190ffe4a7c7a2bb40133efa79a16de630e703",
+    "roster_sha256": "d3b02109268ce77bcd07f6f5f455fb7e4a1989319b2cf60867e372ffc3b87ae5",
+    "sources": 1500
+  },
+  "reproduction": "Verify pinned file SHA-256, roster nesting, version-0 Delta identities and unchanged retained live receipt hashes; run existing permanent suite validation without replaying processing.",
+  "result_freeze_artifact": null,
+  "result_frozen": false,
+  "runtime_receipts": {
+    "historical_m2_archive_sha256": "85fd7c2be09b98a4852ce376dbf5293f44b13256f6dd3db57f0bf4234522ebf7",
+    "step8_clean_sha256": "a95af935e8b1bdc043e2e458a01a582130642746a4cb1b8579b922bec6560fbb",
+    "step8_raw_sha256": "c58a1a36d99b71d79948ea5a41b82069df40d78d8797611411516de52255ac86",
+    "treasury_try_summary_sha256": "e61e865afe70d77690b57d6c22c3224081b1cce89814424110fe999c790d76cd"
+  },
+  "schema": "O_C1500_M2_RESULT_FREEZE_ASSESSMENT_V1",
+  "scoped": {
+    "B2_1_SOURCE_PRESERVING": "BLOCKED_PENDING_FIELD_LEVEL_L3_AND_SCOPED_OWNER_APPROVAL",
+    "C1_SOURCE_PRESERVING": "BLOCKED_DEPENDS_ON_B2_1_FIELD_LEVEL_APPROVAL",
+    "C3_4": "BLOCKED",
+    "economic_integration": "NOT_IMPLEMENTED"
+  },
+  "stability": {
+    "A1": "PASS",
+    "A2": "PASS",
+    "A3": "PASS",
+    "A4": "PASS",
+    "B2.1": "BLOCKED",
+    "B2.2": "PASS",
+    "B2.3": "PASS",
+    "B2.4": "PASS",
+    "C1": "BLOCKED",
+    "C2.1": "PASS",
+    "C2.2": "PASS",
+    "C2.3": "PASS",
+    "C2.4": "PASS",
+    "C3.1": "PASS",
+    "C3.2": "PASS",
+    "C3.3": "PASS",
+    "C3.4": "BLOCKED"
+  },
+  "status": "CANDIDATE",
+  "validated_candidate_sql_sha256": "e6b7c70bfcaefc09199daca0563e36263b49f27b4e69b17de55bbd4a8036db01",
+  "write_tasks": "WRITE_TASKS_COMPLETE_BOUNDED_ARTIFACT_SCOPE"
+}
