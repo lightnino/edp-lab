@@ -1,0 +1,26 @@
+{
+  "admission_files_sha256": {
+    "N750.csv": "1346b66e25bea73266d68520eef6d8bcdcdf2db657fd4cd844d7591f1c819cf3",
+    "admission.json": "edbf1a035aaa6eef25ffbaccd4cc494775e3da57202b35ab74041f9e17a923ee",
+    "bindings.json": "3f052fd203513cfdfaab00554fe36128690381f0a740b63ac8e1360571bb93e8",
+    "corpus_manifest_v4.original.csv": "79660035d807306b111d88be0c0f899c5ee410077e2ffe5caa27d4d9af4d372a",
+    "corpus_manifest_v5.csv": "8e9f2d85728e8372efead68a15efe47343e715372c626b8e0bc4c27736df5089"
+  },
+  "baseline": "C750",
+  "cohort": "C1500",
+  "files_sha256": {
+    "C1500.bindings.json": "810c6898df0cb5e5c478305f71c190ffe4a7c7a2bb40133efa79a16de630e703",
+    "C1500.csv": "d3b02109268ce77bcd07f6f5f455fb7e4a1989319b2cf60867e372ffc3b87ae5",
+    "C750.original.csv": "81162007d42146333e2822d8c9ed2a720ebdd36422db6649291e51bd25e0d85d"
+  },
+  "increment": "N750",
+  "output_freeze": "NOT_RESULT_FREEZE",
+  "processing_authorization": "NOT_GRANTED",
+  "schema": "COMBINED_COHORT_FREEZE_V1",
+  "status": "FROZEN",
+  "universe": {
+    "universe_id": "EDP_LAB_ORIGINAL_SOURCE_UNIVERSE",
+    "universe_manifest_sha256": "2198f9bad9c864bf339eff515992526e22efc4230160614a8f86daf3143f463c",
+    "universe_version": "1"
+  }
+}

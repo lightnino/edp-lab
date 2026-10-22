@@ -1,0 +1,16 @@
+{
+  "cohort": "N750",
+  "files_sha256": {
+    "N750.csv": "1346b66e25bea73266d68520eef6d8bcdcdf2db657fd4cd844d7591f1c819cf3",
+    "bindings.json": "3f052fd203513cfdfaab00554fe36128690381f0a740b63ac8e1360571bb93e8",
+    "corpus_manifest_v4.original.csv": "79660035d807306b111d88be0c0f899c5ee410077e2ffe5caa27d4d9af4d372a",
+    "corpus_manifest_v5.csv": "8e9f2d85728e8372efead68a15efe47343e715372c626b8e0bc4c27736df5089"
+  },
+  "schema": "INCREMENT_ADMISSION_V1",
+  "status": "ADMITTED",
+  "universe": {
+    "universe_id": "EDP_LAB_ORIGINAL_SOURCE_UNIVERSE",
+    "universe_manifest_sha256": "2198f9bad9c864bf339eff515992526e22efc4230160614a8f86daf3143f463c",
+    "universe_version": "1"
+  }
+}

@@ -1,0 +1,48 @@
+# N750 admission and C1500 membership freeze
+
+Executed in `runs/day4/integration-worktree` on branch `feature/n750-admission-execution` using the owner-installed v1 grant. No authority installation or v2 record was used.
+
+Both existing publisher commands completed with `PUBLISHED`: `scripts/publish_cohort.py proposals/n750-step1-v3/plan.json admission`, then the same command with `freeze` (PYTHONPATH=src).
+
+Independent readback hashed all nine published files against the installed grant, checked exact file sets, unique membership, disjointness and union, and byte-preservation of the 754-row baseline manifest prefix. All 18 pre-existing files under metadata/freezes were hashed before publication and matched afterward. All ten approved execution-file hashes also matched before and afterward. No selection, qualification or remote checks were repeated; the existing publisher performed its required local integrity guards.
+
+Source authority: `metadata/authorizations/n750_admission_v1.json`; exact plan: `proposals/n750-step1-v3/plan.json`; execution and output fingerprints are preserved below. Remote evidence remains 450 VERIFIED / 300 UNVERIFIED; unverified sources must not be processed at Step 8. No Step 2 or main merge.
+
+```json
+{
+  "admitted": 750,
+  "execution_file_pins_unchanged": 10,
+  "frozen": 1500,
+  "historical_freeze_files_unchanged": 18,
+  "historical_manifest_rows_preserved": 754,
+  "manifest_rows": 1504,
+  "owner_grant_sha256": "46488e49d34abd2160ad15089581c01c74325714e6d8cc57a27eb1d8e3bd5001",
+  "remote_unverified": 300,
+  "remote_verified": 450,
+  "scopes": {
+    "admission": {
+      "cohort": "N750",
+      "destination": "metadata/admissions/N750_v1",
+      "files_sha256": {
+        "N750.csv": "1346b66e25bea73266d68520eef6d8bcdcdf2db657fd4cd844d7591f1c819cf3",
+        "admission.json": "edbf1a035aaa6eef25ffbaccd4cc494775e3da57202b35ab74041f9e17a923ee",
+        "bindings.json": "3f052fd203513cfdfaab00554fe36128690381f0a740b63ac8e1360571bb93e8",
+        "corpus_manifest_v4.original.csv": "79660035d807306b111d88be0c0f899c5ee410077e2ffe5caa27d4d9af4d372a",
+        "corpus_manifest_v5.csv": "8e9f2d85728e8372efead68a15efe47343e715372c626b8e0bc4c27736df5089"
+      }
+    },
+    "freeze": {
+      "cohort": "C1500",
+      "destination": "metadata/freezes/C1500_v1",
+      "files_sha256": {
+        "C1500.bindings.json": "810c6898df0cb5e5c478305f71c190ffe4a7c7a2bb40133efa79a16de630e703",
+        "C1500.csv": "d3b02109268ce77bcd07f6f5f455fb7e4a1989319b2cf60867e372ffc3b87ae5",
+        "C750.original.csv": "81162007d42146333e2822d8c9ed2a720ebdd36422db6649291e51bd25e0d85d",
+        "freeze.json": "1645c7a4735c55cfdbbdc0ee2e471698dfbbf1d8cb22f7b3bd632bbcb8d2add9"
+      }
+    }
+  },
+  "status": "C1500_COHORT_PASS",
+  "step8_unverified_processing": "PROHIBITED"
+}
+```
