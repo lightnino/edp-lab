@@ -37,3 +37,23 @@ Do not run publication until the above prerequisite is resolved. Independent
 readback and historical seal verification still follow actual publication.
 `C1500_COHORT_PASS` is not claimed. This package must not be merged as completed
 Step 1 while approval or integrity prerequisites remain unresolved. No Step 2.
+
+## Remote-resolution attempt — blocked
+
+`remote-evidence-resolution.json` records an explicit result for each of the 300
+SEC sources. No retained checksum receipt matched any of their approved hashes.
+Live read-only inventories of the three existing N450/N750/N500 upload roots
+contained 450/750/500 objects respectively, with no matching source basenames.
+Native top-level files also had no match. Historical result directories were
+not searched as alternative RAW locations; global absence is not claimed.
+
+Result: 0 additional checksum PASS, 300 BLOCKED_NO_VERIFIABLE_REMOTE_LOCATION,
+0 observed checksum mismatches (no corresponding object bytes could be located).
+The previous 450 accepted readbacks remain reused; 750/750 is NOT established.
+No bytes were downloaded, uploaded, parsed, profiled or processed.
+
+STOPPED per owner instruction. Supply exact existing remote object locations or
+retained checksum evidence for the listed identities. No requirement is waived.
+The proposed/expected-approved record hashes have not changed, but approval and
+installation are not requested yet: remote evidence must be resolved first.
+PR #33 remains draft and must not merge. Admission/freeze have not occurred.

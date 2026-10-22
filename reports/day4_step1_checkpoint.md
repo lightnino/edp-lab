@@ -31,3 +31,18 @@ do not establish publication. No `C1500_COHORT_PASS` is claimed.
 
 Step 2 NOT STARTED. Package PRs target the Day 4 integration branch; no main merge
 before Step 14.
+
+## Latest remote-resolution attempt
+
+Status: **BLOCKED — 300 sources have no verifiable remote location**.
+[Per-source outcomes](../proposals/n750-publication-v1/remote-evidence-resolution.json)
+record 0 additional checksum passes and 300 blocked sources. Retained upload
+receipt hashes and live metadata inventory hashes are recorded. No matching
+basenames were found in existing N450/N750/N500 upload roots. This is a scoped
+location/evidence gap, not proof of global object absence. No RAW bytes were
+read, downloaded or uploaded. Existing verified coverage remains 450/750.
+
+Selection PR #32 merged into integration at
+`352bd4d203cfbcfb308cb03106bb18e0f98e6f7f`. Publication PR #33 remains draft.
+Remote resolution must precede final owner approval/installation. Step 1 is not
+complete; Step 2 is not started.
