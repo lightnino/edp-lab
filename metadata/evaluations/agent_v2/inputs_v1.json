@@ -1,0 +1,1397 @@
+{
+  "artifacts": {
+    "13F_units_document": {
+      "kind": "SOURCE_BUNDLED_FORMAT_DOCUMENT",
+      "locator": "VALUE description",
+      "path": "data/raw/sec/2013q2_form13f.zip!FORM13F_readme.htm",
+      "quote": "Previously, market value was reported in thousands.",
+      "sha256": "305c668f11001802b067a99512cb0440a4f88c21b4b71bcce9a2f8a9abc8e992"
+    },
+    "C300_M1_supporting_archive": {
+      "kind": "REUSED_FROZEN_CLEAN_EVIDENCE",
+      "path": "/Users/lightnino/Projects/edp-lab/runs/c300-m1/closeout-review-v1/supporting-evidence-v1.zip",
+      "sha256": "0903bb24047b95e6203eebca6b5af83441f8b94ab4a0b5addc136e9a18367e10"
+    },
+    "SRC000001_COVERPAGE.tsv_28579a4ca21199ed078237548db3928c5e79f9aa04028f3ad0949a9b4b312829.json": {
+      "kind": "REUSED_PROFILE_NO_RESCAN",
+      "path": "/Users/lightnino/Projects/edp-lab/runs/profiling/SRC000001_COVERPAGE.tsv_28579a4ca21199ed078237548db3928c5e79f9aa04028f3ad0949a9b4b312829.json",
+      "sha256": "29e095f20858cd2872288f6321bdff9faa35605b4fd05b4c7b4d202bee6c44e8"
+    },
+    "SRC000001_INFOTABLE.tsv_1525d35beba9b3d09880bfc8bbaf1da1b56200276efbe2fa09674a89bef46158.json": {
+      "kind": "REUSED_PROFILE_NO_RESCAN",
+      "path": "/Users/lightnino/Projects/edp-lab/runs/profiling/SRC000001_INFOTABLE.tsv_1525d35beba9b3d09880bfc8bbaf1da1b56200276efbe2fa09674a89bef46158.json",
+      "sha256": "8dd2a82f68ec6174caafa93c0b89bdf3efee34b9933b868c157ca80e994ca5ee"
+    },
+    "SRC000001_SUBMISSION.tsv_006d0ef58fc3ba5e5d5b41d09bd7a13519423fbd85ed7cb11ae4948d12cf8542.json": {
+      "kind": "REUSED_PROFILE_NO_RESCAN",
+      "path": "/Users/lightnino/Projects/edp-lab/runs/profiling/SRC000001_SUBMISSION.tsv_006d0ef58fc3ba5e5d5b41d09bd7a13519423fbd85ed7cb11ae4948d12cf8542.json",
+      "sha256": "2e4efcb80b3f447970f48204cca201e41eac8ad0b71b215c5e5d78155ce99892"
+    },
+    "SRC000003_otherlisted.txt_27033886718acf84cf23d6986b37f2d493ae7f7e4682ed5df792f2d804759661.json": {
+      "kind": "REUSED_PROFILE_NO_RESCAN",
+      "path": "/Users/lightnino/Projects/edp-lab/runs/profiling/SRC000003_otherlisted.txt_27033886718acf84cf23d6986b37f2d493ae7f7e4682ed5df792f2d804759661.json",
+      "sha256": "fa39464eff1fe3c67b7b485d21e5e6f30b4f4598453682a1b68a4fedf5128fcf"
+    },
+    "SRC000004_sub.txt_18531d094cde39975df1eebec4abe2573f44556109d81111bb6df76873623e77.json": {
+      "kind": "REUSED_PROFILE_NO_RESCAN",
+      "path": "/Users/lightnino/Projects/edp-lab/runs/profiling/SRC000004_sub.txt_18531d094cde39975df1eebec4abe2573f44556109d81111bb6df76873623e77.json",
+      "sha256": "4bcce97ed2191e512f29e03ae8a0bf04bea9bc7af016d562f9b0f9a2cb193469"
+    },
+    "Step2_report": {
+      "kind": "REUSED_VERSIONED_OBSERVATIONS",
+      "path": "docs/dual_source_decimal_requirements.md",
+      "sha256": "e57c9bffc8edc84526b02c661f7bb8c531971bcfa0acdc7e71ecdad4a8c7215e"
+    }
+  },
+  "cases": [
+    {
+      "dimension": "STTM",
+      "id": "S01",
+      "left": {
+        "field": "value",
+        "grain": "FSDS fact",
+        "namespace": "",
+        "occurrence": "fsds54",
+        "role": "",
+        "time": "20230331",
+        "unit": "USD",
+        "value": "9830000.0000",
+        "witness": "fsds54"
+      },
+      "question": "typed_projection",
+      "review_required": false,
+      "right": {
+        "field": "value_decimal",
+        "grain": "FSDS fact",
+        "namespace": "M2_ADDITIVE_TYPED_NUMERIC_V1",
+        "occurrence": "fsds54",
+        "origin": "approved_contract_target",
+        "role": "",
+        "time": "20230331",
+        "unit": "USD",
+        "value": "DECIMAL(38,4)",
+        "witness": "fsds54"
+      }
+    },
+    {
+      "dimension": "STTM",
+      "id": "S02",
+      "left": {
+        "field": "BC_1MONTH",
+        "grain": "daily tenor observation",
+        "namespace": "",
+        "occurrence": "SRC010451",
+        "role": "",
+        "time": "2025-01-02T00:00:00",
+        "unit": "UNDECLARED",
+        "value": "4.45",
+        "witness": "SRC010451"
+      },
+      "question": "typed_projection",
+      "review_required": false,
+      "right": {
+        "field": "value_decimal",
+        "grain": "daily tenor observation",
+        "namespace": "M2_ADDITIVE_TYPED_NUMERIC_V1",
+        "occurrence": "SRC010451",
+        "origin": "approved_contract_target",
+        "role": "",
+        "time": "2025-01-02T00:00:00",
+        "unit": "UNDECLARED",
+        "value": "DECIMAL(38,4)",
+        "witness": "SRC010451"
+      }
+    },
+    {
+      "dimension": "STTM",
+      "id": "S03",
+      "left": {
+        "field": "value",
+        "grain": "FSDS fact",
+        "namespace": "",
+        "occurrence": "fsds54",
+        "role": "",
+        "time": "20230331",
+        "unit": "USD",
+        "value": "9830000.0000",
+        "witness": "fsds54"
+      },
+      "question": "same_measure",
+      "review_required": false,
+      "right": {
+        "field": "BC_1MONTH",
+        "grain": "daily tenor observation",
+        "namespace": "",
+        "occurrence": "SRC010451",
+        "role": "",
+        "time": "20250102",
+        "unit": "UNDECLARED",
+        "value": "4.45",
+        "witness": "SRC010451"
+      }
+    },
+    {
+      "dimension": "STTM",
+      "id": "S04",
+      "left": {
+        "field": "VALUE",
+        "grain": "holding occurrence",
+        "namespace": "",
+        "occurrence": "holding4229",
+        "role": "",
+        "time": "2013 snapshot",
+        "unit": "PRE_2023_THOUSANDS_REPORTED_VALUE",
+        "value": "181",
+        "witness": "holding4229"
+      },
+      "question": "same_measure",
+      "review_required": false,
+      "right": {
+        "field": "value",
+        "grain": "FSDS fact",
+        "namespace": "",
+        "occurrence": "fsds54",
+        "role": "",
+        "time": "20230331",
+        "unit": "USD",
+        "value": "9830000.0000",
+        "witness": "fsds54"
+      }
+    },
+    {
+      "dimension": "STTM",
+      "id": "S05",
+      "left": {
+        "field": "CIK",
+        "grain": "identifier text",
+        "namespace": "SEC_CIK",
+        "occurrence": "submission161",
+        "role": "filing manager",
+        "time": "",
+        "unit": "",
+        "value": "0001488106",
+        "witness": "submission161"
+      },
+      "question": "identifier_storage_slot",
+      "review_required": true,
+      "right": {
+        "field": "cik",
+        "grain": "identifier text",
+        "namespace": "SEC_CIK",
+        "occurrence": "fsds_sub281",
+        "role": "FSDS registrant",
+        "time": "",
+        "unit": "",
+        "value": "9892",
+        "witness": "fsds_sub281"
+      }
+    },
+    {
+      "dimension": "STTM",
+      "id": "S06",
+      "left": {
+        "field": "PERIODOFREPORT",
+        "grain": "source report period",
+        "namespace": "",
+        "occurrence": "0001423255-13-000008",
+        "role": "reported period",
+        "time": "30-JUN-2012",
+        "unit": "",
+        "value": "30-JUN-2012",
+        "witness": "submission161"
+      },
+      "question": "same_period_text",
+      "review_required": true,
+      "right": {
+        "field": "REPORTCALENDARORQUARTER",
+        "grain": "source report period",
+        "namespace": "",
+        "occurrence": "0001423255-13-000008",
+        "role": "reported period",
+        "time": "30-JUN-2012",
+        "unit": "",
+        "value": "30-JUN-2012",
+        "witness": "cover100"
+      }
+    },
+    {
+      "dimension": "STTM",
+      "id": "S07",
+      "left": {
+        "field": "FILING_DATE",
+        "grain": "",
+        "namespace": "",
+        "occurrence": "submission161",
+        "role": "filing date",
+        "time": "04-JUN-2013",
+        "unit": "",
+        "value": "04-JUN-2013",
+        "witness": "submission161"
+      },
+      "question": "same_period_text",
+      "review_required": false,
+      "right": {
+        "field": "PERIODOFREPORT",
+        "grain": "",
+        "namespace": "",
+        "occurrence": "submission161",
+        "role": "reported period",
+        "time": "30-JUN-2012",
+        "unit": "",
+        "value": "30-JUN-2012",
+        "witness": "submission161"
+      }
+    },
+    {
+      "dimension": "STTM",
+      "id": "S08",
+      "left": {
+        "field": "BC_30YEAR",
+        "grain": "daily tenor observation",
+        "namespace": "",
+        "occurrence": "SRC010451",
+        "role": "",
+        "time": "20250102",
+        "unit": "UNDECLARED",
+        "value": "4.79",
+        "witness": "SRC010451"
+      },
+      "question": "same_measure",
+      "review_required": true,
+      "right": {
+        "field": "BC_30YEARDISPLAY",
+        "grain": "daily tenor observation",
+        "namespace": "",
+        "occurrence": "SRC010451",
+        "role": "",
+        "time": "20250102",
+        "unit": "UNDECLARED",
+        "value": "4.79",
+        "witness": "SRC010451"
+      }
+    },
+    {
+      "dimension": "STTM",
+      "id": "S09",
+      "left": {
+        "field": "ROUND_B1_CLOSE_4WK_2",
+        "grain": "daily tenor observation",
+        "namespace": "",
+        "occurrence": "SRC010452",
+        "role": "",
+        "time": "20250102",
+        "unit": "UNDECLARED",
+        "value": "4.26",
+        "witness": "SRC010452"
+      },
+      "question": "same_measure",
+      "review_required": false,
+      "right": {
+        "field": "ROUND_B1_YIELD_4WK_2",
+        "grain": "daily tenor observation",
+        "namespace": "",
+        "occurrence": "SRC010452",
+        "role": "",
+        "time": "20250102",
+        "unit": "UNDECLARED",
+        "value": "4.33",
+        "witness": "SRC010452"
+      }
+    },
+    {
+      "dimension": "STTM",
+      "id": "S10",
+      "left": {
+        "field": "value",
+        "grain": "FSDS fact",
+        "namespace": "",
+        "occurrence": "fsds60",
+        "role": "",
+        "time": "20240930",
+        "unit": "pure",
+        "value": "0.0070",
+        "witness": "fsds60"
+      },
+      "question": "same_measure",
+      "review_required": false,
+      "right": {
+        "field": "value",
+        "grain": "FSDS fact",
+        "namespace": "",
+        "occurrence": "fsds54",
+        "role": "",
+        "time": "20230331",
+        "unit": "USD",
+        "value": "9830000.0000",
+        "witness": "fsds54"
+      }
+    },
+    {
+      "dimension": "STTM",
+      "id": "S11",
+      "left": {
+        "field": "TC_5YEAR",
+        "grain": "daily 5YEAR observation",
+        "namespace": "",
+        "occurrence": "SRC010454",
+        "role": "",
+        "time": "20250102",
+        "unit": "UNDECLARED",
+        "value": "1.97",
+        "witness": "SRC010454"
+      },
+      "question": "same_measure",
+      "review_required": true,
+      "right": {
+        "field": "RATE",
+        "grain": "daily long-term average observation",
+        "namespace": "",
+        "occurrence": "SRC010455",
+        "role": "",
+        "time": "20250102",
+        "unit": "UNDECLARED",
+        "value": "2.48",
+        "witness": "SRC010455"
+      }
+    },
+    {
+      "dimension": "CROSSWALK",
+      "id": "E01",
+      "left": {
+        "field": "ACCESSION_NUMBER",
+        "grain": "",
+        "namespace": "SEC13F_ACCESSION@SRC000001",
+        "occurrence": "submission161",
+        "role": "",
+        "time": "",
+        "unit": "",
+        "value": "0001423255-13-000008",
+        "witness": "submission161"
+      },
+      "question": "same_native_identifier",
+      "review_required": false,
+      "right": {
+        "field": "ACCESSION_NUMBER",
+        "grain": "",
+        "namespace": "SEC13F_ACCESSION@SRC000001",
+        "occurrence": "cover100",
+        "role": "",
+        "time": "",
+        "unit": "",
+        "value": "0001423255-13-000008",
+        "witness": "cover100"
+      }
+    },
+    {
+      "dimension": "ER",
+      "id": "E02",
+      "left": {
+        "field": "CIK",
+        "grain": "",
+        "namespace": "SEC_CIK",
+        "occurrence": "submission161",
+        "role": "",
+        "time": "",
+        "unit": "",
+        "value": "0001488106",
+        "witness": "submission161"
+      },
+      "question": "same_native_identifier",
+      "review_required": false,
+      "right": {
+        "field": "CUSIP",
+        "grain": "",
+        "namespace": "CUSIP",
+        "occurrence": "holding170",
+        "role": "",
+        "time": "",
+        "unit": "",
+        "value": "037833100",
+        "witness": "holding170"
+      }
+    },
+    {
+      "dimension": "ER",
+      "id": "E03",
+      "left": {
+        "field": "CUSIP",
+        "grain": "holding occurrence",
+        "namespace": "CUSIP",
+        "occurrence": "INFOTABLE:170:59198261",
+        "role": "",
+        "time": "",
+        "unit": "",
+        "value": "037833100",
+        "witness": "holding170"
+      },
+      "question": "same_occurrence",
+      "review_required": false,
+      "right": {
+        "field": "CUSIP",
+        "grain": "holding occurrence",
+        "namespace": "CUSIP",
+        "occurrence": "INFOTABLE:316:46369807",
+        "role": "",
+        "time": "",
+        "unit": "",
+        "value": "037833100",
+        "witness": "holding316"
+      }
+    },
+    {
+      "dimension": "CROSSWALK",
+      "id": "E04",
+      "left": {
+        "field": "CUSIP",
+        "grain": "",
+        "namespace": "CUSIP@SRC000001",
+        "occurrence": "holding170",
+        "role": "",
+        "time": "",
+        "unit": "",
+        "value": "037833100",
+        "witness": "holding170"
+      },
+      "question": "same_native_identifier",
+      "review_required": false,
+      "right": {
+        "field": "CUSIP",
+        "grain": "",
+        "namespace": "CUSIP@SRC000001",
+        "occurrence": "holding316",
+        "role": "",
+        "time": "",
+        "unit": "",
+        "value": "037833100",
+        "witness": "holding316"
+      }
+    },
+    {
+      "dimension": "ER",
+      "id": "E05",
+      "left": {
+        "field": "CUSIP",
+        "grain": "",
+        "namespace": "CUSIP",
+        "occurrence": "holding170",
+        "role": "security candidate",
+        "time": "",
+        "unit": "",
+        "value": "037833100",
+        "witness": "holding170"
+      },
+      "question": "canonical_entity",
+      "review_required": true,
+      "right": {
+        "field": "CUSIP",
+        "grain": "",
+        "namespace": "CUSIP",
+        "occurrence": "holding316",
+        "role": "security candidate",
+        "time": "",
+        "unit": "",
+        "value": "037833100",
+        "witness": "holding316"
+      }
+    },
+    {
+      "dimension": "ER",
+      "id": "E06",
+      "left": {
+        "field": "FILINGMANAGER_NAME",
+        "grain": "",
+        "namespace": "",
+        "occurrence": "cover100",
+        "role": "manager candidate",
+        "time": "",
+        "unit": "",
+        "value": "Mirae Asset Global Investments (USA), LLC",
+        "witness": "cover100"
+      },
+      "question": "canonical_entity",
+      "review_required": true,
+      "right": {
+        "field": "FILINGMANAGER_NAME",
+        "grain": "",
+        "namespace": "",
+        "occurrence": "cover104",
+        "role": "manager candidate",
+        "time": "",
+        "unit": "",
+        "value": "Mirae Asset Global Investments (Hong Kong) LTD",
+        "witness": "cover104"
+      }
+    },
+    {
+      "dimension": "CROSSWALK",
+      "id": "E07",
+      "left": {
+        "field": "ACCESSION_NUMBER",
+        "grain": "",
+        "namespace": "SEC13F_ACCESSION@SRC000001",
+        "occurrence": "cover100",
+        "role": "",
+        "time": "",
+        "unit": "",
+        "value": "0001423255-13-000008",
+        "witness": "cover100"
+      },
+      "question": "same_native_identifier",
+      "review_required": false,
+      "right": {
+        "field": "ACCESSION_NUMBER",
+        "grain": "",
+        "namespace": "SEC13F_ACCESSION@SRC000001",
+        "occurrence": "cover104",
+        "role": "",
+        "time": "",
+        "unit": "",
+        "value": "0001423255-13-000003",
+        "witness": "cover104"
+      }
+    },
+    {
+      "dimension": "CROSSWALK",
+      "id": "E08",
+      "left": {
+        "field": "CIK",
+        "grain": "",
+        "namespace": "SEC_CIK@SRC000001",
+        "occurrence": "submission103",
+        "role": "",
+        "time": "",
+        "unit": "",
+        "value": "0001121477",
+        "witness": "submission103"
+      },
+      "question": "same_native_identifier",
+      "review_required": false,
+      "right": {
+        "field": "CIK",
+        "grain": "",
+        "namespace": "SEC_CIK@SRC000001",
+        "occurrence": "submission104",
+        "role": "",
+        "time": "",
+        "unit": "",
+        "value": "0001121477",
+        "witness": "submission104"
+      }
+    },
+    {
+      "dimension": "ER",
+      "id": "E09",
+      "left": {
+        "field": "CIK",
+        "grain": "filing occurrence",
+        "namespace": "SEC_CIK",
+        "occurrence": "SUBMISSION:103:0001121477-13-000028",
+        "role": "",
+        "time": "31-MAR-2011",
+        "unit": "",
+        "value": "0001121477",
+        "witness": "submission103"
+      },
+      "question": "same_occurrence",
+      "review_required": false,
+      "right": {
+        "field": "CIK",
+        "grain": "filing occurrence",
+        "namespace": "SEC_CIK",
+        "occurrence": "SUBMISSION:104:0001121477-13-000024",
+        "role": "",
+        "time": "31-MAR-2012",
+        "unit": "",
+        "value": "0001121477",
+        "witness": "submission104"
+      }
+    },
+    {
+      "dimension": "ER",
+      "id": "E10",
+      "left": {
+        "field": "ACT Symbol",
+        "grain": "",
+        "namespace": "ACT_SYMBOL@SRC000003",
+        "occurrence": "listing10",
+        "role": "",
+        "time": "",
+        "unit": "",
+        "value": "AAC.U",
+        "witness": "listing10"
+      },
+      "question": "same_native_identifier",
+      "review_required": false,
+      "right": {
+        "field": "ACT Symbol",
+        "grain": "",
+        "namespace": "ACT_SYMBOL@SRC000003",
+        "occurrence": "listing11",
+        "role": "",
+        "time": "",
+        "unit": "",
+        "value": "AAC.W",
+        "witness": "listing11"
+      }
+    },
+    {
+      "dimension": "ER",
+      "id": "E11",
+      "left": {
+        "field": "ACT Symbol",
+        "grain": "",
+        "namespace": "ACT_SYMBOL",
+        "occurrence": "listing10",
+        "role": "security candidate",
+        "time": "",
+        "unit": "",
+        "value": "AAC.U",
+        "witness": "listing10"
+      },
+      "question": "canonical_entity",
+      "review_required": true,
+      "right": {
+        "field": "ACT Symbol",
+        "grain": "",
+        "namespace": "ACT_SYMBOL",
+        "occurrence": "listing11",
+        "role": "security candidate",
+        "time": "",
+        "unit": "",
+        "value": "AAC.W",
+        "witness": "listing11"
+      }
+    },
+    {
+      "dimension": "ER",
+      "id": "E12",
+      "left": {
+        "field": "FIGI",
+        "grain": "",
+        "namespace": "FIGI",
+        "occurrence": "holding170",
+        "role": "",
+        "time": "",
+        "unit": "",
+        "value": "",
+        "witness": "holding170"
+      },
+      "question": "canonical_entity",
+      "review_required": true,
+      "right": {
+        "field": "FIGI",
+        "grain": "",
+        "namespace": "FIGI",
+        "occurrence": "holding316",
+        "role": "",
+        "time": "",
+        "unit": "",
+        "value": "",
+        "witness": "holding316"
+      }
+    }
+  ],
+  "scope": "23 preselected question pairs; no production mapping or source admission",
+  "version": "BOUNDED_AGENT_V2_INPUTS_V1",
+  "witnesses": {
+    "SRC010451": {
+      "evidence": "Step2_report",
+      "evidence_pointer": "Treasury XML \u2014 OBSERVED",
+      "fields": {
+        "BC_1MONTH": "4.45",
+        "BC_30YEAR": "4.79",
+        "BC_30YEARDISPLAY": "4.79",
+        "NEW_DATE": "2025-01-02T00:00:00"
+      },
+      "locator": {
+        "namespace": "http://schemas.microsoft.com/ado/2007/08/dataservices",
+        "path": "a:feed/a:entry[1]/a:content/m:properties/d:<field>",
+        "xml_entry_ordinal": 1
+      },
+      "source": {
+        "raw_path": "data/raw/treasury/treasury_annual_xml/63d9d0beb1bbee0079928bfb710339f0032859cc0ecbf5cccafe3b49429d0581/daily_treasury_yield_curve_2025.xml",
+        "raw_sha256": "fb2f64bcaa9c2041f5601460f5d67bf2ebf51083331e75192a7d48ece0db3ed9",
+        "source_identity": "63d9d0beb1bbee0079928bfb710339f0032859cc0ecbf5cccafe3b49429d0581",
+        "source_instance_id": "SRC010451"
+      }
+    },
+    "SRC010452": {
+      "evidence": "Step2_report",
+      "evidence_pointer": "Treasury XML \u2014 OBSERVED",
+      "fields": {
+        "INDEX_DATE": "2025-01-02T00:00:00",
+        "ROUND_B1_CLOSE_4WK_2": "4.26",
+        "ROUND_B1_YIELD_4WK_2": "4.33"
+      },
+      "locator": {
+        "namespace": "http://schemas.microsoft.com/ado/2007/08/dataservices",
+        "path": "a:feed/a:entry[1]/a:content/m:properties/d:<field>",
+        "xml_entry_ordinal": 1
+      },
+      "source": {
+        "raw_path": "data/raw/treasury/treasury_annual_xml/be4ecba6635cccaa39f23a4a3905198433e25a60040cc3a64e686fcf60731f9c/daily_treasury_bill_rates_2025.xml",
+        "raw_sha256": "5f20dd1fad2627facce863a2a3d3258278f2119fef61028e85e0cf75a244df16",
+        "source_identity": "be4ecba6635cccaa39f23a4a3905198433e25a60040cc3a64e686fcf60731f9c",
+        "source_instance_id": "SRC010452"
+      }
+    },
+    "SRC010453": {
+      "evidence": "Step2_report",
+      "evidence_pointer": "Treasury XML \u2014 OBSERVED",
+      "fields": {
+        "QUOTE_DATE": "2025-01-02T00:00:00",
+        "RATE": "4.86",
+        "RATE_TYPE": "BC_20year"
+      },
+      "locator": {
+        "namespace": "http://schemas.microsoft.com/ado/2007/08/dataservices",
+        "path": "a:feed/a:entry[1]/a:content/m:properties/d:<field>",
+        "xml_entry_ordinal": 1
+      },
+      "source": {
+        "raw_path": "data/raw/treasury/treasury_annual_xml/567fe9b2558e4fbfd6655b72e5ea00ae6f3f750986ce2c253bd589ddb7280805/daily_treasury_long_term_rate_2025.xml",
+        "raw_sha256": "c5ecec4d443cf0e160ea42e585e3f1abb237587c5a8094ee33ce7c9fc350b2f8",
+        "source_identity": "567fe9b2558e4fbfd6655b72e5ea00ae6f3f750986ce2c253bd589ddb7280805",
+        "source_instance_id": "SRC010453"
+      }
+    },
+    "SRC010454": {
+      "evidence": "Step2_report",
+      "evidence_pointer": "Treasury XML \u2014 OBSERVED",
+      "fields": {
+        "NEW_DATE": "2025-01-02T00:00:00",
+        "TC_5YEAR": "1.97"
+      },
+      "locator": {
+        "namespace": "http://schemas.microsoft.com/ado/2007/08/dataservices",
+        "path": "a:feed/a:entry[1]/a:content/m:properties/d:<field>",
+        "xml_entry_ordinal": 1
+      },
+      "source": {
+        "raw_path": "data/raw/treasury/treasury_annual_xml/3d78318e471a446a4e49022d13f7642cce3dbb94cb15dd5360561f19622750be/daily_treasury_real_yield_curve_2025.xml",
+        "raw_sha256": "68f58df186f47f20c349d276ae501b97c94cfb2a09cc36453f4c95288322ec66",
+        "source_identity": "3d78318e471a446a4e49022d13f7642cce3dbb94cb15dd5360561f19622750be",
+        "source_instance_id": "SRC010454"
+      }
+    },
+    "SRC010455": {
+      "evidence": "Step2_report",
+      "evidence_pointer": "Treasury XML \u2014 OBSERVED",
+      "fields": {
+        "QUOTE_DATE": "2025-01-02T00:00:00",
+        "RATE": "2.48"
+      },
+      "locator": {
+        "namespace": "http://schemas.microsoft.com/ado/2007/08/dataservices",
+        "path": "a:feed/a:entry[1]/a:content/m:properties/d:<field>",
+        "xml_entry_ordinal": 1
+      },
+      "source": {
+        "raw_path": "data/raw/treasury/treasury_annual_xml/59a456d521bc98ef7375758272f827cb50bf90f3218b415eb49678e99cf860ae/daily_treasury_real_long_term_2025.xml",
+        "raw_sha256": "e58a45134fe5a857028f7ee3381d07fbc56a7aa248dfd45df5721478e67d5a1e",
+        "source_identity": "59a456d521bc98ef7375758272f827cb50bf90f3218b415eb49678e99cf860ae",
+        "source_instance_id": "SRC010455"
+      }
+    },
+    "cover100": {
+      "evidence": "SRC000001_COVERPAGE.tsv_28579a4ca21199ed078237548db3928c5e79f9aa04028f3ad0949a9b4b312829.json",
+      "evidence_pointer": "columns[*].statistics.sample.value[source_line=100]",
+      "fields": {
+        "ACCESSION_NUMBER": "0001423255-13-000008",
+        "FILINGMANAGER_NAME": "Mirae Asset Global Investments (USA), LLC",
+        "FORM13FFILENUMBER": "028-15177",
+        "REPORTCALENDARORQUARTER": "30-JUN-2012"
+      },
+      "locator": {
+        "byte_length": 151,
+        "byte_offset": 18257,
+        "source_line": 100
+      },
+      "source": {
+        "archive_member": "COVERPAGE.tsv",
+        "expected_header": [
+          "ACCESSION_NUMBER",
+          "REPORTCALENDARORQUARTER",
+          "ISAMENDMENT",
+          "AMENDMENTNO",
+          "AMENDMENTTYPE",
+          "CONFDENIEDEXPIRED",
+          "DATEDENIEDEXPIRED",
+          "DATEREPORTED",
+          "REASONFORNONCONFIDENTIALITY",
+          "FILINGMANAGER_NAME",
+          "FILINGMANAGER_STREET1",
+          "FILINGMANAGER_STREET2",
+          "FILINGMANAGER_CITY",
+          "FILINGMANAGER_STATEORCOUNTRY",
+          "FILINGMANAGER_ZIPCODE",
+          "REPORTTYPE",
+          "FORM13FFILENUMBER",
+          "CRDNUMBER",
+          "SECFILENUMBER",
+          "PROVIDEINFOFORINSTRUCTION5",
+          "ADDITIONALINFORMATION"
+        ],
+        "footer": null,
+        "logical_table_name": "COVERPAGE.tsv",
+        "member_sha256": "21287ddc712db9553e7c7295f2713ecb3c8b63891be622811b29e5cc5836790e",
+        "profile_id": "SEC_13F_TSV_V2_CANDIDATE",
+        "raw_path": "data/raw/sec/2013q2_form13f.zip",
+        "raw_sha256": "569d56e978f7dee3775e544a1e46019389e22adcf482386fcfaba51ceb6c7e84",
+        "source_instance_id": "SRC000001"
+      }
+    },
+    "cover104": {
+      "evidence": "SRC000001_COVERPAGE.tsv_28579a4ca21199ed078237548db3928c5e79f9aa04028f3ad0949a9b4b312829.json",
+      "evidence_pointer": "columns[*].statistics.sample.value[source_line=104]",
+      "fields": {
+        "ACCESSION_NUMBER": "0001423255-13-000003",
+        "FILINGMANAGER_NAME": "Mirae Asset Global Investments (Hong Kong) LTD",
+        "FORM13FFILENUMBER": "028-15175",
+        "REPORTCALENDARORQUARTER": "30-JUN-2012"
+      },
+      "locator": {
+        "byte_length": 191,
+        "byte_offset": 18878,
+        "source_line": 104
+      },
+      "source": {
+        "archive_member": "COVERPAGE.tsv",
+        "expected_header": [
+          "ACCESSION_NUMBER",
+          "REPORTCALENDARORQUARTER",
+          "ISAMENDMENT",
+          "AMENDMENTNO",
+          "AMENDMENTTYPE",
+          "CONFDENIEDEXPIRED",
+          "DATEDENIEDEXPIRED",
+          "DATEREPORTED",
+          "REASONFORNONCONFIDENTIALITY",
+          "FILINGMANAGER_NAME",
+          "FILINGMANAGER_STREET1",
+          "FILINGMANAGER_STREET2",
+          "FILINGMANAGER_CITY",
+          "FILINGMANAGER_STATEORCOUNTRY",
+          "FILINGMANAGER_ZIPCODE",
+          "REPORTTYPE",
+          "FORM13FFILENUMBER",
+          "CRDNUMBER",
+          "SECFILENUMBER",
+          "PROVIDEINFOFORINSTRUCTION5",
+          "ADDITIONALINFORMATION"
+        ],
+        "footer": null,
+        "logical_table_name": "COVERPAGE.tsv",
+        "member_sha256": "21287ddc712db9553e7c7295f2713ecb3c8b63891be622811b29e5cc5836790e",
+        "profile_id": "SEC_13F_TSV_V2_CANDIDATE",
+        "raw_path": "data/raw/sec/2013q2_form13f.zip",
+        "raw_sha256": "569d56e978f7dee3775e544a1e46019389e22adcf482386fcfaba51ceb6c7e84",
+        "source_instance_id": "SRC000001"
+      }
+    },
+    "fsds53": {
+      "evidence": "C300_M1_supporting_archive",
+      "evidence_pointer": "runs/c300-m1/reconciled_recovery_20261021_v2/warehouse-witness-result.json",
+      "fields": {
+        "adsh": "0001655888-23-000012",
+        "ddate": "20221231",
+        "qtrs": "0",
+        "tag": "InvestmentOwnedPercentOfNetAssets",
+        "uom": "pure",
+        "value": "0.0010",
+        "version": "us-gaap/2022"
+      },
+      "locator": {
+        "binding_sha256": "3e019d6dbfcc45c13c8fd27156d83192c1e38ef14524da21e58d2e17e6540912",
+        "byte_length": "181",
+        "byte_offset": "42739663",
+        "run_id": "num_recovery_20261021_v1_recovery",
+        "source_line": "312006"
+      },
+      "source": {
+        "archive_member": "num.txt",
+        "member_sha256": "0751898bc31acb5309660f2acc1a4e692d98ee7a0e2f21e269570ce7758e3c76",
+        "raw_path": "data/raw/sec/sec_fsds/9f55638840a04f32c8da6f5c9c5fc3acb904d3b498898e517179fd3eaf94bd4a/2023q1.zip",
+        "raw_sha256": "479638c1be4088fa2ae42d2947468913eaff5ad0f093c412ba4340af8a8f791e",
+        "source_instance_id": "SRC000053"
+      }
+    },
+    "fsds54": {
+      "evidence": "C300_M1_supporting_archive",
+      "evidence_pointer": "runs/c300-m1/reconciled_recovery_20261021_v2/warehouse-witness-result.json",
+      "fields": {
+        "adsh": "0001558370-23-008867",
+        "ddate": "20230331",
+        "qtrs": "0",
+        "tag": "InvestmentOwnedAtCost",
+        "uom": "USD",
+        "value": "9830000.0000",
+        "version": "us-gaap/2022"
+      },
+      "locator": {
+        "binding_sha256": "54c47c4f0d6793d327c3bb998d6c8b6a1393a819014c601a0f0a55d53cad8fd5",
+        "byte_length": "244",
+        "byte_offset": "46589850",
+        "run_id": "num_recovery_20261021_v1_recovery",
+        "source_line": "337467"
+      },
+      "source": {
+        "archive_member": "num.txt",
+        "member_sha256": "72b948228b2d692e8e36353e8c02c9a7845fa5ddbc7d644b8f7b4661db05d4ba",
+        "raw_path": "data/raw/sec/sec_fsds/cfadad1a865b19429da10c1fc805dccda9cf4a5a352610385beee743f88b172e/2023q2.zip",
+        "raw_sha256": "f028f1e8d24313e7619aa87c7c683a459452e7e81a8e5ba72d7ce39ddf62bda9",
+        "source_instance_id": "SRC000054"
+      }
+    },
+    "fsds60": {
+      "evidence": "C300_M1_supporting_archive",
+      "evidence_pointer": "runs/c300-m1/reconciled_recovery_20261021_v2/warehouse-witness-result.json",
+      "fields": {
+        "adsh": "0001280784-24-000026",
+        "ddate": "20240930",
+        "qtrs": "0",
+        "tag": "InvestmentBasisSpreadVariableRate",
+        "uom": "pure",
+        "value": "0.0070",
+        "version": "us-gaap/2024"
+      },
+      "locator": {
+        "binding_sha256": "14cc8d86190f4f92ab040925bf388b0430aa96a31fb2d27b7575ddc550f9cd32",
+        "byte_length": "287",
+        "byte_offset": "9197940",
+        "run_id": "num_recovery_20261021_v1_recovery",
+        "source_line": "64698"
+      },
+      "source": {
+        "archive_member": "num.txt",
+        "member_sha256": "7db50fd666194d39dcec620c0e8057a9adf159174b5aa88becbe2ec5ea9cd3e5",
+        "raw_path": "data/raw/sec/sec_fsds/facea18c20840730963feeeb7a5bd5981e57237b97a14549e2d4a1bffe72f574/2024q4.zip",
+        "raw_sha256": "9a2cbbaf39c94aa642b33d512f4def92b198d3bfd12d2267bcd27abe55b9902d",
+        "source_instance_id": "SRC000060"
+      }
+    },
+    "fsds_sub281": {
+      "evidence": "SRC000004_sub.txt_18531d094cde39975df1eebec4abe2573f44556109d81111bb6df76873623e77.json",
+      "evidence_pointer": "columns[*].statistics.sample.value[source_line=281]",
+      "fields": {
+        "adsh": "0001193125-10-093422",
+        "cik": "9892"
+      },
+      "locator": {
+        "byte_length": 253,
+        "byte_offset": 79903,
+        "source_line": 281
+      },
+      "source": {
+        "archive_member": "sub.txt",
+        "expected_header": [
+          "adsh",
+          "cik",
+          "name",
+          "sic",
+          "countryba",
+          "stprba",
+          "cityba",
+          "zipba",
+          "bas1",
+          "bas2",
+          "baph",
+          "countryma",
+          "stprma",
+          "cityma",
+          "zipma",
+          "mas1",
+          "mas2",
+          "countryinc",
+          "stprinc",
+          "ein",
+          "former",
+          "changed",
+          "afs",
+          "wksi",
+          "fye",
+          "form",
+          "period",
+          "fy",
+          "fp",
+          "filed",
+          "accepted",
+          "prevrpt",
+          "detail",
+          "instance",
+          "nciks",
+          "aciks"
+        ],
+        "footer": null,
+        "logical_table_name": "sub.txt",
+        "member_sha256": "fca0ff4bf873b46245ac3ca3524f6be6083852cdc7e97a12f307df636834a3e8",
+        "profile_id": "SEC_FSDS_TSV_V2_CANDIDATE",
+        "raw_path": "data/raw/sec/2010q2_fsds.zip",
+        "raw_sha256": "25f416b020fd3e62a67dbf8c6522c9f239e716099b61cf5d05a59a91ffdef1f1",
+        "source_instance_id": "SRC000004"
+      }
+    },
+    "holding170": {
+      "evidence": "Hash-verified bounded RAW witness; member verified before literal TSV extraction",
+      "evidence_pointer": "INFOTABLE.tsv",
+      "fields": {
+        "ACCESSION_NUMBER": "0001487438-13-000012",
+        "CUSIP": "037833100",
+        "FIGI": "",
+        "INFOTABLE_SK": "59198261",
+        "NAMEOFISSUER": "APPLE COMPUTER",
+        "PUTCALL": "",
+        "SSHPRNAMT": "811",
+        "SSHPRNAMTTYPE": "SH",
+        "TITLEOFCLASS": "COM",
+        "VALUE": "230"
+      },
+      "locator": {
+        "byte_length": 86,
+        "byte_offset": 16132,
+        "source_line": 170
+      },
+      "source": {
+        "archive_member": "INFOTABLE.tsv",
+        "expected_header": [
+          "ACCESSION_NUMBER",
+          "INFOTABLE_SK",
+          "NAMEOFISSUER",
+          "TITLEOFCLASS",
+          "CUSIP",
+          "FIGI",
+          "VALUE",
+          "SSHPRNAMT",
+          "SSHPRNAMTTYPE",
+          "PUTCALL",
+          "INVESTMENTDISCRETION",
+          "OTHERMANAGER",
+          "VOTING_AUTH_SOLE",
+          "VOTING_AUTH_SHARED",
+          "VOTING_AUTH_NONE"
+        ],
+        "footer": null,
+        "logical_table_name": "INFOTABLE.tsv",
+        "member_sha256": "04216106355c19768cc31019e6028e2d888cf527b34ab522cd805d54d6f40152",
+        "profile_id": "SEC_13F_TSV_V2_CANDIDATE",
+        "raw_path": "data/raw/sec/2013q2_form13f.zip",
+        "raw_sha256": "569d56e978f7dee3775e544a1e46019389e22adcf482386fcfaba51ceb6c7e84",
+        "source_instance_id": "SRC000001"
+      }
+    },
+    "holding316": {
+      "evidence": "Hash-verified bounded RAW witness; member verified before literal TSV extraction",
+      "evidence_pointer": "INFOTABLE.tsv",
+      "fields": {
+        "ACCESSION_NUMBER": "0001487438-13-000011",
+        "CUSIP": "037833100",
+        "FIGI": "",
+        "INFOTABLE_SK": "46369807",
+        "NAMEOFISSUER": "APPLE COMPUTER",
+        "PUTCALL": "",
+        "SSHPRNAMT": "661",
+        "SSHPRNAMTTYPE": "SH",
+        "TITLEOFCLASS": "COM",
+        "VALUE": "213"
+      },
+      "locator": {
+        "byte_length": 86,
+        "byte_offset": 30160,
+        "source_line": 316
+      },
+      "source": {
+        "archive_member": "INFOTABLE.tsv",
+        "expected_header": [
+          "ACCESSION_NUMBER",
+          "INFOTABLE_SK",
+          "NAMEOFISSUER",
+          "TITLEOFCLASS",
+          "CUSIP",
+          "FIGI",
+          "VALUE",
+          "SSHPRNAMT",
+          "SSHPRNAMTTYPE",
+          "PUTCALL",
+          "INVESTMENTDISCRETION",
+          "OTHERMANAGER",
+          "VOTING_AUTH_SOLE",
+          "VOTING_AUTH_SHARED",
+          "VOTING_AUTH_NONE"
+        ],
+        "footer": null,
+        "logical_table_name": "INFOTABLE.tsv",
+        "member_sha256": "04216106355c19768cc31019e6028e2d888cf527b34ab522cd805d54d6f40152",
+        "profile_id": "SEC_13F_TSV_V2_CANDIDATE",
+        "raw_path": "data/raw/sec/2013q2_form13f.zip",
+        "raw_sha256": "569d56e978f7dee3775e544a1e46019389e22adcf482386fcfaba51ceb6c7e84",
+        "source_instance_id": "SRC000001"
+      }
+    },
+    "holding40834": {
+      "evidence": "SRC000001_INFOTABLE.tsv_1525d35beba9b3d09880bfc8bbaf1da1b56200276efbe2fa09674a89bef46158.json",
+      "evidence_pointer": "columns[*].statistics.sample.value[source_line=40834]",
+      "fields": {
+        "ACCESSION_NUMBER": "0000769993-13-000383",
+        "CUSIP": "25459W888",
+        "FIGI": "",
+        "INFOTABLE_SK": "46506081",
+        "NAMEOFISSUER": "DIREXION SHS ETF TR",
+        "PUTCALL": "Put",
+        "SSHPRNAMT": "4500",
+        "SSHPRNAMTTYPE": "SH",
+        "TITLEOFCLASS": "CMN",
+        "VALUE": "180"
+      },
+      "locator": {
+        "byte_length": 97,
+        "byte_offset": 3979002,
+        "source_line": 40834
+      },
+      "source": {
+        "archive_member": "INFOTABLE.tsv",
+        "expected_header": [
+          "ACCESSION_NUMBER",
+          "INFOTABLE_SK",
+          "NAMEOFISSUER",
+          "TITLEOFCLASS",
+          "CUSIP",
+          "FIGI",
+          "VALUE",
+          "SSHPRNAMT",
+          "SSHPRNAMTTYPE",
+          "PUTCALL",
+          "INVESTMENTDISCRETION",
+          "OTHERMANAGER",
+          "VOTING_AUTH_SOLE",
+          "VOTING_AUTH_SHARED",
+          "VOTING_AUTH_NONE"
+        ],
+        "footer": null,
+        "logical_table_name": "INFOTABLE.tsv",
+        "member_sha256": "04216106355c19768cc31019e6028e2d888cf527b34ab522cd805d54d6f40152",
+        "profile_id": "SEC_13F_TSV_V2_CANDIDATE",
+        "raw_path": "data/raw/sec/2013q2_form13f.zip",
+        "raw_sha256": "569d56e978f7dee3775e544a1e46019389e22adcf482386fcfaba51ceb6c7e84",
+        "source_instance_id": "SRC000001"
+      }
+    },
+    "holding4229": {
+      "evidence": "SRC000001_INFOTABLE.tsv_1525d35beba9b3d09880bfc8bbaf1da1b56200276efbe2fa09674a89bef46158.json",
+      "evidence_pointer": "columns[*].statistics.sample.value[source_line=4229]",
+      "fields": {
+        "ACCESSION_NUMBER": "0001085146-13-001075",
+        "CUSIP": "13342B105",
+        "FIGI": "",
+        "INFOTABLE_SK": "53870895",
+        "NAMEOFISSUER": "CAMERON INTERNATIONAL CORP",
+        "PUTCALL": "",
+        "SSHPRNAMT": "3222",
+        "SSHPRNAMTTYPE": "SH",
+        "TITLEOFCLASS": "COM",
+        "VALUE": "181"
+      },
+      "locator": {
+        "byte_length": 101,
+        "byte_offset": 408514,
+        "source_line": 4229
+      },
+      "source": {
+        "archive_member": "INFOTABLE.tsv",
+        "expected_header": [
+          "ACCESSION_NUMBER",
+          "INFOTABLE_SK",
+          "NAMEOFISSUER",
+          "TITLEOFCLASS",
+          "CUSIP",
+          "FIGI",
+          "VALUE",
+          "SSHPRNAMT",
+          "SSHPRNAMTTYPE",
+          "PUTCALL",
+          "INVESTMENTDISCRETION",
+          "OTHERMANAGER",
+          "VOTING_AUTH_SOLE",
+          "VOTING_AUTH_SHARED",
+          "VOTING_AUTH_NONE"
+        ],
+        "footer": null,
+        "logical_table_name": "INFOTABLE.tsv",
+        "member_sha256": "04216106355c19768cc31019e6028e2d888cf527b34ab522cd805d54d6f40152",
+        "profile_id": "SEC_13F_TSV_V2_CANDIDATE",
+        "raw_path": "data/raw/sec/2013q2_form13f.zip",
+        "raw_sha256": "569d56e978f7dee3775e544a1e46019389e22adcf482386fcfaba51ceb6c7e84",
+        "source_instance_id": "SRC000001"
+      }
+    },
+    "listing10": {
+      "evidence": "Hash-verified two bounded standalone witnesses; supplementary GOLD only",
+      "evidence_pointer": "ACT Symbol AAC.U / AAC.W",
+      "fields": {
+        "ACT Symbol": "AAC.U",
+        "Exchange": "N",
+        "Security Name": "Ares Acquisition Corporation III Units, each consisting of one Class A ordinary share and one-tenth of one redeemable warrant"
+      },
+      "locator": {
+        "byte_length": 154,
+        "byte_offset": 589,
+        "source_line": 10
+      },
+      "source": {
+        "archive_member": "",
+        "expected_header": [
+          "ACT Symbol",
+          "Security Name",
+          "Exchange",
+          "CQS Symbol",
+          "ETF",
+          "Round Lot Size",
+          "Test Issue",
+          "NASDAQ Symbol"
+        ],
+        "footer": {
+          "first_field": "File Creation Time: 1015202603:03",
+          "trailing_empty_fields": 6
+        },
+        "logical_table_name": "otherlisted.txt",
+        "member_sha256": "7f099cd61db347f2199251dfe45dc132ffc8c75bd68a91471c30e217e4265d3d",
+        "profile_id": "NASDAQ_PIPE_V2_CANDIDATE",
+        "raw_path": "data/raw/nasdaq/otherlisted.txt",
+        "raw_sha256": "7f099cd61db347f2199251dfe45dc132ffc8c75bd68a91471c30e217e4265d3d",
+        "source_instance_id": "SRC000003"
+      }
+    },
+    "listing11": {
+      "evidence": "Hash-verified two bounded standalone witnesses; supplementary GOLD only",
+      "evidence_pointer": "ACT Symbol AAC.U / AAC.W",
+      "fields": {
+        "ACT Symbol": "AAC.W",
+        "Exchange": "N",
+        "Security Name": "Ares Acquisition Corporation III Redeemable warrants, each whole warrant exercisable for one Class A ordinary share at an exercise price of $11.50"
+      },
+      "locator": {
+        "byte_length": 176,
+        "byte_offset": 743,
+        "source_line": 11
+      },
+      "source": {
+        "archive_member": "",
+        "expected_header": [
+          "ACT Symbol",
+          "Security Name",
+          "Exchange",
+          "CQS Symbol",
+          "ETF",
+          "Round Lot Size",
+          "Test Issue",
+          "NASDAQ Symbol"
+        ],
+        "footer": {
+          "first_field": "File Creation Time: 1015202603:03",
+          "trailing_empty_fields": 6
+        },
+        "logical_table_name": "otherlisted.txt",
+        "member_sha256": "7f099cd61db347f2199251dfe45dc132ffc8c75bd68a91471c30e217e4265d3d",
+        "profile_id": "NASDAQ_PIPE_V2_CANDIDATE",
+        "raw_path": "data/raw/nasdaq/otherlisted.txt",
+        "raw_sha256": "7f099cd61db347f2199251dfe45dc132ffc8c75bd68a91471c30e217e4265d3d",
+        "source_instance_id": "SRC000003"
+      }
+    },
+    "submission103": {
+      "evidence": "Hash-verified bounded RAW witness; member verified before literal TSV extraction",
+      "evidence_pointer": "SUBMISSION.tsv",
+      "fields": {
+        "ACCESSION_NUMBER": "0001121477-13-000028",
+        "CIK": "0001121477",
+        "FILING_DATE": "20-JUN-2013",
+        "PERIODOFREPORT": "31-MAR-2011"
+      },
+      "locator": {
+        "byte_length": 65,
+        "byte_offset": 6484,
+        "source_line": 103
+      },
+      "source": {
+        "archive_member": "SUBMISSION.tsv",
+        "expected_header": [
+          "ACCESSION_NUMBER",
+          "FILING_DATE",
+          "SUBMISSIONTYPE",
+          "CIK",
+          "PERIODOFREPORT"
+        ],
+        "footer": null,
+        "logical_table_name": "SUBMISSION.tsv",
+        "member_sha256": "94494b45570e698a13b700a510b818d0008ccaa86a93786adb37676433113d2d",
+        "profile_id": "SEC_13F_TSV_V2_CANDIDATE",
+        "raw_path": "data/raw/sec/2013q2_form13f.zip",
+        "raw_sha256": "569d56e978f7dee3775e544a1e46019389e22adcf482386fcfaba51ceb6c7e84",
+        "source_instance_id": "SRC000001"
+      }
+    },
+    "submission104": {
+      "evidence": "Hash-verified bounded RAW witness; member verified before literal TSV extraction",
+      "evidence_pointer": "SUBMISSION.tsv",
+      "fields": {
+        "ACCESSION_NUMBER": "0001121477-13-000024",
+        "CIK": "0001121477",
+        "FILING_DATE": "20-JUN-2013",
+        "PERIODOFREPORT": "31-MAR-2012"
+      },
+      "locator": {
+        "byte_length": 65,
+        "byte_offset": 6549,
+        "source_line": 104
+      },
+      "source": {
+        "archive_member": "SUBMISSION.tsv",
+        "expected_header": [
+          "ACCESSION_NUMBER",
+          "FILING_DATE",
+          "SUBMISSIONTYPE",
+          "CIK",
+          "PERIODOFREPORT"
+        ],
+        "footer": null,
+        "logical_table_name": "SUBMISSION.tsv",
+        "member_sha256": "94494b45570e698a13b700a510b818d0008ccaa86a93786adb37676433113d2d",
+        "profile_id": "SEC_13F_TSV_V2_CANDIDATE",
+        "raw_path": "data/raw/sec/2013q2_form13f.zip",
+        "raw_sha256": "569d56e978f7dee3775e544a1e46019389e22adcf482386fcfaba51ceb6c7e84",
+        "source_instance_id": "SRC000001"
+      }
+    },
+    "submission161": {
+      "evidence": "SRC000001_SUBMISSION.tsv_006d0ef58fc3ba5e5d5b41d09bd7a13519423fbd85ed7cb11ae4948d12cf8542.json",
+      "evidence_pointer": "columns[*].statistics.sample.value[source_line=161]",
+      "fields": {
+        "ACCESSION_NUMBER": "0001423255-13-000008",
+        "CIK": "0001488106",
+        "FILING_DATE": "04-JUN-2013",
+        "PERIODOFREPORT": "30-JUN-2012"
+      },
+      "locator": {
+        "byte_length": 63,
+        "byte_offset": 10204,
+        "source_line": 161
+      },
+      "source": {
+        "archive_member": "SUBMISSION.tsv",
+        "expected_header": [
+          "ACCESSION_NUMBER",
+          "FILING_DATE",
+          "SUBMISSIONTYPE",
+          "CIK",
+          "PERIODOFREPORT"
+        ],
+        "footer": null,
+        "logical_table_name": "SUBMISSION.tsv",
+        "member_sha256": "94494b45570e698a13b700a510b818d0008ccaa86a93786adb37676433113d2d",
+        "profile_id": "SEC_13F_TSV_V2_CANDIDATE",
+        "raw_path": "data/raw/sec/2013q2_form13f.zip",
+        "raw_sha256": "569d56e978f7dee3775e544a1e46019389e22adcf482386fcfaba51ceb6c7e84",
+        "source_instance_id": "SRC000001"
+      }
+    }
+  }
+}

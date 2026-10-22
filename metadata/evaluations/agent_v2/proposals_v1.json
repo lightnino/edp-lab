@@ -1,0 +1,2567 @@
+{
+  "agent_code_sha256": "d28ed69b63bf36515d25bfceb95444b3461e200a84bd882bfd790e83b66ef269",
+  "agent_version": "EDP_CANDIDATE_AGENT_V2_BOUNDED_V1",
+  "ground_truth_commit": "31fd869c697e3afd6611838794513a3fcf64e927",
+  "ground_truth_sha256": "9ba83190b260b1bb5ac7feb0043fa7591b9da846f49a40be0d7fe6c4428477fd",
+  "inputs_sha256": "293a16b9be2837823afb163835607bb0d5350b0718d533961f577a394ed8d396",
+  "proposals": [
+    {
+      "agent_version": "EDP_CANDIDATE_AGENT_V2_BOUNDED_V1",
+      "alternatives": [
+        "Retain source distinctions and leave semantic relation unresolved",
+        "Reject current equivalence candidate; revisit only with new source evidence"
+      ],
+      "candidate_label": "MATCH",
+      "candidate_target": {
+        "field": "value_decimal",
+        "grain": "FSDS fact",
+        "namespace": "M2_ADDITIVE_TYPED_NUMERIC_V1",
+        "occurrence": "fsds54",
+        "origin": "approved_contract_target",
+        "role": "",
+        "time": "20230331",
+        "unit": "USD",
+        "value": "DECIMAL(38,4)",
+        "witness": "fsds54"
+      },
+      "case_id": "S01",
+      "compatibility": {
+        "grain": "LITERAL_EQUAL",
+        "time": "LITERAL_EQUAL",
+        "unit": "LITERAL_EQUAL"
+      },
+      "conflicting_evidence": [
+        "namespace: '' versus 'M2_ADDITIVE_TYPED_NUMERIC_V1'"
+      ],
+      "consequences": "No mapping/crosswalk/identity promotion or production join occurs in either case",
+      "dimension": "STTM",
+      "human_review_required": false,
+      "input_fingerprint": "dae9b9f07f1ad02c2f89627a5e9689ab2d6e1b38e3b08e9adf58a5a9602dd09e",
+      "name_only_baseline_label": "NON_MATCH",
+      "promotion_eligible": false,
+      "question": "typed_projection",
+      "reason": "Exact representation target already specified; no conversion executed",
+      "required_transformation": "EXACT_DECIMAL_38_4_V1; candidate only, not executed",
+      "result_fingerprint": "503cdfcae4228424664c7d4ee9680ae24a2eb6fdfe972541ad81e7d2b12e2d8b",
+      "review_question": "Should this candidate be retained unresolved or rejected pending evidence?",
+      "semantic_promotions": [],
+      "side_effects": [],
+      "source_field": {
+        "field": "value",
+        "grain": "FSDS fact",
+        "namespace": "",
+        "occurrence": "fsds54",
+        "role": "",
+        "time": "20230331",
+        "unit": "USD",
+        "value": "9830000.0000",
+        "witness": "fsds54"
+      },
+      "state": "VALIDATED",
+      "supporting_evidence": [
+        {
+          "locator": {
+            "binding_sha256": "54c47c4f0d6793d327c3bb998d6c8b6a1393a819014c601a0f0a55d53cad8fd5",
+            "byte_length": "244",
+            "byte_offset": "46589850",
+            "run_id": "num_recovery_20261021_v1_recovery",
+            "source_line": "337467"
+          },
+          "source": {
+            "archive_member": "num.txt",
+            "member_sha256": "72b948228b2d692e8e36353e8c02c9a7845fa5ddbc7d644b8f7b4661db05d4ba",
+            "raw_path": "data/raw/sec/sec_fsds/cfadad1a865b19429da10c1fc805dccda9cf4a5a352610385beee743f88b172e/2023q2.zip",
+            "raw_sha256": "f028f1e8d24313e7619aa87c7c683a459452e7e81a8e5ba72d7ce39ddf62bda9",
+            "source_instance_id": "SRC000054"
+          },
+          "witness": "fsds54"
+        },
+        {
+          "locator": {
+            "binding_sha256": "54c47c4f0d6793d327c3bb998d6c8b6a1393a819014c601a0f0a55d53cad8fd5",
+            "byte_length": "244",
+            "byte_offset": "46589850",
+            "run_id": "num_recovery_20261021_v1_recovery",
+            "source_line": "337467"
+          },
+          "source": {
+            "archive_member": "num.txt",
+            "member_sha256": "72b948228b2d692e8e36353e8c02c9a7845fa5ddbc7d644b8f7b4661db05d4ba",
+            "raw_path": "data/raw/sec/sec_fsds/cfadad1a865b19429da10c1fc805dccda9cf4a5a352610385beee743f88b172e/2023q2.zip",
+            "raw_sha256": "f028f1e8d24313e7619aa87c7c683a459452e7e81a8e5ba72d7ce39ddf62bda9",
+            "source_instance_id": "SRC000054"
+          },
+          "witness": "fsds54"
+        }
+      ],
+      "validation_scope": "Exact bounded question and supplied observations; not canonical approval"
+    },
+    {
+      "agent_version": "EDP_CANDIDATE_AGENT_V2_BOUNDED_V1",
+      "alternatives": [
+        "Retain source distinctions and leave semantic relation unresolved",
+        "Reject current equivalence candidate; revisit only with new source evidence"
+      ],
+      "candidate_label": "MATCH",
+      "candidate_target": {
+        "field": "value_decimal",
+        "grain": "daily tenor observation",
+        "namespace": "M2_ADDITIVE_TYPED_NUMERIC_V1",
+        "occurrence": "SRC010451",
+        "origin": "approved_contract_target",
+        "role": "",
+        "time": "2025-01-02T00:00:00",
+        "unit": "UNDECLARED",
+        "value": "DECIMAL(38,4)",
+        "witness": "SRC010451"
+      },
+      "case_id": "S02",
+      "compatibility": {
+        "grain": "LITERAL_EQUAL",
+        "time": "LITERAL_EQUAL",
+        "unit": "UNRESOLVED"
+      },
+      "conflicting_evidence": [
+        "namespace: '' versus 'M2_ADDITIVE_TYPED_NUMERIC_V1'"
+      ],
+      "consequences": "No mapping/crosswalk/identity promotion or production join occurs in either case",
+      "dimension": "STTM",
+      "human_review_required": false,
+      "input_fingerprint": "e69f4fc6ecd172005243dbc824f4a29d6368fc6e99f85d5ad5466ccc549ed098",
+      "name_only_baseline_label": "NON_MATCH",
+      "promotion_eligible": false,
+      "question": "typed_projection",
+      "reason": "Exact representation target already specified; no conversion executed",
+      "required_transformation": "EXACT_DECIMAL_38_4_V1; candidate only, not executed",
+      "result_fingerprint": "691e818d87e8aa1124c3cba5a5b8ab649408adfc22e39317c4c1e441c98c88c5",
+      "review_question": "Should this candidate be retained unresolved or rejected pending evidence?",
+      "semantic_promotions": [],
+      "side_effects": [],
+      "source_field": {
+        "field": "BC_1MONTH",
+        "grain": "daily tenor observation",
+        "namespace": "",
+        "occurrence": "SRC010451",
+        "role": "",
+        "time": "2025-01-02T00:00:00",
+        "unit": "UNDECLARED",
+        "value": "4.45",
+        "witness": "SRC010451"
+      },
+      "state": "VALIDATED",
+      "supporting_evidence": [
+        {
+          "locator": {
+            "namespace": "http://schemas.microsoft.com/ado/2007/08/dataservices",
+            "path": "a:feed/a:entry[1]/a:content/m:properties/d:<field>",
+            "xml_entry_ordinal": 1
+          },
+          "source": {
+            "raw_path": "data/raw/treasury/treasury_annual_xml/63d9d0beb1bbee0079928bfb710339f0032859cc0ecbf5cccafe3b49429d0581/daily_treasury_yield_curve_2025.xml",
+            "raw_sha256": "fb2f64bcaa9c2041f5601460f5d67bf2ebf51083331e75192a7d48ece0db3ed9",
+            "source_identity": "63d9d0beb1bbee0079928bfb710339f0032859cc0ecbf5cccafe3b49429d0581",
+            "source_instance_id": "SRC010451"
+          },
+          "witness": "SRC010451"
+        },
+        {
+          "locator": {
+            "namespace": "http://schemas.microsoft.com/ado/2007/08/dataservices",
+            "path": "a:feed/a:entry[1]/a:content/m:properties/d:<field>",
+            "xml_entry_ordinal": 1
+          },
+          "source": {
+            "raw_path": "data/raw/treasury/treasury_annual_xml/63d9d0beb1bbee0079928bfb710339f0032859cc0ecbf5cccafe3b49429d0581/daily_treasury_yield_curve_2025.xml",
+            "raw_sha256": "fb2f64bcaa9c2041f5601460f5d67bf2ebf51083331e75192a7d48ece0db3ed9",
+            "source_identity": "63d9d0beb1bbee0079928bfb710339f0032859cc0ecbf5cccafe3b49429d0581",
+            "source_instance_id": "SRC010451"
+          },
+          "witness": "SRC010451"
+        }
+      ],
+      "validation_scope": "Exact bounded question and supplied observations; not canonical approval"
+    },
+    {
+      "agent_version": "EDP_CANDIDATE_AGENT_V2_BOUNDED_V1",
+      "alternatives": [
+        "Retain source distinctions and leave semantic relation unresolved",
+        "Reject current equivalence candidate; revisit only with new source evidence"
+      ],
+      "candidate_label": "NON_MATCH",
+      "candidate_target": {
+        "field": "BC_1MONTH",
+        "grain": "daily tenor observation",
+        "namespace": "",
+        "occurrence": "SRC010451",
+        "role": "",
+        "time": "20250102",
+        "unit": "UNDECLARED",
+        "value": "4.45",
+        "witness": "SRC010451"
+      },
+      "case_id": "S03",
+      "compatibility": {
+        "grain": "LITERAL_DIFFERENT",
+        "time": "LITERAL_DIFFERENT",
+        "unit": "UNRESOLVED"
+      },
+      "conflicting_evidence": [
+        "grain: 'FSDS fact' versus 'daily tenor observation'",
+        "time: '20230331' versus '20250102'",
+        "occurrence: 'fsds54' versus 'SRC010451'"
+      ],
+      "consequences": "No mapping/crosswalk/identity promotion or production join occurs in either case",
+      "dimension": "STTM",
+      "human_review_required": false,
+      "input_fingerprint": "21a169ebe3f2e3a08232d7202373626138c452361e735171e8eb1ab9597c489c",
+      "name_only_baseline_label": "NON_MATCH",
+      "promotion_eligible": false,
+      "question": "same_measure",
+      "reason": "Different supplied source grain categories",
+      "required_transformation": "NO_MEASURE_TRANSFORMATION_AUTHORIZED; retain separate original values",
+      "result_fingerprint": "e0b916827b2c423e8e05e305bb1d8d4f9c8cee64dd1927612d5a5f228b81d53d",
+      "review_question": "Should this candidate be retained unresolved or rejected pending evidence?",
+      "semantic_promotions": [],
+      "side_effects": [],
+      "source_field": {
+        "field": "value",
+        "grain": "FSDS fact",
+        "namespace": "",
+        "occurrence": "fsds54",
+        "role": "",
+        "time": "20230331",
+        "unit": "USD",
+        "value": "9830000.0000",
+        "witness": "fsds54"
+      },
+      "state": "REJECTED",
+      "supporting_evidence": [
+        {
+          "locator": {
+            "binding_sha256": "54c47c4f0d6793d327c3bb998d6c8b6a1393a819014c601a0f0a55d53cad8fd5",
+            "byte_length": "244",
+            "byte_offset": "46589850",
+            "run_id": "num_recovery_20261021_v1_recovery",
+            "source_line": "337467"
+          },
+          "source": {
+            "archive_member": "num.txt",
+            "member_sha256": "72b948228b2d692e8e36353e8c02c9a7845fa5ddbc7d644b8f7b4661db05d4ba",
+            "raw_path": "data/raw/sec/sec_fsds/cfadad1a865b19429da10c1fc805dccda9cf4a5a352610385beee743f88b172e/2023q2.zip",
+            "raw_sha256": "f028f1e8d24313e7619aa87c7c683a459452e7e81a8e5ba72d7ce39ddf62bda9",
+            "source_instance_id": "SRC000054"
+          },
+          "witness": "fsds54"
+        },
+        {
+          "locator": {
+            "namespace": "http://schemas.microsoft.com/ado/2007/08/dataservices",
+            "path": "a:feed/a:entry[1]/a:content/m:properties/d:<field>",
+            "xml_entry_ordinal": 1
+          },
+          "source": {
+            "raw_path": "data/raw/treasury/treasury_annual_xml/63d9d0beb1bbee0079928bfb710339f0032859cc0ecbf5cccafe3b49429d0581/daily_treasury_yield_curve_2025.xml",
+            "raw_sha256": "fb2f64bcaa9c2041f5601460f5d67bf2ebf51083331e75192a7d48ece0db3ed9",
+            "source_identity": "63d9d0beb1bbee0079928bfb710339f0032859cc0ecbf5cccafe3b49429d0581",
+            "source_instance_id": "SRC010451"
+          },
+          "witness": "SRC010451"
+        }
+      ],
+      "validation_scope": "Exact bounded question and supplied observations; not canonical approval"
+    },
+    {
+      "agent_version": "EDP_CANDIDATE_AGENT_V2_BOUNDED_V1",
+      "alternatives": [
+        "Retain source distinctions and leave semantic relation unresolved",
+        "Reject current equivalence candidate; revisit only with new source evidence"
+      ],
+      "candidate_label": "NON_MATCH",
+      "candidate_target": {
+        "field": "value",
+        "grain": "FSDS fact",
+        "namespace": "",
+        "occurrence": "fsds54",
+        "role": "",
+        "time": "20230331",
+        "unit": "USD",
+        "value": "9830000.0000",
+        "witness": "fsds54"
+      },
+      "case_id": "S04",
+      "compatibility": {
+        "grain": "LITERAL_DIFFERENT",
+        "time": "LITERAL_DIFFERENT",
+        "unit": "LITERAL_DIFFERENT"
+      },
+      "conflicting_evidence": [
+        "unit: 'PRE_2023_THOUSANDS_REPORTED_VALUE' versus 'USD'",
+        "grain: 'holding occurrence' versus 'FSDS fact'",
+        "time: '2013 snapshot' versus '20230331'",
+        "occurrence: 'holding4229' versus 'fsds54'"
+      ],
+      "consequences": "No mapping/crosswalk/identity promotion or production join occurs in either case",
+      "dimension": "STTM",
+      "human_review_required": false,
+      "input_fingerprint": "8ae4ef26fd21d62fcbd1ba2e0f3d55eef8bff25da54bca84e956ea9b4ac2c120",
+      "name_only_baseline_label": "NON_MATCH",
+      "promotion_eligible": false,
+      "question": "same_measure",
+      "reason": "Known source unit labels differ; no transformation authorized",
+      "required_transformation": "NO_MEASURE_TRANSFORMATION_AUTHORIZED; retain separate original values",
+      "result_fingerprint": "11d91955cca732016f9c0b2ee6b86552bd0c99579136a506d1b0b1446be37b78",
+      "review_question": "Should this candidate be retained unresolved or rejected pending evidence?",
+      "semantic_promotions": [],
+      "side_effects": [],
+      "source_field": {
+        "field": "VALUE",
+        "grain": "holding occurrence",
+        "namespace": "",
+        "occurrence": "holding4229",
+        "role": "",
+        "time": "2013 snapshot",
+        "unit": "PRE_2023_THOUSANDS_REPORTED_VALUE",
+        "value": "181",
+        "witness": "holding4229"
+      },
+      "state": "REJECTED",
+      "supporting_evidence": [
+        {
+          "locator": {
+            "byte_length": 101,
+            "byte_offset": 408514,
+            "source_line": 4229
+          },
+          "source": {
+            "archive_member": "INFOTABLE.tsv",
+            "expected_header": [
+              "ACCESSION_NUMBER",
+              "INFOTABLE_SK",
+              "NAMEOFISSUER",
+              "TITLEOFCLASS",
+              "CUSIP",
+              "FIGI",
+              "VALUE",
+              "SSHPRNAMT",
+              "SSHPRNAMTTYPE",
+              "PUTCALL",
+              "INVESTMENTDISCRETION",
+              "OTHERMANAGER",
+              "VOTING_AUTH_SOLE",
+              "VOTING_AUTH_SHARED",
+              "VOTING_AUTH_NONE"
+            ],
+            "footer": null,
+            "logical_table_name": "INFOTABLE.tsv",
+            "member_sha256": "04216106355c19768cc31019e6028e2d888cf527b34ab522cd805d54d6f40152",
+            "profile_id": "SEC_13F_TSV_V2_CANDIDATE",
+            "raw_path": "data/raw/sec/2013q2_form13f.zip",
+            "raw_sha256": "569d56e978f7dee3775e544a1e46019389e22adcf482386fcfaba51ceb6c7e84",
+            "source_instance_id": "SRC000001"
+          },
+          "witness": "holding4229"
+        },
+        {
+          "locator": {
+            "binding_sha256": "54c47c4f0d6793d327c3bb998d6c8b6a1393a819014c601a0f0a55d53cad8fd5",
+            "byte_length": "244",
+            "byte_offset": "46589850",
+            "run_id": "num_recovery_20261021_v1_recovery",
+            "source_line": "337467"
+          },
+          "source": {
+            "archive_member": "num.txt",
+            "member_sha256": "72b948228b2d692e8e36353e8c02c9a7845fa5ddbc7d644b8f7b4661db05d4ba",
+            "raw_path": "data/raw/sec/sec_fsds/cfadad1a865b19429da10c1fc805dccda9cf4a5a352610385beee743f88b172e/2023q2.zip",
+            "raw_sha256": "f028f1e8d24313e7619aa87c7c683a459452e7e81a8e5ba72d7ce39ddf62bda9",
+            "source_instance_id": "SRC000054"
+          },
+          "witness": "fsds54"
+        }
+      ],
+      "validation_scope": "Exact bounded question and supplied observations; not canonical approval"
+    },
+    {
+      "agent_version": "EDP_CANDIDATE_AGENT_V2_BOUNDED_V1",
+      "alternatives": [
+        "Retain source distinctions and leave semantic relation unresolved",
+        "Reject current equivalence candidate; revisit only with new source evidence"
+      ],
+      "candidate_label": "MATCH",
+      "candidate_target": {
+        "field": "cik",
+        "grain": "identifier text",
+        "namespace": "SEC_CIK",
+        "occurrence": "fsds_sub281",
+        "role": "FSDS registrant",
+        "time": "",
+        "unit": "",
+        "value": "9892",
+        "witness": "fsds_sub281"
+      },
+      "case_id": "S05",
+      "compatibility": {
+        "grain": "LITERAL_EQUAL",
+        "time": "UNRESOLVED",
+        "unit": "UNRESOLVED"
+      },
+      "conflicting_evidence": [
+        "role: 'filing manager' versus 'FSDS registrant'",
+        "occurrence: 'submission161' versus 'fsds_sub281'"
+      ],
+      "consequences": "No mapping/crosswalk/identity promotion or production join occurs in either case",
+      "dimension": "STTM",
+      "human_review_required": true,
+      "input_fingerprint": "4c2cd3d1749b12948e550425d6b5578a885fb099d5f0303f9b745eb40208701a",
+      "name_only_baseline_label": "NON_MATCH",
+      "promotion_eligible": false,
+      "question": "identifier_storage_slot",
+      "reason": "Namespaced TEXT slot candidate; preserve distinct values and entity roles",
+      "required_transformation": "COPY_TEXT_WITH_NAMESPACE_AND_ROLE; no value normalization",
+      "result_fingerprint": "89d7c09cce59c860b245114f047966f5862bf6643288feba6d6d1b4375eb0366",
+      "review_question": "Should this candidate be retained unresolved or rejected pending evidence?",
+      "semantic_promotions": [],
+      "side_effects": [],
+      "source_field": {
+        "field": "CIK",
+        "grain": "identifier text",
+        "namespace": "SEC_CIK",
+        "occurrence": "submission161",
+        "role": "filing manager",
+        "time": "",
+        "unit": "",
+        "value": "0001488106",
+        "witness": "submission161"
+      },
+      "state": "PROPOSED",
+      "supporting_evidence": [
+        {
+          "locator": {
+            "byte_length": 63,
+            "byte_offset": 10204,
+            "source_line": 161
+          },
+          "source": {
+            "archive_member": "SUBMISSION.tsv",
+            "expected_header": [
+              "ACCESSION_NUMBER",
+              "FILING_DATE",
+              "SUBMISSIONTYPE",
+              "CIK",
+              "PERIODOFREPORT"
+            ],
+            "footer": null,
+            "logical_table_name": "SUBMISSION.tsv",
+            "member_sha256": "94494b45570e698a13b700a510b818d0008ccaa86a93786adb37676433113d2d",
+            "profile_id": "SEC_13F_TSV_V2_CANDIDATE",
+            "raw_path": "data/raw/sec/2013q2_form13f.zip",
+            "raw_sha256": "569d56e978f7dee3775e544a1e46019389e22adcf482386fcfaba51ceb6c7e84",
+            "source_instance_id": "SRC000001"
+          },
+          "witness": "submission161"
+        },
+        {
+          "locator": {
+            "byte_length": 253,
+            "byte_offset": 79903,
+            "source_line": 281
+          },
+          "source": {
+            "archive_member": "sub.txt",
+            "expected_header": [
+              "adsh",
+              "cik",
+              "name",
+              "sic",
+              "countryba",
+              "stprba",
+              "cityba",
+              "zipba",
+              "bas1",
+              "bas2",
+              "baph",
+              "countryma",
+              "stprma",
+              "cityma",
+              "zipma",
+              "mas1",
+              "mas2",
+              "countryinc",
+              "stprinc",
+              "ein",
+              "former",
+              "changed",
+              "afs",
+              "wksi",
+              "fye",
+              "form",
+              "period",
+              "fy",
+              "fp",
+              "filed",
+              "accepted",
+              "prevrpt",
+              "detail",
+              "instance",
+              "nciks",
+              "aciks"
+            ],
+            "footer": null,
+            "logical_table_name": "sub.txt",
+            "member_sha256": "fca0ff4bf873b46245ac3ca3524f6be6083852cdc7e97a12f307df636834a3e8",
+            "profile_id": "SEC_FSDS_TSV_V2_CANDIDATE",
+            "raw_path": "data/raw/sec/2010q2_fsds.zip",
+            "raw_sha256": "25f416b020fd3e62a67dbf8c6522c9f239e716099b61cf5d05a59a91ffdef1f1",
+            "source_instance_id": "SRC000004"
+          },
+          "witness": "fsds_sub281"
+        }
+      ],
+      "validation_scope": "Exact bounded question and supplied observations; not canonical approval"
+    },
+    {
+      "agent_version": "EDP_CANDIDATE_AGENT_V2_BOUNDED_V1",
+      "alternatives": [
+        "Retain source distinctions and leave semantic relation unresolved",
+        "Reject current equivalence candidate; revisit only with new source evidence"
+      ],
+      "candidate_label": "MATCH",
+      "candidate_target": {
+        "field": "REPORTCALENDARORQUARTER",
+        "grain": "source report period",
+        "namespace": "",
+        "occurrence": "0001423255-13-000008",
+        "role": "reported period",
+        "time": "30-JUN-2012",
+        "unit": "",
+        "value": "30-JUN-2012",
+        "witness": "cover100"
+      },
+      "case_id": "S06",
+      "compatibility": {
+        "grain": "LITERAL_EQUAL",
+        "time": "LITERAL_EQUAL",
+        "unit": "UNRESOLVED"
+      },
+      "conflicting_evidence": [],
+      "consequences": "No mapping/crosswalk/identity promotion or production join occurs in either case",
+      "dimension": "STTM",
+      "human_review_required": true,
+      "input_fingerprint": "f31feebef89b233a94a10440b838dcd759449b53580f109cf9722cb20fd680cc",
+      "name_only_baseline_label": "NON_MATCH",
+      "promotion_eligible": false,
+      "question": "same_period_text",
+      "reason": "Same native filing token and literal source-reported period text",
+      "required_transformation": "REFERENCE_EXACT_REPORTED_TEXT; no date alignment",
+      "result_fingerprint": "78dc55297474c46a08e90e6241a2b302325e7afed8831eafaed1b491413549df",
+      "review_question": "Should this candidate be retained unresolved or rejected pending evidence?",
+      "semantic_promotions": [],
+      "side_effects": [],
+      "source_field": {
+        "field": "PERIODOFREPORT",
+        "grain": "source report period",
+        "namespace": "",
+        "occurrence": "0001423255-13-000008",
+        "role": "reported period",
+        "time": "30-JUN-2012",
+        "unit": "",
+        "value": "30-JUN-2012",
+        "witness": "submission161"
+      },
+      "state": "PROPOSED",
+      "supporting_evidence": [
+        {
+          "locator": {
+            "byte_length": 63,
+            "byte_offset": 10204,
+            "source_line": 161
+          },
+          "source": {
+            "archive_member": "SUBMISSION.tsv",
+            "expected_header": [
+              "ACCESSION_NUMBER",
+              "FILING_DATE",
+              "SUBMISSIONTYPE",
+              "CIK",
+              "PERIODOFREPORT"
+            ],
+            "footer": null,
+            "logical_table_name": "SUBMISSION.tsv",
+            "member_sha256": "94494b45570e698a13b700a510b818d0008ccaa86a93786adb37676433113d2d",
+            "profile_id": "SEC_13F_TSV_V2_CANDIDATE",
+            "raw_path": "data/raw/sec/2013q2_form13f.zip",
+            "raw_sha256": "569d56e978f7dee3775e544a1e46019389e22adcf482386fcfaba51ceb6c7e84",
+            "source_instance_id": "SRC000001"
+          },
+          "witness": "submission161"
+        },
+        {
+          "locator": {
+            "byte_length": 151,
+            "byte_offset": 18257,
+            "source_line": 100
+          },
+          "source": {
+            "archive_member": "COVERPAGE.tsv",
+            "expected_header": [
+              "ACCESSION_NUMBER",
+              "REPORTCALENDARORQUARTER",
+              "ISAMENDMENT",
+              "AMENDMENTNO",
+              "AMENDMENTTYPE",
+              "CONFDENIEDEXPIRED",
+              "DATEDENIEDEXPIRED",
+              "DATEREPORTED",
+              "REASONFORNONCONFIDENTIALITY",
+              "FILINGMANAGER_NAME",
+              "FILINGMANAGER_STREET1",
+              "FILINGMANAGER_STREET2",
+              "FILINGMANAGER_CITY",
+              "FILINGMANAGER_STATEORCOUNTRY",
+              "FILINGMANAGER_ZIPCODE",
+              "REPORTTYPE",
+              "FORM13FFILENUMBER",
+              "CRDNUMBER",
+              "SECFILENUMBER",
+              "PROVIDEINFOFORINSTRUCTION5",
+              "ADDITIONALINFORMATION"
+            ],
+            "footer": null,
+            "logical_table_name": "COVERPAGE.tsv",
+            "member_sha256": "21287ddc712db9553e7c7295f2713ecb3c8b63891be622811b29e5cc5836790e",
+            "profile_id": "SEC_13F_TSV_V2_CANDIDATE",
+            "raw_path": "data/raw/sec/2013q2_form13f.zip",
+            "raw_sha256": "569d56e978f7dee3775e544a1e46019389e22adcf482386fcfaba51ceb6c7e84",
+            "source_instance_id": "SRC000001"
+          },
+          "witness": "cover100"
+        }
+      ],
+      "validation_scope": "Exact bounded question and supplied observations; not canonical approval"
+    },
+    {
+      "agent_version": "EDP_CANDIDATE_AGENT_V2_BOUNDED_V1",
+      "alternatives": [
+        "Retain source distinctions and leave semantic relation unresolved",
+        "Reject current equivalence candidate; revisit only with new source evidence"
+      ],
+      "candidate_label": "NON_MATCH",
+      "candidate_target": {
+        "field": "PERIODOFREPORT",
+        "grain": "",
+        "namespace": "",
+        "occurrence": "submission161",
+        "role": "reported period",
+        "time": "30-JUN-2012",
+        "unit": "",
+        "value": "30-JUN-2012",
+        "witness": "submission161"
+      },
+      "case_id": "S07",
+      "compatibility": {
+        "grain": "UNRESOLVED",
+        "time": "LITERAL_DIFFERENT",
+        "unit": "UNRESOLVED"
+      },
+      "conflicting_evidence": [
+        "time: '04-JUN-2013' versus '30-JUN-2012'",
+        "role: 'filing date' versus 'reported period'"
+      ],
+      "consequences": "No mapping/crosswalk/identity promotion or production join occurs in either case",
+      "dimension": "STTM",
+      "human_review_required": false,
+      "input_fingerprint": "1c3a23aa2bcdb1a3c26310c4c203cf94cf2954e8775296808400e3ccf52653bc",
+      "name_only_baseline_label": "NON_MATCH",
+      "promotion_eligible": false,
+      "question": "same_period_text",
+      "reason": "Different supplied date roles or literal period contexts",
+      "required_transformation": "REFERENCE_EXACT_REPORTED_TEXT; no date alignment",
+      "result_fingerprint": "fc5932c6afa33aac0132264940cb9eee5e46ce710cf9a4aabe86c5607e25f7f8",
+      "review_question": "Should this candidate be retained unresolved or rejected pending evidence?",
+      "semantic_promotions": [],
+      "side_effects": [],
+      "source_field": {
+        "field": "FILING_DATE",
+        "grain": "",
+        "namespace": "",
+        "occurrence": "submission161",
+        "role": "filing date",
+        "time": "04-JUN-2013",
+        "unit": "",
+        "value": "04-JUN-2013",
+        "witness": "submission161"
+      },
+      "state": "REJECTED",
+      "supporting_evidence": [
+        {
+          "locator": {
+            "byte_length": 63,
+            "byte_offset": 10204,
+            "source_line": 161
+          },
+          "source": {
+            "archive_member": "SUBMISSION.tsv",
+            "expected_header": [
+              "ACCESSION_NUMBER",
+              "FILING_DATE",
+              "SUBMISSIONTYPE",
+              "CIK",
+              "PERIODOFREPORT"
+            ],
+            "footer": null,
+            "logical_table_name": "SUBMISSION.tsv",
+            "member_sha256": "94494b45570e698a13b700a510b818d0008ccaa86a93786adb37676433113d2d",
+            "profile_id": "SEC_13F_TSV_V2_CANDIDATE",
+            "raw_path": "data/raw/sec/2013q2_form13f.zip",
+            "raw_sha256": "569d56e978f7dee3775e544a1e46019389e22adcf482386fcfaba51ceb6c7e84",
+            "source_instance_id": "SRC000001"
+          },
+          "witness": "submission161"
+        },
+        {
+          "locator": {
+            "byte_length": 63,
+            "byte_offset": 10204,
+            "source_line": 161
+          },
+          "source": {
+            "archive_member": "SUBMISSION.tsv",
+            "expected_header": [
+              "ACCESSION_NUMBER",
+              "FILING_DATE",
+              "SUBMISSIONTYPE",
+              "CIK",
+              "PERIODOFREPORT"
+            ],
+            "footer": null,
+            "logical_table_name": "SUBMISSION.tsv",
+            "member_sha256": "94494b45570e698a13b700a510b818d0008ccaa86a93786adb37676433113d2d",
+            "profile_id": "SEC_13F_TSV_V2_CANDIDATE",
+            "raw_path": "data/raw/sec/2013q2_form13f.zip",
+            "raw_sha256": "569d56e978f7dee3775e544a1e46019389e22adcf482386fcfaba51ceb6c7e84",
+            "source_instance_id": "SRC000001"
+          },
+          "witness": "submission161"
+        }
+      ],
+      "validation_scope": "Exact bounded question and supplied observations; not canonical approval"
+    },
+    {
+      "agent_version": "EDP_CANDIDATE_AGENT_V2_BOUNDED_V1",
+      "alternatives": [
+        "Retain source distinctions and leave semantic relation unresolved",
+        "Reject current equivalence candidate; revisit only with new source evidence"
+      ],
+      "candidate_label": "UNRESOLVED",
+      "candidate_target": {
+        "field": "BC_30YEARDISPLAY",
+        "grain": "daily tenor observation",
+        "namespace": "",
+        "occurrence": "SRC010451",
+        "role": "",
+        "time": "20250102",
+        "unit": "UNDECLARED",
+        "value": "4.79",
+        "witness": "SRC010451"
+      },
+      "case_id": "S08",
+      "compatibility": {
+        "grain": "LITERAL_EQUAL",
+        "time": "LITERAL_EQUAL",
+        "unit": "UNRESOLVED"
+      },
+      "conflicting_evidence": [],
+      "consequences": "No mapping/crosswalk/identity promotion or production join occurs in either case",
+      "dimension": "STTM",
+      "human_review_required": true,
+      "input_fingerprint": "4c180eaa1c9f1a07be710c3de11333f1e262c75ff8b9e481be3a05dc41f9758e",
+      "name_only_baseline_label": "NON_MATCH",
+      "promotion_eligible": false,
+      "question": "same_measure",
+      "reason": "Source definitions/units/tenor semantics do not establish equivalence",
+      "required_transformation": "NO_MEASURE_TRANSFORMATION_AUTHORIZED; retain separate original values",
+      "result_fingerprint": "50741af747f28b129b6d2491548b0f310ff9d43772e7c1091a818c5add38b8d9",
+      "review_question": "Should this candidate be retained unresolved or rejected pending evidence?",
+      "semantic_promotions": [],
+      "side_effects": [],
+      "source_field": {
+        "field": "BC_30YEAR",
+        "grain": "daily tenor observation",
+        "namespace": "",
+        "occurrence": "SRC010451",
+        "role": "",
+        "time": "20250102",
+        "unit": "UNDECLARED",
+        "value": "4.79",
+        "witness": "SRC010451"
+      },
+      "state": "UNRESOLVED",
+      "supporting_evidence": [
+        {
+          "locator": {
+            "namespace": "http://schemas.microsoft.com/ado/2007/08/dataservices",
+            "path": "a:feed/a:entry[1]/a:content/m:properties/d:<field>",
+            "xml_entry_ordinal": 1
+          },
+          "source": {
+            "raw_path": "data/raw/treasury/treasury_annual_xml/63d9d0beb1bbee0079928bfb710339f0032859cc0ecbf5cccafe3b49429d0581/daily_treasury_yield_curve_2025.xml",
+            "raw_sha256": "fb2f64bcaa9c2041f5601460f5d67bf2ebf51083331e75192a7d48ece0db3ed9",
+            "source_identity": "63d9d0beb1bbee0079928bfb710339f0032859cc0ecbf5cccafe3b49429d0581",
+            "source_instance_id": "SRC010451"
+          },
+          "witness": "SRC010451"
+        },
+        {
+          "locator": {
+            "namespace": "http://schemas.microsoft.com/ado/2007/08/dataservices",
+            "path": "a:feed/a:entry[1]/a:content/m:properties/d:<field>",
+            "xml_entry_ordinal": 1
+          },
+          "source": {
+            "raw_path": "data/raw/treasury/treasury_annual_xml/63d9d0beb1bbee0079928bfb710339f0032859cc0ecbf5cccafe3b49429d0581/daily_treasury_yield_curve_2025.xml",
+            "raw_sha256": "fb2f64bcaa9c2041f5601460f5d67bf2ebf51083331e75192a7d48ece0db3ed9",
+            "source_identity": "63d9d0beb1bbee0079928bfb710339f0032859cc0ecbf5cccafe3b49429d0581",
+            "source_instance_id": "SRC010451"
+          },
+          "witness": "SRC010451"
+        }
+      ],
+      "validation_scope": "Exact bounded question and supplied observations; not canonical approval"
+    },
+    {
+      "agent_version": "EDP_CANDIDATE_AGENT_V2_BOUNDED_V1",
+      "alternatives": [
+        "Retain source distinctions and leave semantic relation unresolved",
+        "Reject current equivalence candidate; revisit only with new source evidence"
+      ],
+      "candidate_label": "NON_MATCH",
+      "candidate_target": {
+        "field": "ROUND_B1_YIELD_4WK_2",
+        "grain": "daily tenor observation",
+        "namespace": "",
+        "occurrence": "SRC010452",
+        "role": "",
+        "time": "20250102",
+        "unit": "UNDECLARED",
+        "value": "4.33",
+        "witness": "SRC010452"
+      },
+      "case_id": "S09",
+      "compatibility": {
+        "grain": "LITERAL_EQUAL",
+        "time": "LITERAL_EQUAL",
+        "unit": "UNRESOLVED"
+      },
+      "conflicting_evidence": [],
+      "consequences": "No mapping/crosswalk/identity promotion or production join occurs in either case",
+      "dimension": "STTM",
+      "human_review_required": false,
+      "input_fingerprint": "da57a83f741195d76335579d1db4ef1f888cb2a1d2bc9f3ad568364662f92f0c",
+      "name_only_baseline_label": "NON_MATCH",
+      "promotion_eligible": false,
+      "question": "same_measure",
+      "reason": "Distinct source CLOSE/YIELD properties and unequal observed values",
+      "required_transformation": "NO_MEASURE_TRANSFORMATION_AUTHORIZED; retain separate original values",
+      "result_fingerprint": "1348c3670a40db25dd98e559a154a69a16508322a44bc0b948a3e55270404631",
+      "review_question": "Should this candidate be retained unresolved or rejected pending evidence?",
+      "semantic_promotions": [],
+      "side_effects": [],
+      "source_field": {
+        "field": "ROUND_B1_CLOSE_4WK_2",
+        "grain": "daily tenor observation",
+        "namespace": "",
+        "occurrence": "SRC010452",
+        "role": "",
+        "time": "20250102",
+        "unit": "UNDECLARED",
+        "value": "4.26",
+        "witness": "SRC010452"
+      },
+      "state": "REJECTED",
+      "supporting_evidence": [
+        {
+          "locator": {
+            "namespace": "http://schemas.microsoft.com/ado/2007/08/dataservices",
+            "path": "a:feed/a:entry[1]/a:content/m:properties/d:<field>",
+            "xml_entry_ordinal": 1
+          },
+          "source": {
+            "raw_path": "data/raw/treasury/treasury_annual_xml/be4ecba6635cccaa39f23a4a3905198433e25a60040cc3a64e686fcf60731f9c/daily_treasury_bill_rates_2025.xml",
+            "raw_sha256": "5f20dd1fad2627facce863a2a3d3258278f2119fef61028e85e0cf75a244df16",
+            "source_identity": "be4ecba6635cccaa39f23a4a3905198433e25a60040cc3a64e686fcf60731f9c",
+            "source_instance_id": "SRC010452"
+          },
+          "witness": "SRC010452"
+        },
+        {
+          "locator": {
+            "namespace": "http://schemas.microsoft.com/ado/2007/08/dataservices",
+            "path": "a:feed/a:entry[1]/a:content/m:properties/d:<field>",
+            "xml_entry_ordinal": 1
+          },
+          "source": {
+            "raw_path": "data/raw/treasury/treasury_annual_xml/be4ecba6635cccaa39f23a4a3905198433e25a60040cc3a64e686fcf60731f9c/daily_treasury_bill_rates_2025.xml",
+            "raw_sha256": "5f20dd1fad2627facce863a2a3d3258278f2119fef61028e85e0cf75a244df16",
+            "source_identity": "be4ecba6635cccaa39f23a4a3905198433e25a60040cc3a64e686fcf60731f9c",
+            "source_instance_id": "SRC010452"
+          },
+          "witness": "SRC010452"
+        }
+      ],
+      "validation_scope": "Exact bounded question and supplied observations; not canonical approval"
+    },
+    {
+      "agent_version": "EDP_CANDIDATE_AGENT_V2_BOUNDED_V1",
+      "alternatives": [
+        "Retain source distinctions and leave semantic relation unresolved",
+        "Reject current equivalence candidate; revisit only with new source evidence"
+      ],
+      "candidate_label": "NON_MATCH",
+      "candidate_target": {
+        "field": "value",
+        "grain": "FSDS fact",
+        "namespace": "",
+        "occurrence": "fsds54",
+        "role": "",
+        "time": "20230331",
+        "unit": "USD",
+        "value": "9830000.0000",
+        "witness": "fsds54"
+      },
+      "case_id": "S10",
+      "compatibility": {
+        "grain": "LITERAL_EQUAL",
+        "time": "LITERAL_DIFFERENT",
+        "unit": "LITERAL_DIFFERENT"
+      },
+      "conflicting_evidence": [
+        "unit: 'pure' versus 'USD'",
+        "time: '20240930' versus '20230331'",
+        "occurrence: 'fsds60' versus 'fsds54'"
+      ],
+      "consequences": "No mapping/crosswalk/identity promotion or production join occurs in either case",
+      "dimension": "STTM",
+      "human_review_required": false,
+      "input_fingerprint": "5a2836d562930e4dcaa40c17c839a1e64449394ded9c129e0e8ccee05b52c8f6",
+      "name_only_baseline_label": "MATCH",
+      "promotion_eligible": false,
+      "question": "same_measure",
+      "reason": "Known source unit labels differ; no transformation authorized",
+      "required_transformation": "NO_MEASURE_TRANSFORMATION_AUTHORIZED; retain separate original values",
+      "result_fingerprint": "5d5c0434c2ba09cbc092347a60c6767daec1117c485006dd8da14d779604f6f7",
+      "review_question": "Should this candidate be retained unresolved or rejected pending evidence?",
+      "semantic_promotions": [],
+      "side_effects": [],
+      "source_field": {
+        "field": "value",
+        "grain": "FSDS fact",
+        "namespace": "",
+        "occurrence": "fsds60",
+        "role": "",
+        "time": "20240930",
+        "unit": "pure",
+        "value": "0.0070",
+        "witness": "fsds60"
+      },
+      "state": "REJECTED",
+      "supporting_evidence": [
+        {
+          "locator": {
+            "binding_sha256": "14cc8d86190f4f92ab040925bf388b0430aa96a31fb2d27b7575ddc550f9cd32",
+            "byte_length": "287",
+            "byte_offset": "9197940",
+            "run_id": "num_recovery_20261021_v1_recovery",
+            "source_line": "64698"
+          },
+          "source": {
+            "archive_member": "num.txt",
+            "member_sha256": "7db50fd666194d39dcec620c0e8057a9adf159174b5aa88becbe2ec5ea9cd3e5",
+            "raw_path": "data/raw/sec/sec_fsds/facea18c20840730963feeeb7a5bd5981e57237b97a14549e2d4a1bffe72f574/2024q4.zip",
+            "raw_sha256": "9a2cbbaf39c94aa642b33d512f4def92b198d3bfd12d2267bcd27abe55b9902d",
+            "source_instance_id": "SRC000060"
+          },
+          "witness": "fsds60"
+        },
+        {
+          "locator": {
+            "binding_sha256": "54c47c4f0d6793d327c3bb998d6c8b6a1393a819014c601a0f0a55d53cad8fd5",
+            "byte_length": "244",
+            "byte_offset": "46589850",
+            "run_id": "num_recovery_20261021_v1_recovery",
+            "source_line": "337467"
+          },
+          "source": {
+            "archive_member": "num.txt",
+            "member_sha256": "72b948228b2d692e8e36353e8c02c9a7845fa5ddbc7d644b8f7b4661db05d4ba",
+            "raw_path": "data/raw/sec/sec_fsds/cfadad1a865b19429da10c1fc805dccda9cf4a5a352610385beee743f88b172e/2023q2.zip",
+            "raw_sha256": "f028f1e8d24313e7619aa87c7c683a459452e7e81a8e5ba72d7ce39ddf62bda9",
+            "source_instance_id": "SRC000054"
+          },
+          "witness": "fsds54"
+        }
+      ],
+      "validation_scope": "Exact bounded question and supplied observations; not canonical approval"
+    },
+    {
+      "agent_version": "EDP_CANDIDATE_AGENT_V2_BOUNDED_V1",
+      "alternatives": [
+        "Retain source distinctions and leave semantic relation unresolved",
+        "Reject current equivalence candidate; revisit only with new source evidence"
+      ],
+      "candidate_label": "UNRESOLVED",
+      "candidate_target": {
+        "field": "RATE",
+        "grain": "daily long-term average observation",
+        "namespace": "",
+        "occurrence": "SRC010455",
+        "role": "",
+        "time": "20250102",
+        "unit": "UNDECLARED",
+        "value": "2.48",
+        "witness": "SRC010455"
+      },
+      "case_id": "S11",
+      "compatibility": {
+        "grain": "LITERAL_DIFFERENT",
+        "time": "LITERAL_EQUAL",
+        "unit": "UNRESOLVED"
+      },
+      "conflicting_evidence": [
+        "grain: 'daily 5YEAR observation' versus 'daily long-term average observation'",
+        "occurrence: 'SRC010454' versus 'SRC010455'"
+      ],
+      "consequences": "No mapping/crosswalk/identity promotion or production join occurs in either case",
+      "dimension": "STTM",
+      "human_review_required": true,
+      "input_fingerprint": "15218de3fad332cdded79fce177974c58f3d1e9d4423029f7a4de13b7f060c91",
+      "name_only_baseline_label": "NON_MATCH",
+      "promotion_eligible": false,
+      "question": "same_measure",
+      "reason": "Source definitions/units/tenor semantics do not establish equivalence",
+      "required_transformation": "NO_MEASURE_TRANSFORMATION_AUTHORIZED; retain separate original values",
+      "result_fingerprint": "527e0c4dd0cbd8d97827e88915c8e498e67bb3cbe9956d2525b94cfaea4ac024",
+      "review_question": "Should this candidate be retained unresolved or rejected pending evidence?",
+      "semantic_promotions": [],
+      "side_effects": [],
+      "source_field": {
+        "field": "TC_5YEAR",
+        "grain": "daily 5YEAR observation",
+        "namespace": "",
+        "occurrence": "SRC010454",
+        "role": "",
+        "time": "20250102",
+        "unit": "UNDECLARED",
+        "value": "1.97",
+        "witness": "SRC010454"
+      },
+      "state": "UNRESOLVED",
+      "supporting_evidence": [
+        {
+          "locator": {
+            "namespace": "http://schemas.microsoft.com/ado/2007/08/dataservices",
+            "path": "a:feed/a:entry[1]/a:content/m:properties/d:<field>",
+            "xml_entry_ordinal": 1
+          },
+          "source": {
+            "raw_path": "data/raw/treasury/treasury_annual_xml/3d78318e471a446a4e49022d13f7642cce3dbb94cb15dd5360561f19622750be/daily_treasury_real_yield_curve_2025.xml",
+            "raw_sha256": "68f58df186f47f20c349d276ae501b97c94cfb2a09cc36453f4c95288322ec66",
+            "source_identity": "3d78318e471a446a4e49022d13f7642cce3dbb94cb15dd5360561f19622750be",
+            "source_instance_id": "SRC010454"
+          },
+          "witness": "SRC010454"
+        },
+        {
+          "locator": {
+            "namespace": "http://schemas.microsoft.com/ado/2007/08/dataservices",
+            "path": "a:feed/a:entry[1]/a:content/m:properties/d:<field>",
+            "xml_entry_ordinal": 1
+          },
+          "source": {
+            "raw_path": "data/raw/treasury/treasury_annual_xml/59a456d521bc98ef7375758272f827cb50bf90f3218b415eb49678e99cf860ae/daily_treasury_real_long_term_2025.xml",
+            "raw_sha256": "e58a45134fe5a857028f7ee3381d07fbc56a7aa248dfd45df5721478e67d5a1e",
+            "source_identity": "59a456d521bc98ef7375758272f827cb50bf90f3218b415eb49678e99cf860ae",
+            "source_instance_id": "SRC010455"
+          },
+          "witness": "SRC010455"
+        }
+      ],
+      "validation_scope": "Exact bounded question and supplied observations; not canonical approval"
+    },
+    {
+      "agent_version": "EDP_CANDIDATE_AGENT_V2_BOUNDED_V1",
+      "alternatives": [
+        "Retain source distinctions and leave semantic relation unresolved",
+        "Reject current equivalence candidate; revisit only with new source evidence"
+      ],
+      "candidate_label": "MATCH",
+      "candidate_target": {
+        "field": "ACCESSION_NUMBER",
+        "grain": "",
+        "namespace": "SEC13F_ACCESSION@SRC000001",
+        "occurrence": "cover100",
+        "role": "",
+        "time": "",
+        "unit": "",
+        "value": "0001423255-13-000008",
+        "witness": "cover100"
+      },
+      "case_id": "E01",
+      "compatibility": {
+        "grain": "UNRESOLVED",
+        "time": "UNRESOLVED",
+        "unit": "UNRESOLVED"
+      },
+      "conflicting_evidence": [
+        "occurrence: 'submission161' versus 'cover100'"
+      ],
+      "consequences": "No mapping/crosswalk/identity promotion or production join occurs in either case",
+      "dimension": "CROSSWALK",
+      "human_review_required": false,
+      "input_fingerprint": "9b4fd0fc70f46ff1dd82468946c6ae8a7d744ffc105f08c4e6a2e5c6d7bf5e30",
+      "name_only_baseline_label": "MATCH",
+      "promotion_eligible": false,
+      "question": "same_native_identifier",
+      "reason": "Exact nonempty namespaced token observation only",
+      "required_transformation": "REFERENCE_NAMESPACED_LITERAL_ONLY; no canonical merge",
+      "result_fingerprint": "eb71eb04167e0153a0175eaf5c5a402b2e1d064285842e4d3e679923d5b03b76",
+      "review_question": "Should this candidate be retained unresolved or rejected pending evidence?",
+      "semantic_promotions": [],
+      "side_effects": [],
+      "source_field": {
+        "field": "ACCESSION_NUMBER",
+        "grain": "",
+        "namespace": "SEC13F_ACCESSION@SRC000001",
+        "occurrence": "submission161",
+        "role": "",
+        "time": "",
+        "unit": "",
+        "value": "0001423255-13-000008",
+        "witness": "submission161"
+      },
+      "state": "VALIDATED",
+      "supporting_evidence": [
+        {
+          "locator": {
+            "byte_length": 63,
+            "byte_offset": 10204,
+            "source_line": 161
+          },
+          "source": {
+            "archive_member": "SUBMISSION.tsv",
+            "expected_header": [
+              "ACCESSION_NUMBER",
+              "FILING_DATE",
+              "SUBMISSIONTYPE",
+              "CIK",
+              "PERIODOFREPORT"
+            ],
+            "footer": null,
+            "logical_table_name": "SUBMISSION.tsv",
+            "member_sha256": "94494b45570e698a13b700a510b818d0008ccaa86a93786adb37676433113d2d",
+            "profile_id": "SEC_13F_TSV_V2_CANDIDATE",
+            "raw_path": "data/raw/sec/2013q2_form13f.zip",
+            "raw_sha256": "569d56e978f7dee3775e544a1e46019389e22adcf482386fcfaba51ceb6c7e84",
+            "source_instance_id": "SRC000001"
+          },
+          "witness": "submission161"
+        },
+        {
+          "locator": {
+            "byte_length": 151,
+            "byte_offset": 18257,
+            "source_line": 100
+          },
+          "source": {
+            "archive_member": "COVERPAGE.tsv",
+            "expected_header": [
+              "ACCESSION_NUMBER",
+              "REPORTCALENDARORQUARTER",
+              "ISAMENDMENT",
+              "AMENDMENTNO",
+              "AMENDMENTTYPE",
+              "CONFDENIEDEXPIRED",
+              "DATEDENIEDEXPIRED",
+              "DATEREPORTED",
+              "REASONFORNONCONFIDENTIALITY",
+              "FILINGMANAGER_NAME",
+              "FILINGMANAGER_STREET1",
+              "FILINGMANAGER_STREET2",
+              "FILINGMANAGER_CITY",
+              "FILINGMANAGER_STATEORCOUNTRY",
+              "FILINGMANAGER_ZIPCODE",
+              "REPORTTYPE",
+              "FORM13FFILENUMBER",
+              "CRDNUMBER",
+              "SECFILENUMBER",
+              "PROVIDEINFOFORINSTRUCTION5",
+              "ADDITIONALINFORMATION"
+            ],
+            "footer": null,
+            "logical_table_name": "COVERPAGE.tsv",
+            "member_sha256": "21287ddc712db9553e7c7295f2713ecb3c8b63891be622811b29e5cc5836790e",
+            "profile_id": "SEC_13F_TSV_V2_CANDIDATE",
+            "raw_path": "data/raw/sec/2013q2_form13f.zip",
+            "raw_sha256": "569d56e978f7dee3775e544a1e46019389e22adcf482386fcfaba51ceb6c7e84",
+            "source_instance_id": "SRC000001"
+          },
+          "witness": "cover100"
+        }
+      ],
+      "validation_scope": "Exact bounded question and supplied observations; not canonical approval"
+    },
+    {
+      "agent_version": "EDP_CANDIDATE_AGENT_V2_BOUNDED_V1",
+      "alternatives": [
+        "Retain source distinctions and leave semantic relation unresolved",
+        "Reject current equivalence candidate; revisit only with new source evidence"
+      ],
+      "candidate_label": "NON_MATCH",
+      "candidate_target": {
+        "field": "CUSIP",
+        "grain": "",
+        "namespace": "CUSIP",
+        "occurrence": "holding170",
+        "role": "",
+        "time": "",
+        "unit": "",
+        "value": "037833100",
+        "witness": "holding170"
+      },
+      "case_id": "E02",
+      "compatibility": {
+        "grain": "UNRESOLVED",
+        "time": "UNRESOLVED",
+        "unit": "UNRESOLVED"
+      },
+      "conflicting_evidence": [
+        "namespace: 'SEC_CIK' versus 'CUSIP'",
+        "occurrence: 'submission161' versus 'holding170'"
+      ],
+      "consequences": "No mapping/crosswalk/identity promotion or production join occurs in either case",
+      "dimension": "ER",
+      "human_review_required": false,
+      "input_fingerprint": "afaf7f9a022f6e9a9323855219fe516262c43681d315ac747d784c133b1861ee",
+      "name_only_baseline_label": "NON_MATCH",
+      "promotion_eligible": false,
+      "question": "same_native_identifier",
+      "reason": "Identifier namespaces differ",
+      "required_transformation": "REFERENCE_NAMESPACED_LITERAL_ONLY; no canonical merge",
+      "result_fingerprint": "0f8cd6d21f3d4904fe132d83d2c00f1489600018af10f346557913172c000887",
+      "review_question": "Should this candidate be retained unresolved or rejected pending evidence?",
+      "semantic_promotions": [],
+      "side_effects": [],
+      "source_field": {
+        "field": "CIK",
+        "grain": "",
+        "namespace": "SEC_CIK",
+        "occurrence": "submission161",
+        "role": "",
+        "time": "",
+        "unit": "",
+        "value": "0001488106",
+        "witness": "submission161"
+      },
+      "state": "REJECTED",
+      "supporting_evidence": [
+        {
+          "locator": {
+            "byte_length": 63,
+            "byte_offset": 10204,
+            "source_line": 161
+          },
+          "source": {
+            "archive_member": "SUBMISSION.tsv",
+            "expected_header": [
+              "ACCESSION_NUMBER",
+              "FILING_DATE",
+              "SUBMISSIONTYPE",
+              "CIK",
+              "PERIODOFREPORT"
+            ],
+            "footer": null,
+            "logical_table_name": "SUBMISSION.tsv",
+            "member_sha256": "94494b45570e698a13b700a510b818d0008ccaa86a93786adb37676433113d2d",
+            "profile_id": "SEC_13F_TSV_V2_CANDIDATE",
+            "raw_path": "data/raw/sec/2013q2_form13f.zip",
+            "raw_sha256": "569d56e978f7dee3775e544a1e46019389e22adcf482386fcfaba51ceb6c7e84",
+            "source_instance_id": "SRC000001"
+          },
+          "witness": "submission161"
+        },
+        {
+          "locator": {
+            "byte_length": 86,
+            "byte_offset": 16132,
+            "source_line": 170
+          },
+          "source": {
+            "archive_member": "INFOTABLE.tsv",
+            "expected_header": [
+              "ACCESSION_NUMBER",
+              "INFOTABLE_SK",
+              "NAMEOFISSUER",
+              "TITLEOFCLASS",
+              "CUSIP",
+              "FIGI",
+              "VALUE",
+              "SSHPRNAMT",
+              "SSHPRNAMTTYPE",
+              "PUTCALL",
+              "INVESTMENTDISCRETION",
+              "OTHERMANAGER",
+              "VOTING_AUTH_SOLE",
+              "VOTING_AUTH_SHARED",
+              "VOTING_AUTH_NONE"
+            ],
+            "footer": null,
+            "logical_table_name": "INFOTABLE.tsv",
+            "member_sha256": "04216106355c19768cc31019e6028e2d888cf527b34ab522cd805d54d6f40152",
+            "profile_id": "SEC_13F_TSV_V2_CANDIDATE",
+            "raw_path": "data/raw/sec/2013q2_form13f.zip",
+            "raw_sha256": "569d56e978f7dee3775e544a1e46019389e22adcf482386fcfaba51ceb6c7e84",
+            "source_instance_id": "SRC000001"
+          },
+          "witness": "holding170"
+        }
+      ],
+      "validation_scope": "Exact bounded question and supplied observations; not canonical approval"
+    },
+    {
+      "agent_version": "EDP_CANDIDATE_AGENT_V2_BOUNDED_V1",
+      "alternatives": [
+        "Retain source distinctions and leave semantic relation unresolved",
+        "Reject current equivalence candidate; revisit only with new source evidence"
+      ],
+      "candidate_label": "NON_MATCH",
+      "candidate_target": {
+        "field": "CUSIP",
+        "grain": "holding occurrence",
+        "namespace": "CUSIP",
+        "occurrence": "INFOTABLE:316:46369807",
+        "role": "",
+        "time": "",
+        "unit": "",
+        "value": "037833100",
+        "witness": "holding316"
+      },
+      "case_id": "E03",
+      "compatibility": {
+        "grain": "LITERAL_EQUAL",
+        "time": "UNRESOLVED",
+        "unit": "UNRESOLVED"
+      },
+      "conflicting_evidence": [
+        "occurrence: 'INFOTABLE:170:59198261' versus 'INFOTABLE:316:46369807'"
+      ],
+      "consequences": "No mapping/crosswalk/identity promotion or production join occurs in either case",
+      "dimension": "ER",
+      "human_review_required": false,
+      "input_fingerprint": "eec5c253d083ddd04f80ec3341fdba0ba28fa31131dcf480a602bb3fc606c60c",
+      "name_only_baseline_label": "MATCH",
+      "promotion_eligible": false,
+      "question": "same_occurrence",
+      "reason": "Different technical occurrences; shared tokens do not deduplicate them",
+      "required_transformation": "PRESERVE_OCCURRENCES; no deduplication",
+      "result_fingerprint": "ea277403fb4850fb20f0a104f5efad1b92e45db84b230ce06f5dea4e188f9b29",
+      "review_question": "Should this candidate be retained unresolved or rejected pending evidence?",
+      "semantic_promotions": [],
+      "side_effects": [],
+      "source_field": {
+        "field": "CUSIP",
+        "grain": "holding occurrence",
+        "namespace": "CUSIP",
+        "occurrence": "INFOTABLE:170:59198261",
+        "role": "",
+        "time": "",
+        "unit": "",
+        "value": "037833100",
+        "witness": "holding170"
+      },
+      "state": "REJECTED",
+      "supporting_evidence": [
+        {
+          "locator": {
+            "byte_length": 86,
+            "byte_offset": 16132,
+            "source_line": 170
+          },
+          "source": {
+            "archive_member": "INFOTABLE.tsv",
+            "expected_header": [
+              "ACCESSION_NUMBER",
+              "INFOTABLE_SK",
+              "NAMEOFISSUER",
+              "TITLEOFCLASS",
+              "CUSIP",
+              "FIGI",
+              "VALUE",
+              "SSHPRNAMT",
+              "SSHPRNAMTTYPE",
+              "PUTCALL",
+              "INVESTMENTDISCRETION",
+              "OTHERMANAGER",
+              "VOTING_AUTH_SOLE",
+              "VOTING_AUTH_SHARED",
+              "VOTING_AUTH_NONE"
+            ],
+            "footer": null,
+            "logical_table_name": "INFOTABLE.tsv",
+            "member_sha256": "04216106355c19768cc31019e6028e2d888cf527b34ab522cd805d54d6f40152",
+            "profile_id": "SEC_13F_TSV_V2_CANDIDATE",
+            "raw_path": "data/raw/sec/2013q2_form13f.zip",
+            "raw_sha256": "569d56e978f7dee3775e544a1e46019389e22adcf482386fcfaba51ceb6c7e84",
+            "source_instance_id": "SRC000001"
+          },
+          "witness": "holding170"
+        },
+        {
+          "locator": {
+            "byte_length": 86,
+            "byte_offset": 30160,
+            "source_line": 316
+          },
+          "source": {
+            "archive_member": "INFOTABLE.tsv",
+            "expected_header": [
+              "ACCESSION_NUMBER",
+              "INFOTABLE_SK",
+              "NAMEOFISSUER",
+              "TITLEOFCLASS",
+              "CUSIP",
+              "FIGI",
+              "VALUE",
+              "SSHPRNAMT",
+              "SSHPRNAMTTYPE",
+              "PUTCALL",
+              "INVESTMENTDISCRETION",
+              "OTHERMANAGER",
+              "VOTING_AUTH_SOLE",
+              "VOTING_AUTH_SHARED",
+              "VOTING_AUTH_NONE"
+            ],
+            "footer": null,
+            "logical_table_name": "INFOTABLE.tsv",
+            "member_sha256": "04216106355c19768cc31019e6028e2d888cf527b34ab522cd805d54d6f40152",
+            "profile_id": "SEC_13F_TSV_V2_CANDIDATE",
+            "raw_path": "data/raw/sec/2013q2_form13f.zip",
+            "raw_sha256": "569d56e978f7dee3775e544a1e46019389e22adcf482386fcfaba51ceb6c7e84",
+            "source_instance_id": "SRC000001"
+          },
+          "witness": "holding316"
+        }
+      ],
+      "validation_scope": "Exact bounded question and supplied observations; not canonical approval"
+    },
+    {
+      "agent_version": "EDP_CANDIDATE_AGENT_V2_BOUNDED_V1",
+      "alternatives": [
+        "Retain source distinctions and leave semantic relation unresolved",
+        "Reject current equivalence candidate; revisit only with new source evidence"
+      ],
+      "candidate_label": "MATCH",
+      "candidate_target": {
+        "field": "CUSIP",
+        "grain": "",
+        "namespace": "CUSIP@SRC000001",
+        "occurrence": "holding316",
+        "role": "",
+        "time": "",
+        "unit": "",
+        "value": "037833100",
+        "witness": "holding316"
+      },
+      "case_id": "E04",
+      "compatibility": {
+        "grain": "UNRESOLVED",
+        "time": "UNRESOLVED",
+        "unit": "UNRESOLVED"
+      },
+      "conflicting_evidence": [
+        "occurrence: 'holding170' versus 'holding316'"
+      ],
+      "consequences": "No mapping/crosswalk/identity promotion or production join occurs in either case",
+      "dimension": "CROSSWALK",
+      "human_review_required": false,
+      "input_fingerprint": "86deeab0039f3d986dbb94f0045aa0f917e8669884dc64f3ef9a667fe8b6dc02",
+      "name_only_baseline_label": "MATCH",
+      "promotion_eligible": false,
+      "question": "same_native_identifier",
+      "reason": "Exact nonempty namespaced token observation only",
+      "required_transformation": "REFERENCE_NAMESPACED_LITERAL_ONLY; no canonical merge",
+      "result_fingerprint": "bf0d07f5e5e40d14f177e131b2926aaec63d439b80b65e57c71caa6304b4caf8",
+      "review_question": "Should this candidate be retained unresolved or rejected pending evidence?",
+      "semantic_promotions": [],
+      "side_effects": [],
+      "source_field": {
+        "field": "CUSIP",
+        "grain": "",
+        "namespace": "CUSIP@SRC000001",
+        "occurrence": "holding170",
+        "role": "",
+        "time": "",
+        "unit": "",
+        "value": "037833100",
+        "witness": "holding170"
+      },
+      "state": "VALIDATED",
+      "supporting_evidence": [
+        {
+          "locator": {
+            "byte_length": 86,
+            "byte_offset": 16132,
+            "source_line": 170
+          },
+          "source": {
+            "archive_member": "INFOTABLE.tsv",
+            "expected_header": [
+              "ACCESSION_NUMBER",
+              "INFOTABLE_SK",
+              "NAMEOFISSUER",
+              "TITLEOFCLASS",
+              "CUSIP",
+              "FIGI",
+              "VALUE",
+              "SSHPRNAMT",
+              "SSHPRNAMTTYPE",
+              "PUTCALL",
+              "INVESTMENTDISCRETION",
+              "OTHERMANAGER",
+              "VOTING_AUTH_SOLE",
+              "VOTING_AUTH_SHARED",
+              "VOTING_AUTH_NONE"
+            ],
+            "footer": null,
+            "logical_table_name": "INFOTABLE.tsv",
+            "member_sha256": "04216106355c19768cc31019e6028e2d888cf527b34ab522cd805d54d6f40152",
+            "profile_id": "SEC_13F_TSV_V2_CANDIDATE",
+            "raw_path": "data/raw/sec/2013q2_form13f.zip",
+            "raw_sha256": "569d56e978f7dee3775e544a1e46019389e22adcf482386fcfaba51ceb6c7e84",
+            "source_instance_id": "SRC000001"
+          },
+          "witness": "holding170"
+        },
+        {
+          "locator": {
+            "byte_length": 86,
+            "byte_offset": 30160,
+            "source_line": 316
+          },
+          "source": {
+            "archive_member": "INFOTABLE.tsv",
+            "expected_header": [
+              "ACCESSION_NUMBER",
+              "INFOTABLE_SK",
+              "NAMEOFISSUER",
+              "TITLEOFCLASS",
+              "CUSIP",
+              "FIGI",
+              "VALUE",
+              "SSHPRNAMT",
+              "SSHPRNAMTTYPE",
+              "PUTCALL",
+              "INVESTMENTDISCRETION",
+              "OTHERMANAGER",
+              "VOTING_AUTH_SOLE",
+              "VOTING_AUTH_SHARED",
+              "VOTING_AUTH_NONE"
+            ],
+            "footer": null,
+            "logical_table_name": "INFOTABLE.tsv",
+            "member_sha256": "04216106355c19768cc31019e6028e2d888cf527b34ab522cd805d54d6f40152",
+            "profile_id": "SEC_13F_TSV_V2_CANDIDATE",
+            "raw_path": "data/raw/sec/2013q2_form13f.zip",
+            "raw_sha256": "569d56e978f7dee3775e544a1e46019389e22adcf482386fcfaba51ceb6c7e84",
+            "source_instance_id": "SRC000001"
+          },
+          "witness": "holding316"
+        }
+      ],
+      "validation_scope": "Exact bounded question and supplied observations; not canonical approval"
+    },
+    {
+      "agent_version": "EDP_CANDIDATE_AGENT_V2_BOUNDED_V1",
+      "alternatives": [
+        "Retain source distinctions and leave semantic relation unresolved",
+        "Reject current equivalence candidate; revisit only with new source evidence"
+      ],
+      "candidate_label": "UNRESOLVED",
+      "candidate_target": {
+        "field": "CUSIP",
+        "grain": "",
+        "namespace": "CUSIP",
+        "occurrence": "holding316",
+        "role": "security candidate",
+        "time": "",
+        "unit": "",
+        "value": "037833100",
+        "witness": "holding316"
+      },
+      "case_id": "E05",
+      "compatibility": {
+        "grain": "UNRESOLVED",
+        "time": "UNRESOLVED",
+        "unit": "UNRESOLVED"
+      },
+      "conflicting_evidence": [
+        "occurrence: 'holding170' versus 'holding316'",
+        "LIMITATION: no canonical approval, validity interval or cardinality proof"
+      ],
+      "consequences": "No mapping/crosswalk/identity promotion or production join occurs in either case",
+      "dimension": "ER",
+      "human_review_required": true,
+      "input_fingerprint": "d2cf7d1407cab508bedc79168c1dd5c240b3a957cd639e32f9ac1232351c6fc5",
+      "name_only_baseline_label": "MATCH",
+      "promotion_eligible": false,
+      "question": "canonical_entity",
+      "reason": "No independently approved canonical or temporal equivalence rule",
+      "required_transformation": "NO_ENTITY_MERGE_AUTHORIZED; identity rules unresolved",
+      "result_fingerprint": "35fca8e61f14cab21fc078a4fd6177c663e9070fd4d1b7f17c5827c289adfe1d",
+      "review_question": "Should this candidate be retained unresolved or rejected pending evidence?",
+      "semantic_promotions": [],
+      "side_effects": [],
+      "source_field": {
+        "field": "CUSIP",
+        "grain": "",
+        "namespace": "CUSIP",
+        "occurrence": "holding170",
+        "role": "security candidate",
+        "time": "",
+        "unit": "",
+        "value": "037833100",
+        "witness": "holding170"
+      },
+      "state": "UNRESOLVED",
+      "supporting_evidence": [
+        {
+          "locator": {
+            "byte_length": 86,
+            "byte_offset": 16132,
+            "source_line": 170
+          },
+          "source": {
+            "archive_member": "INFOTABLE.tsv",
+            "expected_header": [
+              "ACCESSION_NUMBER",
+              "INFOTABLE_SK",
+              "NAMEOFISSUER",
+              "TITLEOFCLASS",
+              "CUSIP",
+              "FIGI",
+              "VALUE",
+              "SSHPRNAMT",
+              "SSHPRNAMTTYPE",
+              "PUTCALL",
+              "INVESTMENTDISCRETION",
+              "OTHERMANAGER",
+              "VOTING_AUTH_SOLE",
+              "VOTING_AUTH_SHARED",
+              "VOTING_AUTH_NONE"
+            ],
+            "footer": null,
+            "logical_table_name": "INFOTABLE.tsv",
+            "member_sha256": "04216106355c19768cc31019e6028e2d888cf527b34ab522cd805d54d6f40152",
+            "profile_id": "SEC_13F_TSV_V2_CANDIDATE",
+            "raw_path": "data/raw/sec/2013q2_form13f.zip",
+            "raw_sha256": "569d56e978f7dee3775e544a1e46019389e22adcf482386fcfaba51ceb6c7e84",
+            "source_instance_id": "SRC000001"
+          },
+          "witness": "holding170"
+        },
+        {
+          "locator": {
+            "byte_length": 86,
+            "byte_offset": 30160,
+            "source_line": 316
+          },
+          "source": {
+            "archive_member": "INFOTABLE.tsv",
+            "expected_header": [
+              "ACCESSION_NUMBER",
+              "INFOTABLE_SK",
+              "NAMEOFISSUER",
+              "TITLEOFCLASS",
+              "CUSIP",
+              "FIGI",
+              "VALUE",
+              "SSHPRNAMT",
+              "SSHPRNAMTTYPE",
+              "PUTCALL",
+              "INVESTMENTDISCRETION",
+              "OTHERMANAGER",
+              "VOTING_AUTH_SOLE",
+              "VOTING_AUTH_SHARED",
+              "VOTING_AUTH_NONE"
+            ],
+            "footer": null,
+            "logical_table_name": "INFOTABLE.tsv",
+            "member_sha256": "04216106355c19768cc31019e6028e2d888cf527b34ab522cd805d54d6f40152",
+            "profile_id": "SEC_13F_TSV_V2_CANDIDATE",
+            "raw_path": "data/raw/sec/2013q2_form13f.zip",
+            "raw_sha256": "569d56e978f7dee3775e544a1e46019389e22adcf482386fcfaba51ceb6c7e84",
+            "source_instance_id": "SRC000001"
+          },
+          "witness": "holding316"
+        }
+      ],
+      "validation_scope": "Exact bounded question and supplied observations; not canonical approval"
+    },
+    {
+      "agent_version": "EDP_CANDIDATE_AGENT_V2_BOUNDED_V1",
+      "alternatives": [
+        "Retain source distinctions and leave semantic relation unresolved",
+        "Reject current equivalence candidate; revisit only with new source evidence"
+      ],
+      "candidate_label": "UNRESOLVED",
+      "candidate_target": {
+        "field": "FILINGMANAGER_NAME",
+        "grain": "",
+        "namespace": "",
+        "occurrence": "cover104",
+        "role": "manager candidate",
+        "time": "",
+        "unit": "",
+        "value": "Mirae Asset Global Investments (Hong Kong) LTD",
+        "witness": "cover104"
+      },
+      "case_id": "E06",
+      "compatibility": {
+        "grain": "UNRESOLVED",
+        "time": "UNRESOLVED",
+        "unit": "UNRESOLVED"
+      },
+      "conflicting_evidence": [
+        "occurrence: 'cover100' versus 'cover104'",
+        "LIMITATION: no canonical approval, validity interval or cardinality proof"
+      ],
+      "consequences": "No mapping/crosswalk/identity promotion or production join occurs in either case",
+      "dimension": "ER",
+      "human_review_required": true,
+      "input_fingerprint": "93015a0fe5cc987cef6708133cdf9791efac5f5e86f3e7a1b11ecedf493c4c9d",
+      "name_only_baseline_label": "MATCH",
+      "promotion_eligible": false,
+      "question": "canonical_entity",
+      "reason": "No independently approved canonical or temporal equivalence rule",
+      "required_transformation": "NO_ENTITY_MERGE_AUTHORIZED; identity rules unresolved",
+      "result_fingerprint": "dde75322604a66ae23a3909fb92d52d046b76cf011dee4c7baab6e06adcd6ec4",
+      "review_question": "Should this candidate be retained unresolved or rejected pending evidence?",
+      "semantic_promotions": [],
+      "side_effects": [],
+      "source_field": {
+        "field": "FILINGMANAGER_NAME",
+        "grain": "",
+        "namespace": "",
+        "occurrence": "cover100",
+        "role": "manager candidate",
+        "time": "",
+        "unit": "",
+        "value": "Mirae Asset Global Investments (USA), LLC",
+        "witness": "cover100"
+      },
+      "state": "UNRESOLVED",
+      "supporting_evidence": [
+        {
+          "locator": {
+            "byte_length": 151,
+            "byte_offset": 18257,
+            "source_line": 100
+          },
+          "source": {
+            "archive_member": "COVERPAGE.tsv",
+            "expected_header": [
+              "ACCESSION_NUMBER",
+              "REPORTCALENDARORQUARTER",
+              "ISAMENDMENT",
+              "AMENDMENTNO",
+              "AMENDMENTTYPE",
+              "CONFDENIEDEXPIRED",
+              "DATEDENIEDEXPIRED",
+              "DATEREPORTED",
+              "REASONFORNONCONFIDENTIALITY",
+              "FILINGMANAGER_NAME",
+              "FILINGMANAGER_STREET1",
+              "FILINGMANAGER_STREET2",
+              "FILINGMANAGER_CITY",
+              "FILINGMANAGER_STATEORCOUNTRY",
+              "FILINGMANAGER_ZIPCODE",
+              "REPORTTYPE",
+              "FORM13FFILENUMBER",
+              "CRDNUMBER",
+              "SECFILENUMBER",
+              "PROVIDEINFOFORINSTRUCTION5",
+              "ADDITIONALINFORMATION"
+            ],
+            "footer": null,
+            "logical_table_name": "COVERPAGE.tsv",
+            "member_sha256": "21287ddc712db9553e7c7295f2713ecb3c8b63891be622811b29e5cc5836790e",
+            "profile_id": "SEC_13F_TSV_V2_CANDIDATE",
+            "raw_path": "data/raw/sec/2013q2_form13f.zip",
+            "raw_sha256": "569d56e978f7dee3775e544a1e46019389e22adcf482386fcfaba51ceb6c7e84",
+            "source_instance_id": "SRC000001"
+          },
+          "witness": "cover100"
+        },
+        {
+          "locator": {
+            "byte_length": 191,
+            "byte_offset": 18878,
+            "source_line": 104
+          },
+          "source": {
+            "archive_member": "COVERPAGE.tsv",
+            "expected_header": [
+              "ACCESSION_NUMBER",
+              "REPORTCALENDARORQUARTER",
+              "ISAMENDMENT",
+              "AMENDMENTNO",
+              "AMENDMENTTYPE",
+              "CONFDENIEDEXPIRED",
+              "DATEDENIEDEXPIRED",
+              "DATEREPORTED",
+              "REASONFORNONCONFIDENTIALITY",
+              "FILINGMANAGER_NAME",
+              "FILINGMANAGER_STREET1",
+              "FILINGMANAGER_STREET2",
+              "FILINGMANAGER_CITY",
+              "FILINGMANAGER_STATEORCOUNTRY",
+              "FILINGMANAGER_ZIPCODE",
+              "REPORTTYPE",
+              "FORM13FFILENUMBER",
+              "CRDNUMBER",
+              "SECFILENUMBER",
+              "PROVIDEINFOFORINSTRUCTION5",
+              "ADDITIONALINFORMATION"
+            ],
+            "footer": null,
+            "logical_table_name": "COVERPAGE.tsv",
+            "member_sha256": "21287ddc712db9553e7c7295f2713ecb3c8b63891be622811b29e5cc5836790e",
+            "profile_id": "SEC_13F_TSV_V2_CANDIDATE",
+            "raw_path": "data/raw/sec/2013q2_form13f.zip",
+            "raw_sha256": "569d56e978f7dee3775e544a1e46019389e22adcf482386fcfaba51ceb6c7e84",
+            "source_instance_id": "SRC000001"
+          },
+          "witness": "cover104"
+        }
+      ],
+      "validation_scope": "Exact bounded question and supplied observations; not canonical approval"
+    },
+    {
+      "agent_version": "EDP_CANDIDATE_AGENT_V2_BOUNDED_V1",
+      "alternatives": [
+        "Retain source distinctions and leave semantic relation unresolved",
+        "Reject current equivalence candidate; revisit only with new source evidence"
+      ],
+      "candidate_label": "NON_MATCH",
+      "candidate_target": {
+        "field": "ACCESSION_NUMBER",
+        "grain": "",
+        "namespace": "SEC13F_ACCESSION@SRC000001",
+        "occurrence": "cover104",
+        "role": "",
+        "time": "",
+        "unit": "",
+        "value": "0001423255-13-000003",
+        "witness": "cover104"
+      },
+      "case_id": "E07",
+      "compatibility": {
+        "grain": "UNRESOLVED",
+        "time": "UNRESOLVED",
+        "unit": "UNRESOLVED"
+      },
+      "conflicting_evidence": [
+        "occurrence: 'cover100' versus 'cover104'"
+      ],
+      "consequences": "No mapping/crosswalk/identity promotion or production join occurs in either case",
+      "dimension": "CROSSWALK",
+      "human_review_required": false,
+      "input_fingerprint": "fb84695acf8077a01d4b2fc7f4245117ec751906ce6a115ca10a9f25a070aaa3",
+      "name_only_baseline_label": "MATCH",
+      "promotion_eligible": false,
+      "question": "same_native_identifier",
+      "reason": "Distinct source-native tokens",
+      "required_transformation": "REFERENCE_NAMESPACED_LITERAL_ONLY; no canonical merge",
+      "result_fingerprint": "72ccb11c90a74a1fc94d45e305f70c558ff15423b1be103330e4893cd1910b30",
+      "review_question": "Should this candidate be retained unresolved or rejected pending evidence?",
+      "semantic_promotions": [],
+      "side_effects": [],
+      "source_field": {
+        "field": "ACCESSION_NUMBER",
+        "grain": "",
+        "namespace": "SEC13F_ACCESSION@SRC000001",
+        "occurrence": "cover100",
+        "role": "",
+        "time": "",
+        "unit": "",
+        "value": "0001423255-13-000008",
+        "witness": "cover100"
+      },
+      "state": "REJECTED",
+      "supporting_evidence": [
+        {
+          "locator": {
+            "byte_length": 151,
+            "byte_offset": 18257,
+            "source_line": 100
+          },
+          "source": {
+            "archive_member": "COVERPAGE.tsv",
+            "expected_header": [
+              "ACCESSION_NUMBER",
+              "REPORTCALENDARORQUARTER",
+              "ISAMENDMENT",
+              "AMENDMENTNO",
+              "AMENDMENTTYPE",
+              "CONFDENIEDEXPIRED",
+              "DATEDENIEDEXPIRED",
+              "DATEREPORTED",
+              "REASONFORNONCONFIDENTIALITY",
+              "FILINGMANAGER_NAME",
+              "FILINGMANAGER_STREET1",
+              "FILINGMANAGER_STREET2",
+              "FILINGMANAGER_CITY",
+              "FILINGMANAGER_STATEORCOUNTRY",
+              "FILINGMANAGER_ZIPCODE",
+              "REPORTTYPE",
+              "FORM13FFILENUMBER",
+              "CRDNUMBER",
+              "SECFILENUMBER",
+              "PROVIDEINFOFORINSTRUCTION5",
+              "ADDITIONALINFORMATION"
+            ],
+            "footer": null,
+            "logical_table_name": "COVERPAGE.tsv",
+            "member_sha256": "21287ddc712db9553e7c7295f2713ecb3c8b63891be622811b29e5cc5836790e",
+            "profile_id": "SEC_13F_TSV_V2_CANDIDATE",
+            "raw_path": "data/raw/sec/2013q2_form13f.zip",
+            "raw_sha256": "569d56e978f7dee3775e544a1e46019389e22adcf482386fcfaba51ceb6c7e84",
+            "source_instance_id": "SRC000001"
+          },
+          "witness": "cover100"
+        },
+        {
+          "locator": {
+            "byte_length": 191,
+            "byte_offset": 18878,
+            "source_line": 104
+          },
+          "source": {
+            "archive_member": "COVERPAGE.tsv",
+            "expected_header": [
+              "ACCESSION_NUMBER",
+              "REPORTCALENDARORQUARTER",
+              "ISAMENDMENT",
+              "AMENDMENTNO",
+              "AMENDMENTTYPE",
+              "CONFDENIEDEXPIRED",
+              "DATEDENIEDEXPIRED",
+              "DATEREPORTED",
+              "REASONFORNONCONFIDENTIALITY",
+              "FILINGMANAGER_NAME",
+              "FILINGMANAGER_STREET1",
+              "FILINGMANAGER_STREET2",
+              "FILINGMANAGER_CITY",
+              "FILINGMANAGER_STATEORCOUNTRY",
+              "FILINGMANAGER_ZIPCODE",
+              "REPORTTYPE",
+              "FORM13FFILENUMBER",
+              "CRDNUMBER",
+              "SECFILENUMBER",
+              "PROVIDEINFOFORINSTRUCTION5",
+              "ADDITIONALINFORMATION"
+            ],
+            "footer": null,
+            "logical_table_name": "COVERPAGE.tsv",
+            "member_sha256": "21287ddc712db9553e7c7295f2713ecb3c8b63891be622811b29e5cc5836790e",
+            "profile_id": "SEC_13F_TSV_V2_CANDIDATE",
+            "raw_path": "data/raw/sec/2013q2_form13f.zip",
+            "raw_sha256": "569d56e978f7dee3775e544a1e46019389e22adcf482386fcfaba51ceb6c7e84",
+            "source_instance_id": "SRC000001"
+          },
+          "witness": "cover104"
+        }
+      ],
+      "validation_scope": "Exact bounded question and supplied observations; not canonical approval"
+    },
+    {
+      "agent_version": "EDP_CANDIDATE_AGENT_V2_BOUNDED_V1",
+      "alternatives": [
+        "Retain source distinctions and leave semantic relation unresolved",
+        "Reject current equivalence candidate; revisit only with new source evidence"
+      ],
+      "candidate_label": "MATCH",
+      "candidate_target": {
+        "field": "CIK",
+        "grain": "",
+        "namespace": "SEC_CIK@SRC000001",
+        "occurrence": "submission104",
+        "role": "",
+        "time": "",
+        "unit": "",
+        "value": "0001121477",
+        "witness": "submission104"
+      },
+      "case_id": "E08",
+      "compatibility": {
+        "grain": "UNRESOLVED",
+        "time": "UNRESOLVED",
+        "unit": "UNRESOLVED"
+      },
+      "conflicting_evidence": [
+        "occurrence: 'submission103' versus 'submission104'"
+      ],
+      "consequences": "No mapping/crosswalk/identity promotion or production join occurs in either case",
+      "dimension": "CROSSWALK",
+      "human_review_required": false,
+      "input_fingerprint": "69b5aa4534562ec94c802e22dc81d6b8578e170c44c05d3fd01d3e5b36b229ce",
+      "name_only_baseline_label": "MATCH",
+      "promotion_eligible": false,
+      "question": "same_native_identifier",
+      "reason": "Exact nonempty namespaced token observation only",
+      "required_transformation": "REFERENCE_NAMESPACED_LITERAL_ONLY; no canonical merge",
+      "result_fingerprint": "3c155a390efb0c60c4c167375115d35fc51afe447421f9e90b149444fc629038",
+      "review_question": "Should this candidate be retained unresolved or rejected pending evidence?",
+      "semantic_promotions": [],
+      "side_effects": [],
+      "source_field": {
+        "field": "CIK",
+        "grain": "",
+        "namespace": "SEC_CIK@SRC000001",
+        "occurrence": "submission103",
+        "role": "",
+        "time": "",
+        "unit": "",
+        "value": "0001121477",
+        "witness": "submission103"
+      },
+      "state": "VALIDATED",
+      "supporting_evidence": [
+        {
+          "locator": {
+            "byte_length": 65,
+            "byte_offset": 6484,
+            "source_line": 103
+          },
+          "source": {
+            "archive_member": "SUBMISSION.tsv",
+            "expected_header": [
+              "ACCESSION_NUMBER",
+              "FILING_DATE",
+              "SUBMISSIONTYPE",
+              "CIK",
+              "PERIODOFREPORT"
+            ],
+            "footer": null,
+            "logical_table_name": "SUBMISSION.tsv",
+            "member_sha256": "94494b45570e698a13b700a510b818d0008ccaa86a93786adb37676433113d2d",
+            "profile_id": "SEC_13F_TSV_V2_CANDIDATE",
+            "raw_path": "data/raw/sec/2013q2_form13f.zip",
+            "raw_sha256": "569d56e978f7dee3775e544a1e46019389e22adcf482386fcfaba51ceb6c7e84",
+            "source_instance_id": "SRC000001"
+          },
+          "witness": "submission103"
+        },
+        {
+          "locator": {
+            "byte_length": 65,
+            "byte_offset": 6549,
+            "source_line": 104
+          },
+          "source": {
+            "archive_member": "SUBMISSION.tsv",
+            "expected_header": [
+              "ACCESSION_NUMBER",
+              "FILING_DATE",
+              "SUBMISSIONTYPE",
+              "CIK",
+              "PERIODOFREPORT"
+            ],
+            "footer": null,
+            "logical_table_name": "SUBMISSION.tsv",
+            "member_sha256": "94494b45570e698a13b700a510b818d0008ccaa86a93786adb37676433113d2d",
+            "profile_id": "SEC_13F_TSV_V2_CANDIDATE",
+            "raw_path": "data/raw/sec/2013q2_form13f.zip",
+            "raw_sha256": "569d56e978f7dee3775e544a1e46019389e22adcf482386fcfaba51ceb6c7e84",
+            "source_instance_id": "SRC000001"
+          },
+          "witness": "submission104"
+        }
+      ],
+      "validation_scope": "Exact bounded question and supplied observations; not canonical approval"
+    },
+    {
+      "agent_version": "EDP_CANDIDATE_AGENT_V2_BOUNDED_V1",
+      "alternatives": [
+        "Retain source distinctions and leave semantic relation unresolved",
+        "Reject current equivalence candidate; revisit only with new source evidence"
+      ],
+      "candidate_label": "NON_MATCH",
+      "candidate_target": {
+        "field": "CIK",
+        "grain": "filing occurrence",
+        "namespace": "SEC_CIK",
+        "occurrence": "SUBMISSION:104:0001121477-13-000024",
+        "role": "",
+        "time": "31-MAR-2012",
+        "unit": "",
+        "value": "0001121477",
+        "witness": "submission104"
+      },
+      "case_id": "E09",
+      "compatibility": {
+        "grain": "LITERAL_EQUAL",
+        "time": "LITERAL_DIFFERENT",
+        "unit": "UNRESOLVED"
+      },
+      "conflicting_evidence": [
+        "time: '31-MAR-2011' versus '31-MAR-2012'",
+        "occurrence: 'SUBMISSION:103:0001121477-13-000028' versus 'SUBMISSION:104:0001121477-13-000024'"
+      ],
+      "consequences": "No mapping/crosswalk/identity promotion or production join occurs in either case",
+      "dimension": "ER",
+      "human_review_required": false,
+      "input_fingerprint": "6db503eb23c23c7794a41803ad1d230b2c19e405d7ba4511445b3fdce14ddfa2",
+      "name_only_baseline_label": "MATCH",
+      "promotion_eligible": false,
+      "question": "same_occurrence",
+      "reason": "Different technical occurrences; shared tokens do not deduplicate them",
+      "required_transformation": "PRESERVE_OCCURRENCES; no deduplication",
+      "result_fingerprint": "78481b2faf702e04ad6fd5fbe7631b1781859a1672865c3c8f192c59b05e471c",
+      "review_question": "Should this candidate be retained unresolved or rejected pending evidence?",
+      "semantic_promotions": [],
+      "side_effects": [],
+      "source_field": {
+        "field": "CIK",
+        "grain": "filing occurrence",
+        "namespace": "SEC_CIK",
+        "occurrence": "SUBMISSION:103:0001121477-13-000028",
+        "role": "",
+        "time": "31-MAR-2011",
+        "unit": "",
+        "value": "0001121477",
+        "witness": "submission103"
+      },
+      "state": "REJECTED",
+      "supporting_evidence": [
+        {
+          "locator": {
+            "byte_length": 65,
+            "byte_offset": 6484,
+            "source_line": 103
+          },
+          "source": {
+            "archive_member": "SUBMISSION.tsv",
+            "expected_header": [
+              "ACCESSION_NUMBER",
+              "FILING_DATE",
+              "SUBMISSIONTYPE",
+              "CIK",
+              "PERIODOFREPORT"
+            ],
+            "footer": null,
+            "logical_table_name": "SUBMISSION.tsv",
+            "member_sha256": "94494b45570e698a13b700a510b818d0008ccaa86a93786adb37676433113d2d",
+            "profile_id": "SEC_13F_TSV_V2_CANDIDATE",
+            "raw_path": "data/raw/sec/2013q2_form13f.zip",
+            "raw_sha256": "569d56e978f7dee3775e544a1e46019389e22adcf482386fcfaba51ceb6c7e84",
+            "source_instance_id": "SRC000001"
+          },
+          "witness": "submission103"
+        },
+        {
+          "locator": {
+            "byte_length": 65,
+            "byte_offset": 6549,
+            "source_line": 104
+          },
+          "source": {
+            "archive_member": "SUBMISSION.tsv",
+            "expected_header": [
+              "ACCESSION_NUMBER",
+              "FILING_DATE",
+              "SUBMISSIONTYPE",
+              "CIK",
+              "PERIODOFREPORT"
+            ],
+            "footer": null,
+            "logical_table_name": "SUBMISSION.tsv",
+            "member_sha256": "94494b45570e698a13b700a510b818d0008ccaa86a93786adb37676433113d2d",
+            "profile_id": "SEC_13F_TSV_V2_CANDIDATE",
+            "raw_path": "data/raw/sec/2013q2_form13f.zip",
+            "raw_sha256": "569d56e978f7dee3775e544a1e46019389e22adcf482386fcfaba51ceb6c7e84",
+            "source_instance_id": "SRC000001"
+          },
+          "witness": "submission104"
+        }
+      ],
+      "validation_scope": "Exact bounded question and supplied observations; not canonical approval"
+    },
+    {
+      "agent_version": "EDP_CANDIDATE_AGENT_V2_BOUNDED_V1",
+      "alternatives": [
+        "Retain source distinctions and leave semantic relation unresolved",
+        "Reject current equivalence candidate; revisit only with new source evidence"
+      ],
+      "candidate_label": "NON_MATCH",
+      "candidate_target": {
+        "field": "ACT Symbol",
+        "grain": "",
+        "namespace": "ACT_SYMBOL@SRC000003",
+        "occurrence": "listing11",
+        "role": "",
+        "time": "",
+        "unit": "",
+        "value": "AAC.W",
+        "witness": "listing11"
+      },
+      "case_id": "E10",
+      "compatibility": {
+        "grain": "UNRESOLVED",
+        "time": "UNRESOLVED",
+        "unit": "UNRESOLVED"
+      },
+      "conflicting_evidence": [
+        "occurrence: 'listing10' versus 'listing11'"
+      ],
+      "consequences": "No mapping/crosswalk/identity promotion or production join occurs in either case",
+      "dimension": "ER",
+      "human_review_required": false,
+      "input_fingerprint": "89528311ead6a429bd6da15c77849f365ed579dc0bedb622d1e88644205b80ef",
+      "name_only_baseline_label": "MATCH",
+      "promotion_eligible": false,
+      "question": "same_native_identifier",
+      "reason": "Distinct source-native tokens",
+      "required_transformation": "REFERENCE_NAMESPACED_LITERAL_ONLY; no canonical merge",
+      "result_fingerprint": "9949b79b5170c98e17fe3e3b4c5e3520cbc4b5c71e5ee588abee1aeda5aacd33",
+      "review_question": "Should this candidate be retained unresolved or rejected pending evidence?",
+      "semantic_promotions": [],
+      "side_effects": [],
+      "source_field": {
+        "field": "ACT Symbol",
+        "grain": "",
+        "namespace": "ACT_SYMBOL@SRC000003",
+        "occurrence": "listing10",
+        "role": "",
+        "time": "",
+        "unit": "",
+        "value": "AAC.U",
+        "witness": "listing10"
+      },
+      "state": "REJECTED",
+      "supporting_evidence": [
+        {
+          "locator": {
+            "byte_length": 154,
+            "byte_offset": 589,
+            "source_line": 10
+          },
+          "source": {
+            "archive_member": "",
+            "expected_header": [
+              "ACT Symbol",
+              "Security Name",
+              "Exchange",
+              "CQS Symbol",
+              "ETF",
+              "Round Lot Size",
+              "Test Issue",
+              "NASDAQ Symbol"
+            ],
+            "footer": {
+              "first_field": "File Creation Time: 1015202603:03",
+              "trailing_empty_fields": 6
+            },
+            "logical_table_name": "otherlisted.txt",
+            "member_sha256": "7f099cd61db347f2199251dfe45dc132ffc8c75bd68a91471c30e217e4265d3d",
+            "profile_id": "NASDAQ_PIPE_V2_CANDIDATE",
+            "raw_path": "data/raw/nasdaq/otherlisted.txt",
+            "raw_sha256": "7f099cd61db347f2199251dfe45dc132ffc8c75bd68a91471c30e217e4265d3d",
+            "source_instance_id": "SRC000003"
+          },
+          "witness": "listing10"
+        },
+        {
+          "locator": {
+            "byte_length": 176,
+            "byte_offset": 743,
+            "source_line": 11
+          },
+          "source": {
+            "archive_member": "",
+            "expected_header": [
+              "ACT Symbol",
+              "Security Name",
+              "Exchange",
+              "CQS Symbol",
+              "ETF",
+              "Round Lot Size",
+              "Test Issue",
+              "NASDAQ Symbol"
+            ],
+            "footer": {
+              "first_field": "File Creation Time: 1015202603:03",
+              "trailing_empty_fields": 6
+            },
+            "logical_table_name": "otherlisted.txt",
+            "member_sha256": "7f099cd61db347f2199251dfe45dc132ffc8c75bd68a91471c30e217e4265d3d",
+            "profile_id": "NASDAQ_PIPE_V2_CANDIDATE",
+            "raw_path": "data/raw/nasdaq/otherlisted.txt",
+            "raw_sha256": "7f099cd61db347f2199251dfe45dc132ffc8c75bd68a91471c30e217e4265d3d",
+            "source_instance_id": "SRC000003"
+          },
+          "witness": "listing11"
+        }
+      ],
+      "validation_scope": "Exact bounded question and supplied observations; not canonical approval"
+    },
+    {
+      "agent_version": "EDP_CANDIDATE_AGENT_V2_BOUNDED_V1",
+      "alternatives": [
+        "Retain source distinctions and leave semantic relation unresolved",
+        "Reject current equivalence candidate; revisit only with new source evidence"
+      ],
+      "candidate_label": "UNRESOLVED",
+      "candidate_target": {
+        "field": "ACT Symbol",
+        "grain": "",
+        "namespace": "ACT_SYMBOL",
+        "occurrence": "listing11",
+        "role": "security candidate",
+        "time": "",
+        "unit": "",
+        "value": "AAC.W",
+        "witness": "listing11"
+      },
+      "case_id": "E11",
+      "compatibility": {
+        "grain": "UNRESOLVED",
+        "time": "UNRESOLVED",
+        "unit": "UNRESOLVED"
+      },
+      "conflicting_evidence": [
+        "occurrence: 'listing10' versus 'listing11'",
+        "LIMITATION: no canonical approval, validity interval or cardinality proof"
+      ],
+      "consequences": "No mapping/crosswalk/identity promotion or production join occurs in either case",
+      "dimension": "ER",
+      "human_review_required": true,
+      "input_fingerprint": "40bdbce34ecb99f5d6877aa850420d829084dc7b2e9f430e67394920e94bd5d7",
+      "name_only_baseline_label": "MATCH",
+      "promotion_eligible": false,
+      "question": "canonical_entity",
+      "reason": "No independently approved canonical or temporal equivalence rule",
+      "required_transformation": "NO_ENTITY_MERGE_AUTHORIZED; identity rules unresolved",
+      "result_fingerprint": "bbe89aa10fe072cdb1e46a09a968907a19446eb9e044fcaf30b7a4f4fa3b839a",
+      "review_question": "Should this candidate be retained unresolved or rejected pending evidence?",
+      "semantic_promotions": [],
+      "side_effects": [],
+      "source_field": {
+        "field": "ACT Symbol",
+        "grain": "",
+        "namespace": "ACT_SYMBOL",
+        "occurrence": "listing10",
+        "role": "security candidate",
+        "time": "",
+        "unit": "",
+        "value": "AAC.U",
+        "witness": "listing10"
+      },
+      "state": "UNRESOLVED",
+      "supporting_evidence": [
+        {
+          "locator": {
+            "byte_length": 154,
+            "byte_offset": 589,
+            "source_line": 10
+          },
+          "source": {
+            "archive_member": "",
+            "expected_header": [
+              "ACT Symbol",
+              "Security Name",
+              "Exchange",
+              "CQS Symbol",
+              "ETF",
+              "Round Lot Size",
+              "Test Issue",
+              "NASDAQ Symbol"
+            ],
+            "footer": {
+              "first_field": "File Creation Time: 1015202603:03",
+              "trailing_empty_fields": 6
+            },
+            "logical_table_name": "otherlisted.txt",
+            "member_sha256": "7f099cd61db347f2199251dfe45dc132ffc8c75bd68a91471c30e217e4265d3d",
+            "profile_id": "NASDAQ_PIPE_V2_CANDIDATE",
+            "raw_path": "data/raw/nasdaq/otherlisted.txt",
+            "raw_sha256": "7f099cd61db347f2199251dfe45dc132ffc8c75bd68a91471c30e217e4265d3d",
+            "source_instance_id": "SRC000003"
+          },
+          "witness": "listing10"
+        },
+        {
+          "locator": {
+            "byte_length": 176,
+            "byte_offset": 743,
+            "source_line": 11
+          },
+          "source": {
+            "archive_member": "",
+            "expected_header": [
+              "ACT Symbol",
+              "Security Name",
+              "Exchange",
+              "CQS Symbol",
+              "ETF",
+              "Round Lot Size",
+              "Test Issue",
+              "NASDAQ Symbol"
+            ],
+            "footer": {
+              "first_field": "File Creation Time: 1015202603:03",
+              "trailing_empty_fields": 6
+            },
+            "logical_table_name": "otherlisted.txt",
+            "member_sha256": "7f099cd61db347f2199251dfe45dc132ffc8c75bd68a91471c30e217e4265d3d",
+            "profile_id": "NASDAQ_PIPE_V2_CANDIDATE",
+            "raw_path": "data/raw/nasdaq/otherlisted.txt",
+            "raw_sha256": "7f099cd61db347f2199251dfe45dc132ffc8c75bd68a91471c30e217e4265d3d",
+            "source_instance_id": "SRC000003"
+          },
+          "witness": "listing11"
+        }
+      ],
+      "validation_scope": "Exact bounded question and supplied observations; not canonical approval"
+    },
+    {
+      "agent_version": "EDP_CANDIDATE_AGENT_V2_BOUNDED_V1",
+      "alternatives": [
+        "Retain source distinctions and leave semantic relation unresolved",
+        "Reject current equivalence candidate; revisit only with new source evidence"
+      ],
+      "candidate_label": "UNRESOLVED",
+      "candidate_target": {
+        "field": "FIGI",
+        "grain": "",
+        "namespace": "FIGI",
+        "occurrence": "holding316",
+        "role": "",
+        "time": "",
+        "unit": "",
+        "value": "",
+        "witness": "holding316"
+      },
+      "case_id": "E12",
+      "compatibility": {
+        "grain": "UNRESOLVED",
+        "time": "UNRESOLVED",
+        "unit": "UNRESOLVED"
+      },
+      "conflicting_evidence": [
+        "occurrence: 'holding170' versus 'holding316'",
+        "Empty source value is not identity evidence",
+        "LIMITATION: no canonical approval, validity interval or cardinality proof"
+      ],
+      "consequences": "No mapping/crosswalk/identity promotion or production join occurs in either case",
+      "dimension": "ER",
+      "human_review_required": true,
+      "input_fingerprint": "2849525198db9b5576a8d41b033a3dddc96c3dcd0b158885ee3a6ed1c2c5e35c",
+      "name_only_baseline_label": "MATCH",
+      "promotion_eligible": false,
+      "question": "canonical_entity",
+      "reason": "No independently approved canonical or temporal equivalence rule",
+      "required_transformation": "NO_ENTITY_MERGE_AUTHORIZED; identity rules unresolved",
+      "result_fingerprint": "04304aa48c2e8a0b02112438d043ad93894af1918ac175749759006e5a45a3a5",
+      "review_question": "Should this candidate be retained unresolved or rejected pending evidence?",
+      "semantic_promotions": [],
+      "side_effects": [],
+      "source_field": {
+        "field": "FIGI",
+        "grain": "",
+        "namespace": "FIGI",
+        "occurrence": "holding170",
+        "role": "",
+        "time": "",
+        "unit": "",
+        "value": "",
+        "witness": "holding170"
+      },
+      "state": "UNRESOLVED",
+      "supporting_evidence": [
+        {
+          "locator": {
+            "byte_length": 86,
+            "byte_offset": 16132,
+            "source_line": 170
+          },
+          "source": {
+            "archive_member": "INFOTABLE.tsv",
+            "expected_header": [
+              "ACCESSION_NUMBER",
+              "INFOTABLE_SK",
+              "NAMEOFISSUER",
+              "TITLEOFCLASS",
+              "CUSIP",
+              "FIGI",
+              "VALUE",
+              "SSHPRNAMT",
+              "SSHPRNAMTTYPE",
+              "PUTCALL",
+              "INVESTMENTDISCRETION",
+              "OTHERMANAGER",
+              "VOTING_AUTH_SOLE",
+              "VOTING_AUTH_SHARED",
+              "VOTING_AUTH_NONE"
+            ],
+            "footer": null,
+            "logical_table_name": "INFOTABLE.tsv",
+            "member_sha256": "04216106355c19768cc31019e6028e2d888cf527b34ab522cd805d54d6f40152",
+            "profile_id": "SEC_13F_TSV_V2_CANDIDATE",
+            "raw_path": "data/raw/sec/2013q2_form13f.zip",
+            "raw_sha256": "569d56e978f7dee3775e544a1e46019389e22adcf482386fcfaba51ceb6c7e84",
+            "source_instance_id": "SRC000001"
+          },
+          "witness": "holding170"
+        },
+        {
+          "locator": {
+            "byte_length": 86,
+            "byte_offset": 30160,
+            "source_line": 316
+          },
+          "source": {
+            "archive_member": "INFOTABLE.tsv",
+            "expected_header": [
+              "ACCESSION_NUMBER",
+              "INFOTABLE_SK",
+              "NAMEOFISSUER",
+              "TITLEOFCLASS",
+              "CUSIP",
+              "FIGI",
+              "VALUE",
+              "SSHPRNAMT",
+              "SSHPRNAMTTYPE",
+              "PUTCALL",
+              "INVESTMENTDISCRETION",
+              "OTHERMANAGER",
+              "VOTING_AUTH_SOLE",
+              "VOTING_AUTH_SHARED",
+              "VOTING_AUTH_NONE"
+            ],
+            "footer": null,
+            "logical_table_name": "INFOTABLE.tsv",
+            "member_sha256": "04216106355c19768cc31019e6028e2d888cf527b34ab522cd805d54d6f40152",
+            "profile_id": "SEC_13F_TSV_V2_CANDIDATE",
+            "raw_path": "data/raw/sec/2013q2_form13f.zip",
+            "raw_sha256": "569d56e978f7dee3775e544a1e46019389e22adcf482386fcfaba51ceb6c7e84",
+            "source_instance_id": "SRC000001"
+          },
+          "witness": "holding316"
+        }
+      ],
+      "validation_scope": "Exact bounded question and supplied observations; not canonical approval"
+    }
+  ],
+  "result_fingerprint": "9a108f56e606f45541e209237dcadcfbfbc306a2bef42697d09cfcedfacd035d",
+  "semantic_promotions": [],
+  "side_effects": []
+}
