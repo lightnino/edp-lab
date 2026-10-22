@@ -1,0 +1,79 @@
+{
+  "Day4": "NOT_STARTED",
+  "Step4_V2": "ACCEPTED",
+  "Step5A": "MERGED_PR27_PARTIAL_MEASURED",
+  "Step5B": "MERGED_PR28_COMPLETE_AS_MAPPED",
+  "blockers": [],
+  "limitations": [
+    "Enterprise semantic integration NOT_IMPLEMENTED; no entity merge/business correctness claim.",
+    "General business FD testing NOT_IMPLEMENTED; normalized mini schema DEFERRED.",
+    "Statistical profiling bounded/partial; unresolved semantic NULL-dependent metrics and candidate eligibility NOT_COMPUTED.",
+    "FIN V2 PASS covers mandatory three historical financial contexts and full new-cohort applicability/noninterference; wider economic fields PRESERVED_NOT_MODELED.",
+    "Performance PARTIAL_MEASURED; corpus/stage differences prohibit cold full-cohort speedup or source-count linear-scaling claims.",
+    "Cost, executor resources and human-review count/person/minutes UNAVAILABLE where not supported.",
+    "One approved SRC010128 field-local decoding exception; original failures and V1 BLOCKED assessment preserved.",
+    "Finite managed-storage retention; privileged deletion/workspace-loss risk remains, not WORM/independent disaster recovery. No full reconstruction after workspace loss claimed."
+  ],
+  "recorded_at_utc": "2026-10-22T09:49:51.164391+00:00",
+  "requirements": [
+    {
+      "evidence": "Original sealed hashes and bounded version0 reads; zero replay",
+      "requirement": "C300 historical preservation",
+      "status": "PASS"
+    },
+    {
+      "evidence": "450 approved physical identities; published admission digests",
+      "requirement": "N450 Admission",
+      "status": "PASS"
+    },
+    {
+      "evidence": "Exact disjoint300+450,750 identities; input cohort unchanged",
+      "requirement": "C750 Cohort Integrity",
+      "status": "PASS"
+    },
+    {
+      "evidence": "450/450 eligible with approved exact parser profiles; M1 retained",
+      "requirement": "B1 Model Fit",
+      "status": "PASS"
+    },
+    {
+      "evidence": "450/450 COMPLETE;1899705 DATA;9498525 fields",
+      "requirement": "N450 Processing",
+      "status": "PASS"
+    },
+    {
+      "evidence": "1182 bindings;316063821 DATA;3586787936 fields;108/108 groups",
+      "requirement": "C750 QUERYABLE",
+      "status": "PASS"
+    },
+    {
+      "evidence": "All required lexical/applicability/FIN V2 checks PASS; wider semantics unmodeled",
+      "requirement": "Lossless1-6",
+      "status": "PASS_FOR_DECLARED_SCOPE"
+    },
+    {
+      "evidence": "Separate A,B2,C1,C2.1-4,C3.1-4 PASS",
+      "requirement": "Stability A/B2/C",
+      "status": "C_M1_SOURCE_PRESERVING_PASS"
+    },
+    {
+      "evidence": "Accepted merged report; required timings and missing telemetry retained",
+      "requirement": "Performance",
+      "status": "PARTIAL_MEASURED"
+    },
+    {
+      "evidence": "Delivered/equivalent/deferred/not-implemented items explicit",
+      "requirement": "Write Tasks",
+      "status": "COMPLETE_AS_MAPPED"
+    },
+    {
+      "evidence": "O_C750_M1_V1 seal; evidence retrieval SHA/readbacks and preservation controls PASS",
+      "requirement": "Result Freeze",
+      "status": "FROZEN"
+    }
+  ],
+  "result_freeze": "metadata/freezes/O_C750_M1_v1/freeze.json",
+  "scope": "Declared experimental M1 source-preserving run; accepted partial measurement coverage and explicitly unimplemented/deferred semantic work",
+  "status": "COMPLETE",
+  "version": "DAY3_EXIT_V1"
+}

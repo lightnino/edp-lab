@@ -1,0 +1,484 @@
+{
+  "acceptance": {
+    "C2_controls": {
+      "C2.1": "PASS",
+      "C2.2": "PASS",
+      "C2.3": "PASS",
+      "C2.4": "PASS"
+    },
+    "C3_controls": {
+      "C3.1": "PASS",
+      "C3.2": "PASS",
+      "C3.3": "PASS",
+      "C3.4": "PASS"
+    },
+    "Lossless_1_5": {
+      "C300": "PASS_REUSED",
+      "C750": "PASS_108_FULL_SCHEMA_MULTISETS",
+      "N450": "PASS_450_NATIVE"
+    },
+    "Lossless_6": {
+      "C300": "PASS_MANDATORY_FIN_SCOPED",
+      "C750": "PASS_MANDATORY_FIN_AND_APPLICABILITY",
+      "FIN_001_contexts": "2/2",
+      "FIN_002_contexts": "1/1 including wrong-equity negative control",
+      "N450": "PASS_FULL_APPLICABILITY_NONINTERFERENCE_NO_MODELED_ECONOMIC_MEASURES",
+      "lineage_witnesses": 13
+    },
+    "Lossless_6_suite": "LOSSLESS_6_FIN_SUITE_V2",
+    "Stability": {
+      "A": "PASS",
+      "B2": "PASS",
+      "C1": "PASS",
+      "C2": "PASS",
+      "C3": "PASS"
+    },
+    "Stability_suite": "STABILITY_M1_V1",
+    "overall": "C_M1_SOURCE_PRESERVING_PASS",
+    "performance": "PARTIAL_MEASURED",
+    "performance_measurements": "runs/c750-performance/v1/measurements.json",
+    "write_tasks": "docs/c750_write_tasks.md; delivered/equivalent/deferred/not-implemented as mapped"
+  },
+  "accepted_evidence": {
+    "freeze_input_check_sha256": "9a98508be2f4a6eb036af8f57d63ee0dd7eb313322bc6574a9f5bcda41f34fec",
+    "performance_index_sha256": "28a8f867f4d73a44b4e0a98fa8ec44fa4364d441a5f29cf043edd4987d4f4319",
+    "step4_index_sha256": "d1e4ec1dbc9712db0c3f9e92f1754e12ff6d42a3cc8d26df6268c4dc5fc4e28c",
+    "step4_results_sha256": "bc4782b25acd7085139017e3f9294ea9a0730a088c77ddf2cd110d98c2f781fe",
+    "write_task_closeout_check_sha256": "2ec1bbc9a5223b36c365542d4d0bea31483072ab70ce05842a6c5f634cfab91a",
+    "write_task_metadata_check_sha256": "74a88c3aaec29f2d9d4664543799a1e79e44ab57db41c7163a5e817ceccdcb42"
+  },
+  "base_main_revision": "4d4aec8ee844d69c299f3f2342e93bb8cbff8149",
+  "clean_snapshots": [
+    {
+      "baseline_data_version": 0,
+      "delta_id": "64f35e9a-902b-48c8-ba37-45749c16b478",
+      "effective_predictive_optimization": "DISABLE",
+      "latest_metadata_version": 1,
+      "latest_operation": "SET TBLPROPERTIES",
+      "properties": {
+        "delta.appendOnly": "true",
+        "delta.deletedFileRetentionDuration": "interval 90 days",
+        "delta.logRetentionDuration": "interval 90 days"
+      },
+      "retention_evidence": "initial-snapshot-checks.json; effective-protection-checks.json",
+      "source": "C300",
+      "storage_location": "s3://dbstorage-prod-fou7bxa3rw/uc/088be824-cc54-47cf-bcde-d5de77bbe82d/c70027fc-e5bb-494b-8bb6-fc7e574b7e96/__unitystorage/catalogs/071909d2-4a9e-4544-ae70-bae91db83992/tables/2fb1af5d-0e1a-4416-9ac3-875cdc533e2a",
+      "table": "workspace.edp_lab.clean_c300_m1_bindings_main_recovery_20261021_v4_full",
+      "uc_table_id": "2fb1af5d-0e1a-4416-9ac3-875cdc533e2a",
+      "version_0_readback": "PASS"
+    },
+    {
+      "baseline_data_version": 0,
+      "delta_id": "e82a1986-6bd0-4431-b7e3-110842612223",
+      "effective_predictive_optimization": "DISABLE",
+      "latest_metadata_version": 1,
+      "latest_operation": "SET TBLPROPERTIES",
+      "properties": {
+        "delta.appendOnly": "true",
+        "delta.deletedFileRetentionDuration": "interval 90 days",
+        "delta.logRetentionDuration": "interval 90 days"
+      },
+      "retention_evidence": "initial-snapshot-checks.json; effective-protection-checks.json",
+      "source": "C300",
+      "storage_location": "s3://dbstorage-prod-fou7bxa3rw/uc/088be824-cc54-47cf-bcde-d5de77bbe82d/c70027fc-e5bb-494b-8bb6-fc7e574b7e96/__unitystorage/catalogs/071909d2-4a9e-4544-ae70-bae91db83992/tables/05a545eb-fefa-4d22-bea4-86525ddce574",
+      "table": "workspace.edp_lab.clean_c300_m1_bindings_num_recovery_20261021_v1_recovery",
+      "uc_table_id": "05a545eb-fefa-4d22-bea4-86525ddce574",
+      "version_0_readback": "PASS"
+    },
+    {
+      "baseline_data_version": 0,
+      "delta_id": "0c92f52d-7de3-4e77-940f-92efe735a7b5",
+      "effective_predictive_optimization": "DISABLE",
+      "latest_metadata_version": 1,
+      "latest_operation": "SET TBLPROPERTIES",
+      "properties": {
+        "delta.appendOnly": "true",
+        "delta.deletedFileRetentionDuration": "interval 90 days",
+        "delta.logRetentionDuration": "interval 90 days"
+      },
+      "retention_evidence": "initial-snapshot-checks.json; effective-protection-checks.json",
+      "source": "C300",
+      "storage_location": "s3://dbstorage-prod-fou7bxa3rw/uc/088be824-cc54-47cf-bcde-d5de77bbe82d/c70027fc-e5bb-494b-8bb6-fc7e574b7e96/__unitystorage/catalogs/071909d2-4a9e-4544-ae70-bae91db83992/tables/7b50910f-f148-44ea-9406-ea4f97bd9dd2",
+      "table": "workspace.edp_lab.clean_c300_m1_records_main_recovery_20261021_v4_full",
+      "uc_table_id": "7b50910f-f148-44ea-9406-ea4f97bd9dd2",
+      "version_0_readback": "PASS"
+    },
+    {
+      "baseline_data_version": 0,
+      "delta_id": "c7fdfcf6-af29-4573-bec9-21817fc3e201",
+      "effective_predictive_optimization": "DISABLE",
+      "latest_metadata_version": 1,
+      "latest_operation": "SET TBLPROPERTIES",
+      "properties": {
+        "delta.appendOnly": "true",
+        "delta.deletedFileRetentionDuration": "interval 90 days",
+        "delta.logRetentionDuration": "interval 90 days"
+      },
+      "retention_evidence": "initial-snapshot-checks.json; effective-protection-checks.json",
+      "source": "C300",
+      "storage_location": "s3://dbstorage-prod-fou7bxa3rw/uc/088be824-cc54-47cf-bcde-d5de77bbe82d/c70027fc-e5bb-494b-8bb6-fc7e574b7e96/__unitystorage/catalogs/071909d2-4a9e-4544-ae70-bae91db83992/tables/8a54c45d-8797-4d8d-b533-f36fe882f920",
+      "table": "workspace.edp_lab.clean_c300_m1_records_num_recovery_20261021_v1_recovery",
+      "uc_table_id": "8a54c45d-8797-4d8d-b533-f36fe882f920",
+      "version_0_readback": "PASS"
+    },
+    {
+      "baseline_data_version": 0,
+      "delta_id": "a835120b-7149-43fb-9f26-4dc50462be16",
+      "effective_predictive_optimization": "DISABLE",
+      "latest_metadata_version": 1,
+      "latest_operation": "SET TBLPROPERTIES",
+      "properties": {
+        "delta.appendOnly": "true",
+        "delta.deletedFileRetentionDuration": "interval 90 days",
+        "delta.logRetentionDuration": "interval 90 days"
+      },
+      "retention_evidence": "retention-readback.json",
+      "source": "N450",
+      "storage_location": "s3://dbstorage-prod-fou7bxa3rw/uc/088be824-cc54-47cf-bcde-d5de77bbe82d/c70027fc-e5bb-494b-8bb6-fc7e574b7e96/__unitystorage/catalogs/071909d2-4a9e-4544-ae70-bae91db83992/tables/09a42658-7b81-41e8-9dc3-26105edf475b",
+      "table": "workspace.edp_lab.clean_n450_m1_bindings_n450_step3_v1",
+      "uc_table_id": "09a42658-7b81-41e8-9dc3-26105edf475b",
+      "version_0_readback": "PASS"
+    },
+    {
+      "baseline_data_version": 0,
+      "delta_id": "ceb867ff-e93e-4c23-b778-c312900fc4a5",
+      "effective_predictive_optimization": "DISABLE",
+      "latest_metadata_version": 1,
+      "latest_operation": "SET TBLPROPERTIES",
+      "properties": {
+        "delta.appendOnly": "true",
+        "delta.deletedFileRetentionDuration": "interval 90 days",
+        "delta.logRetentionDuration": "interval 90 days"
+      },
+      "retention_evidence": "retention-readback.json",
+      "source": "N450",
+      "storage_location": "s3://dbstorage-prod-fou7bxa3rw/uc/088be824-cc54-47cf-bcde-d5de77bbe82d/c70027fc-e5bb-494b-8bb6-fc7e574b7e96/__unitystorage/catalogs/071909d2-4a9e-4544-ae70-bae91db83992/tables/6648b70f-8406-4b65-9864-e53d306f199d",
+      "table": "workspace.edp_lab.clean_n450_m1_records_n450_step3_v1",
+      "uc_table_id": "6648b70f-8406-4b65-9864-e53d306f199d",
+      "version_0_readback": "PASS"
+    }
+  ],
+  "cohort": {
+    "C300_sources": 300,
+    "C750_distinct_sources": 750,
+    "N450_sources": 450,
+    "admission": "metadata/admissions/N450_v1/admission.json",
+    "admission_sha256": "bd8cd434868515a30bcc4e0812fe392fe62b92a7f084dd39cc88bcea16ad305f",
+    "historical_manifest_rows": 304,
+    "manifest": "metadata/admissions/N450_v1/corpus_manifest_v4.csv",
+    "manifest_registry_rows": 754,
+    "manifest_sha256": "79660035d807306b111d88be0c0f899c5ee410077e2ffe5caa27d4d9af4d372a",
+    "marker_sha256": "2d03baebe0627e612a5d823838e06bf9189d74ec6047ba85ba59b62ef47b4559",
+    "path": "metadata/freezes/C750_v1",
+    "physical_bindings_sha256": "a6a9fd0cac1b5198c95375bc67cab76bab3db173fee31dd043d27ee3c56469e3",
+    "raw_integrity": "All750 previously verified; exact IDs/hash/path/manifest pins unchanged; no RAW rescan or source relocation.",
+    "roster_sha256": "81162007d42146333e2822d8c9ed2a720ebdd36422db6649291e51bd25e0d85d"
+  },
+  "historical_preservation": {
+    "C300_processing_replay": 0,
+    "freeze": "metadata/freezes/O_C300_M1_v1/freeze.json",
+    "model_backfill": 0,
+    "sha256": "db710f6152c6ffe33ee2d0371e7dadc8f9ff76e67af3a8e82d807a4c7923542c",
+    "unchanged": "All original seal file hashes verified; all historical data snapshots/identities/definitions/protections unchanged."
+  },
+  "limitations": [
+    "Enterprise semantic integration NOT_IMPLEMENTED; no entity merge/business correctness claim.",
+    "General business FD testing NOT_IMPLEMENTED; normalized mini schema DEFERRED.",
+    "Statistical profiling bounded/partial; unresolved semantic NULL-dependent metrics and candidate eligibility NOT_COMPUTED.",
+    "FIN V2 PASS covers mandatory three historical financial contexts and full new-cohort applicability/noninterference; wider economic fields PRESERVED_NOT_MODELED.",
+    "Performance PARTIAL_MEASURED; corpus/stage differences prohibit cold full-cohort speedup or source-count linear-scaling claims.",
+    "Cost, executor resources and human-review count/person/minutes UNAVAILABLE where not supported.",
+    "One approved SRC010128 field-local decoding exception; original failures and V1 BLOCKED assessment preserved.",
+    "Finite managed-storage retention; privileged deletion/workspace-loss risk remains, not WORM/independent disaster recovery. No full reconstruction after workspace loss claimed."
+  ],
+  "model": {
+    "actual_processing": {
+      "contract_sha256": "3b0e59c79f2eafb3ba78be5c3ece96b4c18e4177361c84d1f875fa5bf2b6b037",
+      "full_run_id": 879442057562865,
+      "owner_pin": "3fd9c5a6ccb62ffd79610a84dc8ac8cb78f674581a2edcfbd23d18da50e91654",
+      "runtime_sha256": "5b073834c0950ec09212c9fab52b1c754953e3cc8345ebf2cfb221750e481ac0",
+      "smoke_run_id": 181758407473778
+    },
+    "actual_publication": {
+      "archive_content_pins": {
+        ".evidence/1dcf16137a3a3cd0be3c4f025d9e6274e2a9bba34163e121004a97b1961bc45a": "1dcf16137a3a3cd0be3c4f025d9e6274e2a9bba34163e121004a97b1961bc45a",
+        ".evidence/387a20d29f0006dcd6c2b9587e57e5f015358aba50bfbf7fd0cc3f13ca059895": "387a20d29f0006dcd6c2b9587e57e5f015358aba50bfbf7fd0cc3f13ca059895",
+        ".evidence/c80f46c9ccc1be6a48b23b16279d657a056a21bc9fd97828d3120bc5f319d3d1": "c80f46c9ccc1be6a48b23b16279d657a056a21bc9fd97828d3120bc5f319d3d1",
+        ".evidence/f6827a75c4b8df40d4d36a4b442fd5b7b7860b427b368f5c43f4d6116cc6a6dd": "f6827a75c4b8df40d4d36a4b442fd5b7b7860b427b368f5c43f4d6116cc6a6dd",
+        "docs/c300_num_recovery_authority_v1.md": "2bea99217efa69ed10ce89ad7f37c7a8df4f0fc7691d85130aa6b64994474fad",
+        "docs/day2_c300_m1_readiness_v1.md": "13168d8b1906083a7d19578ea6eef157fd51c1919e0bc6067e12fe76f79ed589",
+        "metadata/admissions/N450_v1/N450.csv": "0116d065043859b03652bbe112a7b7558fd23fbddd184c9c7c35ec596a85e2b3",
+        "metadata/admissions/N450_v1/admission.json": "bd8cd434868515a30bcc4e0812fe392fe62b92a7f084dd39cc88bcea16ad305f",
+        "metadata/admissions/N450_v1/bindings.json": "627814be0e6da1969849d2b60a97cf2757ffa7432bccbc0562ecefad5d968474",
+        "metadata/admissions/N450_v1/corpus_manifest_v3.original.csv": "27ce93f363ebeb234737659e9a411927aed3dd3a674bc8a21b780e05dfdc4bdf",
+        "metadata/admissions/N450_v1/corpus_manifest_v4.csv": "79660035d807306b111d88be0c0f899c5ee410077e2ffe5caa27d4d9af4d372a",
+        "metadata/authorizations/n450_execution_v1.json": "50507c7fcde3d5d7295bfa396cd216587402c6852eb5e6d827ee3ad53beb3a48",
+        "metadata/authorizations/n450_processing_v1.json": "64d8d73f893431f706860898490d7c7798063ce816f7189b121951df9d610525",
+        "metadata/authorizations/n450_processing_v2.json": "0dd7fd8636877299ac724f2b60cc0319383333c2229885a0be67454d1822d3e7",
+        "metadata/authorizations/n450_processing_v3.json": "46c98585a19c07670f0c8f929fc34d22623aba72c4f856f404c1f20496ca4600",
+        "metadata/authorizations/n450_processing_v4.json": "df4e959b6090baf8f6201f9648458cfc60bd4a88964aa5d1de5442227a51a513",
+        "metadata/authorizations/n450_processing_v5.json": "3fd9c5a6ccb62ffd79610a84dc8ac8cb78f674581a2edcfbd23d18da50e91654",
+        "metadata/baselines/O_C300_M1.json": "bb31d9766907344621fbee06735e0a88645dc52bce1f1ceb31ecaf9dec15a714",
+        "metadata/cohorts/.gitkeep": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "metadata/cohorts/C300.csv": "f052599a7cfac3b566a236965e2ab163934d4541e7b09e03da98be728c1541e4",
+        "metadata/cohorts/GOLD_V1.csv": "61842b5ab6431c8ba79374f3b788aff387b28692766adaf91c0190a4feca596c",
+        "metadata/cohorts/GOLD_V2.csv": "3b8c223927dc0e47e0377c494ef137481b64508dcc2cdc9a69dda607dd9456dc",
+        "metadata/corpus_manifest.csv": "501dcbb85dbeb5fdb59f5866e84e2401285d07594e86b4b34eb2b23a85f22e7f",
+        "metadata/corpus_manifest_v3.csv": "27ce93f363ebeb234737659e9a411927aed3dd3a674bc8a21b780e05dfdc4bdf",
+        "metadata/decision_log.csv": "9b503f2b3d7455ddaabf26bf3af24c426dda665af7ff471b358750c8195df60c",
+        "metadata/evaluations/fin_eval_v1.json": "0d8e28289b48bf84eea66d3b69b7a4574971cab73d436bcaed3b4080786e8f34",
+        "metadata/evaluations/n450_b1_v1.json": "69941edfd7b36cffdc7fc53a33c3726f42fa0e2580b4b5b1268cd94fa796aa99",
+        "metadata/evaluations/n450_b1_v2.json": "fca0474d02bd35506e98a24abf9e8b2062a155569b72015e649976f59a6ac9e6",
+        "metadata/evaluations/n450_b1_v3.json": "40a6f00932e0f7e976444b36221fdbf01b25694452143074ff0493b9d182563f",
+        "metadata/execution_evidence/N450_C750_v1/README.md": "9aa11d1778fdf97ec62a65ca80bdbc0628261e4926adf01471282e196dba6b6f",
+        "metadata/execution_evidence/N450_C750_v1/execution.json": "eebbe906d368ee98e86e36f3a24b7b295e44867969eaefe0481ca42109e2740f",
+        "metadata/execution_evidence/N450_C750_v1/remote_retry_attempt_1.jsonl": "2a88856d6861325e2f7cb3498653307b542abbeaa443c65dd6748cb19974010d",
+        "metadata/execution_evidence/N450_C750_v1/remote_verification.json": "c565744f41bafd5c93961117dad2752a16b65b93ba2c58097a1505ab273a4bab",
+        "metadata/execution_evidence/N450_C750_v1/remote_verification_complete.json": "72ab92b51dfec16cd0bdf11d1ff564f8158b2fb42410d6dff4d075c658b0b135",
+        "metadata/finding_schema_v1.json": "720096247ef7b4fa283a23960536a414f3ef5346ee9b64590cf5cf94486455ef",
+        "metadata/freezes/C300_v1/authorization.json": "a177d2abea644be2d2bd0776712afa6cb16971eb77e84c4f914231cc11eeb5fb",
+        "metadata/freezes/C300_v1/freeze.json": "7378b5d183cc4d45e0670eae6d501f204e62fdee02d8b345d9a910300d411835",
+        "metadata/freezes/C300_v1/references.json": "5e5476aaedc985e96d9ba4dcb72656f7719631a14dbcc57324725f0a60baf366",
+        "metadata/freezes/C750_v1/C300.original.csv": "f052599a7cfac3b566a236965e2ab163934d4541e7b09e03da98be728c1541e4",
+        "metadata/freezes/C750_v1/C750.bindings.json": "a6a9fd0cac1b5198c95375bc67cab76bab3db173fee31dd043d27ee3c56469e3",
+        "metadata/freezes/C750_v1/C750.csv": "81162007d42146333e2822d8c9ed2a720ebdd36422db6649291e51bd25e0d85d",
+        "metadata/freezes/C750_v1/N450.csv": "0116d065043859b03652bbe112a7b7558fd23fbddd184c9c7c35ec596a85e2b3",
+        "metadata/freezes/C750_v1/admission.json": "bd8cd434868515a30bcc4e0812fe392fe62b92a7f084dd39cc88bcea16ad305f",
+        "metadata/freezes/C750_v1/bindings.json": "627814be0e6da1969849d2b60a97cf2757ffa7432bccbc0562ecefad5d968474",
+        "metadata/freezes/C750_v1/corpus_manifest_v3.original.csv": "27ce93f363ebeb234737659e9a411927aed3dd3a674bc8a21b780e05dfdc4bdf",
+        "metadata/freezes/C750_v1/corpus_manifest_v4.csv": "79660035d807306b111d88be0c0f899c5ee410077e2ffe5caa27d4d9af4d372a",
+        "metadata/freezes/C750_v1/freeze.json": "2d03baebe0627e612a5d823838e06bf9189d74ec6047ba85ba59b62ef47b4559",
+        "metadata/freezes/O_C300_M1_v1/authorization.json": "fe12bb20cbd69d33934cd42d7e2b79b8638c572349c5b2632ee72c6ce935ec8b",
+        "metadata/freezes/O_C300_M1_v1/freeze.json": "db710f6152c6ffe33ee2d0371e7dadc8f9ff76e67af3a8e82d807a4c7923542c",
+        "metadata/freezes/O_C300_M1_v1/references.json": "943a2ccf3c800834608a543671a66835fddcf8ae8c681fc6bbbc0b3365657410",
+        "metadata/gold_set_logical_tables_v2.csv": "f55cd7103847b3b2f859c9371d5e64815425a6c934b7240b37720e8a9d626ef2",
+        "metadata/ground_truth/.gitkeep": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "metadata/mappings/.gitkeep": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "metadata/native_nasdaq_checkpoint_v1.json": "e56c436d67642f9cb36f8c2f257f44a1b76ecd8886b80f387e36ea24978b374e",
+        "metadata/parser_fidelity_v2_candidate.json": "6c67018387a60fda5370cbee6b6b513efd68b3dc69c0ef5e69c32a34f6d7d140",
+        "metadata/parsing_profiling_freeze_v2.json": "6ff2e77ce91985e57f669bae9c9042808d52506598b9d36ab1e45e0629ecdf1e",
+        "metadata/profiling_conventions_v1.json": "2eb2a0673504de4fa328f04b8d72c61ba7d17ff7ac53bf1ec82831c58815b576",
+        "metadata/section_2_6_checkpoint_v1.json": "82b1675950c3a69a79703ea1b1c72bdb867cdd2b7548c2aca28a11da7dbcb00d",
+        "metadata/section_2_6_checkpoint_v2.json": "7029ce70c5ae9caaf2c8bd4d11392236f5d2928bc3edf85f2f3cd20db4cd7da7",
+        "metadata/source_inventory.csv": "bcf914b9ba725f3c22c0d44c46549dec0914ce6c591321599073537f492ad548",
+        "metadata/source_observation_report_v1.schema.json": "5277a7fb81dbbed7959da359760a76d2f00f72ab43bf509f1471b8c0f85a56ee",
+        "metadata/source_profiles/.gitkeep": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "metadata/source_profiles/nasdaq_listed.md": "2ce2b77cc88ba7d82e3479bcfd00460994008d62bf297490127f078c76fc6bcf",
+        "metadata/source_profiles/nasdaq_otherlisted.md": "054992b9d77fcc89a7b0437a92dad9275e9a5bc8f4d2fac4631726a856b45270",
+        "metadata/source_profiles/sec_infotable.md": "3c7370e3ff86bbe1b3ab396ce90b883457d95b7d2d52c5bd05cb151bf897565c",
+        "metadata/source_profiles/sec_submission.md": "797ff6755db41e900045c59891649a683226c3ec2940d12a433e042ccbb8833d",
+        "metadata/source_universes/approved_v1/README.md": "7b0c9ebee2d80a075f9e1e4c067981617a36ef04e2c9a900065c1080d953b860",
+        "metadata/source_universes/approved_v1/approval_verification_v1.json": "8b9580ec70639fbee44597a01b57eb601f5f228b372726b41ab97cc00e149088",
+        "metadata/source_universes/approved_v1/manifest.json": "2198f9bad9c864bf339eff515992526e22efc4230160614a8f86daf3143f463c",
+        "metadata/source_universes/approved_v1/manifest.sha256": "6d1cc7e8ff5c5fa254ca75d8f63fccecd258a811432313c505a026e96d11cb5e",
+        "metadata/source_universes/approved_v1/owner_authorization.json": "3307ff5c234e20b48a7a2ced6de7c54d504eb475de8ae90d4509cfd49002823d",
+        "metadata/source_universes/approved_v1/verification.json": "46dcde3721274cd53b50d5bca2f58729cfc8646ce8e969ee79d0ac1c21f1b364",
+        "metadata/source_universes/historical_cohort_bindings_v1.json": "8ffd02e0322241c5815a629f51a6d9c1590c2baa83231808ac796a450c6f2904",
+        "notebooks/clean_n450_m1.deployed.py": "16f39361dd15bdb384ea7ad4ca044ceba8d92dc7b35f000fefeb3ca08f278b89",
+        "notebooks/clean_n450_m1.py": "cf97155bc03b7ed5e452dfe3c1fd6a6fc098c4c86c92e440ed7e53f69aed95e8",
+        "proposals/n450-processing-v2/c300-reuse.proposed.json": "3f98e7add15349b1f380caf36d5695667ef16549394c5de5cc54240628825c15",
+        "proposals/n450-processing-v2/processing-bindings.proposed.json": "85b36aab59abd30fc03d6f87390844da549412844ca11179c05c5c69463706ef",
+        "proposals/n450-processing-v2/submit-full.json": "421044a583377f9009152bfe7c12783efadb08b208308941f6f0296b01070737",
+        "proposals/n450-processing-v2/submit-publish.json": "8b9e0221e17a753b5b244d117909c4884e0ef1e21b105b0983d8213cebdeb3dc",
+        "proposals/n450-processing-v2/submit-query.json": "aec4273b2ca82dfd25702d9d697193a4e872b7c5a3494473a5629d863e667614",
+        "proposals/n450-processing-v2/submit-smoke.json": "d6a32bbd9e4b5cc294e58009adb8abe1f6a223698bcfd28b33c9fe06e9446692",
+        "proposals/n450-v1/REVIEW.md": "805d83b59523d25bb5a9baa2dd728a9335a0cf159f68a82f69f97d3bd722ec1e",
+        "proposals/n450-v1/c750-proposed.json": "f7994d3a4db77c3d16f8f3c805f57bd23755b165b120740b153d97b0d523eee6",
+        "proposals/n450-v1/packet-sha256.json": "e985055d6d0fca9c5885c75eb120e1cfc723718a9356855f0772a1e886545599",
+        "proposals/n450-v1/qualification.json": "656a27c1fc994cb340b9b818ed9eb2adfd2527be79fadda1c2f8ede67949c084",
+        "proposals/n450-v1/remote-live.json": "8b46ce38d970be771ad56bbfd1a86d8eb60438852f3e9b5fe98fa57ac10f844b",
+        "proposals/n450-v1/remote.json": "5f7e4888e1f0b0b9438fb222c7ea47d9d335b5df0f7a852bf0cc45c102080add",
+        "proposals/n450-v1/roster.json": "1567d32bb1db1fedfcf5bafb4538cbbdf4bba06af460c3eb6cb075f590a5a08b",
+        "reports/C300_baseline.md": "9166ee81414ebfe4dee1adc7401b358a8ad2321db16bb04c92232a1e107d286a",
+        "reports/profile_summary_day2.md": "f6737ba1d9a8cbe7613576e50b2a8e1462d976ba780970fce649f4a919c7302c",
+        "scripts/prepare_n450_m1_runtime.py": "9ad3188c64dc5a435f1f36fdbf37c7baada699c867ee19bbd4008be7b6aa88c0",
+        "scripts/run_n450_m1.py": "6b31a1fe1f3084f5cc738da38b6ee8dd2bc670eb1b8a23f2b330f8da3d3b9317",
+        "sql/reconciliation/fin_eval_v1/FIN_001.sql": "8fff570eb5e233e43c731c2b9c0cb3f8ba9f55ccbce2a58666a919e3245b8058",
+        "sql/reconciliation/fin_eval_v1/FIN_002.sql": "edcb7cd0a137a083682d6b554aa597a53ddfca91f12b2982d7190d590ba89844",
+        "sql/reconciliation/fin_eval_v1/observed_expected_results.csv": "cd9cb0cf91042938833854d5a2b8a48fb3fdf36a60920292c2f670b7123be150",
+        "src/edp_lab/__init__.py": "661d3983f0e94938ba80e54d67479313ad2d1cdc8c706deba996baed824ec917",
+        "src/edp_lab/__main__.py": "76b89a01b506591438a754e8d114e2165de6d4ab4b507bf90e141595678836bf",
+        "src/edp_lab/agents/__init__.py": "661d3983f0e94938ba80e54d67479313ad2d1cdc8c706deba996baed824ec917",
+        "src/edp_lab/agents/analyst_v0.py": "d1da32f7b0182c8845ddcf744ecf765ce15af9f1a0cb938f8e519324ec012c1b",
+        "src/edp_lab/agents/c300_shallow_v0.py": "479edc86db0762f78ea418b5503dcfe540b9fd5f572949f4a84c968433fb1381",
+        "src/edp_lab/agents/checkpoint_v0.py": "3b92d207fb0eb75c54cdc0e8ba74201ffe73e38f85215d14f7ea354512180c1f",
+        "src/edp_lab/agents/post_approval_v1.py": "8b53cdc0a19f09a7aca4a2ed1a142262c481446c206ef52905aba19c7f08a4d3",
+        "src/edp_lab/ingestion/__init__.py": "661d3983f0e94938ba80e54d67479313ad2d1cdc8c706deba996baed824ec917",
+        "src/edp_lab/ingestion/c300_acquisition.py": "6ceb7c2d60d19ccb6857a3d4b68624e85abd0724f06d6361538f37c0006ec6bc",
+        "src/edp_lab/ingestion/c300_admission.py": "f37da38ad44f396fa51b81d00cb9caabdbf007ac58f722d937324fc158594072",
+        "src/edp_lab/ingestion/c300_integrity.py": "6b11e12d44acd596f8a8344e44f164dbd6a0741eb5b2d764edb72c4f8dc6557e",
+        "src/edp_lab/ingestion/gold_set.py": "560cb41880be8763b9ab51f472dec6206b2986187dbbf854e0fb2edf7e16a1a1",
+        "src/edp_lab/ingestion/inventory.py": "1263cd5b3c76b445cdd35a45ac265e0395eb1815005b380e567834df7be24c04",
+        "src/edp_lab/ingestion/load_raw.py": "2518ab4abb3e3a35ff467d3605269be98867c4001788eee87c3cb947d0e2f162",
+        "src/edp_lab/ingestion/local_sources.py": "a1ebcfdfa77a35bab19ae8e183ed042e3f6f2aee51d36ede6cdfe98c867a3c05",
+        "src/edp_lab/ingestion/n450_admission.py": "e4dd1d8523271a06ec7184533a9c7172a6fd3e97e6b7816fea90e84e681ad463",
+        "src/edp_lab/ingestion/source_identity.py": "3a0028d82d5afe5f2528da608d74b034202281967ad352dc97ef71e005efdc56",
+        "src/edp_lab/ingestion/universe.py": "b6e9937c4cc866117c904bbbbb8dc44e1e2677f7f1a1a0250b6bd539203e1afd",
+        "src/edp_lab/ingestion/whole_lab.py": "2f6a87acc4fedf77575be891497e1e7d1b9698bf4aeea8e216842febc4debeec",
+        "src/edp_lab/materialization/c300_m1.py": "cd2b580b56e819dee2e49933a658161ce92675fd4ba5c1abc2f9ffc3a4e1b2ea",
+        "src/edp_lab/materialization/lossless_gate.py": "6bf30aebb7dd03e99dcfb4818573d37e124108ceba3c9ff46edaf221edef7416",
+        "src/edp_lab/materialization/m1_verifier_v2.py": "bf49c22204f67a2c2de7f9f5fefce7924145becb01a6232cf53f13191354afe2",
+        "src/edp_lab/materialization/n450_runtime.py": "e9e78ebddda07ddb6866812d08343e956070a6da4eaa41bc7da7b1d4fbc4ed0e",
+        "src/edp_lab/materialization/n450_spark.py": "af903fb7d959c8985d0d8473c8a7d98360ed2a8b2d0ad5c33501264146c1d518",
+        "src/edp_lab/parsers/__init__.py": "298d2363dab4d57025c1a96d7e40217fa20b9516423ef4646ae2d901d5171809",
+        "src/edp_lab/parsers/c300_reader_v1.py": "5a6c856eeb44e1273b31eb6801dc37baf855c36e64f71bbd14a8cfb899494c78",
+        "src/edp_lab/parsers/c300_v1.py": "12d794670b95f6631175840f2885790141cc244f4fcfe812d4d74f156e488b06",
+        "src/edp_lab/parsers/src010128_v1.py": "57551b3ef7dcc83fb999900ba1a8efa2560fc12b9f221595913c299afb1d704e",
+        "src/edp_lab/profiling/__init__.py": "661d3983f0e94938ba80e54d67479313ad2d1cdc8c706deba996baed824ec917",
+        "src/edp_lab/profiling/conventions.py": "1d124d095098e2357b75f94821ef41c3ec17f1ed5332b41ee900a3c46f85570e",
+        "src/edp_lab/profiling/parser_evidence.py": "4834837663f03a42641144ae279bff46f4869b43cfcca867c9742b901fcaba22",
+        "src/edp_lab/profiling/parser_fidelity.py": "5313fa29d658da692cf926c1eb41302466d95b25be53ae2a14240da1e7b1ddfe",
+        "src/edp_lab/profiling/profile_raw.py": "9f931278520ebd98a0f9ad23498329e3829cc78b68ac31e48b0394652a464b44",
+        "src/edp_lab/profiling/run_gold.py": "671e194873eb8f4ccbb2172d6714f558ec0e545833c871145d2aeb34e6797aae",
+        "src/edp_lab/profiling/source_reader.py": "07abd1499255281cd4437f322401afb422fd1122d9de35c78ddfc92d5ec45cef",
+        "src/edp_lab/profiling/tools.py": "c119e1f6c4b5ea0bf464ec96d0d9f6c60bcbc0d0950cafa6121cd7a5c39c4b76",
+        "src/edp_lab/tool_adapters/__init__.py": "abb453b06a2f56d9533efdd902fb577ba43411cb0dc82591634229311047651d",
+        "src/edp_lab/tool_adapters/profiling.py": "18155f95b85721966e973ac5d30338bc0c8a264214db4ba803f67423fcf21280",
+        "uv.lock": "62a95abca6cf980c2f68d97fa34fdcdf4330ab1da49bf01e8bed6b36617a1803"
+      },
+      "clean_run_id": 1100860214974411,
+      "contract_sha256": "962bdc573320dfd88d05481f871e4a23c463859873c8dd3f86a288d1645aaf0e",
+      "owner_pin": "de242d3754688288cb174fbfde2f8cbc6594fc80b36a8d6281726ca9479322e7",
+      "query_run_id": 368063299510003,
+      "runtime_sha256": "49034e47e11104517da632fda0b48a3f4eb3802374b07ac66ec897b9114ebb47"
+    },
+    "dependency_policy": "Use existing workspace pyarrow/Spark; DuckDB is offline-only. Fail before outputs if missing. No pip/network dependency installation. Record actual versions.",
+    "encoding_decision": "DEC-000010",
+    "historical_model_and_runtime": "Unchanged metadata/freezes/O_C300_M1_v1 and metadata/baselines/O_C300_M1.json; original code/manifests and URI references retained.",
+    "new_cohort_parser_profiles": [
+      "SEC_EDGAR_DAILY_MASTER_C300_PARSER_V1",
+      "SRC010128_COMPANY_ISO8859_1_V1"
+    ],
+    "rules": [
+      "C300_LITERAL_IDENTITY_V1",
+      "C300_FSDS_NUM_QUOTE_BOUNDARY_V1"
+    ],
+    "runtime": {
+      "pyarrow": "14.0.1",
+      "python": "3.11.10",
+      "spark": "4.2.0"
+    },
+    "version": "M1_LEXICAL_V1"
+  },
+  "operational_evidence": {
+    "archive_index": "evidence-index.json;1853 source-path/member/hash/byte entries",
+    "bytes": 12616145,
+    "indexed_members": 1853,
+    "local_original": "runs/c750-freeze/v1/o-c750-m1-evidence-v1.zip",
+    "scope": "No RAW or Parquet included; actual data remains at six recorded managed Delta locations, original data version0.",
+    "sha256": "be023e2415077f1611dcab6c5416671ab61287d80d3ceeed79b0e80414fc6082",
+    "status": "RETRIEVED_SHA256_AND_ALL_INDEXED_MEMBERS_VERIFIED",
+    "uri": "/Volumes/workspace/edp_lab/raw/n450-m1/final_freeze_20261022_v1/o-c750-m1-evidence-v1.zip"
+  },
+  "population": {
+    "C300": {
+      "DATA_records": 314164116,
+      "bindings": 732,
+      "fields": 3577289411,
+      "sources": 300
+    },
+    "C750": {
+      "DATA_records": 316063821,
+      "bindings": 1182,
+      "fields": 3586787936,
+      "sources": 750
+    },
+    "N450": {
+      "DATA_records": 1899705,
+      "bindings": 450,
+      "fields": 9498525,
+      "sources": 450
+    },
+    "N450_complete": 450,
+    "N450_failed_or_blocked": 0,
+    "combined_multiset_groups_pass": 108
+  },
+  "prerequisites": {
+    "26": "a9c621e0a5e8610d02336304b4854583ee7454c5",
+    "27": "8f51a8bf5a8b84f6e2108138da6b4c2d01582503",
+    "28": "4d4aec8ee844d69c299f3f2342e93bb8cbff8149"
+  },
+  "queryable": {
+    "canonical_select_sha256": {
+      "workspace.edp_lab.q_c750_m1_coverage_c750_step3_v1": "458acda5c996d76b96195e517e2e69318ee1ba2d0b2756268f14cfe91482cfdf",
+      "workspace.edp_lab.q_c750_m1_fields_c750_step3_v1": "ae449a2082beffa7c2859b29b0543b632046e4fdd30bfab66006d404dfccc5a6",
+      "workspace.edp_lab.q_c750_m1_records_c750_step3_v1": "437a262ba03a5f35b79998f00e3fbfdd338cf2a4db6361343d2a083a4ded4c15"
+    },
+    "current_definitions": "All six combined/historical SHOW CREATE outputs equal accepted Step4 evidence.",
+    "definitions_file_sha256": "17522cb06f354986fac104316bb68401de3255de6225566b84c311c6e205b42d",
+    "definitions_in_evidence": "runs/n450/step3-clean-write-fix-v1/queryable-plan.json",
+    "lineage": "Exact source/binding/original-run/RAW/member/locator/ordinal references; original UNION ALL and108 full-schema multiset proofs; no duplicate collapse.",
+    "snapshot_versions": {
+      "workspace.edp_lab.clean_c300_m1_bindings_main_recovery_20261021_v4_full": 0,
+      "workspace.edp_lab.clean_c300_m1_bindings_num_recovery_20261021_v1_recovery": 0,
+      "workspace.edp_lab.clean_c300_m1_records_main_recovery_20261021_v4_full": 0,
+      "workspace.edp_lab.clean_c300_m1_records_num_recovery_20261021_v1_recovery": 0,
+      "workspace.edp_lab.clean_n450_m1_bindings_n450_step3_v1": 0,
+      "workspace.edp_lab.clean_n450_m1_records_n450_step3_v1": 0
+    }
+  },
+  "reproduction": [
+    "Retrieve dbfs:/Volumes/workspace/edp_lab/raw/n450-m1/final_freeze_20261022_v1/o-c750-m1-evidence-v1.zip with databricks fs cp to a new local filename; verify SHA256 be023e2415077f1611dcab6c5416671ab61287d80d3ceeed79b0e80414fc6082 before extraction.",
+    "Read evidence-index.json and verify all1853 indexed member hashes. Map retained-external members to their recorded original source references rather than guessing locations.",
+    "Use original runtime archives and their contract file pins, recorded dependencies/owner versions, frozen source hashes/profiles and explicit version0 Delta reads; do not substitute current mutable source/code/view names.",
+    "Accepted population-wide native/multiset/FIN evidence is retained; current six bounded snapshot reads are retrieval checks, not a new full Lossless evaluation.",
+    "Preserve metadata and data files; no destructive VACUUM/DROP/overwrite. Review retention before 2027-01-19. Original C300 retention maintenance remains before2027-01-18 UTC.",
+    "Historical C300 archive URIs remain governed by the original frozen references. Full independent disaster recovery after workspace loss is not established."
+  ],
+  "retention": {
+    "C300_protection": "All four original tables remain effective DISABLE with unchanged version-0 data / metadata-only version 1",
+    "data_writes": 0,
+    "historical_C300_writes": 0,
+    "initial_guard_resolution": "Catalog/schema inherit ENABLE; effective overrides protect all four C300 tables. Applied DISABLE to only new N450 tables. No historical protection discrepancy. Failed catalog-only assertion retained, not misreported as table drift.",
+    "limitations": [
+      "Not WORM; privileged owners can change properties, DROP tables or delete files.",
+      "Managed Volume/Delta retention is finite, not an independent disaster recovery copy.",
+      "RAW, view definitions and evidence remain mutable; frozen fingerprints detect drift.",
+      "No destructive VACUUM, overwrite, DROP or baseline writer changes; review or extend retention before maintenance date."
+    ],
+    "maintenance_review_before_utc": "2027-01-19",
+    "owner": "Baseline owner; explicit Day 3 Step 5C freeze authorization",
+    "recorded_at_utc": "2026-10-22T09:45:47.566896+00:00",
+    "retention_policy": "Existing O_C300_M1 convention: 90-day Delta log/data retention, append-only and effective table-level predictive optimization disabled",
+    "status": "PASS_FOR_DECLARED_EXPERIMENTAL_SCOPE",
+    "tables": [
+      {
+        "delta_id": "a835120b-7149-43fb-9f26-4dc50462be16",
+        "latest_operation": "SET TBLPROPERTIES",
+        "latest_version": 1,
+        "location": "",
+        "predictive_optimization": "DISABLE",
+        "properties": {
+          "delta.appendOnly": "true",
+          "delta.deletedFileRetentionDuration": "interval 90 days",
+          "delta.logRetentionDuration": "interval 90 days"
+        },
+        "read_version": 0,
+        "readback_response_sha256": "917ffbf1d1bdc5bdbef4bd9997f7232bbb7ef13f824053f78b7a8dbe35064069",
+        "readback_statement_id": "01f1cdfd-04d3-187e-979b-feae49147f9f",
+        "table": "workspace.edp_lab.clean_n450_m1_bindings_n450_step3_v1",
+        "uc_table_id": "09a42658-7b81-41e8-9dc3-26105edf475b",
+        "version_0_readback": "PASS"
+      },
+      {
+        "delta_id": "ceb867ff-e93e-4c23-b778-c312900fc4a5",
+        "latest_operation": "SET TBLPROPERTIES",
+        "latest_version": 1,
+        "location": "",
+        "predictive_optimization": "DISABLE",
+        "properties": {
+          "delta.appendOnly": "true",
+          "delta.deletedFileRetentionDuration": "interval 90 days",
+          "delta.logRetentionDuration": "interval 90 days"
+        },
+        "read_version": 0,
+        "readback_response_sha256": "856f1ee7cf8f32435117c5cc154ebe65bac72413c5934f383e92497fed50ef71",
+        "readback_statement_id": "01f1cdfd-0b34-10aa-a579-daca7a2ad953",
+        "table": "workspace.edp_lab.clean_n450_m1_records_n450_step3_v1",
+        "uc_table_id": "6648b70f-8406-4b65-9864-e53d306f199d",
+        "version_0_readback": "PASS"
+      }
+    ]
+  },
+  "version": "O_C750_M1_REFERENCES_V1"
+}
