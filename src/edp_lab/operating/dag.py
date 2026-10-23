@@ -61,6 +61,9 @@ def compile_dag(root: Path, plan: dict) -> dict:
     selected = applicable_controls(root, sorted(tags), contracts["registry"]["path"])
     if not selected:
         raise Denied("NO_VALIDATION_CONTROLS_SELECTED")
+    simulation = plan.get("simulation_only", False)
+    if not isinstance(simulation, bool):
+        raise Denied("INVALID_SIMULATION_MODE")
     local_tasks = plan.get("local_tasks", {})
     if not isinstance(local_tasks, dict) or set(local_tasks) - LOCAL_TASK_STAGES:
         raise Denied("UNAUTHORIZED_DAG_LOCAL_STAGE")
@@ -85,9 +88,12 @@ def compile_dag(root: Path, plan: dict) -> dict:
                     raise Denied("INVALID_BUDGET_PHASE")
                 seen.add(phase_id)
                 task_id = f"P12_budget_{index}"
-                tasks.append({"id": task_id, "kind": "budget_gate",
-                              "phase_id": phase_id, "receipt": receipt,
-                              "depends_on": depends})
+                budget_task = {"id": task_id, "kind": "budget_gate",
+                               "phase_id": phase_id, "receipt": receipt,
+                               "depends_on": depends}
+                if simulation:
+                    budget_task["simulated_measurement"] = True
+                tasks.append(budget_task)
                 depends = [task_id]
         if stage in local_tasks:
             local = local_tasks[stage]
@@ -95,22 +101,32 @@ def compile_dag(root: Path, plan: dict) -> dict:
             if not prompt.is_relative_to(root) or file_digest(prompt) != local["prompt_sha256"]:
                 raise Denied("DAG_PROMPT_HASH_CHANGED")
             task_id = stage + "_local"
-            tasks.append({"id": task_id, "kind": "codex_task",
+            local_task = {"id": task_id, "kind": "codex_task",
                           "prompt_path": local["prompt_path"],
                           "prompt_sha256": local["prompt_sha256"],
                           "runtime_seconds": local["runtime_seconds"],
-                          "depends_on": depends})
+                          "depends_on": depends}
+            if simulation:
+                local_task["simulated_success"] = True
+            tasks.append(local_task)
             depends = [task_id]
-        tasks.append({"id": stage, "kind": "stage_gate", "stage": stage,
-                      "depends_on": depends, "receipt": stage_receipts[stage]})
+        stage_task = {"id": stage, "kind": "stage_gate", "stage": stage,
+                      "depends_on": depends, "receipt": stage_receipts[stage]}
+        if simulation:
+            stage_task["simulated_receipt"] = True
+        tasks.append(stage_task)
         previous = stage
     # The shared runner guarantees a final freeze that depends on ALL previous tasks.
-    tasks.append({"id": "P13_freeze", "kind": "freeze_verify",
-                  "depends_on": [t["id"] for t in tasks],
-                  "receipt": plan["freeze_receipt"]})
+    freeze = {"id": "P13_freeze", "kind": "freeze_verify",
+              "depends_on": [t["id"] for t in tasks],
+              "receipt": plan["freeze_receipt"]}
+    if simulation:
+        freeze["simulated_receipt"] = True
+    tasks.append(freeze)
     queue = {"schema": "EDP_QUEUE_V1", "cohort": plan["cohort"],
              "output": plan["output"], "route": plan["route"],
-             "tags": sorted(tags), "contracts": contracts, "tasks": tasks}
+             "tags": sorted(tags), "contracts": contracts, "tasks": tasks,
+             "simulation_only": simulation}
     _ordered(tasks)
     return queue
 
