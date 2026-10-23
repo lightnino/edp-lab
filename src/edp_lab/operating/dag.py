@@ -41,7 +41,7 @@ def compile_dag(root: Path, plan: dict) -> dict:
     if not {"parser", "model", "rule", "registry", "budget_policy"} <= set(contracts):
         raise Denied("MISSING_DAG_CONTRACTS")
     root = root.resolve()
-    for name, pin in contracts.items():
+    for pin in contracts.values():
         rel = pin.get("path")
         if not isinstance(rel, str) or not isinstance(pin.get("version"), str):
             raise Denied("INVALID_DAG_CONTRACT")
