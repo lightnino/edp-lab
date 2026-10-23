@@ -16,6 +16,25 @@ This is one simple reusable **operational path** for either new Universe Creatio
 2. **Universe membership authority:** after staged RAW and provenance are independently verified, the owner reviews exact candidates and approves **all/some/none** for a new versioned Universe manifest. Selection does not move or re-upload RAW. A rejected/deferred candidate remains retained and unapproved **when lawful and under approved retention policy**.
 3. A subsequent **cohort workflow grant** permits selected approved-universe members to be admitted, processed and frozen. Approval of source acquisition or Universe membership alone is insufficient.
 
+### Shared operations and mode selection
+
+**Shared operation chain:** `Discover → Acquire → Verify → Qualify → Owner Review → Publish → Validate`.
+
+- `U0` establishes authority and prerequisites before this chain; `U1–U10` below specify its **full operational granularity** (including separate local/remote RAW verification, proposal, negative tests and final readback).
+- **Choose exactly one execution mode at run start:** `CREATE` if no approved Universe exists; `EXPAND` if an approved Universe exists. The two columns below are **alternative implementations of the same stage contract, not two parallel jobs**. They may take different actions, have different comparison scope and skip already-verified mechanical transfers. An `EXPAND` invocation must never implicitly recreate the old Universe.
+- Each stage has one required outcome/evidence boundary. Mode selection changes *what is examined and approved*, not the safety requirements. No `U0–U10` stage, source acquisition/remote verification action, or selective-approval disposition is removed.
+
+| Dimension | CREATE — initial Universe (0→1) | EXPAND — existing Universe to new version (1→2) |
+| --- | --- | --- |
+| Existing Universe | None; may have retained RAW/inventories, but no approved membership | Required: verify exact approved Uv manifest, owner approval, hash and holdouts before discovery |
+| Candidate scope | Initial proposed source population | Only new/proposed changed source instances; unchanged Uv membership inherited by reference |
+| Acquisition and staging | Search/download/Databricks RAW staging as needed within the acquisition grant | Acquire only missing/new bytes as needed; independently reuse already-verified staged/original RAW, **never re-upload solely because membership changes** |
+| Qualification and review | Qualify entire proposed population; owner selectively approves each eligible member or defined subset | Qualify proposed changes, compare Uv+1 against pinned Uv and review delta + impact; owner selectively approves/denies/defers |
+| Preservation | Establish first immutable approved membership, RAW references, holdouts and controls | Preserve all historical Uv bytes/approval/cohorts; changes are a prospective new version, never retroactive reassignment |
+| Output | First approved Universe version (e.g., U1) and independent readback | New approved version Uv+1 linked to pinned Uv with versioned exact diff and independent readback |
+
+### Stage-by-stage execution — shared stage IDs, mode-specific rules
+
 | Step | Creation: no approved universe (0→1) | Expansion: approved Uv exists (1→2) | Evidence / exit |
 | --- | --- | --- | --- |
 | U0. Baseline + bounded acquisition permission | Establish permitted publishers/data types, original inventories if present, discovery limits and isolated RAW staging scope; no universe membership approved yet | Verify approved Uv manifest, holdouts and old source identity; use existing standing acquisition grant or request one for **new** search/download/staging scope | `ACQUISITION_SCOPE_VERIFIED` |
@@ -23,12 +42,12 @@ This is one simple reusable **operational path** for either new Universe Creatio
 | U2. Acquire/download (if needed) | For candidate not already held with verified digest, use authorized downloader; preserve original bytes, exact source URL/metadata, delivery and SHA/size. Do not normalize, silently repair or fabricate an absent artifact | Same; check local inventory and previously acquired data before downloading to avoid duplicate acquisition | `LOCAL_RAW_VERIFIED` / `ALREADY_VERIFIED` |
 | U3. Stage Databricks RAW (if needed) | Independently verify local SHA then use guarded upload to the **acquisition-only RAW staging namespace**; read back actual remote bytes/hash, path/object identifier and receipt. Nothing becomes a CLEAN/QUERYABLE source merely by uploading | If remote original is already verified and its receipt/hash matches the exact bytes, **reuse its reference**; otherwise upload once within grant. No copying/moving for Universe promotion | `RAW_STAGING_VERIFIED` / `UPLOAD_DEFERRED_WITH_REASON` |
 | U4. Qualify provenance and identity | Inspect source provenance, licensing/access/retention, publisher authenticity evidence where available, family/schema fingerprints, exact delivery/version, duplicates and unknowns. Mark qualify/reject/hold independently from technical upload result | Apply same checks, plus Uv identity+hash and unchanged membership comparison; do not equate same filename, ticker or text with a same physical instance | `QUALIFICATION_RECORDED` |
-| U5. Scope and holdouts | Propose eligible development scope and protected holdouts; exclude disallowed or unverified candidates | Preserve old approved holdouts (41 for current v1) unless a separate explicit owner decision changes their status | `SCOPE_AND_HOLDOUTS_RECONCILED` |
+| U5. Scope and holdouts | Propose eligible development scope and protected holdouts; exclude disallowed or unverified candidates | Preserve all holdouts in the pinned prior approved Universe unless a separate explicit owner decision changes their status | `SCOPE_AND_HOLDOUTS_RECONCILED` |
 | U6. Build candidate review packet | Produce canonical potential universe roster, sorted candidate IDs, SHA, source/remote staging refs, provenance and qualification, proposed excludes/unknowns, complete counts and owner decisions needed | Produce proposed Uv+1 diff: additions vs unchanged members, changed/retired entries if specifically justified, and retained-but-unapproved candidates | `UNIVERSE_PROPOSAL_READY` |
 | U7. Human selectively approve/deny/defer | Owner chooses exact approved members; reject/defer candidates without deleting already permitted retained RAW | Owner approves the exact prospective Uv+1 membership/diff. Outside-universe previously uploaded RAW stays outside until specifically approved | `UNIVERSE_OWNER_APPROVED` / `NEEDS_HUMAN_DECISION` |
 | U8. Publish immutable Universe version | Exclusively publish approved manifest/digest and separate owner record. Approved members **reference verified staged/original RAW**; no second download/upload | Publish Uv+1 and parent hash; do not rewrite original Uv, holdout decisions, or historical cohorts | `UNIVERSE_VERSION_PUBLISHED` |
-| U9. Negative authorization tests | Gate denies unapproved/denied/deferred or holdout sources, changed SHA, wrong remote path, mismatched grant, and untrusted approval; staged RAW alone gives zero processing authority | Additionally deny v1 rewrites, retroactive membership upgrades and changed identity assignments | `UNIVERSE_GATE_VALIDATED` |
-| U10. Independent readback + handoff | Read back exact manifest/approval/member counts, stage reference hashes and gate outcome; hand off exact pinned eligible set to a *separate* cohort proposal | Read back unchanged Uv, exact v2 diff, retained rejected sources and new authority; offer approved candidates for later cohort selection | `UNIVERSE_LIFECYCLE_COMPLETE` |
+| U9. Negative authorization tests | Gate denies unapproved/denied/deferred or holdout sources, changed SHA, wrong remote path, mismatched grant, and untrusted approval; staged RAW alone gives zero processing authority | Additionally deny prior-version rewrites, retroactive membership upgrades and changed identity assignments | `UNIVERSE_GATE_VALIDATED` |
+| U10. Independent readback + handoff | Read back exact manifest/approval/member counts, stage reference hashes and gate outcome; hand off exact pinned eligible set to a *separate* cohort proposal | Read back unchanged Uv, exact Uv+1 diff, retained rejected/deferred sources and new authority; offer approved candidates for later cohort selection | `UNIVERSE_LIFECYCLE_COMPLETE` |
 
 **Skip, do not duplicate:** If exact RAW bytes with valid source identity, local SHA and Databricks readback receipt already exist, reuse the artifact/receipt and skip download/upload. A stored SHA without independent remote byte/readback proof is not equivalent to remote verification. Upload can be deferred for explicit legal, privacy, access, budget or storage reasons; the candidate remains incomplete for processing until required remote verification is later achieved.
 
@@ -38,7 +57,7 @@ This is one simple reusable **operational path** for either new Universe Creatio
 - `DENIED_FOR_UNIVERSE` / `DEFERRED` — not eligible for any new development cohort; permitted staged RAW is retained for audit/future review without new processing authority.
 - `ACQUISITION_PROHIBITED` — do not download/upload or retain where licensing, privacy, policy or data-ownership rules prohibit it; this is not the ordinary “denied Universe” case.
 
-The 2026-10-21 source-universe scope incident is the concrete precedent: 800 extra RAW objects were retained in local and Databricks storage while being logically excluded from the approved v1 experiment. **Physical possession and authority remain independent.**
+**Physical possession and authority remain independent.** Historical examples and their actual counts belong in the approved manifests and incident evidence, not in the reusable step contract.
 
 ## 2. Input and output contracts
 
@@ -54,15 +73,7 @@ The 2026-10-21 source-universe scope incident is the concrete precedent: 800 ext
 - Bounded workflow grant: exact subsequent operations, source hashes, contract versions, output namespaces, runtime/retry budgets, and protected write authority.
 - New publisher, identity equivalence, holdout release, newly inferred economic interpretation or out-of-universe acquisition is a fresh governance decision, not self-granted by the agent.
 
-## 3. Existing Universe v1 and future v2 guardrails
-
-The existing owner-approved `EDP_LAB_ORIGINAL_SOURCE_UNIVERSE` v1 has **3,021** members and **41 protected Day 13 holdouts**. Therefore the upper bound inside v1 without consuming holdouts is **2,980** physical instances, before any other cohort restrictions. A 3,000-member development cohort cannot be obtained solely from those approved non-holdout v1 members.
-
-The previously acquired **800 outside-original-universe RAW objects** are retained, not erased, and may be researched as v2 candidates, but were *not* authorized into v1 by their physical retention or old processing evidence. New v2 approval is prospective; it cannot retroactively legalize historical out-of-universe cohort selection. The two original SEC Bulk candidates have owner-attested provenance qualification in current v1 evidence; universe qualification alone does not admit them to a cohort.
-
-No unreviewed universe v2 is created by this specification. Day 7 Universe Expansion remains **agent-assisted investigation + owner approval**, not an autonomous scope-widening operation. Once scope is approved, the separate Cohort/Model Workflow can automate processing.
-
-## 4. Hard negative tests / non-negotiable behavior
+## 3. Hard negative tests / non-negotiable behavior
 
 1. Wrong/changed RAW SHA, missing or ambiguous physical identity, source/manifest mismatch → refuse enrollment, retain evidence.
 2. Any holdout or unapproved source → fail the universe gate before admission, even if physical RAW exists in Databricks.
@@ -74,8 +85,18 @@ No unreviewed universe v2 is created by this specification. Day 7 Universe Expan
 8. One acquisition grant cannot grant source membership. Owner denial of membership must never silently trigger deletion, data processing or re-upload; storage/retention rights still govern whether the original may be held.
 9. Simulated/non-live tests must never be reported as live source acquisition or as a published universe.
 
-## 5. Fit with future orchestration
+## 4. Interface with the Cohort/Model Lifecycle
 
-The Day 5 autonomous C1500→C2000 experiment consumes the **already approved Universe v1**, not a newly invented Universe v2. This document's U0–U10 is a specification for the initial Universe bootstrap and for the *separately owner-governed* future expansion. The executor must consume pinned approvals and verify them; it must not become its own source-estate authorizer.
+**Output:** a versioned, owner-approved and independently verified Universe manifest, with exact source membership, physical RAW identity/hash/provenance, staged-original byte references (where allowed), holdout policy, approval evidence and the comparison-to-parent manifest for `EXPAND`.
 
-**No code, admission, new universe, frozen cohort, approval or Databricks operation is performed by this document.**
+**Handoff:** the Cohort/Model Lifecycle consumes that approved Universe and independently selects/adopts a bounded development cohort. A source that was searched, downloaded or uploaded to candidate Databricks RAW staging is **not** eligible for cohort admission until its exact identity is approved in the Universe and subsequently admitted under a separate cohort/workflow authorization.
+
+- The acquisition agent may autonomously discover, download, upload, verify and qualify candidates **within its existing bounded acquisition authority**. Those activities do not alter Universe membership.
+- The owner alone (or their designated independent authority) approves `CREATE` membership or an `EXPAND` delta, plus source-estate/holdout policy exceptions. The agent may prepare the decision packet but **cannot authorize itself**.
+- Neither `CREATE` nor `EXPAND` triggers CLEAN/QUERYABLE materialization, a new model, cohort/result freeze or Git merge. Those are downstream separately authorized operations.
+- Retained but denied/deferred RAW is not erased merely because Universe membership was refused, subject to legal/licensing/retention rules; it remains inaccessible to ordinary admitted-cohort processing.
+- The downstream executor verifies the exact signed/owner-pinned Universe version, RAW identity/hashes and separate cohort/workflow grant. It **reuses verified RAW receipts**, without a second acquisition or upload simply for Universe admission.
+
+**Historical evidence (non-normative):** see [approved Universe v1](../../metadata/source_universes/approved_v1/README.md) and the [source-universe boundary incident](../incidents/2026-10-21_source_universe_scope_control.md) for actual prior member/holdout/out-of-scope counts. The current historical source estate is an *example*, not an embedded limit in this future reusable workflow.
+
+**No code, admission, new universe, frozen cohort, approval or Databricks operation is performed by this specification.**
