@@ -190,9 +190,11 @@ def databricks_job_submit(root: Path, grant: dict, request: dict, ledger: Path,
         if type(run_id) is not int or run_id <= 0:
             raise Denied("JOB_RUN_ID_MISSING_AFTER_SUBMISSION")
         outcome = {"status": "SUBMITTED_REQUIRES_READBACK",
-                   "run_id": run_id, "idempotency_token": payload["idempotency_token"]}
+                   "run_id": run_id, "idempotency_token": payload["idempotency_token"],
+                   "request_sha256": digest(canonical(request))}
     except (OSError, ValueError, Denied, subprocess.TimeoutExpired):
-        outcome = {"status": "UNCERTAIN_REQUIRES_READBACK"}
+        outcome = {"status": "UNCERTAIN_REQUIRES_READBACK",
+                   "request_sha256": digest(canonical(request))}
     record.write_text(json.dumps(outcome, sort_keys=True) + "\n")
     return outcome
 
@@ -217,7 +219,7 @@ def inspect_submitted_job(root: Path, grant: dict, request: dict,
     if type(run_id) is not int or run_id <= 0:
         raise Denied("JOB_RUN_ID_NOT_PINNED")
     expected = digest(canonical(request))
-    if record.get("request_sha256") not in (None, expected):
+    if record.get("request_sha256") != expected:
         raise Denied("JOB_REQUEST_LEDGER_MISMATCH")
     payload_path = _tracked(root.resolve(), request["submission_path"])
     if file_digest(payload_path) != grant["contracts"][request["submission_contract"]]["sha256"]:
