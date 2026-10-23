@@ -2,7 +2,6 @@
 
 import base64
 import json
-from pathlib import Path
 
 import pytest
 
@@ -94,7 +93,7 @@ def test_verified_remote_then_exact_submit_once(tmp_path, monkeypatch):
 
 
 def test_changed_remote_notebook_or_runtime_denied(tmp_path, monkeypatch):
-    root, grant, request, nb, runtime, remote = fixture(tmp_path)
+    root, grant, request, nb, _runtime, _remote = fixture(tmp_path)
     monkeypatch.setattr("edp_lab.operating.databricks_jobs.load_grant",
                         lambda *args: grant)
     monkeypatch.setattr("edp_lab.operating.databricks_jobs.protected_trust_dir",
