@@ -255,7 +255,8 @@ def test_external_write_waits_for_readback_without_replay(tmp_path, monkeypatch)
     def fake_write(root_arg, grant_arg, request_arg, ledger_arg, *, execute):
         seen.append(request_arg)
         assert execute
-        return {"status": "SUBMITTED_REQUIRES_READBACK"}
+        return {"status": "SUBMITTED_REQUIRES_READBACK",
+                "statement_id": "statement-write-001"}
 
     monkeypatch.setattr("edp_lab.operating.runner.databricks_write", fake_write)
     first = run(root, queue_path, envelope, tmp_path / "state")
@@ -264,7 +265,8 @@ def test_external_write_waits_for_readback_without_replay(tmp_path, monkeypatch)
     assert len(seen) == 1
     external_doc = {"schema": "EDP_EXTERNAL_OPERATION_RECEIPT_V1",
                     "operation_id": "write-001", "request_sha256": digest(canonical(seen[0])),
-                    "status": "VERIFIED", "live_readback": True}
+                    "status": "VERIFIED", "live_readback": True,
+                    "statement_id": "statement-write-001"}
     signed = sign_document(tmp_path, private, external_doc)
     receipt.write_bytes(signed.read_bytes())
     fields = ("delta_ids", "delta_history", "delta_properties", "row_counts",

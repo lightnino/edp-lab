@@ -162,8 +162,10 @@ def _external_verified(root: Path, task: dict, request: dict) -> bool:
                 and proof.get("terminal_state") == "SUCCESS"
                 and type(proof.get("job_run_id")) is int
                 and proof["job_run_id"] == task.get("_submitted_run_id"))
-    if task["kind"] == "databricks_write" and task.get("_statement_id"):
-        return common and proof.get("statement_id") == task["_statement_id"]
+    if task["kind"] == "databricks_write":
+        return (common and isinstance(task.get("_statement_id"), str)
+                and bool(task["_statement_id"])
+                and proof.get("statement_id") == task["_statement_id"])
     return common
 
 

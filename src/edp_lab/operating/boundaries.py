@@ -40,6 +40,14 @@ def _reserve(ledger: Path, operation_id: str, request: dict) -> Path:
     return record
 
 
+def _persist_sql_result(record: Path, result: dict) -> None:
+    with record.open("w") as stream:
+        json.dump(result, stream, sort_keys=True)
+        stream.write("\n")
+        stream.flush()
+        os.fsync(stream.fileno())
+
+
 def databricks_write(root: Path, grant: dict, request: dict, ledger: Path,
                      *, execute: bool = False) -> dict:
     """Submit one exact pinned statement; no implicit retry or overwrite."""
@@ -92,23 +100,45 @@ def databricks_write(root: Path, grant: dict, request: dict, ledger: Path,
         return {"status": "AUTHORIZED_DRY_RUN"}
     record = _reserve(ledger, request["operation_id"], request)
     submitted_at = datetime.now(UTC).isoformat()
-    outcome = subprocess.run(databricks_argv("api", "post", "/api/2.0/sql/statements",
-                                             "--json", "@" + str(statement), "-o", "json"),
-                             capture_output=True, text=True, timeout=grant["limits"]["runtime_seconds"],
-                             check=False)
+    try:
+        outcome = subprocess.run(databricks_argv("api", "post", "/api/2.0/sql/statements",
+                                                 "--json", "@" + str(statement),
+                                                 "-p", "edp-lab", "-o", "json"),
+                                 capture_output=True, text=True,
+                                 timeout=grant["limits"]["runtime_seconds"], check=False)
+    except subprocess.TimeoutExpired as exc:
+        stdout = exc.stdout or b""
+        stderr = exc.stderr or b""
+        result = {"status": "UNCERTAIN_REQUIRES_READBACK", "statement_id": None,
+                  "remote_state": None, "submitted_at_utc": submitted_at,
+                  "returncode": None,
+                  "stdout_sha256": digest(stdout.encode() if isinstance(stdout, str) else stdout),
+                  "stderr_sha256": digest(stderr.encode() if isinstance(stderr, str) else stderr)}
+        _persist_sql_result(record, result)
+        return result
+    except OSError:
+        result = {"status": "UNCERTAIN_REQUIRES_READBACK", "statement_id": None,
+                  "remote_state": None, "submitted_at_utc": submitted_at,
+                  "returncode": None, "stdout_sha256": digest(b""),
+                  "stderr_sha256": digest(b"")}
+        _persist_sql_result(record, result)
+        return result
     try:
         remote = json.loads(outcome.stdout) if outcome.returncode == 0 else {}
     except ValueError:
         remote = {}
-    statement_id = remote.get("statement_id")
+    statement_id = remote.get("statement_id") if isinstance(remote, dict) else None
+    status = remote.get("status") if isinstance(remote, dict) else None
+    remote_state = status.get("state") if isinstance(status, dict) else None
     result = {"status": "SUBMITTED_REQUIRES_READBACK" if isinstance(
-                  statement_id, str) and statement_id else "UNCERTAIN_REQUIRES_READBACK",
-              "statement_id": statement_id, "remote_state": remote.get("status", {}).get("state"),
+                  statement_id, str) and statement_id and outcome.returncode == 0
+                  else "UNCERTAIN_REQUIRES_READBACK",
+              "statement_id": statement_id, "remote_state": remote_state,
               "submitted_at_utc": submitted_at,
               "returncode": outcome.returncode,
               "stdout_sha256": digest(outcome.stdout.encode()),
               "stderr_sha256": digest(outcome.stderr.encode())}
-    record.write_text(json.dumps(result, sort_keys=True) + "\n")
+    _persist_sql_result(record, result)
     return result
 
 
