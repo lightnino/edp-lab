@@ -6,12 +6,13 @@ This PR defines the workflows before we implement a runtime DAG on top of the al
 
 | Spec | What it standardizes | Historical source |
 | --- | --- | --- |
-| [Universe Lifecycle](universe_lifecycle_v1.md) | Initial source universe (0→1) and expanded universe (1→2); membership, provenance, holdouts, scope approval, immutability | Approved Universe v1 + 800-outside-universe incident |
+| [Universe Lifecycle](universe_lifecycle_v1.md) | One bounded source search/download/Databricks RAW candidate-staging path; separate selective owner Universe authorization (0→1 and 1→2); holdouts, provenance and immutability | Approved Universe v1 + 800-outside-universe incident |
 | [Cohort + Model Lifecycle](cohort_model_lifecycle_v1.md) | Initial M1, Corpus-only, Additive, Corrective, conditional Parser Exception, L6 economic research, minimal backfill/replay and one bounded authorization | Day 2 C300; Day 3 N450; Day 4 N750/M2; revised autonomous Day 5 |
 | [Validation + Freeze Lifecycle](validation_freeze_lifecycle_v1.md) | Actual Lossless 1–6, A/B2/C1/C2/C3 with branch-specific oracles, economic test promotion, pre-approved comparable performance budget, live Databricks freeze and Git exit | FIN/TRY/Stability controls + Day 2/3 freezes + PR #50 |
 
 ## Owner review checklist
 
+- [ ] Acquisition is separate from Universe membership: bounded `Search → Download → Databricks RAW candidate staging → Independent Readback → Selective Owner Review`; approved/denied/deferred sources can share an immutable stored RAW inventory but only approved sources become eligible. Existing verified RAW is reused without duplicate uploads.
 - [ ] Candidate work order is **RAW → CLEAN → provisional QUERYABLE → full Lossless → Stability → accepted Result Freeze**; pre-write integrity checks and consumer isolation remain mandatory.
 - [ ] Parser Exception and Checkpoint Recovery are *conditional subpaths*, not required ordinary steps.
 - [ ] Additive requirements may have **1..N drivers**, from old and/or new sources; no hard-coded two-source assumption.
