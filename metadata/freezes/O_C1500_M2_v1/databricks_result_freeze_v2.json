@@ -1,0 +1,40 @@
+{
+  "backup_archive_copy_created": false,
+  "databricks_view": "workspace.edp_lab.o_c1500_m2_result_frozen_v1",
+  "databricks_view_object_id": "43e16098-b123-4689-83d5-4d942bbe4dfc",
+  "full_dataset_materialization_created": false,
+  "historical_day4_C3_4": "BLOCKED_OWNER_EXCEPTION_NOT_RETROACTIVE_PASS",
+  "occurrence_classes": {
+    "NEW_N750_M2_EVALUATION": {
+      "occurrences": 12948,
+      "physical_sources": 5
+    },
+    "NEW_N750_SEC_RECORD": {
+      "occurrences": 3052854,
+      "physical_sources": 745
+    },
+    "NEW_N750_XML_PROPERTY": {
+      "occurrences": 21616,
+      "physical_sources": 5
+    },
+    "OLD_C750_RECORD": {
+      "occurrences": 316063821,
+      "physical_sources": 750
+    }
+  },
+  "operational_bindings": 1932,
+  "physical_sources": 1500,
+  "pinned_read_version": 0,
+  "prior_git_only_marker": "metadata/freezes/O_C1500_M2_v1/freeze.json",
+  "prior_git_only_marker_status": "FROZEN_BY_EXPLICIT_HUMAN_OVERRIDE",
+  "runtime_evaluation_ref": "metadata/evaluations/o_c1500_m2_databricks_freeze_v2.json",
+  "runtime_evaluation_sha256": "96fb4522d540d71e65716441673db3693423a16e296b5029f211747766ad07a2",
+  "schema": "O_C1500_M2_DATABRICKS_RESULT_FREEZE_MARKER_V2",
+  "source_preserving_scope": "PASS",
+  "status": "FROZEN_IN_DATABRICKS_SOURCE_PRESERVING",
+  "treasury_economic_L6_B": "NOT_IMPLEMENTED_OUT_OF_SCOPE",
+  "version_0_retention": "CURRENTLY_READABLE_NO_INDEFINITE_RETENTION_CLAIM",
+  "view_marker_sql_ref": "sql/freezes/o_c1500_m2_v1/view_marker.sql",
+  "view_source_sql_ref": "sql/freezes/o_c1500_m2_v1/result_view.sql",
+  "view_source_sql_sha256": "80c52692e3b725676278a28de298f10f51267ac6213ec52456a76617c5c03323"
+}

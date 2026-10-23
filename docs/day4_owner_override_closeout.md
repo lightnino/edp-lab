@@ -25,3 +25,13 @@ The original tenfold benchmark from [budget V1](../metadata/evaluations/operatio
 ## Exit / merge boundary
 
 [Day 4 Exit V2](../metadata/evaluations/day4_exit_v2.json) closes the **bounded experiment** by explicit human exception; the original [V1 PARTIAL exit](../metadata/evaluations/day4_exit_v1.json) remains immutable. Main integration must be evidenced by the actual merged PR and passing CI; a JSON declaration alone does not prove the merge.
+
+## Live Databricks result freeze V2
+
+The owner had already approved all **50/50** Treasury source/QName L3 dispositions as `PRESERVED_NOT_MODELED`; B2.1 and C1 source-preserving acceptance are PASS. The 12,793 VALID and 155 structurally MISSING evaluations need no data repair. Treasury economic L6-B remains `NOT_IMPLEMENTED` and outside this freeze.
+
+The separate, queryable Unity Catalog view `workspace.edp_lab.o_c1500_m2_result_frozen_v1` (object ID `43e16098-b123-4689-83d5-4d942bbe4dfc`) now represents the complete occurrence-level C1500 result. Its [source SQL](../sql/freezes/o_c1500_m2_v1/result_view.sql) directly pins ten physical Delta data inputs at version 0, including all six historical M1 dependencies, historical typed M2 and the three N750 occurrence tables. The N750 coverage table is separately pinned and checked. The view does not refer to a mutable historical or latest view. Five inputs received metadata-only `delta.appendOnly=true`; six historical M1 inputs already had it. No data copy, RAW replay, CLEAN rebuild or M2 reprocessing occurred.
+
+Live SQL verified 1,500 physical sources, 1,932 operational bindings, 319,151,239 occurrence rows across the four approved classes, and Treasury 12,793 VALID / 155 MISSING. The [versioned evaluation](../metadata/evaluations/o_c1500_m2_databricks_freeze_v2.json) indexes 68 live SQL receipts with statement IDs and response hashes. The [Databricks marker](../metadata/freezes/O_C1500_M2_v1/databricks_result_freeze_v2.json) distinguishes this executed freeze from the earlier Git-only owner marker. The unchanged Step 9 bidirectional comparisons, FIN results and 13 lineage witnesses were revalidated by evidence hashes; their full scans were not rerun.
+
+Version 0 was readable at verification time. Append-only does not guarantee unlimited time travel against future retention or privileged deletion. Historical Day 4 C3.4 remains BLOCKED as a technical result under the documented owner exception. [Day 4 Exit V3](../metadata/evaluations/day4_exit_v3_databricks.json) records this narrower executed Databricks outcome; the GitHub merge event remains separate evidence.

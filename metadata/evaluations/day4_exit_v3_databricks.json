@@ -1,0 +1,22 @@
+{
+  "schema": "DAY4_EXIT_V3_DATABRICKS_RESULT_FREEZE",
+  "status": "COMPLETE_SOURCE_PRESERVING_WITH_DECLARED_EXCEPTIONS",
+  "result_freeze": "FROZEN_IN_DATABRICKS_SOURCE_PRESERVING",
+  "databricks_view": "workspace.edp_lab.o_c1500_m2_result_frozen_v1",
+  "databricks_view_object_id": "43e16098-b123-4689-83d5-4d942bbe4dfc",
+  "databricks_evaluation_ref": "metadata/evaluations/o_c1500_m2_databricks_freeze_v2.json",
+  "databricks_marker_ref": "metadata/freezes/O_C1500_M2_v1/databricks_result_freeze_v2.json",
+  "prior_git_only_owner_marker_ref": "metadata/freezes/O_C1500_M2_v1/freeze.json",
+  "historical_exit_v1_ref": "metadata/evaluations/day4_exit_v1.json",
+  "historical_exit_v2_ref": "metadata/evaluations/day4_exit_v2.json",
+  "treasury_l3_approved_fields": 50,
+  "source_preserving_B2_1": "PASS",
+  "source_preserving_C1": "PASS",
+  "treasury_valid": 12793,
+  "treasury_structural_missing": 155,
+  "treasury_economic_L6_B": "NOT_IMPLEMENTED_OUT_OF_SCOPE",
+  "historical_day4_C3_4": "BLOCKED_OWNER_EXCEPTION_NOT_RETROACTIVE_PASS",
+  "version_0_retention": "READABLE_AT_LIVE_VERIFICATION_NO_INDEFINITE_RETENTION_CLAIM",
+  "data_copies_created": 0,
+  "github_integration": "REQUIRES_ACTUAL_MERGE_EVENT_AND_CI_PROOF"
+}

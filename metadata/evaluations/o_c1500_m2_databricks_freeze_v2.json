@@ -1,0 +1,723 @@
+{
+  "historical_view_live_definition_sha256": "142173e5d040da20a78a342a7266525a965b1bf8659774405212f59bd654604f",
+  "historical_view_pinned_physical_refs": [
+    "clean_c300_m1_bindings_main_recovery_20261021_v4_full",
+    "clean_c300_m1_bindings_num_recovery_20261021_v1_recovery",
+    "clean_c300_m1_records_main_recovery_20261021_v4_full",
+    "clean_c300_m1_records_num_recovery_20261021_v1_recovery",
+    "clean_n450_m1_bindings_n450_step3_v1",
+    "clean_n450_m1_records_n450_step3_v1",
+    "typed_c750_m2_historical_20261022_v1"
+  ],
+  "limitations": {
+    "historical_day4_C3_4": "BLOCKED_OWNER_EXCEPTION_NOT_TECHNICAL_PASS",
+    "no_backup_archive_or_full_data_copy": true,
+    "retention": "VERSION_0_CURRENTLY_READABLE_NO_INDEFINITE_RETENTION_CLAIM",
+    "treasury_economic_L6_B": "NOT_IMPLEMENTED_OUT_OF_SCOPE"
+  },
+  "owner_decision_sha256": "90b9cc615fd9325db84f81b73116ab6d5dca28d45cee7f83f556cf5c12075d1e",
+  "physical_delta_pins": {
+    "workspace.edp_lab.clean_c300_m1_bindings_main_recovery_20261021_v4_full": {
+      "approved_read_version": 0,
+      "delta_id": "64f35e9a-902b-48c8-ba37-45749c16b478",
+      "latest_version_after": 1,
+      "latest_version_before": 1,
+      "protection": "ALREADY_APPEND_ONLY"
+    },
+    "workspace.edp_lab.clean_c300_m1_bindings_num_recovery_20261021_v1_recovery": {
+      "approved_read_version": 0,
+      "delta_id": "e82a1986-6bd0-4431-b7e3-110842612223",
+      "latest_version_after": 1,
+      "latest_version_before": 1,
+      "protection": "ALREADY_APPEND_ONLY"
+    },
+    "workspace.edp_lab.clean_c300_m1_records_main_recovery_20261021_v4_full": {
+      "approved_read_version": 0,
+      "delta_id": "0c92f52d-7de3-4e77-940f-92efe735a7b5",
+      "latest_version_after": 1,
+      "latest_version_before": 1,
+      "protection": "ALREADY_APPEND_ONLY"
+    },
+    "workspace.edp_lab.clean_c300_m1_records_num_recovery_20261021_v1_recovery": {
+      "approved_read_version": 0,
+      "delta_id": "c7fdfcf6-af29-4573-bec9-21817fc3e201",
+      "latest_version_after": 1,
+      "latest_version_before": 1,
+      "protection": "ALREADY_APPEND_ONLY"
+    },
+    "workspace.edp_lab.clean_n450_m1_bindings_n450_step3_v1": {
+      "approved_read_version": 0,
+      "delta_id": "a835120b-7149-43fb-9f26-4dc50462be16",
+      "latest_version_after": 1,
+      "latest_version_before": 1,
+      "protection": "ALREADY_APPEND_ONLY"
+    },
+    "workspace.edp_lab.clean_n450_m1_records_n450_step3_v1": {
+      "approved_read_version": 0,
+      "delta_id": "ceb867ff-e93e-4c23-b778-c312900fc4a5",
+      "latest_version_after": 1,
+      "latest_version_before": 1,
+      "protection": "ALREADY_APPEND_ONLY"
+    },
+    "workspace.edp_lab.clean_n750_m1_sec_records_step8_v1": {
+      "approved_read_version": 0,
+      "delta_id": "a02e488f-7be4-4b40-9b64-0585e6f6e962",
+      "latest_version_after": 1,
+      "latest_version_before": 0,
+      "protection": "SET_APPEND_ONLY_METADATA_ONLY"
+    },
+    "workspace.edp_lab.clean_n750_m1_treasury_properties_step8_v1": {
+      "approved_read_version": 0,
+      "delta_id": "c818b141-23b8-4bf2-b4a5-8c2ae44a59df",
+      "latest_version_after": 1,
+      "latest_version_before": 0,
+      "protection": "SET_APPEND_ONLY_METADATA_ONLY"
+    },
+    "workspace.edp_lab.clean_n750_m2_treasury_rates_step8_v1": {
+      "approved_read_version": 0,
+      "delta_id": "abba3c2a-f7ae-43cf-ab4c-e87b933f306c",
+      "latest_version_after": 1,
+      "latest_version_before": 0,
+      "protection": "SET_APPEND_ONLY_METADATA_ONLY"
+    },
+    "workspace.edp_lab.clean_n750_source_coverage_step8_v1": {
+      "approved_read_version": 0,
+      "delta_id": "b5960f3d-c7db-43dd-9b67-be7e53a9be8c",
+      "latest_version_after": 1,
+      "latest_version_before": 0,
+      "protection": "SET_APPEND_ONLY_METADATA_ONLY"
+    },
+    "workspace.edp_lab.typed_c750_m2_historical_20261022_v1": {
+      "approved_read_version": 0,
+      "delta_id": "2cb01f9b-9c72-4451-bfb1-d36d415edba4",
+      "latest_version_after": 2,
+      "latest_version_before": 1,
+      "protection": "SET_APPEND_ONLY_METADATA_ONLY"
+    }
+  },
+  "population": {
+    "incomplete_lineage_envelopes": 0,
+    "new_bindings": 750,
+    "occurrence_classes": {
+      "NEW_N750_M2_EVALUATION": {
+        "occurrences": 12948,
+        "physical_sources": 5
+      },
+      "NEW_N750_SEC_RECORD": {
+        "occurrences": 3052854,
+        "physical_sources": 745
+      },
+      "NEW_N750_XML_PROPERTY": {
+        "occurrences": 21616,
+        "physical_sources": 5
+      },
+      "OLD_C750_RECORD": {
+        "occurrences": 316063821,
+        "physical_sources": 750
+      }
+    },
+    "old_bindings": 1182,
+    "operational_bindings": 1932,
+    "physical_sources": 1500,
+    "source_data_records": 319111460,
+    "total_occurrences_including_framing_and_derived": 319151239,
+    "treasury_structural_missing": 155,
+    "treasury_valid": 12793
+  },
+  "prior_git_only_freeze": "metadata/freezes/O_C1500_M2_v1/freeze.json",
+  "result_view": {
+    "direct_pinned_physical_dependencies": [
+      "clean_c300_m1_bindings_main_recovery_20261021_v4_full",
+      "clean_c300_m1_bindings_num_recovery_20261021_v1_recovery",
+      "clean_c300_m1_records_main_recovery_20261021_v4_full",
+      "clean_c300_m1_records_num_recovery_20261021_v1_recovery",
+      "clean_n450_m1_bindings_n450_step3_v1",
+      "clean_n450_m1_records_n450_step3_v1",
+      "clean_n750_m1_sec_records_step8_v1",
+      "clean_n750_m1_treasury_properties_step8_v1",
+      "clean_n750_m2_treasury_rates_step8_v1",
+      "typed_c750_m2_historical_20261022_v1"
+    ],
+    "full_name": "workspace.edp_lab.o_c1500_m2_result_frozen_v1",
+    "object_type": "VIEW",
+    "queryable_marker": {
+      "edp.freeze.count_response_sha256": "807872c78aa9ab476f91674e266c7add77e4f91575895607ad3d358b2e4934ba",
+      "edp.freeze.count_statement_id": "01f1ce5d-f8c5-1592-9905-0c01a5081b9f",
+      "edp.freeze.day4_c3_4": "HISTORICAL_BLOCKED_OWNER_EXCEPTION",
+      "edp.freeze.economic_l6_b": "NOT_IMPLEMENTED",
+      "edp.freeze.operational_bindings": "1932",
+      "edp.freeze.owner_scope_decision_sha256": "90b9cc615fd9325db84f81b73116ab6d5dca28d45cee7f83f556cf5c12075d1e",
+      "edp.freeze.physical_sources": "1500",
+      "edp.freeze.scope": "SOURCE_PRESERVING_ADDITIVE_M2_ONLY",
+      "edp.freeze.scoped_acceptance_sha256": "87b194453c36b9d717592edd514b3f9d50029c03183be6ec7d550f33c7f1fe24",
+      "edp.freeze.source_roster_sha256": "810c6898df0cb5e5c478305f71c190ffe4a7c7a2bb40133efa79a16de630e703",
+      "edp.freeze.source_sql_sha256": "80c52692e3b725676278a28de298f10f51267ac6213ec52456a76617c5c03323",
+      "edp.freeze.status": "SOURCE_PRESERVING_VERIFIED",
+      "edp.freeze.version": "O_C1500_M2_DATABRICKS_V2",
+      "edp.freeze.view_object_id": "43e16098-b123-4689-83d5-4d942bbe4dfc"
+    },
+    "show_create_post_marker_sha256": "966b70b5178fc1c27a56d2ed52d025ff16f128415f1bf7fb1c3d05ab0039c3e3",
+    "source_sql_ref": "sql/freezes/o_c1500_m2_v1/result_view.sql",
+    "source_sql_sha256": "80c52692e3b725676278a28de298f10f51267ac6213ec52456a76617c5c03323",
+    "uc_get_response_sha256": "39c5435f8154bf6a9265dcbe1b1b9ef7a7c0a868578b172288520ebca12e0589",
+    "uc_table_id": "43e16098-b123-4689-83d5-4d942bbe4dfc"
+  },
+  "reused_unchanged_evidence": {
+    "FIN_001": "2/2 PASS",
+    "FIN_002": "1/1 PASS",
+    "candidate_branch_sql_equivalent_after_inline": true,
+    "historical_lineage_witnesses": 13,
+    "step9_full_schema_differences": 0,
+    "step9_full_schema_multiset_directions": 8
+  },
+  "runtime_receipts": {
+    "append-only-clean_n750_m1_sec_records_step8_v1": {
+      "request_ref": "runs/c1500-m2-databricks-freeze/v1/append-only-clean_n750_m1_sec_records_step8_v1-request.json",
+      "request_sha256": "6b8ec0d7c295bf2537aae0567ee911cbb7cc6a9aa7b9c1cb15c547b1ba19e442",
+      "response_ref": "runs/c1500-m2-databricks-freeze/v1/append-only-clean_n750_m1_sec_records_step8_v1-result.json",
+      "response_sha256": "c80783fe18400da7484f7835e0afb3cc2680fd40471247be44cc2836c356f388",
+      "statement_id": "01f1ce5d-6cc2-1641-b1f6-d5a6d8cb4170",
+      "terminal_status": "SUCCEEDED"
+    },
+    "append-only-clean_n750_m1_treasury_properties_step8_v1": {
+      "request_ref": "runs/c1500-m2-databricks-freeze/v1/append-only-clean_n750_m1_treasury_properties_step8_v1-request.json",
+      "request_sha256": "99365b3c3dd3422a5de9ea4500d397195aea675ef3f37eeb10ce84a235f6468b",
+      "response_ref": "runs/c1500-m2-databricks-freeze/v1/append-only-clean_n750_m1_treasury_properties_step8_v1-result.json",
+      "response_sha256": "d7ba3c15f12a46806d37b4cba8840edbc82208614e987cdb3081f15286092d8d",
+      "statement_id": "01f1ce5d-6f11-1aff-a535-96a596aad8f8",
+      "terminal_status": "SUCCEEDED"
+    },
+    "append-only-clean_n750_m2_treasury_rates_step8_v1": {
+      "request_ref": "runs/c1500-m2-databricks-freeze/v1/append-only-clean_n750_m2_treasury_rates_step8_v1-request.json",
+      "request_sha256": "a3ed432baef40537cf847e161af05d525c93b8abf39de27a96b40da00c16ff0d",
+      "response_ref": "runs/c1500-m2-databricks-freeze/v1/append-only-clean_n750_m2_treasury_rates_step8_v1-result.json",
+      "response_sha256": "e6bd739b574711f6a1187f93f645452e0f965e09982d599f97e00c5dd6b93b71",
+      "statement_id": "01f1ce5d-7144-18a3-b650-fa9e67e9357c",
+      "terminal_status": "SUCCEEDED"
+    },
+    "append-only-clean_n750_source_coverage_step8_v1": {
+      "request_ref": "runs/c1500-m2-databricks-freeze/v1/append-only-clean_n750_source_coverage_step8_v1-request.json",
+      "request_sha256": "d8ff9bfa8bfc4f76cdb689a5b5109d24c2a5f2d257ca2aa53705d530b0995c4e",
+      "response_ref": "runs/c1500-m2-databricks-freeze/v1/append-only-clean_n750_source_coverage_step8_v1-result.json",
+      "response_sha256": "60467ff66e5bda037ca2257ea111caa470df2d52247161e7ec3c43f18967bb00",
+      "statement_id": "01f1ce5d-7348-121b-9f32-eb41d1e08555",
+      "terminal_status": "SUCCEEDED"
+    },
+    "append-only-typed_c750_m2_historical_20261022_v1": {
+      "request_ref": "runs/c1500-m2-databricks-freeze/v1/append-only-typed_c750_m2_historical_20261022_v1-request.json",
+      "request_sha256": "a163fe3ecd7be695591e3f2b009787b32ee909fa0bfcb8a9e01fecc1ddc374a4",
+      "response_ref": "runs/c1500-m2-databricks-freeze/v1/append-only-typed_c750_m2_historical_20261022_v1-result.json",
+      "response_sha256": "b6beac8ae3fe150fb587de16b0713514269f0d2ee2fc142959a005f260462716",
+      "statement_id": "01f1ce5d-4bf4-13cf-88fa-d97ccc3b1e11",
+      "terminal_status": "SUCCEEDED"
+    },
+    "check-result-view-absent": {
+      "request_ref": "runs/c1500-m2-databricks-freeze/v1/check-result-view-absent-request.json",
+      "request_sha256": "8185f9fa9483e865144efe9a9b44abe0ffb001536dda2922c57f537072f9d149",
+      "response_ref": "runs/c1500-m2-databricks-freeze/v1/check-result-view-absent-result.json",
+      "response_sha256": "8ff3d3f7ee7f6608dc417b99210d42554ebec4bdb52c0dbf5a494055bb80fbb8",
+      "statement_id": "01f1ce5d-929b-18b9-92c3-5bb1a192f6de",
+      "terminal_status": "SUCCEEDED"
+    },
+    "create-result-view": {
+      "request_ref": "runs/c1500-m2-databricks-freeze/v1/create-result-view-request.json",
+      "request_sha256": "efce03f5ee6ba69bee0c881f6c44b77ed0f4077ae52ee268a9d3d16d3e4ccfa4",
+      "response_ref": "runs/c1500-m2-databricks-freeze/v1/create-result-view-result.json",
+      "response_sha256": "d9cb589acecbd7bb544b0eccb468a3b677760374a82036c43612852fb39dea3c",
+      "statement_id": "01f1ce5d-b3df-1fdf-8b32-0cfedea24f20",
+      "terminal_status": "SUCCEEDED"
+    },
+    "detail-clean_c300_m1_bindings_main_recovery_20261021_v4_full": {
+      "request_ref": "runs/c1500-m2-databricks-freeze/v1/detail-clean_c300_m1_bindings_main_recovery_20261021_v4_full-request.json",
+      "request_sha256": "4ce79a61303e9ade2b0f5b403ae6699b1e779585097d9fd12b63f64b03dda688",
+      "response_ref": "runs/c1500-m2-databricks-freeze/v1/detail-clean_c300_m1_bindings_main_recovery_20261021_v4_full-result.json",
+      "response_sha256": "318be57e149403f7666f41849ab628aec1edc22bdcc197cab42615e46ed98f5b",
+      "statement_id": "01f1ce5c-c124-1297-9551-9d8a11aeb1e6",
+      "terminal_status": "SUCCEEDED"
+    },
+    "detail-clean_c300_m1_bindings_num_recovery_20261021_v1_recovery": {
+      "request_ref": "runs/c1500-m2-databricks-freeze/v1/detail-clean_c300_m1_bindings_num_recovery_20261021_v1_recovery-request.json",
+      "request_sha256": "0bdfb6e56e888b2c821715bf38c71f3b0a9a4953efbeb8f0016fa494e855b393",
+      "response_ref": "runs/c1500-m2-databricks-freeze/v1/detail-clean_c300_m1_bindings_num_recovery_20261021_v1_recovery-result.json",
+      "response_sha256": "302ff6942a51012c0165391f1073a4353b6391948f1dd5a1eaa207ab2ca81b33",
+      "statement_id": "01f1ce5c-c11e-1634-b80b-c7c17a96bd1d",
+      "terminal_status": "SUCCEEDED"
+    },
+    "detail-clean_c300_m1_records_main_recovery_20261021_v4_full": {
+      "request_ref": "runs/c1500-m2-databricks-freeze/v1/detail-clean_c300_m1_records_main_recovery_20261021_v4_full-request.json",
+      "request_sha256": "40ff52a0bddbe0d5ad170d7114a1c5b51bae758245c2f8d49b2afb94ec41e0a7",
+      "response_ref": "runs/c1500-m2-databricks-freeze/v1/detail-clean_c300_m1_records_main_recovery_20261021_v4_full-result.json",
+      "response_sha256": "0119c16ba1a19871656befa4408e942682578c4f36fb1001aa60cef3ac55fa26",
+      "statement_id": "01f1ce5c-c12e-1825-bed4-48632b182bc2",
+      "terminal_status": "SUCCEEDED"
+    },
+    "detail-clean_c300_m1_records_num_recovery_20261021_v1_recovery": {
+      "request_ref": "runs/c1500-m2-databricks-freeze/v1/detail-clean_c300_m1_records_num_recovery_20261021_v1_recovery-request.json",
+      "request_sha256": "19a0c0f34eaeed96b963c9b9b9af0356c943f61670a433b4659b14431be54120",
+      "response_ref": "runs/c1500-m2-databricks-freeze/v1/detail-clean_c300_m1_records_num_recovery_20261021_v1_recovery-result.json",
+      "response_sha256": "a001db5b2ad95d6597205287939b130b75796bd7d7cd7b2b9f35f63a7969eec3",
+      "statement_id": "01f1ce5c-c121-1c77-81f1-644bee36ff87",
+      "terminal_status": "SUCCEEDED"
+    },
+    "detail-clean_n450_m1_bindings_n450_step3_v1": {
+      "request_ref": "runs/c1500-m2-databricks-freeze/v1/detail-clean_n450_m1_bindings_n450_step3_v1-request.json",
+      "request_sha256": "fd2791bcd1cb4b4394d61e6625ff66dea7526b788347796adf0bed7549754fda",
+      "response_ref": "runs/c1500-m2-databricks-freeze/v1/detail-clean_n450_m1_bindings_n450_step3_v1-result.json",
+      "response_sha256": "d5c6debf380f8ba5a3972dc780c7bca344ffa88d0fde4cb2b2de23d1cab6902e",
+      "statement_id": "01f1ce5c-c489-14da-8f61-14a87d9ce7f3",
+      "terminal_status": "SUCCEEDED"
+    },
+    "detail-clean_n450_m1_records_n450_step3_v1": {
+      "request_ref": "runs/c1500-m2-databricks-freeze/v1/detail-clean_n450_m1_records_n450_step3_v1-request.json",
+      "request_sha256": "db1b33a87e1da403e9b4f42782493a32df5d13371a5df42881391b433492bc18",
+      "response_ref": "runs/c1500-m2-databricks-freeze/v1/detail-clean_n450_m1_records_n450_step3_v1-result.json",
+      "response_sha256": "2174be4edabd329eb80f176f319909d352d694eae7d1707664ba36aafedd89ba",
+      "statement_id": "01f1ce5c-c487-1142-94c7-a673c82e6ab7",
+      "terminal_status": "SUCCEEDED"
+    },
+    "detail-clean_n750_m1_sec_records_step8_v1": {
+      "request_ref": "runs/c1500-m2-databricks-freeze/v1/detail-clean_n750_m1_sec_records_step8_v1-request.json",
+      "request_sha256": "5f2e914595517544aec9a41d09c138c03c140a69cdc832257fee83dcfce1e04b",
+      "response_ref": "runs/c1500-m2-databricks-freeze/v1/detail-clean_n750_m1_sec_records_step8_v1-result.json",
+      "response_sha256": "75d38e27dfd15042811b74a6afe83916962cd4eabe62268f0d5b5bf2a73d8d02",
+      "statement_id": "01f1ce5c-c484-1c9c-bebd-57eb3934e810",
+      "terminal_status": "SUCCEEDED"
+    },
+    "detail-clean_n750_m1_treasury_properties_step8_v1": {
+      "request_ref": "runs/c1500-m2-databricks-freeze/v1/detail-clean_n750_m1_treasury_properties_step8_v1-request.json",
+      "request_sha256": "4ebf8cac1be8542ab5c42f69114e1d62922d231fb0a3e39eea44538b4a1034c2",
+      "response_ref": "runs/c1500-m2-databricks-freeze/v1/detail-clean_n750_m1_treasury_properties_step8_v1-result.json",
+      "response_sha256": "823f45270b9356840fe0a9945c8f513227accc4d23f3ee234085b1b4ab757e16",
+      "statement_id": "01f1ce5c-c46c-1479-81b4-a07e83c48fdb",
+      "terminal_status": "SUCCEEDED"
+    },
+    "detail-clean_n750_m2_treasury_rates_step8_v1": {
+      "request_ref": "runs/c1500-m2-databricks-freeze/v1/detail-clean_n750_m2_treasury_rates_step8_v1-request.json",
+      "request_sha256": "d39c61ed1d1e2da89a8b1b024127a6e630772d146b35c5e1653d7cd517911194",
+      "response_ref": "runs/c1500-m2-databricks-freeze/v1/detail-clean_n750_m2_treasury_rates_step8_v1-result.json",
+      "response_sha256": "793f625a80c6667967a7ea8b5c461a7127718a4ad7056fccdbdda205543b9dce",
+      "statement_id": "01f1ce5c-c6c1-1199-bdf3-9a935346e1c4",
+      "terminal_status": "SUCCEEDED"
+    },
+    "detail-clean_n750_source_coverage_step8_v1": {
+      "request_ref": "runs/c1500-m2-databricks-freeze/v1/detail-clean_n750_source_coverage_step8_v1-request.json",
+      "request_sha256": "214fb3f6bf5bc69e3cf4d6cdd09a9b1816fdf82551b740d155566316428480f9",
+      "response_ref": "runs/c1500-m2-databricks-freeze/v1/detail-clean_n750_source_coverage_step8_v1-result.json",
+      "response_sha256": "3ab4b60f021f56a34aab22c153161a49c1866b82f69cf6de7f87810f22b1f601",
+      "statement_id": "01f1ce5c-c6c4-1a0b-8558-5c1ea6187df1",
+      "terminal_status": "SUCCEEDED"
+    },
+    "detail-typed_c750_m2_historical_20261022_v1": {
+      "request_ref": "runs/c1500-m2-databricks-freeze/v1/detail-typed_c750_m2_historical_20261022_v1-request.json",
+      "request_sha256": "74a69d348088afc143b7fd41e7eee67b9d7d89fe967b0bf63bf0aa581d410b7a",
+      "response_ref": "runs/c1500-m2-databricks-freeze/v1/detail-typed_c750_m2_historical_20261022_v1-result.json",
+      "response_sha256": "3edac17875dd27d853ed016ea893f7567a6859a32379f495cbeb3b0bcd41d1b7",
+      "statement_id": "01f1ce5c-c6fe-160b-8ee4-f5add0492dc0",
+      "terminal_status": "SUCCEEDED"
+    },
+    "historical-view-definition": {
+      "request_ref": "runs/c1500-m2-databricks-freeze/v1/historical-view-definition-request.json",
+      "request_sha256": "7505d34d3d153343fde945bb1eb3374d7d27fddcd2ec267b531312356e39c0ad",
+      "response_ref": "runs/c1500-m2-databricks-freeze/v1/historical-view-definition-result.json",
+      "response_sha256": "92f79cb4c84e46fadea6b9e8f01b2e844c06b1abb6b2025cf7d002cda2e19af8",
+      "statement_id": "01f1ce5c-8016-139a-af9e-6a76d58eb951",
+      "terminal_status": "SUCCEEDED"
+    },
+    "history-clean_c300_m1_bindings_main_recovery_20261021_v4_full": {
+      "request_ref": "runs/c1500-m2-databricks-freeze/v1/history-clean_c300_m1_bindings_main_recovery_20261021_v4_full-request.json",
+      "request_sha256": "dab368f95f8575ef5d012f09d94b52eb3c659617a05ca76defed8594236f2ce4",
+      "response_ref": "runs/c1500-m2-databricks-freeze/v1/history-clean_c300_m1_bindings_main_recovery_20261021_v4_full-result.json",
+      "response_sha256": "0ac893505e7359eeb5a3bf8416ce83eac0136651d4eb61e596b3cfd3f307cff4",
+      "statement_id": "01f1ce5c-c6d5-127d-a568-facd16b7ad6f",
+      "terminal_status": "SUCCEEDED"
+    },
+    "history-clean_c300_m1_bindings_num_recovery_20261021_v1_recovery": {
+      "request_ref": "runs/c1500-m2-databricks-freeze/v1/history-clean_c300_m1_bindings_num_recovery_20261021_v1_recovery-request.json",
+      "request_sha256": "73a54b2b14aafc138279ddd7d6505f1b166f40c183c22b91468e40491288c37a",
+      "response_ref": "runs/c1500-m2-databricks-freeze/v1/history-clean_c300_m1_bindings_num_recovery_20261021_v1_recovery-result.json",
+      "response_sha256": "57f979854145d3dc50b037b56d95aca92bbba9987500e7be333835df5496c5a9",
+      "statement_id": "01f1ce5c-c8bf-1030-a89b-8e369626868c",
+      "terminal_status": "SUCCEEDED"
+    },
+    "history-clean_c300_m1_records_main_recovery_20261021_v4_full": {
+      "request_ref": "runs/c1500-m2-databricks-freeze/v1/history-clean_c300_m1_records_main_recovery_20261021_v4_full-request.json",
+      "request_sha256": "20c033e684ad6eb9ae82b074d1eb1ab6162a71ea2738266367ee351cf5a71f2a",
+      "response_ref": "runs/c1500-m2-databricks-freeze/v1/history-clean_c300_m1_records_main_recovery_20261021_v4_full-result.json",
+      "response_sha256": "10c8e40cc7496d17ce97b25575017c8f7bf3da01e911fc0f1618f848006cd1e5",
+      "statement_id": "01f1ce5c-c90b-1652-beb0-eecbcbf5d33e",
+      "terminal_status": "SUCCEEDED"
+    },
+    "history-clean_c300_m1_records_num_recovery_20261021_v1_recovery": {
+      "request_ref": "runs/c1500-m2-databricks-freeze/v1/history-clean_c300_m1_records_num_recovery_20261021_v1_recovery-request.json",
+      "request_sha256": "c75aa23d5883b795d2ee42c6d1bc69d50ab7fa5e9fbe4c13426121938b36df1c",
+      "response_ref": "runs/c1500-m2-databricks-freeze/v1/history-clean_c300_m1_records_num_recovery_20261021_v1_recovery-result.json",
+      "response_sha256": "9b534d93f30b9c0e929017797c4730ae97b338f9f9dd328cc24bc6bda98091fd",
+      "statement_id": "01f1ce5c-c906-1453-9c44-f5636a9aec41",
+      "terminal_status": "SUCCEEDED"
+    },
+    "history-clean_n450_m1_bindings_n450_step3_v1": {
+      "request_ref": "runs/c1500-m2-databricks-freeze/v1/history-clean_n450_m1_bindings_n450_step3_v1-request.json",
+      "request_sha256": "e6401e437fe971f052ed1896bc165caa5c9c24ecbc66f8ccff6df8fab8e3b774",
+      "response_ref": "runs/c1500-m2-databricks-freeze/v1/history-clean_n450_m1_bindings_n450_step3_v1-result.json",
+      "response_sha256": "6ef08692ea0f9836972c331425070b30753b99e73c5f7d54e559d2e1ccfaf1bb",
+      "statement_id": "01f1ce5c-ce66-12d3-98eb-3aa6f11a6f9e",
+      "terminal_status": "SUCCEEDED"
+    },
+    "history-clean_n450_m1_records_n450_step3_v1": {
+      "request_ref": "runs/c1500-m2-databricks-freeze/v1/history-clean_n450_m1_records_n450_step3_v1-request.json",
+      "request_sha256": "e40b1bfbadfc9e713c0a3069d64605449b155b68044fb66b2e22cc5a337ac5b5",
+      "response_ref": "runs/c1500-m2-databricks-freeze/v1/history-clean_n450_m1_records_n450_step3_v1-result.json",
+      "response_sha256": "ebc50cb44032e28ca4a9fa798917787ab705bdb70f6937befdeb54d6fe886cc2",
+      "statement_id": "01f1ce5c-cdeb-10d7-b0f3-cf778337e2d4",
+      "terminal_status": "SUCCEEDED"
+    },
+    "history-clean_n750_m1_sec_records_step8_v1": {
+      "request_ref": "runs/c1500-m2-databricks-freeze/v1/history-clean_n750_m1_sec_records_step8_v1-request.json",
+      "request_sha256": "3ba66172a0dce6b613583380a1ca24c4b58adf6df27ba44ca9739f3fc42fdf90",
+      "response_ref": "runs/c1500-m2-databricks-freeze/v1/history-clean_n750_m1_sec_records_step8_v1-result.json",
+      "response_sha256": "3a45975b6eaf90858d704675ac611566239002852d09e7529c4c865b3a66c74b",
+      "statement_id": "01f1ce5c-cde2-1911-85a2-c1c7d2b7f281",
+      "terminal_status": "SUCCEEDED"
+    },
+    "history-clean_n750_m1_treasury_properties_step8_v1": {
+      "request_ref": "runs/c1500-m2-databricks-freeze/v1/history-clean_n750_m1_treasury_properties_step8_v1-request.json",
+      "request_sha256": "0c7e4f4f777592f31479200e34118634f976a08f1af164214b195147a1e08721",
+      "response_ref": "runs/c1500-m2-databricks-freeze/v1/history-clean_n750_m1_treasury_properties_step8_v1-result.json",
+      "response_sha256": "284267ac39e1673bedac38866f6d58a6b19d999fcb51c4d16275cb510a24282d",
+      "statement_id": "01f1ce5c-ce00-16c1-82d5-65819fe98736",
+      "terminal_status": "SUCCEEDED"
+    },
+    "history-clean_n750_m2_treasury_rates_step8_v1": {
+      "request_ref": "runs/c1500-m2-databricks-freeze/v1/history-clean_n750_m2_treasury_rates_step8_v1-request.json",
+      "request_sha256": "e66dae3627c4f261e0938a08312154844c3a865e6b0fb35343944cd3b8f08fd5",
+      "response_ref": "runs/c1500-m2-databricks-freeze/v1/history-clean_n750_m2_treasury_rates_step8_v1-result.json",
+      "response_sha256": "ecdf0eddfd56fca9b6337d24fd411c172b39b21c3729345301fee45527598ab2",
+      "statement_id": "01f1ce5c-d0d8-11ba-878d-c5fdf89ca31e",
+      "terminal_status": "SUCCEEDED"
+    },
+    "history-clean_n750_source_coverage_step8_v1": {
+      "request_ref": "runs/c1500-m2-databricks-freeze/v1/history-clean_n750_source_coverage_step8_v1-request.json",
+      "request_sha256": "6560209333664410708fc854d7e505c33d654a4d9d4afe27066c7cec45206f39",
+      "response_ref": "runs/c1500-m2-databricks-freeze/v1/history-clean_n750_source_coverage_step8_v1-result.json",
+      "response_sha256": "9e9d95b78a9b8f0c64176e7037807c2032811e68803b810701edda6b234d8bd1",
+      "statement_id": "01f1ce5c-d0ff-1afd-8363-0de30ce35413",
+      "terminal_status": "SUCCEEDED"
+    },
+    "history-typed_c750_m2_historical_20261022_v1": {
+      "request_ref": "runs/c1500-m2-databricks-freeze/v1/history-typed_c750_m2_historical_20261022_v1-request.json",
+      "request_sha256": "5f2ac28c3e4249df44fc4c5bf8a01e69bd930abc4d3d791d604a660bedff8011",
+      "response_ref": "runs/c1500-m2-databricks-freeze/v1/history-typed_c750_m2_historical_20261022_v1-result.json",
+      "response_sha256": "bdf593cbfd2da0244e0aabe79160de8106230b54dc0239427248cc61dc4b8fe1",
+      "statement_id": "01f1ce5c-d0ef-10e0-8c32-4d7fbc5ad984",
+      "terminal_status": "SUCCEEDED"
+    },
+    "n750-coverage": {
+      "request_ref": "runs/c1500-m2-databricks-freeze/v1/n750-coverage-request.json",
+      "request_sha256": "0fb6213f9bc5854a40217e70b947396a25304b253f2dc677ce872d03542b766e",
+      "response_ref": "runs/c1500-m2-databricks-freeze/v1/n750-coverage-result.json",
+      "response_sha256": "7861a42a816517524e7c6f21a8249a6a52def7a110db263e6fa265b14e94e413",
+      "statement_id": "01f1ce5d-cba8-183f-86f8-2be5418310ba",
+      "terminal_status": "SUCCEEDED"
+    },
+    "post-detail-clean_n750_m1_sec_records_step8_v1": {
+      "request_ref": "runs/c1500-m2-databricks-freeze/v1/post-detail-clean_n750_m1_sec_records_step8_v1-request.json",
+      "request_sha256": "5f2e914595517544aec9a41d09c138c03c140a69cdc832257fee83dcfce1e04b",
+      "response_ref": "runs/c1500-m2-databricks-freeze/v1/post-detail-clean_n750_m1_sec_records_step8_v1-result.json",
+      "response_sha256": "47fe2926abf4f28be742319cd040f74244b01450e3fc99fa64a5c21cbcac95ce",
+      "statement_id": "01f1ce5d-8059-18f1-a56e-b1f29794de39",
+      "terminal_status": "SUCCEEDED"
+    },
+    "post-detail-clean_n750_m1_treasury_properties_step8_v1": {
+      "request_ref": "runs/c1500-m2-databricks-freeze/v1/post-detail-clean_n750_m1_treasury_properties_step8_v1-request.json",
+      "request_sha256": "4ebf8cac1be8542ab5c42f69114e1d62922d231fb0a3e39eea44538b4a1034c2",
+      "response_ref": "runs/c1500-m2-databricks-freeze/v1/post-detail-clean_n750_m1_treasury_properties_step8_v1-result.json",
+      "response_sha256": "e89c0f685c5625bfcffdbed55b352dee82350ec43553d72cdf696882d8c63837",
+      "statement_id": "01f1ce5d-8057-1e66-a3f1-fab26cf1761d",
+      "terminal_status": "SUCCEEDED"
+    },
+    "post-detail-clean_n750_m2_treasury_rates_step8_v1": {
+      "request_ref": "runs/c1500-m2-databricks-freeze/v1/post-detail-clean_n750_m2_treasury_rates_step8_v1-request.json",
+      "request_sha256": "d39c61ed1d1e2da89a8b1b024127a6e630772d146b35c5e1653d7cd517911194",
+      "response_ref": "runs/c1500-m2-databricks-freeze/v1/post-detail-clean_n750_m2_treasury_rates_step8_v1-result.json",
+      "response_sha256": "03f89c87629ea0a066b9219f348c091c5344947e97479afa22c29a1d74049153",
+      "statement_id": "01f1ce5d-8057-11da-a716-9638d2a3a120",
+      "terminal_status": "SUCCEEDED"
+    },
+    "post-detail-clean_n750_source_coverage_step8_v1": {
+      "request_ref": "runs/c1500-m2-databricks-freeze/v1/post-detail-clean_n750_source_coverage_step8_v1-request.json",
+      "request_sha256": "214fb3f6bf5bc69e3cf4d6cdd09a9b1816fdf82551b740d155566316428480f9",
+      "response_ref": "runs/c1500-m2-databricks-freeze/v1/post-detail-clean_n750_source_coverage_step8_v1-result.json",
+      "response_sha256": "cc0b74e2d239a950997e29208a26678382eec762f22ae1a5e44df28e05fbd598",
+      "statement_id": "01f1ce5d-8051-1512-815b-2acf000f686b",
+      "terminal_status": "SUCCEEDED"
+    },
+    "post-detail-typed_c750_m2_historical_20261022_v1": {
+      "request_ref": "runs/c1500-m2-databricks-freeze/v1/post-detail-typed_c750_m2_historical_20261022_v1-request.json",
+      "request_sha256": "74a69d348088afc143b7fd41e7eee67b9d7d89fe967b0bf63bf0aa581d410b7a",
+      "response_ref": "runs/c1500-m2-databricks-freeze/v1/post-detail-typed_c750_m2_historical_20261022_v1-result.json",
+      "response_sha256": "d623635c314478aa4bd382d3b4ae0aea6cd39939f41e040e7c743b51ab81ea14",
+      "statement_id": "01f1ce5d-81e9-1c57-9774-081930084080",
+      "terminal_status": "SUCCEEDED"
+    },
+    "post-history-clean_n750_m1_sec_records_step8_v1": {
+      "request_ref": "runs/c1500-m2-databricks-freeze/v1/post-history-clean_n750_m1_sec_records_step8_v1-request.json",
+      "request_sha256": "3ba66172a0dce6b613583380a1ca24c4b58adf6df27ba44ca9739f3fc42fdf90",
+      "response_ref": "runs/c1500-m2-databricks-freeze/v1/post-history-clean_n750_m1_sec_records_step8_v1-result.json",
+      "response_sha256": "2a5563df36ae44735862ef8ffeaf7b5e9bacbb6d71c9b9c9e64708fceeea6ef2",
+      "statement_id": "01f1ce5d-81ee-1ee3-a57d-1670fea81e8a",
+      "terminal_status": "SUCCEEDED"
+    },
+    "post-history-clean_n750_m1_treasury_properties_step8_v1": {
+      "request_ref": "runs/c1500-m2-databricks-freeze/v1/post-history-clean_n750_m1_treasury_properties_step8_v1-request.json",
+      "request_sha256": "0c7e4f4f777592f31479200e34118634f976a08f1af164214b195147a1e08721",
+      "response_ref": "runs/c1500-m2-databricks-freeze/v1/post-history-clean_n750_m1_treasury_properties_step8_v1-result.json",
+      "response_sha256": "d579ff94677d90877039a403941216464ba9e3dfddf3e26400e9b6f172e7806b",
+      "statement_id": "01f1ce5d-81f4-18a2-991a-f09ef1082327",
+      "terminal_status": "SUCCEEDED"
+    },
+    "post-history-clean_n750_m2_treasury_rates_step8_v1": {
+      "request_ref": "runs/c1500-m2-databricks-freeze/v1/post-history-clean_n750_m2_treasury_rates_step8_v1-request.json",
+      "request_sha256": "e66dae3627c4f261e0938a08312154844c3a865e6b0fb35343944cd3b8f08fd5",
+      "response_ref": "runs/c1500-m2-databricks-freeze/v1/post-history-clean_n750_m2_treasury_rates_step8_v1-result.json",
+      "response_sha256": "484d54047c166125cb652a1ce9b573dbbdfc42ce68f6fc911776b3af322b832d",
+      "statement_id": "01f1ce5d-8204-1929-837a-3becccbfbfec",
+      "terminal_status": "SUCCEEDED"
+    },
+    "post-history-clean_n750_source_coverage_step8_v1": {
+      "request_ref": "runs/c1500-m2-databricks-freeze/v1/post-history-clean_n750_source_coverage_step8_v1-request.json",
+      "request_sha256": "6560209333664410708fc854d7e505c33d654a4d9d4afe27066c7cec45206f39",
+      "response_ref": "runs/c1500-m2-databricks-freeze/v1/post-history-clean_n750_source_coverage_step8_v1-result.json",
+      "response_sha256": "a4b064d53045ca5d1e86736091627feb682e910c48852d90ad5166e9c663e11d",
+      "statement_id": "01f1ce5d-8394-15b7-8be6-24ca261328ca",
+      "terminal_status": "SUCCEEDED"
+    },
+    "post-history-typed_c750_m2_historical_20261022_v1": {
+      "request_ref": "runs/c1500-m2-databricks-freeze/v1/post-history-typed_c750_m2_historical_20261022_v1-request.json",
+      "request_sha256": "5f2ac28c3e4249df44fc4c5bf8a01e69bd930abc4d3d791d604a660bedff8011",
+      "response_ref": "runs/c1500-m2-databricks-freeze/v1/post-history-typed_c750_m2_historical_20261022_v1-result.json",
+      "response_sha256": "83a9a9fc268e3f701ed5b2fe694e57cd536c1dd1855ea7d19c67f60b9b5ff97c",
+      "statement_id": "01f1ce5d-84a4-11ed-9799-8633d9abf906",
+      "terminal_status": "SUCCEEDED"
+    },
+    "post-v0-clean_n750_m1_sec_records_step8_v1": {
+      "request_ref": "runs/c1500-m2-databricks-freeze/v1/post-v0-clean_n750_m1_sec_records_step8_v1-request.json",
+      "request_sha256": "19fa7fe763bc9001aee6a169699730a6d0592a559a2863bc9396255c9b7a6ac9",
+      "response_ref": "runs/c1500-m2-databricks-freeze/v1/post-v0-clean_n750_m1_sec_records_step8_v1-result.json",
+      "response_sha256": "df591c4775fd4d70b31c4c3438e043cf622807ad90b7b30096ba9c65c2c45f37",
+      "statement_id": "01f1ce5d-84a4-1aba-823b-d0e1fe902d18",
+      "terminal_status": "SUCCEEDED"
+    },
+    "post-v0-clean_n750_m1_treasury_properties_step8_v1": {
+      "request_ref": "runs/c1500-m2-databricks-freeze/v1/post-v0-clean_n750_m1_treasury_properties_step8_v1-request.json",
+      "request_sha256": "92134fa06b4771d21ca6084fb2c68c23639e160a921d88ce1571529ff253040e",
+      "response_ref": "runs/c1500-m2-databricks-freeze/v1/post-v0-clean_n750_m1_treasury_properties_step8_v1-result.json",
+      "response_sha256": "ce03c661bb6eb56d9ba50fdc3b94172c8ab980ffd20b1d11f83ea4b6bfd00ead",
+      "statement_id": "01f1ce5d-84ba-15b6-b99b-9313c91e79e3",
+      "terminal_status": "SUCCEEDED"
+    },
+    "post-v0-clean_n750_m2_treasury_rates_step8_v1": {
+      "request_ref": "runs/c1500-m2-databricks-freeze/v1/post-v0-clean_n750_m2_treasury_rates_step8_v1-request.json",
+      "request_sha256": "783b06b8e6243f0f4821a9864052e1c9726bf1d3a66fc504cfa3f448da0b48fa",
+      "response_ref": "runs/c1500-m2-databricks-freeze/v1/post-v0-clean_n750_m2_treasury_rates_step8_v1-result.json",
+      "response_sha256": "a4fc5661c718b02461e1b5573f109bddf5243d91b3f24b4da88964c73f0f68d1",
+      "statement_id": "01f1ce5d-855f-17de-8c11-a53a4d3bf658",
+      "terminal_status": "SUCCEEDED"
+    },
+    "post-v0-clean_n750_source_coverage_step8_v1": {
+      "request_ref": "runs/c1500-m2-databricks-freeze/v1/post-v0-clean_n750_source_coverage_step8_v1-request.json",
+      "request_sha256": "33799d5efe18cf5161ef8077158530339b73ec65d6c7084651440762d5f07e41",
+      "response_ref": "runs/c1500-m2-databricks-freeze/v1/post-v0-clean_n750_source_coverage_step8_v1-result.json",
+      "response_sha256": "7398acc6f5506c8bca5b17bfc1b4d46d0487c0ff45db920f13c050e1f1a55ec2",
+      "statement_id": "01f1ce5d-861a-10c8-aa52-f73c7d7b24b9",
+      "terminal_status": "SUCCEEDED"
+    },
+    "post-v0-typed_c750_m2_historical_20261022_v1": {
+      "request_ref": "runs/c1500-m2-databricks-freeze/v1/post-v0-typed_c750_m2_historical_20261022_v1-request.json",
+      "request_sha256": "ce94eeb879c6e1eac1c53727a95ceccb1f9942780f3117ecb620affd69b9e24d",
+      "response_ref": "runs/c1500-m2-databricks-freeze/v1/post-v0-typed_c750_m2_historical_20261022_v1-result.json",
+      "response_sha256": "bdce4030f91d2c07fafd3cccd104f7f92e55d86e866f9665002fa3148933ec35",
+      "statement_id": "01f1ce5d-8636-19cb-895c-9a5225978ab6",
+      "terminal_status": "SUCCEEDED"
+    },
+    "result-view-counts": {
+      "request_ref": "runs/c1500-m2-databricks-freeze/v1/result-view-counts-request.json",
+      "request_sha256": "c4956b0f1e560d2280784eec95e51d8a89970eeb5d1be001f2055a7ceb504f7b",
+      "response_ref": "runs/c1500-m2-databricks-freeze/v1/result-view-counts-result.json",
+      "response_sha256": "807872c78aa9ab476f91674e266c7add77e4f91575895607ad3d358b2e4934ba",
+      "statement_id": "01f1ce5d-f8c5-1592-9905-0c01a5081b9f",
+      "terminal_status": "SUCCEEDED"
+    },
+    "result-view-definition": {
+      "request_ref": "runs/c1500-m2-databricks-freeze/v1/result-view-definition-request.json",
+      "request_sha256": "f084bf8c7f9a7b8fb88af941ae9270e41f27a294aa1c182505ee4e71d8ae39fa",
+      "response_ref": "runs/c1500-m2-databricks-freeze/v1/result-view-definition-result.json",
+      "response_sha256": "126662903611ba68d50fbdf5d372abb87b33edfa0ffe10d8ac982c338b9ff946",
+      "statement_id": "01f1ce5d-cba3-11ad-bf67-9841c791919e",
+      "terminal_status": "SUCCEEDED"
+    },
+    "result-view-definition-post-marker": {
+      "request_ref": "runs/c1500-m2-databricks-freeze/v1/result-view-definition-post-marker-request.json",
+      "request_sha256": "f084bf8c7f9a7b8fb88af941ae9270e41f27a294aa1c182505ee4e71d8ae39fa",
+      "response_ref": "runs/c1500-m2-databricks-freeze/v1/result-view-definition-post-marker-result.json",
+      "response_sha256": "c098ca3df6df6a2ec4b289cdde729deaee58106cb048a753f3a941e5522753a1",
+      "statement_id": "01f1ce5e-42f7-12d2-9e4e-2599f7ad25d7",
+      "terminal_status": "SUCCEEDED"
+    },
+    "result-view-properties": {
+      "request_ref": "runs/c1500-m2-databricks-freeze/v1/result-view-properties-request.json",
+      "request_sha256": "648dd7e252c0029fc5f3790b2e28fc3a644b0531f9dc2c0c285f5d4726df7e2d",
+      "response_ref": "runs/c1500-m2-databricks-freeze/v1/result-view-properties-result.json",
+      "response_sha256": "b1f97b27b4417b35ce8ffb8ee755d128adfeccaa65605e28190a8f9b0b97b7e3",
+      "statement_id": "01f1ce5e-42f3-1025-aad5-388536e7be80",
+      "terminal_status": "SUCCEEDED"
+    },
+    "result-view-sample": {
+      "request_ref": "runs/c1500-m2-databricks-freeze/v1/result-view-sample-request.json",
+      "request_sha256": "67b1134d81f2a19dfa442ca82a7c210bdc9b9a134e0175c5199453747725542e",
+      "response_ref": "runs/c1500-m2-databricks-freeze/v1/result-view-sample-result.json",
+      "response_sha256": "59b13a58cacebfc12d87bf4a4db93bade19052988d5f414fd1fc977ed5deaac0",
+      "statement_id": "01f1ce5d-cba6-10ab-8e7a-7b0fac969b49",
+      "terminal_status": "SUCCEEDED"
+    },
+    "result-view-sample-post-marker": {
+      "request_ref": "runs/c1500-m2-databricks-freeze/v1/result-view-sample-post-marker-request.json",
+      "request_sha256": "73623ba0ceb655c789c873b926aa70590492d64a024a13287e40d0346f6c5593",
+      "response_ref": "runs/c1500-m2-databricks-freeze/v1/result-view-sample-post-marker-result.json",
+      "response_sha256": "e5e77e9581ac241a18e633e9615fec02d0af497d0d47db5ee034535e90e7dee5",
+      "statement_id": "01f1ce5e-42f0-18fe-b7e3-404ff6c8f63e",
+      "terminal_status": "SUCCEEDED"
+    },
+    "sample-new_n750_m2_evaluation": {
+      "request_ref": "runs/c1500-m2-databricks-freeze/v1/sample-new_n750_m2_evaluation-request.json",
+      "request_sha256": "cb526784dc00afadbb55add65459cd491b8d08a77562804bcbe5e294ef160238",
+      "response_ref": "runs/c1500-m2-databricks-freeze/v1/sample-new_n750_m2_evaluation-result.json",
+      "response_sha256": "1e3cb1b2766e7535d27287f0a66089964f989ea36407573c8f10a7cba885cfb9",
+      "statement_id": "01f1ce5e-be67-1f0e-b53c-501442b687a6",
+      "terminal_status": "SUCCEEDED"
+    },
+    "sample-new_n750_sec_record": {
+      "request_ref": "runs/c1500-m2-databricks-freeze/v1/sample-new_n750_sec_record-request.json",
+      "request_sha256": "5a235ac31802ec237de5a3a29eda4fe0d6ad6f7b11c32572badf1943ff9df75a",
+      "response_ref": "runs/c1500-m2-databricks-freeze/v1/sample-new_n750_sec_record-result.json",
+      "response_sha256": "2a51b19d564e3f266eabfae8692776d436ef2f42f5f5b4bf86e7cef95afb6560",
+      "statement_id": "01f1ce5e-be70-1092-9378-fa5c3d924ad0",
+      "terminal_status": "SUCCEEDED"
+    },
+    "sample-new_n750_xml_property": {
+      "request_ref": "runs/c1500-m2-databricks-freeze/v1/sample-new_n750_xml_property-request.json",
+      "request_sha256": "10239decd8481891e84f68cfbb7697c01841a5e855c719a7661bb189c1970ad7",
+      "response_ref": "runs/c1500-m2-databricks-freeze/v1/sample-new_n750_xml_property-result.json",
+      "response_sha256": "6eaa87d7a007404ecd664d189df71b14ddc284e6147821cb1efbf7c63d27e78d",
+      "statement_id": "01f1ce5e-be73-1a93-a7e4-5999c5f09a55",
+      "terminal_status": "SUCCEEDED"
+    },
+    "set-result-freeze-marker": {
+      "request_ref": "runs/c1500-m2-databricks-freeze/v1/set-result-freeze-marker-request.json",
+      "request_sha256": "eb289468102d97e88bc826de7f9df84e659d2b6ef07ebe0471ae4f8182dc8b72",
+      "response_ref": "runs/c1500-m2-databricks-freeze/v1/set-result-freeze-marker-result.json",
+      "response_sha256": "5ce54a83816de3cef9b0c6322c8c84c6af52b464a1f97e75403295057540e75f",
+      "statement_id": "01f1ce5e-390d-1e94-944e-c360eae55ccd",
+      "terminal_status": "SUCCEEDED"
+    },
+    "treasury-outcomes": {
+      "request_ref": "runs/c1500-m2-databricks-freeze/v1/treasury-outcomes-request.json",
+      "request_sha256": "00fad7e9922bb6e4742f00de8f37de652a4ef795cc611909c36ee618294e395f",
+      "response_ref": "runs/c1500-m2-databricks-freeze/v1/treasury-outcomes-result.json",
+      "response_sha256": "6e86883fc97dc0fc804290e0c1fcc88cf921f9658bca5b09649db4dabcb33313",
+      "statement_id": "01f1ce5d-cba3-1921-91f8-63e51c871fdf",
+      "terminal_status": "SUCCEEDED"
+    },
+    "v0-readable-clean_c300_m1_bindings_main_recovery_20261021_v4_full": {
+      "request_ref": "runs/c1500-m2-databricks-freeze/v1/v0-readable-clean_c300_m1_bindings_main_recovery_20261021_v4_full-request.json",
+      "request_sha256": "0a10379a594db821966265a3d9e25a9b3a9b274df168da4a415cada20bbc7dac",
+      "response_ref": "runs/c1500-m2-databricks-freeze/v1/v0-readable-clean_c300_m1_bindings_main_recovery_20261021_v4_full-result.json",
+      "response_sha256": "9c07912990352d63481486d34837e04fe86882612dac65334de847577aa1e635",
+      "statement_id": "01f1ce5d-304e-1142-985c-a1db6d247581",
+      "terminal_status": "SUCCEEDED"
+    },
+    "v0-readable-clean_c300_m1_bindings_num_recovery_20261021_v1_recovery": {
+      "request_ref": "runs/c1500-m2-databricks-freeze/v1/v0-readable-clean_c300_m1_bindings_num_recovery_20261021_v1_recovery-request.json",
+      "request_sha256": "bae02f8af4f47fbb1c1545fe7b574010233fda6cdcb5c0f53b06b6d6a7dc458e",
+      "response_ref": "runs/c1500-m2-databricks-freeze/v1/v0-readable-clean_c300_m1_bindings_num_recovery_20261021_v1_recovery-result.json",
+      "response_sha256": "b2b73340386de6cffb2df68b0010e2e4a5abd50c2b4053d62867f18faab11368",
+      "statement_id": "01f1ce5d-3044-1ce4-8405-77b58af706df",
+      "terminal_status": "SUCCEEDED"
+    },
+    "v0-readable-clean_c300_m1_records_main_recovery_20261021_v4_full": {
+      "request_ref": "runs/c1500-m2-databricks-freeze/v1/v0-readable-clean_c300_m1_records_main_recovery_20261021_v4_full-request.json",
+      "request_sha256": "66302ac283aa5f84b7066739480109262800d08d1f705c9c8003b9202d0ce3f5",
+      "response_ref": "runs/c1500-m2-databricks-freeze/v1/v0-readable-clean_c300_m1_records_main_recovery_20261021_v4_full-result.json",
+      "response_sha256": "8f67a1df7aa70d69435829dc0dcd9864dfff50f6367198dd4b02f2c36687a976",
+      "statement_id": "01f1ce5d-3048-1e35-8680-d5272a53cdc1",
+      "terminal_status": "SUCCEEDED"
+    },
+    "v0-readable-clean_c300_m1_records_num_recovery_20261021_v1_recovery": {
+      "request_ref": "runs/c1500-m2-databricks-freeze/v1/v0-readable-clean_c300_m1_records_num_recovery_20261021_v1_recovery-request.json",
+      "request_sha256": "40725b1d102bc344c4efe10d67ad11e61e470880a6c361c7c163154f29cc41ee",
+      "response_ref": "runs/c1500-m2-databricks-freeze/v1/v0-readable-clean_c300_m1_records_num_recovery_20261021_v1_recovery-result.json",
+      "response_sha256": "96e867f9337727551c801d4dc3d82be94e29b04da7cc566939093a20ebd295e1",
+      "statement_id": "01f1ce5d-3048-1b83-84ef-2dc8e5791e42",
+      "terminal_status": "SUCCEEDED"
+    },
+    "v0-readable-clean_n450_m1_bindings_n450_step3_v1": {
+      "request_ref": "runs/c1500-m2-databricks-freeze/v1/v0-readable-clean_n450_m1_bindings_n450_step3_v1-request.json",
+      "request_sha256": "5968ed054eeef39ca0432d60428f97d9bc17105276c208493b7dfb2a65743585",
+      "response_ref": "runs/c1500-m2-databricks-freeze/v1/v0-readable-clean_n450_m1_bindings_n450_step3_v1-result.json",
+      "response_sha256": "49efd08331e9778ca72a69b02fc8e529333c84638d4cdbfc748a2715473ad380",
+      "statement_id": "01f1ce5d-331e-14dd-baef-500a6ce5be0f",
+      "terminal_status": "SUCCEEDED"
+    },
+    "v0-readable-clean_n450_m1_records_n450_step3_v1": {
+      "request_ref": "runs/c1500-m2-databricks-freeze/v1/v0-readable-clean_n450_m1_records_n450_step3_v1-request.json",
+      "request_sha256": "234288dc16e5743bb5931416a1782e94b8a8f7eeec590a5a7c66bd4d6817922e",
+      "response_ref": "runs/c1500-m2-databricks-freeze/v1/v0-readable-clean_n450_m1_records_n450_step3_v1-result.json",
+      "response_sha256": "a0be82006d10b996c9ec26c6a5a89127c722613f4b6fbe2343408e2d57d08c64",
+      "statement_id": "01f1ce5d-331b-1d86-9ea5-73b9363464aa",
+      "terminal_status": "SUCCEEDED"
+    },
+    "v0-readable-clean_n750_m1_sec_records_step8_v1": {
+      "request_ref": "runs/c1500-m2-databricks-freeze/v1/v0-readable-clean_n750_m1_sec_records_step8_v1-request.json",
+      "request_sha256": "f829c42d6a3b6b639ede442fac0b8232508fb747f16a604d74a51c5bbae39872",
+      "response_ref": "runs/c1500-m2-databricks-freeze/v1/v0-readable-clean_n750_m1_sec_records_step8_v1-result.json",
+      "response_sha256": "1dc2d2bb60b2b5f34c863579119d4fc70148771ae5c40c173186d61fb5c7a8ea",
+      "statement_id": "01f1ce5d-332e-1419-b79e-308f0d3cd0f7",
+      "terminal_status": "SUCCEEDED"
+    },
+    "v0-readable-clean_n750_m1_treasury_properties_step8_v1": {
+      "request_ref": "runs/c1500-m2-databricks-freeze/v1/v0-readable-clean_n750_m1_treasury_properties_step8_v1-request.json",
+      "request_sha256": "4f8b45b37014599f5767f11bc2418492af757801c18d1e701a05990431422991",
+      "response_ref": "runs/c1500-m2-databricks-freeze/v1/v0-readable-clean_n750_m1_treasury_properties_step8_v1-result.json",
+      "response_sha256": "7ebd4fbc0c04ca2e8a0b1bc47e280531fbe454a947bc94c0c15bc8e91504dfdb",
+      "statement_id": "01f1ce5d-333f-1645-9904-d7c374c50b98",
+      "terminal_status": "SUCCEEDED"
+    },
+    "v0-readable-clean_n750_m2_treasury_rates_step8_v1": {
+      "request_ref": "runs/c1500-m2-databricks-freeze/v1/v0-readable-clean_n750_m2_treasury_rates_step8_v1-request.json",
+      "request_sha256": "1d4ca9fcd327abc6a0dce558aef79d9ab9dcb51ffffd254257fb45abf5254de0",
+      "response_ref": "runs/c1500-m2-databricks-freeze/v1/v0-readable-clean_n750_m2_treasury_rates_step8_v1-result.json",
+      "response_sha256": "2dd0bcb316765c4c73132705cf07eee40368aaad5b3d627df3edac412917a78a",
+      "statement_id": "01f1ce5d-3565-15ad-8fc0-cf1e9bf2755c",
+      "terminal_status": "SUCCEEDED"
+    },
+    "v0-readable-clean_n750_source_coverage_step8_v1": {
+      "request_ref": "runs/c1500-m2-databricks-freeze/v1/v0-readable-clean_n750_source_coverage_step8_v1-request.json",
+      "request_sha256": "e7e4d382624b036af4909378a023adb6fe45759683e8a6bd5e68c45189d06c1e",
+      "response_ref": "runs/c1500-m2-databricks-freeze/v1/v0-readable-clean_n750_source_coverage_step8_v1-result.json",
+      "response_sha256": "bc201b1efd4287acc1b693d649f493450eaed767f85ac24ad6dd9d9fbc3c357e",
+      "statement_id": "01f1ce5d-3563-1bc2-b2a4-2759ee9b7a07",
+      "terminal_status": "SUCCEEDED"
+    },
+    "v0-readable-typed_c750_m2_historical_20261022_v1": {
+      "request_ref": "runs/c1500-m2-databricks-freeze/v1/v0-readable-typed_c750_m2_historical_20261022_v1-request.json",
+      "request_sha256": "dd2aeb399c9581546d73ad27d0c1502b2af5d44dcdb549e35bc0dd34d0096431",
+      "response_ref": "runs/c1500-m2-databricks-freeze/v1/v0-readable-typed_c750_m2_historical_20261022_v1-result.json",
+      "response_sha256": "acfbe96133ff60110fb6d44dd99e9163264fb3e4e5e63f0451e58bc771506bea",
+      "statement_id": "01f1ce5d-3565-11c9-acd1-3f5287c6062a",
+      "terminal_status": "SUCCEEDED"
+    }
+  },
+  "schema": "O_C1500_M2_DATABRICKS_RESULT_FREEZE_V2",
+  "scope": "SOURCE_PRESERVING_ADDITIVE_M2_ONLY",
+  "scoped_acceptance_sha256": "87b194453c36b9d717592edd514b3f9d50029c03183be6ec7d550f33c7f1fe24",
+  "status": "PASS"
+}
