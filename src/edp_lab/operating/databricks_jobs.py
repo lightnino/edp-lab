@@ -6,6 +6,7 @@ Successful CLI submission is NEVER successful processing or signed readback.
 """
 
 import base64
+import hashlib
 import json
 import os
 import re
@@ -121,15 +122,17 @@ def _validate_deployment(root: Path, deployment: dict, request: dict,
 def _remote_preflight(deployment: dict, grant: dict) -> None:
     """Re-read deployed Notebook and source artifacts before every Jobs submit."""
     timeout = min(grant["limits"]["runtime_seconds"], 1800)
-    output = json.loads(_cli("workspace", "export", deployment["notebook_path"],
-                             "-o", "json", timeout=timeout))
+    try:
+        output = json.loads(_cli("workspace", "export", deployment["notebook_path"],
+                                 "-o", "json", timeout=timeout))
+    except ValueError as exc:
+        raise Denied("REMOTE_NOTEBOOK_INVALID") from exc
     if not isinstance(output.get("content"), str):
         raise Denied("REMOTE_NOTEBOOK_MISSING")
     try:
         raw = base64.b64decode(output["content"], validate=True)
-    except ValueError as exc:
+    except (ValueError, TypeError) as exc:
         raise Denied("REMOTE_NOTEBOOK_INVALID") from exc
-    import hashlib
     if hashlib.sha256(raw).hexdigest() != deployment["notebook_sha256"]:
         raise Denied("REMOTE_NOTEBOOK_HASH_CHANGED")
     for item in deployment["files"]:
@@ -153,8 +156,12 @@ def databricks_job_submit(root: Path, grant: dict, request: dict, ledger: Path,
     authorize(grant, request, root=root)
     submission_path = _tracked(root, request["submission_path"])
     deployment_path = _tracked(root, request["deployment_path"])
-    if (file_digest(submission_path) != grant["contracts"]["job_submission"]["sha256"]
-            or file_digest(deployment_path) != grant["contracts"]["deployment"]["sha256"]):
+    submission_pin = grant["contracts"].get(request["submission_contract"])
+    deployment_pin = grant["contracts"].get(request["deployment_contract"])
+    if not submission_pin or not deployment_pin:
+        raise Denied("JOB_CONTRACT_NOT_PINNED")
+    if (file_digest(submission_path) != submission_pin["sha256"]
+            or file_digest(deployment_path) != deployment_pin["sha256"]):
         raise Denied("JOB_OR_DEPLOYMENT_CONTRACT_CHANGED")
     payload = json.loads(submission_path.read_bytes())
     deployment = json.loads(deployment_path.read_bytes())
@@ -169,8 +176,8 @@ def databricks_job_submit(root: Path, grant: dict, request: dict, ledger: Path,
     if fresh != grant:
         raise Denied("GRANT_CHANGED_BEFORE_SUBMIT")
     authorize(fresh, request, root=root)
-    if (file_digest(submission_path) != grant["contracts"]["job_submission"]["sha256"]
-            or file_digest(deployment_path) != grant["contracts"]["deployment"]["sha256"]):
+    if (file_digest(submission_path) != submission_pin["sha256"]
+            or file_digest(deployment_path) != deployment_pin["sha256"]):
         raise Denied("DEPLOYMENT_CHANGED_BEFORE_SUBMIT")
     record = _reserve(ledger, request["operation_id"], request)
     try:
