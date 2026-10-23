@@ -17,38 +17,41 @@ if [[ "$(id -u)" != 0 ]]; then
   print -u2 "Run with sudo in the owner's Terminal."
   exit 1
 fi
-if [[ -e "$base" ]]; then
-  print -u2 "Protected 0A directory already exists; refusing to overwrite it."
-  exit 1
-fi
 if [[ "$(/usr/bin/shasum -a 256 "$policy_source" | /usr/bin/awk '{print $1}')" != "$policy_sha" ||
       "$(/usr/bin/shasum -a 256 "$queue_source" | /usr/bin/awk '{print $1}')" != "$queue_sha" ]]; then
   print -u2 "Reviewed standing policy or Day 5 queue hash changed."
   exit 1
 fi
 
-install -d -m 755 -o root -g wheel "$base" "$trust" "$base/grants" \
-  "$base/receipts" "$runtime"
-install -d -m 700 -o root -g wheel "$private" "$base/ledger"
-/usr/bin/ditto "$root/src/edp_lab" "$runtime/edp_lab"
-/usr/bin/ditto "$python_source" "$base/python"
-chown -R root:wheel "$runtime"
-chmod -R go-w "$runtime"
-chown -R root:wheel "$base/python"
-chmod -R go-w "$base/python"
-for role in owner broker verifier; do
-  /opt/homebrew/bin/openssl genpkey -algorithm Ed25519 -out "$private/${role}.pem"
-  chmod 600 "$private/${role}.pem"
-  /opt/homebrew/bin/openssl pkey -in "$private/${role}.pem" -pubout \
-    -out "$trust/${role}_ed25519_public.pem"
-  chmod 644 "$trust/${role}_ed25519_public.pem"
-done
-print '[]' > "$trust/revoked_grants.json"
-chmod 644 "$trust/revoked_grants.json"
-/usr/bin/install -m 644 -o root -g wheel "$policy_source" "$base/standing_policy_unsigned_v1.json"
-/opt/homebrew/bin/openssl pkeyutl -sign -inkey "$private/owner.pem" -rawin \
-  -in "$base/standing_policy_unsigned_v1.json" -out "$private/policy.sig"
-POLICY_BASE="$base" "$base/python/bin/python3.12" - <<'PY'
+if [[ ! -e "$base" ]]; then
+  install -d -m 755 -o root -g wheel "$base" "$trust" "$base/grants" \
+    "$base/receipts" "$runtime"
+  install -d -m 700 -o root -g wheel "$private" "$base/ledger"
+  /usr/bin/ditto "$root/src/edp_lab" "$runtime/edp_lab"
+  /usr/bin/ditto "$python_source" "$base/python"
+  chown -R root:wheel "$runtime" "$base/python"
+  chmod -R go-w "$runtime" "$base/python"
+  for role in owner broker verifier; do
+    /opt/homebrew/bin/openssl genpkey -algorithm Ed25519 -out "$private/${role}.pem"
+    chmod 600 "$private/${role}.pem"
+    /opt/homebrew/bin/openssl pkey -in "$private/${role}.pem" -pubout \
+      -out "$trust/${role}_ed25519_public.pem"
+    chmod 644 "$trust/${role}_ed25519_public.pem"
+  done
+  print '[]' > "$trust/revoked_grants.json"
+  chmod 644 "$trust/revoked_grants.json"
+fi
+if [[ ! -f "$private/owner.pem" || ! -f "$private/broker.pem" ||
+      ! -f "$private/verifier.pem" || ! -f "$trust/revoked_grants.json" ||
+      ! -x "$base/python/bin/python3.12" ]]; then
+  print -u2 "Protected 0A installation is incomplete; refusing to replace keys."
+  exit 1
+fi
+if [[ ! -f "$trust/standing_policy_v1.json" ]]; then
+  /usr/bin/install -m 644 -o root -g wheel "$policy_source" "$base/standing_policy_unsigned_v1.json"
+  /opt/homebrew/bin/openssl pkeyutl -sign -inkey "$private/owner.pem" -rawin \
+    -in "$base/standing_policy_unsigned_v1.json" -out "$private/policy.sig"
+  POLICY_BASE="$base" "$base/python/bin/python3.12" - <<'PY'
 import base64
 import json
 import os
@@ -61,16 +64,16 @@ envelope = {"document": document, "signature_base64": base64.b64encode(signature
 (base / "trust/standing_policy_v1.json").write_text(
     json.dumps(envelope, sort_keys=True, separators=(",", ":"), ensure_ascii=False) + "\n")
 PY
-chmod 644 "$trust/standing_policy_v1.json"
-PYTHONPATH="$runtime" "$base/python/bin/python3.12" -m edp_lab.operating.prior_verifier \
-  "$root" "$trust" "$private/verifier.pem" "$base/receipts/c1500-prior.json" \
-  --databricks-user lightnino
-plist="/Library/LaunchDaemons/org.edp-lab.policy-broker.plist"
-if [[ -e "$plist" ]]; then
-  print -u2 "Broker launch definition already exists; refusing to replace it."
-  exit 1
+  chmod 644 "$trust/standing_policy_v1.json"
 fi
-/bin/cat > "$plist" <<EOF
+if [[ ! -f "$base/receipts/c1500-prior.json" ]]; then
+  PYTHONPATH="$runtime" "$base/python/bin/python3.12" -m edp_lab.operating.prior_verifier \
+    "$root" "$trust" "$private/verifier.pem" "$base/receipts/c1500-prior.json" \
+    --databricks-user lightnino
+fi
+plist="/Library/LaunchDaemons/org.edp-lab.policy-broker.plist"
+if [[ ! -e "$plist" ]]; then
+  /bin/cat > "$plist" <<EOF
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0"><dict>
@@ -92,8 +95,11 @@ fi
 <key>StandardErrorPath</key><string>$base/broker.stderr.log</string>
 </dict></plist>
 EOF
-chown root:wheel "$plist"
-chmod 644 "$plist"
-/bin/launchctl bootstrap system "$plist"
+  chown root:wheel "$plist"
+  chmod 644 "$plist"
+fi
+if ! /bin/launchctl print system/org.edp-lab.policy-broker >/dev/null 2>&1; then
+  /bin/launchctl bootstrap system "$plist"
+fi
 print "Protected 0A keys, standing policy, independently signed C1500 receipt and broker installed."
 print "Private keys remain root-only. The Day 5 queue is pinned at SHA-256 $queue_sha."
