@@ -6,6 +6,7 @@ cohort rule remains the generic policy in docs/workflows.
 
 import json
 import math
+import re
 from pathlib import Path
 
 from edp_lab.operating.authority import Denied, digest, verified_document
@@ -28,11 +29,10 @@ def load_policy(path: Path) -> dict:
                 or not math.isclose(phase["block_above_seconds"], base * 10, abs_tol=0.001)):
             raise Denied("C3_4_THRESHOLDS_CHANGED")
     thresholds = value["thresholds"]
-    if (thresholds["nonblocking_warning_above_multiplier"] != 5
-            if "nonblocking_warning_above_multiplier" in thresholds
-            else thresholds.get("nonblocking_warning_above_multiplier", 5) != 5):
-        raise Denied("INVALID_C3_4_POLICY")
-    if thresholds.get("block_above_multiplier") != 10:
+    if (thresholds.get("pass_at_or_below_multiplier") != 5
+            or thresholds.get("nonblocking_warning_above_multiplier", 5) != 5
+            or thresholds.get("pass_with_warning_at_or_below_multiplier") != 10
+            or thresholds.get("block_above_multiplier") != 10):
         raise Denied("INVALID_C3_4_POLICY")
     return value
 
@@ -70,7 +70,7 @@ def verify_phase_receipt(root: Path, policy_file: Path, receipt_file: Path, *,
             or evidence.get("policy_sha256") != digest(policy_file.read_bytes())
             or evidence.get("observed_live") is not True
             or not isinstance(evidence.get("measurement_receipt_sha256"), str)
-            or len(evidence["measurement_receipt_sha256"]) != 64):
+            or not re.fullmatch(r"[0-9a-f]{64}", evidence["measurement_receipt_sha256"])):
         raise Denied("C3_4_RECEIPT_SCOPE_INVALID")
     row = next((p for p in policy["phase_limits"] if p["id"] == phase_id), None)
     if row is None or evidence.get("timing_method") != row["metric"]:
