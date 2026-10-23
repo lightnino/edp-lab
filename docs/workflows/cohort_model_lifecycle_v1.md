@@ -1,0 +1,98 @@
+# Cohort + Model Lifecycle V1 — Initial / Corpus / Additive / Corrective
+
+**Status: PROPOSED FOR OWNER REVIEW — not an executable DAG, grant, or processing authorization.**
+
+**Primary objective.** Standardize one reusable RAW → CLEAN → QUERYABLE lifecycle for an initial frozen baseline and for later disjoint source increments. `INITIAL_MODEL`, `CORPUS_ONLY`, `ADDITIVE`, and `CORRECTIVE` are **evidence-selected branches, not chronological stages**. `PARSER_EXCEPTION` and `UNRESOLVED` are conditional cross-cutting subpaths, not mandatory numbered stages. Requirements may originate in one or many old/new source families; there is no hard-coded “dual-source” condition.
+
+**Separation of concerns:** Agent A builds/operates the platform; Agent B/semantic design and V1/V2/V3 capability benchmarks are independent evaluation tracks. STTM/Enterprise Identity/Vault proposals do not have to run in order to accept a source-preserving corpus. Human authority defines business semantics; deterministic tools execute the approved contracts.
+
+**Linked standards:** [Universe Lifecycle](universe_lifecycle_v1.md); [Validation/Freeze Lifecycle](validation_freeze_lifecycle_v1.md); `docs/evaluation_contract.md`, `docs/cohort_publication.md`, `docs/agent_operating_contract.md`, `docs/agent_operating_guide.md`, and `AGENTS.md`. The current PR #51 runner is infrastructure only; this document does not claim its actual C2000 DAG exists.
+
+## 1. Canonical end-to-end lifecycle
+
+A “candidate QUERYABLE” is isolated and non-promoted until the independent Lossless/Stability gates pass. This intentionally makes the *logical work order* RAW → CLEAN → QUERYABLE → Lossless → Stability, while **not** exposing invalid data as accepted/frozen consumer truth. The historical Day 2 per-binding pre-QUERYABLE gate remains historical evidence; this is a future proposed standard, not a rewritten Day 2 fact.
+
+| Step | Work | Why this sequence / Blocks next | Why important commercially | Exit |
+| --- | --- | --- | --- | --- |
+| P0. Verify input authority + old result | Verify approved Universe version, old cohort/result membership, RAW hashes, model/parser/FIN/validation contract versions, Delta IDs/versions, live freeze references. On first run, declare no old frozen result. | Without fixed authority and comparison baseline, “new” vs “regression” has no meaning. | Protect historical delivery and source-estate boundaries. | `BASELINE_VERIFIED` / `INITIAL_BASELINE` |
+| P1. Candidate selection + source identity | Select N disjoint physical instances from approved non-holdout universe. Independently verify paths/hashes, duplicate identities, family/provenance and known remote copies; stage **proposal only**. | Must know exact candidate set to make the scope reviewable. | Prevent scope contamination and duplicated onboarding. | `N_CANDIDATES_VERIFIED` |
+| P2. Read-only discovery + preliminary profiling | Inspect exact bounded RAW/header/schema/encoding/member witnesses from candidates and applicable old sources; list new fields, source contexts, semantic uncertainties and likely parser fits. Record insufficient pre-admission evidence as such. | New field requirements, exceptions and model compatibility are source-evidence driven. | Minimize unnecessary model work. | `SOURCE_REQUIREMENTS_OBSERVED` |
+| P3. B1 model decision | Classify initial/corpus-only/additive/corrective, independent parser gap, unresolved semantics. Map every driver to source IDs, fields, expected output and old-model behavior. No forced M3. | Determine what changes, if anything, before publishing execution authority. | Minimize migration and wrong correction. | `MODEL_PATH_CLASSIFIED` |
+| P4. Conditional contract + bounded evidence | If initial or model change: propose versioned parser/model/rule, human-reviewable meaning and limited negative/positive tests. Parser exception follows X path. If compatible: reuse exact contract. Identify historical projection/backfill/replay needs. | Changed rules must be defined/tested before full-scale processing. | Limits blast radius and rework. | `CONTRACT_APPROVED_OR_UNCHANGED` |
+| P5. One execution approval | Assemble exact roster, approved Universe, prior pins, parser/model/rule/validation registry hashes, operations, destinations, grant trust path, budget/retry, selected branch and Databricks/Git scopes. Owner approves changed semantics if any and signs/authorizes fixed workflow once. | Agent must not derive grant from its own proposal. | Avoid repeated per-step Python SHA pin installation. | `BOUNDED_WORKFLOW_AUTHORIZED` |
+| P6. Admit N + freeze input cohort | Publish exact admission and `C_new = C_old ∪ N` roster via exclusive destinations, independent readback, disjointness, no holds. **Freeze input membership**, not processed result. | No silent re-selection while processing. | Auditability and repeatable cohorts. | `COHORT_FROZEN` |
+| P7. Autonomy pilot / smoke | For a bounded admitted subset, run exact approved parser/processing and negative authorization/recovery checks; reuse successful checkpoints. For historical/manual mode, ordinary family smoke applies. | Prevent a new execution path from affecting the full cohort. | Reduce rollout risk. | `EXECUTION_READY` |
+| P8. Full RAW → CLEAN → candidate QUERYABLE | Verify or resolve exact remote RAW bytes; source-aware parser/CLEAN with record/field lineage and statuses; approved versioned typed projections; version-pinned old/new `UNION ALL` without silent dedup; provisional non-consumer QUERYABLE. Targeted old backfill/replay only if branch requires it. | Need real old/new/combined outputs before full end-to-end validation. | Measure reusable data-engineering work. | `PROCESSING_CANDIDATE_READY` |
+| P9. Apply Lossless 1–6 incl. L6 conditional research | Derive applicability from source/field/measure roster plus registered controls, execute exact RAW/CLEAN/QUERYABLE bidirectional checks, run approved FIN/TRY, and route missing economic meaning through E path below. | Every retained field and derived value must be accounted for; candidate SQL is not trusted merely because it ran. | Prevent false PASS and unsupported economic claims. | `LOSSLESS_SCOPED_EVALUATED` |
+| P10. Apply branch-specific Stability A/B2/C | Old, new and combined separately; C1 multiset + C2 source/semantic noninterference + C3 operational checks. For additive compare old unchanged projections and added fields separately; for corrective compare only approved expected deltas. | A+B2 never substitutes for C; different change paths require different comparison oracles. | Control regression blast radius. | `STABILITY_SCOPED_EVALUATED` |
+| P11. Conditional diagnosis/recovery | At *any* failed stage: classify transient, path/runtime/parser/semantic/integrity, bounded repair/verified checkpoint reuse, targeted re-execution and dependent revalidation. A failed external submission requires readback, not blind replay. | This is a subpath activated when needed, **not a compulsory extra full-run stage**. | Lower operational workload without infinite loops. | `RECOVERED_AND_REVALIDATED` / `PAUSED_WITH_DECISION_PACKET` |
+| P12. Performance + operating evidence | Measure wall/throughput, retries, partial statistics, unmeasured DBUs/$, human minutes, approvals, steering, affected bindings, backfill vs reuse; evaluate standing **preapproved comparable 10× envelope** only when relevant. | Acceptance needs real observed cost and original budget evidence. | Tests small-team economics. | `OPERATING_EVIDENCE_RECORDED` |
+| P13. Live Databricks result freeze | Verify eligible population, physical Delta identities/versioned inputs, effective retention/protection, zero-copy/queryable definition, live independently checked SQL readback and signed/protected evidence. | Final result must be frozen in the actual execution platform, not Git metadata only. | Auditable reproducibility. | `O_Cnew_Mactual_FROZEN` |
+| P14. Git PR/CI/Merge/Exit | Feature branch/worktree at run start; scoped commits; validate tests/Ruff, push PR, review/required CI, merge to main, verify merge SHA and exact freeze references. For current specs, **stop at Draft PR** pending owner review. | Actual closeout is an observed repo state, never merely an agent assertion. | Reusable deployed evidence. | `COHORT_RESULT_DELIVERED` |
+
+For `INITIAL_MODEL`, old-cohort Stability A is not applicable because no frozen historical processing result exists. For subsequent nested cohorts, old/new/combined are all required. An approved exception may allow **scoped** source-preserving acceptance; it cannot relabel unexecuted full economic tests as PASS.
+
+## 2. B1 / Model Decision Router — explicit conditional paths
+
+| Classification | Required evidence | Specific processing branch | Old-data impact / approval |
+| --- | --- | --- | --- |
+| `INITIAL_MODEL` | No frozen model/result; original sources and required representation known | M1/parser contract → bounded positive/negative smoke → first CLEAN/QUERYABLE → complete source-preserving tests → first freeze | Owner approves initial parser/model; establish baseline; no fake Stability A |
+| `CORPUS_ONLY` | Every new required field/structure representable by approved parser and model; no old-rule defect | Reuse versioned code/models; process **new cohort only**, compose pinned old+new; run full A/B2/C | Old physical/result snapshots unchanged; zero historical backfill/replay |
+| `PARSER_EXCEPTION` | Exact RAW evidence of parser/encoding/framing limitation, not general model defect | X1 isolate source/binding → X2 capture source/RAW/row/field/offset/hash + candidate interpretations → X3 compare quarantine vs scoped fix → X4 Human approval if consequential → X5 versioned parser + independent verifier and negative fixtures → X6 targeted reprocess → X7 rerun affected Lossless/Stability | Never global fallback; old baseline and unaffected records byte/meaning-equivalent. May occur inside any major branch |
+| `ADDITIVE` | One or **many** verified old/new source-family requirements for a new compatible consumer capability; old accepted interpretation remains true | D1 requirements per source/context → D2 versioned new-field rule/approval → D3 bounded multiple-source + boundary/negative tests → D4 dependency impact → D5 historical *targeted* backfill if old sources need new projection → D6 new cohort processing → D7 explicit old-field equivalence and added-field correctness; full A/B2/C | Old schemas/queries and unchanged fields/results must remain equivalent; new typed/derived projection intentionally appears, so entire M1-vs-M2 QUERYABLE need **not** be byte-identical |
+| `CORRECTIVE` | Exact previously approved **and executed** wrong rule, affected real historical output, independent expected truth, owner-approved expected delta | R1 evidence/old bad result → R2 corrected contract/approval → R3 bounded old FAIL/new PASS + unaffected controls → R4 dependency impact / rebuild minimal outputs → R5 old affected projection and new cohort → R6 branch-specific A/B2/C → R7 preserve original accepted result | Corrected historical values may change *only* within approved impact list; compare changed set to exact expected deltas, rest equal. No genuine M2 defect was found in the two Day 5 investigations |
+| `UNRESOLVED` | Source interpretation/identity/unit/context not independently established | Preserve RAW and source-native outputs; propose alternatives, evidence and human decision; continue technically independent scope | Cannot manufacture an “approved” semantic rule from candidate SQL or an LLM inference |
+
+**Additive is not corrective.** `M1 lexical "1878000.0000"` plus new `M2 value_decimal 1878000.0000` is a valid additive projection while original lexical output remains unchanged. Likewise a source with a parser gap is not automatically a bad old model.
+
+## 3. Historical dependency and replay planner
+
+Before any backfill/replay, compute and retain:
+
+1. Exact affected source/binding/record/field/query/version set and old frozen pins.
+2. Rule/schema/parser dependencies and which input stage contains the needed original source information.
+3. **Minimal sufficient action**, in order: no replay → recompute query/view only → typed derived projection from frozen CLEAN → targeted CLEAN recompute from verified RAW → selective full RAW replay only where necessary.
+4. Explicit expected change oracle; compare old unchanged projection byte/field/value/lineage, plus new/change projection separately.
+5. Old versions remain queryable/referenced; no `CREATE OR REPLACE` or mutation of accepted snapshots.
+6. Review exception approval boundaries before changing a source's economic meaning.
+
+Example: historical Day 4 M2 used pinned M1 CLEAN to create typed FSDS projection for 60 sources without RAW replay. Historical Day 3 reused frozen C300 and processed N450 only. Corrective only replays affected dependencies after wrong **executed** rule is proven and approved.
+
+## 4. Conditional E — Missing economic integration (part of Lossless 6, not another required stage)
+
+Trigger when newly observed numeric/economic fields lack an approved reconciliation disposition or an applicable economic control.
+
+`E0 INVENTORY`: identify **every** relevant numeric field/source QName, original value/unit/date/grain and statuses `RECONCILE_EXACT`, `RECONCILE_WITH_TRANSFORM`, `RECONCILE_WITH_TOLERANCE`, `DERIVED_RECOMPUTE`, `NON_ADDITIVE_NOT_SUMMABLE` or `PRESERVED_NOT_MODELED`. No unaccounted field. Mechanical L1–L5 and available FIN/TRY proceed independently.
+
+`E1 RESEARCH`: launch independent read-only economic investigator to inspect actual source/context and potential enterprise consumer decisions; propose one or more meaningful business/reconciliation hypotheses **with reasons**, scope, grain, units, dates, conventions, expected outcomes and negative controls. Avoid inventing summability or canonical identity.
+
+`E2 CANDIDATE TEST`: produce precise SQL/test code, original locators and candidate independent oracle; execute bounded **read-only Databricks SQL** under authorized testing scope. Report actual observed PASS/FAIL and possible false positives. A passing candidate SQL does **not** approve its business meaning.
+
+`E3 HUMAN DECISION`: deliver compact evidence + commercial use case + exact proposed interpretation + candidates/alternatives. Owner may approve, reject or defer the *economic rule*. If no independent evidence, retain `PRESERVED_NOT_MODELED`/`NOT_IMPLEMENTED`; distinguish scoped source-preserving result acceptance from any unsatisfied in-scope economic requirement.
+
+`E4 PROMOTION`: after explicit approval, version the rule, test SQL, expected fixture and applicability in the permanent validation registry; rerun only the newly approved L6 and impacted downstream controls on pinned old/new/combined outputs (no full RAW scan unless dependency invalidates pins). Subsequent compatible cohorts must auto-select that rule; never require owner to remind the agent. Maintain original prior evaluations/limitations unchanged.
+
+**Historical Day 4 warning:** 50 Treasury QName dispositions are owner-approved `PRESERVED_NOT_MODELED`, and 155 `MISSING` are structural absence, **not 50 errors or 155 bad records**. Treasury economic L6-B remains `NOT_IMPLEMENTED`; its candidate equations cannot become accepted merely because they return zero differences.
+
+## 5. Exception/approval, performance and completion rules
+
+- Each stage's evidence must include `scope/inputs/authority/operation/checks/receipts/outcome`. Engine-specific file/run IDs are immutable run evidence, not globally assumed table names.
+- Ordinary executor/environment failures, wrong paths, unsupported Spark write-mode parameters, lost sessions and interrupted tasks: bounded technical repair + idempotent resume; **not mandatory manual checkpoints**. New parser interpretation, business identity, economic tests and genuine model correction: human decision.
+- No blanket automatic permission to run arbitrary Codex/Git/Databricks commands. An owner-signed fixed grant may cover admission, processing, readback, freeze and PR/merge; a separately protected credential/ledger boundary is necessary in real execution. Human does not re-sign every automated live test receipt.
+- Measurement: keep successful/failed attempts, actual phase times, throughput, compute where available, human involvement, steering, checkpoint reuse, and source-binding coverage. Never report missing metrics as zero.
+- **Standing 10× budget:** PR #49 accepted a prospective 10× envelope for **comparable future N750-like workload phases**. When the phase is genuinely comparable, the pre-existing reference and factor are pinned before running, and observed time is within the resulting ceiling, the operational threshold is mechanically satisfied without another owner exception. Not a universal all-workloads allowance, not a retrospective Day 4 C3.4 PASS, and not a bypass of a signed execution grant's harder budget. Otherwise `BUDGET_UNRESOLVED` or `C3.4_BLOCKED` until an appropriate decision.
+- Terminal states: `PASS` / `FAIL` / `BLOCKED_NEEDS_HUMAN_DECISION` / `UNRESOLVED` / `NOT_IMPLEMENTED` / `NOT_APPLICABLE` / `PARTIAL_ACCEPTED_WITH_EXPLICIT_SCOPE`. Do not conflates these with execution completeness.
+- Day 5 acceptance is **both** `O_C2000_Mactual_FROZEN` and `AUTONOMOUS_END_TO_END_PASS` with measured human inputs. Pilot-only dry run and a Git-only freeze marker do not qualify.
+
+## 6. Historical conformance examples, not a prescribed chronology
+
+| Historical case | What actually happened | Reusable route |
+| --- | --- | --- |
+| First baseline / C300 M1 ([PR #19](https://github.com/lightnino/edp-lab/pull/19)) | 300 physical sources / 732 bindings; 12 `num.txt` quoted-tab parser exceptions explicitly approved; a timeout required checkpoint validation/reuse; ultimately source-preserving frozen O_C300_M1; original broader economics were not falsely promoted | `INITIAL_MODEL` + optional `PARSER_EXCEPTION` + optional recovery |
+| C300→C750 M1 ([PR #21](https://github.com/lightnino/edp-lab/pull/21), [#29](https://github.com/lightnino/edp-lab/pull/29)) | N450 corpus-only; exact `SRC010128` Company Name single-field encoding interpretation needed human decision; no M1 upgrade or C300 replay; permanent FIN/C2/C3 supplement preceded source-preserving result freeze | `CORPUS_ONLY` + optional `PARSER_EXCEPTION` |
+| C750→C1500 M2 ([PR #40](https://github.com/lightnino/edp-lab/pull/40), [#50](https://github.com/lightnino/edp-lab/pull/50)) | 1+ old/new source drivers (actual FSDS + Treasury); typed decimal `DECIMAL(38,4)` added; selective historical FSDS projection, new N750 XML/SEC; 50 Treasury dispositions accepted with economic limitation; actual live C1500 freeze | `ADDITIVE` + targeted backfill + E scope |
+| C1500→C2000 (planned) | Two independent actual RAW investigations found **no previously approved/executed M2 defect**. PR #51 provides generic local bounded runner, not an already executed end-to-end C2000 DAG | evidence-driven `CORPUS_ONLY` by default, `ADDITIVE`/`CORRECTIVE` only if source proves need; autonomous full run after DAG/owner grant |
+
+The original C300 universe bootstrap happened before the later formally approved Universe v1 guardrail; prospective `P0` is an improved requirement, **not** a retroactive historical PASS assertion. The separate Agent V1/V2 quality, STTM/Crosswalk, Vault architecture and write-task learning exercises remain independently tracked, not arbitrary mandatory gates on this source-preserving lifecycle.
+
+**This document itself causes no code deployment, cohort admission, freeze, model change, Databricks operation or PR merge.**
