@@ -1,6 +1,6 @@
 # Cohort + Model Lifecycle V1 — Initial / Corpus / Additive / Corrective
 
-**Status: Day 5 standing-authorization TARGET specification — not yet implemented by the current exact-run signed-grant Runner; not a deployed credential, execution grant, or live PASS.**
+**Status: Binding Day 5 standing-authorization specification.** The policy broker and Runner request path are implemented in PR #59; the independent protected deployment and live execution must be verified separately. This document is not a deployed credential, execution grant, or live PASS.
 
 **Primary objective.** Standardize one reusable RAW → CLEAN → QUERYABLE lifecycle for an initial frozen baseline and for later disjoint source increments. `INITIAL_MODEL`, `CORPUS_ONLY`, `ADDITIVE`, and `CORRECTIVE` are **evidence-selected branches, not chronological stages**. `PARSER_EXCEPTION` and `UNRESOLVED` are conditional cross-cutting subpaths, not mandatory numbered stages. Requirements may originate in one or many old/new source families; there is no hard-coded “dual-source” condition.
 

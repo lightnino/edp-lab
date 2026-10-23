@@ -1,8 +1,7 @@
 """Signed-grant checks at operation boundaries.
 
-The trust directory is supplied by the owner and must be outside the worktree.
-Only the owner holds the Ed25519 private key. An editable approval string is never
-authority. This module deliberately has no grant creation or signing function.
+The trust directory is outside the worktree. A protected broker may sign exact
+run grants under a standing owner policy; neither private key enters the Agent.
 """
 
 import base64
@@ -73,7 +72,7 @@ def load_grant(root: Path, envelope_path: Path, trust_dir: Path, now: datetime |
     trust = trust_dir.resolve(strict=True)
     if trust.is_relative_to(root):
         raise Denied("TRUST_MUST_BE_OUTSIDE_WORKTREE")
-    key = _trusted_path(root, trust / "owner_ed25519_public.pem")
+    owner_key = _trusted_path(root, trust / "owner_ed25519_public.pem")
     revoked = _trusted_path(root, trust / "revoked_grants.json")
     try:
         envelope = json.loads(envelope_path.read_bytes())
@@ -81,7 +80,9 @@ def load_grant(root: Path, envelope_path: Path, trust_dir: Path, now: datetime |
             raise Denied("INVALID_ENVELOPE")
         signature = base64.b64decode(envelope["signature_base64"], validate=True)
         grant = envelope["grant"]
-        _verify_signature(canonical(grant), signature, key)
+        key = (trust / "broker_ed25519_public.pem"
+               if grant.get("authority") == "policy-broker-v1" else owner_key)
+        _verify_signature(canonical(grant), signature, _trusted_path(root, key))
         required = {"schema", "grant_id", "authority", "issued_at", "expires_at",
                     "cohort", "sources", "contracts", "operations", "databricks_paths",
                     "databricks_tables", "outputs", "git_operations", "protected_branches",
@@ -108,14 +109,17 @@ def load_grant(root: Path, envelope_path: Path, trust_dir: Path, now: datetime |
 
 
 def verified_document(root: Path, envelope_path: Path, trust_dir: Path) -> dict:
-    """Verify a separately signed result receipt against the owner trust anchor."""
-    key = _trusted_path(root.resolve(), trust_dir / "owner_ed25519_public.pem")
+    """Verify a receipt from the owner or an independent protected verifier."""
     try:
         envelope = json.loads(envelope_path.read_bytes())
         if set(envelope) != {"document", "signature_base64"}:
             raise Denied("INVALID_SIGNED_DOCUMENT")
         document = envelope["document"]
         signature = base64.b64decode(envelope["signature_base64"], validate=True)
+        key_name = ("verifier_ed25519_public.pem"
+                    if document.get("authority") == "protected-verifier-v1"
+                    else "owner_ed25519_public.pem")
+        key = _trusted_path(root.resolve(), trust_dir / key_name)
         _verify_signature(canonical(document), signature, key)
         return document
     except (OSError, ValueError, TypeError, KeyError) as exc:

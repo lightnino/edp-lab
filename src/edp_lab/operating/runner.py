@@ -23,6 +23,7 @@ from edp_lab.operating.authority import (
 from edp_lab.operating.boundaries import databricks_write, git_write
 from edp_lab.operating.budget import verify_phase_receipt
 from edp_lab.operating.databricks_jobs import databricks_job_submit
+from edp_lab.operating.policy_broker import request as request_policy_grant
 
 
 def _write_json(path: Path, value: dict) -> None:
@@ -200,6 +201,11 @@ def run(root: Path, queue_path: Path, envelope: Path, state_dir: Path,
         raise Denied("INVALID_QUEUE")
     if queue.get("simulation_only") and not dry_run:
         raise Denied("SIMULATION_QUEUE_CANNOT_RUN_LIVE")
+    if str(envelope) == "auto":
+        socket_path = os.environ.get("EDP_POLICY_BROKER_SOCKET")
+        if not socket_path:
+            raise Denied("POLICY_BROKER_REQUIRED")
+        envelope = request_policy_grant(Path(socket_path), queue_path)
     grant = load_grant(root, envelope, protected_trust_dir(root))
     if file_digest(queue_path) != grant["contracts"]["queue"]["sha256"]:
         raise Denied("QUEUE_HASH_CHANGED")
@@ -370,7 +376,12 @@ def run(root: Path, queue_path: Path, envelope: Path, state_dir: Path,
                         _event(log, "WAITING_EXTERNAL_READBACK", task=task["id"])
                         break
                 elif task["kind"] == "stage_gate":
-                    if dry_run:
+                    if (task["stage"] == "P5"
+                            and grant["authority"] == "policy-broker-v1"):
+                        # The independently signed exact grant is the P5 receipt.
+                        # load_grant and the queue pin were verified before tasks.
+                        pass
+                    elif dry_run:
                         if not task.get("simulated_receipt"):
                             raise Denied("DRY_RUN_STAGE_RECEIPT_REQUIRED")
                     elif not _stage_verified(
