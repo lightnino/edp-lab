@@ -13,11 +13,14 @@ from pathlib import Path
 from edp_lab.operating.authority import (
     Denied,
     authorize,
+    canonical,
+    digest,
     file_digest,
     load_grant,
     protected_trust_dir,
     verified_document,
 )
+from edp_lab.operating.boundaries import databricks_write, git_write
 
 
 def _write_json(path: Path, value: dict) -> None:
@@ -35,9 +38,13 @@ def _event(log: Path, kind: str, **detail: object) -> None:
         os.fsync(stream.fileno())
 
 
-def applicable_controls(root: Path, tags: list[str]) -> list[dict]:
-    registry = json.loads((root / "metadata/operating/validation_registry_v1.json").read_bytes())
-    if registry["schema"] != "EDP_VALIDATION_REGISTRY_V1":
+def applicable_controls(root: Path, tags: list[str],
+                        registry_path: str = "metadata/operating/validation_registry_v1.json") -> list[dict]:
+    path = (root / registry_path).resolve(strict=True)
+    if not path.is_relative_to(root.resolve()):
+        raise Denied("REGISTRY_OUTSIDE_REPO")
+    registry = json.loads(path.read_bytes())
+    if registry["schema"] != "EDP_VALIDATION_REGISTRY_V1" or registry["version"] < 1:
         raise Denied("INVALID_REGISTRY")
     result = []
     for control in registry["controls"]:
@@ -126,6 +133,18 @@ def _freeze_verified(root: Path, path: Path, expected_output: str) -> bool:
             and bool(evidence.get("remote_receipt_sha256")))
 
 
+def _external_verified(root: Path, task: dict, request: dict) -> bool:
+    receipt = Path(task["external_receipt"])
+    if not receipt.is_file():
+        return False
+    proof = verified_document(root, receipt, protected_trust_dir(root))
+    return (proof.get("schema") == "EDP_EXTERNAL_OPERATION_RECEIPT_V1"
+            and proof.get("operation_id") == request["operation_id"]
+            and proof.get("request_sha256") == digest(canonical(request))
+            and proof.get("status") == "VERIFIED"
+            and proof.get("live_readback") is True)
+
+
 def _ordered(tasks: list[dict]) -> list[dict]:
     ids = {task["id"] for task in tasks}
     if len(ids) != len(tasks):
@@ -158,11 +177,16 @@ def run(root: Path, queue_path: Path, envelope: Path, state_dir: Path,
         raise Denied("QUEUE_HASH_CHANGED")
     if queue["cohort"] != grant["cohort"] or queue["output"] not in grant["outputs"]:
         raise Denied("QUEUE_OUT_OF_SCOPE")
+    registry_file = (root / queue["contracts"]["registry"]["path"]).resolve(strict=True)
+    if (not registry_file.is_relative_to(root)
+            or file_digest(registry_file) != grant["contracts"]["registry"]["sha256"]):
+        raise Denied("REGISTRY_HASH_CHANGED")
     ordered = _ordered(queue["tasks"])
     if "PRESERVED_NOT_MODELED" in queue["tags"] and not any(
             task["kind"] == "economic_research" for task in ordered):
         raise Denied("ECONOMIC_RESEARCH_TASK_REQUIRED")
-    selected_controls = applicable_controls(root, queue["tags"])
+    selected_controls = applicable_controls(root, queue["tags"],
+                                            queue["contracts"]["registry"]["path"])
     if selected_controls and not any(task["kind"] == "validate_controls" for task in ordered):
         raise Denied("VALIDATION_TASK_REQUIRED")
     state_dir.mkdir(parents=True, exist_ok=True)
@@ -194,14 +218,6 @@ def run(root: Path, queue_path: Path, envelope: Path, state_dir: Path,
             if not set(task["depends_on"]) <= {key for key, value in state["tasks"].items()
                                                     if value["status"] == "COMPLETE"}:
                 continue
-            if (current.get("status") == "RUNNING" and task["kind"] != "verify_file"
-                    and not (task["kind"] in {"codex_task", "economic_research"}
-                             and current.get("codex", {}).get("session_id"))):
-                state["tasks"][task["id"]] = {"status": "NEEDS_HUMAN_DECISION",
-                                               "reason": "INTERRUPTED_NON_IDEMPOTENT_TASK"}
-                _write_json(state_path, state)
-                _event(log, "PAUSED", task=task["id"])
-                break
             request = {"operation": task["kind"], "cohort": queue["cohort"],
                        "output": queue["output"], "source": task.get("source"),
                        "contracts": {**queue.get("contracts", {}),
@@ -211,6 +227,29 @@ def run(root: Path, queue_path: Path, envelope: Path, state_dir: Path,
                                   "runtime_seconds": task.get("runtime_seconds", 0),
                                   "compute_units": task.get("compute_units", 0),
                                   "token_count": task.get("token_budget", 0)}}
+            if task["kind"] in {"databricks_write", "git_write"}:
+                request.update({key: task[key] for key in (
+                    "operation_id", "databricks_path", "databricks_table", "statement_path",
+                    "git_operation", "branch", "argv", "pr", "head_sha", "merge_gate_receipt")
+                    if key in task})
+                request["grant_path"] = str(envelope)
+            if current.get("status") == "VALIDATING" and task["kind"] in {
+                    "databricks_write", "git_write"}:
+                if _external_verified(root, task, request):
+                    state["tasks"][task["id"]]["status"] = "COMPLETE"
+                    _write_json(state_path, state)
+                    _event(log, "COMPLETE_AFTER_READBACK", task=task["id"])
+                    continue
+                _event(log, "WAITING_EXTERNAL_READBACK", task=task["id"])
+                break
+            if (current.get("status") == "RUNNING" and task["kind"] != "verify_file"
+                    and not (task["kind"] in {"codex_task", "economic_research"}
+                             and current.get("codex", {}).get("session_id"))):
+                state["tasks"][task["id"]] = {"status": "NEEDS_HUMAN_DECISION",
+                                               "reason": "INTERRUPTED_NON_IDEMPOTENT_TASK"}
+                _write_json(state_path, state)
+                _event(log, "PAUSED", task=task["id"])
+                break
             started = time.monotonic()
             try:
                 authorize(grant, request, root=root, used=state["used"])
@@ -229,7 +268,8 @@ def run(root: Path, queue_path: Path, envelope: Path, state_dir: Path,
                     if current.get("attempts", 0) == 0:
                         raise TimeoutError("simulated transient interruption")
                 elif task["kind"] == "validate_controls":
-                    selected = applicable_controls(root, queue["tags"])
+                    selected = applicable_controls(root, queue["tags"],
+                                                   queue["contracts"]["registry"]["path"])
                     expected = set(task["control_ids"])
                     if expected != {x["id"] for x in selected}:
                         raise Denied("APPLICABLE_CONTROLS_NOT_COVERED")
@@ -264,6 +304,29 @@ def run(root: Path, queue_path: Path, envelope: Path, state_dir: Path,
                             raise TimeoutError("Codex task timed out")
                         if result["returncode"]:
                             raise RuntimeError("CODEX_TASK_REPAIR_REQUIRED")
+                elif task["kind"] in {"databricks_write", "git_write"}:
+                    if dry_run:
+                        ledger = Path("/private/tmp/edp-dry-run-ledger")
+                    else:
+                        ledger_value = os.environ.get("EDP_OWNER_LEDGER_DIR")
+                        if not ledger_value:
+                            raise Denied("PROTECTED_LEDGER_REQUIRED")
+                        ledger = Path(ledger_value)
+                    if task["kind"] == "databricks_write":
+                        outcome = databricks_write(root, grant, request, ledger,
+                                                  execute=not dry_run)
+                    else:
+                        outcome = git_write(root, grant, request, ledger,
+                                            execute=not dry_run)
+                    state["tasks"][task["id"]]["external"] = outcome
+                    if not dry_run:
+                        state["tasks"][task["id"]]["status"] = "VALIDATING"
+                        state["used"]["operations"] += 1
+                        state["used"]["runtime_seconds"] += math.ceil(time.monotonic() - started)
+                        state["used"]["compute_units"] += task.get("compute_units", 0)
+                        _write_json(state_path, state)
+                        _event(log, "WAITING_EXTERNAL_READBACK", task=task["id"])
+                        break
                 elif task["kind"] == "freeze_verify":
                     if dry_run:
                         if not task.get("simulated_receipt"):

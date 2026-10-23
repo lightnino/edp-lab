@@ -25,7 +25,7 @@ def signed_setup(tmp_path):
     raw.write_text("immutable sample\n")
     registry = root / "metadata/operating/validation_registry_v1.json"
     registry.parent.mkdir(parents=True)
-    registry.write_text('{"schema":"EDP_VALIDATION_REGISTRY_V1","controls":[]}\n')
+    registry.write_text('{"schema":"EDP_VALIDATION_REGISTRY_V1","version":1,"controls":[]}\n')
     queue = root / "queue.json"
     tasks = [{"id": "hash", "kind": "verify_file", "depends_on": [], "source": {
         "identity": "SRC_A", "path": str(raw), "sha256": digest(raw.read_bytes())}},
@@ -185,6 +185,15 @@ def test_registry_changed_source_applicability(tmp_path):
         "LOSSLESS_1_TO_5_LOCAL_V1", "TRY_001_V1", "TRY_002_V1", "TRY_003_V1", "TRY_004_V1"}
 
 
+def test_changed_registry_denied_before_queue(tmp_path, monkeypatch):
+    root, trust, private, queue, _statement, grant = signed_setup(tmp_path)
+    envelope = sign(tmp_path, private, grant)
+    monkeypatch.setenv("EDP_OWNER_TRUST_DIR", str(trust))
+    (root / "metadata/operating/validation_registry_v1.json").write_text("{}")
+    with pytest.raises(Denied, match="REGISTRY_HASH_CHANGED"):
+        run(root, queue, envelope, tmp_path / "state", dry_run=True)
+
+
 def test_live_freeze_needs_signed_complete_evidence(tmp_path, monkeypatch):
     root, trust, private, _queue, _statement, _grant = signed_setup(tmp_path)
     monkeypatch.setenv("EDP_OWNER_TRUST_DIR", str(trust))
@@ -199,3 +208,70 @@ def test_live_freeze_needs_signed_complete_evidence(tmp_path, monkeypatch):
     receipt.write_text(json.dumps(unsigned_change))
     with pytest.raises(Denied, match="INVALID_SIGNATURE"):
         _freeze_verified(root, receipt, "test.output.v1")
+
+
+def test_runner_dispatches_guarded_write_dry_run(tmp_path, monkeypatch):
+    root, trust, private, queue_path, _statement, grant = signed_setup(tmp_path)
+    queue = json.loads(queue_path.read_text())
+    queue["contracts"]["statement"] = {"version": "S1", "path": "statement.json"}
+    queue["tasks"].insert(2, {"id": "write", "kind": "databricks_write",
+                              "depends_on": ["hash", "retry"],
+                              "operation_id": "write-001", "statement_path": "statement.json",
+                              "databricks_table": "workspace.test.output",
+                              "databricks_path": "/Volumes/workspace/test"})
+    queue["tasks"][-1]["depends_on"].append("write")
+    queue_path.write_bytes(canonical(queue))
+    grant["contracts"]["queue"]["sha256"] = digest(queue_path.read_bytes())
+    envelope = sign(tmp_path, private, grant)
+    monkeypatch.setenv("EDP_OWNER_TRUST_DIR", str(trust))
+    state = run(root, queue_path, envelope, tmp_path / "state", dry_run=True)
+    assert state["summary"]["simulation_complete"]
+    assert state["summary"]["accepted"] is False
+    assert state["tasks"]["write"]["external"] == {"status": "AUTHORIZED_DRY_RUN"}
+    assert state["used"]["operations"] == 4
+
+
+def test_external_write_waits_for_readback_without_replay(tmp_path, monkeypatch):
+    root, trust, private, queue_path, _statement, grant = signed_setup(tmp_path)
+    queue = json.loads(queue_path.read_text())
+    queue["contracts"]["statement"] = {"version": "S1", "path": "statement.json"}
+    receipt = tmp_path / "external-receipt.json"
+    freeze = tmp_path / "freeze-receipt.json"
+    queue["tasks"].insert(2, {"id": "write", "kind": "databricks_write",
+                              "depends_on": ["hash", "retry"],
+                              "operation_id": "write-001", "statement_path": "statement.json",
+                              "databricks_table": "workspace.test.output",
+                              "databricks_path": "/Volumes/workspace/test",
+                              "external_receipt": str(receipt)})
+    queue["tasks"][-1]["depends_on"].append("write")
+    queue["tasks"][-1]["receipt"] = str(freeze)
+    queue_path.write_bytes(canonical(queue))
+    grant["contracts"]["queue"]["sha256"] = digest(queue_path.read_bytes())
+    envelope = sign(tmp_path, private, grant)
+    monkeypatch.setenv("EDP_OWNER_TRUST_DIR", str(trust))
+    monkeypatch.setenv("EDP_OWNER_LEDGER_DIR", str(tmp_path / "protected-ledger"))
+    seen = []
+
+    def fake_write(root_arg, grant_arg, request_arg, ledger_arg, *, execute):
+        seen.append(request_arg)
+        assert execute
+        return {"status": "SUBMITTED_REQUIRES_READBACK"}
+
+    monkeypatch.setattr("edp_lab.operating.runner.databricks_write", fake_write)
+    first = run(root, queue_path, envelope, tmp_path / "state")
+    assert first["tasks"]["write"]["status"] == "VALIDATING"
+    assert not first["summary"]["accepted"]
+    assert len(seen) == 1
+    external_doc = {"schema": "EDP_EXTERNAL_OPERATION_RECEIPT_V1",
+                    "operation_id": "write-001", "request_sha256": digest(canonical(seen[0])),
+                    "status": "VERIFIED", "live_readback": True}
+    signed = sign_document(tmp_path, private, external_doc)
+    receipt.write_bytes(signed.read_bytes())
+    fields = ("delta_ids", "delta_history", "delta_properties", "row_counts",
+              "source_lineage", "queryable_versions", "live_readback")
+    freeze_doc = {"schema": "EDP_LIVE_FREEZE_RECEIPT_V1", "output": "test.output.v1",
+                  "remote_receipt_sha256": "a" * 64, **dict.fromkeys(fields, "VERIFIED")}
+    freeze.write_bytes(sign_document(tmp_path, private, freeze_doc).read_bytes())
+    resumed = run(root, queue_path, envelope, tmp_path / "state")
+    assert resumed["summary"]["accepted"]
+    assert len(seen) == 1
