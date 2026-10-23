@@ -21,6 +21,7 @@ from edp_lab.operating.authority import (
     verified_document,
 )
 from edp_lab.operating.boundaries import databricks_write, git_write
+from edp_lab.operating.budget import verify_phase_receipt
 
 
 def _write_json(path: Path, value: dict) -> None:
@@ -145,6 +146,22 @@ def _external_verified(root: Path, task: dict, request: dict) -> bool:
             and proof.get("live_readback") is True)
 
 
+def _stage_verified(root: Path, path: Path, *, cohort: str, output: str,
+                    stage: str, queue_sha256: str) -> bool:
+    """Trusted separate verifier receipt for a completed stage, never a mere status tag."""
+    evidence = verified_document(root, path, protected_trust_dir(root))
+    return (evidence.get("schema") == "EDP_STAGE_RECEIPT_V1"
+            and evidence.get("cohort") == cohort
+            and evidence.get("output") == output
+            and evidence.get("stage") == stage
+            and evidence.get("queue_sha256") == queue_sha256
+            and evidence.get("status") == "VERIFIED"
+            and evidence.get("independent_verifier") is True
+            and isinstance(evidence.get("evidence_sha256"), str)
+            and len(evidence["evidence_sha256"]) == 64
+            and evidence.get("execution_kind") == "LIVE")
+
+
 def _ordered(tasks: list[dict]) -> list[dict]:
     ids = {task["id"] for task in tasks}
     if len(ids) != len(tasks):
@@ -182,6 +199,10 @@ def run(root: Path, queue_path: Path, envelope: Path, state_dir: Path,
             or file_digest(registry_file) != grant["contracts"]["registry"]["sha256"]):
         raise Denied("REGISTRY_HASH_CHANGED")
     ordered = _ordered(queue["tasks"])
+    if any(t["kind"] == "budget_gate" for t in ordered):
+        policy = queue.get("contracts", {}).get("budget_policy")
+        if not policy or "budget_policy" not in grant["contracts"]:
+            raise Denied("C3_4_POLICY_NOT_PINNED")
     if "PRESERVED_NOT_MODELED" in queue["tags"] and not any(
             task["kind"] == "economic_research" for task in ordered):
         raise Denied("ECONOMIC_RESEARCH_TASK_REQUIRED")
@@ -215,6 +236,8 @@ def run(root: Path, queue_path: Path, envelope: Path, state_dir: Path,
             current = state["tasks"].get(task["id"], {})
             if current.get("status") == "COMPLETE":
                 continue
+            if current.get("status") in {"NEEDS_HUMAN_DECISION", "FAILED_INTEGRITY"}:
+                raise Denied("PAUSED_REQUIRES_OWNER_DISPOSITION")
             if not set(task["depends_on"]) <= {key for key, value in state["tasks"].items()
                                                     if value["status"] == "COMPLETE"}:
                 continue
@@ -327,6 +350,39 @@ def run(root: Path, queue_path: Path, envelope: Path, state_dir: Path,
                         _write_json(state_path, state)
                         _event(log, "WAITING_EXTERNAL_READBACK", task=task["id"])
                         break
+                elif task["kind"] == "stage_gate":
+                    if dry_run:
+                        if not task.get("simulated_receipt"):
+                            raise Denied("DRY_RUN_STAGE_RECEIPT_REQUIRED")
+                    elif not _stage_verified(
+                            root, Path(task["receipt"]), cohort=queue["cohort"],
+                            output=queue["output"], stage=task["stage"],
+                            queue_sha256=file_digest(queue_path)):
+                        raise Denied("STAGE_RECEIPT_NOT_VERIFIED")
+                elif task["kind"] == "budget_gate":
+                    if dry_run:
+                        if not task.get("simulated_measurement"):
+                            raise Denied("DRY_RUN_BUDGET_MEASUREMENT_REQUIRED")
+                        outcome = {"status": "SIMULATED_NOT_ACCEPTED",
+                                   "phase_id": task["phase_id"]}
+                    else:
+                        policy_path = (root / queue["contracts"]["budget_policy"]["path"]).resolve(
+                            strict=True)
+                        if not policy_path.is_relative_to(root):
+                            raise Denied("POLICY_OUTSIDE_REPO")
+                        outcome = verify_phase_receipt(
+                            root, policy_path, Path(task["receipt"]), cohort=queue["cohort"],
+                            output=queue["output"], phase_id=task["phase_id"],
+                            trust_dir=protected_trust_dir(root))
+                        if outcome["status"] in {
+                                "C3_4_BLOCKED_NEEDS_HUMAN_APPROVAL",
+                                "BASELINE_OR_MEASUREMENT_UNRESOLVED"}:
+                            state["tasks"][task["id"]]["budget_outcome"] = outcome
+                            raise Denied(outcome["status"])
+                    state["tasks"][task["id"]]["budget_outcome"] = outcome
+                    if outcome["status"] == "PASS_WITH_PERFORMANCE_WARNING":
+                        _event(log, "PERFORMANCE_WARNING", task=task["id"],
+                               phase=task["phase_id"], ratio=outcome["ratio"])
                 elif task["kind"] == "freeze_verify":
                     if dry_run:
                         if not task.get("simulated_receipt"):
@@ -375,7 +431,13 @@ def run(root: Path, queue_path: Path, envelope: Path, state_dir: Path,
                 break
             except Denied as exc:
                 state["used"]["runtime_seconds"] += math.ceil(time.monotonic() - started)
-                state["tasks"][task["id"]] = {"status": "FAILED_INTEGRITY", "reason": str(exc)}
+                reason = str(exc)
+                paused = reason in {"C3_4_BLOCKED_NEEDS_HUMAN_APPROVAL",
+                                    "BASELINE_OR_MEASUREMENT_UNRESOLVED",
+                                    "C3_4_PHASE_NOT_COMPARABLE"}
+                state["tasks"][task["id"]].update(
+                    status="NEEDS_HUMAN_DECISION" if paused else "FAILED_INTEGRITY",
+                    reason=reason)
                 _write_json(state_path, state)
                 _event(log, "STOPPED", task=task["id"], reason=str(exc))
                 break
