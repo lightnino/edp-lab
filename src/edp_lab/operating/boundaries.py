@@ -12,6 +12,7 @@ from pathlib import Path
 from edp_lab.operating.authority import (
     Denied,
     authorize,
+    canonical,
     digest,
     file_digest,
     load_grant,
@@ -31,7 +32,7 @@ def _reserve(ledger: Path, operation_id: str, request: dict) -> Path:
         raise Denied("OPERATION_REPLAY_OR_UNCERTAIN_RESULT") from exc
     with os.fdopen(fd, "w") as stream:
         json.dump({"status": "RESERVED", "request_sha256": digest(
-            json.dumps(request, sort_keys=True).encode())}, stream, sort_keys=True)
+            canonical(request))}, stream, sort_keys=True)
         stream.flush()
         os.fsync(stream.fileno())
     return record
