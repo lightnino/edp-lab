@@ -31,6 +31,9 @@
   "delta_readback": "NOT_RUN",
   "raw_byte_reverification": "NOT_RUN_IN_THIS_WORKTREE",
   "write_authorization": "NOT_VERIFIED",
+  "implementation_commit_initial": "532850f",
+  "pr": "https://github.com/lightnino/edp-lab/pull/61",
+  "ci_initial": "deterministic-smoke PASS, two observed jobs before evidence-only update",
   "day6_step0": "WAITING_C2000_RESULT_FREEZE",
   "day6_step3": "BLOCKED_BY_STEP0_AND_STEP2"
 }

@@ -30,6 +30,6 @@ An independent authority must provision or identify a permitted isolated Dev Sch
 
 ## Step 2.6 — local regression
 
-`uv run pytest -q tests/vault`: **15 passed**. `uv run pytest -q`: **562 passed, 82 skipped in 89.43s**. `uv run ruff check .`: **All checks passed**. These tests cover local projection and synthetic rejection paths only; they do not establish live Delta persistence. The final Git diff and CI result are recorded in the PR once published.
+`uv run pytest -q tests/vault`: **15 passed**. `uv run pytest -q`: **562 passed, 82 skipped in 89.43s**. `uv run ruff check .`: **All checks passed**. These tests cover local projection and synthetic rejection paths only; they do not establish live Delta persistence. Commit `532850f` was pushed on `day6/vault-prototype-c1500`; [PR #61](https://github.com/lightnino/edp-lab/pull/61) is open against `main`. Both observed `deterministic-smoke` CI jobs passed before this documentation-only evidence update. The complete diff contains no Day 5 or Step 0 edits; `docs/vault_load_contract_v1.md` is byte-for-byte unchanged.
 
 Day 6 Step 0: `WAITING_C2000_RESULT_FREEZE`. Day 6 Step 3: `BLOCKED_BY_STEP0_AND_STEP2`.
