@@ -54,7 +54,7 @@ Prepare a JSON plan with these required keys:
 From repository root:
 
 ```sh
-uv run python -m edp_lab.operating.dag my-reviewed-plan.json /tmp/edp-c2000-queue.json
+uv run python -m edp_lab.operating.dag my-reviewed-plan.json runs/operating/c2000-queue.json
 ```
 
 The runner demands a queue located **inside the repository** to verify its hash-pinned relative path. Compile there (e.g. `runs/operating/c2000-queue.json`) before handing the queue to the external owner signing process; regenerate and re-sign if any queue byte changes. All grants and live receipts are separate, externally protected operations. Do not put signing keys in the repository or an agent-editable worktree.
