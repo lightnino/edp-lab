@@ -235,6 +235,7 @@ def serve(socket_path: Path, root: Path, policy: Path, trust: Path, key: Path,
                     response = {"status": "ISSUED", "grant_path": str(path)}
                 elif query.get("action") == "execute":
                     from edp_lab.operating.boundaries import databricks_write, git_write, raw_stage
+                    from edp_lab.operating.cohort_admission import cohort_admit
                     from edp_lab.operating.databricks_jobs import databricks_job_submit
 
                     grant_path = Path(query["grant_path"]).resolve(strict=True)
@@ -248,7 +249,7 @@ def serve(socket_path: Path, root: Path, policy: Path, trust: Path, key: Path,
                         raise Denied("GRANT_PATH_MISMATCH")
                     adapters = {"raw_stage": raw_stage, "databricks_write": databricks_write,
                                 "databricks_job_submit": databricks_job_submit,
-                                "git_write": git_write}
+                                "git_write": git_write, "cohort_admit": cohort_admit}
                     adapter = adapters.get(operation.get("operation"))
                     if adapter is None:
                         raise Denied("PROTECTED_OPERATION_NOT_SUPPORTED")

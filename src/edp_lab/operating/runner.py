@@ -208,11 +208,11 @@ def task_request(root: Path, queue: dict, queue_path: Path,
                           "runtime_seconds": task.get("runtime_seconds", 0),
                           "compute_units": task.get("compute_units", 0),
                           "token_count": task.get("token_budget", 0)}}
-    if task["kind"] in {"raw_stage", "databricks_write", "git_write",
+    if task["kind"] in {"raw_stage", "cohort_admit", "databricks_write", "git_write",
                         "databricks_job_submit"}:
         request.update({key: task[key] for key in (
             "operation_id", "databricks_path", "databricks_table", "statement_path",
-            "statement_contract",
+            "statement_contract", "candidate_path",
             "git_operation", "branch", "argv", "pr", "head_sha", "merge_gate_receipt",
             "submission_path", "deployment_path", "submission_contract",
             "deployment_contract") if key in task})
@@ -290,7 +290,8 @@ def run(root: Path, queue_path: Path, envelope: Path, state_dir: Path,
                 continue
             request = task_request(root, queue, queue_path, task, envelope)
             if current.get("status") == "VALIDATING" and task["kind"] in {
-                    "raw_stage", "databricks_write", "git_write", "databricks_job_submit"}:
+                    "raw_stage", "cohort_admit", "databricks_write", "git_write",
+                    "databricks_job_submit"}:
                 submitted = dict(task, _submitted_run_id=current.get("external", {}).get("run_id"),
                                  _statement_id=current.get("external", {}).get("statement_id"))
                 if _external_verified(root, submitted, request):
@@ -362,7 +363,7 @@ def run(root: Path, queue_path: Path, envelope: Path, state_dir: Path,
                             raise TimeoutError("Codex task timed out")
                         if result["returncode"]:
                             raise RuntimeError("CODEX_TASK_REPAIR_REQUIRED")
-                elif task["kind"] in {"raw_stage", "databricks_write", "git_write",
+                elif task["kind"] in {"raw_stage", "cohort_admit", "databricks_write", "git_write",
                                       "databricks_job_submit"}:
                     if not dry_run and grant["authority"] == "policy-broker-v1":
                         outcome = protected_execute(Path(broker_socket), envelope, request)
@@ -377,6 +378,11 @@ def run(root: Path, queue_path: Path, envelope: Path, state_dir: Path,
                         if task["kind"] == "raw_stage":
                             outcome = raw_stage(root, grant, request, ledger,
                                                 execute=not dry_run)
+                        elif task["kind"] == "cohort_admit":
+                            from edp_lab.operating.cohort_admission import cohort_admit
+
+                            outcome = cohort_admit(root, grant, request, ledger,
+                                                   execute=not dry_run)
                         elif task["kind"] == "databricks_write":
                             outcome = databricks_write(root, grant, request, ledger,
                                                       execute=not dry_run)

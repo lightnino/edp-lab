@@ -14,6 +14,7 @@ from edp_lab.operating.authority import (
     digest,
     file_digest,
     load_grant,
+    verified_document,
 )
 from edp_lab.operating.protected_cli import databricks_argv
 from edp_lab.operating.runner import task_request
@@ -163,15 +164,94 @@ def attest_sql(root: Path, queue_path: Path, grant_path: Path, state_path: Path,
             "operation_id": task["operation_id"], "statement_id": statement_id}
 
 
+def attest_cohort(root: Path, queue_path: Path, grant_path: Path, state_path: Path,
+                  task_id: str, trust: Path, key: Path) -> dict:
+    """Independently attest exact C2000 publication and its live RAW receipts."""
+    root = root.resolve()
+    if any(p.resolve().is_relative_to(root) for p in (trust, key)):
+        raise Denied("VERIFIER_MUST_BE_PROTECTED")
+    queue_path = queue_path.resolve(strict=True)
+    if not queue_path.is_relative_to(root):
+        raise Denied("QUEUE_OUTSIDE_REPO")
+    queue = json.loads(queue_path.read_bytes())
+    tasks = [task for task in queue["tasks"] if task["id"] == task_id]
+    if len(tasks) != 1 or tasks[0]["kind"] != "cohort_admit":
+        raise Denied("COHORT_ADMISSION_TASK_REQUIRED")
+    task = tasks[0]
+    grant = load_grant(root, grant_path, trust)
+    state = json.loads(state_path.read_bytes())
+    if (grant["authority"] != "policy-broker-v1"
+            or state["queue_sha256"] != file_digest(queue_path)
+            or grant["contracts"]["queue"]["sha256"] != state["queue_sha256"]
+            or state["grant_id"] != grant["grant_id"]
+            or state["tasks"][task_id]["status"] != "VALIDATING"):
+        raise Denied("COHORT_CHECKPOINT_MISMATCH")
+    freeze_path = root / "metadata/freezes/C2000_v1/freeze.json"
+    freeze = json.loads(freeze_path.read_bytes())
+    if (freeze.get("schema") != "C2000_INPUT_FREEZE_V1"
+            or freeze.get("status") != "FROZEN_INPUT_NOT_RESULT"
+            or freeze.get("queue_sha256") != file_digest(queue_path)
+            or freeze.get("candidate_sha256") != grant["contracts"]["candidate"]["sha256"]
+            or len(freeze.get("raw_receipts_sha256", {})) != 500
+            or state["tasks"][task_id].get("external", {}).get("freeze_sha256")
+            != file_digest(freeze_path)):
+        raise Denied("COHORT_FREEZE_NOT_VERIFIED")
+    folder = freeze_path.parent
+    for name, expected in freeze["files_sha256"].items():
+        if file_digest(folder / name) != expected:
+            raise Denied("COHORT_FILE_CHANGED")
+    if file_digest(root / "metadata/cohorts/C2000.csv") != freeze[
+            "files_sha256"]["C2000.csv"]:
+        raise Denied("COHORT_ALIAS_CHANGED")
+    combined = json.loads((folder / "C2000.bindings.json").read_bytes())
+    new = json.loads((folder / "N500.bindings.json").read_bytes())
+    if (len(combined) != 2000 or len(new) != 500
+            or {row["source_identity"]: row["raw_sha256"] for row in combined}
+            != grant["sources"]):
+        raise Denied("COHORT_SOURCE_MAP_MISMATCH")
+    for source in new:
+        identity = source["source_identity"]
+        receipt = next((task for task in queue["tasks"] if task["kind"] == "raw_stage"
+                        and task["source"]["identity"] == identity), None)
+        if receipt is None or file_digest(Path(receipt["external_receipt"])) != freeze[
+                "raw_receipts_sha256"].get(identity):
+            raise Denied("COHORT_RAW_RECEIPT_CHANGED")
+        signed = verified_document(root, Path(receipt["external_receipt"]), trust)
+        if (signed.get("authority") != "protected-verifier-v1"
+                or signed.get("schema") != "EDP_EXTERNAL_OPERATION_RECEIPT_V1"
+                or signed.get("operation_id") != receipt["operation_id"]
+                or signed.get("remote_sha256") != source["raw_sha256"]
+                or signed.get("remote_path") != source["remote_raw_path"]
+                or signed.get("status") != "VERIFIED"
+                or signed.get("live_readback") is not True):
+            raise Denied("COHORT_RAW_RECEIPT_INVALID")
+    output = Path(task["external_receipt"])
+    if output.parent.resolve() != (trust.parent / "receipts").resolve():
+        raise Denied("RECEIPT_OUTSIDE_PROTECTED_STORE")
+    request = task_request(root, queue, queue_path, task, grant_path)
+    document = {"schema": "EDP_EXTERNAL_OPERATION_RECEIPT_V1",
+                "authority": "protected-verifier-v1",
+                "operation_id": task["operation_id"],
+                "request_sha256": digest(canonical(request)),
+                "status": "VERIFIED", "live_readback": True,
+                "freeze_sha256": file_digest(freeze_path),
+                "cohort_csv_sha256": freeze["files_sha256"]["C2000.csv"],
+                "physical_sources": 2000, "new_sources": 500}
+    _sign(document, key, output)
+    return {"status": "VERIFIED", "receipt_sha256": file_digest(output),
+            "operation_id": task["operation_id"]}
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("kind", choices=("raw", "sql"))
+    parser.add_argument("kind", choices=("raw", "sql", "cohort"))
     for name in ("root", "queue", "grant", "state", "task_id", "trust", "key"):
         parser.add_argument(name, type=Path if name != "task_id" else str)
     parser.add_argument("--databricks-user", required=True)
     args = parser.parse_args()
     os.environ["EDP_DATABRICKS_RUN_AS_USER"] = args.databricks_user
-    verify = attest_raw if args.kind == "raw" else attest_sql
+    verify = {"raw": attest_raw, "sql": attest_sql,
+              "cohort": attest_cohort}[args.kind]
     print(json.dumps(verify(args.root, args.queue, args.grant, args.state,
                             args.task_id, args.trust, args.key), sort_keys=True))
 
