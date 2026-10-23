@@ -173,9 +173,26 @@ def build_local() -> dict:
     return summary
 
 
+def render_load() -> dict:
+    """Render pinned, unexecuted SQL for protected 0A policy review."""
+    import sys
+
+    sys.path.insert(0, str(ROOT / "src"))
+    from edp_lab.vault.load_plan import render
+
+    projected = json.loads((OUT / "projected-manifest.json").read_text())
+    plan = render(projected["rows"])
+    path = OUT / "load-plan.json"
+    path.write_text(json.dumps(plan, indent=2, sort_keys=True, ensure_ascii=False) + "\n")
+    return {"plan_file_sha256": sha(path.read_bytes()),
+            "stages_sha256": plan["stages_sha256"],
+            "stage_count": len(plan["stages"]), "path": str(path)}
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("command", choices=("render", "sample", "preflight", "build-local"))
+    parser.add_argument("command", choices=("render", "sample", "preflight", "build-local",
+                                            "render-load"))
     args = parser.parse_args()
     verify_baseline()
     if args.command == "render":
@@ -195,8 +212,10 @@ def main() -> None:
             print(json.dumps({"query": n, "statement_id": result.get("statement_id"),
                               "status": result.get("status"), "result": result.get("result")},
                              sort_keys=True))
-    else:
+    elif args.command == "build-local":
         print(json.dumps(build_local(), sort_keys=True))
+    else:
+        print(json.dumps(render_load(), sort_keys=True))
 
 
 if __name__ == "__main__":
