@@ -95,6 +95,27 @@ def compile_dag(root: Path, plan: dict) -> dict:
                     budget_task["simulated_measurement"] = True
                 tasks.append(budget_task)
                 depends = [task_id]
+        # Only the existing #51 guarded CREATE TABLE adapter is available today.
+        # Do not generalize it into RAW/CLEAN/QUERYABLE or Delta freeze permissions.
+        write = plan.get("guarded_create_table")
+        if stage == "P8" and write is not None:
+            if "statement" not in contracts or not isinstance(write, dict):
+                raise Denied("GUARDED_WRITE_STATEMENT_NOT_PINNED")
+            required = {"operation_id", "databricks_path", "databricks_table",
+                        "statement_path", "external_receipt"}
+            if set(write) != required:
+                raise Denied("INVALID_GUARDED_WRITE")
+            if write["statement_path"] != contracts["statement"]["path"]:
+                raise Denied("GUARDED_WRITE_STATEMENT_NOT_PINNED")
+            task_id = "P8_guarded_create_table"
+            tasks.append({"id": task_id, "kind": "databricks_write",
+                          "operation_id": write["operation_id"],
+                          "databricks_path": write["databricks_path"],
+                          "databricks_table": write["databricks_table"],
+                          "statement_path": write["statement_path"],
+                          "external_receipt": write["external_receipt"],
+                          "depends_on": depends})
+            depends = [task_id]
         if stage in local_tasks:
             local = local_tasks[stage]
             prompt = (root / local["prompt_path"]).resolve(strict=True)
