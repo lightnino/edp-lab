@@ -6,6 +6,7 @@ socket and grant store must be owner controlled; this module is not an approval.
 
 import argparse
 import base64
+import grp
 import json
 import os
 import re
@@ -174,7 +175,7 @@ def issue(root: Path, queue: Path, policy: Path, trust: Path, key: Path,
         envelope = {"grant": grant,
                     "signature_base64": base64.b64encode(signature.read_bytes()).decode()}
     staged = target.with_suffix(".next")
-    fd = os.open(staged, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
+    fd = os.open(staged, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o644)
     with os.fdopen(fd, "wb") as stream:
         stream.write(canonical(envelope))
         stream.flush()
@@ -212,6 +213,7 @@ def serve(socket_path: Path, root: Path, policy: Path, trust: Path, key: Path,
             self.wfile.write(canonical(response))
 
     with socketserver.UnixStreamServer(str(socket_path), Handler) as server:
+        os.chown(socket_path, -1, grp.getgrnam("staff").gr_gid)
         os.chmod(socket_path, 0o660)
         server.serve_forever()
 
