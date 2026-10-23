@@ -253,3 +253,23 @@ def test_compiler_branches_and_deps(tmp_path):
             compile_dag(repo, dict(plan, route=wrong))
     with pytest.raises(Denied, match="MISSING_STAGE_RECEIPTS"):
         compile_dag(repo, dict(plan, stage_receipts={"P0": "x"}))
+    # P8 may invoke exactly the existing signed/ledgered guarded CREATE TABLE adapter.
+    guarded = {"operation_id": "create-c2000-once",
+               "databricks_path": "/Volumes/workspace/edp_lab/approved",
+               "databricks_table": "workspace.edp_lab.o_c2000_candidate_v1",
+               "statement_path": "AGENTS.md",
+               "external_receipt": str(tmp_path / "db-readback.json")}
+    with pytest.raises(Denied, match="GUARDED_WRITE_STATEMENT_NOT_PINNED"):
+        compile_dag(repo, dict(plan, guarded_create_table=guarded))
+    updated = dict(plan, contracts={**pins, "statement": {
+        "version": "S1", "path": "AGENTS.md"}},
+        guarded_create_table=guarded)
+    with_write = compile_dag(repo, updated)
+    write = next(t for t in with_write["tasks"]
+                 if t["id"] == "P8_guarded_create_table")
+    assert write["depends_on"] == ["P7"]
+    p8 = next(t for t in with_write["tasks"] if t["id"] == "P8")
+    assert p8["depends_on"] == ["P8_guarded_create_table"]
+    with pytest.raises(Denied, match="INVALID_GUARDED_WRITE"):
+        compile_dag(repo, dict(updated, guarded_create_table={
+            **guarded, "not_approved": True}))
