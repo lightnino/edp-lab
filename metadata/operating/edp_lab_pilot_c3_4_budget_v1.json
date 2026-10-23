@@ -1,0 +1,125 @@
+{
+  "schema": "EDP_LAB_AUTONOMOUS_PILOT_C3_4_BUDGET_V1",
+  "version": 1,
+  "scope": "EDP Lab project only; Day 5 pilot and future numbered project runs while current project-scoped policy remains in force; no general workflow-spec baseline change",
+  "policy_status": "OWNER_DIRECTED_PROJECT_PILOT_REFERENCE; NOT_YET_WIRED_TO_SIGNED_RUNTIME_GRANTS",
+  "effective_when": "versioned config installed in the future executable orchestrator and explicitly covered by external bounded execution grant",
+  "authority_source": "Project owner explicitly requested using measured Day 4 stages as provisional reference because first-cohort (Day 2) lacks complete comparable phase timing, and approved merge of the generic Workflow Specification",
+  "generic_policy": "docs/workflows/validation_freeze_lifecycle_v1.md §5 remains first valid fully measured accepted/frozen cohort per-phase; does not name Day 4",
+  "baseline_selection": {
+    "kind": "PROJECT_SPECIFIC_PROVISIONAL_REFERENCE",
+    "source": "Day 4 N750 Step 8 real measured phases",
+    "rationale": "Day 2 C300 did not retain one complete comparable end-to-end timing; choose real observed Day 4 granular evidence for project pilot instead of inventing missing Day 2 values",
+    "evidence": "metadata/evaluations/operational_budget_v1.json",
+    "original_owner_authorization": "metadata/authorizations/day4_c3_4_budget_approval_v1.json",
+    "historical_scope_unchanged": true,
+    "phase_method": "Local monotonic elapsed for remote resolution and local CLEAN; SQL local request-to-result intervals (not Spark executor time). Derived SQL total is nonoverlapping sum, not an end-to-end run."
+  },
+  "thresholds": {
+    "pass_at_or_below_multiplier": 5,
+    "nonblocking_warning_above_multiplier": 5,
+    "pass_with_warning_at_or_below_multiplier": 10,
+    "block_above_multiplier": 10,
+    "warnings_do_not_require_reapproval": true,
+    "blocked_requires_owner_approval": true,
+    "greater_than_ten_does_not_self_authorize": true
+  },
+  "workload_reference": {
+    "source_cohort": "N750",
+    "physical_sources": 750,
+    "remote_verified_bytes": 269323425,
+    "sec_data_records": 3047639,
+    "sec_data_fields": 15238195,
+    "xml_properties": 21616,
+    "remote_reused_sources": 450,
+    "remote_uploaded_sources": 300
+  },
+  "phase_limits": [
+    {
+      "id": "remote_raw_resolution_readback",
+      "baseline_observed_seconds": 675.667,
+      "warning_above_seconds": 3378.335,
+      "block_above_seconds": 6756.67,
+      "metric": "local monotonic wall",
+      "scope": "reuse/upload mix recorded as 450 reused / 300 uploaded",
+      "description": "N750 source RAW resolution and remote verification"
+    },
+    {
+      "id": "local_clean_build_readback",
+      "baseline_observed_seconds": 45.89,
+      "warning_above_seconds": 229.45,
+      "block_above_seconds": 458.9,
+      "metric": "local monotonic wall",
+      "scope": "observed local step8 construction",
+      "description": "local CLEAN build and result readback"
+    },
+    {
+      "id": "sql_table_creation",
+      "baseline_observed_seconds": 55.145,
+      "warning_above_seconds": 275.725,
+      "block_above_seconds": 551.45,
+      "metric": "SQL request-to-result",
+      "scope": "only equivalent SQL table creation phase",
+      "description": "SQL table creation request-to-result elapsed"
+    },
+    {
+      "id": "sql_delta_validation",
+      "baseline_observed_seconds": 91.842,
+      "warning_above_seconds": 459.21,
+      "block_above_seconds": 918.42,
+      "metric": "SQL request-to-result",
+      "scope": "only equivalent SQL validation phase",
+      "description": "SQL Delta version / data validation request-to-result"
+    },
+    {
+      "id": "sql_views_counts",
+      "baseline_observed_seconds": 27.862,
+      "warning_above_seconds": 139.31,
+      "block_above_seconds": 278.62,
+      "metric": "SQL request-to-result",
+      "scope": "only equivalent view and counts phase",
+      "description": "SQL view and counts request-to-result"
+    },
+    {
+      "id": "sql_coverage_lineage",
+      "baseline_observed_seconds": 43.465,
+      "warning_above_seconds": 217.325,
+      "block_above_seconds": 434.65,
+      "metric": "SQL request-to-result",
+      "scope": "only equivalent SQL coverage and lineage phase",
+      "description": "SQL source coverage and lineage request-to-result"
+    },
+    {
+      "id": "sql_phase_total_nonoverlap",
+      "baseline_observed_seconds": 218.314,
+      "warning_above_seconds": 1091.57,
+      "block_above_seconds": 2183.14,
+      "metric": "derived SQL request-time sum",
+      "scope": "not a separate job; only when same four SQL phases are complete; not full end-to-end processing",
+      "description": "derived nonoverlapping sum of four SQL phase request-to-result intervals"
+    }
+  ],
+  "applicability": {
+    "pilot_day5_and_later": "Use numeric reference at future project runs for matching phase operations. Compare and record actual phase definition, data volume, source family mix, runtime, source reuse/upload ratio and processing/model operations; expose noncomparable characteristics as explicit pilot caveats. The project owner accepts this provisional numeric yardstick for bounded experimentation, not as proof of production scale invariance.",
+    "no_existing_phase": "Do not invent a threshold or claim C3.4 PASS. Measure and seek a separate first-stage owner-approved baseline for a genuinely new processing, historical backfill/replay or end-to-end phase.",
+    "run_readiness": "This config does not itself issue a Databricks write grant, increase job timeouts, or authorize exceeding any separately signed runtime budget.",
+    "comparison_aggregation": "Each phase is assessed independently. The four-SQL-phase total is a derived cross-check only when all four intervals were measured on the same basis; not additive to those already measured phases."
+  },
+  "outcomes": {
+    "pass": "measured time <= 5x baseline, and no stricter signed grant or job cap breached",
+    "pass_warning": "5x < measured time <= 10x: performance warning retained and visible, but C3.4 technical result PASS and workflow continues within other grants",
+    "block": "measured time > 10x: C3.4 BLOCKED; hold result promotion and obtain separate human decision before relaxing budget or continuing beyond allowed cap",
+    "unresolved": "missing measured reference/time or structurally unmatched work: no automatic C3.4 PASS; independent bootstrap needed"
+  },
+  "historical_integrity": {
+    "day4_c3_4_result": "BLOCKED historically; never change to PASS",
+    "original_day4_approval_scope": "N750-like comparable workloads only, preserved in original file",
+    "day2_missing_stage_evidence": "NOT_MEASURED rather than manufactured",
+    "known_limitations": [
+      "Day 4 reference is not single end-to-end C1500 runtime",
+      "Phase elapsed time not internal Spark executor wall",
+      "Project-specific comparison may involve different source mix or number of sources",
+      "No basis to assume CPU/DBU/$ metrics where unavailable"
+    ]
+  }
+}
