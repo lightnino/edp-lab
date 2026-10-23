@@ -5,8 +5,8 @@ import json
 
 import pytest
 
-from edp_lab.operating.authority import Denied, digest
-from edp_lab.operating.databricks_jobs import databricks_job_submit
+from edp_lab.operating.authority import Denied, canonical, digest
+from edp_lab.operating.databricks_jobs import databricks_job_submit, inspect_submitted_job
 
 
 def fixture(tmp_path):
@@ -159,3 +159,50 @@ def test_local_contract_tamper_and_forbidden_remote_path(tmp_path):
     request["databricks_path"] = "/Shared/unauthorized"
     with pytest.raises(Denied, match="DATABRICKS_PATH_OUT_OF_SCOPE"):
         databricks_job_submit(root, grant, request, tmp_path / "ledger")
+
+
+def test_independent_job_readback_requires_pinned_success(tmp_path, monkeypatch):
+    root, grant, request, *_ = fixture(tmp_path)
+    ledger = tmp_path / "ledger"
+    ledger.mkdir()
+    # Simulate the retained outcome of an earlier protected adapter submission.
+    (ledger / "day5-job-001.json").write_text(json.dumps({
+        "status": "SUBMITTED_REQUIRES_READBACK", "run_id": 314159,
+        "request_sha256": digest(canonical(request))}))
+    data = {"run_id": 314159,
+            "state": {"life_cycle_state": "TERMINATED", "result_state": "SUCCESS"},
+            "tasks": [{"task_key": "full", "notebook_task": {
+                "notebook_path": "/Shared/edp-lab/approved/runtime"}}]}
+    observed = []
+    def get_run(*argv, timeout):
+        observed.append(argv)
+        assert argv[:3] == ("jobs", "get-run", "314159")
+        return json.dumps(data).encode()
+    monkeypatch.setattr("edp_lab.operating.databricks_jobs._cli", get_run)
+    result = inspect_submitted_job(root, grant, request, ledger)
+    assert result["schema"] == "EDP_EXTERNAL_OPERATION_RECEIPT_V1"
+    assert result["job_run_id"] == 314159
+    assert result["terminal_state"] == "SUCCESS"
+    assert result["signature_status"] == "UNSIGNED_REQUIRES_PROTECTED_VERIFIER"
+    assert len(observed) == 1
+    data["state"]["life_cycle_state"] = "RUNNING"
+    with pytest.raises(Denied, match="JOB_NOT_TERMINAL"):
+        inspect_submitted_job(root, grant, request, ledger)
+    data["state"] = {"life_cycle_state": "TERMINATED", "result_state": "FAILED"}
+    with pytest.raises(Denied, match="JOB_TERMINAL_FAILURE"):
+        inspect_submitted_job(root, grant, request, ledger)
+    data["state"]["result_state"] = "SUCCESS"
+    data["run_id"] = 42
+    with pytest.raises(Denied, match="JOB_RUN_ID_CHANGED"):
+        inspect_submitted_job(root, grant, request, ledger)
+    data["run_id"] = 314159
+    data["tasks"][0]["notebook_task"]["notebook_path"] = "/Shared/other"
+    with pytest.raises(Denied, match="JOB_REMOTE_TASK_CHANGED"):
+        inspect_submitted_job(root, grant, request, ledger)
+    data["tasks"][0]["notebook_task"]["notebook_path"] = (
+        "/Shared/edp-lab/approved/runtime")
+    record = json.loads((ledger / "day5-job-001.json").read_text())
+    record["request_sha256"] = "0" * 64
+    (ledger / "day5-job-001.json").write_text(json.dumps(record))
+    with pytest.raises(Denied, match="JOB_REQUEST_LEDGER_MISMATCH"):
+        inspect_submitted_job(root, grant, request, ledger)
