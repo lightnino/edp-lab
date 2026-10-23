@@ -132,3 +132,35 @@ Keep this incident **OPEN** until R1–R5 have evidence-backed dispositions and 
 No code was deployed, supervisor restarted, remote write submitted, ledger altered, Workflow Spec revised, P13 freeze accepted, or P14 merged **by creating this report**. Day 6 Vault prototype/PR #61 and the already-merged prospective RAW handoff specification PR #62 are out of scope.
 
 **Evidence update rule:** Add subsequent independently verified recovery/closeout references when they exist. Do not backfill success or transform provisional hypotheses into confirmed root causes without additional evidence.
+
+
+## 8. Follow-up at 2026-10-24 06:47 SGT — Recovery preparation, human gate versus operability gap
+
+**Source and qualification:** Additional owner-provided Codex execution report, not an independently verified protected-host readback. This update is documentary only; it does not grant permission to resume or retry.
+
+- Reported live checkpoint: **502/513 COMPLETE**, `sql-roster` still `VALIDATING`, P13 `PLANNED`; protected Supervisor stopped.
+- Reported narrow correction prepared in a **local commit `0fb6242`**: explicit Databricks profile, Statement ID ledger persistence/synchronization, fail-closed uncertain submissions and exact Statement ID receipt matching. The full commit and recovery packet are **not yet independently accessible through the remote GitHub repository** at the time of this update; do not represent the reported fix as deployed or merged.
+- Reported test evidence: 55 operating tests pass; 562 tests pass / 82 skipped across the full suite; Ruff passes. This validates the tested checkout, **not** actual protected runtime installation or live recovery.
+- Local recovery packet reported at `docs/operating/day5_c2000_sql_recovery_packet_20261024.md`. Its contents, required owner procedure and exact deployment pins must be reviewed from the local checkout before executing privileged actions; no undocumented command should be inferred here.
+- Protected runtime **not updated**. Original operation ledger and 502 COMPLETE tasks remain untouched; no SQL retry, protected deployment, P13 acceptance or P14 merge.
+- Reported checkpoint operating counters: 503 operations, zero retries, 6,863 cumulative runtime seconds; actual monetary cost unavailable. These counters are neither a certification of 503 remote writes nor a P13/14 completion measure.
+
+### Human-intervention classification
+
+| Situation | Intended treatment | Incident significance |
+| --- | --- | --- |
+| Routine CLI authentication selection / service configuration | Protected, pre-authorized 0A runtime configuration and regression tests; no per-run owner signature | **Preventable runtime defect**; part of this incident |
+| Verifier raises for a missing Statement ID and launchd Supervisor stops without a durable actionable state | Record typed fail-closed state, notify/observe liveness, preserve checkpoint, allow safe read-only reconciliation | **Operability/liveness gap**; part of this incident |
+| A write is mechanically and independently proven not executed with no remote side effect, and a standing-policy recovery is explicitly authorized | Bounded automated disposition/retry via independently trusted components, with unique attempt identity and complete audit evidence | **Candidate autonomy improvement**, but do not assume this authority/path currently exists or is approved |
+| Original non-idempotent write cannot be proven safe to retry after independent remote reconciliation | Fail closed and obtain explicit owner disposition before any new submission | **Justified human safety gate**, not itself a defect |
+| P14 review and merge | Mandatory human review and explicit merge approval | **Intended workflow gate** |
+
+The presence of a justified **human uncertain-write disposition** must not be conflated with the avoidable **human debugging, root-only readback access bottleneck, lack of safe automated forensic assistance, and Supervisor crash**. A protected agent should never gain unrestricted root access or permission to self-authorize an uncertain-write replay. Improved trusted read-only diagnostic interfaces and independently verified recovery can reduce routine owner intervention while preserving separation of duties.
+
+### Decision and lifecycle
+
+- **Incident report:** Submit and retain this draft PR now as a factual OPEN record. The draft report is not a fix, an approved recovery, or a workflow amendment.
+- **Day 5 execution:** Review the local recovery packet, perform the minimal owner-only forensic/disposition/deployment steps actually required by the protected contract, then resume the same checkpoint under approved authority. Finish P13 and the separate P14 review/merge gate.
+- **Incident completion:** After Day 5 P14, update this incident with independently observed root cause, disposition, deployed fix SHA, service resume evidence, P13 freeze and P14 merge; review and merge the incident PR. Do not mark `RESOLVED` if material R1–R5 safety/operability evidence remains missing.
+- **Workflow changes:** None now. Open a separately reviewed spec-change proposal **only if** the post-recovery evidence demonstrates an actual missing/contradictory normative requirement, rather than an implementation shortfall against existing P11/0A and operating contracts.
+- **C3021 RAW audit:** Independent, later investigation; not a prerequisite for SQL recovery, Day 5 closeout, or a supported incident report.
