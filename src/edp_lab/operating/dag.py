@@ -67,6 +67,30 @@ def compile_dag(root: Path, plan: dict) -> dict:
     local_tasks = plan.get("local_tasks", {})
     if not isinstance(local_tasks, dict) or set(local_tasks) - LOCAL_TASK_STAGES:
         raise Denied("UNAUTHORIZED_DAG_LOCAL_STAGE")
+    guarded_jobs = plan.get("guarded_jobs", [])
+    if not isinstance(guarded_jobs, list) or len(guarded_jobs) > 16:
+        raise Denied("INVALID_GUARDED_JOBS")
+    seen_operations = set()
+    for job in guarded_jobs:
+        expected = {"stage", "operation_id", "submission_path", "deployment_path",
+                    "submission_contract", "deployment_contract", "databricks_path",
+                    "external_receipt"}
+        if not isinstance(job, dict) or set(job) != expected or job["stage"] not in {
+                "P7", "P8"}:
+            raise Denied("INVALID_GUARDED_JOB")
+        if job["operation_id"] in seen_operations:
+            raise Denied("DUPLICATE_JOB_OPERATION_ID")
+        seen_operations.add(job["operation_id"])
+        for contract_key, path_key in (("submission_contract", "submission_path"),
+                                       ("deployment_contract", "deployment_path")):
+            name = job[contract_key]
+            if name not in contracts or contracts[name]["path"] != job[path_key]:
+                raise Denied("JOB_CONTRACT_NOT_PINNED")
+            # Request payload and remote deployment manifest must be byte-pinned
+            # at compile time; the live adapter rechecks against the signed grant.
+            if contracts[name].get("sha256") != file_digest(
+                    (root / job[path_key]).resolve(strict=True)):
+                raise Denied("JOB_CONTRACT_HASH_CHANGED")
     tasks = []
     previous = None
     for stage in STAGES:
@@ -115,6 +139,15 @@ def compile_dag(root: Path, plan: dict) -> dict:
                           "statement_path": write["statement_path"],
                           "external_receipt": write["external_receipt"],
                           "depends_on": depends})
+            depends = [task_id]
+        for index, job in enumerate(guarded_jobs):
+            if stage != job["stage"]:
+                continue
+            task_id = f"{stage}_job_{index}"
+            tasks.append({"id": task_id, "kind": "databricks_job_submit",
+                          "depends_on": depends,
+                          **{key: value for key, value in job.items()
+                             if key != "stage"}})
             depends = [task_id]
         if stage in local_tasks:
             local = local_tasks[stage]
