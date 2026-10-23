@@ -1,6 +1,6 @@
 # Operating guide for a future signed queue
 
-The [contract](agent_operating_contract.md) is binding. This guide describes the implemented local path. Do not use historical N750 SHA-pin modules as a grant issuer.
+The [contract](agent_operating_contract.md) is binding. **This guide describes the existing exact-grant implementation**, not the desired Day 5 automatic standing-policy issuer. Do not use historical N750 SHA-pin modules as a grant issuer, and do not mistake a Git documentation update for deployed authority.
 
 ## Owner setup
 
@@ -25,3 +25,9 @@ Local proof: `uv run pytest -q tests/operating/test_operating_system.py` exercis
 ## Git and limits
 
 Before a write, inspect main and the worktree, create a feature branch, run tests and Ruff, review the diff, push and open a PR. Merge only after required CI and approvals; verify the merge commit on main. The Git boundary refuses force push and protected branches and requires a signed merge-gate receipt for automated merge. The implementation does not grant production credentials, install a protected gateway, produce a Day 4 live freeze receipt, or prove a real Databricks write/readback. Those are operational deployment steps, not local dry-run outcomes.
+
+## Day 5 standing policy — required future 0A integration
+
+The project's target operational flow is `0A standing owner-installed infrastructure policy → P0–P4 source/model evidence → P5 automatic protected policy check → P6–P13 live run → P14 human PR review and merge`. Policy-compliant Databricks RAW staging, SQL/Jobs writes, admission, recovery, validation and result freeze need **no per-run owner infrastructure signing**. C3.4 >10× and new business/semantic judgments retain human approval. Universe membership revisions (not N500 selection from approved Universe v1) also retain their separate review.
+
+Current `EDP_SIGNED_GRANT_V1` requires an exact owner signature. **Before claiming autonomous 0A readiness, implement and test a protected automatic issuer/verifier for run-scoped grants/receipts and deploy it separately from the agent.** Never put the owner signing private key in the Codex worktree, turn an editable manifest into a grant or bypass existing fail-closed checks. P14 Git merge remains human-approved.

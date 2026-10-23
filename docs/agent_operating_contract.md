@@ -18,6 +18,8 @@ The historical N750 Step 8 gate pins an owner grant SHA inside `src/edp_lab/inge
 
 Every action preserves source references and logs status, retries and measured operation counts. Owner approvals, tool permission requests, steering, manual SHA installations, human minutes, compute and tokens are fields in the checkpoint, with unknown measurements left `null` rather than invented. At the end, compare these measurements with retained Days 3–4 evidence; only measured interventions support the staffing hypothesis.
 
+Routine infrastructure operations continue within the standing policy. New semantic judgments, approved-Universe or policy changes, C3.4 measurements above the applicable 10× gate, and exhausted hard limits retain their respective human-decision or fail-closed boundaries. P14 human PR review and explicit merge approval remain mandatory.
+
 ## Validation and economic meaning
 
 The versioned registry `metadata/operating/validation_registry_v1.json` pins existing local Lossless/Stability tests and FIN/Treasury SQL by SHA. Tag applicability selects every matching control and rejects a changed control file; a queue cannot silently omit a selected ID. Local controls execute through pytest for live runs. Databricks SQL controls require separately signed receipts carrying exact control ID, SQL hash and live PASS. New controls require a reviewed registry version, negative tests and changed-source applicability tests. Prior receipts may be reused only when their source/scope/rule pins are unchanged.
@@ -28,4 +30,4 @@ The versioned registry `metadata/operating/validation_registry_v1.json` pins exi
 
 An accepted queue ends with `freeze_verify`. Its live receipt must be separately signed and identify the output plus verified Delta IDs, history, properties, row counts, source lineage, version-pinned QUERYABLE definitions and live readback, with a retained remote receipt SHA. Freeze creation is exclusive and versioned, uses bounded append-only protection where authorized, and never overwrites a historical version. The local gate will not accept the Day 4 Git marker as that receipt. A real Databricks execution and independent receipt signing remain required before operational acceptance.
 
-For a write task, use a feature branch, run relevant tests and Ruff, review diff/evidence, push and open a PR, wait for required CI/approvals, then merge and verify the main merge commit. Branch protections and semantic review gates remain in force. Read-only investigations expressly labelled NO GIT CHANGES are exempt.
+For a write task, use a feature branch, run relevant tests and Ruff, review diff/evidence, push and open a PR, then wait for required CI and **human PR review and explicit merge approval**. Merge only after that approval and verify the main merge commit. Branch protections and semantic review gates remain in force. Read-only investigations expressly labelled NO GIT CHANGES are exempt.

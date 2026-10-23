@@ -2,7 +2,7 @@
 
 **Status: PROPOSED FOR OWNER REVIEW — specification only.** This document does not approve a universe, mutate existing manifests, select a cohort, authorize processing, or implement an autonomous runner.
 
-**Purpose.** Establish a reusable source-estate governance lifecycle, independent of whether a subsequent cohort follows `INITIAL_MODEL`, `CORPUS_ONLY`, `ADDITIVE` or `CORRECTIVE` processing. A universe lists *eligible candidate source instances*. A cohort selects *approved members* from that universe. These are separate authorities.
+**Purpose.** Establish a reusable source-estate governance lifecycle, independent of whether a subsequent cohort follows `INITIAL_MODEL`, `CORPUS_ONLY`, `ADDITIVE` or `CORRECTIVE` processing. A universe lists *eligible candidate source instances*. A cohort mechanically selects eligible members **from an already approved Universe** under the 0A standing operating policy; this does **not** constitute a new Universe membership change or require new per-cohort human approval. Universe CREATE/EXPAND and cohort selection remain distinct scopes.
 
 **Historical references:** `metadata/source_universes/approved_v1/`, `docs/source_universe_guardrail.md`, `docs/incidents/2026-10-21_source_universe_scope_control.md`, `src/edp_lab/ingestion/universe.py`, `docs/cohort_publication.md`. These are authoritative for existing snapshots; this proposal must not rewrite them.
 
@@ -21,7 +21,7 @@ The two lifecycles can be chained in one session when useful, or separated by an
 
 1. **Acquisition/staging authority:** an independently approved, bounded standing acquisition policy/grant permits search, download and retention, and permits guarded upload **only into an isolated RAW-candidate namespace**. It binds allowed publishers/data classes, source endpoints where applicable, acquisition scope/count/bytes, storage destination, credentials, retries and resource budget. It gives **no approved-universe membership, cohort admission, CLEAN, QUERYABLE or semantic permission**. Human review need not approve each mechanical candidate acquisition if within this standing authority.
 2. **Universe membership authority:** after staged RAW and provenance are independently verified, the owner may review **any selected subset** of the persistent candidate inventory and approve **all/some/none** for an initial or successor Universe version. Selection does not move or re-upload RAW. A rejected/deferred candidate remains retained and unapproved **when lawful and under approved retention policy**. **If the decision approves no new members and no other substantive membership/policy change, record the review outcome only; do not mint an unchanged Universe version.**
-3. A subsequent **cohort workflow grant** permits selected approved-universe members to be admitted, processed and frozen. Approval of source acquisition or Universe membership alone is insufficient.
+3. A subsequent cohort run is mechanically admitted/processed/frozen **under the preinstalled standing 0A project execution policy**, with exact per-run source/hash/cohort/output checks and protected non-agent enforcement. Existing Universe approval by itself is not a Databricks credential; **no per-N500 selection, admission or Databricks write owner signature is required** when all policy checks pass. Only modifying the approved Universe membership/holdouts/policy enters the separate U7 owner review.
 
 ### Shared operations and mode selection
 
@@ -68,7 +68,7 @@ The two lifecycles can be chained in one session when useful, or separated by an
 - `DENIED_FOR_UNIVERSE` / `DEFERRED` — not eligible for any new development cohort; permitted staged RAW is retained for audit/future review without new processing authority.
 - `ACQUISITION_PROHIBITED` — do not download/upload or retain where licensing, privacy, policy or data-ownership rules prohibit it; this is not the ordinary “denied Universe” case.
 
-**Physical possession and authority remain independent.** Historical examples and their actual counts belong in the approved manifests and incident evidence, not in the reusable step contract.
+**Physical possession and authority remain independent.** Historical examples and their actual counts belong in the approved manifests and incident evidence, not in the reusable step contract. **Day 5 clarification:** selecting N500 from the already approved original Universe v1 is a Cohort P1 machine operation, **not** a Universe CREATE/EXPAND U7 approval event. Routine staging of selected approved-universe RAW occurs automatically within the installed project policy, with required independent remote readback. Preserve U7 owner decisions only for a *change to actual Universe membership or source-governance rules*.
 
 ## 2. Input and output contracts
 
