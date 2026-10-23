@@ -275,3 +275,69 @@ def test_external_write_waits_for_readback_without_replay(tmp_path, monkeypatch)
     resumed = run(root, queue_path, envelope, tmp_path / "state")
     assert resumed["summary"]["accepted"]
     assert len(seen) == 1
+
+
+def test_jobs_submit_waits_for_exact_signed_run_terminal_receipt(tmp_path, monkeypatch):
+    root, trust, private, queue_path, _statement, grant = signed_setup(tmp_path)
+    (root / "job.json").write_text('{"fixed":"submission"}')
+    (root / "deployed.json").write_text('{"fixed":"runtime"}')
+    queue = json.loads(queue_path.read_text())
+    queue["contracts"]["job_submit_full"] = {"version": "V1", "path": "job.json"}
+    queue["contracts"]["deploy_full"] = {"version": "V1", "path": "deployed.json"}
+    queue["tasks"].insert(2, {"id": "full-job", "kind": "databricks_job_submit",
+                              "depends_on": ["hash", "retry"],
+                              "operation_id": "fixed-full-job-001",
+                              "submission_path": "job.json",
+                              "deployment_path": "deployed.json",
+                              "submission_contract": "job_submit_full",
+                              "deployment_contract": "deploy_full",
+                              "databricks_path": "/Shared/approved/job",
+                              "external_receipt": str(tmp_path / "job-terminal.json")})
+    queue["tasks"][-1]["depends_on"].append("full-job")
+    queue["tasks"][-1]["receipt"] = str(tmp_path / "freeze-complete.json")
+    queue_path.write_bytes(canonical(queue))
+    grant["operations"].append("databricks_job_submit")
+    grant["databricks_paths"].append("/Shared/approved/job")
+    grant["contracts"]["queue"]["sha256"] = digest(queue_path.read_bytes())
+    grant["contracts"]["job_submit_full"] = {
+        "version": "V1", "sha256": digest((root / "job.json").read_bytes())}
+    grant["contracts"]["deploy_full"] = {
+        "version": "V1", "sha256": digest((root / "deployed.json").read_bytes())}
+    envelope = sign(tmp_path, private, grant)
+    monkeypatch.setenv("EDP_OWNER_TRUST_DIR", str(trust))
+    monkeypatch.setenv("EDP_OWNER_LEDGER_DIR", str(tmp_path / "ledger"))
+    seen = []
+
+    def fake_submit(_root, _grant, request, _ledger, *, execute):
+        assert execute
+        seen.append(request)
+        return {"status": "SUBMITTED_REQUIRES_READBACK", "run_id": 9001}
+
+    monkeypatch.setattr("edp_lab.operating.runner.databricks_job_submit", fake_submit)
+    first = run(root, queue_path, envelope, tmp_path / "state")
+    assert first["tasks"]["full-job"]["status"] == "VALIDATING"
+    assert first["tasks"]["freeze"]["status"] == "PLANNED"
+    assert not first["summary"]["accepted"] and len(seen) == 1
+    # A validly signed receipt for *another run* must never complete this task.
+    common = {"schema": "EDP_EXTERNAL_OPERATION_RECEIPT_V1",
+              "operation_id": "fixed-full-job-001",
+              "request_sha256": digest(canonical(seen[0])),
+              "status": "VERIFIED", "live_readback": True,
+              "external_service": "DATABRICKS_JOBS", "terminal_state": "SUCCESS"}
+    wrong = sign_document(tmp_path, private, {**common, "job_run_id": 9999})
+    (tmp_path / "job-terminal.json").write_bytes(wrong.read_bytes())
+    stalled = run(root, queue_path, envelope, tmp_path / "state")
+    assert stalled["tasks"]["full-job"]["status"] == "VALIDATING"
+    assert len(seen) == 1 and not stalled["summary"]["accepted"]
+    signed = sign_document(tmp_path, private, {**common, "job_run_id": 9001})
+    (tmp_path / "job-terminal.json").write_bytes(signed.read_bytes())
+    fields = ("delta_ids", "delta_history", "delta_properties", "row_counts",
+              "source_lineage", "queryable_versions", "live_readback")
+    final_receipt = sign_document(
+        tmp_path, private, {"schema": "EDP_LIVE_FREEZE_RECEIPT_V1",
+                            "output": "test.output.v1", "remote_receipt_sha256": "a" * 64,
+                            **dict.fromkeys(fields, "VERIFIED")})
+    (tmp_path / "freeze-complete.json").write_bytes(final_receipt.read_bytes())
+    finished = run(root, queue_path, envelope, tmp_path / "state")
+    assert finished["summary"]["accepted"]
+    assert len(seen) == 1
