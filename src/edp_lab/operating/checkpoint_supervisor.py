@@ -16,6 +16,7 @@ from edp_lab.operating.day5_freeze_verifier import attest_freeze
 from edp_lab.operating.day5_stage_verifier import attest_stage
 from edp_lab.operating.day5_timing_verifier import attest_timing
 from edp_lab.operating.policy_broker import request as request_grant
+from edp_lab.operating.protected_recovery import recover_pre_submission_raw
 from edp_lab.operating.protected_verifier import attest_cohort, attest_raw, attest_sql
 from edp_lab.operating.runner import run
 
@@ -39,6 +40,10 @@ def supervise(root: Path, queue: Path, state_dir: Path, trust: Path, socket: Pat
                 raise
             time.sleep(1)
     load_grant(root, grant_path, trust)
+    checkpoint = state_dir / "checkpoint.json"
+    if checkpoint.exists():
+        recover_pre_submission_raw(root, queue, grant_path, checkpoint, trust,
+                                   verifier_key)
     queue_sha = file_digest(queue)
     tasks = json.loads(queue.read_bytes())["tasks"]
     pending_started = None
@@ -48,6 +53,11 @@ def supervise(root: Path, queue: Path, state_dir: Path, trust: Path, socket: Pat
             raise Denied("SUPERVISOR_QUEUE_CHANGED")
         if state["summary"]["accepted"]:
             return state["summary"]
+        stopped = {task_id: item.get("reason", item["status"])
+                   for task_id, item in state["tasks"].items()
+                   if item["status"] in {"FAILED_INTEGRITY", "NEEDS_HUMAN_DECISION"}}
+        if stopped:
+            return {**state["summary"], "stopped": stopped}
         active = [(task_id, item) for task_id, item in state["tasks"].items()
                   if item["status"] == "VALIDATING"]
         if len(active) > 1:

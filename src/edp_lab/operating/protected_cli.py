@@ -2,6 +2,7 @@
 
 import os
 import re
+from pathlib import Path
 
 from edp_lab.operating.authority import Denied
 
@@ -13,6 +14,14 @@ def databricks_argv(*args: str) -> list[str]:
             raise Denied("PROTECTED_DATABRICKS_IDENTITY_INVALID")
         return ["/usr/bin/sudo", "-n", "-u", user, "-H", "/opt/homebrew/bin/databricks",
                 *args]
+    if os.geteuid() == 0:
+        config = os.environ.get("DATABRICKS_CONFIG_FILE")
+        expected = Path("/private/var/db/edp-lab/private/databrickscfg")
+        if (config != str(expected) or not expected.is_file()
+                or expected.stat().st_uid != 0 or expected.stat().st_mode & 0o077
+                or os.environ.get("DATABRICKS_AUTH_STORAGE") != "plaintext"):
+            raise Denied("PROTECTED_DATABRICKS_CREDENTIAL_STORE_REQUIRED")
+        return ["/opt/homebrew/bin/databricks", *args]
     return ["databricks", *args]
 
 
