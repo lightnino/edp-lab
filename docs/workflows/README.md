@@ -2,13 +2,13 @@
 
 **PROPOSED. Not approved, not executable, and not an authorization to process data.**
 
-This PR defines the workflows before we implement a runtime DAG on top of the already merged PR #51 policy-governed runner. The owner reviews/approves this specification first. **Do not merge the PR without explicit owner review.** A separate later implementation PR must independently prove executable adapters, negative tests, true guarded Databricks writes/readbacks and end-to-end C2000 readiness.
+This PR defines **one main Cohort/Model execution workflow** and its **shared Validation/Stability/Freeze acceptance contract**, plus a separately governed Universe input lifecycle, before we implement a runtime DAG on top of the already merged PR #51 policy-governed runner. The owner reviews/approves this specification first. **Do not merge the PR without explicit owner review.** A separate later implementation PR must independently prove executable adapters, negative tests, true guarded Databricks writes/readbacks and end-to-end C2000 readiness.
 
 | Spec | What it standardizes | Historical source |
 | --- | --- | --- |
 | [Universe Lifecycle](universe_lifecycle_v1.md) | One bounded source search/download/Databricks RAW candidate-staging path; separate selective owner Universe authorization (0→1 and 1→2); holdouts, provenance and immutability | Approved Universe v1 + 800-outside-universe incident |
 | [Cohort + Model Lifecycle](cohort_model_lifecycle_v1.md) | Initial M1, Corpus-only, Additive, Corrective, conditional Parser Exception, L6 economic research, minimal backfill/replay and one bounded authorization | Day 2 C300; Day 3 N450; Day 4 N750/M2; revised autonomous Day 5 |
-| [Validation + Freeze Lifecycle](validation_freeze_lifecycle_v1.md) | Actual Lossless 1–6, A/B2/C1/C2/C3 with branch-specific oracles, economic test promotion, pre-approved comparable performance budget, live Databricks freeze and Git exit | FIN/TRY/Stability controls + Day 2/3 freezes + PR #50 |
+| [Validation + Freeze Contract](validation_freeze_lifecycle_v1.md) | **Invoked by Cohort P9/P10/P12/P13/P14**; detailed Lossless 1–6, branch-specific A/B2/C1/C2/C3, economic test promotion, proposed first-frozen 5× warning/10× gate, live Databricks freeze and Git exit; not a second processing pipeline | FIN/TRY/Stability controls + historical frozen results + PR #50 |
 
 ## Owner review checklist
 
@@ -19,7 +19,7 @@ This PR defines the workflows before we implement a runtime DAG on top of the al
 - [ ] Corpus-only / Additive / Corrective are **alternative branches**, each with precise Stability A/B2/C and history-equivalence/approved-delta tests.
 - [ ] Missing L6 economic logic triggers evidence research, bounded read-only Databricks SQL tests, owner semantic approval, **permanent versioned test registration**, targeted L6 rerun and automatic later applicability.
 - [ ] If evidence is absent, explain `PRESERVED_NOT_MODELED` vs `NOT_IMPLEMENTED` vs genuinely corrupted data; Treasury 50 approved dispositions/155 structural missing are preserved.
-- [ ] A pre-approved **10× performance envelope** may mechanically pass only in genuinely comparable future N750-like phases; original Day 4 C3.4 remains BLOCKED and unrelated limits are not changed.
+- [ ] **Prospective C3.4 V2 for owner review:** first accepted/frozen cohort's fully measured phase sets the benchmark (where evidence exists); ≤5× = technical PASS; >5× to ≤10× = PASS + non-blocking alert; >10× = BLOCKED awaiting owner approval. Missing baseline is not fabricated. PR #49's prior restricted approval and historical Day 4 C3.4 BLOCKED remain intact until a **new owner-approved versioned policy** is installed.
 - [ ] Historical accepted M1/M2 and old freeze references never overwritten. Version-pinned readback and actual Databricks freeze are required, not a Git-only claim.
 - [ ] The Owner approves source-estate or new business-meaning decisions. After one bounded workflow grant, Agent A may run permitted mechanical operations without repeatedly asking for each step.
 - [ ] **Day 5 only** targets the full autonomous C1500→C2000 experiment now. Day 6 Vault and Day 7 Universe v2 are initially manual/agent-assisted to discover approval boundaries; promote their reusable flows later.
