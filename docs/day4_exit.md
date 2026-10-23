@@ -1,4 +1,4 @@
-> **Subsequent owner decision (2026-10-23 SGT):** The historical PARTIAL assessment below is preserved as written. See [Day 4 owner-override closeout](day4_owner_override_closeout.md) and [Exit V2](../metadata/evaluations/day4_exit_v2.json) for the later bounded source-preserving freeze and COMPLETE_BY_HUMAN_OVERRIDE_WITH_EXCEPTIONS decision. No retroactive C3.4 technical PASS or Treasury economic integration is claimed.
+> **Subsequent decisions and execution:** The historical PARTIAL assessment below is preserved as written. See [Day 4 owner-override closeout](day4_owner_override_closeout.md), [Exit V2](../metadata/evaluations/day4_exit_v2.json), and [executed Databricks Exit V3](day4_exit_v3_databricks.md). No retroactive C3.4 technical PASS or Treasury economic integration is claimed.
 
 # Day 4 exit — partial
 
