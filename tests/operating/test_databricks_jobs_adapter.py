@@ -151,10 +151,12 @@ def test_submitted_payload_is_exact_and_bounded(tmp_path, edit, reason):
 
 def test_local_contract_tamper_and_forbidden_remote_path(tmp_path):
     root, grant, request, *_ = fixture(tmp_path)
+    original = (root / "submit.json").read_text()
     (root / "submit.json").write_text("{}")
     with pytest.raises(Denied, match="CONTRACT_HASH_CHANGED|JOB_OR_DEPLOYMENT_CONTRACT_CHANGED"):
         databricks_job_submit(root, grant, request, tmp_path / "ledger")
-    # Scope checks happen before any remote command.
+    # Restore the original bytes so the next assertion isolates scope denial.
+    (root / "submit.json").write_text(original)
     request["databricks_path"] = "/Shared/unauthorized"
     with pytest.raises(Denied, match="DATABRICKS_PATH_OUT_OF_SCOPE"):
         databricks_job_submit(root, grant, request, tmp_path / "ledger")
