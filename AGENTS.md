@@ -50,6 +50,14 @@ Demonstrate the feasibility of a domain-agnostic, Databricks-based enterprise da
 
 These priorities do not rewrite frozen historical contracts or weaken existing safety and integrity rules.
 
+## Future-day operating contract
+
+For each new day, read the approved scope and last frozen result, verify the baseline and input hashes, then select all applicable versioned Lossless, Stability and FIN controls. Preserve newly approved controls in `metadata/operating/validation_registry_v1.json` or a reviewed successor. Treat `PRESERVED_NOT_MODELED` as an independent economic-research question, never as a corrupt-record count or authority to change source values. Structural absence and missing business approval are not data defects without evidence.
+
+Future autonomous external operations require a bounded signed grant verified against owner-controlled trust material outside the writable worktree, operation-boundary enforcement, durable state, bounded retries and output locking. One grant may cover multiple authorized steps and resumptions. Historical SHA-pin authorization remains valid for historical reproduction only. The agent cannot approve its own grant by editing a repository file. Proposed economic rules stay proposals until human approval.
+
+Accepted final results require actual version-pinned Databricks Result Freeze verification and live readback evidence. A Git marker alone is insufficient; the later executed Day 4 V2 Databricks freeze is recorded separately from its historical Git-only marker. Use branch, tests, review, PR, CI and merge gates for writes; continue through routine authorized steps, record interventions and recovery, and pause only for real integrity or semantic authority decisions. See `docs/agent_operating_contract.md`.
+
 ### Scoped C300 parser approval
 The user approved mechanical, read-only lexical parsing and shallow inspection of exactly the 720 PASS bindings in approval packet SHA-256 `3873e9d07e4bcc2f357f940d05cf4fc5dc1262358b641d1debba2ef117910e05`. This explicit subsequent authority supersedes only the earlier statement that C300 parser execution is unapproved for these bindings. The other 12 FSDS `num.txt` bindings remain FAILED/BLOCKED with their evidence intact. No semantic NULL interpretation, business key, canonical mapping or modification to RAW, GOLD or frozen C300 is approved. Preserve the original packet membership and historical checkpoints; see `metadata/section_2_6_checkpoint_v2.json` for the post-approval evidence reference.
 

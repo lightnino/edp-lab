@@ -1,0 +1,14 @@
+{
+  "schema": "EDP_VALIDATION_REGISTRY_V1",
+  "version": 1,
+  "controls": [
+    {"id": "LOSSLESS_1_TO_5_LOCAL_V1", "tags": ["RAW"], "path": "tests/lossless/test_raw_inventory.py", "sha256": "034cc75a7b07e3561c0bb0a40bc3ac3d8c966011f908e256f8bbd21049b423e9", "execution": "pytest"},
+    {"id": "STABILITY_C1500_M2_V1", "tags": ["C1500", "M2"], "path": "tests/stability/test_c1500_m2_stability.py", "sha256": "2e3cec3c1e8037b64d3b8ed13cb0a2bbcb367be5bc974ed707d140e2ac70a50e", "execution": "pytest"},
+    {"id": "FIN_001_V1", "tags": ["FSDS", "FIN"], "path": "sql/reconciliation/fin_eval_v1/FIN_001.sql", "sha256": "8fff570eb5e233e43c731c2b9c0cb3f8ba9f55ccbce2a58666a919e3245b8058", "execution": "databricks_sql"},
+    {"id": "FIN_002_V1", "tags": ["FSDS", "FIN"], "path": "sql/reconciliation/fin_eval_v1/FIN_002.sql", "sha256": "edcb7cd0a137a083682d6b554aa597a53ddfca91f12b2982d7190d590ba89844", "execution": "databricks_sql"},
+    {"id": "TRY_001_V1", "tags": ["TREASURY"], "path": "sql/reconciliation/treasury_lossless6_v1/TRY_001.sql", "sha256": "3caa3ab3cc206056cd69b19979391d3aa1e8689ec6bf1e95babc678f9f13a206", "execution": "databricks_sql"},
+    {"id": "TRY_002_V1", "tags": ["TREASURY"], "path": "sql/reconciliation/treasury_lossless6_v1/TRY_002.sql", "sha256": "6d22797e609f53fb36af6691712d4e74f4a0210fd7988c53627f0df2bc96c948", "execution": "databricks_sql"},
+    {"id": "TRY_003_V1", "tags": ["TREASURY"], "path": "sql/reconciliation/treasury_lossless6_v1/TRY_003.sql", "sha256": "f687b07d28003e5a6aa1868de7931e43c5ad63e697ba4b9a80b4f735d14a9c2d", "execution": "databricks_sql"},
+    {"id": "TRY_004_V1", "tags": ["TREASURY"], "path": "sql/reconciliation/treasury_lossless6_v1/TRY_004.sql", "sha256": "383cb468ebecbcf53eed6390f6ef4ed8ca1794c092093c64066f5ad01372a4ff", "execution": "databricks_sql"}
+  ]
+}
