@@ -17,6 +17,10 @@ if [[ "$(id -u)" != 0 ]]; then
   print -u2 "Run with sudo in the owner's Terminal."
   exit 1
 fi
+if [[ -n "$(/usr/bin/git -c safe.directory="$root" -C "$root" status --porcelain --untracked-files=no)" ]]; then
+  print -u2 "Tracked checkout is modified; run only from the pinned, clean commit."
+  exit 1
+fi
 if [[ "$(/usr/bin/shasum -a 256 "$policy_source" | /usr/bin/awk '{print $1}')" != "$policy_sha" ||
       "$(/usr/bin/shasum -a 256 "$queue_source" | /usr/bin/awk '{print $1}')" != "$queue_sha" ]]; then
   print -u2 "Reviewed standing policy or Day 5 queue hash changed."
@@ -27,10 +31,9 @@ if [[ ! -e "$base" ]]; then
   install -d -m 755 -o root -g wheel "$base" "$trust" "$base/grants" \
     "$base/receipts" "$runtime"
   install -d -m 700 -o root -g wheel "$private" "$base/ledger"
-  /usr/bin/ditto "$root/src/edp_lab" "$runtime/edp_lab"
   /usr/bin/ditto "$python_source" "$base/python"
-  chown -R root:wheel "$runtime" "$base/python"
-  chmod -R go-w "$runtime" "$base/python"
+  chown -R root:wheel "$base/python"
+  chmod -R go-w "$base/python"
   for role in owner broker verifier; do
     /opt/homebrew/bin/openssl genpkey -algorithm Ed25519 -out "$private/${role}.pem"
     chmod 600 "$private/${role}.pem"
@@ -41,6 +44,18 @@ if [[ ! -e "$base" ]]; then
   print '[]' > "$trust/revoked_grants.json"
   chmod 644 "$trust/revoked_grants.json"
 fi
+if /bin/launchctl print system/org.edp-lab.day5-supervisor >/dev/null 2>&1; then
+  print -u2 "Day 5 supervisor is already installed; refusing a live code replacement."
+  exit 1
+fi
+if /bin/launchctl print system/org.edp-lab.policy-broker >/dev/null 2>&1; then
+  /bin/launchctl bootout system/org.edp-lab.policy-broker
+fi
+install -d -m 755 -o root -g wheel "$runtime/src"
+install -d -m 700 -o root -g wheel "$base/state"
+/usr/bin/git -c safe.directory="$root" -C "$root" archive HEAD src/edp_lab | /usr/bin/tar -x -C "$runtime"
+chown -R root:wheel "$runtime"
+chmod -R go-w "$runtime"
 if [[ ! -f "$private/owner.pem" || ! -f "$private/broker.pem" ||
       ! -f "$private/verifier.pem" || ! -f "$trust/revoked_grants.json" ||
       ! -x "$base/python/bin/python3.12" ]]; then
@@ -67,13 +82,12 @@ PY
   chmod 644 "$trust/standing_policy_v1.json"
 fi
 if [[ ! -f "$base/receipts/c1500-prior.json" ]]; then
-  PYTHONPATH="$runtime" "$base/python/bin/python3.12" -m edp_lab.operating.prior_verifier \
+  PYTHONPATH="$runtime/src" "$base/python/bin/python3.12" -m edp_lab.operating.prior_verifier \
     "$root" "$trust" "$private/verifier.pem" "$base/receipts/c1500-prior.json" \
     --databricks-user lightnino
 fi
 plist="/Library/LaunchDaemons/org.edp-lab.policy-broker.plist"
-if [[ ! -e "$plist" ]]; then
-  /bin/cat > "$plist" <<EOF
+/bin/cat > "$plist" <<EOF
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0"><dict>
@@ -88,18 +102,44 @@ if [[ ! -e "$plist" ]]; then
 <string>--git-user</string><string>lightnino</string>
 </array>
 <key>EnvironmentVariables</key><dict>
-<key>PYTHONPATH</key><string>$runtime</string>
+<key>PYTHONPATH</key><string>$runtime/src</string>
+<key>PATH</key><string>/opt/homebrew/bin:/usr/bin:/bin</string>
 </dict>
 <key>RunAtLoad</key><true/><key>KeepAlive</key><true/>
 <key>StandardOutPath</key><string>$base/broker.stdout.log</string>
 <key>StandardErrorPath</key><string>$base/broker.stderr.log</string>
 </dict></plist>
 EOF
-  chown root:wheel "$plist"
-  chmod 644 "$plist"
-fi
+chown root:wheel "$plist"
+chmod 644 "$plist"
 if ! /bin/launchctl print system/org.edp-lab.policy-broker >/dev/null 2>&1; then
   /bin/launchctl bootstrap system "$plist"
 fi
-print "Protected 0A keys, standing policy, independently signed C1500 receipt and broker installed."
+supervisor_plist="/Library/LaunchDaemons/org.edp-lab.day5-supervisor.plist"
+/bin/cat > "$supervisor_plist" <<EOF
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0"><dict>
+<key>Label</key><string>org.edp-lab.day5-supervisor</string>
+<key>ProgramArguments</key><array>
+<string>$base/python/bin/python3.12</string>
+<string>-m</string><string>edp_lab.operating.checkpoint_supervisor</string>
+<string>$root</string><string>$queue_source</string>
+<string>$base/state/day5</string><string>$trust</string>
+<string>$base/broker.sock</string><string>$private/verifier.pem</string>
+</array>
+<key>EnvironmentVariables</key><dict>
+<key>PYTHONPATH</key><string>$runtime/src</string>
+<key>EDP_DATABRICKS_RUN_AS_USER</key><string>lightnino</string>
+<key>PATH</key><string>/opt/homebrew/bin:/usr/bin:/bin</string>
+</dict>
+<key>RunAtLoad</key><true/><key>KeepAlive</key><false/>
+<key>StandardOutPath</key><string>$base/supervisor.stdout.log</string>
+<key>StandardErrorPath</key><string>$base/supervisor.stderr.log</string>
+</dict></plist>
+EOF
+chown root:wheel "$supervisor_plist"
+chmod 644 "$supervisor_plist"
+/bin/launchctl bootstrap system "$supervisor_plist"
+print "Protected 0A keys, standing policy, C1500 receipt, broker and Day 5 supervisor installed."
 print "Private keys remain root-only. The Day 5 queue is pinned at SHA-256 $queue_sha."

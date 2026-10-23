@@ -63,7 +63,15 @@ def applicable_controls(root: Path, tags: list[str],
 def _execute_controls(root: Path, controls: list[dict], receipts: dict) -> None:
     for control in controls:
         if control["execution"] == "pytest":
-            result = subprocess.run([sys.executable, "-m", "pytest", "-q", control["path"]],
+            command = [sys.executable, "-m", "pytest", "-q", control["path"]]
+            if os.geteuid() == 0:
+                user = os.environ.get("EDP_LOCAL_TEST_RUN_AS_USER")
+                test_python = os.environ.get("EDP_LOCAL_TEST_PYTHON")
+                if not user or not test_python:
+                    raise Denied("PROTECTED_LOCAL_TEST_IDENTITY_REQUIRED")
+                command = ["/usr/bin/sudo", "-n", "-u", user, "-H", test_python,
+                           "-m", "pytest", "-q", control["path"]]
+            result = subprocess.run(command,
                                     cwd=root, capture_output=True, timeout=300, check=False)
             if result.returncode:
                 raise Denied("LOCAL_CONTROL_FAILED:" + control["id"])
@@ -221,7 +229,8 @@ def task_request(root: Path, queue: dict, queue_path: Path,
 
 
 def run(root: Path, queue_path: Path, envelope: Path, state_dir: Path,
-        *, dry_run: bool = False, pause_after: int | None = None) -> dict:
+        *, dry_run: bool = False, pause_after: int | None = None,
+        pause_at_receipt_barrier: bool = False) -> dict:
     root = root.resolve()
     queue = json.loads(queue_path.read_bytes())
     if queue["schema"] != "EDP_QUEUE_V1":
@@ -298,6 +307,8 @@ def run(root: Path, queue_path: Path, envelope: Path, state_dir: Path,
                     state["tasks"][task["id"]]["status"] = "COMPLETE"
                     _write_json(state_path, state)
                     _event(log, "COMPLETE_AFTER_READBACK", task=task["id"])
+                    if pause_at_receipt_barrier:
+                        break
                     continue
                 _event(log, "WAITING_EXTERNAL_READBACK", task=task["id"])
                 break
@@ -456,6 +467,11 @@ def run(root: Path, queue_path: Path, envelope: Path, state_dir: Path,
                 state["used"]["token_count"] += task.get("token_budget", 0)
                 _write_json(state_path, state)
                 _event(log, "COMPLETE", task=task["id"])
+                if pause_at_receipt_barrier and not dry_run and (
+                        task["kind"] in {"validate_controls", "budget_gate"}
+                        or task["kind"] == "stage_gate" and task["stage"] in {
+                            "P7", "P8", "P9"}):
+                    break
             except TimeoutError as exc:
                 state["used"]["runtime_seconds"] += math.ceil(time.monotonic() - started)
                 attempts = current.get("attempts", 0) + 1
@@ -511,7 +527,8 @@ def run(root: Path, queue_path: Path, envelope: Path, state_dir: Path,
         lock.rmdir()
     if retry_needed:
         return run(root, queue_path, envelope, state_dir, dry_run=dry_run,
-                   pause_after=pause_after)
+                   pause_after=pause_after,
+                   pause_at_receipt_barrier=pause_at_receipt_barrier)
     return state
 
 

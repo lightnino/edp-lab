@@ -45,7 +45,7 @@ def test_protected_verifier_attests_own_live_readback(tmp_path, monkeypatch):
                                    "edp.freeze.physical_sources": "1500",
                                    "edp.freeze.version": "O_C1500_M2_DATABRICKS_V2"}}
         return {"status": {"state": "SUCCEEDED"}, "statement_id": "live-statement",
-                "result": {"data_array": [["OLD_C750_RECORD", "SRC000000"]]}}
+                "result": {"data_array": [[f"SRC{n:06d}"] for n in range(1500)]}}
 
     monkeypatch.setattr(verifier, "_databricks", live)
     output = trust / "prior.json"
@@ -58,7 +58,7 @@ def test_protected_verifier_attests_own_live_readback(tmp_path, monkeypatch):
         verifier.attest(root, trust, key, output, "test-user")
 
 
-def test_protected_verifier_rejects_out_of_roster_sample(tmp_path, monkeypatch):
+def test_protected_verifier_rejects_out_of_roster_member(tmp_path, monkeypatch):
     root, trust, key = setup(tmp_path, monkeypatch)
     monkeypatch.setattr(verifier, "_databricks", lambda _user, method, *args: (
         {"full_name": verifier.VIEW, "table_type": "VIEW",
@@ -69,7 +69,8 @@ def test_protected_verifier_rejects_out_of_roster_sample(tmp_path, monkeypatch):
                         "edp.freeze.version": "O_C1500_M2_DATABRICKS_V2"}}
         if method == "get" else
         {"status": {"state": "SUCCEEDED"}, "statement_id": "live-statement",
-         "result": {"data_array": [["OLD_C750_RECORD", "SRC999999"]]}}))
-    with pytest.raises(Denied, match="LIVE_PRIOR_SAMPLE_OUT_OF_ROSTER"):
+         "result": {"data_array": [[f"SRC{n:06d}"] for n in range(1499)]
+                    + [["SRC999999"]]}}))
+    with pytest.raises(Denied, match="LIVE_PRIOR_MEMBERSHIP_MISMATCH"):
         verifier.attest(root, trust, key, trust / "prior.json", "test-user")
     assert not (trust / "prior.json").exists()

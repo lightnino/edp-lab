@@ -6,6 +6,7 @@ import json
 import os
 import subprocess
 import tempfile
+from datetime import UTC, datetime
 from pathlib import Path
 
 from edp_lab.operating.authority import (
@@ -79,7 +80,10 @@ def attest_raw(root: Path, queue_path: Path, grant_path: Path, state_path: Path,
         raise Denied("RAW_SOURCE_OUT_OF_GRANT")
     external = state["tasks"][task_id].get("external", {})
     if (external.get("remote_path") != task["databricks_path"]
-            or external.get("remote_sha256") != source["sha256"]):
+            or external.get("status") not in {
+                "SUBMITTED_REQUIRES_INDEPENDENT_READBACK",
+                "UNCERTAIN_REQUIRES_INDEPENDENT_READBACK"}
+            or external.get("remote_sha256") not in (None, source["sha256"])):
         raise Denied("RAW_STAGE_SUBMISSION_MISMATCH")
     observed = digest(_remote_bytes(task["databricks_path"], grant["limits"][
         "runtime_seconds"]))
@@ -126,6 +130,12 @@ def attest_sql(root: Path, queue_path: Path, grant_path: Path, state_path: Path,
     statement_id = external.get("statement_id")
     if not isinstance(statement_id, str) or not statement_id:
         raise Denied("SQL_STATEMENT_ID_MISSING")
+    submitted_at = external.get("submitted_at_utc")
+    try:
+        if datetime.fromisoformat(submitted_at).tzinfo is None:
+            raise ValueError("timezone required")
+    except (TypeError, ValueError) as exc:
+        raise Denied("SQL_SUBMISSION_TIME_MISSING") from exc
     statement_path = (root / task["statement_path"]).resolve(strict=True)
     contract_name = task.get("statement_contract", "statement")
     if (not statement_path.is_relative_to(root)
@@ -136,8 +146,11 @@ def attest_sql(root: Path, queue_path: Path, grant_path: Path, state_path: Path,
         raise Denied("SQL_TARGET_MISMATCH")
     terminal = _remote_json("/api/2.0/sql/statements/" + statement_id,
                             grant["limits"]["runtime_seconds"])
-    if (terminal.get("statement_id") != statement_id
-            or terminal.get("status", {}).get("state") != "SUCCEEDED"):
+    if terminal.get("statement_id") != statement_id:
+        raise Denied("SQL_STATEMENT_ID_MISMATCH")
+    if terminal.get("status", {}).get("state") in {"FAILED", "CANCELED", "CLOSED"}:
+        raise Denied("SQL_STATEMENT_FAILED")
+    if terminal.get("status", {}).get("state") != "SUCCEEDED":
         raise Denied("SQL_STATEMENT_NOT_SUCCEEDED")
     if terminal.get("statement") not in (None, expected):
         raise Denied("REMOTE_SQL_TEXT_MISMATCH")
@@ -156,6 +169,8 @@ def attest_sql(root: Path, queue_path: Path, grant_path: Path, state_path: Path,
                 "request_sha256": digest(canonical(request)),
                 "status": "VERIFIED", "live_readback": True,
                 "statement_id": statement_id, "table": uc["full_name"],
+                "submitted_at_utc": submitted_at,
+                "attested_at_utc": datetime.now(UTC).isoformat(),
                 "uc_table_id": uc["table_id"],
                 "terminal_response_sha256": digest(canonical(terminal)),
                 "uc_response_sha256": digest(canonical(uc))}
@@ -217,9 +232,11 @@ def attest_cohort(root: Path, queue_path: Path, grant_path: Path, state_path: Pa
                 "raw_receipts_sha256"].get(identity):
             raise Denied("COHORT_RAW_RECEIPT_CHANGED")
         signed = verified_document(root, Path(receipt["external_receipt"]), trust)
+        exact_request = task_request(root, queue, queue_path, receipt, grant_path)
         if (signed.get("authority") != "protected-verifier-v1"
                 or signed.get("schema") != "EDP_EXTERNAL_OPERATION_RECEIPT_V1"
                 or signed.get("operation_id") != receipt["operation_id"]
+                or signed.get("request_sha256") != digest(canonical(exact_request))
                 or signed.get("remote_sha256") != source["raw_sha256"]
                 or signed.get("remote_path") != source["remote_raw_path"]
                 or signed.get("status") != "VERIFIED"

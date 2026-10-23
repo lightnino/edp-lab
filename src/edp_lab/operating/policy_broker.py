@@ -226,6 +226,16 @@ def serve(socket_path: Path, root: Path, policy: Path, trust: Path, key: Path,
     """Run under an independent service identity with protected credentials."""
     if socket_path.resolve().is_relative_to(root.resolve()):
         raise Denied("BROKER_SOCKET_MUST_BE_PROTECTED")
+    if socket_path.exists():
+        if not socket_path.is_socket() or socket_path.stat().st_uid != 0:
+            raise Denied("BROKER_SOCKET_PATH_UNSAFE")
+        with socket.socket(socket.AF_UNIX) as probe:
+            try:
+                probe.connect(str(socket_path))
+            except OSError:
+                socket_path.unlink()
+            else:
+                raise Denied("BROKER_ALREADY_RUNNING")
     class Handler(socketserver.StreamRequestHandler):
         def handle(self) -> None:
             try:

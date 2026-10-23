@@ -212,7 +212,8 @@ def test_protected_sql_readback_matches_exact_statement(tmp_path, monkeypatch):
                         lambda _socket, _queue: grant_path)
     monkeypatch.setattr("edp_lab.operating.runner.protected_execute",
                         lambda *_args: {"status": "SUBMITTED_REQUIRES_READBACK",
-                                        "statement_id": "statement-c2"})
+                                        "statement_id": "statement-c2",
+                                        "submitted_at_utc": datetime.now(UTC).isoformat()})
     first = run(root, queue_path, Path("auto"), tmp_path / "state")
     assert first["tasks"]["roster"]["status"] == "VALIDATING"
 

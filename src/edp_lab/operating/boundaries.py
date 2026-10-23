@@ -7,6 +7,7 @@ an uncertain external result requires readback and human disposition, not replay
 import json
 import os
 import subprocess
+from datetime import UTC, datetime
 from pathlib import Path
 
 from edp_lab.operating.authority import (
@@ -90,6 +91,7 @@ def databricks_write(root: Path, grant: dict, request: dict, ledger: Path,
     if not execute:
         return {"status": "AUTHORIZED_DRY_RUN"}
     record = _reserve(ledger, request["operation_id"], request)
+    submitted_at = datetime.now(UTC).isoformat()
     outcome = subprocess.run(databricks_argv("api", "post", "/api/2.0/sql/statements",
                                              "--json", "@" + str(statement), "-o", "json"),
                              capture_output=True, text=True, timeout=grant["limits"]["runtime_seconds"],
@@ -102,6 +104,7 @@ def databricks_write(root: Path, grant: dict, request: dict, ledger: Path,
     result = {"status": "SUBMITTED_REQUIRES_READBACK" if isinstance(
                   statement_id, str) and statement_id else "UNCERTAIN_REQUIRES_READBACK",
               "statement_id": statement_id, "remote_state": remote.get("status", {}).get("state"),
+              "submitted_at_utc": submitted_at,
               "returncode": outcome.returncode,
               "stdout_sha256": digest(outcome.stdout.encode()),
               "stderr_sha256": digest(outcome.stderr.encode())}
@@ -132,17 +135,43 @@ def raw_stage(root: Path, grant: dict, request: dict, ledger: Path,
         raise Denied("RAW_DESTINATION_OUT_OF_SCOPE")
     if not execute:
         return {"status": "AUTHORIZED_DRY_RUN"}
+    parent = remote.rsplit("/", 1)[0]
+    created = subprocess.run(databricks_argv("fs", "mkdir", parent, "-p", "edp-lab"),
+                             capture_output=True, timeout=grant["limits"]["runtime_seconds"],
+                             check=False)
+    if created.returncode:
+        raise Denied("RAW_PARENT_CREATION_UNCERTAIN")
+    inventory = subprocess.run(databricks_argv("fs", "ls", parent, "-p", "edp-lab",
+                                            "-o", "json"), capture_output=True,
+                               timeout=grant["limits"]["runtime_seconds"], check=False)
+    if inventory.returncode:
+        raise Denied("RAW_DESTINATION_INVENTORY_FAILED")
+    if any(item["name"] == Path(source["path"]).name for item in json.loads(
+            inventory.stdout)):
+        raise Denied("RAW_DESTINATION_ALREADY_EXISTS")
     _reserve(ledger, request["operation_id"], request)
     command = databricks_argv("fs", "cp", source["path"], remote, "-p", "edp-lab")
-    outcome = subprocess.run(command, capture_output=True, timeout=grant["limits"][
-        "runtime_seconds"], check=False)
+    try:
+        outcome = subprocess.run(command, capture_output=True, timeout=grant["limits"][
+            "runtime_seconds"], check=False)
+    except subprocess.TimeoutExpired:
+        return {"status": "UNCERTAIN_REQUIRES_INDEPENDENT_READBACK",
+                "remote_path": remote}
     if outcome.returncode:
-        raise Denied("RAW_STAGE_UNCERTAIN_REQUIRES_READBACK")
-    observed = subprocess.run(databricks_argv("fs", "cat", remote, "-p", "edp-lab"),
-                              capture_output=True, timeout=grant["limits"][
-                                  "runtime_seconds"], check=False)
-    if observed.returncode or digest(observed.stdout) != source["sha256"]:
-        raise Denied("REMOTE_RAW_HASH_MISMATCH_OR_UNCERTAIN")
+        return {"status": "UNCERTAIN_REQUIRES_INDEPENDENT_READBACK",
+                "remote_path": remote}
+    try:
+        observed = subprocess.run(databricks_argv("fs", "cat", remote, "-p", "edp-lab"),
+                                  capture_output=True, timeout=grant["limits"][
+                                      "runtime_seconds"], check=False)
+    except subprocess.TimeoutExpired:
+        return {"status": "UNCERTAIN_REQUIRES_INDEPENDENT_READBACK",
+                "remote_path": remote}
+    if observed.returncode:
+        return {"status": "UNCERTAIN_REQUIRES_INDEPENDENT_READBACK",
+                "remote_path": remote}
+    if digest(observed.stdout) != source["sha256"]:
+        raise Denied("REMOTE_RAW_HASH_MISMATCH")
     return {"status": "SUBMITTED_REQUIRES_INDEPENDENT_READBACK",
             "remote_sha256": digest(observed.stdout), "remote_path": remote}
 

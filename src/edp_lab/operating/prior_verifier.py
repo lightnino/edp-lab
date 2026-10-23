@@ -31,6 +31,18 @@ def _databricks(user: str, *args: str) -> dict:
     return json.loads(result.stdout)
 
 
+def _statement(user: str, sql: str) -> dict:
+    result = _databricks(user, "post", "/api/2.0/sql/statements", "--json", json.dumps({
+        "warehouse_id": WAREHOUSE, "statement": sql, "wait_timeout": "50s",
+        "on_wait_timeout": "CONTINUE", "disposition": "INLINE", "row_limit": 2000}))
+    for _ in range(20):
+        if result.get("status", {}).get("state") not in {"PENDING", "RUNNING"}:
+            return result
+        result = _databricks(user, "get", "/api/2.0/sql/statements/" + result[
+            "statement_id"] + "?wait_timeout=50s")
+    raise Denied("LIVE_PRIOR_QUERY_LIMIT")
+
+
 def attest(root: Path, trust: Path, key: Path, output: Path, user: str) -> dict:
     root = root.resolve()
     if any(path.resolve().is_relative_to(root) for path in (trust, key, output)):
@@ -53,14 +65,15 @@ def attest(root: Path, trust: Path, key: Path, output: Path, user: str) -> dict:
             or props.get("edp.freeze.physical_sources") != "1500"
             or props.get("edp.freeze.version") != "O_C1500_M2_DATABRICKS_V2"):
         raise Denied("LIVE_PRIOR_FREEZE_MISMATCH")
-    sql = f"SELECT occurrence_class, source_instance_id FROM {VIEW} LIMIT 1"
-    live = _databricks(user, "post", "/api/2.0/sql/statements", "--json", json.dumps({
-        "warehouse_id": WAREHOUSE, "statement": sql, "wait_timeout": "30s"}))
+    sql = f"SELECT DISTINCT source_instance_id FROM {VIEW}"
+    live = _statement(user, sql)
     if live.get("status", {}).get("state") != "SUCCEEDED":
         raise Denied("LIVE_PRIOR_QUERY_NOT_SUCCEEDED")
-    sample = live.get("result", {}).get("data_array", [])
-    if (len(sample) != 1 or len(sample[0]) != 2 or sample[0][1] not in source_ids):
-        raise Denied("LIVE_PRIOR_SAMPLE_OUT_OF_ROSTER")
+    members = live.get("result", {}).get("data_array", [])
+    if (live.get("manifest", {}).get("truncated")
+            or len(members) != 1500 or any(len(row) != 1 for row in members)
+            or {row[0] for row in members} != source_ids):
+        raise Denied("LIVE_PRIOR_MEMBERSHIP_MISMATCH")
     document = {
         "schema": "EDP_PRIOR_COHORT_RECEIPT_V1",
         "authority": "protected-verifier-v1", "cohort": "C1500",
@@ -68,7 +81,8 @@ def attest(root: Path, trust: Path, key: Path, output: Path, user: str) -> dict:
         "result_freeze_sha256": EXPECTED_FREEZE_SHA,
         "live_uc_table_id": EXPECTED_VIEW_ID,
         "live_statement_id": live["statement_id"],
-        "live_sample": sample[0], "live_readback": True, "status": "VERIFIED",
+        "live_membership_sha256": digest(canonical(sorted(source_ids))),
+        "live_readback": True, "status": "VERIFIED",
     }
     with tempfile.TemporaryDirectory() as temporary:
         payload = Path(temporary) / "payload"
