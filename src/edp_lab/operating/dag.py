@@ -32,7 +32,10 @@ def compile_dag(root: Path, plan: dict) -> dict:
     if not isinstance(plan.get("output"), str) or not plan["output"]:
         raise Denied("INVALID_OUTPUT")
     stage_receipts = plan.get("stage_receipts")
-    if not isinstance(stage_receipts, dict) or set(stage_receipts) != set(STAGES):
+    required_receipts = set(STAGES) - ({"P5"} if "sources" in plan else set())
+    if (not isinstance(stage_receipts, dict)
+            or not required_receipts <= set(stage_receipts)
+            or set(stage_receipts) - set(STAGES)):
         raise Denied("MISSING_STAGE_RECEIPTS")
     for path in stage_receipts.values():
         if not isinstance(path, str) or not path:
@@ -165,7 +168,8 @@ def compile_dag(root: Path, plan: dict) -> dict:
             tasks.append(local_task)
             depends = [task_id]
         stage_task = {"id": stage, "kind": "stage_gate", "stage": stage,
-                      "depends_on": depends, "receipt": stage_receipts[stage]}
+                      "depends_on": depends,
+                      "receipt": stage_receipts.get(stage, "BROKER_GRANT")}
         if simulation:
             stage_task["simulated_receipt"] = True
         tasks.append(stage_task)
@@ -181,6 +185,9 @@ def compile_dag(root: Path, plan: dict) -> dict:
              "output": plan["output"], "route": plan["route"],
              "tags": sorted(tags), "contracts": contracts, "tasks": tasks,
              "simulation_only": simulation}
+    if "sources" in plan:
+        queue.update(sources=plan["sources"], previous_cohort=plan["previous_cohort"],
+                     prior_receipt=plan["prior_receipt"])
     _ordered(tasks)
     return queue
 

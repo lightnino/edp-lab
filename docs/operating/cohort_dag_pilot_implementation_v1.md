@@ -6,7 +6,7 @@ This adds a deterministic plan compiler on top of PR #51's existing signed queue
 
 ## Where the pieces fit
 
-- **Input/authority:** Universe approval and separate Cohort admission remain independent; acquisition candidate staging grants neither. Owner reviews exact N roster and model contract before approving a bounded run.
+- **Input/authority:** Universe approval and separate Cohort admission remain independent; acquisition candidate staging grants neither. P1 selects the exact N roster. P5 asks the protected 0A authority to evaluate it under the standing policy; only a new semantic or policy decision returns to the owner.
 - **Planning:** `edp_lab.operating.dag` compiles a versioned `EDP_COHORT_DAG_PLAN_V1` into a deterministic `EDP_QUEUE_V1` that PR #51's runner can execute. Selected `route` is `INITIAL_MODEL`, `CORPUS_ONLY`, `ADDITIVE` or `CORRECTIVE`; `UNRESOLVED` cannot be promoted as a model route.
 - **DAG sequence:** P0 baseline → P1 selection → P2 observation → P3 B1 route evidence → P4 branch contract → P5 bounded authorization evidence → P6 cohort input freeze → P7 smoke → P8 provisional RAW/CLEAN/QUERYABLE processing evidence → P9 applicable controls + Lossless stage evidence → P10 A/B2/C Stability evidence → P12 signed C3.4 checks + operating evidence → P13 independently signed live freeze. P11 is **conditional recovery**, implemented by PR #51's bounded queue resume; P14 Git is **separate guarded closeout** under PR #51 Git adapter, not falsely counted as part of a post-freeze Databricks receipt.
 - **Work/execution distinction:** `stage_gate` validates *externally produced and independently signed LIVE stage evidence* keyed by cohort/output/stage/**exact queue hash**. It **does not perform** the claimed Databricks operation. Optional `local_tasks` for P2/P4/P7 run pinned Codex prompts under PR #51's restricted local Codex task. An optional **`guarded_create_table` at P8** invokes the existing #51 signed, ledgered, single-`CREATE TABLE` adapter and waits for a separately verified exact-operation remote readback before P8 may complete. It does **not** yet implement arbitrary Day 5 RAW→CLEAN→QUERYABLE processing or guarded Delta view publication. **Real P1/P6/full-P8/P13 executors and independent verifier integration remain blockers**.
@@ -37,7 +37,7 @@ Prepare a JSON plan with these required keys:
   "stage_receipts": {
     "P0": "<signed external P0 evidence path>",
     "P1": "<P1>", "P2": "<P2>", "P3": "<P3>",
-    "P4": "<P4>", "P5": "<P5>", "P6": "<P6>",
+    "P4": "<P4>", "P6": "<P6>",
     "P7": "<P7>", "P8": "<P8>", "P9": "<P9>",
     "P10": "<P10>", "P12": "<P12>"
   },
@@ -51,7 +51,7 @@ Prepare a JSON plan with these required keys:
 
 **Optional bounded P8 CREATE TABLE action:** the plan may additionally contain `"guarded_create_table": {"operation_id": "<unique>", "databricks_path": "<owner-approved exact path>", "databricks_table": "<approved table>", "statement_path": "<in-repo pinned JSON statement>", "external_receipt": "<signed exact-operation live readback>"}`, and a matching `contracts.statement` hash/version pin. This uses PR #51's exclusive CREATE TABLE boundary and durable reservation; it is **not** a general-purpose processing adapter or permission to run raw Databricks CLI scripts. The source must be an approved member of the cohort grant, and actual execution requires an independent protected runtime with credentials and a signed readback receipt. No execution is performed by compiling the plan.
 
-**The example is a schema illustration, not an approved C2000 route or actual cohort.** B1 classification must be supported by real N500 observations and an approved decision receipt. Actual paths and physical input hashes must be selected/pinned by a separate owner grant. Source-specific validation must be completely inventoried rather than assuming all of C2000 consists only of FSDS/Treasury.
+**The example is a schema illustration, not an approved C2000 route or actual cohort.** B1 classification must be supported by real N500 observations and any required semantic decision. For standing-policy execution the plan also supplies `previous_cohort`, `prior_receipt` (independently signed live prior-membership evidence) and `sources` (exact P1 identity/path/SHA triples). P5 checks these against the signed 0A policy and approved Universe; the broker-signed exact grant is its receipt, so `stage_receipts.P5` is omitted. Source-specific validation must be completely inventoried rather than assuming all of C2000 consists only of FSDS/Treasury.
 
 From repository root:
 
@@ -59,13 +59,13 @@ From repository root:
 uv run python -m edp_lab.operating.dag my-reviewed-plan.json runs/operating/c2000-queue.json
 ```
 
-The runner demands a queue located **inside the repository** to verify its hash-pinned relative path. Compile there (e.g. `runs/operating/c2000-queue.json`) before handing the queue to the external owner signing process; regenerate and re-sign if any queue byte changes. All grants and live receipts are separate, externally protected operations. Do not put signing keys in the repository or an agent-editable worktree.
+The runner demands a queue located **inside the repository** to verify its hash-pinned relative path. Compile there (e.g. `runs/operating/c2000-queue.json`). The protected policy broker checks the resulting exact bytes and signs the run grant automatically. Live receipts remain separately verified. Do not put signing keys in the repository or an agent-editable worktree.
 
 ```sh
-# Protected owner signing / real Databricks authority still NOT installed by this PR:
-EDP_OWNER_TRUST_DIR=/owner/trust uv run python -m edp_lab.operating.runner \
-  runs/operating/c2000-queue.json /owner/approved/c2000-grant.json \
-  runs/operating/c2000 --dry-run
+# Once the independent 0A broker and protected runtime are installed:
+EDP_OWNER_TRUST_DIR=/owner/trust EDP_POLICY_BROKER_SOCKET=/owner/broker.sock \
+  uv run python -m edp_lab.operating.runner \
+  runs/operating/c2000-queue.json auto runs/operating/c2000 --dry-run
 ```
 
 For an explicit simulation, set `simulation_only: true` in the plan before compiling; this is separately hash-pinned and cannot be promoted into a live queue. A *non-simulation* plan requires real stage receipts and independently approved authority before it can advance.
