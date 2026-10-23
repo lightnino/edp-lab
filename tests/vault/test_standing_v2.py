@@ -318,6 +318,15 @@ def test_owner_installer_denies_unprivileged_invocation():
     assert "OWNER_ROOT_TERMINAL_AND_WORKTREE_REQUIRED" in result.stderr
 
 
+def test_v2_client_rejects_absolute_run_path_before_socket_access():
+    result = subprocess.run(
+        [sys.executable, str(ROOT / "scripts/vault_0a_v2_client.py"),
+         "grant", "/tmp/forged.json"],
+        capture_output=True, text=True, timeout=30, check=False)
+    assert result.returncode != 0
+    assert "VAULT_RUN_PATH_INVALID" in result.stderr
+
+
 def test_owner_approved_cohort_registers_once_for_multiple_runs(tmp_path):
     receipt = _receipt(tmp_path, "C1500")
     approval = {**receipt, "schema": "EDP_VAULT_COHORT_SCOPE_APPROVAL_V1",

@@ -29,6 +29,8 @@ Codex does not run this grant or the privileged installer. Once the privilege is
 
 The installer prints `VAULT_0A_INSTALLED_AWAITING_ELIGIBLE_RUN`, **not** `VAULT_0A_INFRA_OPERATIONAL`. An independently signed eligibility receipt, real protected grant, service-principal read/write checks, live negative authorization checks, restart/rotation and readback must still pass. The installer refuses partial reinstallation; owner review is required if its provisioning sequence fails after creating Vault-only resources.
 
+Once an eligible cohort receipt exists, `scripts/vault_0a_v2_client.py grant RUN_REQUEST.json` requests a short-lived grant and `scripts/vault_0a_v2_client.py execute RUN_REQUEST.json` submits it to the protected Executor. The run request path is repository-relative; the client accepts no SQL, table name, warehouse ID or credential. The Executor independently verifies the broker signature and all pins before any write.
+
 The credential rotation helper is `scripts/owner_rotate_vault_credential_v2.py`. It creates a new seven-day service-principal secret through owner-controlled Databricks access, probes the dedicated warehouse with the staged secret and swaps the protected config only on success. The old secret is not printed or reused by the helper and expires by its Databricks lifetime. Rotation must be exercised in the protected installation before an operational claim.
 
 ## Current verification coverage and limits
