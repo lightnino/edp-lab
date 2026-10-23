@@ -17,7 +17,14 @@ import tempfile
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
-from edp_lab.operating.authority import Denied, canonical, digest, file_digest, verified_document
+from edp_lab.operating.authority import (
+    Denied,
+    canonical,
+    digest,
+    file_digest,
+    load_grant,
+    verified_document,
+)
 
 
 def evaluate(root: Path, queue_path: Path, policy_path: Path, trust: Path) -> dict:
@@ -109,7 +116,10 @@ def evaluate(root: Path, queue_path: Path, policy_path: Path, trust: Path) -> di
         path = task.get("databricks_path")
         table = task.get("databricks_table")
         if path is not None:
-            if not any(path.startswith(prefix) for prefix in policy["databricks_path_prefixes"]):
+            components = path.removeprefix("dbfs:").split("/")
+            if (not any(path.startswith(prefix)
+                        for prefix in policy["databricks_path_prefixes"])
+                    or any(part in {"", ".", ".."} for part in components[1:])):
                 raise Denied("DATABRICKS_PATH_OUT_OF_POLICY")
             paths.add(path)
         if table is not None:
@@ -189,12 +199,26 @@ def request(socket_path: Path, queue: Path) -> Path:
     with socket.socket(socket.AF_UNIX) as client:
         client.settimeout(30)
         client.connect(str(socket_path))
-        client.sendall(canonical({"queue": str(queue.resolve())}))
+        client.sendall(canonical({"action": "issue", "queue": str(queue.resolve())}))
         client.shutdown(socket.SHUT_WR)
         response = json.loads(client.recv(8192))
     if response.get("status") != "ISSUED":
         raise Denied(response.get("reason", "BROKER_DENIED"))
     return Path(response["grant_path"])
+
+
+def execute(socket_path: Path, grant_path: Path, operation: dict) -> dict:
+    """Submit one exact operation to the protected credential and ledger holder."""
+    with socket.socket(socket.AF_UNIX) as client:
+        client.settimeout(900)
+        client.connect(str(socket_path))
+        client.sendall(canonical({"action": "execute", "grant_path": str(grant_path),
+                                  "operation": operation}))
+        client.shutdown(socket.SHUT_WR)
+        response = json.loads(client.recv(65536))
+    if response.get("status") != "EXECUTED":
+        raise Denied(response.get("reason", "PROTECTED_EXECUTION_DENIED"))
+    return response["result"]
 
 
 def serve(socket_path: Path, root: Path, policy: Path, trust: Path, key: Path,
@@ -206,8 +230,33 @@ def serve(socket_path: Path, root: Path, policy: Path, trust: Path, key: Path,
         def handle(self) -> None:
             try:
                 query = json.loads(self.rfile.readline(8192))
-                path = issue(root, Path(query["queue"]), policy, trust, key, grant_store)
-                response = {"status": "ISSUED", "grant_path": str(path)}
+                if query.get("action") == "issue":
+                    path = issue(root, Path(query["queue"]), policy, trust, key, grant_store)
+                    response = {"status": "ISSUED", "grant_path": str(path)}
+                elif query.get("action") == "execute":
+                    from edp_lab.operating.boundaries import databricks_write, git_write, raw_stage
+                    from edp_lab.operating.databricks_jobs import databricks_job_submit
+
+                    grant_path = Path(query["grant_path"]).resolve(strict=True)
+                    if not grant_path.is_relative_to(grant_store.resolve()):
+                        raise Denied("GRANT_NOT_IN_PROTECTED_STORE")
+                    grant = load_grant(root, grant_path, trust)
+                    if grant["authority"] != "policy-broker-v1":
+                        raise Denied("BROKER_GRANT_REQUIRED")
+                    operation = query["operation"]
+                    if operation.get("grant_path") != str(grant_path):
+                        raise Denied("GRANT_PATH_MISMATCH")
+                    adapters = {"raw_stage": raw_stage, "databricks_write": databricks_write,
+                                "databricks_job_submit": databricks_job_submit,
+                                "git_write": git_write}
+                    adapter = adapters.get(operation.get("operation"))
+                    if adapter is None:
+                        raise Denied("PROTECTED_OPERATION_NOT_SUPPORTED")
+                    result = adapter(root, grant, operation, trust.parent / "ledger",
+                                     execute=True)
+                    response = {"status": "EXECUTED", "result": result}
+                else:
+                    raise Denied("UNKNOWN_BROKER_ACTION")
             except (Denied, OSError, ValueError, KeyError) as exc:
                 response = {"status": "DENIED", "reason": str(exc)}
             self.wfile.write(canonical(response))
@@ -222,7 +271,15 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Protected standing-policy grant broker")
     for name in ("socket", "root", "policy", "trust", "key", "grant_store"):
         parser.add_argument(name, type=Path)
+    parser.add_argument("--databricks-user")
+    parser.add_argument("--git-user")
     args = parser.parse_args()
+    os.environ["EDP_OWNER_TRUST_DIR"] = str(args.trust)
+    if args.databricks_user:
+        os.environ["EDP_DATABRICKS_RUN_AS_USER"] = args.databricks_user
+        os.environ["EDP_DATABRICKS_PROFILE"] = "edp-lab"
+    if args.git_user:
+        os.environ["EDP_GIT_RUN_AS_USER"] = args.git_user
     serve(args.socket, args.root, args.policy, args.trust, args.key, args.grant_store)
 
 

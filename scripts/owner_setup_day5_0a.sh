@@ -17,7 +17,8 @@ if [[ -e "$base" ]]; then
   exit 1
 fi
 
-install -d -m 755 -o root -g wheel "$base" "$trust" "$base/grants" "$runtime"
+install -d -m 755 -o root -g wheel "$base" "$trust" "$base/grants" \
+  "$base/receipts" "$runtime"
 install -d -m 700 -o root -g wheel "$private" "$base/ledger"
 /usr/bin/ditto "$root/src/edp_lab" "$runtime/edp_lab"
 chown -R root:wheel "$runtime"

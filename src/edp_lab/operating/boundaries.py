@@ -19,6 +19,7 @@ from edp_lab.operating.authority import (
     protected_trust_dir,
     verified_document,
 )
+from edp_lab.operating.protected_cli import databricks_argv, git_argv
 
 
 def _reserve(ledger: Path, operation_id: str, request: dict) -> Path:
@@ -53,7 +54,11 @@ def databricks_write(root: Path, grant: dict, request: dict, ledger: Path,
     statement = (root / request["statement_path"]).resolve(strict=True)
     if not statement.is_relative_to(root.resolve()):
         raise Denied("STATEMENT_OUTSIDE_REPO")
-    if file_digest(statement) != grant["contracts"]["statement"]["sha256"]:
+    name = request.get("statement_contract", "statement")
+    if (name not in grant["contracts"]
+            or request.get("contracts", {}).get(name, {}).get("path")
+            != request["statement_path"]
+            or file_digest(statement) != grant["contracts"][name]["sha256"]):
         raise Denied("STATEMENT_HASH_CHANGED")
     content = json.loads(statement.read_bytes())
     if not isinstance(content, dict) or not isinstance(content.get("statement"), str):
@@ -85,16 +90,61 @@ def databricks_write(root: Path, grant: dict, request: dict, ledger: Path,
     if not execute:
         return {"status": "AUTHORIZED_DRY_RUN"}
     record = _reserve(ledger, request["operation_id"], request)
-    outcome = subprocess.run(["databricks", "api", "post", "/api/2.0/sql/statements",
-                              "--json", "@" + str(statement), "-o", "json"],
+    outcome = subprocess.run(databricks_argv("api", "post", "/api/2.0/sql/statements",
+                                             "--json", "@" + str(statement), "-o", "json"),
                              capture_output=True, text=True, timeout=grant["limits"]["runtime_seconds"],
                              check=False)
-    result = {"status": "SUBMITTED_REQUIRES_READBACK" if outcome.returncode == 0 else
-              "UNCERTAIN_REQUIRES_READBACK", "returncode": outcome.returncode,
+    try:
+        remote = json.loads(outcome.stdout) if outcome.returncode == 0 else {}
+    except ValueError:
+        remote = {}
+    statement_id = remote.get("statement_id")
+    result = {"status": "SUBMITTED_REQUIRES_READBACK" if isinstance(
+                  statement_id, str) and statement_id else "UNCERTAIN_REQUIRES_READBACK",
+              "statement_id": statement_id, "remote_state": remote.get("status", {}).get("state"),
+              "returncode": outcome.returncode,
               "stdout_sha256": digest(outcome.stdout.encode()),
               "stderr_sha256": digest(outcome.stderr.encode())}
     record.write_text(json.dumps(result, sort_keys=True) + "\n")
     return result
+
+
+def raw_stage(root: Path, grant: dict, request: dict, ledger: Path,
+              *, execute: bool = False) -> dict:
+    """Stage one immutable RAW source and read back its exact remote bytes."""
+    if request["operation"] != "raw_stage":
+        raise Denied("WRONG_BOUNDARY")
+    if ledger.resolve().is_relative_to(root.resolve()):
+        raise Denied("LEDGER_MUST_BE_OUTSIDE_WORKTREE")
+    if execute:
+        fresh = load_grant(root, Path(request["grant_path"]), protected_trust_dir(root))
+        if fresh != grant:
+            raise Denied("GRANT_CHANGED_AT_WRITE_BOUNDARY")
+    authorize(grant, request, root=root)
+    source = request["source"]
+    remote = request["databricks_path"]
+    parts = remote.removeprefix("dbfs:").split("/") if isinstance(remote, str) else []
+    if (not isinstance(remote, str)
+            or not remote.startswith("dbfs:/Volumes/workspace/edp_lab/raw/")
+            or any(part in {"", ".", ".."} for part in parts[1:])
+            or len(parts) < 7 or parts[-2] != source["identity"]
+            or parts[-1] != Path(source["path"]).name):
+        raise Denied("RAW_DESTINATION_OUT_OF_SCOPE")
+    if not execute:
+        return {"status": "AUTHORIZED_DRY_RUN"}
+    _reserve(ledger, request["operation_id"], request)
+    command = databricks_argv("fs", "cp", source["path"], remote, "-p", "edp-lab")
+    outcome = subprocess.run(command, capture_output=True, timeout=grant["limits"][
+        "runtime_seconds"], check=False)
+    if outcome.returncode:
+        raise Denied("RAW_STAGE_UNCERTAIN_REQUIRES_READBACK")
+    observed = subprocess.run(databricks_argv("fs", "cat", remote, "-p", "edp-lab"),
+                              capture_output=True, timeout=grant["limits"][
+                                  "runtime_seconds"], check=False)
+    if observed.returncode or digest(observed.stdout) != source["sha256"]:
+        raise Denied("REMOTE_RAW_HASH_MISMATCH_OR_UNCERTAIN")
+    return {"status": "SUBMITTED_REQUIRES_INDEPENDENT_READBACK",
+            "remote_sha256": digest(observed.stdout), "remote_path": remote}
 
 
 def git_write(root: Path, grant: dict, request: dict, ledger: Path,
@@ -135,7 +185,7 @@ def git_write(root: Path, grant: dict, request: dict, ledger: Path,
     if not execute:
         return {"status": "AUTHORIZED_DRY_RUN"}
     record = _reserve(ledger, request["operation_id"], request)
-    outcome = subprocess.run(argv, cwd=root, capture_output=True, text=True,
+    outcome = subprocess.run(git_argv(*argv), cwd=root, capture_output=True, text=True,
                              timeout=grant["limits"]["runtime_seconds"], check=False)
     result = {"status": "SUBMITTED_REQUIRES_READBACK" if outcome.returncode == 0 else
               "UNCERTAIN_REQUIRES_READBACK", "returncode": outcome.returncode,

@@ -10,6 +10,7 @@ import pytest
 
 from edp_lab.operating.authority import Denied, canonical, digest, load_grant
 from edp_lab.operating.policy_broker import issue
+from edp_lab.operating.protected_verifier import attest_raw, attest_sql
 from edp_lab.operating.runner import run
 
 
@@ -129,6 +130,103 @@ def test_c1500_to_c2000_p5_authorization(tmp_path, monkeypatch):
                         lambda _socket, _queue: issued)
     state = run(root, queue, Path("auto"), tmp_path / "state", dry_run=True)
     assert state["tasks"]["P5"]["status"] == "COMPLETE"
+
+
+def test_live_broker_grant_routes_raw_stage_to_protected_service(tmp_path, monkeypatch):
+    root, trust, queue_path, policy_path, members = setup(tmp_path)
+    receipts = tmp_path / "receipts"
+    receipts.mkdir()
+    queue = json.loads(queue_path.read_bytes())
+    queue["tasks"].insert(2, {"id": "stage", "kind": "raw_stage", "depends_on": ["P5"],
+                              "operation_id": "stage-source-1", "source": queue["sources"][0],
+                              "databricks_path": "dbfs:/Volumes/workspace/edp_lab/raw/day5/"
+                                                 "source-1/raw-1.txt",
+                              "external_receipt": str(receipts / "raw-stage-receipt.json")})
+    queue["tasks"][-1]["depends_on"].append("stage")
+    queue["tasks"][-1]["receipt"] = str(receipts / "freeze-receipt.json")
+    queue_path.write_bytes(canonical(queue))
+    policy_envelope = json.loads(policy_path.read_bytes())
+    policy = policy_envelope["document"]
+    policy["operations"].append("raw_stage")
+    policy["databricks_path_prefixes"].append("dbfs:/Volumes/workspace/edp_lab/raw/day5/")
+    signed(policy_path, trust / "owner.pem", policy)
+    grant_path = issue(root, queue_path, policy_path, trust, trust / "broker.pem",
+                       trust / "grants")
+    monkeypatch.setenv("EDP_OWNER_TRUST_DIR", str(trust))
+    monkeypatch.setenv("EDP_POLICY_BROKER_SOCKET", str(trust / "broker.sock"))
+    monkeypatch.setattr("edp_lab.operating.runner.request_policy_grant",
+                        lambda _socket, _queue: grant_path)
+    seen = []
+
+    def protected(_socket, _grant, request):
+        seen.append(request)
+        return {"status": "SUBMITTED_REQUIRES_INDEPENDENT_READBACK",
+                "remote_path": request["databricks_path"],
+                "remote_sha256": request["source"]["sha256"]}
+
+    monkeypatch.setattr("edp_lab.operating.runner.protected_execute", protected)
+    monkeypatch.setattr("edp_lab.operating.runner.raw_stage",
+                        lambda *args, **kwargs: pytest.fail("unprotected RAW adapter called"))
+    state = run(root, queue_path, Path("auto"), tmp_path / "state")
+    assert state["tasks"]["P5"]["status"] == "COMPLETE"
+    assert state["tasks"]["stage"]["status"] == "VALIDATING"
+    assert seen[0]["source"]["identity"] == members[1]["identity"]
+    monkeypatch.setattr("edp_lab.operating.protected_verifier._remote_bytes",
+                        lambda _path, _timeout: (root / "raw-1.txt").read_bytes())
+    attested = attest_raw(root, queue_path, grant_path, tmp_path / "state/checkpoint.json",
+                          "stage", trust, trust / "verifier.pem")
+    assert attested["status"] == "VERIFIED"
+    readback = run(root, queue_path, Path("auto"), tmp_path / "state")
+    assert readback["tasks"]["stage"]["status"] == "COMPLETE"
+    assert len(seen) == 1
+
+
+def test_protected_sql_readback_matches_exact_statement(tmp_path, monkeypatch):
+    root, trust, queue_path, policy_path, _members = setup(tmp_path)
+    receipts = tmp_path / "receipts"
+    receipts.mkdir()
+    statement = root / "roster-sql.json"
+    sql = "CREATE TABLE workspace.edp_lab.c2_roster USING DELTA AS SELECT 1"
+    statement.write_bytes(canonical({"warehouse_id": "test", "statement": sql}))
+    queue = json.loads(queue_path.read_bytes())
+    queue["contracts"]["statement_roster"] = {"version": "V1", "path": statement.name}
+    queue["tasks"].insert(2, {"id": "roster", "kind": "databricks_write",
+                              "depends_on": ["P5"], "operation_id": "create-c2-roster",
+                              "statement_path": statement.name,
+                              "statement_contract": "statement_roster",
+                              "databricks_table": "workspace.edp_lab.c2_roster",
+                              "external_receipt": str(receipts / "roster.json")})
+    queue["tasks"][-1]["depends_on"].append("roster")
+    queue["tasks"][-1]["receipt"] = str(receipts / "freeze.json")
+    queue_path.write_bytes(canonical(queue))
+    policy = json.loads(policy_path.read_bytes())["document"]
+    policy["contracts"]["statement_roster"] = {
+        "version": "V1", "sha256": digest(statement.read_bytes())}
+    policy["operations"].append("databricks_write")
+    signed(policy_path, trust / "owner.pem", policy)
+    grant_path = issue(root, queue_path, policy_path, trust, trust / "broker.pem",
+                       trust / "grants")
+    monkeypatch.setenv("EDP_OWNER_TRUST_DIR", str(trust))
+    monkeypatch.setenv("EDP_POLICY_BROKER_SOCKET", str(trust / "broker.sock"))
+    monkeypatch.setattr("edp_lab.operating.runner.request_policy_grant",
+                        lambda _socket, _queue: grant_path)
+    monkeypatch.setattr("edp_lab.operating.runner.protected_execute",
+                        lambda *_args: {"status": "SUBMITTED_REQUIRES_READBACK",
+                                        "statement_id": "statement-c2"})
+    first = run(root, queue_path, Path("auto"), tmp_path / "state")
+    assert first["tasks"]["roster"]["status"] == "VALIDATING"
+
+    def live(path, _timeout):
+        if path.startswith("/api/2.0/sql/statements/"):
+            return {"statement_id": "statement-c2", "statement": sql,
+                    "status": {"state": "SUCCEEDED"}}
+        return {"full_name": "workspace.edp_lab.c2_roster", "table_id": "uc-c2"}
+
+    monkeypatch.setattr("edp_lab.operating.protected_verifier._remote_json", live)
+    assert attest_sql(root, queue_path, grant_path, tmp_path / "state/checkpoint.json",
+                      "roster", trust, trust / "verifier.pem")["status"] == "VERIFIED"
+    resumed = run(root, queue_path, Path("auto"), tmp_path / "state")
+    assert resumed["tasks"]["roster"]["status"] == "COMPLETE"
 
 
 def test_policy_tamper_and_revocation_fail_closed(tmp_path):
