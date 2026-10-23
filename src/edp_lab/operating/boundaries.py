@@ -12,6 +12,7 @@ from pathlib import Path
 from edp_lab.operating.authority import (
     Denied,
     authorize,
+    canonical,
     digest,
     file_digest,
     load_grant,
@@ -31,7 +32,7 @@ def _reserve(ledger: Path, operation_id: str, request: dict) -> Path:
         raise Denied("OPERATION_REPLAY_OR_UNCERTAIN_RESULT") from exc
     with os.fdopen(fd, "w") as stream:
         json.dump({"status": "RESERVED", "request_sha256": digest(
-            json.dumps(request, sort_keys=True).encode())}, stream, sort_keys=True)
+            canonical(request))}, stream, sort_keys=True)
         stream.flush()
         os.fsync(stream.fileno())
     return record
@@ -55,11 +56,32 @@ def databricks_write(root: Path, grant: dict, request: dict, ledger: Path,
     if file_digest(statement) != grant["contracts"]["statement"]["sha256"]:
         raise Denied("STATEMENT_HASH_CHANGED")
     content = json.loads(statement.read_bytes())
-    sql = content.get("statement", "").strip().upper()
-    if not sql.startswith("CREATE TABLE ") or " IF NOT EXISTS " in sql or " OR REPLACE " in sql:
+    if not isinstance(content, dict) or not isinstance(content.get("statement"), str):
+        raise Denied("INVALID_PINNED_SQL_REQUEST")
+    sql = content["statement"].strip()
+    # Day 2-4 uses versioned CREATE TABLE AS SELECT and CREATE VIEW AS
+    # SELECT/WITH. A pinned request is still not a general SQL execution grant.
+    import re
+
+    no_header = re.sub(r"\A(?:--[^\n]*\n\s*)*", "", sql)
+    match = re.match(
+        r"\ACREATE\s+(TABLE|VIEW)\s+([A-Za-z_][\w]*\.[A-Za-z_][\w]*"
+        r"\.[A-Za-z_][\w]*)\s+(.*)\Z",
+        no_header, flags=re.IGNORECASE | re.DOTALL,
+    )
+    if match is None or ";" in no_header.rstrip(";"):
         raise Denied("NON_EXCLUSIVE_WRITE")
-    if request["databricks_table"].upper() not in sql:
+    kind, target, remainder = match.groups()
+    if (not isinstance(request.get("databricks_table"), str)
+            or target.lower() != request["databricks_table"].lower()):
         raise Denied("TABLE_NOT_IN_STATEMENT")
+    if (kind.upper() == "TABLE" and not re.match(
+            r"(?:USING\s+DELTA\s+)?AS\s+(SELECT|WITH)\b", remainder, re.IGNORECASE)
+            or kind.upper() == "VIEW" and not re.match(
+                r"AS\s+(SELECT|WITH)\b", remainder, re.IGNORECASE)):
+        raise Denied("NON_EXCLUSIVE_WRITE")
+    if re.search(r"\b(OR\s+REPLACE|IF\s+NOT\s+EXISTS)\b", no_header, re.IGNORECASE):
+        raise Denied("NON_EXCLUSIVE_WRITE")
     if not execute:
         return {"status": "AUTHORIZED_DRY_RUN"}
     record = _reserve(ledger, request["operation_id"], request)

@@ -22,6 +22,7 @@ from edp_lab.operating.authority import (
 )
 from edp_lab.operating.boundaries import databricks_write, git_write
 from edp_lab.operating.budget import verify_phase_receipt
+from edp_lab.operating.databricks_jobs import databricks_job_submit
 
 
 def _write_json(path: Path, value: dict) -> None:
@@ -139,11 +140,19 @@ def _external_verified(root: Path, task: dict, request: dict) -> bool:
     if not receipt.is_file():
         return False
     proof = verified_document(root, receipt, protected_trust_dir(root))
-    return (proof.get("schema") == "EDP_EXTERNAL_OPERATION_RECEIPT_V1"
-            and proof.get("operation_id") == request["operation_id"]
-            and proof.get("request_sha256") == digest(canonical(request))
-            and proof.get("status") == "VERIFIED"
-            and proof.get("live_readback") is True)
+    common = (proof.get("schema") == "EDP_EXTERNAL_OPERATION_RECEIPT_V1"
+              and proof.get("operation_id") == request["operation_id"]
+              and proof.get("request_sha256") == digest(canonical(request))
+              and proof.get("status") == "VERIFIED"
+              and proof.get("live_readback") is True)
+    if task["kind"] == "databricks_job_submit":
+        # Successful submit is not completion. Independent service readback must
+        # match the exact run ID recorded at the original submission.
+        return (common and proof.get("external_service") == "DATABRICKS_JOBS"
+                and proof.get("terminal_state") == "SUCCESS"
+                and type(proof.get("job_run_id")) is int
+                and proof["job_run_id"] == task.get("_submitted_run_id"))
+    return common
 
 
 def _stage_verified(root: Path, path: Path, *, cohort: str, output: str,
@@ -252,15 +261,19 @@ def run(root: Path, queue_path: Path, envelope: Path, state_dir: Path,
                                   "runtime_seconds": task.get("runtime_seconds", 0),
                                   "compute_units": task.get("compute_units", 0),
                                   "token_count": task.get("token_budget", 0)}}
-            if task["kind"] in {"databricks_write", "git_write"}:
+            if task["kind"] in {"databricks_write", "git_write",
+                                "databricks_job_submit"}:
                 request.update({key: task[key] for key in (
                     "operation_id", "databricks_path", "databricks_table", "statement_path",
-                    "git_operation", "branch", "argv", "pr", "head_sha", "merge_gate_receipt")
+                    "git_operation", "branch", "argv", "pr", "head_sha", "merge_gate_receipt",
+                    "submission_path", "deployment_path", "submission_contract",
+                    "deployment_contract")
                     if key in task})
                 request["grant_path"] = str(envelope)
             if current.get("status") == "VALIDATING" and task["kind"] in {
-                    "databricks_write", "git_write"}:
-                if _external_verified(root, task, request):
+                    "databricks_write", "git_write", "databricks_job_submit"}:
+                submitted = dict(task, _submitted_run_id=current.get("external", {}).get("run_id"))
+                if _external_verified(root, submitted, request):
                     state["tasks"][task["id"]]["status"] = "COMPLETE"
                     _write_json(state_path, state)
                     _event(log, "COMPLETE_AFTER_READBACK", task=task["id"])
@@ -329,7 +342,8 @@ def run(root: Path, queue_path: Path, envelope: Path, state_dir: Path,
                             raise TimeoutError("Codex task timed out")
                         if result["returncode"]:
                             raise RuntimeError("CODEX_TASK_REPAIR_REQUIRED")
-                elif task["kind"] in {"databricks_write", "git_write"}:
+                elif task["kind"] in {"databricks_write", "git_write",
+                                      "databricks_job_submit"}:
                     if dry_run:
                         ledger = Path("/private/tmp/edp-dry-run-ledger")
                     else:
@@ -340,6 +354,9 @@ def run(root: Path, queue_path: Path, envelope: Path, state_dir: Path,
                     if task["kind"] == "databricks_write":
                         outcome = databricks_write(root, grant, request, ledger,
                                                   execute=not dry_run)
+                    elif task["kind"] == "databricks_job_submit":
+                        outcome = databricks_job_submit(root, grant, request, ledger,
+                                                       execute=not dry_run)
                     else:
                         outcome = git_write(root, grant, request, ledger,
                                             execute=not dry_run)
