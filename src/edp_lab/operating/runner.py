@@ -189,6 +189,8 @@ def run(root: Path, queue_path: Path, envelope: Path, state_dir: Path,
     queue = json.loads(queue_path.read_bytes())
     if queue["schema"] != "EDP_QUEUE_V1":
         raise Denied("INVALID_QUEUE")
+    if queue.get("simulation_only") and not dry_run:
+        raise Denied("SIMULATION_QUEUE_CANNOT_RUN_LIVE")
     grant = load_grant(root, envelope, protected_trust_dir(root))
     if file_digest(queue_path) != grant["contracts"]["queue"]["sha256"]:
         raise Denied("QUEUE_HASH_CHANGED")
