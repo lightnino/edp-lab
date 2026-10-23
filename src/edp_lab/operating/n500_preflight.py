@@ -155,7 +155,7 @@ def prepare_n500_review(root: Path, candidate_bindings: list, *,
             "B1_MODEL_ROUTE_AND_PARSER_RULE_REVIEW",
             "OWNER_COHORT_ADMISSION_AND_FREEZE",
             "EXTERNAL_SIGNED_WORKFLOW_GRANT",
-            "DATBRICKS_RUNTIME_AND_RESULT_VERIFICATION",
+            "DATABRICKS_RUNTIME_AND_RESULT_VERIFICATION",
         ],
     }
 
@@ -171,7 +171,7 @@ def main() -> None:
     review = prepare_n500_review(root, bindings)
     args.output.parent.mkdir(parents=True, exist_ok=True)
     with args.output.open("xb") as output:
-        output.write(canonical(review).decode())
+        output.write(canonical(review))
     print(json.dumps({"status": review["status"],
                       "proposed_members": review["additional_count"],
                       "review_packet": str(args.output)}))
