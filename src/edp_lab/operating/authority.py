@@ -129,8 +129,8 @@ def authorize(grant: dict, request: dict, *, root: Path, used: dict | None = Non
         raise Denied("OPERATION_OUT_OF_SCOPE")
     if request["cohort"] != grant["cohort"]:
         raise Denied("COHORT_OUT_OF_SCOPE")
-    if request["operation"] in {"databricks_write", "codex_task", "validate_controls",
-                                "freeze_verify"} and not {"parser", "model", "rule"} <= set(
+    if request["operation"] in {"databricks_write", "databricks_job_submit",
+                                "codex_task", "validate_controls", "freeze_verify"} and not {"parser", "model", "rule"} <= set(
                                     request.get("contracts", {})):
         raise Denied("EXECUTION_CONTRACT_NOT_PRESENTED")
     source = request.get("source")
