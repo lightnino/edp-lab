@@ -10,7 +10,7 @@ from pathlib import Path
 import pytest
 
 from edp_lab.operating.authority import Denied
-from edp_lab.vault.load_plan import NAMESPACE, render
+from edp_lab.vault.load_plan import NAMESPACE, TABLES, render, render_v2
 from edp_lab.vault.protected_readback import _expected, _normalized
 from edp_lab.vault.protected_sql import _reserve_statement_budget
 from edp_lab.vault.raw_verify import verify_selected
@@ -81,6 +81,21 @@ def test_plan_is_fixed_target_insert_only_and_utf8_lossless():
     assert len(expected["s_fact_assertion"]) == 127
     assert len(expected["r_load_event"]) == 254
     assert len(expected["vault_reject_quarantine"]) == 6
+
+
+def test_v2_renderer_uses_synthetic_rows_without_local_manifests():
+    rows = projected_rows()
+    counts = {name: 0 for name in TABLES}
+    counts.update({"h_filing": 1, "h_concept": 1, "l_fact_slot": 1,
+                   "r_source_occurrence": 127, "s_fact_assertion": 127,
+                   "s_num_m2_value": 127, "vault_reject_quarantine": 6})
+    plan = render_v2(rows, cohort_id="SYNTHETIC_TEST", input_manifest_sha256="a" * 64,
+                     expected_table_counts=counts, synthetic_negatives=True)
+    assert plan["schema"] == "EDP_VAULT_LOAD_PLAN_V2"
+    assert plan["data_occurrences"] == 127
+    assert plan["synthetic_rows"] == 6
+    assert plan["expected_tables"]["r_load_event"]["rows"] == []
+    assert all(stage["table"] != f"{NAMESPACE}.r_load_event" for stage in plan["stages"])
 
 
 def test_protected_raw_verifier_checks_every_selected_locator(tmp_path):

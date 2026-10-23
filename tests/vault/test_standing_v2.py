@@ -222,7 +222,7 @@ def test_forged_expired_and_revoked_grants_denied(tmp_path):
 
 
 def test_stale_socket_restart_cannot_replace_live_service():
-    with tempfile.TemporaryDirectory(prefix="v", dir="/private/tmp") as short:
+    with tempfile.TemporaryDirectory(prefix="v", dir="/tmp") as short:
         path = Path(short) / "broker.sock"
         with socket.socket(socket.AF_UNIX) as server:
             server.bind(str(path))
@@ -351,9 +351,12 @@ def test_independent_readback_requires_exact_table_keys_and_multiplicity():
 
 
 def test_v1_pinned_plan_unchanged_and_v2_renderer_is_cohort_neutral():
-    rows = json.loads((ROOT / "runs/day6-vault-prototype/projected-manifest.json").read_bytes())[
-        "rows"]
-    retained = json.loads((ROOT / "runs/day6-vault-prototype/load-plan.json").read_bytes())
+    projection = ROOT / "runs/day6-vault-prototype/projected-manifest.json"
+    plan_path = ROOT / "runs/day6-vault-prototype/load-plan.json"
+    if not projection.exists() or not plan_path.exists():
+        pytest.skip("pinned local prototype manifests are intentionally ignored by Git")
+    rows = json.loads(projection.read_bytes())["rows"]
+    retained = json.loads(plan_path.read_bytes())
     assert render(rows) == retained
     counts = {name: 0 for name in TABLES}
     counts.update({"h_filing": 20, "h_concept": 24, "l_fact_slot": 76,
