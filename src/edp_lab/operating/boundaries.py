@@ -75,7 +75,7 @@ def databricks_write(root: Path, grant: dict, request: dict, ledger: Path,
             or target.lower() != request["databricks_table"].lower()):
         raise Denied("TABLE_NOT_IN_STATEMENT")
     if (kind.upper() == "TABLE" and not re.match(
-            r"USING\s+DELTA\s+AS\s+(SELECT|WITH)\b", remainder, re.IGNORECASE)
+            r"(?:USING\s+DELTA\s+)?AS\s+(SELECT|WITH)\b", remainder, re.IGNORECASE)
             or kind.upper() == "VIEW" and not re.match(
                 r"AS\s+(SELECT|WITH)\b", remainder, re.IGNORECASE)):
         raise Denied("NON_EXCLUSIVE_WRITE")
