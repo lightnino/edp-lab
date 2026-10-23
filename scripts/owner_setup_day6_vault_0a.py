@@ -288,6 +288,7 @@ def _rpc(path: Path, request: dict) -> dict:
 
 
 def main() -> None:
+    raise RuntimeError("C1500_SPECIFIC_INSTALLER_PAUSED_USE_REUSABLE_VAULT_0A")
     parser = argparse.ArgumentParser()
     parser.add_argument("expected_commit")
     parser.add_argument("expected_policy_sha256")

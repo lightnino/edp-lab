@@ -25,6 +25,7 @@ def _call(path: Path, request: dict, *, timeout: int = 600) -> dict:
 
 
 def main() -> None:
+    raise Denied("C1500_PROTOTYPE_EXECUTION_PAUSED_PENDING_REUSABLE_VAULT_0A")
     parser = argparse.ArgumentParser()
     parser.add_argument("command", choices=("grant", "execute"))
     args = parser.parse_args()

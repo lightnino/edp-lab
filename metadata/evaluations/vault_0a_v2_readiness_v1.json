@@ -1,0 +1,14 @@
+{
+  "schema": "VAULT_0A_V2_READINESS_EVALUATION_V1",
+  "status": "VAULT_0A_AWAITING_OWNER_INSTALL",
+  "live_installation": false,
+  "signed_standing_policy_installed": false,
+  "eligible_run_grant_issued": false,
+  "live_negative_authorization_checks_passed": false,
+  "databricks_delta_write_and_readback_passed": false,
+  "step2_c1500_execution": "PAUSED_BY_OWNER_PRIORITY_REVISION",
+  "step0_c2000": "WAITING_C2000_RESULT_FREEZE",
+  "step3_c2000": "BLOCKED_BY_STEP0_AND_STEP2",
+  "evidence": "reports/vault_0a_v2_evidence.md",
+  "agent_generated_signature": null
+}

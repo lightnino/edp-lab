@@ -1,5 +1,7 @@
 # Day 6 Vault Dev 0A installation packet
 
+**Historical C1500-specific proposal, paused by the owner priority revision.** The old installer and agent client entry points now deny execution. Use the [reusable Vault 0A V2 packet](vault_0a_reusable_v2.md) for new infrastructure work. This file retains the original Step 2 preparation evidence and command for audit only; do not execute its command.
+
 This packet continues [Day 6 Step 2](../reports/day6_vault_prototype_evidence.md) and [PR #61](https://github.com/lightnino/edp-lab/pull/61). It does not revise the approved Vault Contract V1. The separate [C1500 exception](../metadata/authorizations/day6_vault_c1500_prototype_exception_v1.json) authorizes only this bounded execution; the [unsigned policy proposal](../metadata/operating/day6_vault_dev_policy_proposal_v1.json) is not a write grant.
 
 ## Protected boundary

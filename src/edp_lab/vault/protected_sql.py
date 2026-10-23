@@ -8,6 +8,7 @@ from __future__ import annotations
 import fcntl
 import json
 import os
+import re
 import subprocess
 import tempfile
 import time
@@ -25,26 +26,59 @@ def _warehouse(base: Path) -> str:
     return warehouse
 
 
-def _reserve_statement_budget(base: Path) -> None:
+def _reserve_statement_budget(base: Path, budget: dict | None = None) -> None:
     envelope = json.loads((base / "trust/policy.signed.json").read_bytes())
     policy = envelope["document"]
-    maximum = policy["max_sql_statements"]
-    if not isinstance(maximum, int) or maximum < 1 or maximum > 60:
+    if policy.get("schema") == "EDP_VAULT_STANDING_POLICY_V2":
+        if (not isinstance(budget, dict) or not isinstance(budget.get("run_sha256"), str)
+                or re.fullmatch(r"[0-9a-f]{64}", budget["run_sha256"]) is None
+                or not isinstance(budget.get("max_statements"), int)
+                or not 1 <= budget["max_statements"] <= policy["max_run_statements"]
+                or not isinstance(budget.get("max_runtime_seconds"), int)
+                or not 1 <= budget["max_runtime_seconds"] <= policy["max_run_runtime_seconds"]):
+            raise Denied("VAULT_RUN_SQL_BUDGET_INVALID")
+        maximum = budget["max_statements"]
+        runtime = budget["max_runtime_seconds"]
+        ledger = base / "ledger" / ("sql-" + budget["run_sha256"] + ".json")
+        _reserve_total_sql_budget(base, policy["max_total_sql_statements"])
+    else:
+        maximum = policy["max_sql_statements"]
+        runtime = policy["max_runtime_seconds"]
+        ledger = base / "ledger/sql_statement_budget.json"
+    if not isinstance(maximum, int) or maximum < 1 or maximum > 100:
         raise Denied("VAULT_SQL_BUDGET_INVALID")
-    ledger = base / "ledger/sql_statement_budget.json"
     fd = os.open(ledger, os.O_RDWR | os.O_CREAT, 0o600)
     with os.fdopen(fd, "r+") as stream:
         fcntl.flock(stream.fileno(), fcntl.LOCK_EX)
         content = stream.read()
         state = json.loads(content) if content else {"used": 0, "started_at_epoch": time.time()}
         used = state["used"]
-        if time.time() - state["started_at_epoch"] > policy["max_runtime_seconds"]:
+        if time.time() - state["started_at_epoch"] > runtime:
             raise Denied("VAULT_RUNTIME_CAP_EXHAUSTED")
         if used >= maximum:
             raise Denied("VAULT_SQL_STATEMENT_CAP_EXHAUSTED")
         stream.seek(0)
         stream.truncate()
         json.dump({**state, "used": used + 1}, stream)
+        stream.write("\n")
+        stream.flush()
+        os.fsync(stream.fileno())
+
+
+def _reserve_total_sql_budget(base: Path, maximum: int) -> None:
+    if not isinstance(maximum, int) or not 1 <= maximum <= 10_000:
+        raise Denied("VAULT_TOTAL_SQL_BUDGET_INVALID")
+    ledger = base / "ledger/total-sql-statements.json"
+    fd = os.open(ledger, os.O_RDWR | os.O_CREAT, 0o600)
+    with os.fdopen(fd, "r+") as stream:
+        fcntl.flock(stream.fileno(), fcntl.LOCK_EX)
+        content = stream.read()
+        used = json.loads(content)["used"] if content else 0
+        if used >= maximum:
+            raise Denied("VAULT_STANDING_SQL_CAP_EXHAUSTED")
+        stream.seek(0)
+        stream.truncate()
+        json.dump({"used": used + 1}, stream)
         stream.write("\n")
         stream.flush()
         os.fsync(stream.fileno())
@@ -73,11 +107,12 @@ def _cli(root: Path, base: Path, *args: str, timeout: int = 180) -> dict:
     return json.loads(result.stdout)
 
 
-def statement(root: Path, base: Path, sql: str, *, timeout: int = 300) -> dict:
+def statement(root: Path, base: Path, sql: str, *, timeout: int = 300,
+              budget: dict | None = None) -> dict:
     """Submit once, then poll read-only. Timeout/uncertainty never resubmits."""
     if not isinstance(sql, str) or not sql or len(sql.encode()) > 600_000:
         raise Denied("VAULT_SQL_SIZE_OR_EMPTY")
-    _reserve_statement_budget(base)
+    _reserve_statement_budget(base, budget)
     request = {"warehouse_id": _warehouse(base), "statement": sql,
                "wait_timeout": "50s", "on_wait_timeout": "CONTINUE",
                "disposition": "INLINE"}
@@ -104,8 +139,9 @@ def statement(root: Path, base: Path, sql: str, *, timeout: int = 300) -> dict:
     return response
 
 
-def scalar(root: Path, base: Path, sql: str, *, timeout: int = 300) -> tuple[str, str]:
-    result = statement(root, base, sql, timeout=timeout)
+def scalar(root: Path, base: Path, sql: str, *, timeout: int = 300,
+           budget: dict | None = None) -> tuple[str, str]:
+    result = statement(root, base, sql, timeout=timeout, budget=budget)
     values = result.get("result", {}).get("data_array", [])
     if len(values) != 1 or len(values[0]) != 1:
         raise Denied("VAULT_SCALAR_READBACK_INVALID")

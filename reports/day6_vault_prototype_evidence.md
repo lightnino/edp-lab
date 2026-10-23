@@ -45,3 +45,7 @@ The [owner installation packet](../docs/vault_0a_install_v1.md) and repository i
 Status remains `DAY6_STEP2_PARTIAL` / `PROTOTYPE_BLOCKED_WRITE_AUTHORIZATION`. `VAULT_0A_INFRA_OPERATIONAL` and `VAULT_PROTOTYPE_VALIDATED` are **not achieved**. Step 0 remains `WAITING_C2000_RESULT_FREEZE`; Step 3 remains `BLOCKED_BY_STEP0_AND_STEP2`. The original contract remains byte-for-byte unchanged.
 
 The continuation regression run completed with **574 full-suite tests passed / 82 skipped in 88.39 seconds**. After one additional readback-boolean normalization test, **13 focused Vault 0A tests passed** and **Ruff passed**. These remain local tests; protected installation and warehouse negative controls have not run.
+
+## Owner priority revision — Step 2 execution paused
+
+The owner paused C1500 prototype execution while retaining the frozen sample, one-time exception, load plan, projection and all prior evidence. The former C1500-specific installer and client now fail closed. [Reusable Vault 0A V2](../docs/vault_0a_reusable_v2.md) is the current infrastructure work. Its unsigned policy has no C1500 row/sample pin or November 1 expiry. No protected V2 deployment, eligibility receipt, live grant, Delta load or readback has occurred. The C1500 Step 2 status is **`PAUSED_BY_OWNER_PRIORITY_REVISION`**, not cancelled or validated. The approved Vault Contract V1 remains unchanged.

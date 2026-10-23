@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import re
 from collections import OrderedDict
 from collections.abc import Iterable
 
@@ -76,9 +77,12 @@ def _unique(rows: list[dict], key: str, names: tuple[str, ...]) -> list[tuple[st
     return list(values.values())
 
 
-def render(rows: list[dict]) -> dict:
+def render(rows: list[dict], *, required_size: int | None = 127,
+           include_events: bool = True, include_negatives: bool = True,
+           negative_execution_id: str = "day6-vault-proto-c1500-negative-v1") -> dict:
     """Prepare all business-table DML for the previously pinned 127-row sample."""
-    if len(rows) != 127 or len({r["occurrence_hk"] for r in rows}) != 127:
+    if (not rows or (required_size is not None and len(rows) != required_size)
+            or len({r["occurrence_hk"] for r in rows}) != len(rows)):
         raise ValueError("PINNED_SAMPLE_SIZE_OR_OCCURRENCE_CHANGED")
     stages = []
 
@@ -124,8 +128,9 @@ def render(rows: list[dict]) -> dict:
         ((r["occurrence_hk"], "9", r["m2_source_rule_version"], r["m2_model_version"],
           r["m2_rule_version"], r["value_lexical"], r["m2_decimal"],
           r["m2_outcome"], r["m2_reason"]) for r in rows), decimal="value_decimal")
-    for event_kind, execution_id in (("ADMITTED", "day6-vault-proto-c1500-first-v1"),
-                                      ("REPLAY", "day6-vault-proto-c1500-replay-v1")):
+    events = (("ADMITTED", "day6-vault-proto-c1500-first-v1"),
+              ("REPLAY", "day6-vault-proto-c1500-replay-v1")) if include_events else ()
+    for event_kind, execution_id in events:
         add("r_load_event", ("occurrence_hk", "execution_id"),
             ("occurrence_hk", "execution_id", "event_kind", "statement_id",
              "input_manifest_sha256"),
@@ -146,19 +151,55 @@ def render(rows: list[dict]) -> dict:
         payload = json.dumps({"original_occurrence_hk": first["occurrence_hk"],
                               "mutation": mutation, "original_fields_json": first["fields_json"]},
                              sort_keys=True, separators=(",", ":"))
-        negative.append((identity, "day6-vault-proto-c1500-negative-v1", reason,
+        negative.append((identity, negative_execution_id, reason,
                          "Controlled synthetic mutation; reject promotion", first["source_instance_id"],
                          first["archive_member"], first["member_sha256"],
                          str(first["byte_offset"]), str(first["byte_length"]),
                          str(first["source_line"]), first["raw_sha256"],
                          first["binding_sha256"], payload, "true"))
-    add("vault_reject_quarantine", ("input_identity", "execution_id"),
-        ("input_identity", "execution_id", "reason_code", "reason_detail",
-         "source_instance_id", "archive_member", "member_sha256", "byte_offset",
-         "byte_length", "source_line", "raw_sha256", "binding_sha256", "input_json",
-         "synthetic_negative_control"), negative,
-        stamp="rejected_dts", stage_id="synthetic-negative-quarantine")
+    if include_negatives:
+        add("vault_reject_quarantine", ("input_identity", "execution_id"),
+            ("input_identity", "execution_id", "reason_code", "reason_detail",
+             "source_instance_id", "archive_member", "member_sha256", "byte_offset",
+             "byte_length", "source_line", "raw_sha256", "binding_sha256", "input_json",
+             "synthetic_negative_control"), negative,
+            stamp="rejected_dts", stage_id="synthetic-negative-quarantine")
     payload = json.dumps(stages, sort_keys=True, ensure_ascii=False, separators=(",", ":")).encode()
     return {"schema": "DAY6_VAULT_BOUNDED_LOAD_PLAN_V1", "namespace": NAMESPACE,
             "data_occurrences": len(rows), "stages_sha256": hashlib.sha256(payload).hexdigest(),
             "stages": stages}
+
+
+def render_v2(rows: list[dict], *, cohort_id: str, input_manifest_sha256: str,
+              expected_table_counts: dict[str, int],
+              synthetic_negatives: bool = False) -> dict:
+    """Render an eligible cohort plan; audit events are generated per run."""
+    if (re.fullmatch(r"[A-Za-z0-9_.:-]{1,120}", cohort_id) is None
+            or re.fullmatch(r"[0-9a-f]{64}", input_manifest_sha256) is None
+            or not 1 <= len(rows) <= 1000
+            or set(expected_table_counts) != set(TABLES)
+            or any(not isinstance(count, int) or count < 0
+                   for count in expected_table_counts.values())):
+        raise ValueError("VAULT_V2_PLAN_SCOPE_INVALID")
+    negative_execution_id = f"vault-negative-{cohort_id}"
+    base = render(rows, required_size=None, include_events=False,
+                  include_negatives=synthetic_negatives,
+                  negative_execution_id=negative_execution_id)
+    from edp_lab.vault.protected_readback import COLS, _expected
+
+    expected = _expected(rows, include_events=False,
+                         include_negatives=synthetic_negatives,
+                         negative_execution_id=negative_execution_id)
+    stages = [{**stage, "expected_rows": expected_table_counts[stage["table"].split(".")[-1]]}
+              for stage in base["stages"]]
+    if any(len(stage["statement"].encode()) > 600_000
+           or len(stage["precheck"].encode()) > 600_000 for stage in stages):
+        raise ValueError("VAULT_V2_SQL_SIZE_BOUND_EXCEEDED")
+    return {"schema": "EDP_VAULT_LOAD_PLAN_V2", "cohort_id": cohort_id,
+            "namespace": NAMESPACE, "input_manifest_sha256": input_manifest_sha256,
+            "data_occurrences": len(rows),
+            "synthetic_rows": len(expected["vault_reject_quarantine"]),
+            "stages": stages,
+            "expected_tables": {name: {"columns": list(COLS[name]),
+                                        "rows": [list(row) for row in expected[name]]}
+                                for name in TABLES}}

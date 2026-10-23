@@ -48,7 +48,10 @@ COLS = {
 }
 
 
-def _expected(rows: list[dict]) -> dict[str, list[tuple[str | None, ...]]]:
+def _expected(rows: list[dict], *, include_events: bool = True,
+              include_negatives: bool = True,
+              negative_execution_id: str = "day6-vault-proto-c1500-negative-v1"
+              ) -> dict[str, list[tuple[str | None, ...]]]:
     filing = {(r["filing_hk"], "SEC_FSDS", r["adsh"]) for r in rows}
     concept = {(r["concept_hk"], "SEC_FSDS", r["tag"], r["version"]) for r in rows}
     slot = {(r["fact_slot_hk"], r["filing_hk"], r["concept_hk"], r["context_json"])
@@ -65,7 +68,7 @@ def _expected(rows: list[dict]) -> dict[str, list[tuple[str | None, ...]]]:
                "366ca59ac251fa54d0a2c97ebdd8f9cacbcf773231c61aa20a504196a3cf31dc")
               for kind, execution in (("ADMITTED", "day6-vault-proto-c1500-first-v1"),
                                       ("REPLAY", "day6-vault-proto-c1500-replay-v1"))
-              for r in rows]
+              for r in rows] if include_events else []
     first = rows[0]
     negatives = []
     for reason, mutation in (
@@ -81,7 +84,7 @@ def _expected(rows: list[dict]) -> dict[str, list[tuple[str | None, ...]]]:
                                  "original_fields_json": first["fields_json"]},
                                 sort_keys=True, separators=(",", ":"))
         negatives.append(("SYNTHETIC_NEGATIVE_" + reason,
-                          "day6-vault-proto-c1500-negative-v1", reason,
+                          negative_execution_id, reason,
                           "Controlled synthetic mutation; reject promotion",
                           first["source_instance_id"], first["archive_member"],
                           first["member_sha256"], str(first["byte_offset"]),
@@ -91,7 +94,8 @@ def _expected(rows: list[dict]) -> dict[str, list[tuple[str | None, ...]]]:
     return {"h_filing": list(filing), "h_concept": list(concept),
             "l_fact_slot": list(slot), "r_source_occurrence": occurrence,
             "s_fact_assertion": assertion, "s_num_m2_value": m2,
-            "r_load_event": events, "vault_reject_quarantine": negatives}
+            "r_load_event": events,
+            "vault_reject_quarantine": negatives if include_negatives else []}
 
 
 def _normalized(values: list[list]) -> Counter:
