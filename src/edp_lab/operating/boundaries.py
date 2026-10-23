@@ -62,10 +62,10 @@ def databricks_write(root: Path, grant: dict, request: dict, ledger: Path,
     # SELECT/WITH. A pinned request is still not a general SQL execution grant.
     import re
 
-    no_header = re.sub(r"\\A(?:--[^\\n]*\\n\\s*)*", "", sql)
+    no_header = re.sub(r"\A(?:--[^\n]*\n\s*)*", "", sql)
     match = re.match(
-        r"\\ACREATE\\s+(TABLE|VIEW)\\s+([A-Za-z_][\\w]*\\.[A-Za-z_][\\w]*"
-        r"\\.[A-Za-z_][\\w]*)\\s+(.*)\\Z",
+        r"\ACREATE\s+(TABLE|VIEW)\s+([A-Za-z_][\w]*\.[A-Za-z_][\w]*"
+        r"\.[A-Za-z_][\w]*)\s+(.*)\Z",
         no_header, flags=re.IGNORECASE | re.DOTALL,
     )
     if match is None or ";" in no_header.rstrip(";"):
@@ -75,11 +75,11 @@ def databricks_write(root: Path, grant: dict, request: dict, ledger: Path,
             or target.lower() != request["databricks_table"].lower()):
         raise Denied("TABLE_NOT_IN_STATEMENT")
     if (kind.upper() == "TABLE" and not re.match(
-            r"USING\\s+DELTA\\s+AS\\s+(SELECT|WITH)\\b", remainder, re.IGNORECASE)
+            r"USING\s+DELTA\s+AS\s+(SELECT|WITH)\b", remainder, re.IGNORECASE)
             or kind.upper() == "VIEW" and not re.match(
-                r"AS\\s+(SELECT|WITH)\\b", remainder, re.IGNORECASE)):
+                r"AS\s+(SELECT|WITH)\b", remainder, re.IGNORECASE)):
         raise Denied("NON_EXCLUSIVE_WRITE")
-    if re.search(r"\\b(OR\\s+REPLACE|IF\\s+NOT\\s+EXISTS)\\b", no_header, re.IGNORECASE):
+    if re.search(r"\b(OR\s+REPLACE|IF\s+NOT\s+EXISTS)\b", no_header, re.IGNORECASE):
         raise Denied("NON_EXCLUSIVE_WRITE")
     if not execute:
         return {"status": "AUTHORIZED_DRY_RUN"}
