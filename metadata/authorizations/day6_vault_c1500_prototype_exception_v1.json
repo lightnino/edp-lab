@@ -1,0 +1,20 @@
+{
+  "authorization_id": "DAY6_VAULT_C1500_PROTOTYPE_EXCEPTION_V1",
+  "authority": "requesting owner, direct Day 6 Step 2 correction on 2026-10-24",
+  "date_sgt": "2026-10-24",
+  "decision": "Execute the isolated, bounded Day 6 Step 2 Vault prototype using Frozen C1500 while Day 5 and Day 6 Step 0 remain pending.",
+  "approved_semantics": "VAULT_LOAD_CONTRACT_V1 D1-D5 unchanged",
+  "contract_path": "docs/vault_load_contract_v1.md",
+  "contract_sha256_before": "681c3f6a9a4446b5357c3ab6c6534e6fd5b8cf944f967ea9ab27dcc2c8b5aabe",
+  "cohort_freeze": "metadata/freezes/C1500_v1/freeze.json",
+  "result_freeze": "metadata/freezes/O_C1500_M2_v1/databricks_result_freeze_v2.json",
+  "write_boundary": "Independently permitted isolated Databricks Dev Schema only, after applicable controlled-write authorization is verified",
+  "exclusions": [
+    "Contract V1 amendment",
+    "Day 6 Step 0 completion",
+    "Day 6 Step 3 C2000 full Vault integration",
+    "write access to Day 5 or frozen historical resources",
+    "general bypass for future runs"
+  ],
+  "agent_generated_signature": null
+}
