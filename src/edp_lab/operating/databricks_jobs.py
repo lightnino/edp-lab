@@ -16,6 +16,8 @@ from pathlib import Path
 from edp_lab.operating.authority import (
     Denied,
     authorize,
+    canonical,
+    digest,
     file_digest,
     load_grant,
     protected_trust_dir,
@@ -193,3 +195,63 @@ def databricks_job_submit(root: Path, grant: dict, request: dict, ledger: Path,
         outcome = {"status": "UNCERTAIN_REQUIRES_READBACK"}
     record.write_text(json.dumps(outcome, sort_keys=True) + "\n")
     return outcome
+
+
+def inspect_submitted_job(root: Path, grant: dict, request: dict,
+                          ledger: Path) -> dict:
+    """Independent read-only Databricks Jobs terminal check.
+
+    Returns UNSIGNED receipt content. Only a separately protected verifier may
+    sign it with the owner-trusted key after completing its own checks.
+    """
+    if request.get("operation") != "databricks_job_submit":
+        raise Denied("WRONG_BOUNDARY")
+    authorize(grant, request, root=root.resolve())
+    record_path = ledger / (request["operation_id"] + ".json")
+    if ledger.resolve().is_relative_to(root.resolve()):
+        raise Denied("LEDGER_MUST_BE_OUTSIDE_WORKTREE")
+    record = json.loads(record_path.read_bytes())
+    if record.get("status") != "SUBMITTED_REQUIRES_READBACK":
+        raise Denied("JOB_NOT_SUBMITTED_OR_UNCERTAIN")
+    run_id = record.get("run_id")
+    if type(run_id) is not int or run_id <= 0:
+        raise Denied("JOB_RUN_ID_NOT_PINNED")
+    expected = digest(canonical(request))
+    if record.get("request_sha256") not in (None, expected):
+        raise Denied("JOB_REQUEST_LEDGER_MISMATCH")
+    payload_path = _tracked(root.resolve(), request["submission_path"])
+    if file_digest(payload_path) != grant["contracts"][request["submission_contract"]]["sha256"]:
+        raise Denied("JOB_SUBMISSION_CHANGED")
+    submission = json.loads(payload_path.read_bytes())
+    raw = _cli("jobs", "get-run", str(run_id), "-o", "json",
+               timeout=min(grant["limits"]["runtime_seconds"], 1800))
+    try:
+        live = json.loads(raw)
+    except ValueError as exc:
+        raise Denied("JOB_READBACK_INVALID") from exc
+    state = live.get("state", {})
+    if live.get("run_id") != run_id:
+        raise Denied("JOB_RUN_ID_CHANGED")
+    tasks = live.get("tasks", [])
+    expected_task = submission["tasks"][0]
+    if (not isinstance(tasks, list) or len(tasks) != 1
+            or tasks[0].get("task_key") != expected_task["task_key"]
+            or tasks[0].get("notebook_task", {}).get("notebook_path") !=
+            expected_task["notebook_task"]["notebook_path"]):
+        raise Denied("JOB_REMOTE_TASK_CHANGED")
+    if state.get("life_cycle_state") != "TERMINATED":
+        raise Denied("JOB_NOT_TERMINAL")
+    if state.get("result_state") != "SUCCESS":
+        raise Denied("JOB_TERMINAL_FAILURE")
+    return {
+        "schema": "EDP_EXTERNAL_OPERATION_RECEIPT_V1",
+        "operation_id": request["operation_id"],
+        "request_sha256": expected,
+        "status": "VERIFIED",
+        "live_readback": True,
+        "external_service": "DATABRICKS_JOBS",
+        "terminal_state": "SUCCESS",
+        "job_run_id": run_id,
+        "remote_response_sha256": digest(raw),
+        "signature_status": "UNSIGNED_REQUIRES_PROTECTED_VERIFIER",
+    }
