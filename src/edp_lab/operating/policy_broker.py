@@ -28,6 +28,7 @@ from edp_lab.operating.authority import (
 from edp_lab.operating.raw_ownership import (
     require_cohort_operation_readonly,
     require_cohort_readonly,
+    verify_u10_raw_handoff,
 )
 
 
@@ -53,6 +54,10 @@ def evaluate(root: Path, queue_path: Path, policy_path: Path, trust: Path) -> di
         raise Denied("INVALID_LIVE_QUEUE")
     # A legacy broad 0A policy cannot grant RAW mutation to a Cohort.
     require_cohort_readonly(queue)
+    if policy.get("require_verified_raw_handoff") is True:
+        verify_u10_raw_handoff(root, queue, trust)
+    elif policy.get("require_verified_raw_handoff") not in (None, False):
+        raise Denied("INVALID_RAW_HANDOFF_POLICY")
     if not re.fullmatch(policy["cohort_pattern"], queue["cohort"]):
         raise Denied("COHORT_OUT_OF_SCOPE")
     if queue.get("route") not in policy["routes"]:
