@@ -7,9 +7,7 @@ only resumes the Runner after the independent verifier signs live readback.
 import argparse
 import json
 import os
-import re
 import time
-from datetime import UTC, datetime
 from pathlib import Path
 
 from edp_lab.operating.authority import Denied, file_digest, load_grant
@@ -21,39 +19,15 @@ from edp_lab.operating.policy_broker import request as request_grant
 from edp_lab.operating.protected_recovery import recover_pre_submission_raw
 from edp_lab.operating.protected_verifier import attest_cohort, attest_raw, attest_sql
 from edp_lab.operating.runner import run
+from edp_lab.operating.supervisor_health import persist_health
 
 
 
-# R4 state is a protected sidecar; it never changes the signed Runner checkpoint.
-# The only public detail is a tightly normalized error class, not exception text.
+# The status/heartbeat is advisory; it cannot change the signed Runner
+# checkpoint, protected ledger or independently verified external receipt.
 def _persist_supervisor_state(state_dir: Path, code: str, *, blocked: bool) -> dict:
-    state_dir = state_dir.resolve(strict=True)
-    if state_dir.is_symlink() or not state_dir.is_dir():
-        raise Denied("SUPERVISOR_STATE_DIR_INVALID")
-    safe_code = code if re.fullmatch(r"[A-Z][A-Z0-9_]{0,79}", code) else "UNCLASSIFIED_DENIAL"
-    record = {
-        "schema": "EDP_SUPERVISOR_STATUS_V1",
-        "status": "PAUSED_WITH_DECISION_PACKET" if blocked else "COMPLETE",
-        "reason_code": safe_code,
-        "replay_authorized": False,
-        "updated_at_utc": datetime.now(UTC).isoformat(),
-    }
-    dest = state_dir / "supervisor_status.json"
-    if dest.is_symlink():
-        raise Denied("SUPERVISOR_STATUS_SYMLINK")
-    tmp = state_dir / (".supervisor_status." + str(os.getpid()) + ".tmp")
-    fd = os.open(tmp, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW, 0o600)
-    try:
-        with os.fdopen(fd, "w") as out:
-            json.dump(record, out, sort_keys=True)
-            out.write("\n")
-            out.flush()
-            os.fsync(out.fileno())
-        os.replace(tmp, dest)
-    finally:
-        if tmp.exists():
-            tmp.unlink()
-    return record
+    return persist_health(state_dir, "PAUSED_WITH_DECISION_PACKET" if blocked
+                          else "COMPLETE", code)
 
 
 def supervise(root: Path, queue: Path, state_dir: Path, trust: Path, socket: Path,
@@ -79,11 +53,14 @@ def supervise(root: Path, queue: Path, state_dir: Path, trust: Path, socket: Pat
     if checkpoint.exists():
         recover_pre_submission_raw(root, queue, grant_path, checkpoint, trust,
                                    verifier_key)
+    persist_health(state_dir, "RUNNING", "SUPERVISOR_STARTED")
     queue_sha = file_digest(queue)
     tasks = json.loads(queue.read_bytes())["tasks"]
     pending_started = None
     while True:
+        persist_health(state_dir, "RUNNING", "SUPERVISOR_POLLING")
         state = run(root, queue, grant_path, state_dir, pause_at_receipt_barrier=True)
+        persist_health(state_dir, "RUNNING", "SUPERVISOR_CHECKPOINT_OBSERVED")
         if state["queue_sha256"] != queue_sha:
             raise Denied("SUPERVISOR_QUEUE_CHANGED")
         if state["summary"]["accepted"]:
@@ -138,13 +115,14 @@ def supervise(root: Path, queue: Path, state_dir: Path, trust: Path, socket: Pat
             if transient:
                 if time.monotonic() - pending_started > task["runtime_seconds"]:
                     raise Denied("SQL_READBACK_HARD_LIMIT_EXHAUSTED") from exc
+                persist_health(state_dir, "RUNNING", "SUPERVISOR_REMOTE_PENDING")
                 time.sleep(interval)
                 continue
             raise
         pending_started = None
 
 
-def main() -> None:
+def main() -> int:
     parser = argparse.ArgumentParser()
     for name in ("root", "queue", "state_dir", "trust", "socket", "verifier_key"):
         parser.add_argument(name, type=Path)
@@ -153,17 +131,23 @@ def main() -> None:
         summary = supervise(args.root, args.queue, args.state_dir, args.trust,
                             args.socket, args.verifier_key)
     except Denied as exc:
-        # Nontransient verifier denials must survive supervisor process exit.
-        # Never call Runner again or modify an uncertain operation ledger here.
+        # Denial is blocked with a nonzero service exit, never success/COMPLETE.
+        # Preserve original uncertain operation and signed Runner checkpoint.
         state = _persist_supervisor_state(args.state_dir, str(exc), blocked=True)
         print(json.dumps(state, sort_keys=True))
-        return
-    # A normal return may itself be a failed or incomplete Runner outcome.
+        return 2
+    except Exception:
+        # No exception strings, stderr/credentials or remote payloads exposed.
+        state = _persist_supervisor_state(
+            args.state_dir, "SUPERVISOR_UNEXPECTED_ERROR", blocked=True)
+        print(json.dumps(state, sort_keys=True))
+        return 2
     accepted = bool(summary.get("accepted"))
-    reason = "SUPERVISOR_ACCEPTED" if accepted else "SUPERVISOR_INCOMPLETE"
-    _persist_supervisor_state(args.state_dir, reason, blocked=not accepted)
+    code = "SUPERVISOR_ACCEPTED" if accepted else "SUPERVISOR_INCOMPLETE"
+    _persist_supervisor_state(args.state_dir, code, blocked=not accepted)
     print(json.dumps(summary, sort_keys=True))
+    return 0 if accepted else 2
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())
