@@ -17,10 +17,6 @@ import tempfile
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
-from edp_lab.operating.raw_ownership import (
-    require_cohort_operation_readonly,
-    require_cohort_readonly,
-)
 from edp_lab.operating.authority import (
     Denied,
     canonical,
@@ -28,6 +24,10 @@ from edp_lab.operating.authority import (
     file_digest,
     load_grant,
     verified_document,
+)
+from edp_lab.operating.raw_ownership import (
+    require_cohort_operation_readonly,
+    require_cohort_readonly,
 )
 
 
