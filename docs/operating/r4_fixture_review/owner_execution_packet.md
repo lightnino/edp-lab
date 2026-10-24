@@ -104,10 +104,12 @@ sudo /bin/launchctl bootstrap system /Library/LaunchDaemons/org.edp-lab.r4-watch
 sudo /bin/launchctl bootstrap system /Library/LaunchDaemons/org.edp-lab.r4-worker-fixture.plist
 ```
 
-The worker service starts only when the Owner uses `launchctl kickstart`
-for `system/org.edp-lab.r4-worker-fixture`; its nonzero fixture exit exercises
-the configured 30-second backoff. The Watchdog has an independent 30-second
-schedule. Do not leave the restart fixture running after the bounded test.
+Treat `launchctl bootstrap` of the worker plist as **activation**: launchd may
+start a `KeepAlive` job immediately even with `RunAtLoad=false`. Its nonzero
+fixture exit exercises the configured 30-second backoff. `kickstart` is an
+explicit additional trigger, not a safety gate. The Watchdog has an
+independent 30-second schedule. Do not leave the restart fixture running
+after the bounded test.
 The exact observation and shutdown commands are:
 
 ```sh
