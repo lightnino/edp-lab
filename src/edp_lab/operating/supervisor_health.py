@@ -69,8 +69,11 @@ def _progress(checkpoint_path: Path) -> tuple[str | None, int | None, str | None
         return None, None, None, None
     if checkpoint_path.is_symlink() or not checkpoint_path.is_file():
         raise Denied("SUPERVISOR_CHECKPOINT_INVALID")
-    data = _read_private(checkpoint_path)
-    if data is None or not isinstance(data.get("tasks"), dict):
+    try:
+        data = json.loads(checkpoint_path.read_bytes())
+    except (OSError, ValueError) as exc:
+        raise Denied("SUPERVISOR_CHECKPOINT_INVALID") from exc
+    if not isinstance(data, dict) or not isinstance(data.get("tasks"), dict):
         raise Denied("SUPERVISOR_CHECKPOINT_INVALID")
     tasks = data["tasks"]
     statuses = {k: {"status": v.get("status"), "attempts": v.get("attempts"),
