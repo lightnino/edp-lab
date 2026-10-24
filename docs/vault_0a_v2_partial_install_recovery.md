@@ -1,5 +1,33 @@
 # Vault 0A V2 partial-install recovery
 
+## Current checkpoint: after secret, before warehouse
+
+The owner completed the single OAuth secret request. Secret metadata count is
+one; the root-owned `private/databrickscfg`, matching identity file, refreshed
+runtime and original runtime backup exist. The earlier recovery stopped at
+`_warehouse_v2()` without retaining CLI stderr. Do not run the original
+installer or the earlier `owner_recover_vault_0a_v2.py` command again.
+
+Read-only checks on 2026-10-24 found no `EDP Vault Dev V2` warehouse. The
+installed Databricks CLI v1.21.0 accepts the warehouse creation flags used by
+the installer. Workspace warehouse configuration enables serverless compute
+and PRO warehouses. Those checks do not establish why the earlier create
+failed; the original CLI stderr is unavailable.
+
+`scripts/owner_resume_vault_0a_v2.py` is limited to this exact checkpoint. It
+checks the reviewed commit and unchanged policy hash; the root-owned protected
+config, identity and runtime backup; one secret metadata entry; exact principal
+and active workspace assignment; working credentials without printing them;
+and target warehouse and schema absence. It checks warehouse absence again
+immediately before one creation call. CLI errors are bounded and redacted.
+An error or timeout stops with no automatic retry. A successful creation uses
+the existing installation functions for schema, tables, grants, signed policy,
+services, negative checks and signed receipt. The owner reviews the committed
+code and runs the exact pinned command supplied with that review. Protected
+execution has not occurred.
+
+## Historical pre-secret checkpoint
+
 On 2026-10-24 the owner installer stopped at its first OAuth secret request,
 after creating service principal `72304318628585` and the protected Vault root.
 The original installer must not be run again. The owner later supplied the
@@ -47,7 +75,9 @@ runtime code inside the existing protected root and keeps the original code
 tree as `edp_lab-original-d841204`. This ensures the eventual protected
 services enforce the reviewed C2000 artifact pins without recreating the root.
 
-Run only from the owner terminal as root, after reviewing the recovery commit
+The following historical command applied only before the secret was created;
+it must not be run at the current checkpoint. It ran from the owner terminal
+as root after reviewing the recovery commit
 and confirming the Databricks profile is authenticated. Supply the commit SHA
 of that reviewed recovery commit and the unchanged policy hash:
 

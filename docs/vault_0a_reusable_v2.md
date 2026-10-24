@@ -1,6 +1,6 @@
 # Reusable Vault Dev 0A V2 — installation and authority packet
 
-**Status: partial installation at OAuth secret creation; live verification pending.** The existing service principal and protected root are handled by the [bounded owner recovery](vault_0a_v2_partial_install_recovery.md). The C1500 exception is `WITHDRAWN_UNEXERCISED`; its prior read-only [evidence](../reports/day6_vault_prototype_evidence.md) remains historical. The C2000 Step 2 preparation is in [the rebaseline packet](vault_c2000_rebaseline_v1.md). The approved [Vault Contract V1](vault_load_contract_v1.md) and all Day 5 services remain unchanged.
+**Status: partial installation after OAuth secret creation, before warehouse creation; live verification pending.** The existing service principal and protected root are handled by the [bounded owner recovery](vault_0a_v2_partial_install_recovery.md). The C1500 exception is `WITHDRAWN_UNEXERCISED`; its prior read-only [evidence](../reports/day6_vault_prototype_evidence.md) remains historical. The C2000 Step 2 preparation is in [the rebaseline packet](vault_c2000_rebaseline_v1.md). The approved [Vault Contract V1](vault_load_contract_v1.md) and all Day 5 services remain unchanged.
 
 ## Separation of concerns
 

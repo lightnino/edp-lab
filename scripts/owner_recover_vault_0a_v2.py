@@ -199,6 +199,11 @@ def main() -> None:
     if any(item.get("name") == WAREHOUSE_NAME for item in candidates):
         raise RuntimeError("VAULT_WAREHOUSE_ALREADY_EXISTS_NO_DUPLICATE")
     warehouse = _warehouse_v2(APPLICATION_ID)
+    complete_after_warehouse(policy, warehouse)
+
+
+def complete_after_warehouse(policy: dict, warehouse: str) -> None:
+    """Finish the existing one-time installation after warehouse creation."""
     _absent_schema()
     ddl_ids = _schema_and_tables(APPLICATION_ID)
     _verify_service_principal_boundaries(APPLICATION_ID)
