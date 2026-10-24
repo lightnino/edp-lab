@@ -1,0 +1,10 @@
+{
+  "schema": "EDP_R4_NO_WRITE_FIXTURE_QUEUE_V1",
+  "tasks": [
+    {
+      "id": "fixture-noop",
+      "kind": "noop"
+    }
+  ],
+  "external_operations": []
+}

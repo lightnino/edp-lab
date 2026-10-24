@@ -1,0 +1,13 @@
+{
+  "schema": "EDP_WATCHDOG_INSTALL_V1",
+  "state_dir": "/private/var/db/edp-lab-r4-fixture-20261024/state",
+  "heartbeat_seconds": 10,
+  "progress_seconds": 20,
+  "alert_argv": [
+    "/usr/bin/mail",
+    "-s",
+    "EDP R4 fixture alert",
+    "chengzhu13@gmail.com"
+  ],
+  "operator_id": "Owner"
+}

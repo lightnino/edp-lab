@@ -19,6 +19,14 @@ from edp_lab.operating.policy_broker import request as request_grant
 from edp_lab.operating.protected_recovery import recover_pre_submission_raw
 from edp_lab.operating.protected_verifier import attest_cohort, attest_raw, attest_sql
 from edp_lab.operating.runner import run
+from edp_lab.operating.supervisor_health import persist_health
+
+
+# The status/heartbeat is advisory; it cannot change the signed Runner
+# checkpoint, protected ledger or independently verified external receipt.
+def _persist_supervisor_state(state_dir: Path, code: str, *, blocked: bool) -> dict:
+    return persist_health(state_dir, "PAUSED_WITH_DECISION_PACKET" if blocked
+                          else "COMPLETE", code)
 
 
 def supervise(root: Path, queue: Path, state_dir: Path, trust: Path, socket: Path,
@@ -44,11 +52,14 @@ def supervise(root: Path, queue: Path, state_dir: Path, trust: Path, socket: Pat
     if checkpoint.exists():
         recover_pre_submission_raw(root, queue, grant_path, checkpoint, trust,
                                    verifier_key)
+    persist_health(state_dir, "RUNNING", "SUPERVISOR_STARTED")
     queue_sha = file_digest(queue)
     tasks = json.loads(queue.read_bytes())["tasks"]
     pending_started = None
     while True:
+        persist_health(state_dir, "RUNNING", "SUPERVISOR_POLLING")
         state = run(root, queue, grant_path, state_dir, pause_at_receipt_barrier=True)
+        persist_health(state_dir, "RUNNING", "SUPERVISOR_CHECKPOINT_OBSERVED")
         if state["queue_sha256"] != queue_sha:
             raise Denied("SUPERVISOR_QUEUE_CHANGED")
         if state["summary"]["accepted"]:
@@ -103,20 +114,39 @@ def supervise(root: Path, queue: Path, state_dir: Path, trust: Path, socket: Pat
             if transient:
                 if time.monotonic() - pending_started > task["runtime_seconds"]:
                     raise Denied("SQL_READBACK_HARD_LIMIT_EXHAUSTED") from exc
+                persist_health(state_dir, "RUNNING", "SUPERVISOR_REMOTE_PENDING")
                 time.sleep(interval)
                 continue
             raise
         pending_started = None
 
 
-def main() -> None:
+def main() -> int:
     parser = argparse.ArgumentParser()
     for name in ("root", "queue", "state_dir", "trust", "socket", "verifier_key"):
         parser.add_argument(name, type=Path)
     args = parser.parse_args()
-    print(json.dumps(supervise(args.root, args.queue, args.state_dir, args.trust,
-                               args.socket, args.verifier_key), sort_keys=True))
+    try:
+        summary = supervise(args.root, args.queue, args.state_dir, args.trust,
+                            args.socket, args.verifier_key)
+    except Denied as exc:
+        # Denial is blocked with a nonzero service exit, never success/COMPLETE.
+        # Preserve original uncertain operation and signed Runner checkpoint.
+        state = _persist_supervisor_state(args.state_dir, str(exc), blocked=True)
+        print(json.dumps(state, sort_keys=True))
+        return 2
+    except Exception:  # noqa: BLE001 - a protected service must persist unexpected crashes
+        # No exception strings, stderr/credentials or remote payloads exposed.
+        state = _persist_supervisor_state(
+            args.state_dir, "SUPERVISOR_UNEXPECTED_ERROR", blocked=True)
+        print(json.dumps(state, sort_keys=True))
+        return 2
+    accepted = bool(summary.get("accepted"))
+    code = "SUPERVISOR_ACCEPTED" if accepted else "SUPERVISOR_INCOMPLETE"
+    _persist_supervisor_state(args.state_dir, code, blocked=not accepted)
+    print(json.dumps(summary, sort_keys=True))
+    return 0 if accepted else 2
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

@@ -230,3 +230,95 @@ The historical Day 2/C3021 RAW staging vs Day 5 actual N500 reuse allegation is 
 After this report's review/merge, run a separate **read-only forensic audit**, against the exact original C3021 inventory and selected Day 5 N500, prior-to-first-Day-5-upload receipt timestamps and remote version/audit evidence. Produce the requested 500-row matrix with historical-presence and Day-5-action as **separate axes**, plus verified duplicate/new/unresolved counts and evidence references. Distinguish historical specification from PR #62's later prospective requirement. Do **not** infer duplicate physical RAW staging from cohort-prefixed directories or missing legacy receipts; do **not** mutate Databricks, the final freeze or protected ledgers. A distinct corrective implementation/negative-tests PR, if the audit demonstrates it, must enforce Acquisition RAW-write vs Cohort RAW-read permissions and avoid unresolved→missing fallthrough. **Do not fold RAW forensic conclusions or an executor rewrite into PR #63.**
 
 **Incident reporting disposition (updated 2026-10-24):** Day 5 execution, this specific P11 recovery, and P14 are closed, with signed evidence. **R7 is CLOSED by PR #65**. **R4 liveness/diagnostic hardening and R8 installed preflight regressions remain OPEN**. PR #63 may be merged as a completed factual postmortem while those clearly labeled corrective actions are delivered in separately reviewed PRs; it must not be described as a complete runtime reliability fix.
+
+## 13. PR #66 acceptance preparation (2026-10-24)
+
+PR #66 adds R4 blocked-state/liveness diagnostics, an independently scheduled
+Watchdog candidate, and R8 read-only UC PRESENT/ABSENT preflight. The
+[acceptance packet](../../operating/r4_r8_protected_acceptance_packet_20261024.md)
+records offline tests, local installed-CLI response hashes, a disposable
+protected fixture plan and remaining owner-controlled gates. The original
+P11 incident, signed recovery, 513/513 completed Day 5 checkpoint and P13/P14
+result remain historical facts; they were not rerun or revised.
+
+**R4 remains OPEN / protected-live BLOCKED:** no owner-approved Watchdog
+installation, separate launchd restart/backoff evidence, protected fixture
+test, or actual designated-operator alert receipt yet. **R8 remains OPEN /
+protected Owner-terminal BLOCKED:** the local installed CLI read-only PRESENT
+smoke passed, but owner-protected profile/identity, raw response retention and
+negative-format capture have not yet been independently accepted. The later
+PR #62 prospective RAW authorization split remains a specification, not proof
+of deployment. PR #61 is separate and untouched. No PR #66 merge is implied.
+
+The R4 status above was recorded before the protected fixture execution; the
+later observed disposition is in §13.2.
+
+### 13.1 Bounded fixture approval and remaining final execution gate
+
+The Owner subsequently approved preparing an isolated root-owned R4 no-write
+fixture and protected read-only R8 preflight, with an explicit final review of
+paths, commands, service configuration and notification route before any
+privileged installation. The [exact execution review packet](../../operating/r4_fixture_review/owner_execution_packet.md)
+is prepared on PR #66. The proposed `/usr/bin/mail` command and Owner email
+destination have **not** been approved for activation or used. No root-owned
+fixture, launchd job or protected R8 response store has been installed yet.
+R4 and R8 therefore remain OPEN/BLOCKED for protected-live acceptance; the
+completed historical Day 5 result is unchanged.
+
+### 13.2 Protected fixture result and remaining acceptance (2026-10-24)
+
+The Owner reports that the bounded R4 protected fixture executed successfully.
+The Watchdog detected `SUPERVISOR_BLOCKED` with
+`replay_authorized=false`; the fixture Queue and Ledger hashes were unchanged
+before and after. Both fixture launchd services were stopped at closeout. The
+mail command succeeded, but inbox delivery was not independently verified.
+These are the reported protected fixture findings; no further fixture or
+notification test is planned under PR #66.
+
+**Implemented and tested in PR #66:** R4 blocked-state persistence, Watchdog,
+read-only status and their offline tests; the bounded protected fixture
+demonstrated blocked detection without replay or Queue/Ledger mutation. R8
+read-only CLI preflight and offline parser tests are implemented; the local
+installed-CLI PRESENT smoke passed for its user session. These results do not
+establish future production monitoring or protected R8 acceptance.
+
+**OPEN protected acceptance:** independent designated-operator inbox delivery
+for the R4 notifier is unverified, so R4 is not fully accepted. The R8
+protected profile uses databricks-cli OAuth; whether authentication can run
+without refreshing or modifying credentials is unverified. Protected R8
+preflight, response retention and credential non-mutation acceptance therefore
+remain OPEN. Do not run further protected CLI tests or modify credentials.
+PR #66 is prepared for Owner review and remains unmerged pending explicit
+approval. The completed Day 5 result and separate Day 6 scope are unchanged.
+
+
+## 14. Current post-Day-5 controls and separate follow-ups (2026-10-24)
+
+This section records the *current* disposition of related work without conflating
+the historical P11 SQL incident, the independent C3021 RAW-staging audit, and
+future architectural work. Historical statements in §§1–12 reflect what was
+known on those dates and are not silently rewritten.
+
+| Scope | Evidence / owning work | Current disposition |
+| --- | --- | --- |
+| Approved Source Universe and Day 5 N500 admission | Approved Universe v1, exact C1500 baseline, selected N500, signed Day 5 P6 cohort evidence and [PR #64](https://github.com/lightnino/edp-lab/pull/64) | **COMPLETE FOR DAY 5**; source approval is not itself a RAW upload/replay authorization |
+| Autonomous standing 0A broker / policy | [PR #59](https://github.com/lightnino/edp-lab/pull/59), signed grant and protected-policy architecture used by the eventual accepted Day 5 execution | **IMPLEMENTED / USED FOR DAY 5**; does not imply every future Acquisition-specific delegation is installed |
+| Original P11 uncertain SQL write and targeted recovery | §§9–11 above; original ledger preserved, distinct owner-signed disposition and new operation receipt, 513/513 task closeout, P13 freeze, P14 [PR #64](https://github.com/lightnino/edp-lab/pull/64) | **CLOSED FOR THE ORIGINAL INCIDENT/OPERATION**; no historical SQL replay |
+| R7 Recovery Decision Matrix and Operating Guide | [PR #65](https://github.com/lightnino/edp-lab/pull/65) | **MERGED / CLOSED** |
+| R4 Supervisor blocked-state, liveness, Watchdog and delivery | [PR #66](https://github.com/lightnino/edp-lab/pull/66), owner-reviewed [execution packet](../../operating/r4_fixture_review/owner_execution_packet.md), §13.2 | **OPEN**. Bounded protected fixture detected `SUPERVISOR_BLOCKED` without replay or Queue/Ledger change; mail command succeeded, but inbox delivery and production monitoring acceptance are unverified |
+| R8 installed CLI Profile/Identity, UC response formats and retained evidence | Same [PR #66](https://github.com/lightnino/edp-lab/pull/66), §13.2 | **OPEN**. Local installed-CLI smoke passed; protected profile uses OAuth and non-refreshing authentication is unverified. Protected response retention and credential non-mutation are not accepted |
+| C3021 historical RAW staging vs Day 5 N500 reuse | Independent read-only investigation archived in [PR #70](https://github.com/lightnino/edp-lab/pull/70) and the [canonical audit incident](https://github.com/lightnino/edp-lab/blob/66924976798af429c9d3537f2d2128372a2db10a/docs/incidents/2026-10-24-c3021-n500-raw-staging/incident.md) | **AUDIT RECORD MERGED**. 500 new-destination Day 5 uploads observed; no N500 preexisting copies demonstrated in inspected evidence; redundant transfer neither established nor ruled out |
+| Single-owner Acquisition RAW staging / Cohort RAW-read-only contract | [PR #62](https://github.com/lightnino/edp-lab/pull/62) | **WORKFLOW SPECIFICATION MERGED**, not a claim of deployed runtime isolation |
+| Closed-loop Acquisition delegation, verified U10 handoff and same-checkpoint Cohort resume | [Issue #72](https://github.com/lightnino/edp-lab/issues/72); partial [PR #71](https://github.com/lightnino/edp-lab/pull/71) **CLOSED UNMERGED** | **OPEN — FUTURE ENGINEERING**. Blocking Cohort RAW writes alone did not automatically invoke Acquisition or resume a Cohort; retain prior `main` runtime while implementation remains incomplete |
+
+**Boundary:** The C3021 historical audit and Issue #72 are *linked independent
+workstreams*, not additional proven root causes of the original P11 SQL
+submission failure. Preserve the existing signed Day 5 Queue, approved
+P13/P14 freeze, ledger and recovery receipts. Day 6 [PR #61](https://github.com/lightnino/edp-lab/pull/61)
+is independent and is not an authorization to change its active runtime.
+
+**Next decision on PR #66:** Owner review of its final head and CI checks.
+Keep R4 notifier delivery and R8 protected acceptance OPEN until independent
+evidence resolves them. The bounded disposable fixture does not establish a
+permanently monitored production Supervisor. Do not merge without explicit
+Owner approval.
