@@ -147,6 +147,13 @@ def raw_stage(root: Path, grant: dict, request: dict, ledger: Path,
     """Stage one immutable RAW source and read back its exact remote bytes."""
     if request["operation"] != "raw_stage":
         raise Denied("WRONG_BOUNDARY")
+    # No Cohort-issued or broker-issued V1 grant can authorize a RAW write,
+    # even when a stale historical grant still lists this operation. This
+    # low-level adapter is reserved for a separately owner-signed Acquisition
+    # principal, reached only via acquisition_executor, not the Cohort Runner.
+    if (grant.get("authority") != "owner-acquisition-v1"
+            or grant.get("cohort") != "ACQUISITION"):
+        raise Denied("RAW_STAGE_ACQUISITION_ONLY")
     if ledger.resolve().is_relative_to(root.resolve()):
         raise Denied("LEDGER_MUST_BE_OUTSIDE_WORKTREE")
     if execute:
