@@ -158,7 +158,10 @@ def main() -> None:
         state = _persist_supervisor_state(args.state_dir, str(exc), blocked=True)
         print(json.dumps(state, sort_keys=True))
         return
-    _persist_supervisor_state(args.state_dir, "SUPERVISOR_RETURNED", blocked=False)
+    # A normal return may itself be a failed or incomplete Runner outcome.
+    accepted = bool(summary.get("accepted"))
+    reason = "SUPERVISOR_ACCEPTED" if accepted else "SUPERVISOR_INCOMPLETE"
+    _persist_supervisor_state(args.state_dir, reason, blocked=not accepted)
     print(json.dumps(summary, sort_keys=True))
 
 
