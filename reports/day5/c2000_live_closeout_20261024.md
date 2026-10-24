@@ -1,4 +1,6 @@
-# Day 5 C2000 live result and P14 review packet
+# Day 5 C2000 live result and P14 closeout evidence
+
+**Final status (verified 2026-10-24):** P13 SIGNED LIVE RESULT FREEZE; P14 HUMAN-APPROVED AND MERGED via [PR #64](https://github.com/lightnino/edp-lab/pull/64) at main commit `12874dd2aa581a80086afa24a3d21a0a1aa6f3e4`. This is historical execution evidence, not a reusable operating rule or authority to replay SQL.
 
 ## Accepted run and P11 recovery
 
@@ -74,8 +76,4 @@ remote evidence for P13.
 
 ## P14 decision
 
-P13 is source-preserving `PASS` in the bounded approved scope. P14 requires
-review of the scoped PR, required green CI, and explicit human merge approval.
-The PR must not be merged from an agent-only decision. Day 6 PR #61 and Incident
-PR #63 are separate. Incident #63 may cite the confirmed signed P11 recovery
-receipts above at its eventual closeout; it is not changed here.
+P13 is source-preserving `PASS` in the bounded approved scope. The owner reviewed and approved P14; the required merge was completed and independently verified at `12874dd2aa581a80086afa24a3d21a0a1aa6f3e4` ([PR #64](https://github.com/lightnino/edp-lab/pull/64)). The separate [SQL recovery incident](../../docs/incidents/2026-10-23-c2000-p11-sql/incident.md) was reported in PR #63 and its R7 documentation action was closed in PR #65. R4/R8 remain tracked separately. No historical signed result or P11 operation is rewritten.
