@@ -2,7 +2,7 @@
 
 Enterprise Data Platform learning lab. **Authoritative entry points:** [Agent Rules & Routing](AGENTS.md), [Document Ownership Registry](docs/README.md), [Lifecycle Specifications](docs/workflows/README.md), [Canonical Contracts](docs/contracts/README.md), and [Incident Register](docs/incidents/README.md). Current approvals and accepted freezes must be verified against exact `metadata/authorizations/`, `metadata/freezes/` and protected live receipts; historical day/PR narratives do not substitute for this evidence.
 
-The experimental platform preserves RAW → CLEAN → QUERYABLE provenance, Lossless/Stability evidence and independently gated source, semantic, execution and merge authority. Source Identity, GOLD_V2 registration, snapshot-scoped Parsing/Profiling Freeze V2 and Governance Policy are approved. The five deterministic profiling functions are implemented and verified on GOLD_V2. See [profiling completion evidence](docs/preflight_exit_checklist.md).
+The platform explores reproducible RAW → CLEAN → QUERYABLE processing, Lossless/Stability evidence, bounded agent autonomy, and separately governed data, semantic, execution and merge authority. See the canonical registries above for **current** rules; source-specific milestones and historical benchmark evidence remain in their original records.
 
 ## Setup (macOS/Linux)
 
