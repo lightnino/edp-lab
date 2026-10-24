@@ -1,6 +1,6 @@
 # Agent Operating Guide V1 — Shared Operational Procedures
 
-**Status:** Prospective procedural companion to the [binding cross-lifecycle Operating Contract](../workflows/agent_operating_contract_v1.md). Covers Acquisition/Universe, Cohort/Model, and Validation/Freeze. This Guide grants no permissions, deploys no credentials and does not replace the independently installed protected 0A policy. For historical execution detail consult the original signed receipts/incidents, not this reusable Guide.
+**Status:** Owner-reviewed shared procedural guide, merged in [PR #65](https://github.com/lightnino/edp-lab/pull/65); prospective deployment obligations remain separate. Companion to the [binding cross-lifecycle Operating Contract](../workflows/agent_operating_contract_v1.md). Covers Acquisition/Universe, Cohort/Model, and Validation/Freeze. This Guide grants no permissions, deploys no credentials and does not replace the independently installed protected 0A policy. For historical execution detail consult the original signed receipts/incidents, not this reusable Guide.
 
 ## Before starting a run
 
