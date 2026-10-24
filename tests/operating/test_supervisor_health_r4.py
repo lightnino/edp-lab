@@ -11,7 +11,6 @@ from edp_lab.operating import checkpoint_supervisor
 from edp_lab.operating.authority import Denied
 from edp_lab.operating.supervisor_health import persist_health, watchdog
 
-
 EPOCH = datetime(2026, 10, 24, 10, 0, tzinfo=UTC)
 
 
