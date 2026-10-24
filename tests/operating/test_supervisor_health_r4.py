@@ -7,8 +7,8 @@ from pathlib import Path
 
 import pytest
 
-from edp_lab.operating.authority import Denied
 from edp_lab.operating import checkpoint_supervisor
+from edp_lab.operating.authority import Denied
 from edp_lab.operating.supervisor_health import persist_health, watchdog
 
 
