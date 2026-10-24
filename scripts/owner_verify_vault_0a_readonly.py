@@ -7,6 +7,7 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+import stat
 import subprocess
 import tarfile
 from io import BytesIO
@@ -27,6 +28,18 @@ PROPOSAL_SHA256 = "7200b417a3321580147c8d135eef99868c5fb79dbe78ae236f54266240fa3
 def require(condition: bool, code: str) -> None:
     if not condition:
         raise RuntimeError(code)
+
+
+def executor_negative_probe(base: Path, impossible: Path) -> dict:
+    lock = base / "ledger/namespace.lock"
+    try:
+        metadata = lock.lstat()
+    except FileNotFoundError:
+        raise RuntimeError("NAMESPACE_LOCK_MISSING_OR_INVALID") from None
+    require(stat.S_ISREG(metadata.st_mode) and metadata.st_uid == 0,
+            "NAMESPACE_LOCK_MISSING_OR_INVALID")
+    return _rpc(base / "executor.sock",
+                {"action": "execute", "grant_path": str(impossible)})
 
 
 def runtime_matches_commit() -> int:
@@ -91,8 +104,7 @@ def main() -> None:
     impossible = Path("/private/var/db/edp-lab-day6-vault/never-issued-acceptance-grant.json")
     require(not impossible.exists(), "NEGATIVE_GRANT_PATH_EXISTS")
     broker = _rpc(BASE / "broker.sock", {"action": "unauthorized", "run_path": "x"})
-    executor = _rpc(BASE / "executor.sock",
-                    {"action": "execute", "grant_path": str(impossible)})
+    executor = executor_negative_probe(BASE, impossible)
     after = (sorted(p.name for p in grants_dir.iterdir()),
              sorted(p.name for p in ledger_dir.iterdir()))
     require(broker.get("status") == executor.get("status") == "DENIED"
