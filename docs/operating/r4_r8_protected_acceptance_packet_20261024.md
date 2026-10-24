@@ -40,14 +40,13 @@ source files, checkpoint, ledger, Queue and external operation counts before
 and after; the count must remain zero for this fixture. Any automatic SQL
 replay or protected-state mutation fails acceptance.
 
-**Current gate:** R4 offline tests PASS. Protected-host installation,
-independent schedule, actual operator alert and launchd restart/backoff are
-**BLOCKED pending final Owner execution approval and execution**. The Owner
-approved the bounded disposable-fixture scope, then required exact paths,
-commands, service configuration and notification route before installation.
-The [review packet](r4_fixture_review/owner_execution_packet.md) supplies
-those artifacts. The fixture notifier test sends to a disposable local inbox
-only; it is not delivery to the designated operator.
+**Updated protected fixture finding (2026-10-24):** The Owner reports successful
+bounded fixture execution: Watchdog detected `SUPERVISOR_BLOCKED`, reported
+`replay_authorized=false`, and fixture Queue/Ledger hashes were unchanged.
+Both fixture launchd services were stopped. The mail command succeeded;
+independent inbox delivery was not verified. The [review packet](r4_fixture_review/owner_execution_packet.md)
+records the pre-execution plan. The R4 notifier acceptance item stays OPEN;
+this fixture does not establish future production monitoring acceptance.
 
 ## R8 installed-CLI evidence and limits
 
@@ -83,18 +82,22 @@ presence, authentication failure, mismatched identity, pagination and
 incomplete history. The current local CLI smoke is **PASS for read-only
 connectivity and PRESENT format**. The actual protected Owner-terminal
 identity/profile, owner-controlled raw response retention and protected
-negative-response capture remain **BLOCKED pending owner execution**. Empty
-history and target absence never imply `NO_REMOTE_EFFECT` or authorize a write.
+negative-response capture remain **OPEN**. The protected profile uses
+databricks-cli OAuth, and non-refreshing authentication is unverified. No
+further protected CLI test or credential change is authorized by this
+closeout. Empty history and target absence never imply `NO_REMOTE_EFFECT` or
+authorize a write.
 
 ## Acceptance decisions
 
 | Gate | Current state |
 | --- | --- |
 | R4 offline deterministic/process fixtures | PASS |
-| R4 protected schedule, restart/backoff, permissions, actual operator alert | BLOCKED — owner installation and evidence required |
+| R4 bounded protected fixture | PASS for reported blocked detection, no replay, unchanged Queue/Ledger hashes, and stopped fixture services |
+| R4 designated-operator notifier delivery and production deployment acceptance | OPEN — mail command succeeded; inbox delivery unverified |
 | R8 offline parser and negative formats | PASS |
 | R8 local installed CLI read-only PRESENT smoke | PASS — scoped to this user session/profile |
-| R8 protected Owner-terminal preflight and protected raw response retention | BLOCKED — owner execution required |
-| Incident R4/R8 overall closure | BLOCKED |
+| R8 protected Owner-terminal preflight and protected raw response retention | OPEN — OAuth non-refreshing behavior unverified; no further protected CLI test |
+| Incident R4/R8 overall closure | OPEN |
 
 No PR #66 merge or historical recovery operation is authorized by this packet.
