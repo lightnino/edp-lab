@@ -6,7 +6,7 @@
 | --- | --- | --- |
 | Day 3 / N450 → C750 | [Day 3 / C750](day3-c750/README.md) | [Cohort/Model Lifecycle](../workflows/cohort_model_lifecycle_v1.md) and [Validation/Freeze](../workflows/validation_freeze_lifecycle_v1.md) |
 | Day 4 / N750 → C1500 | [Day 4 / C1500](day4-c1500/README.md) | Same Lifecycle/Validation rules; approved source/model changes remain separately scoped |
-| Day 5 / C3021 → N500 RAW staging audit | [Execution, audit and resolution](day5-c2000/c3021_n500_raw_staging_audit_20261024.md) | Historical forensic record; [PR #59](https://github.com/lightnino/edp-lab/pull/59) implements standing 0A authorization, while [PR #62](https://github.com/lightnino/edp-lab/pull/62) defines prospective Acquisition-only RAW staging / Cohort read-only handoff |
+| Day 5 / C3021 → N500 RAW staging audit | [OPEN engineering incident, original evidence retained](../incidents/2026-10-24-c3021-n500-raw-staging/incident.md) | Historical RAW-staging facts preserved; [PR #62](https://github.com/lightnino/edp-lab/pull/62) defines the prospective RAW ownership contract; automatic Acquisition handoff and Cohort resume remain OPEN in [Issue #72](https://github.com/lightnino/edp-lab/issues/72) |
 
 **Migration classification:**
 - **MOVED:** Only evidence files with no located live Day 6 PR #61 dependency or pinned owner-decision/freeze path, with inbound links checked and repaired.
