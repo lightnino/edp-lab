@@ -8,6 +8,7 @@ Only cross-lifecycle or reusable execution mechanisms belong in this folder. No 
 | [Standing Policy V1](standing_policy_v1.md) | 0A/P5 broker/grant mechanics; actual installed signed policy and protected service override illustrative instructions |
 | [Databricks Adapter Integration V1](databricks_adapter_integration_v1.md) | General guarded Jobs/SQL adapter interface and readback safety; earlier milestone claims are historical |
 | [Cohort DAG Pilot Implementation V1](cohort_dag_pilot_implementation_v1.md) | General DAG compilation/stage evidence boundaries; not automatically full current runtime coverage |
+| [R4 + R8 Supervisor Hardening](supervisor_runtime_hardening_r4_r8.md) | **Implementation/acceptance proposal** for independent liveness, alerts and live CLI preflight; NOT installed or live-verified |
 
 **Authority owner:** [Agent Operating Contract V1](../workflows/agent_operating_contract_v1.md). Lifecycle ordering and independent acceptance are owned by [Workflow Specifications](../workflows/README.md).
 
