@@ -21,7 +21,13 @@ from edp_lab.vault.broker_v2 import (
     load_run_grant,
 )
 from edp_lab.vault.protected_sql import _cli, scalar, statement
-from edp_lab.vault.standing_v2 import NAMESPACE, TABLES, authorize_stage, validate_standing_policy
+from edp_lab.vault.standing_v2 import (
+    NAMESPACE,
+    TABLES,
+    authorize_stage,
+    pinned_path,
+    validate_standing_policy,
+)
 
 
 def _budget(grant: dict) -> dict:
@@ -117,7 +123,7 @@ def _execute_locked(root: Path, base: Path, grant_path: Path) -> dict:
             or grant["input_manifest_sha256"] != receipt["input_manifest_sha256"]
             or grant["load_plan_sha256"] != receipt["load_plan_sha256"]):
         raise Denied("VAULT_COHORT_GRANT_DRIFT")
-    plan_path = root / receipt["load_plan"]["path"]
+    plan_path = pinned_path(root, receipt["load_plan"]["path"], base)
     if file_digest(plan_path) != grant["load_plan_sha256"]:
         raise Denied("VAULT_LOAD_PLAN_CHANGED")
     plan = json.loads(plan_path.read_bytes())

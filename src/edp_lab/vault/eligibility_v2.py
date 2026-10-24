@@ -69,7 +69,7 @@ def register(root: Path, base: Path, cohort_id: str) -> Path:
     if file_digest(prior_path) != approval.get("independent_freeze_receipt_sha256"):
         raise Denied("VAULT_INDEPENDENT_FREEZE_RECEIPT_CHANGED")
     receipt = receipt_from_owner_approval(policy, approval)
-    validate_cohort_receipt(policy, receipt, root)
+    validate_cohort_receipt(policy, receipt, root, protected_base=base)
     output = base / "eligibility" / (cohort_id + ".signed.json")
     if output.exists():
         raise Denied("VAULT_COHORT_ELIGIBILITY_ALREADY_INSTALLED")

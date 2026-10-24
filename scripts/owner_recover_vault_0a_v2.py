@@ -9,6 +9,8 @@ import argparse
 import json
 import os
 import subprocess
+import tarfile
+from io import BytesIO
 from pathlib import Path
 
 from owner_setup_day6_vault_0a import ADMIN_USER, BASE, HOST, ROOT, admin_cli, digest, run
@@ -134,7 +136,8 @@ def _create_single_secret() -> None:
         raise RuntimeError("VAULT_WORKSPACE_ASSIGNMENT_REQUIRED")
     cmd = ["/usr/bin/sudo", "-n", "-u", ADMIN_USER, "-H",
            "/opt/homebrew/bin/databricks", "service-principal-secrets-proxy", "create",
-           PRINCIPAL_ID, "--lifetime", "604800", "-p", "edp-lab", "-o", "json"]
+           PRINCIPAL_ID, "--json", '{"lifetime":"604800s"}',
+           "-p", "edp-lab", "-o", "json"]
     result = subprocess.run(cmd, capture_output=True, text=True, timeout=120, check=False)
     if result.returncode:
         # Databricks CLI errors contain endpoint details, not the OAuth value.
@@ -156,12 +159,38 @@ def _create_single_secret() -> None:
         stream.write("\n")
 
 
+def _refresh_protected_runtime() -> None:
+    """Stage reviewed HEAD code while retaining the original runtime tree."""
+    original = BASE / "runtime/src/edp_lab"
+    prior = BASE / "runtime/src/edp_lab-original-d841204"
+    staged = BASE / "runtime-next"
+    if prior.exists() or staged.exists() or not original.is_dir():
+        raise RuntimeError("VAULT_RUNTIME_REFRESH_CHECKPOINT_CHANGED")
+    archive = subprocess.run(
+        ["/usr/bin/git", "-c", f"safe.directory={ROOT}", "-C", str(ROOT),
+         "archive", "HEAD", "src/edp_lab"], capture_output=True, check=True, timeout=60)
+    staged.mkdir(mode=0o700)
+    with tarfile.open(fileobj=BytesIO(archive.stdout), mode="r:") as tar:
+        tar.extractall(staged, filter="data")
+    incoming = staged / "src/edp_lab"
+    if not (incoming / "vault/standing_v2.py").is_file():
+        raise RuntimeError("VAULT_REVIEWED_RUNTIME_MISSING")
+    for path in staged.rglob("*"):
+        if path.is_file():
+            path.chmod(path.stat().st_mode & ~0o022)
+    original.rename(prior)
+    incoming.rename(original)
+    (staged / "src").rmdir()
+    staged.rmdir()
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("expected_recovery_commit")
     parser.add_argument("expected_policy_sha256")
     args = parser.parse_args()
     policy = preflight(args.expected_recovery_commit, args.expected_policy_sha256)
+    _refresh_protected_runtime()
     _create_single_secret()
     # Each later operation is guarded by the checkpoint above. A failure after
     # this point stops without automatic replay or duplicate remote creation.

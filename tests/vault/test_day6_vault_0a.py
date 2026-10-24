@@ -10,31 +10,18 @@ from pathlib import Path
 import pytest
 
 from edp_lab.operating.authority import Denied
-from edp_lab.vault.load_plan import NAMESPACE, TABLES, render, render_v2
-from edp_lab.vault.protected_readback import _expected, _normalized
+from edp_lab.vault.load_plan import NAMESPACE, TABLES, render_v2
+from edp_lab.vault.protected_readback import _normalized
 from edp_lab.vault.protected_sql import _reserve_statement_budget
 from edp_lab.vault.raw_verify import verify_selected
-from edp_lab.vault.standing_authority import signed_policy, validate_policy
+from edp_lab.vault.standing_authority import signed_policy
 
 ROOT = Path(__file__).resolve().parents[2]
-PROPOSAL = json.loads((ROOT / "metadata/operating/day6_vault_dev_policy_proposal_v1.json").read_text())
-
-
-@pytest.mark.parametrize("change", [
-    {"namespace": "workspace.edp_lab"},
-    {"source_ids": ["SRC000005", "SRC000054", "SRC000065"]},
-    {"tables": [*PROPOSAL["tables"], "day5_table"]},
-    {"max_data_occurrences": 1000},
-    {"max_sql_statements": 10000},
-    {"day5_resources_allowed": True},
-    {"c2000_integration_allowed": True},
-    {"requires_independent_readback_receipts": False},
-])
-def test_policy_scope_expansion_denied_before_file_access(change):
-    policy = {**PROPOSAL, **change}
-    with pytest.raises(Denied, match="VAULT_POLICY_SCOPE_CHANGED"):
-        validate_policy(ROOT, policy, ROOT / "missing-sample", ROOT / "missing-projection",
-                        ROOT / "missing-plan")
+def test_withdrawn_c1500_has_no_active_authorization():
+    assert not (ROOT / "metadata/authorizations/day6_vault_c1500_prototype_exception_v1.json").exists()
+    assert not (ROOT / "metadata/operating/day6_vault_dev_policy_proposal_v1.json").exists()
+    assert json.loads((ROOT / "metadata/operating/day6_vault_step2_pause_v1.json").read_text())[
+        "status"] == "WITHDRAWN_UNEXERCISED"
 
 
 def projected_rows():
@@ -60,29 +47,6 @@ def projected_rows():
              "byte_offset": 10 + i * 20, "source_line": i + 2} for i in range(127)]
 
 
-def test_plan_is_fixed_target_insert_only_and_utf8_lossless():
-    rows = projected_rows()
-    plan = render(rows)
-    assert len(plan["stages"]) == 9
-    assert plan == render(copy.deepcopy(rows))
-    assert {stage["table"].split(".")[-1] for stage in plan["stages"]} == set(
-        PROPOSAL["tables"])
-    for stage in plan["stages"]:
-        assert stage["statement"].startswith("MERGE INTO " + NAMESPACE)
-        assert "WHEN NOT MATCHED THEN INSERT" in stage["statement"]
-        assert "WHEN MATCHED THEN" not in stage["statement"]
-        assert "<=>" in stage["precheck"]
-        assert "quote ' and UTF-8 雪" not in stage["statement"]
-    assert "71756f7465202720616e64205554462d3820e99baa" in plan["stages"][4]["statement"]
-    with pytest.raises(ValueError, match="PINNED_SAMPLE_SIZE"):
-        render(rows[:-1])
-    expected = _expected(rows)
-    assert len(expected["r_source_occurrence"]) == 127
-    assert len(expected["s_fact_assertion"]) == 127
-    assert len(expected["r_load_event"]) == 254
-    assert len(expected["vault_reject_quarantine"]) == 6
-
-
 def test_v2_renderer_uses_synthetic_rows_without_local_manifests():
     rows = projected_rows()
     counts = {name: 0 for name in TABLES}
@@ -96,6 +60,9 @@ def test_v2_renderer_uses_synthetic_rows_without_local_manifests():
     assert plan["synthetic_rows"] == 6
     assert plan["expected_tables"]["r_load_event"]["rows"] == []
     assert all(stage["table"] != f"{NAMESPACE}.r_load_event" for stage in plan["stages"])
+    assert all(stage["statement"].startswith("MERGE INTO " + NAMESPACE)
+               and "WHEN NOT MATCHED THEN INSERT" in stage["statement"]
+               and "WHEN MATCHED THEN" not in stage["statement"] for stage in plan["stages"])
 
 
 def test_protected_raw_verifier_checks_every_selected_locator(tmp_path):

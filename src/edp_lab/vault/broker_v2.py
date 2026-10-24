@@ -22,6 +22,7 @@ from edp_lab.vault.standing_v2 import (
     TABLES,
     authorize_stage,
     grant_for_run,
+    pinned_path,
     validate_cohort_receipt,
     validate_run,
     validate_standing_policy,
@@ -55,7 +56,7 @@ def _eligibility(root: Path, base: Path, cohort_id: str, policy: dict) -> dict:
     if path.stat().st_uid != 0 or path.stat().st_mode & 0o022:
         raise Denied("VAULT_COHORT_RECEIPT_UNPROTECTED")
     receipt = verified_document(root, path, base / "trust")
-    validate_cohort_receipt(policy, receipt, root)
+    validate_cohort_receipt(policy, receipt, root, protected_base=base)
     return receipt
 
 
@@ -71,10 +72,10 @@ def _run_file(root: Path, relative: str) -> dict:
     return json.loads(resolved.read_bytes())
 
 
-def _plan(root: Path, receipt: dict, run: dict) -> None:
+def _plan(root: Path, base: Path, receipt: dict, run: dict) -> None:
     """Check every SQL stage against the independently signed plan pin."""
     relative = receipt["load_plan"]["path"]
-    plan = json.loads((root / relative).read_bytes())
+    plan = json.loads(pinned_path(root, relative, base).read_bytes())
     if (plan.get("schema") != "EDP_VAULT_LOAD_PLAN_V2"
             or plan.get("cohort_id") != run["cohort_id"]
             or plan.get("input_manifest_sha256") != run["input_manifest_sha256"]
@@ -187,7 +188,7 @@ def issue(root: Path, base: Path, run_relative: str) -> Path:
     run = _run_file(root, run_relative)
     receipt = _eligibility(root, base, run["cohort_id"], policy)
     validate_run(policy, receipt, run)
-    _plan(root, receipt, run)
+    _plan(root, base, receipt, run)
     grant = grant_for_run(policy, receipt, run)
     grant["grant_id"] += "-" + uuid.uuid4().hex
     key = base / "private/broker.pem"

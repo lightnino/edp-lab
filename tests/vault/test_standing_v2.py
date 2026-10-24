@@ -32,6 +32,7 @@ from edp_lab.vault.standing_v2 import (
     TABLES,
     authorize_stage,
     grant_for_run,
+    pinned_path,
     validate_cohort_receipt,
     validate_run,
     validate_standing_policy,
@@ -140,6 +141,13 @@ def test_full_integration_requires_owner_policy_expansion(tmp_path):
     receipt["workload_kind"] = "FULL_INTEGRATION"
     with pytest.raises(Denied, match="VAULT_COHORT_RECEIPT_SCOPE_INVALID"):
         validate_cohort_receipt(POLICY, receipt, tmp_path, now=NOW)
+
+
+@pytest.mark.parametrize("name", ["protected:../plan.json", "protected:/plan.json",
+                                        "protected:plan/other.json", "protected:plan.txt"])
+def test_protected_artifact_path_rejects_escape_or_wrong_type(tmp_path, name):
+    with pytest.raises(Denied, match="VAULT_PROTECTED_ARTIFACT_PATH_INVALID"):
+        pinned_path(tmp_path, name, tmp_path / "protected")
 
 
 def test_run_drift_and_budget_denied(tmp_path):

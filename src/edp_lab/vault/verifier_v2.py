@@ -10,7 +10,7 @@ from edp_lab.operating.authority import Denied, canonical, digest, file_digest, 
 from edp_lab.vault.broker_v2 import _eligibility, _protected, _signed, load_run_grant
 from edp_lab.vault.protected_readback import COLS, _normalized, _sign
 from edp_lab.vault.protected_sql import _cli, statement
-from edp_lab.vault.standing_v2 import NAMESPACE, TABLES, validate_standing_policy
+from edp_lab.vault.standing_v2 import NAMESPACE, TABLES, pinned_path, validate_standing_policy
 
 KEYS = {
     "h_filing": ("filing_hk",),
@@ -74,7 +74,7 @@ def attest(root: Path, base: Path, grant_path: Path) -> dict:
     validate_standing_policy(policy, root=root)
     grant = load_run_grant(root, base, grant_path)
     receipt = _eligibility(root, base, grant["cohort_id"], policy)
-    plan_path = root / receipt["load_plan"]["path"]
+    plan_path = pinned_path(root, receipt["load_plan"]["path"], base)
     if file_digest(plan_path) != grant["load_plan_sha256"]:
         raise Denied("VAULT_VERIFIER_PLAN_CHANGED")
     plan = json.loads(plan_path.read_bytes())

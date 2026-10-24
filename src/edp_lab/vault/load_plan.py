@@ -190,6 +190,8 @@ def render_v2(rows: list[dict], *, cohort_id: str, input_manifest_sha256: str,
     expected = _expected(rows, include_events=False,
                          include_negatives=synthetic_negatives,
                          negative_execution_id=negative_execution_id)
+    if {name: len(values) for name, values in expected.items()} != expected_table_counts:
+        raise ValueError("VAULT_V2_EXPECTED_TABLE_COUNTS_CHANGED")
     stages = [{**stage, "expected_rows": expected_table_counts[stage["table"].split(".")[-1]]}
               for stage in base["stages"]]
     if any(len(stage["statement"].encode()) > 600_000
@@ -201,5 +203,7 @@ def render_v2(rows: list[dict], *, cohort_id: str, input_manifest_sha256: str,
             "synthetic_rows": len(expected["vault_reject_quarantine"]),
             "stages": stages,
             "expected_tables": {name: {"columns": list(COLS[name]),
-                                        "rows": [list(row) for row in expected[name]]}
+                                        "rows": [list(row) for row in sorted(
+                                            expected[name], key=lambda row: json.dumps(
+                                                row, ensure_ascii=False, sort_keys=True))]}
                                 for name in TABLES}}

@@ -23,7 +23,8 @@ def main() -> None:
     config = BASE / "private/databrickscfg"
     old_hash = hashlib.sha256(config.read_bytes()).hexdigest()
     response = admin_cli("service-principal-secrets-proxy", "create",
-                         identity["service_principal_id"], "--lifetime", "604800")
+                         identity["service_principal_id"],
+                         "--json", '{"lifetime":"604800s"}')
     secret = response["secret"]
     from owner_setup_day6_vault_0a import HOST
 

@@ -45,6 +45,31 @@ def _sha(value: object) -> bool:
     return isinstance(value, str) and SHA.fullmatch(value) is not None
 
 
+def pinned_path(root: Path, relative: str, protected_base: Path | None = None) -> Path:
+    """Resolve a receipt pin from Git or the owner-controlled artifact store."""
+    if relative.startswith("protected:"):
+        name = relative.removeprefix("protected:")
+        if protected_base is None or re.fullmatch(r"[A-Za-z0-9_.-]+\.json", name) is None:
+            raise Denied("VAULT_PROTECTED_ARTIFACT_PATH_INVALID")
+        folder = protected_base / "artifacts"
+        path = folder / name
+        if (folder.is_symlink() or path.is_symlink()
+                or folder.stat().st_uid != 0 or folder.stat().st_mode & 0o022
+                or path.stat().st_uid != 0 or path.stat().st_mode & 0o022):
+            raise Denied("VAULT_PROTECTED_ARTIFACT_UNPROTECTED")
+        resolved = path.resolve(strict=True)
+        if resolved.parent != folder.resolve(strict=True):
+            raise Denied("VAULT_PROTECTED_ARTIFACT_PATH_INVALID")
+        return resolved
+    path = Path(relative)
+    if path.is_absolute() or ".." in path.parts:
+        raise Denied("VAULT_COHORT_PIN_OUTSIDE_REPOSITORY")
+    resolved = (root / path).resolve(strict=True)
+    if not resolved.is_relative_to(root.resolve()):
+        raise Denied("VAULT_COHORT_PIN_OUTSIDE_REPOSITORY")
+    return resolved
+
+
 def validate_standing_policy(policy: dict, *, now: datetime | None = None,
                              root: Path | None = None) -> None:
     """Check only durable infrastructure bounds; no cohort or sample pins."""
@@ -107,7 +132,8 @@ def validate_standing_policy(policy: dict, *, now: datetime | None = None,
 
 
 def validate_cohort_receipt(policy: dict, receipt: dict, root: Path,
-                            *, now: datetime | None = None) -> None:
+                            *, now: datetime | None = None,
+                            protected_base: Path | None = None) -> None:
     """Consume a separately signed, independently verified cohort receipt."""
     validate_standing_policy(policy, now=now, root=root)
     if (receipt.get("schema") != "EDP_VAULT_COHORT_ELIGIBILITY_V1"
@@ -137,11 +163,10 @@ def validate_cohort_receipt(policy: dict, receipt: dict, root: Path,
         item = receipt.get(name)
         if not isinstance(item, dict) or set(item) != {"path", "sha256"} or not _sha(item["sha256"]):
             raise Denied("VAULT_COHORT_PIN_INVALID")
-        relative = Path(item["path"])
-        if relative.is_absolute() or ".." in relative.parts:
-            raise Denied("VAULT_COHORT_PIN_OUTSIDE_REPOSITORY")
-        path = (root / relative).resolve(strict=True)
-        if not path.is_relative_to(root.resolve()) or file_digest(path) != item["sha256"]:
+        if item["path"].startswith("protected:") and name not in {"input_manifest", "load_plan"}:
+            raise Denied("VAULT_PROTECTED_ARTIFACT_KIND_INVALID")
+        path = pinned_path(root, item["path"], protected_base)
+        if file_digest(path) != item["sha256"]:
             raise Denied("VAULT_COHORT_PIN_CHANGED")
     if (receipt["input_manifest"]["sha256"] != receipt["input_manifest_sha256"]
             or receipt["load_plan"]["sha256"] != receipt["load_plan_sha256"]):

@@ -1,6 +1,6 @@
 # Reusable Vault Dev 0A V2 — installation and authority packet
 
-**Status: partial installation at OAuth secret creation; live verification pending.** The existing service principal and protected root are handled by the [bounded owner recovery](vault_0a_v2_partial_install_recovery.md). The owner has resumed independent C1500 Step 2 work while preserving its [exception](../metadata/authorizations/day6_vault_c1500_prototype_exception_v1.json), sample and [evidence](../reports/day6_vault_prototype_evidence.md). The approved [Vault Contract V1](vault_load_contract_v1.md) and all Day 5 services remain unchanged.
+**Status: partial installation at OAuth secret creation; live verification pending.** The existing service principal and protected root are handled by the [bounded owner recovery](vault_0a_v2_partial_install_recovery.md). The C1500 exception is `WITHDRAWN_UNEXERCISED`; its prior read-only [evidence](../reports/day6_vault_prototype_evidence.md) remains historical. The C2000 Step 2 preparation is in [the rebaseline packet](vault_c2000_rebaseline_v1.md). The approved [Vault Contract V1](vault_load_contract_v1.md) and all Day 5 services remain unchanged.
 
 ## Separation of concerns
 
@@ -37,4 +37,4 @@ The credential rotation helper is `scripts/owner_rotate_vault_credential_v2.py`.
 
 Local tests cover cohort-neutral policy, two independently eligible cohort receipts, grant windows, modified freeze/contract/rule pins, out-of-scope namespace/tables, RAW and Day 5 flags, destructive SQL, forged/expired/revoked grants, budget limits, uncertain replay, stale socket restart and atomic credential replacement after a successful probe. These tests simulate signed-receipt inputs and do not substitute for protected installation. No live signed cohort receipt, real grant, Delta write or independent readback has run.
 
-The C1500-specific installer and client remain disabled during the pause. The 127-row C1500 sample, plan and evidence are retained and will be adapted to the V2 plan/eligibility format only after 0A is operational. Step 3 remains blocked by both Step 0 C2000 Freeze and Step 2 validation.
+The C1500-specific installer and client remain disabled. The old unsigned C1500 policy proposal and active exception file were removed from this branch. Step 0 can now use the accepted C2000 freeze; Step 2 still needs installation, operational tests and a separate C2000 scope approval. Full Step 3 integration needs an owner-approved standing-policy, capacity and write-scope change.

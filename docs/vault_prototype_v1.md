@@ -1,6 +1,6 @@
 # Day 6 Step 2 bounded Vault prototype plan V1
 
-The requesting owner's one-time [C1500 exception](../metadata/authorizations/day6_vault_c1500_prototype_exception_v1.json) permits this bounded prototype while Step 0 waits for C2000. The approved [Vault Load Contract V1](vault_load_contract_v1.md) is unchanged. This document describes the actual read-only sample and the unexecuted isolated write plan. It is not a live Delta validation.
+**Historical read-only C1500 preparation.** The owner withdrew the one-time C1500 exception as `WITHDRAWN_UNEXERCISED`; the authorization file was removed from the current branch. The approved [Vault Load Contract V1](vault_load_contract_v1.md) is unchanged. This document describes the prior read-only sample and unexecuted isolated write plan; it grants no current execution authority. The current Step 2 plan is [C2000](vault_c2000_rebaseline_v1.md).
 
 ## Verified read-only inputs
 

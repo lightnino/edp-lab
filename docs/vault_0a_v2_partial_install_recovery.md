@@ -2,10 +2,14 @@
 
 On 2026-10-24 the owner installer stopped at its first OAuth secret request,
 after creating service principal `72304318628585` and the protected Vault root.
-The original installer must not be run again. Its `run()` wrapper raised on a
-nonzero CLI result without including stderr, so the historical HTTP response
-code and error message are not in the traceback. Do not label the failure as a
-permission or propagation error without that evidence.
+The original installer must not be run again. The owner later supplied the
+failure text `Could not parse request object: Error parsing Duration`.
+Inspection of the recovery command found `--lifetime 604800`. The CLI accepts
+that flag as a string, and the API rejected the bare value as a Duration.
+The corrected command passes an explicit JSON body
+`{"lifetime":"604800s"}`, avoiding any flag conversion ambiguity.
+The [Databricks API reference](https://docs.databricks.com/api/authentication/v1/service-principal-secret-proxy)
+defines `lifetime` as a string Duration and illustrates the `s` suffix.
 
 Read-only Databricks checks found:
 
@@ -38,6 +42,11 @@ schema creation, the recovery checks their absence again. The original
 one-time installer functions then complete warehouse, eight-table, policy,
 service and signed installation-receipt setup.
 
+Before the corrected secret request, recovery stages the reviewed Git `HEAD`
+runtime code inside the existing protected root and keeps the original code
+tree as `edp_lab-original-d841204`. This ensures the eventual protected
+services enforce the reviewed C2000 artifact pins without recreating the root.
+
 Run only from the owner terminal as root, after reviewing the recovery commit
 and confirming the Databricks profile is authenticated. Supply the commit SHA
 of that reviewed recovery commit and the unchanged policy hash:
@@ -53,6 +62,6 @@ The command is one-shot. If it fails, preserve the stderr and read-only remote
 metadata; do not issue another OAuth create request or run the original
 installer. The signed install receipt is still an installation result, not an
 operational PASS. Live negative checks, eligible grant, Delta write/readback,
-restart and credential rotation remain separate verification steps. C1500 Step
-2 may proceed independently of C2000 Step 0 once this Vault verification
-passes.
+restart and credential rotation remain separate verification steps. The C1500
+exception was withdrawn unexercised. C2000 Step 2 requires its own owner
+scope approval and protected eligibility receipt after operational readiness.

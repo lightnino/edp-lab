@@ -137,7 +137,7 @@ def _service_identity_v2() -> tuple[str, str]:
     sp_id = str(created["id"])
     app_id = created["applicationId"]
     secret = admin_cli("service-principal-secrets-proxy", "create", sp_id,
-                       "--lifetime", "604800")["secret"]
+                       "--json", '{"lifetime":"604800s"}')["secret"]
     config = BASE / "private/databrickscfg"
     from owner_setup_day6_vault_0a import HOST
 
