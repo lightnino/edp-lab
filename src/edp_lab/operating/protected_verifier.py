@@ -42,7 +42,7 @@ def _sign(document: dict, key: Path, output: Path) -> None:
         payload = Path(temporary) / "payload"
         signature = Path(temporary) / "signature"
         payload.write_bytes(canonical(document))
-        subprocess.run(["/opt/homebrew/bin/openssl", "pkeyutl", "-sign", "-inkey", str(key),
+        subprocess.run(["openssl", "pkeyutl", "-sign", "-inkey", str(key),
                         "-rawin", "-in", str(payload), "-out", str(signature)],
                        check=True, capture_output=True)
         envelope = {"document": document,
