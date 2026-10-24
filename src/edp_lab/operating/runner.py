@@ -20,11 +20,12 @@ from edp_lab.operating.authority import (
     protected_trust_dir,
     verified_document,
 )
-from edp_lab.operating.boundaries import databricks_write, git_write, raw_stage
+from edp_lab.operating.boundaries import databricks_write, git_write
 from edp_lab.operating.budget import verify_phase_receipt
 from edp_lab.operating.databricks_jobs import databricks_job_submit
 from edp_lab.operating.policy_broker import execute as protected_execute
 from edp_lab.operating.policy_broker import request as request_policy_grant
+from edp_lab.operating.raw_ownership import require_cohort_readonly
 
 
 def _write_json(path: Path, value: dict) -> None:
@@ -226,7 +227,7 @@ def task_request(root: Path, queue: dict, queue_path: Path,
                           "runtime_seconds": task.get("runtime_seconds", 0),
                           "compute_units": task.get("compute_units", 0),
                           "token_count": task.get("token_budget", 0)}}
-    if task["kind"] in {"raw_stage", "cohort_admit", "databricks_write", "git_write",
+    if task["kind"] in {"cohort_admit", "databricks_write", "git_write",
                         "databricks_job_submit"}:
         request.update({key: task[key] for key in (
             "operation_id", "databricks_path", "databricks_table", "statement_path",
@@ -245,6 +246,8 @@ def run(root: Path, queue_path: Path, envelope: Path, state_dir: Path,
     queue = json.loads(queue_path.read_bytes())
     if queue["schema"] != "EDP_QUEUE_V1":
         raise Denied("INVALID_QUEUE")
+    # Fail before resolving signed grants, state/locks, or any external dispatch.
+    require_cohort_readonly(queue)
     if queue.get("simulation_only") and not dry_run:
         raise Denied("SIMULATION_QUEUE_CANNOT_RUN_LIVE")
     if str(envelope) == "auto":
@@ -316,7 +319,7 @@ def run(root: Path, queue_path: Path, envelope: Path, state_dir: Path,
                                     task, recovery, protected_trust_dir(root))
                 request["operation_id"] = recovery["operation_id"]
             if current.get("status") == "VALIDATING" and task["kind"] in {
-                    "raw_stage", "cohort_admit", "databricks_write", "git_write",
+                    "cohort_admit", "databricks_write", "git_write",
                     "databricks_job_submit"}:
                 submitted = dict(task, _submitted_run_id=current.get("external", {}).get("run_id"),
                                  _statement_id=current.get("external", {}).get("statement_id"))
@@ -391,7 +394,7 @@ def run(root: Path, queue_path: Path, envelope: Path, state_dir: Path,
                             raise TimeoutError("Codex task timed out")
                         if result["returncode"]:
                             raise RuntimeError("CODEX_TASK_REPAIR_REQUIRED")
-                elif task["kind"] in {"raw_stage", "cohort_admit", "databricks_write", "git_write",
+                elif task["kind"] in {"cohort_admit", "databricks_write", "git_write",
                                       "databricks_job_submit"}:
                     if not dry_run and grant["authority"] == "policy-broker-v1":
                         outcome = protected_execute(Path(broker_socket), envelope, request)
@@ -403,10 +406,7 @@ def run(root: Path, queue_path: Path, envelope: Path, state_dir: Path,
                             if not ledger_value:
                                 raise Denied("PROTECTED_LEDGER_REQUIRED")
                             ledger = Path(ledger_value)
-                        if task["kind"] == "raw_stage":
-                            outcome = raw_stage(root, grant, request, ledger,
-                                                execute=not dry_run)
-                        elif task["kind"] == "cohort_admit":
+                        if task["kind"] == "cohort_admit":
                             from edp_lab.operating.cohort_admission import cohort_admit
 
                             outcome = cohort_admit(root, grant, request, ledger,
