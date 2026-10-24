@@ -154,6 +154,29 @@ def raw_stage(root: Path, grant: dict, request: dict, ledger: Path,
     if (grant.get("authority") != "owner-acquisition-v1"
             or grant.get("cohort") != "ACQUISITION"):
         raise Denied("RAW_STAGE_ACQUISITION_ONLY")
+    # Enforce the verifier-signed cross-history discovery at the *actual*
+    # write adapter as well; a caller must not skip acquisition_executor's
+    # preflight by invoking the adapter with only a historical RAW grant.
+    discovery_path = Path(request.get("acquisition_discovery_receipt", ""))
+    if (not discovery_path.is_absolute() or discovery_path.is_symlink()
+            or discovery_path.resolve().is_relative_to(root.resolve())):
+        raise Denied("ACQUISITION_DISCOVERY_REQUIRED")
+    if (request.get("acquisition_discovery_sha256") != file_digest(discovery_path)):
+        raise Denied("ACQUISITION_DISCOVERY_CHANGED")
+    discovery = verified_document(root, discovery_path, protected_trust_dir(root))
+    source = request.get("source")
+    if (not isinstance(source, dict)
+            or discovery.get("schema") != "EDP_ACQUISITION_DISCOVERY_V1"
+            or discovery.get("authority") != "protected-verifier-v1"
+            or discovery.get("status") != "STAGE_NEW_AFTER_DISCOVERY"
+            or discovery.get("discovery_scope") != "CROSS_HISTORICAL_LOCATORS"
+            or discovery.get("reusable_raw_found") is not False
+            or discovery.get("source_identity") != source.get("identity")
+            or discovery.get("raw_sha256") != source.get("sha256")
+            or discovery.get("destination") != request.get("databricks_path")
+            or not isinstance(discovery.get("byte_size"), int)
+            or discovery["byte_size"] != Path(source["path"]).stat().st_size):
+        raise Denied("ACQUISITION_DISCOVERY_UNVERIFIED")
     if ledger.resolve().is_relative_to(root.resolve()):
         raise Denied("LEDGER_MUST_BE_OUTSIDE_WORKTREE")
     if execute:
