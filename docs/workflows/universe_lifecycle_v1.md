@@ -116,6 +116,6 @@ The two lifecycles can be chained in one session when useful, or separated by an
 - Retained but denied/deferred RAW is not erased merely because Universe membership was refused, subject to legal/licensing/retention rules; it remains inaccessible to ordinary admitted-cohort processing.
 - The downstream executor verifies the exact signed/owner-pinned Universe version, RAW identity/hashes and separate cohort/workflow grant. It **reuses verified RAW receipts**, without a second acquisition or upload simply for Universe admission.
 
-**Historical evidence (non-normative):** see [approved Universe v1](../../metadata/source_universes/approved_v1/README.md) and the [source-universe boundary incident](../incidents/2026-10-21_source_universe_scope_control.md) for actual prior member/holdout/out-of-scope counts. The current historical source estate is an *example*, not an embedded limit in this future reusable workflow.
+**Historical evidence (non-normative):** see [approved Universe v1](../../metadata/source_universes/approved_v1/README.md) and the [source-universe boundary incident](../incidents/2026-10-21-source-universe/incident.md) for actual prior member/holdout/out-of-scope counts. The current historical source estate is an *example*, not an embedded limit in this future reusable workflow.
 
 **No code, admission, new universe, frozen cohort, approval or Databricks operation is performed by this specification.**
