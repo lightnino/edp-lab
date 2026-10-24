@@ -85,6 +85,8 @@ def execute_acquisition_stage(
         "databricks_path": plan["remote_path"],
         "operation_id": plan["operation_id"],
         "grant_path": str(grant_path),
+        "acquisition_discovery_receipt": str(discovery_path),
+        "acquisition_discovery_sha256": file_digest(discovery_path),
         "contracts": {"acquisition_plan": {
             "version": "ACQUISITION_RAW_PLAN_V1",
             "path": str(plan_path.relative_to(root))}},
