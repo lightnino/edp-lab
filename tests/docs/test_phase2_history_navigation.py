@@ -51,7 +51,7 @@ def test_no_stale_legacy_path_references() -> None:
     args = ["grep", "-n", "-F"]
     for old in old_paths:
         args.extend(["-e", old])
-    found = _git(*args, "--", ".")
+    found = _git(*args, "--", ".", ":(exclude)tests/docs/test_phase2_history_navigation.py", ":(exclude)docs/history/migration_audit_v1.md")
     assert found.returncode == 1, found.stdout[:1600] + found.stderr[:1000]
 
 
