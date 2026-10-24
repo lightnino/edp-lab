@@ -4,6 +4,8 @@
 
 **Purpose.** Establish a reusable source-estate governance lifecycle, independent of whether a subsequent cohort follows `INITIAL_MODEL`, `CORPUS_ONLY`, `ADDITIVE` or `CORRECTIVE` processing. A universe lists *eligible candidate source instances*. A cohort mechanically selects eligible members **from an already approved Universe** under the 0A standing operating policy; this does **not** constitute a new Universe membership change or require new per-cohort human approval. Universe CREATE/EXPAND and cohort selection remain distinct scopes.
 
+**Shared operating addendum:** [Agent Operating Contract V1](agent_operating_contract_v1.md) governs protected authority, liveness, Recovery Decision Matrix and owner escalation for Acquisition/Universe U0–U10. The [generic protected recovery guide](../operating/agent_operating_guide_v1.md) gives the procedure. These do **not** grant Cohort RAW-write permission or replace U3/U10 handoff evidence.
+
 **Historical references:** `metadata/source_universes/approved_v1/`, `docs/source_universe_guardrail.md`, `docs/incidents/2026-10-21_source_universe_scope_control.md`, `src/edp_lab/ingestion/universe.py`, `docs/cohort_publication.md`. These are authoritative for existing snapshots; this proposal must not rewrite them.
 
 ## 1. Independent Acquisition and Universe lifecycles; composable when useful
