@@ -1,9 +1,8 @@
 # EDP Lab
 
-> **Post-closeout (2026-10-23 SGT):** Day 4 has a new [explicit owner-override closeout](docs/day4_owner_override_closeout.md), [result-freeze V1](metadata/freezes/O_C1500_M2_v1/freeze.json) and [Exit V2](metadata/evaluations/day4_exit_v2.json). Source-preserving freeze is a Git evidence marker, not a newly verified Databricks storage freeze. The historical CANDIDATE/PARTIAL records remain unchanged.
+Enterprise Data Platform learning lab. **Authoritative entry points:** [Agent Rules & Routing](AGENTS.md), [Document Ownership Registry](docs/README.md), [Lifecycle Specifications](docs/workflows/README.md), [Canonical Contracts](docs/contracts/README.md), and [Incident Register](docs/incidents/README.md). Current approvals and accepted freezes must be verified against exact `metadata/authorizations/`, `metadata/freezes/` and protected live receipts; historical day/PR narratives do not substitute for this evidence.
 
-
-Enterprise Data Platform learning lab. Source Identity, GOLD_V2 registration, snapshot-scoped Parsing/Profiling Freeze V2 and Governance Policy are approved. The five deterministic profiling functions are implemented and verified on GOLD_V2. See [profiling completion evidence](docs/preflight_exit_checklist.md).
+The experimental platform preserves RAW → CLEAN → QUERYABLE provenance, Lossless/Stability evidence and independently gated source, semantic, execution and merge authority. Source Identity, GOLD_V2 registration, snapshot-scoped Parsing/Profiling Freeze V2 and Governance Policy are approved. The five deterministic profiling functions are implemented and verified on GOLD_V2. See [profiling completion evidence](docs/preflight_exit_checklist.md).
 
 ## Setup (macOS/Linux)
 
