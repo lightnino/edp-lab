@@ -23,6 +23,7 @@ from edp_lab.operating.authority import (
     protected_trust_dir,
 )
 from edp_lab.operating.boundaries import _reserve
+from edp_lab.operating.protected_cli import databricks_argv
 
 _SHA = re.compile(r"[0-9a-f]{64}\Z")
 _NAME = re.compile(r"[a-zA-Z][a-zA-Z0-9_.-]{1,127}\Z")
@@ -42,7 +43,7 @@ def _cli(*args: str, timeout: int) -> bytes:
     profile = os.environ.get("EDP_DATABRICKS_PROFILE")
     if profile is not None and not _NAME.fullmatch(profile):
         raise Denied("INVALID_DATABRICKS_PROFILE")
-    argv = ["databricks", *args]
+    argv = databricks_argv(*args)
     if profile:
         argv.extend(["--profile", profile])
     process = subprocess.run(argv, capture_output=True, check=False, timeout=timeout)

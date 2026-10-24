@@ -1,0 +1,5 @@
+{
+  "statement": "CREATE VIEW workspace.edp_lab.o_c2000_m2_result_frozen_day5_v1 AS\nSELECT occurrence_class, source_instance_id, run_id, binding_ref, locator, payload\nFROM workspace.edp_lab.o_c1500_m2_result_frozen_v1\nUNION ALL\nSELECT 'NEW_N500_SEC_RECORD' AS occurrence_class, source_instance_id,\n       'day5_n500_v1' AS run_id, raw_sha256 AS binding_ref, locator, payload\nFROM workspace.edp_lab.clean_n500_m1_records_day5_v1 VERSION AS OF 0",
+  "wait_timeout": "30s",
+  "warehouse_id": "589e80595c7c8cb8"
+}
