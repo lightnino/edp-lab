@@ -40,6 +40,11 @@
     "EXACT_FULL_INTEGRATION_WRITE_SCOPE_AND_BUDGET",
     "OWNER_CONTROLLED_PROTECTED_EXECUTION_AUTHORITY"
   ],
+  "technical_boundaries": [
+    "INSTALLED_V2_EXECUTOR_IS_BOUNDED_PROTOTYPE_ONLY_AND_CAPS_RUN_AT_1000_DATA_OCCURRENCES",
+    "PROTECTED_FULL_POPULATION_DELTA_EXECUTION_NOT_DEMONSTRATED",
+    "PROTECTED_V9_LIVE_FREEZE_ACTION_NOT_INSTALLED"
+  ],
   "installed_policy_full_c2000_allowed": false,
   "protected_full_executor_demonstrated": false,
   "agent_generated_signature": null

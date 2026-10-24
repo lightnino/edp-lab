@@ -122,7 +122,9 @@ def test_full_stage_orchestration_needs_no_manual_stage_invocations(tmp_path, mo
     def fake_advance(*_args):
         return ({"status": "COMPLETE", "next_stage": None}
                 if index["value"] == len(STAGES)
-                else {"status": "EVIDENCE_REQUIRED", "next_stage": STAGES[index["value"]]})
+                else {"status": "EVIDENCE_REQUIRED", "next_stage": STAGES[index["value"]],
+                      "v9_freeze": {"receipt_path": "signed.json", "receipt_sha256": "a" * 64}
+                      if STAGES[index["value"]] == "V9" else None})
 
     def complete_stage(*_args, **_kwargs):
         index["value"] += 1
@@ -153,3 +155,32 @@ def test_v4_authority_boundary_does_not_submit(tmp_path, monkeypatch):
     monkeypatch.setattr(runner, "dispatch_v4", lambda *_: pytest.fail("write submitted"))
     result = run_until_boundary(root, plan_path, root / "state")
     assert result["status"] == "HUMAN_AUTHORIZATION_REQUIRED"
+
+
+def test_v9_freeze_handoff_then_git_stage_is_automatic(tmp_path, monkeypatch):
+    root, plan_path = setup_plan(tmp_path)
+    import edp_lab.vault.lifecycle_runner as runner
+
+    phase = {"value": "freeze"}
+
+    def state(*_args):
+        if phase["value"] == "done":
+            return {"status": "COMPLETE", "next_stage": None}
+        return {"status": "EVIDENCE_REQUIRED", "next_stage": "V9",
+                "v9_freeze": {"receipt_path": "signed.json"}
+                if phase["value"] == "git" else None}
+
+    def freeze(*_args):
+        phase["value"] = "git"
+        return state()
+
+    def git(*_args, **_kwargs):
+        phase["value"] = "done"
+        return state()
+
+    monkeypatch.setattr(runner, "advance", state)
+    monkeypatch.setattr(runner, "dispatch_v9_freeze", freeze)
+    monkeypatch.setattr(runner, "dispatch_agent", git)
+    result = run_until_boundary(root, plan_path, root / "state",
+                                freeze_request="approved-freeze.json")
+    assert result["status"] == "COMPLETE"

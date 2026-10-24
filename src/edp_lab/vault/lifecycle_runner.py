@@ -12,6 +12,7 @@ import argparse
 import csv
 import hashlib
 import json
+import socket
 import subprocess
 import sys
 from datetime import UTC, datetime
@@ -137,6 +138,7 @@ def _receipt(root: Path, plan: dict, stage: str) -> dict | None:
                                           protected_trust_dir(root))
                 checks = proof.get("checks")
                 if (proof.get("schema") != "EDP_VAULT_RUN_READBACK_RECEIPT_V2"
+                        or proof.get("authority") != "protected-verifier-v1"
                         or proof.get("cohort_id") != plan["cohort"]
                         or proof.get("status") != "VERIFIED"
                         or proof.get("namespace") != plan["namespace"]
@@ -167,6 +169,7 @@ def _receipt(root: Path, plan: dict, stage: str) -> dict | None:
                 raise Denied("VAULT_SIGNED_LIVE_RECEIPT_REQUIRED:" + stage)
             proof = verified_document(root, Path(envelope), protected_trust_dir(root))
             if (proof.get("schema") != "EDP_VAULT_LIVE_FREEZE_RECEIPT_V1"
+              or proof.get("authority") != "protected-verifier-v1"
               or proof.get("cohort") != plan["cohort"]
               or proof.get("status") != "VERIFIED"
               or proof.get("live_readback") is not True
@@ -263,6 +266,11 @@ def advance(root: Path, plan_path: Path, state_dir: Path) -> dict:
                 break
             if stage == "V5" and receipt["status"] == "NOT_REQUIRED":
                 raise Denied("VAULT_LOSSLESS_CANNOT_BE_SKIPPED")
+            if stage == "V9":
+                frozen = state.get("v9_freeze")
+                if (not frozen or receipt.get("signed_live_receipt") != frozen["receipt_path"]
+                        or file_digest(Path(frozen["receipt_path"])) != frozen["receipt_sha256"]):
+                    raise Denied("VAULT_V9_FREEZE_CHECKPOINT_MISMATCH")
             if stage in {"V3", "V6"} and receipt["status"] == "NOT_REQUIRED" and not receipt.get("applicability_evidence"):
                 raise Denied("VAULT_CONDITIONAL_STAGE_NEEDS_EVIDENCE:" + stage)
             state["completed"][stage] = file_digest(root / plan["stages"][stage]["receipt"])
@@ -316,6 +324,7 @@ def _finish_v4_batch(root: Path, plan: dict, state_dir: Path, signed: Path) -> d
     proof = verified_document(root, signed, protected_trust_dir(root))
     if (run_sha != pending["operation_id"] or proof.get("run_sha256") != run_sha
             or proof.get("schema") != "EDP_VAULT_RUN_READBACK_RECEIPT_V2"
+            or proof.get("authority") != "protected-verifier-v1"
             or proof.get("cohort_id") != plan["cohort"]
             or proof.get("namespace") != plan["namespace"]
             or proof.get("status") != "VERIFIED"
@@ -347,7 +356,82 @@ def reconcile_external(root: Path, plan_path: Path, state_dir: Path,
         raise Denied("VAULT_NO_EXTERNAL_OPERATION_PENDING")
     if signed_receipt is None:
         raise Denied("VAULT_EXTERNAL_RECEIPT_NOT_READY")
-    return _finish_v4_batch(root, plan, state_dir, signed_receipt)
+    if pending["stage"] == "V4":
+        return _finish_v4_batch(root, plan, state_dir, signed_receipt)
+    if pending["stage"] == "V9":
+        return _finish_v9_freeze(root, plan, state_dir, signed_receipt)
+    raise Denied("VAULT_EXTERNAL_STAGE_INVALID")
+
+
+def _finish_v9_freeze(root: Path, plan: dict, state_dir: Path, signed: Path) -> dict:
+    from edp_lab.operating.authority import protected_trust_dir, verified_document
+
+    state_path = state_dir / "checkpoint.json"
+    state = json.loads(state_path.read_bytes())
+    pending = state.get("pending_external")
+    if not pending or pending["stage"] != "V9":
+        raise Denied("VAULT_NO_V9_FREEZE_PENDING")
+    if not pending.get("request_path"):
+        raise Denied("VAULT_V9_FREEZE_REQUEST_PIN_MISSING")
+    _repo_file(root, pending["request_path"], pending["request_sha256"])
+    proof = verified_document(root, signed, protected_trust_dir(root))
+    if (proof.get("schema") != "EDP_VAULT_LIVE_FREEZE_RECEIPT_V1"
+            or proof.get("authority") != "protected-verifier-v1"
+            or proof.get("status") != "VERIFIED"
+            or proof.get("cohort") != plan["cohort"]
+            or proof.get("request_sha256") != pending["request_sha256"]
+            or proof.get("live_readback") is not True
+            or not proof.get("delta_ids") or not proof.get("delta_versions")
+            or not proof.get("source_coverage")):
+        raise Denied("VAULT_V9_FREEZE_READBACK_MISMATCH")
+    state["v9_freeze"] = {"receipt_path": str(signed),
+                          "receipt_sha256": file_digest(signed),
+                          "request_sha256": pending["request_sha256"]}
+    state["pending_external"] = None
+    _write_json(state_path, state)
+    _event(state_dir / "events.jsonl", "EXTERNAL_RECONCILED", stage="V9",
+           operation_id=pending["operation_id"])
+    state["status"] = "EVIDENCE_REQUIRED"
+    return state
+
+
+def dispatch_v9_freeze(root: Path, plan_path: Path, state_dir: Path,
+                       freeze_request: str) -> dict:
+    """Use the installed protected executor socket for a versioned freeze action."""
+    plan = load_plan(root, plan_path)
+    state = advance(root, plan_path, state_dir)
+    if state["status"] != "EVIDENCE_REQUIRED" or state["next_stage"] != "V9":
+        raise Denied("VAULT_V9_NOT_READY")
+    path = Path(freeze_request)
+    if path.is_absolute() or ".." in path.parts:
+        raise Denied("VAULT_FREEZE_REQUEST_OUTSIDE_REPO")
+    resolved = (root / path).resolve(strict=True)
+    if not resolved.is_relative_to(root.resolve()):
+        raise Denied("VAULT_FREEZE_REQUEST_OUTSIDE_REPO")
+    request = json.loads(resolved.read_bytes())
+    if (request.get("schema") != "EDP_VAULT_FREEZE_REQUEST_V1"
+            or request.get("cohort") != plan["cohort"]
+            or request.get("namespace") != plan["namespace"]):
+        raise Denied("VAULT_FREEZE_REQUEST_INVALID")
+    request_sha = file_digest(resolved)
+    reserve_external(state_dir, stage="V9", operation_id=request_sha,
+                     request_sha256=request_sha, request_path=str(path))
+    try:
+        with socket.socket(socket.AF_UNIX) as client:
+            client.settimeout(3700)
+            client.connect("/private/var/db/edp-lab-day6-vault/executor.sock")
+            client.sendall((json.dumps({"action": "freeze", "request_path": str(path)},
+                                       sort_keys=True) + "\n").encode())
+            client.shutdown(socket.SHUT_WR)
+            response = json.loads(client.recv(8192))
+        if response.get("status") != "VAULT_LIVE_FREEZE_VERIFIED":
+            raise Denied("VAULT_PROTECTED_FREEZE_NOT_VERIFIED")
+        return _finish_v9_freeze(root, plan, state_dir, Path(response["receipt_path"]))
+    except (OSError, ValueError, KeyError, Denied) as exc:
+        _event(state_dir / "events.jsonl", "EXTERNAL_RECONCILIATION_REQUIRED",
+               stage="V9", reason=str(exc))
+        return {"status": "EXTERNAL_RECONCILIATION_REQUIRED", "stage": "V9",
+                "request_sha256": request_sha}
 
 
 def reconcile_agent(root: Path, plan_path: Path, state_dir: Path) -> dict:
@@ -387,6 +471,7 @@ def readiness(root: Path, plan_path: Path) -> dict:
     plan = load_plan(root, plan_path)
     startup_blockers = []
     authority_blockers = []
+    closeout_blockers = []
     max_run_occurrences = None
     base = Path("/private/var/db/edp-lab-day6-vault")
     try:
@@ -398,13 +483,17 @@ def readiness(root: Path, plan_path: Path) -> dict:
         max_run_occurrences = policy.get("max_run_data_occurrences")
         if policy.get("protected_full_executor_validated") is not True:
             authority_blockers.append("FULL_SCOPE_PROTECTED_EXECUTION_NOT_DEMONSTRATED")
+        if policy.get("vault_live_freeze_action_v1") is not True:
+            closeout_blockers.append("PROTECTED_V9_FREEZE_ACTION_NOT_INSTALLED")
     except (OSError, Denied):
         startup_blockers.append("INSTALLED_POLICY_NOT_VERIFIABLE")
         authority_blockers.append("INSTALLED_FULL_SCOPE_POLICY_NOT_VERIFIABLE")
+        closeout_blockers.append("PROTECTED_V9_FREEZE_ACTION_NOT_VERIFIABLE")
     return {"startup_status": "READY" if not startup_blockers else "BLOCKED",
             "startup_blockers": startup_blockers,
             "protected_full_write_status": "READY" if not authority_blockers else "BLOCKED",
             "authority_blockers": authority_blockers, "cohort": plan["cohort"],
+            "closeout_blockers": closeout_blockers,
             "max_run_data_occurrences": max_run_occurrences,
             "workflow_sha256": plan["workflow_sha256"],
             "existing_step2_reused": "step2" in plan["inputs"]}
@@ -524,6 +613,8 @@ def dispatch_agent(root: Path, plan_path: Path, state_dir: Path,
         raise Denied("VAULT_AGENT_STAGE_NOT_READY")
     if state.get("pending_agent"):
         raise Denied("VAULT_AGENT_OUTCOME_UNCERTAIN")
+    if stage == "V9" and not state.get("v9_freeze"):
+        raise Denied("VAULT_V9_PROTECTED_FREEZE_REQUIRED")
     prompt = state_dir / (stage.lower() + ".prompt.txt")
     recovery = state["status"] == "TECHNICAL_RECOVERY_REQUIRED"
     prompt.write_text(
@@ -540,8 +631,10 @@ def dispatch_agent(root: Path, plan_path: Path, state_dir: Path,
         "do not claim a protected freeze or merge without independent proof. "
         "Use the existing receipt path from the plan only when evidence supports it; "
         "record unresolved items and human decisions explicitly. "
-        + ("Commit, push and create the PR only after independently verified live "
-           "freeze evidence; stop before merge when review approval is required.\n"
+        + (f"Verified protected live-freeze receipt: {state['v9_freeze']['receipt_path']} "
+           f"(SHA-256 {state['v9_freeze']['receipt_sha256']}). "
+           "Commit, push and create the PR only after checking this exact receipt; "
+           "stop before merge when review approval is required.\n"
            if stage == "V9" else "Do not run git commit, push or merge.\n")
     )
     state["pending_agent"] = {"stage": stage, "prompt_sha256": file_digest(prompt),
@@ -653,7 +746,8 @@ def _mechanical_stage(root: Path, plan_path: Path, state_dir: Path,
 
 def run_until_boundary(root: Path, plan_path: Path, state_dir: Path,
                        *, runtime_seconds: int = 1800,
-                       run_request: str | None = None) -> dict:
+                       run_request: str | None = None,
+                       freeze_request: str | None = None) -> dict:
     """Drive consecutive evidence stages and stop at an actual authority boundary."""
     root = root.resolve()
     state_dir = (root / state_dir).resolve() if not state_dir.is_absolute() else state_dir.resolve()
@@ -684,9 +778,18 @@ def run_until_boundary(root: Path, plan_path: Path, state_dir: Path,
             if state.get("status") == "EVIDENCE_REQUIRED":
                 continue
             return state
-        if state["next_stage"] == "V9" and state.get("agent_sessions", {}).get("V9"):
-            state["status"] = "PROTECTED_FREEZE_OR_GIT_GATE_PENDING"
-            return state
+        if state["next_stage"] == "V9":
+            if not state.get("v9_freeze"):
+                if freeze_request is None:
+                    state["status"] = "PROTECTED_FREEZE_REQUEST_REQUIRED"
+                    return state
+                state = dispatch_v9_freeze(root, plan_path, state_dir, freeze_request)
+                if state.get("status") == "EVIDENCE_REQUIRED":
+                    continue
+                return state
+            if state.get("agent_sessions", {}).get("V9"):
+                state["status"] = "GIT_REVIEW_OR_SIGNED_EXIT_PENDING"
+                return state
         current_stage = state["next_stage"]
         if current_stage in {"V0A", "V0", "V1", "V2", "V3"}:
             state = _mechanical_stage(root, plan_path, state_dir, current_stage)
@@ -695,7 +798,7 @@ def run_until_boundary(root: Path, plan_path: Path, state_dir: Path,
                                    runtime_seconds=runtime_seconds)
         if (state["status"] == "EVIDENCE_REQUIRED"
                 and state["next_stage"] == current_stage):
-            state["status"] = ("PROTECTED_FREEZE_OR_GIT_GATE_PENDING"
+            state["status"] = ("GIT_REVIEW_OR_SIGNED_EXIT_PENDING"
                                if current_stage == "V9" else "STAGE_EVIDENCE_PENDING")
             return state
         if state["status"] != "EVIDENCE_REQUIRED":
@@ -711,6 +814,7 @@ def main() -> None:
     parser.add_argument("plan", type=Path)
     parser.add_argument("--state-dir", type=Path)
     parser.add_argument("--run-request")
+    parser.add_argument("--freeze-request")
     parser.add_argument("--signed-receipt", type=Path)
     parser.add_argument("--runtime-seconds", type=int, default=1800)
     args = parser.parse_args()
@@ -736,7 +840,8 @@ def main() -> None:
     elif args.action == "run":
         result = run_until_boundary(root, args.plan, args.state_dir,
                                     runtime_seconds=args.runtime_seconds,
-                                    run_request=args.run_request)
+                                    run_request=args.run_request,
+                                    freeze_request=args.freeze_request)
     else:
         result = advance(root, args.plan, args.state_dir)
     print(json.dumps(result, sort_keys=True, indent=2))
