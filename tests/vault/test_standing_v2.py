@@ -24,7 +24,7 @@ from edp_lab.vault.broker_v2 import (
 )
 from edp_lab.vault.credential_rotation import _rotate_file, rotate_config
 from edp_lab.vault.eligibility_v2 import receipt_from_owner_approval
-from edp_lab.vault.executor_v2 import _audit_sql
+from edp_lab.vault.executor_v2 import _audit_sql, _ready
 from edp_lab.vault.load_plan import render, render_v2
 from edp_lab.vault.protected_sql import _reserve_statement_budget
 from edp_lab.vault.standing_v2 import (
@@ -102,6 +102,10 @@ def test_policy_is_cohort_neutral_and_two_cohorts_need_no_reinstall(tmp_path):
 
 @pytest.mark.parametrize("change", [
     {"namespace": "workspace.edp_lab"},
+    {"warehouse_id": "0000000000000000"},
+    {"warehouse_name": "Other Warehouse"},
+    {"warehouse_mode": "DEDICATED"},
+    {"warehouse_service_principal_permission": "CAN_MANAGE"},
     {"tables": [*TABLES, "day5_queue"]},
     {"day5_resources_allowed": True},
     {"raw_writes_allowed": True},
@@ -119,6 +123,26 @@ def test_standing_boundary_denials(change):
     else:
         with pytest.raises(Denied):
             validate_standing_policy(proposal, now=NOW)
+
+
+def test_executor_readiness_pins_shared_warehouse(monkeypatch, tmp_path):
+    from edp_lab.vault import executor_v2
+
+    calls = []
+
+    def cli(_root, _base, *args):
+        calls.append(args)
+        return {"id": POLICY["warehouse_id"], "name": POLICY["warehouse_name"]}
+
+    monkeypatch.setattr(executor_v2, "_cli", cli)
+    _ready(tmp_path, tmp_path, POLICY)
+    assert calls == [("warehouses", "get", "589e80595c7c8cb8")]
+    with pytest.raises(Denied, match="VAULT_SHARED_COMPUTE_SCOPE_CHANGED"):
+        _ready(tmp_path, tmp_path, {**POLICY, "warehouse_id": "0000000000000000"})
+    monkeypatch.setattr(executor_v2, "_cli", lambda *_args: {
+        "id": POLICY["warehouse_id"], "name": "Renamed"})
+    with pytest.raises(Denied, match="VAULT_SHARED_COMPUTE_CHANGED"):
+        _ready(tmp_path, tmp_path, POLICY)
 
 
 def test_unapproved_or_changed_cohort_denied(tmp_path):

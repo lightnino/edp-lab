@@ -15,6 +15,8 @@ from pathlib import Path
 from edp_lab.operating.authority import Denied, file_digest
 
 NAMESPACE = "workspace.edp_lab_day6_vault_proto"
+SHARED_WAREHOUSE_ID = "589e80595c7c8cb8"
+SHARED_WAREHOUSE_NAME = "Serverless Starter Warehouse"
 TABLES = (
     "h_filing", "h_concept", "l_fact_slot", "r_source_occurrence",
     "s_fact_assertion", "s_num_m2_value", "r_load_event",
@@ -77,11 +79,10 @@ def validate_standing_policy(policy: dict, *, now: datetime | None = None,
             or policy.get("authority") != "requesting-owner-vault-dev-v2"
             or policy.get("namespace") != NAMESPACE
             or policy.get("tables") != list(TABLES)
-            or policy.get("warehouse_max_cluster_size") != "2X-Small"
-            or policy.get("warehouse_max_clusters") != 1
-            or policy.get("warehouse_name") != "EDP Vault Dev V2"
-            or (policy.get("status") == "OWNER_INSTALLED_STANDING_POLICY" and
-                re.fullmatch(r"[0-9a-f]{16}", policy.get("warehouse_id", "")) is None)
+            or policy.get("warehouse_mode") != "EXISTING_SHARED_COMPUTE_EXACT"
+            or policy.get("warehouse_name") != SHARED_WAREHOUSE_NAME
+            or policy.get("warehouse_id") != SHARED_WAREHOUSE_ID
+            or policy.get("warehouse_service_principal_permission") != "CAN_USE"
             or policy.get("day5_resources_allowed") is not False
             or policy.get("raw_writes_allowed") is not False
             or policy.get("c2000_full_integration_allowed") is not False

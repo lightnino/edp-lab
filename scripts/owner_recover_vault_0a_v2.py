@@ -203,7 +203,7 @@ def main() -> None:
 
 
 def complete_after_warehouse(policy: dict, warehouse: str) -> None:
-    """Finish the existing one-time installation after warehouse creation."""
+    """Finish the existing one-time installation after shared compute is verified."""
     _absent_schema()
     ddl_ids = _schema_and_tables(APPLICATION_ID)
     _verify_service_principal_boundaries(APPLICATION_ID)
@@ -230,6 +230,10 @@ def complete_after_warehouse(policy: dict, warehouse: str) -> None:
                     "authority": "protected-verifier-v1",
                     "status": "VAULT_0A_INSTALLED_AWAITING_ELIGIBLE_RUN",
                     "namespace": NAMESPACE, "warehouse_id": warehouse,
+                    "warehouse_mode": policy["warehouse_mode"],
+                    "warehouse_name": policy["warehouse_name"],
+                    "warehouse_service_principal_permission":
+                    policy["warehouse_service_principal_permission"],
                     "service_principal_id": PRINCIPAL_ID,
                     "service_principal_application_id": APPLICATION_ID,
                     "ddl_statement_ids": ddl_ids,

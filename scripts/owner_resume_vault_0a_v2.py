@@ -7,15 +7,15 @@ import json
 import os
 import re
 import subprocess
+import tarfile
+from io import BytesIO
 from pathlib import Path
 
 from owner_recover_vault_0a_v2 import (
     APPLICATION_ID,
     NAME,
     ORIGINAL_COMMIT,
-    POLICY_SHA256,
     PRINCIPAL_ID,
-    WAREHOUSE_NAME,
     _absent_schema,
     complete_after_warehouse,
 )
@@ -30,6 +30,8 @@ from owner_setup_vault_0a_v2 import (
 )
 
 from edp_lab.vault.standing_v2 import validate_standing_policy
+
+POLICY_SHA256 = "7200b417a3321580147c8d135eef99868c5fb79dbe78ae236f54266240fa3316"
 
 
 def _root_owned(path: Path) -> bool:
@@ -76,13 +78,6 @@ def _protected_checkpoint() -> None:
             raise RuntimeError("VAULT_SERVICE_CHECKPOINT_CHANGED")
 
 
-def _warehouse_absent() -> None:
-    response = admin_cli("warehouses", "list")
-    warehouses = response if isinstance(response, list) else response.get("warehouses", [])
-    if any(item.get("name") == WAREHOUSE_NAME for item in warehouses):
-        raise RuntimeError("VAULT_WAREHOUSE_ALREADY_EXISTS_NO_RETRY")
-
-
 def _remote_checkpoint() -> None:
     identity = admin_cli("service-principals", "get", PRINCIPAL_ID)
     if (str(identity.get("id")) != PRINCIPAL_ID
@@ -102,7 +97,9 @@ def _remote_checkpoint() -> None:
     secrets = admin_cli("service-principal-secrets-proxy", "list", PRINCIPAL_ID)
     if not isinstance(secrets, list) or len(secrets) != 1:
         raise RuntimeError("VAULT_SECRET_METADATA_COUNT_CHANGED")
-    _warehouse_absent()
+    from owner_setup_vault_0a_v2 import _verify_shared_warehouse
+
+    _verify_shared_warehouse()
     _absent_schema()
     result = subprocess.run(
         ["/opt/homebrew/bin/databricks", "current-user", "me", "-p", "vault-dev", "-o", "json"],
@@ -166,21 +163,48 @@ def _sanitized_cli_error(exc: subprocess.CalledProcessError) -> str:
     return line[:1000] if line else f"CLI_EXIT_{exc.returncode}_NO_ERROR_LINE"
 
 
+def _refresh_reviewed_runtime() -> None:
+    """Replace only the protected runtime copy with reviewed HEAD code."""
+    current = BASE / "runtime/src/edp_lab"
+    staged = BASE / "runtime-next"
+    if staged.exists() or not current.is_dir():
+        raise RuntimeError("VAULT_RUNTIME_REFRESH_CHECKPOINT_CHANGED")
+    archive = subprocess.run(
+        ["/usr/bin/git", "-c", f"safe.directory={ROOT}", "-C", str(ROOT),
+         "archive", "HEAD", "src/edp_lab"], capture_output=True, check=True, timeout=60)
+    staged.mkdir(mode=0o700)
+    with tarfile.open(fileobj=BytesIO(archive.stdout), mode="r:") as tar:
+        tar.extractall(staged, filter="data")
+    incoming = staged / "src/edp_lab"
+    if not (incoming / "vault/standing_v2.py").is_file():
+        raise RuntimeError("VAULT_REVIEWED_RUNTIME_MISSING")
+    for path in staged.rglob("*"):
+        if path.is_file():
+            path.chmod(path.stat().st_mode & ~0o022)
+    backup = BASE / "runtime/src/edp_lab-pre-shared-compute"
+    if backup.exists():
+        raise RuntimeError("VAULT_RUNTIME_REFRESH_CHECKPOINT_CHANGED")
+    current.rename(backup)
+    incoming.rename(current)
+    (staged / "src").rmdir()
+    staged.rmdir()
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("expected_recovery_commit")
     parser.add_argument("expected_policy_sha256")
     args = parser.parse_args()
     policy = preflight(args.expected_recovery_commit, args.expected_policy_sha256)
-    # The owner invokes this command once. Recheck immediately before the write.
-    _warehouse_absent()
+    # The owner invokes this command once from the post-secret checkpoint.
+    _refresh_reviewed_runtime()
     try:
         warehouse = _warehouse_v2(APPLICATION_ID)
     except subprocess.CalledProcessError as exc:
-        raise RuntimeError("VAULT_WAREHOUSE_CREATE_OR_PERMISSION_FAILED: "
+        raise RuntimeError("VAULT_SHARED_WAREHOUSE_VERIFY_OR_PERMISSION_FAILED: "
                            + _sanitized_cli_error(exc)) from None
     except subprocess.TimeoutExpired:
-        raise RuntimeError("VAULT_WAREHOUSE_CREATE_TIMEOUT_NO_RETRY") from None
+        raise RuntimeError("VAULT_SHARED_WAREHOUSE_TIMEOUT_NO_RETRY") from None
     complete_after_warehouse(policy, warehouse)
 
 

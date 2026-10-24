@@ -23,6 +23,8 @@ from edp_lab.vault.broker_v2 import (
 from edp_lab.vault.protected_sql import _cli, scalar, statement
 from edp_lab.vault.standing_v2 import (
     NAMESPACE,
+    SHARED_WAREHOUSE_ID,
+    SHARED_WAREHOUSE_NAME,
     TABLES,
     authorize_stage,
     pinned_path,
@@ -48,11 +50,14 @@ def _save(path: Path, document: dict) -> None:
 
 
 def _ready(root: Path, base: Path, policy: dict) -> None:
+    if (policy.get("warehouse_mode") != "EXISTING_SHARED_COMPUTE_EXACT"
+            or policy.get("warehouse_id") != SHARED_WAREHOUSE_ID
+            or policy.get("warehouse_name") != SHARED_WAREHOUSE_NAME):
+        raise Denied("VAULT_SHARED_COMPUTE_SCOPE_CHANGED")
     warehouse = _cli(root, base, "warehouses", "get", policy["warehouse_id"])
-    if (warehouse.get("name") != policy["warehouse_name"]
-            or warehouse.get("cluster_size") != policy["warehouse_max_cluster_size"]
-            or warehouse.get("max_num_clusters") != policy["warehouse_max_clusters"]):
-        raise Denied("VAULT_DEDICATED_COMPUTE_CHANGED")
+    if (warehouse.get("id") != SHARED_WAREHOUSE_ID
+            or warehouse.get("name") != SHARED_WAREHOUSE_NAME):
+        raise Denied("VAULT_SHARED_COMPUTE_CHANGED")
 
 
 def _audit_sql(plan: dict, grant: dict) -> tuple[str, str, str, int]:

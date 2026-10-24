@@ -9,7 +9,6 @@ import argparse
 import base64
 import json
 import os
-import re
 import socket
 import subprocess
 import time
@@ -31,7 +30,11 @@ from owner_setup_day6_vault_0a import (
 
 from edp_lab.operating.authority import canonical, file_digest, verified_document
 from edp_lab.vault.protected_readback import _sign
-from edp_lab.vault.standing_v2 import validate_standing_policy
+from edp_lab.vault.standing_v2 import (
+    SHARED_WAREHOUSE_ID,
+    SHARED_WAREHOUSE_NAME,
+    validate_standing_policy,
+)
 
 PROPOSAL = ROOT / "metadata/operating/vault_standing_policy_v2_proposal.json"
 BROKER_LABEL = "org.edp-lab.vault-v2-broker"
@@ -67,10 +70,7 @@ def preflight(commit: str, policy_sha256: str) -> dict:
                          'displayName sw "edp-lab-vault-dev-v2"')
     if existing:
         raise RuntimeError("VAULT_SERVICE_PRINCIPAL_ALREADY_EXISTS")
-    warehouses = admin_cli("warehouses", "list")
-    candidates = warehouses if isinstance(warehouses, list) else warehouses.get("warehouses", [])
-    if any(item.get("name") == "EDP Vault Dev V2" for item in candidates):
-        raise RuntimeError("VAULT_WAREHOUSE_ALREADY_EXISTS")
+    _verify_shared_warehouse()
     # An absent target is required; inspect the CLI result without swallowing other errors.
     probe = subprocess.run(
         ["/usr/bin/sudo", "-n", "-u", ADMIN_USER, "-H",
@@ -97,19 +97,48 @@ def _directories() -> None:
         (BASE / name).mkdir(mode=mode)
 
 
+def _verify_shared_warehouse() -> None:
+    warehouse = admin_cli("warehouses", "get", SHARED_WAREHOUSE_ID)
+    if (warehouse.get("id") != SHARED_WAREHOUSE_ID
+            or warehouse.get("name") != SHARED_WAREHOUSE_NAME):
+        raise RuntimeError("VAULT_SHARED_WAREHOUSE_MISMATCH")
+
+
 def _warehouse_v2(application_id: str) -> str:
-    response = admin_cli("warehouses", "create", "--name", "EDP Vault Dev V2",
-                         "--cluster-size", "2X-Small", "--min-num-clusters", "1",
-                         "--max-num-clusters", "1", "--auto-stop-mins", "10",
-                         "--enable-serverless-compute", "--warehouse-type", "PRO",
-                         "--no-wait")
-    warehouse = response["id"]
-    if re.fullmatch(r"[0-9a-f]{16}", warehouse) is None:
-        raise RuntimeError("VAULT_WAREHOUSE_ID_INVALID")
-    admin_cli("permissions", "update", "warehouses", warehouse,
+    """Add only CAN_USE to the existing warehouse; retain every other ACL."""
+    _verify_shared_warehouse()
+    before = admin_cli("permissions", "get", "warehouses", SHARED_WAREHOUSE_ID)
+    acl = before.get("access_control_list")
+    if not isinstance(acl, list):
+        raise TypeError("VAULT_SHARED_WAREHOUSE_ACL_UNVERIFIED")
+    target = [entry for entry in acl
+              if entry.get("service_principal_name") == application_id]
+    if len(target) > 1:
+        raise RuntimeError("VAULT_SHARED_WAREHOUSE_DUPLICATE_PRINCIPAL")
+    if target:
+        levels = {item.get("permission_level") for item in
+                  target[0].get("all_permissions", [])}
+        if levels != {"CAN_USE"}:
+            raise RuntimeError("VAULT_SHARED_WAREHOUSE_PERMISSION_OUT_OF_SCOPE")
+        return SHARED_WAREHOUSE_ID
+    admin_cli("permissions", "update", "warehouses", SHARED_WAREHOUSE_ID,
               "--json", json.dumps({"access_control_list": [{
                   "service_principal_name": application_id, "permission_level": "CAN_USE"}]}))
-    return warehouse
+    after = admin_cli("permissions", "get", "warehouses", SHARED_WAREHOUSE_ID)
+    new_acl = after.get("access_control_list")
+    if not isinstance(new_acl, list):
+        raise TypeError("VAULT_SHARED_WAREHOUSE_ACL_UNVERIFIED")
+    unchanged = lambda entries: sorted(
+        json.dumps(entry, sort_keys=True) for entry in entries
+        if entry.get("service_principal_name") != application_id)
+    added = [entry for entry in new_acl
+             if entry.get("service_principal_name") == application_id]
+    if (unchanged(acl) != unchanged(new_acl) or len(added) != 1
+            or {item.get("permission_level") for item in
+                added[0].get("all_permissions", [])} != {"CAN_USE"}):
+        raise RuntimeError("VAULT_SHARED_WAREHOUSE_ACL_CHANGED")
+    _verify_shared_warehouse()
+    return SHARED_WAREHOUSE_ID
 
 
 def _verify_service_principal_boundaries(application_id: str) -> None:
@@ -118,9 +147,9 @@ def _verify_service_principal_boundaries(application_id: str) -> None:
         ("schema", "workspace.edp_lab_day6_vault_proto",
          {"CREATE_TABLE", "CREATE_VOLUME", "ALL_PRIVILEGES", "MANAGE"}),
         ("schema", "workspace.edp_lab",
-         {"CREATE_TABLE", "MODIFY", "ALL_PRIVILEGES", "MANAGE"}),
+         {"USE_SCHEMA", "CREATE_TABLE", "SELECT", "MODIFY", "ALL_PRIVILEGES", "MANAGE"}),
         ("volume", "workspace.edp_lab.raw",
-         {"WRITE_VOLUME", "CREATE_VOLUME", "ALL_PRIVILEGES", "MANAGE"}),
+         {"READ_VOLUME", "WRITE_VOLUME", "CREATE_VOLUME", "ALL_PRIVILEGES", "MANAGE"}),
     ):
         result = admin_cli("grants", "get-effective", securable, name,
                            "--principal", application_id)
@@ -156,7 +185,8 @@ def _keys_and_policy(policy: dict, warehouse: str) -> None:
         run("/opt/homebrew/bin/openssl", "pkey", "-in", str(key), "-pubout",
             "-out", str(BASE / "trust" / (role + "_ed25519_public.pem")))
     (BASE / "trust/revoked_grants.json").write_text("[]\n")
-    policy["warehouse_id"] = warehouse
+    if warehouse != SHARED_WAREHOUSE_ID:
+        raise RuntimeError("VAULT_SHARED_WAREHOUSE_MISMATCH")
     policy["status"] = "OWNER_INSTALLED_STANDING_POLICY"
     message = BASE / "private/policy.payload"
     message.write_bytes(canonical(policy))
@@ -209,7 +239,12 @@ def main() -> None:
                     "authority": "protected-verifier-v1",
                     "status": "VAULT_0A_INSTALLED_AWAITING_ELIGIBLE_RUN",
                     "namespace": "workspace.edp_lab_day6_vault_proto",
-                    "warehouse_id": warehouse, "service_principal_id": sp_id,
+                    "warehouse_id": warehouse,
+                    "warehouse_mode": policy["warehouse_mode"],
+                    "warehouse_name": policy["warehouse_name"],
+                    "warehouse_service_principal_permission":
+                    policy["warehouse_service_principal_permission"],
+                    "service_principal_id": sp_id,
                     "ddl_statement_ids": ddl_ids,
                     "negative_broker_action_denied": True,
                     "negative_forged_executor_grant_denied": True,

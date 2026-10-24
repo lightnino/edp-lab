@@ -1,12 +1,21 @@
 # Vault 0A V2 partial-install recovery
 
-## Current checkpoint: after secret, before warehouse
+## Current checkpoint: after secret, before shared-compute permission
 
 The owner completed the single OAuth secret request. Secret metadata count is
 one; the root-owned `private/databrickscfg`, matching identity file, refreshed
 runtime and original runtime backup exist. The earlier recovery stopped at
 `_warehouse_v2()` without retaining CLI stderr. Do not run the original
 installer or the earlier `owner_recover_vault_0a_v2.py` command again.
+
+The owner selected the existing `Serverless Starter Warehouse`, ID
+`589e80595c7c8cb8`, for this one Vault installation. No second Warehouse is
+authorized. The post-secret resume verifies the exact ID and name, reads the
+current ACL, adds only `CAN_USE` for application ID
+`87df13c2-1bb7-4a0b-b84a-84e01bdc1764` if absent, and verifies all other
+ACL entries remain unchanged. It does not delete, resize, stop, rename or
+reconfigure the Warehouse. The protected runtime is refreshed from reviewed
+HEAD while preserving the earlier runtime copies.
 
 Read-only checks on 2026-10-24 found no `EDP Vault Dev V2` warehouse. The
 installed Databricks CLI v1.21.0 accepts the warehouse creation flags used by
@@ -15,16 +24,16 @@ and PRO warehouses. Those checks do not establish why the earlier create
 failed; the original CLI stderr is unavailable.
 
 `scripts/owner_resume_vault_0a_v2.py` is limited to this exact checkpoint. It
-checks the reviewed commit and unchanged policy hash; the root-owned protected
+checks the reviewed commit and shared-compute policy hash; the root-owned protected
 config, identity and runtime backup; one secret metadata entry; exact principal
 and active workspace assignment; working credentials without printing them;
-and target warehouse and schema absence. It checks warehouse absence again
-immediately before one creation call. CLI errors are bounded and redacted.
-An error or timeout stops with no automatic retry. A successful creation uses
+and exact shared Warehouse and target schema. CLI errors are bounded and redacted.
+An error or timeout stops with no automatic retry. Successful verification uses
 the existing installation functions for schema, tables, grants, signed policy,
-services, negative checks and signed receipt. The owner reviews the committed
-code and runs the exact pinned command supplied with that review. Protected
-execution has not occurred.
+services, negative checks and signed receipt. The signed receipt names the
+shared-compute mode, Warehouse ID and name, and `CAN_USE` scope. The owner
+reviews the committed code and runs the exact pinned command supplied with
+that review. Protected execution has not occurred.
 
 ## Historical pre-secret checkpoint
 
