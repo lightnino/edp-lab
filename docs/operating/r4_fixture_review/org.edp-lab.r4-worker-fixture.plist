@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key><string>org.edp-lab.r4-worker-fixture</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/private/var/db/edp-lab/python/bin/python3.12</string>
+    <string>/private/var/db/edp-lab-r4-fixture-20261024/runtime/scripts/r4_disposable_worker.py</string>
+    <string>--fixture-root</string>
+    <string>/private/var/db/edp-lab-r4-fixture-20261024</string>
+    <string>--queue-sha256</string>
+    <string>4ccaaa79246058ed2890687448f4ec04094f3075f3770392a40942718092a8e4</string>
+    <string>--ledger-sha256</string>
+    <string>52717451535071393f53cfa2141e385baa2b890ddff67bac6584fe61af3e65ec</string>
+    <string>--mode</string>
+    <string>unexpected</string>
+  </array>
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>PYTHONPATH</key>
+    <string>/private/var/db/edp-lab-r4-fixture-20261024/runtime/src</string>
+  </dict>
+  <key>RunAtLoad</key><false/>
+  <key>KeepAlive</key>
+  <dict><key>SuccessfulExit</key><false/></dict>
+  <key>ThrottleInterval</key><integer>30</integer>
+  <key>StandardOutPath</key>
+  <string>/private/var/db/edp-lab-r4-fixture-20261024/logs/worker.stdout.log</string>
+  <key>StandardErrorPath</key>
+  <string>/private/var/db/edp-lab-r4-fixture-20261024/logs/worker.stderr.log</string>
+</dict>
+</plist>

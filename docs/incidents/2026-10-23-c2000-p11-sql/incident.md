@@ -249,3 +249,15 @@ smoke passed, but owner-protected profile/identity, raw response retention and
 negative-format capture have not yet been independently accepted. The later
 PR #62 prospective RAW authorization split remains a specification, not proof
 of deployment. PR #61 is separate and untouched. No PR #66 merge is implied.
+
+### 13.1 Bounded fixture approval and remaining final execution gate
+
+The Owner subsequently approved preparing an isolated root-owned R4 no-write
+fixture and protected read-only R8 preflight, with an explicit final review of
+paths, commands, service configuration and notification route before any
+privileged installation. The [exact execution review packet](../../operating/r4_fixture_review/owner_execution_packet.md)
+is prepared on PR #66. The proposed `/usr/bin/mail` command and Owner email
+destination have **not** been approved for activation or used. No root-owned
+fixture, launchd job or protected R8 response store has been installed yet.
+R4 and R8 therefore remain OPEN/BLOCKED for protected-live acceptance; the
+completed historical Day 5 result is unchanged.

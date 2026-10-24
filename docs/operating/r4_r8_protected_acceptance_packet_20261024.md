@@ -42,9 +42,12 @@ replay or protected-state mutation fails acceptance.
 
 **Current gate:** R4 offline tests PASS. Protected-host installation,
 independent schedule, actual operator alert and launchd restart/backoff are
-**BLOCKED pending explicit owner approval and execution**. The fixture
-notifier test sends to a disposable local inbox only; it is not delivery to
-the designated operator.
+**BLOCKED pending final Owner execution approval and execution**. The Owner
+approved the bounded disposable-fixture scope, then required exact paths,
+commands, service configuration and notification route before installation.
+The [review packet](r4_fixture_review/owner_execution_packet.md) supplies
+those artifacts. The fixture notifier test sends to a disposable local inbox
+only; it is not delivery to the designated operator.
 
 ## R8 installed-CLI evidence and limits
 
