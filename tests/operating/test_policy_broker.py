@@ -293,6 +293,14 @@ def test_future_day6_cohort_requires_signed_u10_handoff(tmp_path):
     with pytest.raises(Denied, match="RAW_HANDOFF_BLOCKED"):
         issue(root, queue_path, policy_path, trust, trust / "broker.pem",
               trust / "broker-mismatch")
+    document["sources"][0]["remote_readback_sha256"] = sources[0]["sha256"]
+    document["sources"][0]["byte_size"] += 1
+    signed(receipt, trust / "verifier.pem", document)
+    queue["raw_handoff"]["sha256"] = digest(receipt.read_bytes())
+    queue_path.write_bytes(canonical(queue))
+    with pytest.raises(Denied, match="RAW_HANDOFF_BLOCKED"):
+        issue(root, queue_path, policy_path, trust, trust / "broker.pem",
+              trust / "broker-wrong-size")
 
 
 def test_future_day6_missing_raw_handoff_routes_upstream_not_upload(tmp_path):
