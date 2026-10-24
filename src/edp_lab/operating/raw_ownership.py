@@ -63,3 +63,75 @@ def acquisition_remediation_request(
         "write_authorized": False,
         "resume_requires": "INDEPENDENTLY_VERIFIED_RAW_HANDOFF",
     }
+
+
+def verify_u10_raw_handoff(root, queue: dict, trust) -> dict:
+    """Verify immutable signed Acquisition/U10 receipt before Cohort processing.
+
+    Can be required by a separately owner-signed standing Cohort policy; old
+    historical Queue V1 bytes stay unchanged and are not silently upgraded.
+    This verifies trusted retained readback evidence, not live remote object
+    freshness. It never stages RAW or issues an Acquisition write grant.
+    """
+    import re
+    from pathlib import Path
+
+    from edp_lab.operating.authority import file_digest, verified_document
+
+    root = Path(root).resolve()
+    path_info = queue.get("raw_handoff")
+    if (not isinstance(path_info, dict)
+            or set(path_info) != {"path", "sha256"}
+            or not re.fullmatch(r"[a-f0-9]{64}", str(path_info["sha256"]))):
+        raise Denied("RAW_HANDOFF_BLOCKED")
+    path = Path(path_info["path"])
+    if (not path.is_absolute() or path.is_symlink()
+            or path.resolve().is_relative_to(root)):
+        raise Denied("RAW_HANDOFF_BLOCKED")
+    try:
+        if file_digest(path) != path_info["sha256"]:
+            raise Denied("RAW_HANDOFF_BLOCKED")
+        receipt = verified_document(root, path, trust)
+    except (OSError, ValueError, KeyError) as exc:
+        raise Denied("RAW_HANDOFF_BLOCKED") from exc
+    if (receipt.get("schema") != "EDP_U10_RAW_HANDOFF_V1"
+            or receipt.get("authority") != "protected-verifier-v1"
+            or receipt.get("status") != "VERIFIED"
+            or receipt.get("live_remote_readback") is not True
+            or receipt.get("cohort") != queue.get("cohort")
+            or not isinstance(receipt.get("sources"), list)
+            or not isinstance(queue.get("sources"), list)):
+        raise Denied("RAW_HANDOFF_BLOCKED")
+    sources = queue["sources"]
+    entries = receipt["sources"]
+    if len(entries) != len(sources):
+        raise Denied("RAW_HANDOFF_BLOCKED")
+    originals = {}
+    for source in sources:
+        if (not isinstance(source, dict) or not isinstance(source.get("identity"), str)
+                or not re.fullmatch(r"[a-f0-9]{64}", str(source.get("sha256", "")))
+                or source["identity"] in originals):
+            raise Denied("RAW_HANDOFF_BLOCKED")
+        originals[source["identity"]] = source["sha256"]
+    seen = set()
+    for item in entries:
+        if not isinstance(item, dict):
+            raise Denied("RAW_HANDOFF_BLOCKED")
+        identity = item.get("identity")
+        uri = item.get("remote_raw_path")
+        if (not isinstance(identity, str) or identity in seen
+                or originals.get(identity) != item.get("sha256")
+                or item.get("remote_readback_sha256") != item.get("sha256")
+                or type(item.get("byte_size")) is not int
+                or item["byte_size"] < 0
+                or not isinstance(uri, str)
+                or not uri.startswith("dbfs:/Volumes/")
+                or any(part in {"", ".", ".."} for part in uri[6:].split("/"))
+                or not re.fullmatch(
+                    r"[a-f0-9]{64}", str(item.get("readback_receipt_sha256", "")))):
+            raise Denied("RAW_HANDOFF_BLOCKED")
+        seen.add(identity)
+    if seen != set(originals):
+        raise Denied("RAW_HANDOFF_BLOCKED")
+    return {"status": "RAW_HANDOFF_VERIFIED", "verified_sources": len(entries),
+            "handoff_sha256": path_info["sha256"], "raw_write_authorized": False}
