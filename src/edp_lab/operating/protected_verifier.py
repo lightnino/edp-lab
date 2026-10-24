@@ -127,6 +127,11 @@ def attest_sql(root: Path, queue_path: Path, grant_path: Path, state_path: Path,
             or state["tasks"][task_id]["status"] != "VALIDATING"):
         raise Denied("SQL_WRITE_CHECKPOINT_MISMATCH")
     external = state["tasks"][task_id].get("external", {})
+    recovery = state["tasks"][task_id].get("technical_recovery")
+    if recovery is not None:
+        from edp_lab.operating.protected_recovery import verify_sql_recovery
+
+        verify_sql_recovery(root, queue_path, state_path, task, recovery, trust)
     statement_id = external.get("statement_id")
     if not isinstance(statement_id, str) or not statement_id:
         raise Denied("SQL_STATEMENT_ID_MISSING")
@@ -163,12 +168,15 @@ def attest_sql(root: Path, queue_path: Path, grant_path: Path, state_path: Path,
     if output.parent.resolve() != (trust.parent / "receipts").resolve():
         raise Denied("RECEIPT_OUTSIDE_PROTECTED_STORE")
     request = task_request(root, queue, queue_path, task, grant_path)
+    if recovery is not None:
+        request["operation_id"] = recovery["operation_id"]
     document = {"schema": "EDP_EXTERNAL_OPERATION_RECEIPT_V1",
                 "authority": "protected-verifier-v1",
-                "operation_id": task["operation_id"],
+                "operation_id": request["operation_id"],
                 "request_sha256": digest(canonical(request)),
                 "status": "VERIFIED", "live_readback": True,
                 "statement_id": statement_id, "table": uc["full_name"],
+                "terminal_state": "SUCCEEDED",
                 "submitted_at_utc": submitted_at,
                 "attested_at_utc": datetime.now(UTC).isoformat(),
                 "uc_table_id": uc["table_id"],
@@ -176,7 +184,7 @@ def attest_sql(root: Path, queue_path: Path, grant_path: Path, state_path: Path,
                 "uc_response_sha256": digest(canonical(uc))}
     _sign(document, key, output)
     return {"status": "VERIFIED", "receipt_sha256": file_digest(output),
-            "operation_id": task["operation_id"], "statement_id": statement_id}
+            "operation_id": request["operation_id"], "statement_id": statement_id}
 
 
 def attest_cohort(root: Path, queue_path: Path, grant_path: Path, state_path: Path,

@@ -266,7 +266,11 @@ def test_external_write_waits_for_readback_without_replay(tmp_path, monkeypatch)
     external_doc = {"schema": "EDP_EXTERNAL_OPERATION_RECEIPT_V1",
                     "operation_id": "write-001", "request_sha256": digest(canonical(seen[0])),
                     "status": "VERIFIED", "live_readback": True,
-                    "statement_id": "statement-write-001"}
+                    "statement_id": "statement-write-001",
+                    "terminal_state": "SUCCEEDED", "table": "workspace.test.output",
+                    "uc_table_id": "table-write-001",
+                    "terminal_response_sha256": "a" * 64,
+                    "uc_response_sha256": "b" * 64}
     signed = sign_document(tmp_path, private, external_doc)
     receipt.write_bytes(signed.read_bytes())
     fields = ("delta_ids", "delta_history", "delta_properties", "row_counts",

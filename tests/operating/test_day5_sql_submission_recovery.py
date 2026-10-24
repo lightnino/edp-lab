@@ -105,12 +105,16 @@ def test_sql_receipt_cannot_complete_checkpoint_without_submitted_id(
         "schema": "EDP_EXTERNAL_OPERATION_RECEIPT_V1", "operation_id": "roster-once",
         "request_sha256": digest(b"request"), "status": "VERIFIED",
         "live_readback": True, "statement_id": "statement-123",
+        "terminal_state": "SUCCEEDED", "table": "workspace.edp_lab.n500_roster",
+        "uc_table_id": "table-123", "terminal_response_sha256": "a" * 64,
+        "uc_response_sha256": "b" * 64,
     })
     monkeypatch.setattr("edp_lab.operating.runner.protected_trust_dir",
                         lambda *_: tmp_path / "trust")
     # The receipt is otherwise exact; only the checkpoint Statement ID is absent.
     monkeypatch.setattr("edp_lab.operating.runner.digest", lambda *_: digest(b"request"))
     task = {"kind": "databricks_write", "external_receipt": str(receipt),
+            "databricks_table": "workspace.edp_lab.n500_roster",
             "_statement_id": None}
     assert not _external_verified(root, task, {"operation_id": "roster-once"})
     task["_statement_id"] = "statement-123"

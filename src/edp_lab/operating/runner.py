@@ -165,7 +165,15 @@ def _external_verified(root: Path, task: dict, request: dict) -> bool:
     if task["kind"] == "databricks_write":
         return (common and isinstance(task.get("_statement_id"), str)
                 and bool(task["_statement_id"])
-                and proof.get("statement_id") == task["_statement_id"])
+                and proof.get("statement_id") == task["_statement_id"]
+                and proof.get("terminal_state") == "SUCCEEDED"
+                and proof.get("table") == task["databricks_table"]
+                and isinstance(proof.get("uc_table_id"), str)
+                and bool(proof["uc_table_id"])
+                and isinstance(proof.get("terminal_response_sha256"), str)
+                and len(proof["terminal_response_sha256"]) == 64
+                and isinstance(proof.get("uc_response_sha256"), str)
+                and len(proof["uc_response_sha256"]) == 64)
     return common
 
 
@@ -300,6 +308,13 @@ def run(root: Path, queue_path: Path, envelope: Path, state_dir: Path,
                                                     if value["status"] == "COMPLETE"}:
                 continue
             request = task_request(root, queue, queue_path, task, envelope)
+            recovery = current.get("technical_recovery")
+            if recovery is not None:
+                from edp_lab.operating.protected_recovery import verify_sql_recovery
+
+                verify_sql_recovery(root, queue_path, state_dir / "checkpoint.json",
+                                    task, recovery, protected_trust_dir(root))
+                request["operation_id"] = recovery["operation_id"]
             if current.get("status") == "VALIDATING" and task["kind"] in {
                     "raw_stage", "cohort_admit", "databricks_write", "git_write",
                     "databricks_job_submit"}:
