@@ -1,6 +1,6 @@
 # EDP Lab — Agent Entry Point (Binding Routing Rules)
 
-This file is a **stable entry point for autonomous agents**, not an incident diary, cohort status report, deployment approval or substitute for an installed policy. Read it first; follow the authoritative documents for the operation at hand. Never use the existence of a document as proof of live authorization.
+This file is a **stable entry point for autonomous agents**, not an incident diary, cohort status report, deployment approval or substitute for an installed policy. See the [Documentation Ownership Registry](docs/README.md) for canonical folder roles, incident disposition, contracts and historical-evidence classification. Read it first; follow the authoritative documents for the operation at hand. Never use the existence of a document as proof of live authorization.
 
 ## 1. Route each task to its owning specification
 
@@ -11,7 +11,7 @@ This file is a **stable entry point for autonomous agents**, not an incident dia
 | Lossless, Stability, economic meaning controls, resource limits, accepted result freeze and Git exit | [Validation, Stability, Budget & Freeze Specification](docs/workflows/validation_freeze_lifecycle_v1.md) | Exact applicable oracles, independent PASS/BLOCKED criteria and evidence |
 | Shared execution authority, separation of duties, 0A/P5 enforcement, uncertain writes, liveness and recovery classification | [Agent Operating Contract V1](docs/workflows/agent_operating_contract_v1.md) | **Canonical cross-lifecycle rules**, including [Recovery Decision Matrix](docs/workflows/agent_operating_contract_v1.md#recovery-decision-matrix) |
 | How to start, observe, diagnose, safely reconcile, escalate and resume | [Agent Operating Guide V1](docs/operating/agent_operating_guide_v1.md) | Generic protected recovery runbook; **does not grant authority** |
-| Task-specific source identity, parsing, modeling, Vault/consumer semantics | The **applicable versioned domain contract and owner decisions** referenced by that lifecycle/task | Narrower scope and acceptance evidence; no unapproved semantic assumptions |
+| Task-specific source identity, parsing, modeling, Vault/consumer semantics | [Canonical Domain/Tool Contracts Registry](docs/contracts/README.md), including approved [Vault Load Contract V1](docs/vault_load_contract_v1.md) | Narrower, SHA-/path-pinned scope and acceptance evidence; no unapproved semantic assumptions and no implicit execution approval |
 
 When a new independent workflow is introduced, create or update its **own** reviewed specification and link it in this routing table. Put reusable cross-lifecycle requirements in the Operating Contract, operator steps in the Guide, and enforcement in protected runtime/tests. Do **not** append historical narratives or new scope-specific runbooks to this entry point.
 
