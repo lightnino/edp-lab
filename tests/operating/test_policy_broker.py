@@ -244,3 +244,68 @@ def test_broker_fails_closed(tmp_path, change, reason):
     queue_path.write_bytes(canonical(queue))
     with pytest.raises(Denied, match=reason):
         issue(root, queue_path, policy, trust, trust / "broker.pem", trust / "grants")
+
+
+def test_future_day6_cohort_requires_signed_u10_handoff(tmp_path):
+    """Synthetic Day 6-like cohort: consume trusted RAW, never stage it."""
+    root, trust, queue_path, policy_path, _members = setup(tmp_path)
+    queue = json.loads(queue_path.read_bytes())
+    policy = json.loads(policy_path.read_bytes())["document"]
+    policy["require_verified_raw_handoff"] = True
+    signed(policy_path, trust / "owner.pem", policy)
+
+    # A signed standing policy cannot be bypassed by an agent omitting the
+    # newly required Acquisition/U10 handoff field from an otherwise valid Queue.
+    with pytest.raises(Denied, match="RAW_HANDOFF_BLOCKED"):
+        issue(root, queue_path, policy_path, trust, trust / "broker-empty")
+
+    sources = queue["sources"]
+    receipt = trust / "u10-handoff.json"
+    document = {
+        "schema": "EDP_U10_RAW_HANDOFF_V1",
+        "authority": "protected-verifier-v1",
+        "status": "VERIFIED", "live_remote_readback": True,
+        "cohort": queue["cohort"],
+        "sources": [{
+            "identity": row["identity"], "sha256": row["sha256"],
+            "byte_size": Path(row["path"]).stat().st_size,
+            "remote_raw_path": f"dbfs:/Volumes/workspace/edp_lab/raw/reused/{row['identity']}/original.txt",
+            "remote_readback_sha256": row["sha256"],
+            "readback_receipt_sha256": digest(row["sha256"].encode()),
+        } for row in sources],
+    }
+    signed(receipt, trust / "verifier.pem", document)
+    queue["raw_handoff"] = {
+        "path": str(receipt), "sha256": digest(receipt.read_bytes())}
+    queue_path.write_bytes(canonical(queue))
+    issued = issue(root, queue_path, policy_path, trust, trust / "broker-verified")
+    assert load_grant(root, issued, trust)["operations"] == [
+        "freeze_verify", "stage_gate", "verify_file"]
+
+    # A remote-hash mismatch remains blocked even when signed by a verifier:
+    # signature alone cannot substitute for verified source bytes.
+    document["sources"][0]["remote_readback_sha256"] = "f" * 64
+    signed(receipt, trust / "verifier.pem", document)
+    queue["raw_handoff"]["sha256"] = digest(receipt.read_bytes())
+    queue_path.write_bytes(canonical(queue))
+    with pytest.raises(Denied, match="RAW_HANDOFF_BLOCKED"):
+        issue(root, queue_path, policy_path, trust, trust / "broker-mismatch")
+
+
+def test_future_day6_missing_raw_handoff_routes_upstream_not_upload(tmp_path):
+    root, trust, queue_path, policy_path, _members = setup(tmp_path)
+    policy = json.loads(policy_path.read_bytes())["document"]
+    policy["require_verified_raw_handoff"] = True
+    signed(policy_path, trust / "owner.pem", policy)
+    with pytest.raises(Denied, match="RAW_HANDOFF_BLOCKED"):
+        issue(root, queue_path, policy_path, trust, trust / "broker")
+    from edp_lab.operating.raw_ownership import acquisition_remediation_request
+
+    source = json.loads(queue_path.read_bytes())["sources"][0]
+    packet = acquisition_remediation_request(
+        identity=source["identity"], raw_sha256=source["sha256"],
+        byte_size=Path(source["path"]).stat().st_size,
+        reason_code="RAW_RECEIPT_MISSING", cohort="C2")
+    assert packet["target_actor"] == "ACQUISITION"
+    assert packet["operations_authorized"] == []
+    assert packet["write_authorized"] is False
