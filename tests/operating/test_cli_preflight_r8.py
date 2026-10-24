@@ -53,7 +53,7 @@ def test_exact_uc_missing_cli_render_and_json() -> None:
     for rejected in (
         response(1, err=b"Error: PERMISSION_DENIED"),
         response(1, err=b"Error: connection refused"),
-        response(1, err="Error: Table 'workspace.edp_lab.other' does not exist.".encode()),
+        response(1, err=b"Error: Table 'workspace.edp_lab.other' does not exist."),
         response(0, err=("Error: " + message).encode()),
         response(1, out=b"some output", err=("Error: " + message).encode()),
         response(1, err=b"Not Found"),
