@@ -68,6 +68,7 @@ def acquisition_fixture(tmp_path: Path):
         "source": source,
         "remote_path": uri,
         "discovery_receipt": str(receipt),
+        "discovery_receipt_sha256": digest(receipt.read_bytes()),
     }))
     now = datetime.now(UTC)
     pin = digest(b"legacy mandatory field")
@@ -141,7 +142,7 @@ def test_acquisition_stage_requires_independent_signed_discovery(
     discovery = json.loads(receipt.read_bytes())["document"]
     discovery["reusable_raw_found"] = True
     sign(receipt, trust / "verifier.pem", discovery)
-    with pytest.raises(Denied, match="ACQUISITION_DISCOVERY_UNVERIFIED"):
+    with pytest.raises(Denied, match="ACQUISITION_DISCOVERY_CHANGED"):
         execute_acquisition_stage(root, grant, plan, ledger, execute=False)
     assert not ledger.exists()
 
