@@ -1,6 +1,6 @@
 # Reusable Vault Dev 0A V2 — installation and authority packet
 
-**Status: code prepared; protected installation and live verification pending.** The owner paused C1500 Step 2 execution while preserving its [exception](../metadata/authorizations/day6_vault_c1500_prototype_exception_v1.json), sample and [evidence](../reports/day6_vault_prototype_evidence.md). The approved [Vault Contract V1](vault_load_contract_v1.md) and all Day 5 services remain unchanged.
+**Status: partial installation at OAuth secret creation; live verification pending.** The existing service principal and protected root are handled by the [bounded owner recovery](vault_0a_v2_partial_install_recovery.md). The owner has resumed independent C1500 Step 2 work while preserving its [exception](../metadata/authorizations/day6_vault_c1500_prototype_exception_v1.json), sample and [evidence](../reports/day6_vault_prototype_evidence.md). The approved [Vault Contract V1](vault_load_contract_v1.md) and all Day 5 services remain unchanged.
 
 ## Separation of concerns
 
