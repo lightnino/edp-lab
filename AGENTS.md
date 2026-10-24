@@ -1,74 +1,47 @@
-# EDP Lab Agent Rules (Binding)
+# EDP Lab — Agent Entry Point (Binding Routing Rules)
 
-## May do
-- Create/organize repo folders, files, packaging, docs and Git/CI workflows.
-- Write deterministic, read-only file inventory, hash checks, column listing, mechanical loaders and tests.
-- Run reproducible scripts and report exact output/failures.
-- Propose semantic decisions **as questions**, without executing them.
+This file is a **stable entry point for autonomous agents**, not an incident diary, cohort status report, deployment approval or substitute for an installed policy. Read it first; follow the authoritative documents for the operation at hand. Never use the existence of a document as proof of live authorization.
 
-## May NOT do (until explicit human-approved later-phase policy)
-- Infer issuer/security/listing canonical mappings or identifiers.
-- Choose enterprise business keys or entity merge/split rules.
-- Declare two source identifiers semantically equivalent based on names/tickers.
-- Design population-level deduplication, transformations, reconciliation tolerances, or sector classifications.
-- Mutate, overwrite, auto-correct, or drop RAW rows/files.
-- Silently select a 13F amendment as authoritative, or align historical reporting dates without evidence.
-- Make network/API calls, including OpenAI API, without direct instruction; do not spend API credits.
-- Commit RAW bytes, credentials, `.env`, results or DuckDB local database.
+## 1. Route each task to its owning specification
 
-## Review gates
-- Before any mapping, identity resolution, canonical merge, business key, or nontrivial data transformation: STOP and request human review with input evidence, alternatives and consequences.
-- Every output must preserve reproducible source references. Unknowns are recorded, not guessed.
-- Verify source hashes before ingesting; do not process changed inputs silently.
+| Question / operation | Normative source | Responsibility |
+| --- | --- | --- |
+| Discover/acquire sources, RAW candidate staging, source eligibility, Universe approval/handoff | [Universe Lifecycle](docs/workflows/universe_lifecycle_v1.md) | Acquisition owns RAW writes; Universe owns membership/version decisions; neither alone authorizes cohort processing |
+| Select a cohort, choose INITIAL_MODEL / CORPUS_ONLY / ADDITIVE / CORRECTIVE, run RAW-read → CLEAN → QUERYABLE, diagnose P11 | [Cohort & Model Lifecycle](docs/workflows/cohort_model_lifecycle_v1.md) | Processing stages/branching/checkpoint and strict RAW-read-only boundary |
+| Lossless, Stability, economic meaning controls, resource limits, accepted result freeze and Git exit | [Validation, Stability, Budget & Freeze Specification](docs/workflows/validation_freeze_lifecycle_v1.md) | Exact applicable oracles, independent PASS/BLOCKED criteria and evidence |
+| Shared execution authority, separation of duties, 0A/P5 enforcement, uncertain writes, liveness and recovery classification | [Agent Operating Contract V1](docs/workflows/agent_operating_contract_v1.md) | **Canonical cross-lifecycle rules**, including [Recovery Decision Matrix](docs/workflows/agent_operating_contract_v1.md#recovery-decision-matrix) |
+| How to start, observe, diagnose, safely reconcile, escalate and resume | [Agent Operating Guide V1](docs/operating/agent_operating_guide_v1.md) | Generic protected recovery runbook; **does not grant authority** |
+| Task-specific source identity, parsing, modeling, Vault/consumer semantics | The **applicable versioned domain contract and owner decisions** referenced by that lifecycle/task | Narrower scope and acceptance evidence; no unapproved semantic assumptions |
 
-## Current approved scope
-- Source Identity and GOLD_V2 registration are approved; see `docs/source_instance_identity.md` and `docs/gold_set_v2_admission.md`.
-- Snapshot-scoped lexical parsing is approved only as specified in `docs/parsing_profiling_freeze_v2.md` and DEC-000001–DEC-000005. The profiling functions use that scope; source NULL semantics remain unresolved.
-- `docs/ownership_approval_boundaries.md` and Finding Schema v1 are approved governance policy. Mechanical validation never implies semantic approval.
-- Deterministic execution within an explicitly approved rule/version/snapshot scope does not need repeated per-record review. New semantic decisions still require the review gates above.
-- The five deterministic profiling functions are implemented; see `docs/profiling_tools.md` and `docs/profiling_output_contract.md`. GOLD_V2 execution covers 13 tables, 304,508 occurrences and 149 column profiles, with semantic NULL-dependent metrics and candidate-key eligibility NOT_COMPUTED.
-- C300 was admitted and frozen under explicit user authorization on 2026-10-20; the exact approved roster and additive manifest are persisted in `metadata/cohorts/C300.csv` and `metadata/corpus_manifest_v3.csv`, with original freeze/authorization records and evidence references in `metadata/freezes/C300_v1/`. Operational evidence remains in `runs/c300/frozen-v1/`. See `docs/c300_admission.md`. C300 parser registration and execution remain unapproved; physical admission does not extend GOLD parser scope. Semantic integration remains unimplemented. Historical phase labels in frozen documents describe their original scope.
+When a new independent workflow is introduced, create or update its **own** reviewed specification and link it in this routing table. Put reusable cross-lifecycle requirements in the Operating Contract, operator steps in the Guide, and enforcement in protected runtime/tests. Do **not** append historical narratives or new scope-specific runbooks to this entry point.
 
-## EDP Lab Mission and Engineering Priorities
+**Document status matters.** A PROPOSED specification is not binding authority merely because it is linked here. Verify each document's actual review/approval state and all required installed-policy gates. If documents disagree about an operation, pause and request explicit owner clarification rather than choosing the more permissive rule.
 
-### Mission
-Demonstrate the feasibility of a domain-agnostic, Databricks-based enterprise data platform maintaining RAW -> CLEAN -> QUERYABLE with measurable LOSSLESS and STABILITY properties. Evaluate whether standardized contracts, automation, metadata and agents could enable a small engineering team (~10 people rather than ~200) to operate it. This staffing proposition is an experimental hypothesis, not an established guarantee.
+## 2. Authority and safety invariants
 
-### Engineering priorities (binding)
-1. Prioritize reusable platform mechanisms over exhaustive source-specific interpretation.
-2. Demonstrate correctness of system invariants, not perfect understanding of every source record.
-3. Preserve RAW immutability, provenance, lineage, reproducibility and explicit failure accounting.
-4. FAILED, BLOCKED and UNRESOLVED are acceptable recorded outcomes. Silent data loss, distortion and false PASS claims are not.
-5. Use representative experiments and bounded evaluations when sufficient for the current requirement; state actual coverage.
-6. Do not repeatedly scan or retest unchanged evidence unless a relevant change invalidates the previous result.
-7. Investigate individual anomalies only as necessary to demonstrate detection and isolation mechanisms.
-8. Measure automation coverage, human intervention, processing time, failure rate and resource usage.
-9. Request human judgment only when an actual authority decision is required; preserve existing approval boundaries.
-10. Follow the Study Notes sequentially. Do not introduce downstream requirements into earlier sections or expand scope without a concrete dependency.
-11. Keep Git branch, commit and PR names independent of Study Notes section numbers.
-12. Prefer the simplest implementation satisfying current acceptance criteria.
+- Operate only within the **currently owner-installed**, independently enforced standing policy, signed grant/receipt and exact approved source/model/rule/registry scope. An editable worktree, this AGENTS file, an unsigned manifest or green local tests cannot grant permissions.
+- Agents may implement deterministic, reversible, scoped code, local tests and read-only analysis **within authorized task scope**. Do not make external writes, network/API calls or spend paid resources beyond explicitly permitted standing policy/task instructions. Protect credentials, keys and root-only ledgers in separately controlled environments.
+- Acquisition alone may stage RAW using its specific protected identity; Cohort/Model can only verify/consume RAW. Preserve original bytes, immutable identity, hashes, provenance, lineage, previous frozen results and approved holdouts. Never silently deduplicate, overwrite, or restage originals.
+- Do not infer enterprise business identity, canonical keys, issuer equivalence, missing-value meaning, mapping, tolerance, semantic reconciliation, or which amendment supersedes another without appropriate evidence and explicit semantic authority. Preserve unresolved interpretations and source-native data; mechanical correctness is not business approval.
+- Independently verify remote effects and signed receipts before declaring an external operation or final freeze complete. Do not resubmit an uncertain non-idempotent write; follow the [Recovery Decision Matrix](docs/workflows/agent_operating_contract_v1.md#recovery-decision-matrix) and bound the resume to the original checkpoint.
+- **Checkpoint status and Supervisor liveness are different facts.** Check trusted process/service heartbeat, latest verified progress and the applicable stall threshold before saying a run is active. A stale VALIDATING state cannot justify "still running." Missing monitoring is an operational gap to report, never permission to assume success or resubmit SQL.
+- Retain human gates for consequential new semantics, Universe/policy scope changes, true integrity/budget exceptions outside installed limits and explicit PR review/merge. No agent can sign its own expansion.
+- Never commit RAW source bytes, secret material, private ledgers, local databases or unapproved result dumps. Record evidence by stable references and hashes.
 
-These priorities do not rewrite frozen historical contracts or weaken existing safety and integrity rules.
+## 3. Standard agent lifecycle
 
-## Future-day operating contract
+1. **Discover the owner of the task.** Choose the owning Lifecycle/specification and its applicable version, domain contract and acceptance tests; do not combine independent lifecycles unless authorized.
+2. **Establish reality.** Inspect latest verified `main`, current signed approval/policy/grant and actual protected-runtime availability, source/remote evidence, previously accepted freeze and current checkpoint. Do **not** substitute historical narrative or planned work for current observed state.
+3. **Bind and execute.** Stay within approved identities, operations, budget and time bounds. Prefer reusable mechanisms, targeted tests, existing artifacts and unchanged snapshots over bespoke rework or repeated whole-corpus scans.
+4. **Monitor and recover.** Track service liveness **and** progress; distinguish long legitimate work, hard stalls, nontransient failures and uncertain remote effects. Use the Contract decision matrix and protected Guide. Auto-repair only when the installed independent authority permits it; otherwise provide a single evidence-complete decision packet.
+5. **Independently verify.** Run applicable registered controls and negative tests, verify remote readback and exact immutable output IDs/receipts. State PASS, FAIL, BLOCKED and UNRESOLVED precisely; never convert a local simulation, proposal or signed plan into a live PASS.
+6. **Deliver with approval gates.** For Git writes, use a scoped branch, tests/lint, CI and reviewed PR; await explicit required human merge approval and verify final `main` SHA. Report durable outcomes, scope limitations, retries, failed states and measured human/compute costs; leave unknown figures null.
 
-**Binding shared addendum:** [Agent Operating Contract V1](docs/workflows/agent_operating_contract_v1.md) supplies the Recovery Decision Matrix and cross-lifecycle execution/escalation authority. [Agent Operating Guide V1](docs/operating/agent_operating_guide_v1.md) supplies the protected runbook. These are prospective reusable rules, not historical incident narratives; actual protected runtime enforcement must be separately verified. A task at VALIDATING does not mean its Supervisor is alive: verify service heartbeat and bounded progress before reporting an active run.
+## 4. Where historical and current state belongs
 
+- **Past approvals, source-specific exceptions, runs, incidents and exact freeze evidence:** the relevant `metadata/authorizations/`, `metadata/freezes/`, `metadata/evaluations/`, `reports/` and domain-specific records, with original hashes/refs.
+- **Current runnable authority:** the actual protected installed policy, grants, revocations, trust material and readback receipts, independently verified. Repository descriptions do not supersede these.
+- **Reusable rule changes:** reviewed owning Workflow or Operating Contract, with negative tests/enforcement as applicable.
+- **Operational how-to changes:** shared Operating Guide; runtime changes require separate code/tests/deployment. No new historical status sections in `AGENTS.md`.
 
-For each new day, read the approved scope and last frozen result, verify the baseline and input hashes, then select all applicable versioned Lossless, Stability and FIN controls. Preserve newly approved controls in `metadata/operating/validation_registry_v1.json` or a reviewed successor. Treat `PRESERVED_NOT_MODELED` as an independent economic-research question, never as a corrupt-record count or authority to change source values. Structural absence and missing business approval are not data defects without evidence.
-
-Future autonomous external operations require a bounded signed grant verified against owner-controlled trust material outside the writable worktree, operation-boundary enforcement, durable state, bounded retries and output locking. One grant may cover multiple authorized steps and resumptions. Historical SHA-pin authorization remains valid for historical reproduction only. The agent cannot approve its own grant by editing a repository file. Proposed economic rules stay proposals until human approval.
-
-**Day 5 standing-authorization target (not implemented by this rule text):** For this personal EDP Lab, 0A should establish once a bounded, protected infrastructure execution policy and independent issuer. P1 selects a new N500 from the existing approved Universe (without new Universe-owner review); P5 should check that cohort/operation/Databricks scope mechanically rather than request a human signature per RAW upload, Databricks Jobs/SQL/write, routine technical recovery or result freeze. Preserve human decisions for **new economic/semantic rules, owner changes to approved Universe membership/policy, C3.4 >10× exceptions and P14 PR review/merge approval**. Currently implemented exact signed-grant enforcement remains binding **until** the external standing-policy issuer exists; an Agent may neither sign/approve its own grants nor bypass missing trusted execution setup. See `docs/workflows/agent_operating_contract_v1.md`.
-
-Accepted final results require actual version-pinned Databricks Result Freeze verification and live readback evidence. A Git marker alone is insufficient; the later executed Day 4 V2 Databricks freeze is recorded separately from its historical Git-only marker. Use branch, tests, review, PR, CI and merge gates for writes; continue through routine authorized steps, record interventions and recovery, and pause only for real integrity or semantic authority decisions. See `docs/workflows/agent_operating_contract_v1.md`.
-
-### Scoped C300 parser approval
-The user approved mechanical, read-only lexical parsing and shallow inspection of exactly the 720 PASS bindings in approval packet SHA-256 `3873e9d07e4bcc2f357f940d05cf4fc5dc1262358b641d1debba2ef117910e05`. This explicit subsequent authority supersedes only the earlier statement that C300 parser execution is unapproved for these bindings. The other 12 FSDS `num.txt` bindings remain FAILED/BLOCKED with their evidence intact. No semantic NULL interpretation, business key, canonical mapping or modification to RAW, GOLD or frozen C300 is approved. Preserve the original packet membership and historical checkpoints; see `metadata/section_2_6_checkpoint_v2.json` for the post-approval evidence reference.
-
-## Day 4 subsequent owner authorization (2026-10-23 SGT)
-
-- The original Day 4 Step 13 CANDIDATE and Exit V1 PARTIAL assessments remain historical evidence. The requesting owner subsequently authorized an explicit **bounded source-preserving O_C1500_M2 result freeze by human override**, recorded in `metadata/freezes/O_C1500_M2_v1/`, and a **Day 4 COMPLETE_BY_HUMAN_OVERRIDE_WITH_EXCEPTIONS** closeout in `metadata/evaluations/day4_exit_v2.json`.
-- Standing **10× C3.4 phase budget** is approved **only for future comparably measured N750-like workloads**, until explicit supersession; see `metadata/authorizations/day4_c3_4_budget_approval_v1.json`. No automatic new workload applicability or retrospective technical C3.4 PASS.
-- The 50 source/QName Treasury L3 dispositions and B2.1/C1 source-preserving PASS were separately approved in PR #48. The 155 structural MISSING outcomes are not corrupt records. Treasury L6-B remains NOT_IMPLEMENTED; no canonical economic or entity semantics are approved.
-- This Git freeze marker records a human decision and pinned version-0 references; it does not assert that new Databricks readback, physical write protection, independent archive, or WORM immutability was performed. Those controls must be separately verified before any stronger retention claim.
+**EDP Lab engineering objective:** test a reusable Databricks RAW → CLEAN → QUERYABLE platform preserving Lossless and Stability invariants with measurable automation, throughput, cost, human intervention and correctness. The small-team operating model is a hypothesis to measure, not a license to relax evidence or safety gates. Prefer minimal general mechanisms over repeated source-specific bespoke patches.
