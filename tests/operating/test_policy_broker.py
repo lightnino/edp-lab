@@ -257,7 +257,8 @@ def test_future_day6_cohort_requires_signed_u10_handoff(tmp_path):
     # A signed standing policy cannot be bypassed by an agent omitting the
     # newly required Acquisition/U10 handoff field from an otherwise valid Queue.
     with pytest.raises(Denied, match="RAW_HANDOFF_BLOCKED"):
-        issue(root, queue_path, policy_path, trust, trust / "broker-empty")
+        issue(root, queue_path, policy_path, trust, trust / "broker.pem",
+              trust / "broker-empty")
 
     sources = queue["sources"]
     receipt = trust / "u10-handoff.json"
@@ -278,7 +279,8 @@ def test_future_day6_cohort_requires_signed_u10_handoff(tmp_path):
     queue["raw_handoff"] = {
         "path": str(receipt), "sha256": digest(receipt.read_bytes())}
     queue_path.write_bytes(canonical(queue))
-    issued = issue(root, queue_path, policy_path, trust, trust / "broker-verified")
+    issued = issue(root, queue_path, policy_path, trust, trust / "broker.pem",
+              trust / "broker-verified")
     assert load_grant(root, issued, trust)["operations"] == [
         "freeze_verify", "stage_gate", "verify_file"]
 
@@ -289,7 +291,8 @@ def test_future_day6_cohort_requires_signed_u10_handoff(tmp_path):
     queue["raw_handoff"]["sha256"] = digest(receipt.read_bytes())
     queue_path.write_bytes(canonical(queue))
     with pytest.raises(Denied, match="RAW_HANDOFF_BLOCKED"):
-        issue(root, queue_path, policy_path, trust, trust / "broker-mismatch")
+        issue(root, queue_path, policy_path, trust, trust / "broker.pem",
+              trust / "broker-mismatch")
 
 
 def test_future_day6_missing_raw_handoff_routes_upstream_not_upload(tmp_path):
@@ -298,7 +301,8 @@ def test_future_day6_missing_raw_handoff_routes_upstream_not_upload(tmp_path):
     policy["require_verified_raw_handoff"] = True
     signed(policy_path, trust / "owner.pem", policy)
     with pytest.raises(Denied, match="RAW_HANDOFF_BLOCKED"):
-        issue(root, queue_path, policy_path, trust, trust / "broker")
+        issue(root, queue_path, policy_path, trust, trust / "broker.pem",
+              trust / "broker")
     from edp_lab.operating.raw_ownership import acquisition_remediation_request
 
     source = json.loads(queue_path.read_bytes())["sources"][0]
