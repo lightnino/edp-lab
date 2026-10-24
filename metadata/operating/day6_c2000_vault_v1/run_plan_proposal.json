@@ -1,0 +1,26 @@
+{
+  "schema": "DAY6_C2000_VAULT_RUN_PLAN_PROPOSAL_V1",
+  "status": "INELIGIBLE_PENDING_OWNER_AND_PROTECTED_VERIFIER_GATES",
+  "cohort_id": "C2000",
+  "workload_kind": "BOUNDED_PROTOTYPE",
+  "event_kind": "ADMITTED",
+  "planned_run_id": "vault-c2000-bounded-v1",
+  "input_manifest_sha256": "ee7adf7c39d3fc702692d3b5fe8561d14ecdac33c592f823ae0ddea4d4daf613",
+  "load_plan_sha256": "241ed0e10e041587bcd132f667960f7e7f1521c537275460c2f2ab08647c931f",
+  "local_evidence_directory_ignored": "runs/day6-vault-c2000-v1",
+  "expected_data_occurrences": 127,
+  "synthetic_rows": 6,
+  "expected_business_rows": {
+    "h_filing": 20,
+    "h_concept": 24,
+    "l_fact_slot": 76,
+    "r_source_occurrence": 127,
+    "s_fact_assertion": 127,
+    "s_num_m2_value": 127
+  },
+  "runtime_cap_seconds": 3600,
+  "statement_cap": 60,
+  "zero_retry_on_uncertain_write": true,
+  "protected_delta_readback": "REQUIRED_NOT_RUN",
+  "replay_and_negative_controls": "REQUIRED_NOT_RUN"
+}

@@ -1,0 +1,25 @@
+# Day 6 Step 2 bounded Vault prototype plan V1
+
+**Historical read-only C1500 preparation.** The owner withdrew the one-time C1500 exception as `WITHDRAWN_UNEXERCISED`; the authorization file was removed from the current branch. The approved [Vault Load Contract V1](vault_load_contract_v1.md) is unchanged. This document describes the prior read-only sample and unexecuted isolated write plan; it grants no current execution authority. The current Step 2 plan is [C2000](vault_c2000_rebaseline_v1.md).
+
+## Verified read-only inputs
+
+`scripts/day6_vault_prototype.py sample` uses pinned `VERSION AS OF 0` M1 records and COMPLETE bindings for `SRC000005`, `SRC000054`, and `SRC000064`. It partitions by every physical full-context field, selects every repeated Fact Slot, the first eight byte-offset-sorted DATA records per source, and the seven named witnesses. The result is 127 DATA occurrences, below the 1,000 cap. The exact SQL SHA-256 is `03d04d9835328b58f181b78fd8e4b856c535f43d74f4c5a3d68793044ff7c939`; the ignored row manifest has canonical rows SHA-256 `366ca59ac251fa54d0a2c97ebdd8f9cacbcf773231c61aa20a504196a3cf31dc`. `build-local` uses the reference typed serializer and existing numeric converter. Its ignored projected manifest SHA-256 is `a73d325c814ebcb4bbb7d4b27f8925e7dd7702af64192fb315df077a9f89a41d`.
+
+`SRC000005` uses `workspace.edp_lab.clean_c300_m1_records_main_recovery_20261021_v4_full` and its binding table at version 0, parser `C300_PARSER_V1`, model `M1_LEXICAL_V1`, rule `C300_LITERAL_IDENTITY_V1`. The two later sources use the corresponding `num_recovery_20261021_v1_recovery` records and bindings at version 0, parser/profile/rule `C300_FSDS_NUM_QUOTE_BOUNDARY_V1`, model `M1_LEXICAL_V1`. All three are among the 60 approved source-scoped FSDS NUM M2 bindings, with `M2_ADDITIVE_TYPED_NUMERIC_V1`, `EXACT_DECIMAL_38_4_V1`, and `FSDS_NUM_VALUE_SCOPE_V1` for ordinal 9 only.
+
+The local worktree contains no three pinned RAW ZIPs. Prior Step 1 evidence records independent ZIP/member hash verification and the seven source byte witnesses. This Step 2 read reverified the hashes and locators against pinned M1 binding/record rows, but it did not rehash RAW bytes. A final source-byte verification remains a live gate before promotion.
+
+## Isolated deployment boundary and allowlist
+
+The planned namespace is `workspace.edp_lab_day6_vault_proto` after a trusted grant and `CREATE SCHEMA` privilege are independently verified. Read-only preflight found no such schema and `SHOW GRANTS ON CATALOG workspace` returned only `USE CATALOG` for the workspace user group. No protected `EDP_OWNER_TRUST_DIR` or `EDP_POLICY_BROKER_SOCKET` is configured in this session. The binding [operating contract](agent_operating_contract.md) requires an external signed grant and protected write adapter for future autonomous Databricks writes. No DDL or DML was submitted.
+
+The exact table allowlist is `h_filing`, `h_concept`, `l_fact_slot`, `r_source_occurrence`, `s_fact_assertion`, `s_num_m2_value`, `r_load_event`, and `vault_reject_quarantine`, all inside that one schema. [The migration](../sql/vault/day6_proto_v1.sql) contains only `CREATE SCHEMA IF NOT EXISTS` and `CREATE TABLE IF NOT EXISTS` on those targets. Expected first-load business rows from the saved sample are 20, 24, 76, 127, 127, and 127 respectively; load-event rows would be 127 on first submission, and quarantine starts at zero. Actual Delta counts are **not measured**.
+
+The prospective load must verify exact source bytes, binding and parser versions, schema permissions, signed operation scope, and empty or compatible target tables before writes. For each row it must compare stored components and payload hashdiff before an insert. A match is a replay event without a new business row; any component or payload mismatch is quarantine plus a hard failure. Tables are written in Hub, Link, Occurrence, Assertion, M2, audit order. Because these are separate Delta transactions, each step needs durable operation ID, statement receipt, independent key/count readback, and restart from the first unverified step. No `DROP`, `REPLACE`, `DELETE`, full-table rewrite, or source-table update is in scope. Quarantine must retain exact input and lineage for failed synthetic controls. The final gate must compare every persisted row to the independently saved input manifest and reference hashes, including post-replay and negative controls.
+
+The bounded warehouse read used the existing SQL warehouse `589e80595c7c8cb8`; the sample query ran for about 48 seconds of client wall time. Databricks did not report compute units or monetary cost in the retained statement response. Planned writes are eight small Delta tables and at most 127 admitted DATA occurrences, plus separately labeled negative controls. Runtime and cost caps must be set in an independently issued operation grant before execution.
+
+## Current gate
+
+`PROTOTYPE_BLOCKED_WRITE_AUTHORIZATION`. The read-only sample and local keys are ready. Deployment, replay, quarantine and independent Delta readback remain unexecuted, so `VAULT_PROTOTYPE_VALIDATED` is not claimed.

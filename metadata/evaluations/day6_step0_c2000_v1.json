@@ -1,0 +1,27 @@
+{
+  "schema": "DAY6_STEP0_C2000_BASELINE_V1",
+  "status": "PASS_SIGNED_C2000_FREEZE",
+  "remote_main_commit": "12874dd2aa581a80086afa24a3d21a0a1aa6f3e4",
+  "cohort": "C2000",
+  "cohort_freeze": "metadata/freezes/C2000_v1/freeze.json",
+  "cohort_freeze_sha256": "324ca5e416adabc443d18d8066fbccdf137f4cb50aa20934e645615f4ee77ff3",
+  "source_roster_sha256": "2a72b8f8483e2181a3112a26b5d68d702b92308def6e74978838b155cfd85312",
+  "result_freeze": "metadata/freezes/O_C2000_M2_v1/databricks_result_freeze_v1.json",
+  "result_freeze_sha256": "942fa887ceea8cf5c9bc64c603c2044e1b643b01fcbc29909ce264c024b69374",
+  "signed_receipt_sha256": "e1023289fedb3b682e0afe33bc350997e5d84c5aa27e9d00bf34bc760fe93830",
+  "signed_receipt_verified_against": "/private/var/db/edp-lab/trust/verifier_ed25519_public.pem",
+  "live_uc_result_observed": {
+    "name": "workspace.edp_lab.o_c2000_m2_result_frozen_day5_v1",
+    "table_id": "a9b7d2ab-4d9d-462a-b046-7f04bf144773",
+    "type": "VIEW",
+    "definition_contains_prior_c1500_view": true,
+    "definition_contains_new_clean_version_0": true
+  },
+  "accepted_day5_tasks": 513,
+  "physical_sources": 2000,
+  "combined_occurrences": 321188377,
+  "lossless_controls": "FIN_001/002_AND_TRY_001/004_PASS_IN_SIGNED_DAY5_EVIDENCE",
+  "vault_contract_sha256": "681c3f6a9a4446b5357c3ab6c6534e6fd5b8cf944f967ea9ab27dcc2c8b5aabe",
+  "vault_serializer_sha256": "c80c43e299424947d1d4c6bcd2211235bebd79efc03923e2a9db55bc682a659a",
+  "step2_status": "BLOCKED_VAULT_INSTALL_AND_NEW_C2000_OWNER_SCOPE_APPROVAL"
+}

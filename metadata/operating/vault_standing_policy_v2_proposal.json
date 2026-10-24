@@ -1,0 +1,40 @@
+{
+  "schema": "EDP_VAULT_STANDING_POLICY_V2",
+  "policy_id": "VAULT_DEV_STANDING_V2",
+  "authority": "requesting-owner-vault-dev-v2",
+  "status": "UNSIGNED_OWNER_INSTALL_PROPOSAL",
+  "issued_at": "2026-10-24T00:00:00+00:00",
+  "expires_at": "2027-10-24T00:00:00+00:00",
+  "namespace": "workspace.edp_lab_day6_vault_proto",
+  "tables": [
+    "h_filing", "h_concept", "l_fact_slot", "r_source_occurrence",
+    "s_fact_assertion", "s_num_m2_value", "r_load_event",
+    "vault_reject_quarantine"
+  ],
+  "contracts": [
+    {"version": "VAULT_LOAD_CONTRACT_V1", "path": "docs/vault_load_contract_v1.md", "sha256": "681c3f6a9a4446b5357c3ab6c6534e6fd5b8cf944f967ea9ab27dcc2c8b5aabe"}
+  ],
+  "mapping_rules": [
+    {"version": "VAULT_LOAD_CONTRACT_V1_SERIALIZER", "path": "scripts/day6_vault_contract_v1.py", "sha256": "c80c43e299424947d1d4c6bcd2211235bebd79efc03923e2a9db55bc682a659a"}
+  ],
+  "cohort_receipt_authority": "protected-verifier-v1",
+  "warehouse_mode": "EXISTING_SHARED_COMPUTE_EXACT",
+  "warehouse_name": "Serverless Starter Warehouse",
+  "warehouse_id": "589e80595c7c8cb8",
+  "warehouse_service_principal_permission": "CAN_USE",
+  "max_grant_seconds": 3600,
+  "max_run_statements": 100,
+  "max_total_grants": 64,
+  "max_total_sql_statements": 2000,
+  "max_run_runtime_seconds": 3600,
+  "max_run_data_occurrences": 1000,
+  "max_run_synthetic_rows": 20,
+  "max_retries_per_statement": 0,
+  "allowed_write_kinds": ["MERGE_INSERT_ONLY"],
+  "allowed_read_kinds": ["READBACK"],
+  "day5_resources_allowed": false,
+  "raw_writes_allowed": false,
+  "c2000_full_integration_allowed": false,
+  "destructive_sql_allowed": false,
+  "agent_generated_signature": null
+}

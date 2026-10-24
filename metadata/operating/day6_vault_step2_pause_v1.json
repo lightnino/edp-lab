@@ -1,0 +1,8 @@
+{
+  "schema": "DAY6_VAULT_STEP2_EXECUTION_PAUSE_V1",
+  "status": "WITHDRAWN_UNEXERCISED",
+  "scope": "Historical C1500 bounded Vault prototype execution only; no current authorization",
+  "evidence_retained": "reports/day6_vault_prototype_evidence.md",
+  "contract_unchanged_sha256": "681c3f6a9a4446b5357c3ab6c6534e6fd5b8cf944f967ea9ab27dcc2c8b5aabe",
+  "resume_after": "NEVER; use separately approved C2000 Step 2 scope"
+}
