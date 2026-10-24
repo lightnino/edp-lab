@@ -1,6 +1,6 @@
 # Agent Operating Contract V1 — Shared Lifecycle Rules
 
-**Status:** Proposed binding cross-lifecycle operating addendum, pending review and merge. Applies prospectively to Acquisition/Universe, Cohort/Model, and Validation/Freeze. It is not an authorization, credential, deployed policy, operational receipt or retrospective amendment to any freeze.
+**Status:** Owner-reviewed, binding cross-lifecycle operating addendum, merged in [PR #65](https://github.com/lightnino/edp-lab/pull/65) on 2026-10-24. Applies prospectively to Acquisition/Universe, Cohort/Model, and Validation/Freeze. It is not an authorization, credential, deployed policy, operational receipt or retrospective amendment to any freeze.
 
 **Normative ownership:** Each Lifecycle defines **what** steps and acceptance evidence are required. This contract defines **who may execute/recover**, how trusted authority is enforced, and which decisions require the owner. The [Operating Guide](../operating/agent_operating_guide_v1.md) documents **how** to carry out these rules. In any conflict, do not silently choose a more permissive interpretation: block, record the conflict, and seek owner review.
 
