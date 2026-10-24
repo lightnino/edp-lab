@@ -24,12 +24,12 @@ def test_raw_stage_scope_and_traversal(tmp_path):
     request = {"operation": "raw_stage", "cohort": "C2000",
                "output": "workspace.edp_lab.c2000", "source": source,
                "databricks_path": remote, "operation_id": "stage-raw-1"}
-    assert raw_stage(root, grant, request, tmp_path / "ledger") == {
-        "status": "AUTHORIZED_DRY_RUN"}
+    with pytest.raises(Denied, match="RAW_STAGE_ACQUISITION_ONLY"):
+        raw_stage(root, grant, request, tmp_path / "ledger")
     bad = remote.replace("day5-n500-v1/", "day5-n500-v1/../")
     grant["databricks_paths"].append(bad)
-    with pytest.raises(Denied, match="RAW_DESTINATION_OUT_OF_SCOPE"):
+    with pytest.raises(Denied, match="RAW_STAGE_ACQUISITION_ONLY"):
         raw_stage(root, grant, dict(request, databricks_path=bad), tmp_path / "ledger")
     raw.write_bytes(b"changed RAW\n")
-    with pytest.raises(Denied, match="RAW_HASH_CHANGED"):
+    with pytest.raises(Denied, match="RAW_STAGE_ACQUISITION_ONLY"):
         raw_stage(root, grant, request, tmp_path / "ledger")
