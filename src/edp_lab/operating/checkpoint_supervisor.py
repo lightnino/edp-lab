@@ -7,7 +7,9 @@ only resumes the Runner after the independent verifier signs live readback.
 import argparse
 import json
 import os
+import re
 import time
+from datetime import UTC, datetime
 from pathlib import Path
 
 from edp_lab.operating.authority import Denied, file_digest, load_grant
@@ -19,6 +21,39 @@ from edp_lab.operating.policy_broker import request as request_grant
 from edp_lab.operating.protected_recovery import recover_pre_submission_raw
 from edp_lab.operating.protected_verifier import attest_cohort, attest_raw, attest_sql
 from edp_lab.operating.runner import run
+
+
+
+# R4 state is a protected sidecar; it never changes the signed Runner checkpoint.
+# The only public detail is a tightly normalized error class, not exception text.
+def _persist_supervisor_state(state_dir: Path, code: str, *, blocked: bool) -> dict:
+    state_dir = state_dir.resolve(strict=True)
+    if state_dir.is_symlink() or not state_dir.is_dir():
+        raise Denied("SUPERVISOR_STATE_DIR_INVALID")
+    safe_code = code if re.fullmatch(r"[A-Z][A-Z0-9_]{0,79}", code) else "UNCLASSIFIED_DENIAL"
+    record = {
+        "schema": "EDP_SUPERVISOR_STATUS_V1",
+        "status": "PAUSED_WITH_DECISION_PACKET" if blocked else "COMPLETE",
+        "reason_code": safe_code,
+        "replay_authorized": False,
+        "updated_at_utc": datetime.now(UTC).isoformat(),
+    }
+    dest = state_dir / "supervisor_status.json"
+    if dest.is_symlink():
+        raise Denied("SUPERVISOR_STATUS_SYMLINK")
+    tmp = state_dir / (".supervisor_status." + str(os.getpid()) + ".tmp")
+    fd = os.open(tmp, os.O_WRONLY | os.O_CREAT | os.O_EXCL | os.O_NOFOLLOW, 0o600)
+    try:
+        with os.fdopen(fd, "w") as out:
+            json.dump(record, out, sort_keys=True)
+            out.write("\n")
+            out.flush()
+            os.fsync(out.fileno())
+        os.replace(tmp, dest)
+    finally:
+        if tmp.exists():
+            tmp.unlink()
+    return record
 
 
 def supervise(root: Path, queue: Path, state_dir: Path, trust: Path, socket: Path,
@@ -114,8 +149,17 @@ def main() -> None:
     for name in ("root", "queue", "state_dir", "trust", "socket", "verifier_key"):
         parser.add_argument(name, type=Path)
     args = parser.parse_args()
-    print(json.dumps(supervise(args.root, args.queue, args.state_dir, args.trust,
-                               args.socket, args.verifier_key), sort_keys=True))
+    try:
+        summary = supervise(args.root, args.queue, args.state_dir, args.trust,
+                            args.socket, args.verifier_key)
+    except Denied as exc:
+        # Nontransient verifier denials must survive supervisor process exit.
+        # Never call Runner again or modify an uncertain operation ledger here.
+        state = _persist_supervisor_state(args.state_dir, str(exc), blocked=True)
+        print(json.dumps(state, sort_keys=True))
+        return
+    _persist_supervisor_state(args.state_dir, "SUPERVISOR_RETURNED", blocked=False)
+    print(json.dumps(summary, sort_keys=True))
 
 
 if __name__ == "__main__":
