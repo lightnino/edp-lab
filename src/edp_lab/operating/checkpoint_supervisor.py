@@ -22,7 +22,6 @@ from edp_lab.operating.runner import run
 from edp_lab.operating.supervisor_health import persist_health
 
 
-
 # The status/heartbeat is advisory; it cannot change the signed Runner
 # checkpoint, protected ledger or independently verified external receipt.
 def _persist_supervisor_state(state_dir: Path, code: str, *, blocked: bool) -> dict:
