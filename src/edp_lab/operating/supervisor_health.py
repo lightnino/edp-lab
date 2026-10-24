@@ -33,7 +33,9 @@ def _directory(path: Path) -> Path:
 def _read_private(path: Path) -> dict | None:
     if not path.exists():
         return None
-    if path.is_symlink() or not path.is_file():
+    if path.is_symlink():
+        raise Denied("SUPERVISOR_STATUS_SYMLINK")
+    if not path.is_file():
         raise Denied("SUPERVISOR_STATE_FILE_INVALID")
     if path.stat().st_mode & 0o077:
         raise Denied("SUPERVISOR_STATE_PERMISSIONS")
