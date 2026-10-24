@@ -62,8 +62,11 @@ def execute_acquisition_stage(
         raise Denied("ACQUISITION_SOURCE_CHANGED")
     discovery_path = Path(plan.get("discovery_receipt", ""))
     if (not discovery_path.is_absolute()
+            or discovery_path.is_symlink()
             or discovery_path.resolve().is_relative_to(root)):
         raise Denied("ACQUISITION_DISCOVERY_NOT_PROTECTED")
+    if plan.get("discovery_receipt_sha256") != file_digest(discovery_path):
+        raise Denied("ACQUISITION_DISCOVERY_CHANGED")
     discovery = verified_document(root, discovery_path, trust)
     if (discovery.get("schema") != "EDP_ACQUISITION_DISCOVERY_V1"
             or discovery.get("authority") != "protected-verifier-v1"
