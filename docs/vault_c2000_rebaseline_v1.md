@@ -22,7 +22,7 @@ records. Expanding source types needs a separate semantic review.
 The subsequent Step 2 readiness recheck matched all three actual RAW ZIP and
 `num.txt` member hashes, the retained M1/M2 version-0 evidence, and the exact
 input and plan hashes. See the [0A evidence](../reports/vault_0a_v2_evidence.md)
-and [Owner gate packet](operating/day6_c2000_step2_owner_gate_v1.md). No Day 5
+and [Owner gate packet](day6_c2000_step2_owner_gate_v1.md). No Day 5
 query or write was rerun.
 
 ## Step 2: prepared bounded prototype

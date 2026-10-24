@@ -45,7 +45,7 @@ The read-only local recheck matched all four C2000 Freeze file hashes, the freez
 
 The 127 retained M1 rows equal the historical `sample-manifest.json` rows and canonical row SHA-256 `366ca59ac251fa54d0a2c97ebdd8f9cacbcf773231c61aa20a504196a3cf31dc`, from version-0 statement `01f1cf23-e739-1d06-87d3-293a7fee758b`. The projected rows equal the historical M2 projection and a fresh projection with approved bindings. M1 uses `M1_LEXICAL_V1` for all rows; M2 uses `M2_ADDITIVE_TYPED_NUMERIC_V1` and `EXACT_DECIMAL_38_4_V1` for all rows, with 125 `VALID` and two `BLANK` outcomes. The input-manifest SHA-256 is `ee7adf7c39d3fc702692d3b5fe8561d14ecdac33c592f823ae0ddea4d4daf613`; projected-manifest SHA-256 is `993e9588617ea5132d80bf3dfc84cacd5e382f01a50adcb86c97ee141a11efbb`; regenerated in-memory V2 plan exactly equals the retained seven-stage load plan, SHA-256 `241ed0e10e041587bcd132f667960f7e7f1521c537275460c2f2ab08647c931f`. It has 127 DATA occurrences and six synthetic negatives. The retained M1 query and projection are historical local evidence; this recheck made no new warehouse query or Day 5 execution.
 
-The [Owner packet and protected freeze procedure](../docs/operating/day6_c2000_step2_owner_gate_v1.md) records the remaining authorization gate.
+The [Owner packet and protected freeze procedure](../docs/day6_c2000_step2_owner_gate_v1.md) records the remaining authorization gate.
 
 ## Historical preparation evidence
 
