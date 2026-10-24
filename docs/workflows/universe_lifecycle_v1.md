@@ -6,7 +6,7 @@
 
 **Shared operating addendum:** [Agent Operating Contract V1](agent_operating_contract_v1.md) governs protected authority, liveness, Recovery Decision Matrix and owner escalation for Acquisition/Universe U0–U10. The [generic protected recovery guide](../operating/agent_operating_guide_v1.md) gives the procedure. These do **not** grant Cohort RAW-write permission or replace U3/U10 handoff evidence.
 
-**Historical references:** `metadata/source_universes/approved_v1/`, `docs/source_universe_guardrail.md`, `docs/incidents/2026-10-21_source_universe_scope_control.md`, `src/edp_lab/ingestion/universe.py`, `docs/cohort_publication.md`. These are authoritative for existing snapshots; this proposal must not rewrite them.
+**Historical references:** `metadata/source_universes/approved_v1/`, `docs/source_universe_guardrail.md`, `docs/incidents/2026-10-21-source-universe/incident.md`, `src/edp_lab/ingestion/universe.py`, `docs/cohort_publication.md`. These are authoritative for existing snapshots; this proposal must not rewrite them.
 
 ## 1. Independent Acquisition and Universe lifecycles; composable when useful
 
