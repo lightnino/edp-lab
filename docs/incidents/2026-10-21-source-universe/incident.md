@@ -213,15 +213,15 @@ This ledger records **only incident remediation and closure**. Times are on 2026
 
 ### Scope and evidence
 
-Approved universe: `EDP_LAB_ORIGINAL_SOURCE_UNIVERSE` v1, **3,021** exact physical identities; pinned [manifest](../../metadata/source_universes/approved_v1/manifest.json), SHA-256 `2198f9bad9c864bf339eff515992526e22efc4230160614a8f86daf3143f463c`, with separate [owner approval](../../metadata/source_universes/approved_v1/owner_authorization.json). Original inventory v1/v2 and **C300 300/300** identity/path/hash compatibility verified; 41 holdouts remain reserved. This is universe authorization, not automatic source admission or processing approval.
+Approved universe: `EDP_LAB_ORIGINAL_SOURCE_UNIVERSE` v1, **3,021** exact physical identities; pinned [manifest](../../../metadata/source_universes/approved_v1/manifest.json), SHA-256 `2198f9bad9c864bf339eff515992526e22efc4230160614a8f86daf3143f463c`, with separate [owner approval](../../../metadata/source_universes/approved_v1/owner_authorization.json). Original inventory v1/v2 and **C300 300/300** identity/path/hash compatibility verified; 41 holdouts remain reserved. This is universe authorization, not automatic source admission or processing approval.
 
-The original reconciliation compared inventory identities/SHA-256 with frozen C2000 manifests and acquisition receipts; the complete **family breakdown is preserved in §2**, with [evidence index](2026-10-21_evidence_index.md) and [800-reference appendix](2026-10-21_retained_raw_references.md).
+The original reconciliation compared inventory identities/SHA-256 with frozen C2000 manifests and acquisition receipts; the complete **family breakdown is preserved in §2**, with [evidence index](evidence_index.md) and [800-reference appendix](retained_raw_references.md).
 
 Step 4 independently verified **800/800 current remote RAW objects** for presence, size and SHA-256, totaling **79,225,793 bytes**, with no mismatches; seven incomplete responses were retried and both attempts retained. The 800 are excluded from Universe v1 and accepted C300; examined C300/M1 physical inputs had zero overlap. Historical Day 3–5 uploads and structural profiling are preserved; global live consumer lineage is **not exhaustively verified**. Evidence: [Step 4 report](https://github.com/lightnino/edp-lab/blob/009da4fa053f4d5e3ab182fbe08510808688204c/docs/incidents/2026-10-21_800_remote_verification.md), [800-object readbacks](https://github.com/lightnino/edp-lab/blob/009da4fa053f4d5e3ab182fbe08510808688204c/docs/incidents/evidence/800_remote_verification/objects.csv) and [validation](https://github.com/lightnino/edp-lab/blob/009da4fa053f4d5e3ab182fbe08510808688204c/docs/incidents/evidence/800_remote_verification/validation.json).
 
 ### Implemented deterministic controls (local scope only)
 
-[Guardrail PR #17](https://github.com/lightnino/edp-lab/pull/17), merge `2988c62ce7e8a92547224e8212ed74f1cec2bc94`; detailed code/test evidence in [source_universe_guardrail.md](../source_universe_guardrail.md).
+[Guardrail PR #17](https://github.com/lightnino/edp-lab/pull/17), merge `2988c62ce7e8a92547224e8212ed74f1cec2bc94`; detailed code/test evidence in [source_universe_guardrail.md](../../source_universe_guardrail.md).
 
 | Integration | Verified control |
 | --- | --- |
