@@ -20,7 +20,7 @@
 - Before acknowledging an incident, persist a sanitized state and alert/decision packet; allow authorized read-only investigation even if the worker has exited. Do not treat an alert, state record, restart, or no-progress timeout as permission to resubmit an external write.
 - An independent trusted verifier enforces status, receipt, identity and authority checks. The Agent neither signs its own grant/receipt nor acquires protected/root credentials or uncensored secret-bearing logs.
 
-## 3. Recovery Decision Matrix — normative
+## Recovery Decision Matrix
 
 This table applies to **all three Lifecycles and all applicable external-write adapters**. Classify by **independent evidence of remote effects**, not only by CLI exit code or absence of a Statement ID.
 
@@ -46,6 +46,6 @@ Safe recovery outcomes: VERIFIED_EXISTING; PROVEN_NO_EFFECT_WITH_DELEGATION; PAU
 
 ## 5. Independent acceptance and change control
 
-Applicable Lossless/Stability/economic checks and scoped control registries are binding; a candidate control or readback does not approve economic meaning. A result freeze requires independently verified version-pinned live storage/object identities, source lineage and signed receipts, not merely a Git marker. Keep observed metrics (runtime, retries, compute, human intervention) with unknown values as null, never inferred PASS.
+Applicable Lossless/Stability/economic checks and versioned, source-scoped control registries are binding. A queue cannot silently omit an applicable pinned control or promote candidate SQL as an approved business meaning. When economic meaning is not established, preserve original lexical data and record PRESERVED_NOT_MODELED rather than invent a mapping or call the record corrupt. Independent economic research must report source meaning, grain, unit, dates, conventions, potential source-native reconciliation, alternative interpretations and consequences. Price/yield interpretations require fixed cashflows and explicit conventions; principal is not automatically price. A candidate control or readback does not approve economic meaning. A result freeze requires independently verified version-pinned live storage/object identities, source lineage and signed receipts, not merely a Git marker. Keep observed metrics (runtime, retries, compute, human intervention) with unknown values as null, never inferred PASS.
 
 For write changes use scoped branch/PR, tests and Ruff, CI, human review and explicit merge approval, and verify final main SHA. No unsigned new policy, Guide statement, or incident closeout may silently weaken the three Lifecycle Specifications. The companion [protected recovery runbook](../operating/agent_operating_guide_v1.md#protected-recovery-runbook) is non-authoritative on grant scope.
