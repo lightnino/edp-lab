@@ -1,6 +1,6 @@
 # Reusable Vault Dev 0A V2 — installation and authority packet
 
-**Status: partial installation after OAuth secret creation, before shared-Warehouse permission verification; live verification pending.** The existing service principal and protected root are handled by the [bounded owner recovery](vault_0a_v2_partial_install_recovery.md). The C1500 exception is `WITHDRAWN_UNEXERCISED`; its prior read-only [evidence](../reports/day6_vault_prototype_evidence.md) remains historical. The C2000 Step 2 preparation is in [the rebaseline packet](vault_c2000_rebaseline_v1.md). The approved [Vault Contract V1](vault_load_contract_v1.md) and all Day 5 services remain unchanged.
+**Status: `VAULT_0A_INSTALLED_AWAITING_ELIGIBLE_RUN`; protected read-only acceptance is pending.** The owner reports installation receipt SHA-256 `04b555202469cd1aa9423da7d6f7639900202693c986859e1b229f3d1427c7b2`. Live read-only Unity Catalog checks confirmed the schema, eight Delta tables and intended effective grants; the protected receipt signature, policy, runtime and service checks still require the single [Owner Terminal probe](../reports/vault_0a_v2_evidence.md). The [bounded owner recovery](vault_0a_v2_partial_install_recovery.md) is historical. The C1500 exception is `WITHDRAWN_UNEXERCISED`; its prior read-only [evidence](../reports/day6_vault_prototype_evidence.md) remains historical. The C2000 Step 2 preparation is in [the rebaseline packet](vault_c2000_rebaseline_v1.md). The approved [Vault Contract V1](vault_load_contract_v1.md) and all Day 5 services remain unchanged.
 
 ## Separation of concerns
 
@@ -17,7 +17,7 @@ The default per-run ceiling is 1,000 DATA occurrences, 20 synthetic rows, 100 SQ
 
 The cohort eligibility registration requires a protected, signed owner scope approval **and** a separate protected `LIVE_VERIFIED` freeze receipt that pins the same Cohort Freeze SHA. The approval identifies the already approved source hashes, input and load plan; it is not signed for each retry. This preserves the owner-controlled material cohort boundary. The installer and broker never stage or mutate RAW; the acquisition-owned verified handoff in merged PR #62 remains the source route. Full C2000 integration is currently denied by the policy and needs its separate Step 0/Step 2 gates and an owner-controlled policy amendment. The services do not need reinstallation for that amendment.
 
-## Provisioning prerequisite and one-time installation
+## Historical provisioning prerequisite and one-time installation
 
 The read-only effective-grant check for `chengzhu13@gmail.com` shows `USE_CATALOG` only, and the isolated schema does not exist. An independently authorized `workspace` catalog owner must grant `CREATE_SCHEMA` to the owner-terminal provisioning principal, or provide an equivalently authorized administrator. The narrowly scoped SQL is:
 
@@ -27,7 +27,7 @@ GRANT CREATE SCHEMA ON CATALOG workspace TO `chengzhu13@gmail.com`;
 
 Codex does not run this grant or the privileged installer. Once the privilege is effective, the owner runs `scripts/owner_setup_vault_0a_v2.py` as root from a trusted terminal with the reviewed Git commit SHA and policy-proposal SHA. The installer checks both pins, a clean tracked tree, principal identity, effective UC privilege, absent target schema and absent Vault root before creating anything. It uses the owner's existing `edp-lab` profile without printing it, creates a separate root-owned OAuth profile, then gives the service principal only `USE CATALOG`, `USE SCHEMA` and `SELECT, MODIFY` on the eight tables. It checks effective table grants and denial of write privilege on `workspace.edp_lab`.
 
-The installer prints `VAULT_0A_INSTALLED_AWAITING_ELIGIBLE_RUN`, **not** `VAULT_0A_INFRA_OPERATIONAL`. An independently signed eligibility receipt, real protected grant, service-principal read/write checks, live negative authorization checks, restart/rotation and readback must still pass. The installer refuses partial reinstallation; owner review is required if its provisioning sequence fails after creating Vault-only resources.
+The installer printed `VAULT_0A_INSTALLED_AWAITING_ELIGIBLE_RUN`, **not** `VAULT_0A_INFRA_OPERATIONAL`. An independently signed eligibility receipt, real protected grant, service-principal read/write checks, live negative authorization checks, restart/rotation and readback must still pass. Do not reinstall for acceptance.
 
 Once an eligible cohort receipt exists, `scripts/vault_0a_v2_client.py grant RUN_REQUEST.json` requests a short-lived grant and `scripts/vault_0a_v2_client.py execute RUN_REQUEST.json` submits it to the protected Executor. The run request path is repository-relative; the client accepts no SQL, table name, warehouse ID or credential. The Executor independently verifies the broker signature and all pins before any write.
 
@@ -35,6 +35,6 @@ The credential rotation helper is `scripts/owner_rotate_vault_credential_v2.py`.
 
 ## Current verification coverage and limits
 
-Local tests cover cohort-neutral policy, two independently eligible cohort receipts, grant windows, modified freeze/contract/rule pins, out-of-scope namespace/tables, RAW and Day 5 flags, destructive SQL, forged/expired/revoked grants, budget limits, uncertain replay, stale socket restart and atomic credential replacement after a successful probe. These tests simulate signed-receipt inputs and do not substitute for protected installation. No live signed cohort receipt, real grant, Delta write or independent readback has run.
+Local tests cover cohort-neutral policy, two independently eligible cohort receipts, grant windows, modified freeze/contract/rule pins, out-of-scope namespace/tables, RAW and Day 5 flags, destructive SQL, forged/expired/revoked grants, budget limits, uncertain replay, stale socket restart and atomic credential replacement after a successful probe. These tests simulate signed-receipt inputs and do not substitute for protected execution. No live signed cohort receipt, real grant, Delta write or independent readback has run.
 
-The C1500-specific installer and client remain disabled. The old unsigned C1500 policy proposal and active exception file were removed from this branch. Step 0 can now use the accepted C2000 freeze; Step 2 still needs installation, operational tests and a separate C2000 scope approval. Full Step 3 integration needs an owner-approved standing-policy, capacity and write-scope change.
+The C1500-specific installer and client remain disabled. The old unsigned C1500 policy proposal and active exception file were removed from this branch. Step 0 can now use the accepted C2000 freeze; Step 2 still needs operational tests and a separate C2000 scope approval. Full Step 3 integration needs an owner-approved standing-policy, capacity and write-scope change.

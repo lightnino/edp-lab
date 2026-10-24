@@ -1,6 +1,8 @@
 # Vault 0A V2 partial-install recovery
 
-## Current checkpoint: after secret, before shared-compute permission
+## Historical checkpoint: after secret, before shared-compute permission
+
+The owner subsequently completed installation and reported `VAULT_0A_INSTALLED_AWAITING_ELIGIBLE_RUN` with receipt SHA-256 `04b555202469cd1aa9423da7d6f7639900202693c986859e1b229f3d1427c7b2`. This recovery procedure must not be rerun. Current read-only acceptance is tracked in [the 0A evidence](../reports/vault_0a_v2_evidence.md).
 
 The owner completed the single OAuth secret request. Secret metadata count is
 one; the root-owned `private/databrickscfg`, matching identity file, refreshed
@@ -33,7 +35,7 @@ the existing installation functions for schema, tables, grants, signed policy,
 services, negative checks and signed receipt. The signed receipt names the
 shared-compute mode, Warehouse ID and name, and `CAN_USE` scope. The owner
 reviews the committed code and runs the exact pinned command supplied with
-that review. Protected execution has not occurred.
+that review. This paragraph records the earlier recovery checkpoint.
 
 ## Historical pre-secret checkpoint
 
