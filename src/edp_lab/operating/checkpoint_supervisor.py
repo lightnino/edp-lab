@@ -136,7 +136,7 @@ def main() -> int:
         state = _persist_supervisor_state(args.state_dir, str(exc), blocked=True)
         print(json.dumps(state, sort_keys=True))
         return 2
-    except Exception:
+    except Exception:  # noqa: BLE001 - a protected service must persist unexpected crashes
         # No exception strings, stderr/credentials or remote payloads exposed.
         state = _persist_supervisor_state(
             args.state_dir, "SUPERVISOR_UNEXPECTED_ERROR", blocked=True)
