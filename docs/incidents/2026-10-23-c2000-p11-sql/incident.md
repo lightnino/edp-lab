@@ -261,3 +261,37 @@ destination have **not** been approved for activation or used. No root-owned
 fixture, launchd job or protected R8 response store has been installed yet.
 R4 and R8 therefore remain OPEN/BLOCKED for protected-live acceptance; the
 completed historical Day 5 result is unchanged.
+
+
+## 14. Current post-Day-5 controls and separate follow-ups (2026-10-24)
+
+This section records the *current* disposition of related work without conflating
+the historical P11 SQL incident, the independent C3021 RAW-staging audit, and
+future architectural work. Historical statements in §§1–12 reflect what was
+known on those dates and are not silently rewritten.
+
+| Scope | Evidence / owning work | Current disposition |
+| --- | --- | --- |
+| Approved Source Universe and Day 5 N500 admission | Approved Universe v1, exact C1500 baseline, selected N500, signed Day 5 P6 cohort evidence and [PR #64](https://github.com/lightnino/edp-lab/pull/64) | **COMPLETE FOR DAY 5**; source approval is not itself a RAW upload/replay authorization |
+| Autonomous standing 0A broker / policy | [PR #59](https://github.com/lightnino/edp-lab/pull/59), signed grant and protected-policy architecture used by the eventual accepted Day 5 execution | **IMPLEMENTED / USED FOR DAY 5**; does not imply every future Acquisition-specific delegation is installed |
+| Original P11 uncertain SQL write and targeted recovery | §§9–11 above; original ledger preserved, distinct owner-signed disposition and new operation receipt, 513/513 task closeout, P13 freeze, P14 [PR #64](https://github.com/lightnino/edp-lab/pull/64) | **CLOSED FOR THE ORIGINAL INCIDENT/OPERATION**; no historical SQL replay |
+| R7 Recovery Decision Matrix and Operating Guide | [PR #65](https://github.com/lightnino/edp-lab/pull/65) | **MERGED / CLOSED** |
+| R4 Supervisor blocked-state, liveness, Watchdog and delivery | [PR #66](https://github.com/lightnino/edp-lab/pull/66), owner-reviewed [execution packet](../../operating/r4_fixture_review/owner_execution_packet.md) | **OPEN — PROTECTED LIVE ACCEPTANCE PENDING**. Offline tests are not proof of installed protected scheduling, restart/backoff, independent operator alert delivery or production monitoring |
+| R8 installed CLI Profile/Identity, UC response formats and retained evidence | Same [PR #66](https://github.com/lightnino/edp-lab/pull/66) | **OPEN — PROTECTED OWNER-TERMINAL ACCEPTANCE PENDING**. Local installed-CLI smoke passed; protected credential non-mutation and hash-bound raw-response retention still require evidence |
+| C3021 historical RAW staging vs Day 5 N500 reuse | Independent read-only investigation archived in [PR #70](https://github.com/lightnino/edp-lab/pull/70) and [historical audit](../../history/day5-c2000/c3021_n500_raw_staging_audit_20261024.md) | **AUDIT RECORD MERGED**. 500 new-destination Day 5 uploads observed; no N500 preexisting copies demonstrated in inspected evidence; redundant transfer neither established nor ruled out |
+| Single-owner Acquisition RAW staging / Cohort RAW-read-only contract | [PR #62](https://github.com/lightnino/edp-lab/pull/62) | **WORKFLOW SPECIFICATION MERGED**, not a claim of deployed runtime isolation |
+| Closed-loop Acquisition delegation, verified U10 handoff and same-checkpoint Cohort resume | [Issue #72](https://github.com/lightnino/edp-lab/issues/72); partial [PR #71](https://github.com/lightnino/edp-lab/pull/71) **CLOSED UNMERGED** | **OPEN — FUTURE ENGINEERING**. Blocking Cohort RAW writes alone did not automatically invoke Acquisition or resume a Cohort; retain prior `main` runtime while implementation remains incomplete |
+
+**Boundary:** The C3021 historical audit and Issue #72 are *linked independent
+workstreams*, not additional proven root causes of the original P11 SQL
+submission failure. Preserve the existing signed Day 5 Queue, approved
+P13/P14 freeze, ledger and recovery receipts. Day 6 [PR #61](https://github.com/lightnino/edp-lab/pull/61)
+is independent and is not an authorization to change its active runtime.
+
+**Next update to this same incident:** After the independent, approved
+protected-live PR #66 acceptance is finished, append the actual dated R4 and
+R8 evidence, exact signed/hashed checks, test scope, remaining deployment
+limitations and separately justified CLOSED/BLOCKED disposition for each gate.
+A successful disposable fixture cannot be substituted for evidence of a
+permanently monitored production Supervisor. PR #66 must stay unmerged until
+the Owner separately reviews and approves its exact final head and checks.
