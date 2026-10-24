@@ -25,7 +25,10 @@ from edp_lab.operating.budget import verify_phase_receipt
 from edp_lab.operating.databricks_jobs import databricks_job_submit
 from edp_lab.operating.policy_broker import execute as protected_execute
 from edp_lab.operating.policy_broker import request as request_policy_grant
-from edp_lab.operating.raw_ownership import require_cohort_readonly
+from edp_lab.operating.raw_ownership import (
+    require_cohort_readonly,
+    verify_u10_raw_handoff,
+)
 
 
 def _write_json(path: Path, value: dict) -> None:
@@ -256,6 +259,10 @@ def run(root: Path, queue_path: Path, envelope: Path, state_dir: Path,
             raise Denied("POLICY_BROKER_REQUIRED")
         envelope = request_policy_grant(Path(socket_path), queue_path)
     grant = load_grant(root, envelope, protected_trust_dir(root))
+    # Once a queue pins a U10 handoff, direct invocation must verify it too.
+    # The protected Broker separately *requires* this for policies opting in.
+    if queue.get("raw_handoff") is not None:
+        verify_u10_raw_handoff(root, queue, protected_trust_dir(root))
     broker_socket = os.environ.get("EDP_POLICY_BROKER_SOCKET")
     if grant["authority"] == "policy-broker-v1" and not broker_socket:
         raise Denied("POLICY_BROKER_REQUIRED")
