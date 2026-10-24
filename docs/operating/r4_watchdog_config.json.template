@@ -1,0 +1,8 @@
+{
+  "schema": "EDP_WATCHDOG_INSTALL_V1",
+  "state_dir": "__DISPOSABLE_PROTECTED_FIXTURE_STATE__",
+  "heartbeat_seconds": 60,
+  "progress_seconds": 600,
+  "alert_argv": ["__OWNER_REVIEWED_ABSOLUTE_NOTIFIER__", "__NOTIFIER_ARGUMENTS__"],
+  "operator_id": "__DESIGNATED_OPERATOR__"
+}

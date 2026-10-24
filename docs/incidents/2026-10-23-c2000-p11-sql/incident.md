@@ -230,3 +230,22 @@ The historical Day 2/C3021 RAW staging vs Day 5 actual N500 reuse allegation is 
 After this report's review/merge, run a separate **read-only forensic audit**, against the exact original C3021 inventory and selected Day 5 N500, prior-to-first-Day-5-upload receipt timestamps and remote version/audit evidence. Produce the requested 500-row matrix with historical-presence and Day-5-action as **separate axes**, plus verified duplicate/new/unresolved counts and evidence references. Distinguish historical specification from PR #62's later prospective requirement. Do **not** infer duplicate physical RAW staging from cohort-prefixed directories or missing legacy receipts; do **not** mutate Databricks, the final freeze or protected ledgers. A distinct corrective implementation/negative-tests PR, if the audit demonstrates it, must enforce Acquisition RAW-write vs Cohort RAW-read permissions and avoid unresolved→missing fallthrough. **Do not fold RAW forensic conclusions or an executor rewrite into PR #63.**
 
 **Incident reporting disposition (updated 2026-10-24):** Day 5 execution, this specific P11 recovery, and P14 are closed, with signed evidence. **R7 is CLOSED by PR #65**. **R4 liveness/diagnostic hardening and R8 installed preflight regressions remain OPEN**. PR #63 may be merged as a completed factual postmortem while those clearly labeled corrective actions are delivered in separately reviewed PRs; it must not be described as a complete runtime reliability fix.
+
+## 13. PR #66 acceptance preparation (2026-10-24)
+
+PR #66 adds R4 blocked-state/liveness diagnostics, an independently scheduled
+Watchdog candidate, and R8 read-only UC PRESENT/ABSENT preflight. The
+[acceptance packet](../../operating/r4_r8_protected_acceptance_packet_20261024.md)
+records offline tests, local installed-CLI response hashes, a disposable
+protected fixture plan and remaining owner-controlled gates. The original
+P11 incident, signed recovery, 513/513 completed Day 5 checkpoint and P13/P14
+result remain historical facts; they were not rerun or revised.
+
+**R4 remains OPEN / protected-live BLOCKED:** no owner-approved Watchdog
+installation, separate launchd restart/backoff evidence, protected fixture
+test, or actual designated-operator alert receipt yet. **R8 remains OPEN /
+protected Owner-terminal BLOCKED:** the local installed CLI read-only PRESENT
+smoke passed, but owner-protected profile/identity, raw response retention and
+negative-format capture have not yet been independently accepted. The later
+PR #62 prospective RAW authorization split remains a specification, not proof
+of deployment. PR #61 is separate and untouched. No PR #66 merge is implied.

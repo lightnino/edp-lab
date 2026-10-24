@@ -9,7 +9,7 @@ import pytest
 
 from edp_lab.operating import checkpoint_supervisor
 from edp_lab.operating.authority import Denied
-from edp_lab.operating.supervisor_health import persist_health, watchdog
+from edp_lab.operating.supervisor_health import persist_health, sanitized_status, watchdog
 
 EPOCH = datetime(2026, 10, 24, 10, 0, tzinfo=UTC)
 
@@ -89,6 +89,21 @@ def test_monitor_fails_closed_if_status_absent_or_corrupt(tmp_path: Path) -> Non
                  max_progress_seconds=40, now=EPOCH)
 
 
+def test_read_only_status_projection_is_sanitized(tmp_path: Path) -> None:
+    persist_health(tmp_path, "RUNNING", "SUPERVISOR_STARTED", now=EPOCH)
+    status = tmp_path / "supervisor_status.json"
+    before = status.read_bytes()
+    report = sanitized_status(tmp_path)
+    assert report["status"] == "RUNNING"
+    assert report["replay_authorized"] is False
+    assert status.read_bytes() == before
+    poison = json.loads(before)
+    poison["active_task_id"] = "Bearer SECRET"
+    status.write_text(json.dumps(poison))
+    with pytest.raises(Denied, match="SUPERVISOR_TASK_INVALID"):
+        sanitized_status(tmp_path)
+
+
 def test_supervisor_status_rejects_symlink_and_leaked_secret(tmp_path: Path) -> None:
     outside = tmp_path.parent / (tmp_path.name + "-owner-protected")
     outside.write_text("original")
@@ -131,3 +146,34 @@ def test_supervisor_main_incomplete_not_false_success(tmp_path, monkeypatch):
         ("root", "queue", "state", "trust", "sock", "verifier")
     ]])
     assert checkpoint_supervisor.main() == 2
+
+
+@pytest.mark.parametrize(("outcome", "expected_exit", "expected_status"), [
+    ("accepted", 0, "COMPLETE"),
+    ("unexpected", 2, "PAUSED_WITH_DECISION_PACKET"),
+])
+def test_disposable_supervisor_terminal_paths_preserve_ledger(
+        tmp_path, monkeypatch, outcome, expected_exit, expected_status):
+    for name in ("root", "queue", "trust", "sock", "verifier"):
+        (tmp_path / name).touch()
+    state = tmp_path / "state"
+    state.mkdir()
+    ledger = state / "operation-ledger.json"
+    ledger.write_bytes(b'{"original":"unchanged"}\n')
+    before = ledger.read_bytes()
+    if outcome == "accepted":
+        monkeypatch.setattr(checkpoint_supervisor, "supervise",
+                            lambda *_args: {"accepted": True})
+    else:
+        def crash(*_args):
+            raise RuntimeError("secret-bearing exception text")
+        monkeypatch.setattr(checkpoint_supervisor, "supervise", crash)
+    monkeypatch.setattr(sys, "argv", ["cmd", *[
+        str(tmp_path / name) for name in
+        ("root", "queue", "state", "trust", "sock", "verifier")
+    ]])
+    assert checkpoint_supervisor.main() == expected_exit
+    status = json.loads((state / "supervisor_status.json").read_text())
+    assert status["status"] == expected_status
+    assert "secret" not in json.dumps(status)
+    assert ledger.read_bytes() == before

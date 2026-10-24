@@ -142,6 +142,47 @@ def _is_alive(pid: int) -> bool | None:
     return True
 
 
+def sanitized_status(state_dir: Path) -> dict:
+    """Read-only diagnostic projection; never expose raw checkpoint or ledger."""
+    saved = _read_private(_directory(state_dir) / _STATUS)
+    if saved is None or saved.get("schema") != "EDP_SUPERVISOR_STATUS_V2":
+        raise Denied("SUPERVISOR_STATUS_UNAVAILABLE")
+    if saved.get("status") not in _ALLOWED:
+        raise Denied("SUPERVISOR_STATUS_INVALID")
+    reason = saved.get("reason_code")
+    if not isinstance(reason, str) or not _CODE.fullmatch(reason):
+        raise Denied("SUPERVISOR_REASON_INVALID")
+    task = saved.get("active_task_id")
+    if task is not None and (not isinstance(task, str) or not re.fullmatch(
+            r"[A-Za-z0-9_-]{1,80}", task)):
+        raise Denied("SUPERVISOR_TASK_INVALID")
+    digest = saved.get("checkpoint_sha256")
+    if digest is not None and (not isinstance(digest, str) or not re.fullmatch(
+            r"[0-9a-f]{64}", digest)):
+        raise Denied("SUPERVISOR_CHECKPOINT_DIGEST_INVALID")
+    count = saved.get("completed_count")
+    if count is not None and (type(count) is not int or count < 0):
+        raise Denied("SUPERVISOR_COUNT_INVALID")
+    for field in ("heartbeat_at_utc", "last_progress_at_utc"):
+        value = saved.get(field)
+        if not isinstance(value, str):
+            raise Denied("SUPERVISOR_TIMESTAMP_INVALID")
+        try:
+            parsed = datetime.fromisoformat(value)
+        except ValueError as exc:
+            raise Denied("SUPERVISOR_TIMESTAMP_INVALID") from exc
+        if parsed.tzinfo is None:
+            raise Denied("SUPERVISOR_TIMESTAMP_INVALID")
+    return {"schema": "EDP_SUPERVISOR_STATUS_READONLY_V1",
+            "status": saved["status"], "reason_code": reason,
+            "active_task_id": task,
+            "completed_count": count,
+            "checkpoint_sha256": digest,
+            "heartbeat_at_utc": saved.get("heartbeat_at_utc"),
+            "last_progress_at_utc": saved.get("last_progress_at_utc"),
+            "replay_authorized": False}
+
+
 def watchdog(
     state_dir: Path, *, max_heartbeat_seconds: int, max_progress_seconds: int,
     now: datetime | None = None, alive=None,
@@ -200,9 +241,15 @@ def watchdog(
         "reason_code": reason or "SUPERVISOR_HEALTHY",
         "replay_authorized": False,
         "checked_at_utc": now.astimezone(UTC).isoformat(),
-        "last_verified_task": saved.get("active_task_id") if saved else None,
-        "last_completed_count": saved.get("completed_count") if saved else None,
-        "checkpoint_sha256": saved.get("checkpoint_sha256") if saved else None,
+        "last_verified_task": (saved.get("active_task_id") if saved and isinstance(
+            saved.get("active_task_id"), str) and re.fullmatch(
+                r"[A-Za-z0-9_-]{1,80}", saved["active_task_id"]) else None),
+        "last_completed_count": (saved.get("completed_count") if saved and type(
+            saved.get("completed_count")) is int and saved["completed_count"] >= 0
+            else None),
+        "checkpoint_sha256": (saved.get("checkpoint_sha256") if saved and isinstance(
+            saved.get("checkpoint_sha256"), str) and re.fullmatch(
+                r"[0-9a-f]{64}", saved["checkpoint_sha256"]) else None),
     }
     if reason:
         _atomic_private(root / _ALERT, report)
