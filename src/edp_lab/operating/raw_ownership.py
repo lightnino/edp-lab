@@ -112,7 +112,11 @@ def verify_u10_raw_handoff(root, queue: dict, trust) -> dict:
                 or not re.fullmatch(r"[a-f0-9]{64}", str(source.get("sha256", "")))
                 or source["identity"] in originals):
             raise Denied("RAW_HANDOFF_BLOCKED")
-        originals[source["identity"]] = source["sha256"]
+        source_path = Path(source.get("path", ""))
+        if not source_path.is_file():
+            raise Denied("RAW_HANDOFF_BLOCKED")
+        originals[source["identity"]] = (
+            source["sha256"], source_path.stat().st_size)
     seen = set()
     for item in entries:
         if not isinstance(item, dict):
@@ -120,7 +124,8 @@ def verify_u10_raw_handoff(root, queue: dict, trust) -> dict:
         identity = item.get("identity")
         uri = item.get("remote_raw_path")
         if (not isinstance(identity, str) or identity in seen
-                or originals.get(identity) != item.get("sha256")
+                or originals.get(identity) != (
+                    item.get("sha256"), item.get("byte_size"))
                 or item.get("remote_readback_sha256") != item.get("sha256")
                 or type(item.get("byte_size")) is not int
                 or item["byte_size"] < 0
