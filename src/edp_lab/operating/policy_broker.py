@@ -17,6 +17,10 @@ import tempfile
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
+from edp_lab.operating.raw_ownership import (
+    require_cohort_operation_readonly,
+    require_cohort_readonly,
+)
 from edp_lab.operating.authority import (
     Denied,
     canonical,
@@ -47,6 +51,8 @@ def evaluate(root: Path, queue_path: Path, policy_path: Path, trust: Path) -> di
     queue = json.loads(queue_path.read_bytes())
     if queue.get("schema") != "EDP_QUEUE_V1" or queue.get("simulation_only"):
         raise Denied("INVALID_LIVE_QUEUE")
+    # A legacy broad 0A policy cannot grant RAW mutation to a Cohort.
+    require_cohort_readonly(queue)
     if not re.fullmatch(policy["cohort_pattern"], queue["cohort"]):
         raise Denied("COHORT_OUT_OF_SCOPE")
     if queue.get("route") not in policy["routes"]:
@@ -244,7 +250,7 @@ def serve(socket_path: Path, root: Path, policy: Path, trust: Path, key: Path,
                     path = issue(root, Path(query["queue"]), policy, trust, key, grant_store)
                     response = {"status": "ISSUED", "grant_path": str(path)}
                 elif query.get("action") == "execute":
-                    from edp_lab.operating.boundaries import databricks_write, git_write, raw_stage
+                    from edp_lab.operating.boundaries import databricks_write, git_write
                     from edp_lab.operating.cohort_admission import cohort_admit
                     from edp_lab.operating.databricks_jobs import databricks_job_submit
 
@@ -255,9 +261,10 @@ def serve(socket_path: Path, root: Path, policy: Path, trust: Path, key: Path,
                     if grant["authority"] != "policy-broker-v1":
                         raise Denied("BROKER_GRANT_REQUIRED")
                     operation = query["operation"]
+                    require_cohort_operation_readonly(operation)
                     if operation.get("grant_path") != str(grant_path):
                         raise Denied("GRANT_PATH_MISMATCH")
-                    adapters = {"raw_stage": raw_stage, "databricks_write": databricks_write,
+                    adapters = {"databricks_write": databricks_write,
                                 "databricks_job_submit": databricks_job_submit,
                                 "git_write": git_write, "cohort_admit": cohort_admit}
                     adapter = adapters.get(operation.get("operation"))
