@@ -19,6 +19,12 @@ This bounds Step 2 to a representative **C2000 member sample of the supported
 source type**, without implying coverage of all 2,000 sources or new N500
 records. Expanding source types needs a separate semantic review.
 
+The subsequent Step 2 readiness recheck matched all three actual RAW ZIP and
+`num.txt` member hashes, the retained M1/M2 version-0 evidence, and the exact
+input and plan hashes. See the [0A evidence](../reports/vault_0a_v2_evidence.md)
+and [Owner gate packet](operating/day6_c2000_step2_owner_gate_v1.md). No Day 5
+query or write was rerun.
+
 ## Step 2: prepared bounded prototype
 
 The ignored local input manifest at `runs/day6-vault-c2000-v1/input_manifest.json`
@@ -26,7 +32,8 @@ contains 127 occurrences from `SRC000005`, `SRC000054` and `SRC000064`, with
 the exact immutable C2000 roster hashes and source locators. The source rows
 come from the prior read-only version-0 M1 statement, and the projection was
 regenerated with the approved serializer. This is reuse of unchanged physical
-sources, **not a new C2000 warehouse sample query or a new RAW byte check**.
+sources, **not a new C2000 warehouse sample query**. The later readiness
+recheck independently matched the three RAW ZIP/member byte hashes.
 The ignored local V2 load plan at `runs/day6-vault-c2000-v1/load_plan.json`
 has seven fixed business/quarantine stages, 127 DATA occurrences and six
 synthetic negatives. The [run proposal](../metadata/operating/day6_c2000_vault_v1/run_plan_proposal.json)
