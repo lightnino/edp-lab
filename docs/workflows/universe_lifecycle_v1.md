@@ -4,7 +4,9 @@
 
 **Purpose.** Establish a reusable source-estate governance lifecycle, independent of whether a subsequent cohort follows `INITIAL_MODEL`, `CORPUS_ONLY`, `ADDITIVE` or `CORRECTIVE` processing. A universe lists *eligible candidate source instances*. A cohort mechanically selects eligible members **from an already approved Universe** under the 0A standing operating policy; this does **not** constitute a new Universe membership change or require new per-cohort human approval. Universe CREATE/EXPAND and cohort selection remain distinct scopes.
 
-**Historical references:** `metadata/source_universes/approved_v1/`, `docs/source_universe_guardrail.md`, `docs/incidents/2026-10-21_source_universe_scope_control.md`, `src/edp_lab/ingestion/universe.py`, `docs/cohort_publication.md`. These are authoritative for existing snapshots; this proposal must not rewrite them.
+**Shared operating addendum:** [Agent Operating Contract V1](agent_operating_contract_v1.md) governs protected authority, liveness, Recovery Decision Matrix and owner escalation for Acquisition/Universe U0–U10. The [generic protected recovery guide](../operating/agent_operating_guide_v1.md) gives the procedure. These do **not** grant Cohort RAW-write permission or replace U3/U10 handoff evidence.
+
+**Historical references:** `metadata/source_universes/approved_v1/`, `docs/source_universe_guardrail.md`, `docs/incidents/2026-10-21-source-universe/incident.md`, `src/edp_lab/ingestion/universe.py`, `docs/cohort_publication.md`. These are authoritative for existing snapshots; this proposal must not rewrite them.
 
 ## 1. Independent Acquisition and Universe lifecycles; composable when useful
 
@@ -114,6 +116,6 @@ The two lifecycles can be chained in one session when useful, or separated by an
 - Retained but denied/deferred RAW is not erased merely because Universe membership was refused, subject to legal/licensing/retention rules; it remains inaccessible to ordinary admitted-cohort processing.
 - The downstream executor verifies the exact signed/owner-pinned Universe version, RAW identity/hashes and separate cohort/workflow grant. It **reuses verified RAW receipts**, without a second acquisition or upload simply for Universe admission.
 
-**Historical evidence (non-normative):** see [approved Universe v1](../../metadata/source_universes/approved_v1/README.md) and the [source-universe boundary incident](../incidents/2026-10-21_source_universe_scope_control.md) for actual prior member/holdout/out-of-scope counts. The current historical source estate is an *example*, not an embedded limit in this future reusable workflow.
+**Historical evidence (non-normative):** see [approved Universe v1](../../metadata/source_universes/approved_v1/README.md) and the [source-universe boundary incident](../incidents/2026-10-21-source-universe/incident.md) for actual prior member/holdout/out-of-scope counts. The current historical source estate is an *example*, not an embedded limit in this future reusable workflow.
 
 **No code, admission, new universe, frozen cohort, approval or Databricks operation is performed by this specification.**

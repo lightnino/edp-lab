@@ -2,15 +2,17 @@
 
 **Tracking ID:** EDP-INC-2026-10-23-002  
 **Recorded:** 2026-10-23 (SGT; exact time not independently recorded)  
-**State:** OPEN — architecture/operating-model gap; Day 5 remediation NOT IMPLEMENTED  
+**State (updated 2026-10-24):** CLOSED FOR THE BOUNDED DAY 5 COHORT 0A USE CASE; general deployment coverage remains policy-/workflow-specific  
 **Priority:** P1 for the EDP Lab Operational Scalability experiment  
-**Classification:** authorization workflow / human-intervention overhead, **not** an unauthorized-execution or security breach  
+**Classification:** authorization workflow / human-intervention overhead (**architecture finding**, not an unauthorized-execution or security breach)  
 **Owner decision:** Record the problem during Day 4; complete the existing Step 8 trusted approval without changing active authorization enforcement; make the durable fix a Day 5 milestone.  
 **Scope:** EDP Lab Agent A (bounded platform operations), separate from Agent V1–V3 semantic capability versions.
 
+**Resolution evidence:** [Standing authorization PR #59](https://github.com/lightnino/edp-lab/pull/59) merged with protected broker/auto-grant support; the owner-installed protected Day 5 run was executed to [C2000 513/513, signed P13 and merged P14](https://github.com/lightnino/edp-lab/pull/64). This closes repeated step-specific code/SHA-pin installation for the approved Day 5 mechanical cohort run. It does **not** grant all future cohorts, arbitrary Acquisition RAW mutation, Day 6 Vault deployment or semantic/policy expansion. An owner-signed *uncertain-write integrity disposition* in [the separate P11 incident](../2026-10-23-c2000-p11-sql/incident.md) was required and is not a regression to repeated routine infrastructure signoffs. This report's original Day 4 observations and unmet-at-the-time release wording remain as dated history, not current state. No measured across-cohort autonomy benchmark is claimed.
+
 ## 1. Intended control versus observed workflow
 
-The intended policy is already in [ownership and approval boundaries](../ownership_approval_boundaries.md): an approved, pinned rule/source/configuration scope permits deterministic execution without repeated per-record human approvals; new consequential semantic or source-scope decisions need human review. The [authorized source universe incident](2026-10-21_source_universe_scope_control.md) showed why independent source-scope enforcement is non-negotiable.
+The intended policy is already in [ownership and approval boundaries](../../ownership_approval_boundaries.md): an approved, pinned rule/source/configuration scope permits deterministic execution without repeated per-record human approvals; new consequential semantic or source-scope decisions need human review. The [authorized source universe incident](../2026-10-21-source-universe/incident.md) showed why independent source-scope enforcement is non-negotiable.
 
 In implementation, Day 3 N450 processing used separately installed, host-pinned processing grants; Day 4 N750 admission/C1500 freeze used an admission-only owner grant; Day 4 Step 8 then encountered an additional processing gate. The *boundaries are valid*, but re-preparing a bespoke proposal, canonicalizing approval JSON, manually installing a new approved record, and changing a cohort/step-specific Python SHA pin adds an additional human-directed deployment step for each newly scoped workflow.
 
@@ -20,10 +22,10 @@ In implementation, Day 3 N450 processing used separately installed, host-pinned 
 
 | Stage | Observed evidence | Implication |
 | --- | --- | --- |
-| Day 2 C300 | [Frozen C300 approval](../../metadata/freezes/O_C300_M1_v1/authorization.json) scoped the historical M1 closeout. | A prior C300 approval does not grant N750 processing. |
-| Day 3 N450/C750 | [Actual execution report](../n450_c750_execution_evidence.md) records separately pinned processing/publication authority and later approved runtime correction. | Processing required real owner authority; technical retry and scope control were both explicit. |
-| Day 4 Step 1 | [N750 admission/freeze evidence](../n750_c1500_execution_evidence.md) and [installed N750 admission grant](../../metadata/authorizations/n750_admission_v1.json) pin exactly 750 new sources and the C1500 membership freeze. | Admission/freeze authority is **not** processing authorization. |
-| Day 4 Step 8 preflight | [C1500 freeze](../../metadata/freezes/C1500_v1/freeze.json) states `processing_authorization: NOT_GRANTED`, `output_freeze: NOT_RESULT_FREEZE`. [Execution evidence](../n750_c1500_execution_evidence.md) reports 450 remotely VERIFIED and 300 UNVERIFIED. | The executor correctly failed closed at **0/750 processed**; no CLEAN/M1/M2/QUERYABLE outputs were created in that blocked attempt. |
+| Day 2 C300 | [Frozen C300 approval](../../../metadata/freezes/O_C300_M1_v1/authorization.json) scoped the historical M1 closeout. | A prior C300 approval does not grant N750 processing. |
+| Day 3 N450/C750 | [Actual execution report](../../n450_c750_execution_evidence.md) records separately pinned processing/publication authority and later approved runtime correction. | Processing required real owner authority; technical retry and scope control were both explicit. |
+| Day 4 Step 1 | [N750 admission/freeze evidence](../../history/day4-c1500/n750_c1500_execution_evidence.md) and [installed N750 admission grant](../../../metadata/authorizations/n750_admission_v1.json) pin exactly 750 new sources and the C1500 membership freeze. | Admission/freeze authority is **not** processing authorization. |
+| Day 4 Step 8 preflight | [C1500 freeze](../../../metadata/freezes/C1500_v1/freeze.json) states `processing_authorization: NOT_GRANTED`, `output_freeze: NOT_RESULT_FREEZE`. [Execution evidence](../../history/day4-c1500/n750_c1500_execution_evidence.md) reports 450 remotely VERIFIED and 300 UNVERIFIED. | The executor correctly failed closed at **0/750 processed**; no CLEAN/M1/M2/QUERYABLE outputs were created in that blocked attempt. |
 | Step 8 follow-up | Local-only owner proposal at `runs/day4/n750-step8-worktree/proposals/n750-step8-v1/owner-record.proposed.json` was reported with proposed SHA-256 `0c0571e45de48ea96ebac0c6d6a28a2cf6c6ee5086558da23087014d07f05b36`; reported expected approved SHA-256 `5ae18d7d2ee770cbefb3f6ad0a6b05eac87282d8e88b2c9f6422dff7c9b7b120`. | Owner review and separate trusted installation required. These local-only artifacts and reported digests have **not** been independently verified in this GitHub record. Their appearance here is **not** approval or evidence of installation. |
 
 The remote 300 are **UNVERIFIED**, not proven missing, corrupt, or out of universe. An authorized RAW upload or processing must still satisfy exact source identity and independent remote SHA checks.
@@ -54,7 +56,7 @@ Day 5 must implement the minimum **policy-enforced, bounded authorization envelo
 
 **Day 5 release gate:** `BOUNDED_AUTHORIZATION_POLICY_VALIDATED` before claiming Runtime Agent A L2 autonomy. If not implemented or independently tested, report `AUTONOMY_PILOT_BLOCKED` or `LEGACY_GRANT_ONLY`; do not relabel manual Codex execution as autonomous Runtime Agent operation.
 
-## 6. Resolution criteria (not yet met)
+## 6. Original Day 4 resolution criteria (subsequently met for the bounded Day 5 cohort case)
 
 - One explicit trusted owner approval covers an N500-sized **bounded, versioned workflow**, not undefined future cohorts or model changes.
 - Agent can run/resume at least two approved mechanical phases without a second manual code-pin installation.
@@ -62,4 +64,4 @@ Day 5 must implement the minimum **policy-enforced, bounded authorization envelo
 - Reproducible audit trail separates approvals, mechanical execution, human decisions, rejected attempts and actual human minutes.
 - Existing Day 2–4 grants and frozen data are unchanged; no implied historic authorization or success.
 
-**Current disposition:** OPEN; remediation is planned for Day 5, not approved or deployed by this document.
+**Current disposition (2026-10-24):** BOUNDED_DAY5_COHORT_REMEDIATION_VERIFIED; tracking closed for repeated per-step owner grant/code-pin installation in that run. Protected 0A still requires per-workflow installed authority and independently signed exact scope. Do not generalize this result to other execution identities or the separately pending Day 6 Vault installation.

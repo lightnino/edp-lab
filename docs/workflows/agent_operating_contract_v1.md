@@ -1,0 +1,51 @@
+# Agent Operating Contract V1 — Shared Lifecycle Rules
+
+**Status:** Owner-reviewed, binding cross-lifecycle operating addendum, merged in [PR #65](https://github.com/lightnino/edp-lab/pull/65) on 2026-10-24. Applies prospectively to Acquisition/Universe, Cohort/Model, and Validation/Freeze. It is not an authorization, credential, deployed policy, operational receipt or retrospective amendment to any freeze.
+
+**Normative ownership:** Each Lifecycle defines **what** steps and acceptance evidence are required. This contract defines **who may execute/recover**, how trusted authority is enforced, and which decisions require the owner. The [Operating Guide](../operating/agent_operating_guide_v1.md) documents **how** to carry out these rules. In any conflict, do not silently choose a more permissive interpretation: block, record the conflict, and seek owner review.
+
+## 1. Standing authority and role separation
+
+1. At 0A an owner installs a versioned, bounded policy, trusted keys/issuers, protected execution identities, immutable operation ledger and signer/verifier outside the agent-editable repository. No repository change can install or enlarge its own privilege. A policy *proposal* or Git merge is not a deployed authorization.
+2. Trusted policy infrastructure evaluates exact source/Universe membership, contract/model/rule/registry pins, role, destination, operation kind, duration/budget, revocation and limits; it issues time-limited, exact grants and independent receipts only within the actually installed policy. Routine permitted grants/writes/readbacks/checkpoint resumes require no new per-operation human signature. A missing issuer or deployment is a technical blocker, not implicit permission.
+3. Acquisition alone may stage/mutate candidate RAW under a separately bounded RAW-write identity. Universe membership/holdout changes require owner approval; selecting an existing approved Universe member does not. Cohort/Model receives RAW-read/verify only, never RAW upload/move/restage permissions — including in recovery. Validation and result freezing can read and write only their independently allowed outputs. A grant for one role does not transfer to another.
+4. New material business/semantic rules, parser interpretations where consequential, source-governance or policy expansion, integrity/budget exceptions outside installed bounds, and Git PR merge require their defined human decision. A P14 merge always requires explicit human PR review/merge approval.
+
+## 2. Durable execution, independence and bounded recovery
+
+- Pin each action to signed grant, exact operation and request digest, approved source/contract/output version, and immutable pre-existing checkpoint. External writes remain unverified until independent signed remote readback. Preserve original ledger and any uncertain operation; never replay an uncertain non-idempotent request.
+- Completed tasks must not run again when resuming; preserve source and old-result freezes. A dry-run/simulation never counts as accepted live execution.
+- Distinguish task status from service liveness. A checkpoint showing VALIDATING is **not evidence the Supervisor is running**. The protected runtime must expose a trusted, durable state, process/service heartbeat or equivalent liveness, progress timestamps, and a bounded no-progress/timeout determination.
+- A stopped Supervisor, missing heartbeat, or stalled progress must be reported as STOPPED_OR_UNRESPONSIVE / STALLED_PENDING_DIAGNOSIS with last verified task, checkpoint and time; do not say "still running" without fresh process and progress evidence. Detection must be automated by an independent monitor (or equivalent protected mechanism), not reliant on the owner noticing unchanged counters.
+- Before acknowledging an incident, persist a sanitized state and alert/decision packet; allow authorized read-only investigation even if the worker has exited. Do not treat an alert, state record, restart, or no-progress timeout as permission to resubmit an external write.
+- An independent trusted verifier enforces status, receipt, identity and authority checks. The Agent neither signs its own grant/receipt nor acquires protected/root credentials or uncensored secret-bearing logs.
+
+## Recovery Decision Matrix
+
+This table applies to **all three Lifecycles and all applicable external-write adapters**. Classify by **independent evidence of remote effects**, not only by CLI exit code or absence of a Statement ID.
+
+| Evidence class | Required independent proof | Permitted operation | Owner decision / escalation |
+| --- | --- | --- | --- |
+| **A. Existing submission verified** | Exact original operation and request, remote Statement/Job ID or equivalent, terminal state, target object/side effects and independently signed matching receipt | Reconcile and finish the **existing** operation; **never resubmit** | Block on mismatch, disputed outcome or insufficient proof |
+| **B. Pre-submission failure and no remote effect proven** | Authenticated, correctly scoped submit/transport evidence **plus** independent remote checks establishing no side effects, with visibility/delay limitations resolved or explicitly evaluated | A **distinct, bounded** recovery may be signed by a separately protected authority **only if an already owner-installed policy delegates this precise class and evidence threshold** | Otherwise issue an owner integrity decision packet; no delegation is created by this text |
+| **C. Remote state unresolved / uncertain** | Missing or ambiguous ID/response; partial history visibility; possible delayed effects; conflicting request/target/receipt; not enough proof for A or B | Preserve UNCERTAIN_REQUIRES_READBACK ledger; retain VALIDATING/durably blocked state; read-only reconcile; **no replay or fresh non-idempotent submission** | Owner integrity disposition is mandatory before any new non-idempotent write |
+| **D. Routine technical/transient failure with no uncertain external effects** | Trusted local/config/runtime evidence and no outstanding uncertain operation; within installed scope and limits | Bounded technical repair, polling and same-checkpoint resume; no repeated owner infrastructure signature | Escalate if bounded limits exhaust, status becomes uncertain or technical repair needs policy expansion |
+| **E. New semantic/policy/Universe change, integrity exception, hard budget/measurement exception, Git merge** | Applicable changed-scope proposal and independent review package | No autonomous enlargement of semantics, grants, scope, limits or human merge gate | Relevant owner approval; P14 human review and explicit merge approval |
+
+**Insufficient evidence:** Zero visible Query History rows, an absent UC table, a missing Statement ID, empty stdout, a stopped process or an unrecognized API error **alone** proves neither pre-submission nor no remote effects.
+
+Any recovery decision must bind the original and (if distinct) new operation ID, original ledger digest, exact request digest, queue/checkpoint/grant pins, trusted identity, remote reconciliation evidence, signatures, timestamp, limits and a persistent audit linkage. Preserve unchanged original bytes. No automatic re-upload of Cohort RAW and no replay of completed tasks. Do not install a blanket recovery signer.
+
+## 4. Operator visibility and escalation contract
+
+A protected monitoring/read-only diagnostic surface **must** provide, without exposed credentials or root access: trusted service liveness and last heartbeat; latest progress/transition time; exact queue/checkpoint/task/operation references; failure **classification** and sanitized code; ledger/receipt state; pending reconciliation; configured retry/timeout bounds; and the *specific* evidence and authority missing for safe recovery.
+
+Liveness, progress and external-write state are **independent dimensions**. For example, VALIDATING + Supervisor STOPPED is a blocked incident, not an active poll. Timeout is not proof of remote non-execution. If a required monitor/status interface itself fails, report observability failure and fail closed; never assert progress from a stale checkpoint. Heartbeat and no-progress thresholds must be explicit, bounded, appropriate to each operation and tested in the protected installation; this document does not invent a universal clock value.
+
+Safe recovery outcomes: VERIFIED_EXISTING; PROVEN_NO_EFFECT_WITH_DELEGATION; PAUSED_WITH_DECISION_PACKET; BOUNDED_TECHNICAL_RESUME; FAILED_INTEGRITY/POLICY_BLOCKED. A sanitized decision packet is available to the Agent/owner; raw credentials/private ledger bytes remain in separately protected custody. **Implementation and alert/restart/watchdog tests are a separate R4 obligation.**
+
+## 5. Independent acceptance and change control
+
+Applicable Lossless/Stability/economic checks and versioned, source-scoped control registries are binding. A queue cannot silently omit an applicable pinned control or promote candidate SQL as an approved business meaning. When economic meaning is not established, preserve original lexical data and record PRESERVED_NOT_MODELED rather than invent a mapping or call the record corrupt. Independent economic research must report source meaning, grain, unit, dates, conventions, potential source-native reconciliation, alternative interpretations and consequences. Price/yield interpretations require fixed cashflows and explicit conventions; principal is not automatically price. A candidate control or readback does not approve economic meaning. A result freeze requires independently verified version-pinned live storage/object identities, source lineage and signed receipts, not merely a Git marker. Keep observed metrics (runtime, retries, compute, human intervention) with unknown values as null, never inferred PASS.
+
+For write changes use scoped branch/PR, tests and Ruff, CI, human review and explicit merge approval, and verify final main SHA. No unsigned new policy, Guide statement, or incident closeout may silently weaken the three Lifecycle Specifications. The companion [protected recovery runbook](../operating/agent_operating_guide_v1.md#protected-recovery-runbook) is non-authoritative on grant scope.
