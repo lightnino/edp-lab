@@ -155,8 +155,7 @@ def test_acquisition_fails_closed_on_changed_plan_or_missing_signature(
         execute_acquisition_stage(root, grant, plan, tmp_path / "ledger")
     assert not (tmp_path / "ledger").exists()
 
-    root, trust, grant, plan, receipt, _source = acquisition_fixture(tmp_path / "other")
-    monkeypatch.setenv("EDP_OWNER_TRUST_DIR", str(trust))
+    plan.write_bytes(plan.read_bytes()[:-1])
     receipt.unlink()
     with pytest.raises((Denied, OSError)):
         execute_acquisition_stage(root, grant, plan, tmp_path / "ledger")
