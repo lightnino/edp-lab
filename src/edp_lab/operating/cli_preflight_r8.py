@@ -62,8 +62,7 @@ def exact_uc_missing(response: CliResponse, *, table: str) -> bool:
     expected = f"Table '{table}' does not exist."
     if message == "Error: " + expected:
         return True
-    if message.startswith("Error: "):
-        message = message[len("Error: "):]
+    message = message.removeprefix("Error: ")
     try:
         body = json.loads(message)
     except ValueError:
