@@ -89,7 +89,8 @@ def _execute_controls(root: Path, controls: list[dict], receipts: dict) -> None:
             raise Denied("UNKNOWN_CONTROL_EXECUTION")
 
 
-def _codex_step(root: Path, task: dict, state_dir: Path, *, read_only: bool) -> dict:
+def _codex_step(root: Path, task: dict, state_dir: Path, *, read_only: bool,
+                allow_git: bool = False) -> dict:
     """Run or resume a bounded local Codex task; retain raw JSONL session events."""
     prompt = (root / task["prompt_path"]).resolve(strict=True)
     if not prompt.is_relative_to(root):
@@ -104,8 +105,11 @@ def _codex_step(root: Path, task: dict, state_dir: Path, *, read_only: bool) -> 
                    "read-only" if read_only else "workspace-write", "--json", "-"]
     environment = {key: value for key, value in os.environ.items()
                    if not key.startswith(("DATABRICKS_", "AWS_", "GITHUB_", "GH_"))}
-    instruction = ("Work only inside this repository. Do not run Git mutations, "
-                   "Databricks writes, network APIs, or semantic promotions. "
+    instruction = ("Work only inside this repository. "
+                   + ("Git and PR operations require the applicable independently verified "
+                      "live freeze and repository review gates; no other network APIs. "
+                      if allow_git else "Do not run Git mutations or network APIs. ")
+                   + "Do not run Databricks writes or semantic promotions. "
                    "Report completed work and blockers.\n\n"
                    + ("Diagnose and repair the previous ordinary code/execution failure within "
                       "the same approved task and scope.\n\n"

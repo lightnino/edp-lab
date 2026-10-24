@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import hashlib
 import json
 import subprocess
 import sys
@@ -83,14 +84,14 @@ def _receipt(root: Path, plan: dict, stage: str) -> dict | None:
             rows = list(csv.DictReader(stream))
         source_ids = {row["source_instance_id"] for row in rows}
         dispositions = receipt.get("source_dispositions")
-        if (len(rows) != 2000 or len(source_ids) != 2000
+        if (not rows or len(source_ids) != len(rows)
                 or not isinstance(dispositions, dict)
                 or set(dispositions) != source_ids
                 or not set(dispositions.values()) <= {
                     "REUSE_APPROVED", "NEW_CONTRACT_REQUIRED", "UNSUPPORTED", "UNRESOLVED"
                 }):
             raise Denied("VAULT_MODEL_FIT_COVERAGE_INCOMPLETE")
-    if stage == "V2" and receipt["status"] == "PASS":
+    if stage == "V2" and receipt["status"] in {"PASS", "PARTIAL"}:
         if not receipt.get("approved_contract_pins"):
             raise Denied("VAULT_CONTRACT_PINS_REQUIRED")
         for pin in receipt["approved_contract_pins"]:
@@ -98,7 +99,15 @@ def _receipt(root: Path, plan: dict, stage: str) -> dict | None:
         v1 = _receipt(root, plan, "V1")
         novel = (v1 is not None and "NEW_CONTRACT_REQUIRED" in
                  v1["source_dispositions"].values())
-        if novel or receipt.get("new_semantics"):
+        if receipt["status"] == "PARTIAL":
+            reused = {sid for sid, fit in v1["source_dispositions"].items()
+                      if fit == "REUSE_APPROVED"}
+            pending = set(v1["source_dispositions"]) - reused
+            if (set(receipt.get("approved_sources", [])) != reused
+                    or set(receipt.get("pending_sources", [])) != pending
+                    or receipt.get("new_semantics") is not False):
+                raise Denied("VAULT_PARTIAL_CONTRACT_SCOPE_INVALID")
+        if (receipt["status"] == "PASS" and novel) or receipt.get("new_semantics"):
             from edp_lab.operating.authority import protected_trust_dir, verified_document
 
             decision_path = receipt.get("owner_signed_decision")
@@ -113,17 +122,87 @@ def _receipt(root: Path, plan: dict, stage: str) -> dict | None:
         # A self-authored JSON status cannot establish a live write or freeze.
         from edp_lab.operating.authority import protected_trust_dir, verified_document
 
-        envelope = receipt.get("signed_live_receipt")
-        if not envelope:
-            raise Denied("VAULT_SIGNED_LIVE_RECEIPT_REQUIRED:" + stage)
-        proof = verified_document(root, Path(envelope), protected_trust_dir(root))
-        if (proof.get("cohort") != plan["cohort"]
-                or proof.get("status") not in {"VERIFIED", "PASS"}
-                or proof.get("live_readback") is not True):
-            raise Denied("VAULT_LIVE_READBACK_REQUIRED:" + stage)
+        if stage == "V4":
+            runs = receipt.get("protected_runs")
+            if not isinstance(runs, list) or not runs:
+                raise Denied("VAULT_V4_RUN_RECEIPTS_REQUIRED")
+            covered = set()
+            for run in runs:
+                request_path = _repo_file(root, run["request_path"], run["request_sha256"])
+                request = json.loads(request_path.read_bytes())
+                expected_run_sha = hashlib.sha256(json.dumps(
+                    request, sort_keys=True, separators=(",", ":"),
+                    ensure_ascii=False).encode()).hexdigest()
+                proof = verified_document(root, Path(run["signed_live_receipt"]),
+                                          protected_trust_dir(root))
+                checks = proof.get("checks")
+                if (proof.get("schema") != "EDP_VAULT_RUN_READBACK_RECEIPT_V2"
+                        or proof.get("cohort_id") != plan["cohort"]
+                        or proof.get("status") != "VERIFIED"
+                        or proof.get("namespace") != plan["namespace"]
+                        or not isinstance(checks, dict)
+                        or set(checks) != set(plan["tables"])
+                        or any(not item.get("uc_table_id") or not item.get("statement_id")
+                               or not isinstance(item.get("rows"), int)
+                               for item in checks.values())
+                        or run.get("run_sha256") != proof.get("run_sha256")
+                        or expected_run_sha != proof.get("run_sha256")
+                        or request.get("cohort_id") != plan["cohort"]
+                        or not isinstance(request.get("sources"), dict)
+                        or file_digest(Path(run["signed_live_receipt"])) != run.get("receipt_sha256")):
+                    raise Denied("VAULT_V4_SIGNED_READBACK_INVALID")
+                covered.update(request["sources"])
+            if set(receipt.get("selected_sources", [])) != covered:
+                raise Denied("VAULT_V4_SOURCE_COVERAGE_MISMATCH")
+            if receipt["status"] == "PASS":
+                roster = plan["inputs"]["roster"]
+                with _repo_file(root, roster["path"], roster["sha256"]).open(newline="") as stream:
+                    all_sources = {row["source_instance_id"] for row in csv.DictReader(stream)}
+                v2 = _receipt(root, plan, "V2")
+                if covered != all_sources or v2 is None or v2["status"] != "PASS":
+                    raise Denied("VAULT_FULL_POPULATION_PASS_UNSUPPORTED")
+        else:
+            envelope = receipt.get("signed_live_receipt")
+            if not envelope:
+                raise Denied("VAULT_SIGNED_LIVE_RECEIPT_REQUIRED:" + stage)
+            proof = verified_document(root, Path(envelope), protected_trust_dir(root))
+            if (proof.get("schema") != "EDP_VAULT_LIVE_FREEZE_RECEIPT_V1"
+              or proof.get("cohort") != plan["cohort"]
+              or proof.get("status") != "VERIFIED"
+              or proof.get("live_readback") is not True
+              or not proof.get("delta_ids") or not proof.get("delta_versions")
+              or not proof.get("source_coverage")):
+                raise Denied("VAULT_V9_LIVE_FREEZE_INVALID")
+            if receipt["status"] == "PASS":
+                for prerequisite in ("V2", "V4", "V5", "V8"):
+                    prior = _receipt(root, plan, prerequisite)
+                    if prior is None or prior["status"] != "PASS":
+                        raise Denied("VAULT_V9_FULL_PASS_PREREQUISITE_MISSING")
+            _verify_git_exit(receipt)
     for item in receipt.get("evidence", []):
         _repo_file(root, item["path"], item["sha256"])
     return receipt
+
+
+def _verify_git_exit(receipt: dict) -> None:
+    """Verify the actual remote PR merge after any required human review."""
+    git_exit = receipt.get("git_exit")
+    if (not isinstance(git_exit, dict) or type(git_exit.get("pr")) is not int
+            or not isinstance(git_exit.get("merge_sha"), str)
+            or not isinstance(git_exit.get("head_sha"), str)):
+        raise Denied("VAULT_GIT_EXIT_EVIDENCE_REQUIRED")
+    response = subprocess.run(
+        ["gh", "pr", "view", str(git_exit["pr"]), "--json",
+         "state,mergedAt,mergeCommit,headRefOid,baseRefName"],
+        capture_output=True, text=True, timeout=30, check=False)
+    if response.returncode:
+        raise Denied("VAULT_GIT_EXIT_REMOTE_READBACK_FAILED")
+    live = json.loads(response.stdout)
+    if (live.get("state") != "MERGED" or not live.get("mergedAt")
+            or live.get("mergeCommit", {}).get("oid") != git_exit["merge_sha"]
+            or live.get("headRefOid") != git_exit["head_sha"]
+            or live.get("baseRefName") != "main"):
+        raise Denied("VAULT_GIT_EXIT_REMOTE_MISMATCH")
 
 
 def advance(root: Path, plan_path: Path, state_dir: Path) -> dict:
@@ -159,6 +238,10 @@ def advance(root: Path, plan_path: Path, state_dir: Path) -> dict:
             if stage in state["completed"]:
                 if not receipt or file_digest(root / plan["stages"][stage]["receipt"]) != state["completed"][stage]:
                     raise Denied("VAULT_COMPLETED_EVIDENCE_CHANGED:" + stage)
+                for incident in state["recovery"]:
+                    if incident["stage"] == stage and "resolved_at" not in incident:
+                        incident["resolved_at"] = datetime.now(UTC).isoformat()
+                        incident["resolution"] = "SUPERSEDED_BY_VERIFIED_STAGE_EVIDENCE"
                 continue
             if receipt is None:
                 state["next_stage"] = stage
@@ -174,11 +257,19 @@ def advance(root: Path, plan_path: Path, state_dir: Path) -> dict:
                                               "at": datetime.now(UTC).isoformat()})
                     _event(log, "V7_INTERRUPT", stage=stage, reason=receipt.get("reason"))
                 break
+            if stage in {"V0A", "V0"} and receipt["status"] != "PASS":
+                state["next_stage"] = stage
+                state["status"] = "HUMAN_DECISION_REQUIRED"
+                break
             if stage == "V5" and receipt["status"] == "NOT_REQUIRED":
                 raise Denied("VAULT_LOSSLESS_CANNOT_BE_SKIPPED")
             if stage in {"V3", "V6"} and receipt["status"] == "NOT_REQUIRED" and not receipt.get("applicability_evidence"):
                 raise Denied("VAULT_CONDITIONAL_STAGE_NEEDS_EVIDENCE:" + stage)
             state["completed"][stage] = file_digest(root / plan["stages"][stage]["receipt"])
+            for incident in state["recovery"]:
+                if incident["stage"] == stage and "resolved_at" not in incident:
+                    incident["resolved_at"] = datetime.now(UTC).isoformat()
+                    incident["resolution"] = "SUPERSEDED_BY_VERIFIED_STAGE_EVIDENCE"
             _event(log, "STAGE_VERIFIED", stage=stage, status=receipt["status"])
         else:
             state["next_stage"] = None
@@ -190,7 +281,7 @@ def advance(root: Path, plan_path: Path, state_dir: Path) -> dict:
 
 
 def reserve_external(state_dir: Path, *, stage: str, operation_id: str,
-                     request_sha256: str) -> dict:
+                     request_sha256: str, request_path: str | None = None) -> dict:
     """Durably reserve one protected operation before sending it to a service."""
     if stage not in PROTECTED:
         raise Denied("VAULT_EXTERNAL_STAGE_INVALID")
@@ -200,6 +291,7 @@ def reserve_external(state_dir: Path, *, stage: str, operation_id: str,
         raise Denied("VAULT_EXTERNAL_OPERATION_NOT_READY")
     state["pending_external"] = {"stage": stage, "operation_id": operation_id,
                                  "request_sha256": request_sha256,
+                                 "request_path": request_path,
                                  "reserved_at": datetime.now(UTC).isoformat()}
     state["status"] = "EXTERNAL_OUTCOME_PENDING"
     _write_json(path, state)
@@ -208,95 +300,208 @@ def reserve_external(state_dir: Path, *, stage: str, operation_id: str,
     return state
 
 
-def reconcile_external(root: Path, plan_path: Path, state_dir: Path) -> dict:
-    """Clear an uncertain operation only against its matching signed readback."""
+def _finish_v4_batch(root: Path, plan: dict, state_dir: Path, signed: Path) -> dict:
+    """Record one exact protected readback and release only its reservation."""
+    from edp_lab.operating.authority import protected_trust_dir, verified_document
+
+    state_path = state_dir / "checkpoint.json"
+    state = json.loads(state_path.read_bytes())
+    pending = state.get("pending_external")
+    if not pending or pending["stage"] != "V4" or not pending.get("request_path"):
+        raise Denied("VAULT_NO_V4_BATCH_PENDING")
+    request_path = _repo_file(root, pending["request_path"], pending["request_sha256"])
+    request = json.loads(request_path.read_bytes())
+    run_sha = hashlib.sha256(json.dumps(request, sort_keys=True, separators=(",", ":"),
+                                       ensure_ascii=False).encode()).hexdigest()
+    proof = verified_document(root, signed, protected_trust_dir(root))
+    if (run_sha != pending["operation_id"] or proof.get("run_sha256") != run_sha
+            or proof.get("schema") != "EDP_VAULT_RUN_READBACK_RECEIPT_V2"
+            or proof.get("cohort_id") != plan["cohort"]
+            or proof.get("namespace") != plan["namespace"]
+            or proof.get("status") != "VERIFIED"
+            or set(proof.get("checks", {})) != set(plan["tables"])
+            or any(not check.get("uc_table_id") or not check.get("statement_id")
+                   or not isinstance(check.get("rows"), int)
+                   for check in proof["checks"].values())):
+        raise Denied("VAULT_V4_BATCH_READBACK_MISMATCH")
+    entry = {"request_path": pending["request_path"],
+             "request_sha256": pending["request_sha256"],
+             "run_sha256": run_sha, "signed_live_receipt": str(signed),
+             "receipt_sha256": file_digest(signed)}
+    state.setdefault("v4_batches", {})[run_sha] = entry
+    state["pending_external"] = None
+    _write_json(state_path, state)
+    _event(state_dir / "events.jsonl", "EXTERNAL_RECONCILED", stage="V4",
+           operation_id=run_sha)
+    return state
+
+
+def reconcile_external(root: Path, plan_path: Path, state_dir: Path,
+                       signed_receipt: Path | None = None) -> dict:
+    """Reconcile an uncertain write from signed readback; never replay it."""
     plan = load_plan(root, plan_path)
     state_path = state_dir / "checkpoint.json"
     state = json.loads(state_path.read_bytes())
     pending = state.get("pending_external")
     if not pending:
         raise Denied("VAULT_NO_EXTERNAL_OPERATION_PENDING")
-    stage = pending["stage"]
-    receipt = _receipt(root, plan, stage)
-    if receipt is None or receipt["status"] not in {"PASS", "PARTIAL"}:
+    if signed_receipt is None:
         raise Denied("VAULT_EXTERNAL_RECEIPT_NOT_READY")
-    from edp_lab.operating.authority import protected_trust_dir, verified_document
+    return _finish_v4_batch(root, plan, state_dir, signed_receipt)
 
-    proof = verified_document(root, Path(receipt["signed_live_receipt"]),
-                              protected_trust_dir(root))
-    if (proof.get("operation_id") != pending["operation_id"]
-            or proof.get("request_sha256") != pending["request_sha256"]):
-        raise Denied("VAULT_EXTERNAL_RECEIPT_OPERATION_MISMATCH")
-    state["pending_external"] = None
+
+def reconcile_agent(root: Path, plan_path: Path, state_dir: Path) -> dict:
+    """Recover a lost agent response only from a retained terminal session event."""
+    load_plan(root, plan_path)
+    state_path = state_dir / "checkpoint.json"
+    state = json.loads(state_path.read_bytes())
+    pending = state.get("pending_agent")
+    if not pending:
+        raise Denied("VAULT_NO_AGENT_PENDING")
+    stage = pending["stage"]
+    prompt = state_dir / (stage.lower() + ".prompt.txt")
+    if file_digest(prompt) != pending["prompt_sha256"]:
+        raise Denied("VAULT_AGENT_PROMPT_CHANGED")
+    events = state_dir / (stage.lower() + ".codex.jsonl")
+    if not events.is_file():
+        raise Denied("VAULT_AGENT_TERMINAL_EVENT_MISSING")
+    kinds = []
+    for line in events.read_text().splitlines():
+        try:
+            kinds.append(json.loads(line).get("type"))
+        except ValueError:
+            raise Denied("VAULT_AGENT_EVENT_CORRUPT") from None
+    if "turn.completed" not in kinds and "turn.failed" not in kinds:
+        raise Denied("VAULT_AGENT_TERMINAL_EVENT_MISSING")
+    state["pending_agent"] = None
+    state["status"] = ("EVIDENCE_REQUIRED" if "turn.completed" in kinds
+                       else "TECHNICAL_RECOVERY_REQUIRED")
     _write_json(state_path, state)
-    _event(state_dir / "events.jsonl", "EXTERNAL_RECONCILED", stage=stage,
-           operation_id=pending["operation_id"])
-    return advance(root, plan_path, state_dir)
+    _event(state_dir / "events.jsonl", "AGENT_RECONCILED", stage=stage,
+           status=state["status"])
+    return advance(root, plan_path, state_dir) if "turn.completed" in kinds else state
 
 
 def readiness(root: Path, plan_path: Path) -> dict:
-    """Local no-write check; do not mistake the old prototype for full authority."""
+    """Separate pilot startup from later protected full-write authority."""
     plan = load_plan(root, plan_path)
-    blockers = []
+    startup_blockers = []
+    authority_blockers = []
+    max_run_occurrences = None
     base = Path("/private/var/db/edp-lab-day6-vault")
     try:
         from edp_lab.operating.authority import verified_document
 
         policy = verified_document(root, base / "trust/policy.signed.json", base / "trust")
         if policy.get("c2000_full_integration_allowed") is not True:
-            blockers.append("INSTALLED_POLICY_EXCLUDES_FULL_C2000")
-        if policy.get("max_run_data_occurrences", 0) <= 1000:
-            blockers.append("INSTALLED_POLICY_CAPS_RUN_AT_1000_OCCURRENCES")
+            authority_blockers.append("INSTALLED_POLICY_EXCLUDES_FULL_C2000")
+        max_run_occurrences = policy.get("max_run_data_occurrences")
         if policy.get("protected_full_executor_validated") is not True:
-            blockers.append("FULL_SCOPE_PROTECTED_EXECUTION_NOT_DEMONSTRATED")
+            authority_blockers.append("FULL_SCOPE_PROTECTED_EXECUTION_NOT_DEMONSTRATED")
     except (OSError, Denied):
-        blockers.append("INSTALLED_FULL_SCOPE_POLICY_NOT_VERIFIABLE")
-    # Stage V1/V2 decisions are evidence, not claims in a writable plan.
-    try:
-        for stage in ("V1", "V2"):
-            receipt = _receipt(root, plan, stage)
-            if receipt is None or receipt["status"] != "PASS":
-                blockers.append("FULL_SOURCE_MODEL_FIT_AND_CONTRACT_DECISIONS_PENDING")
-                break
-    except (OSError, Denied):
-        blockers.append("FULL_SOURCE_MODEL_FIT_AND_CONTRACT_DECISIONS_PENDING")
-    return {"status": "READY" if not blockers else "BLOCKED", "cohort": plan["cohort"],
-            "workflow_sha256": plan["workflow_sha256"], "blockers": blockers,
+        startup_blockers.append("INSTALLED_POLICY_NOT_VERIFIABLE")
+        authority_blockers.append("INSTALLED_FULL_SCOPE_POLICY_NOT_VERIFIABLE")
+    return {"startup_status": "READY" if not startup_blockers else "BLOCKED",
+            "startup_blockers": startup_blockers,
+            "protected_full_write_status": "READY" if not authority_blockers else "BLOCKED",
+            "authority_blockers": authority_blockers, "cohort": plan["cohort"],
+            "max_run_data_occurrences": max_run_occurrences,
+            "workflow_sha256": plan["workflow_sha256"],
             "existing_step2_reused": "step2" in plan["inputs"]}
 
 
 def dispatch_v4(root: Path, plan_path: Path, state_dir: Path,
                 run_request: str) -> dict:
-    """Submit once through the existing protected V2 service after reservation.
-
-    A lost response stays pending.  The operator/agent must reconcile the
-    protected ledger and live Delta state before clearing that reservation.
-    """
-    load_plan(root, plan_path)
+    """Drive pinned protected batches, resuming only after signed readback."""
+    plan = load_plan(root, plan_path)
     state = advance(root, plan_path, state_dir)
     if state["status"] != "EVIDENCE_REQUIRED" or state["next_stage"] != "V4":
         raise Denied("VAULT_V4_NOT_READY")
-    if readiness(root, plan_path)["status"] != "READY":
+    if readiness(root, plan_path)["protected_full_write_status"] != "READY":
         raise Denied("VAULT_FULL_SCOPE_AUTHORITY_BLOCKED")
-    request = Path(run_request)
-    if request.is_absolute() or ".." in request.parts:
+    manifest_path = Path(run_request)
+    if manifest_path.is_absolute() or ".." in manifest_path.parts:
         raise Denied("VAULT_RUN_REQUEST_OUTSIDE_REPO")
-    request_path = (root / request).resolve(strict=True)
-    if not request_path.is_relative_to(root.resolve()):
+    manifest_file = (root / manifest_path).resolve(strict=True)
+    if not manifest_file.is_relative_to(root.resolve()):
         raise Denied("VAULT_RUN_REQUEST_OUTSIDE_REPO")
-    request_hash = file_digest(request_path)
-    reserve_external(state_dir, stage="V4", operation_id=request_hash,
-                     request_sha256=request_hash)
-    command = [sys.executable, str(root / "scripts/vault_0a_v2_client.py"),
-               "execute", str(request)]
-    result = subprocess.run(command, cwd=root, capture_output=True, text=True,
-                            timeout=3700, check=False)
-    # The response is evidence for reconciliation, never a reason to replay.
-    (state_dir / "v4-protected-response.json").write_text(json.dumps({
-        "returncode": result.returncode, "stdout": result.stdout,
-        "stderr": result.stderr[-2000:]}, sort_keys=True) + "\n")
-    return {"status": "EXTERNAL_RECONCILIATION_REQUIRED",
-            "returncode": result.returncode, "request_sha256": request_hash}
+    manifest = json.loads(manifest_file.read_bytes())
+    if (manifest.get("schema") != "EDP_VAULT_EXECUTION_MANIFEST_V1"
+            or manifest.get("cohort") != plan["cohort"]
+            or not isinstance(manifest.get("runs"), list)
+            or not manifest["runs"]):
+        raise Denied("VAULT_BATCH_MANIFEST_INVALID")
+    manifest_hash = file_digest(manifest_file)
+    state_path = state_dir / "checkpoint.json"
+    state = json.loads(state_path.read_bytes())
+    if state.get("v4_manifest_sha256") not in {None, manifest_hash}:
+        raise Denied("VAULT_BATCH_MANIFEST_CHANGED_DURING_RESUME")
+    if state.get("v4_manifest_sha256") is None:
+        state["v4_manifest_sha256"] = manifest_hash
+        _write_json(state_path, state)
+    from edp_lab.vault.pilot_evidence import save_once
+
+    covered = set()
+    expected_hashes = []
+    for item in manifest["runs"]:
+        request_file = _repo_file(root, item["path"], item["sha256"])
+        run = json.loads(request_file.read_bytes())
+        if (run.get("cohort_id") != plan["cohort"]
+                or not isinstance(run.get("sources"), dict)
+                or covered.intersection(run["sources"])):
+            raise Denied("VAULT_BATCH_SOURCE_SCOPE_INVALID")
+        covered.update(run["sources"])
+        run_hash = hashlib.sha256(json.dumps(run, sort_keys=True, separators=(",", ":"),
+                                             ensure_ascii=False).encode()).hexdigest()
+        expected_hashes.append(run_hash)
+        state = json.loads((state_dir / "checkpoint.json").read_bytes())
+        if run_hash in state.get("v4_batches", {}):
+            entry = state["v4_batches"][run_hash]
+            if entry["request_sha256"] != item["sha256"]:
+                raise Denied("VAULT_COMPLETED_BATCH_CHANGED")
+            # Recheck signed readback before skipping a completed batch.
+            from edp_lab.operating.authority import protected_trust_dir, verified_document
+
+            proof = verified_document(root, Path(entry["signed_live_receipt"]),
+                                      protected_trust_dir(root))
+            if proof.get("run_sha256") != run_hash:
+                raise Denied("VAULT_COMPLETED_BATCH_READBACK_CHANGED")
+            continue
+        reserve_external(state_dir, stage="V4", operation_id=run_hash,
+                         request_sha256=item["sha256"], request_path=item["path"])
+        result = subprocess.run(
+            [sys.executable, str(root / "scripts/vault_0a_v2_client.py"),
+             "execute", item["path"]], cwd=root, capture_output=True, text=True,
+            timeout=3700, check=False)
+        response_path = state_dir / ("v4-" + run_hash + "-response.json")
+        save_once(response_path, {"returncode": result.returncode,
+                                  "stdout": result.stdout, "stderr": result.stderr[-2000:]})
+        if result.returncode:
+            return {"status": "EXTERNAL_RECONCILIATION_REQUIRED",
+                    "run_sha256": run_hash, "returncode": result.returncode}
+        try:
+            response = json.loads(result.stdout)
+            signed = Path(response["receipt_path"])
+            if (response.get("status") != "VAULT_RUN_READBACK_VERIFIED"
+                    or file_digest(signed) != response["receipt_sha256"]):
+                raise Denied("VAULT_PROTECTED_RESPONSE_INVALID")
+            _finish_v4_batch(root, plan, state_dir, signed)
+        except (KeyError, OSError, ValueError, Denied):
+            return {"status": "EXTERNAL_RECONCILIATION_REQUIRED",
+                    "run_sha256": run_hash, "returncode": result.returncode}
+    if set(manifest.get("selected_sources", [])) != covered:
+        raise Denied("VAULT_BATCH_MANIFEST_COVERAGE_MISMATCH")
+    state = json.loads((state_dir / "checkpoint.json").read_bytes())
+    if set(state.get("v4_batches", {})) != set(expected_hashes):
+        raise Denied("VAULT_BATCH_READBACK_INCOMPLETE")
+    save_once(root / plan["stages"]["V4"]["receipt"], {
+        "schema": "EDP_VAULT_LIFECYCLE_STAGE_V1", "cohort": plan["cohort"],
+        "stage": "V4", "workflow_sha256": plan["workflow_sha256"],
+        "status": "PARTIAL", "selected_sources": sorted(covered),
+        "protected_runs": [state["v4_batches"][key] for key in expected_hashes],
+        "evidence": [{"path": str(manifest_path), "sha256": manifest_hash}],
+    })
+    return advance(root, plan_path, state_dir)
 
 
 def dispatch_agent(root: Path, plan_path: Path, state_dir: Path,
@@ -315,7 +520,7 @@ def dispatch_agent(root: Path, plan_path: Path, state_dir: Path,
     state = advance(root, plan_path, state_dir)
     stage = state.get("next_stage")
     if (state["status"] not in {"EVIDENCE_REQUIRED", "TECHNICAL_RECOVERY_REQUIRED"}
-            or stage in PROTECTED or stage is None):
+            or stage == "V4" or stage is None):
         raise Denied("VAULT_AGENT_STAGE_NOT_READY")
     if state.get("pending_agent"):
         raise Denied("VAULT_AGENT_OUTCOME_UNCERTAIN")
@@ -331,9 +536,13 @@ def dispatch_agent(root: Path, plan_path: Path, state_dir: Path,
         "Choose the evidence/profiling/tests called for there. Reuse accepted evidence. "
         "Do not run C2000 Delta writes, issue grants, sign decisions, change protected "
         "policy, mutate RAW/frozen inputs, or invent business semantics. "
+        "For V9, prepare live-freeze and Git exit evidence under the workflow; "
+        "do not claim a protected freeze or merge without independent proof. "
         "Use the existing receipt path from the plan only when evidence supports it; "
         "record unresolved items and human decisions explicitly. "
-        "Do not run git commit, push or merge.\n"
+        + ("Commit, push and create the PR only after independently verified live "
+           "freeze evidence; stop before merge when review approval is required.\n"
+           if stage == "V9" else "Do not run git commit, push or merge.\n")
     )
     state["pending_agent"] = {"stage": stage, "prompt_sha256": file_digest(prompt),
                               "started_at": datetime.now(UTC).isoformat()}
@@ -342,7 +551,7 @@ def dispatch_agent(root: Path, plan_path: Path, state_dir: Path,
     result = _codex_step(root, {"id": stage.lower(), "prompt_path": str(prompt),
                                 "prompt_sha256": file_digest(prompt),
                                 "runtime_seconds": runtime_seconds}, state_dir,
-                         read_only=False)
+                         read_only=False, allow_git=stage == "V9")
     state = json.loads((state_dir / "checkpoint.json").read_bytes())
     state["pending_agent"] = None
     state["agent_sessions"] = {**state.get("agent_sessions", {}), stage: result}
@@ -356,28 +565,138 @@ def dispatch_agent(root: Path, plan_path: Path, state_dir: Path,
     return advance(root, plan_path, state_dir)
 
 
+def _mechanical_stage(root: Path, plan_path: Path, state_dir: Path,
+                      stage: str) -> dict:
+    """Reuse immutable evidence and classify the frozen roster without semantics."""
+    from edp_lab.vault.pilot_evidence import (
+        classify_frozen_inventory,
+        save_once,
+        verify_reused_v0,
+        verify_reused_v0a,
+    )
+
+    plan = load_plan(root, plan_path)
+    receipt_path = root / plan["stages"][stage]["receipt"]
+    common = {"schema": "EDP_VAULT_LIFECYCLE_STAGE_V1", "cohort": plan["cohort"],
+              "stage": stage, "workflow_sha256": plan["workflow_sha256"]}
+    if stage == "V0A":
+        result = verify_reused_v0a(root, plan)
+        evidence_names = ["vault_0a_acceptance"]
+    elif stage == "V0":
+        result = verify_reused_v0(root, plan)
+        evidence_names = ["step0_evaluation", "cohort_freeze", "upstream_result",
+                          "frozen_bindings", "approved_contract", "contract_approval",
+                          "step2"]
+    elif stage == "V1":
+        inventory = classify_frozen_inventory(root, plan)
+        inventory_path = state_dir.parent / "model-fit-2000.json"
+        save_once(inventory_path, inventory)
+        result = {"status": "PASS", "source_dispositions": {
+            sid: item["model_fit"] for sid, item in inventory["sources"].items()},
+            "family_counts": inventory["family_counts"],
+            "model_fit_counts": inventory["model_fit_counts"],
+            "inventory_sha256": file_digest(inventory_path)}
+        evidence_names = ["roster", "frozen_bindings"]
+        result["evidence"] = [{"path": str(inventory_path.relative_to(root)),
+                               "sha256": file_digest(inventory_path)}]
+    elif stage == "V2":
+        v1 = _receipt(root, plan, "V1")
+        if v1 is None:
+            raise Denied("VAULT_V1_REQUIRED_BEFORE_V2")
+        approved = sorted(sid for sid, fit in v1["source_dispositions"].items()
+                          if fit == "REUSE_APPROVED")
+        pending = sorted(sid for sid in v1["source_dispositions"] if sid not in approved)
+        result = {"status": "PARTIAL", "decision_required": True,
+                  "reason": "NEW_SOURCE_FAMILY_VAULT_CONTRACTS_PENDING",
+                  "approved_contract_pins": [plan["inputs"]["approved_contract"]],
+                  "approved_sources": approved, "pending_sources": pending,
+                  "new_semantics": False,
+                  "reused_contract": "VAULT_LOAD_CONTRACT_V1",
+                  "new_contract_family_counts": {
+                      family: count for family, count in v1["family_counts"].items()
+                      if family != "SEC_FSDS"},
+                  "approval_packet": "reports/day6_c2000_vault_pilot_owner_review_v1.md"}
+        evidence_names = ["approved_contract", "contract_approval", "frozen_bindings"]
+        for relative in ("reports/day6_c2000_vault_pilot_owner_review_v1.md",
+                         "runs/day6-vault-pilot/family-probe-v1.json"):
+            path = (root / relative).resolve(strict=True)
+            if not path.is_relative_to(root):
+                raise Denied("VAULT_V2_EVIDENCE_OUTSIDE_REPO")
+            result.setdefault("evidence", []).append(
+                {"path": relative, "sha256": file_digest(path)})
+    elif stage == "V3":
+        headers_path = root / "runs/day6-vault-pilot/fsds-num-headers-v1.json"
+        headers = json.loads(headers_path.read_bytes())
+        expected = "adsh\ttag\tversion\tddate\tqtrs\tuom\tsegments\tcoreg\tvalue\tfootnote"
+        if (headers.get("bindings_sha256") != plan["inputs"]["frozen_bindings"]["sha256"]
+                or headers.get("source_count") != 60
+                or headers.get("header_patterns") != {expected: 60}):
+            raise Denied("VAULT_FSDS_SHAPE_PROBE_MISMATCH")
+        result = {"status": "PARTIAL", "decision_required": True,
+                  "fsds_prototype_reused": sorted(
+                      ("SRC000005", "SRC000054", "SRC000064")),
+                  "fsds_shape_check": "60_OF_60_RAW_HASH_VERIFIED_IDENTICAL_NUM_HEADER",
+                  "new_contract_prototype": "PENDING_SEMANTIC_DECISIONS",
+                  "applicability_evidence": "Existing accepted 127-occurrence Delta prototype matches the approved FSDS Contract V1 and all 60 verified physical NUM headers.",
+                  "evidence": [{"path": "runs/day6-vault-pilot/fsds-num-headers-v1.json",
+                                "sha256": file_digest(headers_path)},
+                               {"path": "reports/day6_c2000_vault_pilot_v3_shape_addendum_v1.md",
+                                "sha256": file_digest(root / "reports/day6_c2000_vault_pilot_v3_shape_addendum_v1.md")}]}
+        evidence_names = ["step2", "approved_contract", "frozen_bindings"]
+    else:
+        raise Denied("VAULT_MECHANICAL_STAGE_INVALID")
+    result.setdefault("evidence", [])
+    result["evidence"].extend(plan["inputs"][name] for name in evidence_names)
+    save_once(receipt_path, {**common, **result})
+    return advance(root, plan_path, state_dir)
+
+
 def run_until_boundary(root: Path, plan_path: Path, state_dir: Path,
                        *, runtime_seconds: int = 1800,
                        run_request: str | None = None) -> dict:
     """Drive consecutive evidence stages and stop at an actual authority boundary."""
+    root = root.resolve()
+    state_dir = (root / state_dir).resolve() if not state_dir.is_absolute() else state_dir.resolve()
     for _ in STAGES:
         state = advance(root, plan_path, state_dir)
+        if (state["status"] == "TECHNICAL_RECOVERY_REQUIRED"
+                and state.get("next_stage") not in PROTECTED):
+            prior_stage = state["next_stage"]
+            recovered = dispatch_agent(root, plan_path, state_dir,
+                                       runtime_seconds=runtime_seconds)
+            if (recovered["status"] == "EVIDENCE_REQUIRED"
+                    and recovered.get("next_stage") != prior_stage):
+                continue
+            return recovered
         if state["status"] != "EVIDENCE_REQUIRED":
             return state
         if state["next_stage"] == "V4":
+            authority = readiness(root, plan_path)
+            if authority["protected_full_write_status"] != "READY":
+                state["status"] = "HUMAN_AUTHORIZATION_REQUIRED"
+                state["authority_blockers"] = authority["authority_blockers"]
+                state["approval_packet"] = "reports/day6_c2000_vault_pilot_owner_review_v1.md"
+                return state
             if run_request is None:
                 state["status"] = "PROTECTED_RUN_REQUEST_REQUIRED"
                 return state
-            return dispatch_v4(root, plan_path, state_dir, run_request)
-        if state["next_stage"] == "V9":
-            state["status"] = "PROTECTED_FREEZE_RECEIPT_REQUIRED"
+            state = dispatch_v4(root, plan_path, state_dir, run_request)
+            if state.get("status") == "EVIDENCE_REQUIRED":
+                continue
+            return state
+        if state["next_stage"] == "V9" and state.get("agent_sessions", {}).get("V9"):
+            state["status"] = "PROTECTED_FREEZE_OR_GIT_GATE_PENDING"
             return state
         current_stage = state["next_stage"]
-        state = dispatch_agent(root, plan_path, state_dir,
-                               runtime_seconds=runtime_seconds)
+        if current_stage in {"V0A", "V0", "V1", "V2", "V3"}:
+            state = _mechanical_stage(root, plan_path, state_dir, current_stage)
+        else:
+            state = dispatch_agent(root, plan_path, state_dir,
+                                   runtime_seconds=runtime_seconds)
         if (state["status"] == "EVIDENCE_REQUIRED"
                 and state["next_stage"] == current_stage):
-            state["status"] = "STAGE_EVIDENCE_PENDING"
+            state["status"] = ("PROTECTED_FREEZE_OR_GIT_GATE_PENDING"
+                               if current_stage == "V9" else "STAGE_EVIDENCE_PENDING")
             return state
         if state["status"] != "EVIDENCE_REQUIRED":
             return state
@@ -387,13 +706,17 @@ def run_until_boundary(root: Path, plan_path: Path, state_dir: Path,
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("action", choices=("readiness", "advance", "run",
-                                           "dispatch-agent", "dispatch-v4", "reconcile"))
+                                           "dispatch-agent", "dispatch-v4", "reconcile",
+                                           "reconcile-agent"))
     parser.add_argument("plan", type=Path)
     parser.add_argument("--state-dir", type=Path)
     parser.add_argument("--run-request")
+    parser.add_argument("--signed-receipt", type=Path)
     parser.add_argument("--runtime-seconds", type=int, default=1800)
     args = parser.parse_args()
     root = Path(__file__).resolve().parents[3]
+    if args.state_dir is not None and not args.state_dir.is_absolute():
+        args.state_dir = root / args.state_dir
     if args.action != "readiness" and args.state_dir is None:
         parser.error("--state-dir is required")
     if args.action == "dispatch-v4" and not args.run_request:
@@ -406,7 +729,10 @@ def main() -> None:
         result = dispatch_agent(root, args.plan, args.state_dir,
                                 runtime_seconds=args.runtime_seconds)
     elif args.action == "reconcile":
-        result = reconcile_external(root, args.plan, args.state_dir)
+        result = reconcile_external(root, args.plan, args.state_dir,
+                                    args.signed_receipt)
+    elif args.action == "reconcile-agent":
+        result = reconcile_agent(root, args.plan, args.state_dir)
     elif args.action == "run":
         result = run_until_boundary(root, args.plan, args.state_dir,
                                     runtime_seconds=args.runtime_seconds,

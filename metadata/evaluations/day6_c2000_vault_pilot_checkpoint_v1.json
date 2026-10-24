@@ -1,0 +1,46 @@
+{
+  "schema": "DAY6_C2000_VAULT_PILOT_CHECKPOINT_V1",
+  "status": "PAUSED_AT_GENUINE_V4_AUTHORITY_BOUNDARY",
+  "workflow_sha256": "467dff3902f09e7abbbf37c2a4fa7ae0b417e3641a9af27c3ff3e7f128390dc8",
+  "plan": "metadata/operating/c2000_vault_lifecycle_plan_v1.json",
+  "local_durable_checkpoint": "runs/day6-vault-pilot/state/checkpoint.json",
+  "completed_stages": ["V0A", "V0", "V1", "V2_PARTIAL", "V3_PARTIAL"],
+  "next_stage": "V4",
+  "frozen_sources": 2000,
+  "model_fit": {
+    "SEC_FSDS_REUSE_APPROVED": 60,
+    "SEC_EDGAR_DAILY_MASTER_NEW_CONTRACT_REQUIRED": 1893,
+    "SEC_13F_NEW_CONTRACT_REQUIRED": 42,
+    "TREASURY_ANNUAL_XML_NEW_CONTRACT_REQUIRED": 5
+  },
+  "historical_prototype_reused": {
+    "sources": ["SRC000005", "SRC000054", "SRC000064"],
+    "data_occurrences": 127,
+    "synthetic_negatives": 6
+  },
+  "fsds_num_header_probe": {
+    "status": "PASS_60_OF_60_FROZEN_RAW_HASHES_AND_PHYSICAL_HEADERS",
+    "local_path": "runs/day6-vault-pilot/fsds-num-headers-v1.json",
+    "sha256": "2db44432f84d8451b5cdd2d995b53741d41a5cad10e56e7b2f5db34085944349"
+  },
+  "family_probe": {
+    "local_path": "runs/day6-vault-pilot/family-probe-v1.json",
+    "sha256": "625d3561a2ee8d8d630c0a85bb9e635f892fe1804cb46a9d8c40370dd6f1c2c9"
+  },
+  "model_fit_inventory": {
+    "local_path": "runs/day6-vault-pilot/model-fit-2000.json",
+    "sha256": "f0db94486c7f5b3dd5db02133ee0c37e04a50f2438c1888ede660c66dc74f9be"
+  },
+  "new_delta_writes": 0,
+  "new_protected_grants": 0,
+  "owner_packet": "reports/day6_c2000_vault_pilot_owner_review_v1.md",
+  "shape_addendum": "reports/day6_c2000_vault_pilot_v3_shape_addendum_v1.md",
+  "pending_decisions": [
+    "NEW_VAULT_CONTRACTS_FOR_1940_NON_FSDS_SOURCES_OR_EXPLICIT_DEFER",
+    "EXACT_FULL_INTEGRATION_WRITE_SCOPE_AND_BUDGET",
+    "OWNER_CONTROLLED_PROTECTED_EXECUTION_AUTHORITY"
+  ],
+  "installed_policy_full_c2000_allowed": false,
+  "protected_full_executor_demonstrated": false,
+  "agent_generated_signature": null
+}

@@ -14,6 +14,7 @@ from edp_lab.vault.lifecycle_runner import (
     readiness,
     reconcile_external,
     reserve_external,
+    run_until_boundary,
 )
 from edp_lab.vault.standing_v2 import NAMESPACE, SHARED_WAREHOUSE_ID, TABLES
 
@@ -83,8 +84,8 @@ def test_uncertain_external_is_never_replayed(tmp_path):
 def test_readiness_does_not_inherit_prototype_authority(tmp_path):
     root, path = setup_plan(tmp_path)
     result = readiness(root, path)
-    assert result["status"] == "BLOCKED"
-    assert "FULL_SOURCE_MODEL_FIT_AND_CONTRACT_DECISIONS_PENDING" in result["blockers"]
+    assert result["protected_full_write_status"] == "BLOCKED"
+    assert result["authority_blockers"]
 
 
 def test_v1_requires_exact_roster_coverage(tmp_path):
@@ -99,8 +100,7 @@ def test_v1_requires_exact_roster_coverage(tmp_path):
     receipt.write_text(json.dumps({"schema": "EDP_VAULT_LIFECYCLE_STAGE_V1",
                                    "cohort": "C2000", "stage": "V1",
                                    "workflow_sha256": plan["workflow_sha256"],
-                                   "status": "PASS", "source_dispositions": {
-                                       "SRC000001": "REUSE_APPROVED"}}))
+                                   "status": "PASS", "source_dispositions": {}}))
     with pytest.raises(Denied, match="VAULT_MODEL_FIT_COVERAGE_INCOMPLETE"):
         _receipt(root, plan, "V1")
 
@@ -112,3 +112,44 @@ def test_agent_inflight_requires_reconciliation(tmp_path):
     state["pending_agent"] = {"stage": "V0A"}
     (state_dir / "checkpoint.json").write_text(json.dumps(state))
     assert advance(root, path, state_dir)["status"] == "AGENT_OUTCOME_RECONCILIATION_REQUIRED"
+
+
+def test_full_stage_orchestration_needs_no_manual_stage_invocations(tmp_path, monkeypatch):
+    """A trusted V4 response flows through V5/V6/V8/V9 in the same run."""
+    root, plan_path = setup_plan(tmp_path)
+    index = {"value": 0}
+
+    def fake_advance(*_args):
+        return ({"status": "COMPLETE", "next_stage": None}
+                if index["value"] == len(STAGES)
+                else {"status": "EVIDENCE_REQUIRED", "next_stage": STAGES[index["value"]]})
+
+    def complete_stage(*_args, **_kwargs):
+        index["value"] += 1
+        return fake_advance()
+
+    import edp_lab.vault.lifecycle_runner as runner
+
+    monkeypatch.setattr(runner, "advance", fake_advance)
+    monkeypatch.setattr(runner, "_mechanical_stage", complete_stage)
+    monkeypatch.setattr(runner, "dispatch_agent", complete_stage)
+    monkeypatch.setattr(runner, "dispatch_v4", complete_stage)
+    monkeypatch.setattr(runner, "readiness", lambda *_: {
+        "protected_full_write_status": "READY"})
+    result = run_until_boundary(root, plan_path, root / "state", run_request="approved.json")
+    assert result["status"] == "COMPLETE"
+    assert index["value"] == len(STAGES)
+
+
+def test_v4_authority_boundary_does_not_submit(tmp_path, monkeypatch):
+    root, plan_path = setup_plan(tmp_path)
+    import edp_lab.vault.lifecycle_runner as runner
+
+    monkeypatch.setattr(runner, "advance", lambda *_: {
+        "status": "EVIDENCE_REQUIRED", "next_stage": "V4"})
+    monkeypatch.setattr(runner, "readiness", lambda *_: {
+        "protected_full_write_status": "BLOCKED",
+        "authority_blockers": ["INSTALLED_POLICY_EXCLUDES_FULL_C2000"]})
+    monkeypatch.setattr(runner, "dispatch_v4", lambda *_: pytest.fail("write submitted"))
+    result = run_until_boundary(root, plan_path, root / "state")
+    assert result["status"] == "HUMAN_AUTHORIZATION_REQUIRED"

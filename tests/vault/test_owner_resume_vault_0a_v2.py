@@ -151,6 +151,10 @@ def test_remote_checkpoint_requires_exactly_one_secret(monkeypatch):
 
 def test_protected_config_is_verified_without_disclosure(tmp_path, monkeypatch):
     monkeypatch.setattr(resume, "BASE", tmp_path)
+    original_exists = Path.exists
+    monkeypatch.setattr(Path, "exists", lambda path: (
+        False if path.parent == Path("/Library/LaunchDaemons")
+        else original_exists(path)))
     for name in ("private", "trust", "grants", "approvals", "eligibility",
                  "receipts", "ledger", "runtime/src/edp_lab",
                  "runtime/src/edp_lab-original-d841204", "python/bin"):

@@ -7,6 +7,10 @@
   "warehouse_id": "589e80595c7c8cb8",
   "tables": ["h_filing", "h_concept", "l_fact_slot", "r_source_occurrence", "s_fact_assertion", "s_num_m2_value", "r_load_event", "vault_reject_quarantine"],
   "inputs": {
+    "vault_0a_acceptance": {"path": "metadata/evaluations/vault_0a_v2_readiness_v1.json", "sha256": "2683acc7707e66966669a211c79a9cb74e6bfc60d367c96eb9f0eead5c150b42"},
+    "step0_evaluation": {"path": "metadata/evaluations/day6_step0_c2000_v1.json", "sha256": "4567f40afafd2af6237d89931cc32dfae5b94e39d490e99845d83ccf36cf87d0"},
+    "frozen_bindings": {"path": "metadata/freezes/C2000_v1/C2000.bindings.json", "sha256": "2a72b8f8483e2181a3112a26b5d68d702b92308def6e74978838b155cfd85312"},
+    "contract_approval": {"path": "metadata/authorizations/day6_vault_load_contract_v1_owner_approval.json", "sha256": "9fc0ac0ef84b3cdeedfdae5cbf9b57e79af5f2f93eed4a595e69abe549910bda"},
     "roster": {"path": "metadata/cohorts/C2000.csv", "sha256": "ae04d740745a02320435706fa93083fe3fddaa37f1b3bdb5b5052cd5b4a5de5e"},
     "cohort_freeze": {"path": "metadata/freezes/C2000_v1/freeze.json", "sha256": "324ca5e416adabc443d18d8066fbccdf137f4cb50aa20934e645615f4ee77ff3"},
     "upstream_result": {"path": "metadata/freezes/O_C2000_M2_v1/databricks_result_freeze_v1.json", "sha256": "942fa887ceea8cf5c9bc64c603c2044e1b643b01fcbc29909ce264c024b69374"},
