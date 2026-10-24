@@ -1,0 +1,17 @@
+{
+  "combined_count": 2000,
+  "new_count": 500,
+  "old_bindings_sha256": "810c6898df0cb5e5c478305f71c190ffe4a7c7a2bb40133efa79a16de630e703",
+  "outputs_sha256": {
+    "C2000.bindings.json": "2a72b8f8483e2181a3112a26b5d68d702b92308def6e74978838b155cfd85312",
+    "C2000.csv": "ae04d740745a02320435706fa93083fe3fddaa37f1b3bdb5b5052cd5b4a5de5e",
+    "N500.bindings.json": "05a955523db63d04d3c3a7afa162a4698492d060c7b886e9e3f1ec43fbf57aaa",
+    "N500.csv": "f45049c9a4d66ae313f2dbc85e8634b737e44928ebb06bf6ef556a8c2de950fe"
+  },
+  "p3_p4_evidence_sha256": "a2bd59f6bf12555b53d12a9b8333a74810599487bfee72064124ed61c756d0b5",
+  "prior_count": 1500,
+  "remote_raw_prefix": "dbfs:/Volumes/workspace/edp_lab/raw/day5-n500-e77ff543d6a3",
+  "schema": "DAY5_P6_CANDIDATE_V1",
+  "selected_evidence_sha256": "043d8ce985acc30f5c25f03c38826e2b31384b563b0edc5734346947118b6ba0",
+  "status": "PREPARED_NOT_ADMITTED_REMOTE_READBACK_PENDING"
+}
