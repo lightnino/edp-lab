@@ -1,12 +1,18 @@
 """The reviewed R4 worker can only exercise an isolated noop Queue."""
 
 import hashlib
+import importlib.util
 import json
 from pathlib import Path
 
 import pytest
 
-from scripts.r4_disposable_worker import run_fixture
+_SCRIPT = Path(__file__).resolve().parents[2] / "scripts/r4_disposable_worker.py"
+_SPEC = importlib.util.spec_from_file_location("r4_disposable_worker", _SCRIPT)
+assert _SPEC is not None and _SPEC.loader is not None
+_MODULE = importlib.util.module_from_spec(_SPEC)
+_SPEC.loader.exec_module(_MODULE)
+run_fixture = _MODULE.run_fixture
 
 
 def fixture_root(tmp_path: Path) -> tuple[Path, str, str]:
