@@ -1,6 +1,6 @@
 {
   "schema": "VAULT_0A_V2_READINESS_EVALUATION_V1",
-  "status": "PASS_READ_ONLY_PROTECTED_ACCEPTANCE_AWAITING_C2000_OWNER_GATE",
+  "status": "VAULT_0A_READ_ONLY_ACCEPTED_C2000_DEV_PROTOTYPE_VALIDATED",
   "live_installation": true,
   "signed_standing_policy_installed": true,
   "installation_receipt_reported_sha256": "04b555202469cd1aa9423da7d6f7639900202693c986859e1b229f3d1427c7b2",
@@ -18,10 +18,13 @@
   "eligible_run_grant_issued": false,
   "live_negative_authorization_checks_passed": false,
   "databricks_delta_write_and_readback_passed": false,
+  "direct_dev_delta_write_and_readback_passed": true,
   "step2_c1500_execution": "PAUSED_BY_OWNER_PRIORITY_REVISION",
   "step0_c2000": "PASS_SIGNED_C2000_FREEZE",
-  "step2_c2000": "LOCAL_INPUTS_VERIFIED_AWAITING_OWNER_SCOPE_AND_LIVE_VERIFIED_FREEZE_RECEIPT",
-  "step3_c2000": "BLOCKED_BY_SEPARATE_OWNER_POLICY_AND_STEP2_GATE",
+  "step2_c2000": "COMPLETE_OWNER_AUTHORIZED_DIRECT_DEV_PATH",
+  "step2_c2000_evaluation": "metadata/evaluations/day6_c2000_vault_step2_v2.json",
+  "step2_protected_v2_broker_executor_tested": false,
+  "step3_c2000": "NOT_STARTED_REQUIRES_SEPARATE_SCOPE",
   "evidence": "reports/vault_0a_v2_evidence.md",
   "agent_generated_signature": null
 }

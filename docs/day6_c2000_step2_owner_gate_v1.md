@@ -1,5 +1,7 @@
 # C2000 bounded Vault Step 2: Owner gate packet
 
+**Historical and superseded for the DEV prototype.** The Owner subsequently authorized the exact bounded C2000 sample to run through a separate direct DEV profile path without the proposed `LIVE_VERIFIED` receipt, eligibility registration, Broker grant or Owner scope signature. The executed result is in the [Step 2 closeout](../reports/day6_c2000_vault_step2_closeout_v1.md). This packet remains an audit record of the earlier proposed protected route, not a current execution instruction.
+
 **Decision requested:** approve or decline only the three-source, 127-DATA-occurrence, six-synthetic-negative `BOUNDED_PROTOTYPE` in `workspace.edp_lab_day6_vault_proto`. This packet is evidence and a proposed scope; it is not a signature, eligibility registration, grant, or permission for a Delta write. Full C2000 integration remains outside this decision.
 
 ## Reviewed pins

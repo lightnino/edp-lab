@@ -1,5 +1,7 @@
 # Day 6 C2000 Vault rebaseline
 
+**Step 2 executed and validated through the separately Owner-authorized DEV path.** See the [live closeout](../reports/day6_c2000_vault_step2_closeout_v1.md). The preparation and proposed protected route below remain historical. The approved Vault Contract V1 and C2000 pins were unchanged.
+
 ## Step 0: accepted baseline
 
 Remote main `12874dd2aa581a80086afa24a3d21a0a1aa6f3e4` was merged into
