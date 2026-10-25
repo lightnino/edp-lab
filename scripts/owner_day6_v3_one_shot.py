@@ -152,7 +152,40 @@ def _job_settings(request_sha: str, deployment: dict) -> dict:
                                        "dependencies": [wheel]}}]}
 
 
+def _signed_service_readiness() -> None:
+    """Independent Owner-verified IAM/UC evidence; no SP admin introspection."""
+    ready = verified_document(
+        ROOT, BASE / "receipts/day6-v3-e2e-ready-v1.signed.json",
+        BASE / "trust",
+    )
+    require(ready.get("schema") == "EDP_VAULT_E2E_READY_V1"
+            and ready.get("authority") == "protected-verifier-v1"
+            and ready.get("status") == "VERIFIED"
+            and ready.get("run_as") == APP_ID
+            and ready.get("workspace_access_verified") is True
+            and ready.get("effective_uc_access_verified") is True,
+            "V3_OWNER_SIGNED_IAM_UC_READINESS_REQUIRED")
+
+
+def _service_context() -> bool:
+    if os.environ.get("EDP_DAY6_V3_SERVICE_CONTEXT") != "1":
+        return False
+    require(os.geteuid() == 0, "V3_SERVICE_ROOT_REQUIRED")
+    return True
+
+
 def _source_rights() -> None:
+    if _service_context():
+        # Only workspace administrators can enumerate other principals' UC
+        # grants reliably. The Owner already attested the exact SP privileges.
+        # Live scoped metadata access proves the SP can still see each source.
+        _signed_service_readiness()
+        for name in SOURCE_TABLES:
+            full_name = "workspace.edp_lab." + name
+            record = admin_cli("tables", "get", full_name)
+            require(record.get("table_id") and record.get("name") == name,
+                    "V3_SERVICE_SOURCE_TABLE_INACCESSIBLE:" + name)
+        return
     for securable, name, rights in (
         ("catalog", "workspace", {"USE_CATALOG"}),
         ("schema", "workspace.edp_lab", {"USE_SCHEMA"}),
@@ -164,7 +197,19 @@ def _source_rights() -> None:
 
 
 def _workspace_access() -> None:
-    """A UC grant and active assignment do not authorize Jobs execution."""
+    """Owner probes IAM; the service proves its own least-privilege access."""
+    if _service_context():
+        _signed_service_readiness()
+        identity = admin_cli("current-user", "me")
+        require(str(identity.get("id")) == SERVICE_PRINCIPAL_ID,
+                "V3_UNATTENDED_PRINCIPAL_CHANGED")
+        # This endpoint exercises workspace access without granting the
+        # service principal admin privileges or querying another principal.
+        folder = admin_cli("workspace", "get-status", WHEEL_DIR)
+        require(folder.get("object_type") == "DIRECTORY"
+                and folder.get("path") == WHEEL_DIR,
+                "V3_SERVICE_WORKSPACE_DIRECTORY_INACCESSIBLE")
+        return
     assignment = admin_cli("workspace-iam-v2", "get-workspace-assignment-proxy",
                            SERVICE_PRINCIPAL_ID)
     access = admin_cli("workspace-iam-v2", "get-workspace-access-detail-local",
@@ -395,11 +440,26 @@ def _installed(request: dict, deployment: dict) -> dict:
     ):
         require(_remote_digest(remote) == expected, "V3_REMOTE_ARTIFACT_CHANGED:" + remote)
     _source_rights()
-    saved = admin_cli("jobs", "get", str(proof["job_id"]))
-    verify_saved_job(saved["settings"],
-                     wheel_path=original_deployment["artifact"]["workspace_target_proposed"],
-                     run_as={"service_principal_name": APP_ID},
-                     parameters=_job_parameters(proof["derived_request_sha256"], deployment))
+    if _service_context():
+        # The original Job is a terminal historical failure and is never
+        # resubmitted. The Owner-signed install + partial-failure evidence bind
+        # its exact ID/settings. Do not require the least-privilege SP to inspect
+        # an Owner-owned historical Job that it must not execute.
+        from owner_reconcile_day6_v3_partial import (
+            JOB_ID as ORIGINAL_JOB_ID,
+        )
+        from owner_reconcile_day6_v3_partial import (
+            _original_ledger,
+        )
+        require(proof.get("job_id") == ORIGINAL_JOB_ID,
+                "V3_ORIGINAL_INSTALL_JOB_PIN_CHANGED")
+        _original_ledger()
+    else:
+        saved = admin_cli("jobs", "get", str(proof["job_id"]))
+        verify_saved_job(saved["settings"],
+                         wheel_path=original_deployment["artifact"]["workspace_target_proposed"],
+                         run_as={"service_principal_name": APP_ID},
+                         parameters=_job_parameters(proof["derived_request_sha256"], deployment))
     require(_targets(request) == proof["historical_table_ids"],
             "V3_TARGET_OR_HISTORICAL_BASELINE_CHANGED")
     return proof
