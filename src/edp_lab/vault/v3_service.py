@@ -117,6 +117,19 @@ def probe(root: Path, base: Path) -> dict:
     workspace_absent(successor.REMOTE_REQUEST)
     jobs = admin_cli("jobs", "list")
     require(isinstance(jobs, list), "V3_UNATTENDED_JOBS_LIST_FAILED")
+    # Prove real M2M SQL warehouse usage + SELECT for every bound input,
+    # not merely Owner-observed Unity Catalog grants or table visibility.
+    # Five fixed, read-only zero-row statements; no Cohort/Delta writes.
+    from owner_day6_v3_one_shot import SOURCE_TABLES
+    from owner_setup_day6_vault_0a import admin_sql
+
+    for name in SOURCE_TABLES:
+        observed = admin_sql(
+            "SELECT 1 AS access_probe FROM workspace.edp_lab."
+            + name + " LIMIT 0"
+        )
+        require(observed.get("status", {}).get("state") == "SUCCEEDED",
+                "V3_SERVICE_SOURCE_SELECT_DENIED:" + name)
     return {"status": "V3_UNATTENDED_ADMISSION_READS_VERIFIED",
             "principal_id": SERVICE_PRINCIPAL_ID, "attempt_number": number}
 
