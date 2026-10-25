@@ -23,7 +23,6 @@ from owner_day6_v3_one_shot import (
     CURRENT_REQUEST_SHA256,
     DEPLOYMENT,
     ORIGINAL_ACTIVE_REQUEST,
-    ORIGINAL_ACTIVE_REQUEST_SHA256,
     REQUEST,
     ROOT,
     _installed,
