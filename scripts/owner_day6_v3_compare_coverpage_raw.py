@@ -139,6 +139,58 @@ def classified_change(raw: str, c300: str) -> str:
     return "OTHER_LEXICAL_DIFFERENCE"
 
 
+def _quoted_csv_cell_equivalent(raw: str, physical: str) -> bool:
+    """Exact semantic test, not quote stripping or a normalization policy.
+
+    Require a single, physically quoted TSV cell whose standard CSV decoding
+    yields exactly the independently verified frozen RAW csv.reader value.
+    """
+    if (not isinstance(raw, str) or not isinstance(physical, str)
+            or len(physical) < 2
+            or not physical.startswith('"') or not physical.endswith('"')
+            or '""' not in physical or "\t" in physical
+            or "\n" in physical or "\r" in physical):
+        return False
+    try:
+        parsed = list(csv.reader([physical], delimiter="\t", strict=True))
+    except csv.Error:
+        return False
+    return (len(parsed) == 1 and len(parsed[0]) == 1
+            and parsed[0][0] == raw)
+
+
+def quote_equivalence(
+    headers: list[str],
+    raw_rows: list[tuple[int, list[str]]],
+    c300_rows: list[tuple[int, list[dict], int, int]],
+) -> dict:
+    """Classify only the 7th-row/21st-field difference without exposing data."""
+    differences = []
+    for (ordinal, original), (observed_ordinal, fields, _, _) in zip(
+        raw_rows, c300_rows, strict=True
+    ):
+        require(ordinal == observed_ordinal
+                and len(original) == len(fields) == 21
+                and len(headers) == 21,
+                "COVERPAGE_CSV_PROOF_SHAPE_CHANGED")
+        for index, (raw, field) in enumerate(zip(original, fields, strict=True), 1):
+            c300 = field["lexical_value"]
+            if raw != c300:
+                differences.append((ordinal, index, raw, c300))
+    exact_only = len(differences) == 1 and differences[0][:2] == (7, 21)
+    equivalent = (
+        exact_only
+        and headers[20] == "ADDITIONALINFORMATION"
+        and _quoted_csv_cell_equivalent(differences[0][2], differences[0][3])
+    )
+    return {
+        "only_difference_is_coverpage_row7_field21": exact_only,
+        "physical_quoted_field_csv_decode_equals_frozen_raw": bool(equivalent),
+        "normalization_scope": "SRC000065/COVERPAGE.tsv/row7/field21",
+        "no_frozen_hash_or_c300_record_mutated": True,
+    }
+
+
 def diff_summary(
     headers: list[str],
     raw_rows: list[tuple[int, list[str]]],
@@ -218,6 +270,7 @@ def diagnose() -> None:
     actual = _digest([[ordinal, [f["lexical_value"] for f in fields]]
                       for ordinal, fields, _, _ in remote])
     summary = diff_summary(header, original, remote)
+    equivalence = quote_equivalence(header, original, remote)
     require(actual != expected, "COVERPAGE_NO_LONGER_MISMATCHED_REASSESS_RECOVERY")
     require(summary["differing_cells"] > 0,
             "COVERPAGE_M1_LEXICAL_DIGEST_CHANGED_WITH_EQUAL_FIELD_VALUES")
@@ -228,6 +281,7 @@ def diagnose() -> None:
     print("FROZEN_SELECTED_LEXICAL_SHA256=" + expected)
     print("ACCEPTED_M1_SELECTED_LEXICAL_SHA256=" + actual)
     print("DIFFERENCE_SUMMARY=" + json.dumps(summary, sort_keys=True))
+    print("CSV_QUOTE_EQUIVALENCE=" + json.dumps(equivalence, sort_keys=True))
     print("NO_RAW_CONTENT_PRINTED_NO_DELTA_WRITE_NO_CANARY_RETRY")
 
 
