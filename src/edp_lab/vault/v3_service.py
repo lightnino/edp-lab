@@ -87,51 +87,88 @@ def status(root: Path, base: Path) -> dict:
             "e2e_sha256": file_digest(base / "receipts/day6-v3-e2e-ready-v1.signed.json")}
 
 
-def probe(root: Path, base: Path) -> dict:
-    """Exercise the fixed admission read path in the actual service process."""
-    _ready(root, base)
-    (successor, owner, pins, _, targets, workspace_absent,
-     require, admin_cli) = _imports()
-    from owner_day6_v3_one_shot import (
-        SERVICE_PRINCIPAL_ID,
-        _installed,
-        _remote_digest,
-        _source_rights,
-        _workspace_access,
-    )
+def audit(root: Path, base: Path) -> dict:
+    """Run every fixed non-mutating V3 admission check; report all failures.
 
-    owner(_commit(base))
-    number, state = _next_attempt(root, base)
-    require(state == "READY_FOR_DISTINCT_ATTEMPT", "V3_PROBE_CHECKPOINT_CHANGED")
-    successor.configure_attempt(number)
-    request, deployment = pins()
-    identity = admin_cli("current-user", "me")
-    require(str(identity.get("id")) == SERVICE_PRINCIPAL_ID,
-            "V3_UNATTENDED_IDENTITY_CHANGED")
-    _installed(request, deployment)
-    _workspace_access()
-    _source_rights()
-    require(_remote_digest(deployment["artifact"]["workspace_target_proposed"])
-            == deployment["artifact"]["sha256"], "V3_DEPLOYED_WHEEL_CHANGED")
-    targets(request)
-    workspace_absent(successor.REMOTE_REQUEST)
-    jobs = admin_cli("jobs", "list")
-    require(isinstance(jobs, list), "V3_UNATTENDED_JOBS_LIST_FAILED")
-    # Prove real M2M SQL warehouse usage + SELECT for every bound input,
-    # not merely Owner-observed Unity Catalog grants or table visibility.
-    # Five fixed, read-only zero-row statements; no Cohort/Delta writes.
-    from owner_day6_v3_one_shot import SOURCE_TABLES
+    This does not claim Job-create, workspace-import or Delta-write authority;
+    these can only be proven by separately authorized live execution/canaries.
+    """
+    _ready(root, base)
+    from owner_day6_v3_one_shot import (
+        SERVICE_PRINCIPAL_ID, SOURCE_TABLES, _installed, _remote_digest,
+        _source_rights, _workspace_access,
+    )
     from owner_setup_day6_vault_0a import admin_sql
 
+    successor, owner, pins, _, targets, workspace_absent, require, cli = _imports()
+    owner(_commit(base))
+    number, state = _next_attempt(root, base)
+    if state != "READY_FOR_DISTINCT_ATTEMPT":
+        return {"status": "V3_CHECKPOINT_CHANGED", "attempt_number": number,
+                "checkpoint_state": state}
+    successor.configure_attempt(number)
+    request, deployment = pins()
+    results = {}
+
+    def check(label: str, fn) -> None:
+        try:
+            fn()
+        except (OSError, RuntimeError, KeyError, TypeError, ValueError,
+                subprocess.CalledProcessError) as exc:
+            results[label] = {"status": "BLOCKED", "reason": str(exc)[:240]}
+        else:
+            results[label] = {"status": "PASS"}
+
+    def verify_identity() -> None:
+        identity = cli("current-user", "me")
+        require(str(identity.get("id")) == SERVICE_PRINCIPAL_ID,
+                "V3_UNATTENDED_IDENTITY_CHANGED")
+
+    def verify_jobs() -> None:
+        jobs = cli("jobs", "list")
+        require(isinstance(jobs, list), "V3_UNATTENDED_JOBS_LIST_FAILED")
+
+    def verify_wheel() -> None:
+        require(_remote_digest(deployment["artifact"]["workspace_target_proposed"])
+                == deployment["artifact"]["sha256"], "V3_DEPLOYED_WHEEL_CHANGED")
+
+    def verify_history() -> None:
+        _installed(request, deployment)
+
+    def verify_targets() -> None:
+        targets(request)
+
+    check("identity", verify_identity)
+    check("owner_signed_workspace_scope", _workspace_access)
+    check("source_table_metadata", _source_rights)
+    check("installed_job_and_pins", verify_history)
+    check("wheel_export", verify_wheel)
+    check("historical_table_ids", verify_targets)
+    check("distinct_request_absent", lambda: workspace_absent(successor.REMOTE_REQUEST))
+    check("jobs_list", verify_jobs)
+
+    # Fixed SELECT-only real M2M SQL calls: verify both shared warehouse CAN_USE
+    # and effective per-table SELECT, not merely metadata or prior Owner proof.
     for name in SOURCE_TABLES:
-        observed = admin_sql(
-            "SELECT 1 AS access_probe FROM workspace.edp_lab."
-            + name + " LIMIT 0"
-        )
-        require(observed.get("status", {}).get("state") == "SUCCEEDED",
-                "V3_SERVICE_SOURCE_SELECT_DENIED:" + name)
-    return {"status": "V3_UNATTENDED_ADMISSION_READS_VERIFIED",
-            "principal_id": SERVICE_PRINCIPAL_ID, "attempt_number": number}
+        def select_source(name: str = name) -> None:
+            reply = admin_sql("SELECT 1 AS access_probe FROM workspace.edp_lab."
+                              + name + " LIMIT 0")
+            require(reply.get("status", {}).get("state") == "SUCCEEDED",
+                    "V3_SERVICE_SOURCE_SELECT_DENIED:" + name)
+        check("sql_select:" + name, select_source)
+
+    passed = all(value["status"] == "PASS" for value in results.values())
+    return {"status": ("V3_UNATTENDED_ADMISSION_READS_VERIFIED"
+                       if passed else "V3_RUNTIME_CAPABILITY_AUDIT_BLOCKED"),
+            "attempt_number": number, "checks": results,
+            "write_capabilities": "NOT_TESTED_NO_MUTATION",
+            "checks_passed": sum(v["status"] == "PASS" for v in results.values()),
+            "checks_total": len(results)}
+
+
+def probe(root: Path, base: Path) -> dict:
+    """A single read-only full capability audit, never first-error-only."""
+    return audit(root, base)
 
 
 def evidence(root: Path, base: Path) -> dict:
@@ -151,6 +188,9 @@ def run(root: Path, base: Path) -> dict:
     successor, owner, *_ = _imports()
     commit = _commit(base)
     owner(commit)
+    preflight = audit(root, base)
+    if preflight.get("status") != "V3_UNATTENDED_ADMISSION_READS_VERIFIED":
+        return preflight
     number, state = _next_attempt(root, base)
     if state != "READY_FOR_DISTINCT_ATTEMPT":
         return {"status": state, "attempt_number": number}
@@ -482,6 +522,8 @@ def serve(root: Path, base: Path) -> None:
                     response = status(root, base)
                 elif request == {"action": "probe"}:
                     response = probe(root, base)
+                elif request == {"action": "audit"}:
+                    response = audit(root, base)
                 elif request == {"action": "evidence"}:
                     response = evidence(root, base)
                 elif request == {"action": "run"}:
