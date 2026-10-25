@@ -41,6 +41,69 @@ def test_workspace_absence_requires_matching_not_found_response(
             owner._workspace_absent(remote)
 
 
+def test_directory_requires_independent_status_readback(monkeypatch):
+    calls = []
+
+    def cli(*args):
+        calls.append(args)
+        return {"path": owner.WHEEL_DIR, "object_type": "DIRECTORY", "object_id": 123}
+
+    monkeypatch.setattr(owner, "admin_cli", cli)
+    owner._workspace_directory()
+    assert calls == [("workspace", "get-status", owner.WHEEL_DIR)]
+    monkeypatch.setattr(owner, "admin_cli", lambda *_args: {"object_type": "DIRECTORY"})
+    with pytest.raises(RuntimeError, match="V3_WORKSPACE_DIRECTORY_UNVERIFIED"):
+        owner._workspace_directory()
+
+
+def test_import_accepts_empty_response_only_after_digest_readback(tmp_path, monkeypatch):
+    source = tmp_path / "selection.json"
+    source.write_bytes(b"test")
+    calls = []
+
+    def cli(*args, **kwargs):
+        calls.append((args, kwargs))
+
+    monkeypatch.setattr(owner, "admin_cli", cli)
+    monkeypatch.setattr(owner, "_remote_digest", lambda _remote: owner.file_digest(source))
+    owner._upload(source, owner.WHEEL_DIR + "/selection.json")
+    assert calls[0][0][:2] == ("workspace", "import")
+    assert calls[0][1] == {"allow_empty": True}
+    monkeypatch.setattr(owner, "_remote_digest", lambda _remote: "0" * 64)
+    with pytest.raises(RuntimeError, match="UPLOADED_WORKSPACE_BYTES_UNVERIFIED"):
+        owner._upload(source, owner.WHEEL_DIR + "/selection.json")
+
+
+def test_grant_update_requires_effective_rights_readback(monkeypatch):
+    calls = []
+
+    def cli(*args, **kwargs):
+        calls.append((args, kwargs))
+        if args[:2] == ("grants", "get-effective"):
+            return {"privilege_assignments": []}
+        return None
+
+    monkeypatch.setattr(owner, "admin_cli", cli)
+    with pytest.raises(RuntimeError, match="V3_GRANT_UPDATE_UNVERIFIED"):
+        owner._ensure_rights("schema", "workspace.edp_lab", ["USE_SCHEMA"])
+    assert [call[0][1] for call in calls] == ["get-effective", "update", "get-effective"]
+    assert calls[1][1] == {"allow_empty": True}
+
+
+def test_grant_update_accepts_verified_effective_rights(monkeypatch):
+    calls = []
+
+    def cli(*args, **kwargs):
+        calls.append((args, kwargs))
+        if args[:2] == ("grants", "get-effective"):
+            privileges = [] if len(calls) == 1 else [{"privilege": "USE_SCHEMA"}]
+            return {"privilege_assignments": [{"privileges": privileges}]}
+
+    monkeypatch.setattr(owner, "admin_cli", cli)
+    owner._ensure_rights("schema", "workspace.edp_lab", ["USE_SCHEMA"])
+    assert [call[0][1] for call in calls] == ["get-effective", "update", "get-effective"]
+
+
 def test_proposed_job_is_the_exact_saved_job_shape():
     request = json.loads(owner.REQUEST.read_bytes())
     deployment = json.loads(owner.DEPLOYMENT.read_bytes())

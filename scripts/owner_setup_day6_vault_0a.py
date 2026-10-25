@@ -45,9 +45,11 @@ def run(*args: str, admin: bool = False, capture: bool = True) -> subprocess.Com
     return subprocess.run(argv, capture_output=capture, text=True, check=True, timeout=900)
 
 
-def admin_cli(*args: str) -> dict:
+def admin_cli(*args: str, allow_empty: bool = False) -> dict | list | None:
     result = run("/opt/homebrew/bin/databricks", *args, "-p", "edp-lab", "-o", "json",
                  admin=True)
+    if allow_empty and not result.stdout.strip():
+        return None
     return json.loads(result.stdout)
 
 

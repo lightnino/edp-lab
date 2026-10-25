@@ -156,11 +156,26 @@ def _source_rights() -> None:
         ("schema", "workspace.edp_lab_day6_vault_proto", {"USE_SCHEMA", "CREATE_TABLE"}),
         *(("table", "workspace.edp_lab." + name, {"SELECT"}) for name in SOURCE_TABLES),
     ):
-        grants = admin_cli("grants", "get-effective", securable, name,
-                           "--principal", APP_ID)
-        actual = {item["privilege"] for assignment in grants.get("privilege_assignments", [])
-                  for item in assignment.get("privileges", [])}
-        require(rights <= actual, "V3_RUN_AS_PRIVILEGES_MISSING:" + name)
+        require(rights <= _effective_rights(securable, name),
+                "V3_RUN_AS_PRIVILEGES_MISSING:" + name)
+
+
+def _effective_rights(securable: str, name: str) -> set[str]:
+    grants = admin_cli("grants", "get-effective", securable, name,
+                       "--principal", APP_ID)
+    return {item["privilege"] for assignment in grants.get("privilege_assignments", [])
+            for item in assignment.get("privileges", [])}
+
+
+def _ensure_rights(securable: str, name: str, rights: list[str]) -> None:
+    missing = sorted(set(rights) - _effective_rights(securable, name))
+    if missing:
+        admin_cli("grants", "update", securable, name,
+                  "--json", json.dumps({"changes": [{"principal": APP_ID,
+                                                        "add": missing}]}),
+                  allow_empty=True)
+        require(set(missing) <= _effective_rights(securable, name),
+                "V3_GRANT_UPDATE_UNVERIFIED:" + name)
 
 
 def _targets(request: dict) -> dict:
@@ -175,9 +190,11 @@ def _targets(request: dict) -> dict:
 def _upload(path: Path, remote: str) -> None:
     if path.is_relative_to(BASE):
         admin_cli("workspace", "import", remote, "--content",
-                  base64.b64encode(path.read_bytes()).decode(), "--format", "AUTO")
+                  base64.b64encode(path.read_bytes()).decode(), "--format", "AUTO",
+                  allow_empty=True)
     else:
-        admin_cli("workspace", "import", remote, "--file", str(path), "--format", "AUTO")
+        admin_cli("workspace", "import", remote, "--file", str(path), "--format", "AUTO",
+                  allow_empty=True)
     require(_remote_digest(remote) == file_digest(path),
             "UPLOADED_WORKSPACE_BYTES_UNVERIFIED:" + remote)
 
@@ -202,6 +219,12 @@ def _workspace_absent(remote: str) -> None:
             "V3_REMOTE_FILE_ABSENCE_UNVERIFIED:" + remote)
 
 
+def _workspace_directory() -> None:
+    status = admin_cli("workspace", "get-status", WHEEL_DIR)
+    require(status.get("path") == WHEEL_DIR and status.get("object_type") == "DIRECTORY"
+            and status.get("object_id"), "V3_WORKSPACE_DIRECTORY_UNVERIFIED")
+
+
 def install(expected_commit: str) -> dict:
     _owner(expected_commit)
     request, deployment = _pins()
@@ -221,7 +244,8 @@ def install(expected_commit: str) -> dict:
                    WHEEL_DIR + "/negative-oracles.json",
                    WHEEL_DIR + "/request.granted.json"):
         _workspace_absent(remote)
-    admin_cli("workspace", "mkdirs", WHEEL_DIR)
+    admin_cli("workspace", "mkdirs", WHEEL_DIR, allow_empty=True)
+    _workspace_directory()
     wheel = Path(deployment["artifact"]["local_build_output_uncommitted"])
     _upload(wheel, deployment["artifact"]["workspace_target_proposed"])
     for kind, source in (("selection", ROOT / request["selection"]["path"]),
@@ -243,16 +267,7 @@ def install(expected_commit: str) -> dict:
         *(("table", "workspace.edp_lab." + name, ["SELECT"])
           for name in SOURCE_TABLES),
     ):
-        effective = admin_cli("grants", "get-effective", securable, name,
-                              "--principal", APP_ID)
-        current = {item["privilege"] for assignment in
-                   effective.get("privilege_assignments", [])
-                   for item in assignment.get("privileges", [])}
-        missing = sorted(set(rights) - current)
-        if missing:
-            admin_cli("grants", "update", securable, name,
-                      "--json", json.dumps({"changes": [{"principal": APP_ID,
-                                                            "add": missing}]}))
+        _ensure_rights(securable, name, rights)
     _source_rights()
     settings = _job_settings(derived_sha, deployment)
     created = admin_cli("jobs", "create", "--json", json.dumps(settings))
