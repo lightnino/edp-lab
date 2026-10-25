@@ -63,12 +63,32 @@ def _ready(root: Path, base: Path) -> None:
         raise RuntimeError("V3_PROTECTED_SERVICE_ROOT_REQUIRED")
     standing = verified_document(root, base / "trust/day6-v3-standing-v1.signed.json",
                                  base / "trust")
-    smoke = verified_document(root, base / "receipts/day6-v3-e2e-ready-v1.signed.json",
-                              base / "trust")
-    if (standing.get("status") != "INSTALLED" or smoke.get("status") != "VERIFIED"
+    original = base / "receipts/day6-v3-e2e-ready-v1.signed.json"
+    upgrade = base / "receipts/day6-v3-e2e-ready-edgar-fix-v1.signed.json"
+    approval = base / "approvals/day6-v3-edgar-fix-upgrade-v1.signed.json"
+    initial = verified_document(root, original, base / "trust")
+    smoke = verified_document(root, upgrade, base / "trust")
+    authorized = verified_document(root, approval, base / "trust")
+    from owner_day6_v3_one_shot import CURRENT_REQUEST_SHA256, DEPLOYMENT
+    deployment = json.loads(DEPLOYMENT.read_bytes())
+    if (standing.get("status") != "INSTALLED"
+            or initial.get("status") != "VERIFIED"
+            or initial.get("standing_sha256") != file_digest(
+                base / "trust/day6-v3-standing-v1.signed.json")
+            or authorized.get("schema") != "EDP_DAY6_V3_ARTIFACT_UPGRADE_V1"
+            or authorized.get("status") != "APPROVED"
+            or authorized.get("request_sha256") != CURRENT_REQUEST_SHA256
+            or authorized.get("wheel_sha256") != deployment["artifact"]["sha256"]
+            or authorized.get("original_e2e_sha256") != file_digest(original)
+            or smoke.get("schema") != "EDP_VAULT_E2E_UPGRADE_V1"
+            or smoke.get("status") != "VERIFIED"
+            or smoke.get("approval_sha256") != file_digest(approval)
+            or smoke.get("request_sha256") != CURRENT_REQUEST_SHA256
+            or smoke.get("wheel_sha256") != deployment["artifact"]["sha256"]
+            or smoke.get("original_e2e_sha256") != file_digest(original)
             or smoke.get("standing_sha256") != file_digest(
                 base / "trust/day6-v3-standing-v1.signed.json")):
-        raise RuntimeError("V3_STANDING_OR_E2E_NOT_VERIFIED")
+        raise RuntimeError("V3_UPGRADED_STANDING_OR_E2E_NOT_VERIFIED")
 
 
 def _commit(base: Path) -> str:
@@ -109,7 +129,8 @@ def status(root: Path, base: Path) -> dict:
     number, state = _next_attempt(root, base)
     return {"status": state, "next_attempt": number,
             "standing_sha256": file_digest(base / "trust/day6-v3-standing-v1.signed.json"),
-            "e2e_sha256": file_digest(base / "receipts/day6-v3-e2e-ready-v1.signed.json")}
+            "e2e_sha256": file_digest(
+                base / "receipts/day6-v3-e2e-ready-edgar-fix-v1.signed.json")}
 
 
 def audit(root: Path, base: Path) -> dict:
