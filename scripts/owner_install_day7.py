@@ -430,14 +430,29 @@ def permissions(app_id: str) -> None:
               f"o_c2000_m2_result_frozen_day5_v1 TO `{app_id}`")
     def merge_acl(resource: str, resource_id: str, subject: str,
                   permission: str) -> None:
-        existing = admin("api", "get", f"/api/2.0/permissions/{resource}/{resource_id}")
-        acl = existing.get("access_control_list", [])
-        retained = [item for item in acl
-                    if item.get("service_principal_name") != subject]
-        retained.append({"service_principal_name": subject,
-                         "permission_level": permission})
-        admin("permissions", "update", resource, resource_id, "--json",
-              json.dumps({"access_control_list": retained}))
+        # PATCH only our SP's explicit ACL. Never resubmit other users/groups'
+        # effective or inherited entries as though they were direct ACL grants.
+        path = f"/api/2.0/permissions/{resource}/{resource_id}"
+        before = admin("api", "get", path)
+        rows = before.get("access_control_list", [])
+        ours = [item for item in rows
+                if item.get("service_principal_name") == subject]
+        if len(ours) > 1:
+            raise RuntimeError("DAY7_SP_ACL_DUPLICATE")
+        if not ours or not any(
+                entry.get("permission_level") == permission
+                for entry in ours[0].get("all_permissions", [])):
+            admin("permissions", "update", resource, resource_id, "--json",
+                  json.dumps({"access_control_list": [{
+                      "service_principal_name": subject,
+                      "permission_level": permission}]}))
+        after = admin("api", "get", path)
+        found = [item for item in after.get("access_control_list", [])
+                 if item.get("service_principal_name") == subject]
+        if len(found) != 1 or not any(
+                entry.get("permission_level") == permission
+                for entry in found[0].get("all_permissions", [])):
+            raise RuntimeError("DAY7_SP_ACL_READBACK_INVALID")
 
     merge_acl("warehouses", WAREHOUSE, app_id, "CAN_USE")
     raw = admin("grants", "get-effective", "volume", "workspace.edp_lab.raw",
