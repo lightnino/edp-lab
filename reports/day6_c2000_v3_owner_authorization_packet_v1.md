@@ -38,6 +38,8 @@ The job must verify the signed semantic record, frozen roster/source/member hash
 
 **Final pin required before execution approval:** the [request](../metadata/operating/day6_c2000_vault_v3_bounded_request_v1.json) currently has `runtime_artifact_sha256`, `deployment_sha256` and `protected_grant_id` set to `null`. No pinned Spark loader/deployment has been installed or demonstrated. The protected issuer must receive the reviewed exact runtime/deployment hashes and approve that fixed payload before any V3 write. Until those pins and a signed grant exist, this is a bounded execution *proposal*, not a runnable protected operation. This missing implementation/installation is a technical readiness gap, not a request to waive a control.
 
+Local, read-only readiness command: `PYTHONPATH=src:. .venv/bin/python scripts/check_day6_c2000_v3_readiness.py`. It verifies the preserved historical receipt hashes, contract pins and selection, then lists missing protected inputs. It never submits a Job or writes Delta.
+
 ## Exact Owner decisions still required
 
 1. Have the existing Owner-controlled issuer produce the signed semantic envelope for the pinned five-contract `document`, without adding write authority to that semantic record.
