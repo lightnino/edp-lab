@@ -24,9 +24,9 @@ from owner_day6_v3_one_shot import (
     BASE,
     CURRENT_REQUEST_SHA256,
     DEPLOYMENT,
-    ORIGINAL_ACTIVE_REQUEST_SHA256,
-    ORIGINAL_ACTIVE_REQUEST,
     ORIGINAL_ACTIVE_DEPLOYMENT,
+    ORIGINAL_ACTIVE_REQUEST,
+    ORIGINAL_ACTIVE_REQUEST_SHA256,
     REQUEST,
     ROOT,
     _installed,
@@ -47,6 +47,7 @@ from owner_day6_v3_successor import (
     UPGRADE_APPROVAL,
 )
 from owner_setup_day6_vault_0a import admin_cli
+
 from edp_lab.operating.authority import canonical, file_digest, verified_document
 from edp_lab.vault.v3_one_shot_gate import verify_saved_job
 from edp_lab.vault.v3_service import _service_target_absent
