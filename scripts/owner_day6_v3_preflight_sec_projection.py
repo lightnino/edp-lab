@@ -18,10 +18,10 @@ from owner_day6_v3_diagnose_lexical import (
     checked_sql_token,
     rows,
 )
-from owner_day6_v3_one_shot import ROOT, require
+from owner_day6_v3_one_shot import require
 
 from edp_lab.vault.v3_input import c300_occurrence
-from edp_lab.vault.v3_mapping import project
+from edp_lab.vault.v3_mapping import EDGAR_HEADER, FSDS_HEADERS, project
 from edp_lab.vault.v3_spark_runtime import (
     C300_TABLES,
     SEC_IDS,
@@ -118,6 +118,8 @@ def verify() -> dict:
     found = bindings(selection)
     exact = _full_bindings(found)
     require(len(exact) == 17, "V3_SEC_PREFLIGHT_NOT_17_MEMBERS")
+    for (sid, _), record in exact.items():
+        record["raw_sha256"] = selection["sources"][sid]["raw_sha256"]
     counts = Counter()
     blocked = Counter()
     occurrence_ids = set()
@@ -127,11 +129,24 @@ def verify() -> dict:
         frozen = selection["sources"][sid]
         spec = frozen["members"][member]
         selected = _data_rows(exact[sid, member], _ordinals(spec))
+        lexical = []
         for ordinal, m1 in selected:
             names = tuple(x["original_name"] for x in m1["fields"])
+            if member in FSDS_HEADERS:
+                require(names == FSDS_HEADERS[member],
+                        "V3_SEC_PREFLIGHT_FSDS_HEADER_CHANGED")
+            if sid == "SRC000107":
+                require(names == EDGAR_HEADER,
+                        "V3_SEC_PREFLIGHT_EDGAR_HEADER_CHANGED")
             instance = c300_occurrence(m1, exact[sid, member],
                                        frozen["raw_sha256"], names)
             instance = _coverpage_quote_exception(instance, sid, member, ordinal)
+            lexical.append([
+                ordinal,
+                "|".join(item["text"] for item in instance["fields"])
+                if member == "daily_master.idx"
+                else [item["text"] for item in instance["fields"]]
+            ])
             projection = project(instance)
             if projection["business_status"] != "PROJECTED":
                 blocked[(sid, member, projection["business_status"])] += 1
@@ -147,6 +162,11 @@ def verify() -> dict:
                     selected_parents[accession] += 1
                 else:
                     children.add(accession)
+        if spec.get("header_sha256"):
+            require(_digest(list(names)) == spec["header_sha256"],
+                    "V3_SEC_PREFLIGHT_HEADER_CHANGED:" + sid + "/" + member)
+        require(_digest(lexical) == spec["selected_lexical_sha256"],
+                "V3_SEC_PREFLIGHT_LEXICAL_CHANGED:" + sid + "/" + member)
         print(f"{sid}/{member}: PROJECTION_DONE selected={counts[sid, member]} "
               f"blocked={sum(n for (s, m, _), n in blocked.items() if (s, m) == (sid, member))}")
     expected = {(sid, member): spec["selected_data_rows"]
