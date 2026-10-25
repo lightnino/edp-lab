@@ -161,9 +161,10 @@ def verify_canary_raw_read_only() -> dict:
             or not locator.startswith("dbfs:/Volumes/workspace/edp_lab/raw/")
             or ".." in locator.split("/")):
         raise RuntimeError("DAY7_CANARY_REMOTE_PATH_INVALID")
+    identity_prefix = (["/usr/bin/sudo", "-n", "-u", "lightnino", "-H"]
+                       if os.geteuid() == 0 else [])
     result = subprocess.run(
-        ["/usr/bin/sudo", "-n", "-u", "lightnino", "-H",
-         CLI, "fs", "cat", locator, "-p", "edp-lab"],
+        [*identity_prefix, CLI, "fs", "cat", locator, "-p", "edp-lab"],
         capture_output=True, check=False, timeout=180,
     )
     if (result.returncode != 0
@@ -172,6 +173,33 @@ def verify_canary_raw_read_only() -> dict:
         raise RuntimeError("DAY7_CANARY_REMOTE_FULL_HASH_READBACK_FAILED")
     return {"physical_identity": "SRC000002", "remote_path": locator,
             "raw_sha256": source["raw_sha256"], "raw_bytes": source["raw_bytes"]}
+
+
+def read_only_preflight(expected_commit: str) -> dict:
+    """Normal Owner terminal; no sudo, root store or external writes."""
+    if os.geteuid() == 0:
+        raise RuntimeError("DAY7_USE_NONROOT_OWNER_FOR_READ_ONLY_PREFLIGHT")
+    head = run("/usr/bin/git", "-C", str(ROOT), "rev-parse", "HEAD").strip()
+    if head != expected_commit:
+        raise RuntimeError("DAY7_UNREVIEWED_READ_ONLY_PREFLIGHT_COMMIT")
+    if run("/usr/bin/git", "-C", str(ROOT), "status", "--porcelain").strip():
+        raise RuntimeError("DAY7_READ_ONLY_PREFLIGHT_WORKTREE_NOT_CLEAN")
+    for path, pin in (
+        (POLICY, POLICY_SHA),
+        (SOURCE_INDEX, SOURCE_INDEX_SHA),
+        (ROOT / "metadata/source_universes/approved/manifest.json", MANIFEST_SHA),
+        (ROOT / "metadata/authorizations/day7_universe_expansion_800_owner_decision.json",
+         DECISION_SHA),
+    ):
+        if file_digest(path) != pin:
+            raise RuntimeError("DAY7_READ_ONLY_PREFLIGHT_PIN_CHANGED")
+    source = verify_canary_raw_read_only()
+    return {"status": "DAY7_OWNER_READ_ONLY_PREFLIGHT_PASS",
+            "reviewed_commit": expected_commit,
+            "source": source, "manifest_sha256": MANIFEST_SHA,
+            "source_evidence_index_sha256": SOURCE_INDEX_SHA,
+            "protected_publication": "NOT_YET_EXECUTED",
+            "protected_deployment": "NOT_YET_EXECUTED"}
 
 
 def preflight(expected_commit: str) -> None:
@@ -203,15 +231,18 @@ def preflight(expected_commit: str) -> None:
         raise RuntimeError("EXISTING_COHORT_PROTECTED_INFRASTRUCTURE_REQUIRED")
     recovering = BASE.exists()
     if recovering:
-        if (PLIST.exists() and (PLIST.is_symlink() or PLIST.stat().st_uid != 0)):
+        if PLIST.exists() and (PLIST.is_symlink() or PLIST.stat().st_uid != 0):
             raise RuntimeError("DAY7_UNOWNED_LAUNCHDAEMON_CHANGED")
+        journal_or_tmp = (
+            JOURNAL if JOURNAL.exists()
+            else JOURNAL.with_name(JOURNAL.name + ".new"))
         if (BASE.is_symlink() or BASE.stat().st_uid != 0
                 or BASE.stat().st_mode & 0o077
-                or not JOURNAL.is_file() or JOURNAL.is_symlink()
-                or JOURNAL.stat().st_uid != 0
-                or {k: v for k, v in _read_json(JOURNAL).items()
+                or not journal_or_tmp.is_file() or journal_or_tmp.is_symlink()
+                or journal_or_tmp.stat().st_uid != 0
+                or {k: v for k, v in _read_json(journal_or_tmp).items()
                     if k != "completed"} != _install_intent(expected_commit)
-                or not isinstance(_read_json(JOURNAL).get("completed"), dict)):
+                or not isinstance(_read_json(journal_or_tmp).get("completed"), dict)):
             raise RuntimeError("DAY7_EXISTING_INSTALL_JOURNAL_PIN_MISMATCH")
     elif PLIST.exists():
         raise RuntimeError("DAY7_UNOWNED_LAUNCHDAEMON_EXISTS")
@@ -689,7 +720,11 @@ def install_broker() -> None:
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("expected_commit")
+    parser.add_argument("--read-only-preflight", action="store_true")
     args = parser.parse_args()
+    if args.read_only_preflight:
+        print(json.dumps(read_only_preflight(args.expected_commit), sort_keys=True))
+        return
 
     # All feasible fixed-source checks and real RAW readback run BEFORE any
     # protected directory, secret, IAM mutation, Job or remote write.
