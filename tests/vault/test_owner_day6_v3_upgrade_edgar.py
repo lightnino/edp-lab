@@ -91,3 +91,69 @@ def test_upgrade_requires_verified_original_no_effect(monkeypatch):
         "No trust read until exact reviewed artifact pins"))
     with pytest.raises((RuntimeError, KeyError)):
         upgrade.preflight("reviewed")
+
+
+def test_successor_accepts_only_config_bound_signed_upgrade(monkeypatch):
+    import owner_day6_v3_successor as successor
+
+    request = json.loads(upgrade.REQUEST.read_bytes())
+    deployment = json.loads(upgrade.DEPLOYMENT.read_bytes())
+    stable_digest = "a" * 64
+    standing = {
+        "schema": "EDP_DAY6_V3_STANDING_AUTHORIZATION_V1",
+        "status": "INSTALLED",
+        "request_sha256": upgrade.ORIGINAL_ACTIVE_REQUEST_SHA256,
+        "job_submissions_max": 10000000,
+        "runtime_seconds_max": 3600,
+        "run_as": upgrade.APP_ID,
+        "target_namespace": request["target_namespace"],
+        "source_ids": request["selection"]["source_ids"],
+        "table_allowlist": request["new_v3_table_allowlist"],
+        "distinct_no_effect_recovery_allowed": True,
+    }
+    approval = {
+        "schema": "EDP_DAY6_V3_ARTIFACT_UPGRADE_V1",
+        "status": "APPROVED",
+        "request_sha256": upgrade.CURRENT_REQUEST_SHA256,
+        "wheel_sha256": upgrade.NEW_WHEEL_SHA,
+        "original_e2e_sha256": stable_digest,
+        "standing_sha256": stable_digest,
+    }
+    ready = {
+        "schema": "EDP_VAULT_E2E_UPGRADE_V1",
+        "status": "VERIFIED",
+        "approval_sha256": stable_digest,
+        "original_e2e_sha256": stable_digest,
+        "standing_sha256": stable_digest,
+        "request_sha256": upgrade.CURRENT_REQUEST_SHA256,
+        "wheel_sha256": upgrade.NEW_WHEEL_SHA,
+        "environment_version": "4",
+        "target_namespace": request["target_namespace"],
+        "run_as": upgrade.APP_ID,
+        "canary_terminal_state": "SUCCESS",
+        "isolated_persisted_readback_reused": True,
+        "read_only_new_wheel_verified": True,
+        "signed_readback_sha256": stable_digest,
+        "workspace_access_verified": True,
+        "effective_uc_access_verified": True,
+    }
+    monkeypatch.setattr(successor, "file_digest", lambda *_: stable_digest)
+
+    def document(_root, path, _trust):
+        return {
+            successor.STANDING: standing,
+            successor.UPGRADE_APPROVAL: approval,
+            successor.E2E_READY: ready,
+        }[path]
+
+    monkeypatch.setattr(successor, "verified_document", document)
+    successor._admission(request, deployment)
+
+    ready["read_only_new_wheel_verified"] = False
+    with pytest.raises(RuntimeError, match="V3_SIGNED_E2E_READINESS_REQUIRED"):
+        successor._admission(request, deployment)
+
+    ready["read_only_new_wheel_verified"] = True
+    approval["wheel_sha256"] = "bad" * 21 + "b"
+    with pytest.raises(RuntimeError, match="V3_UPGRADE_OWNER_APPROVAL_REQUIRED"):
+        successor._admission(request, deployment)
