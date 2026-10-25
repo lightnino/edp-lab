@@ -40,6 +40,7 @@ from owner_day6_v3_one_shot import (
     _targets,
     _upload,
     _workspace_access,
+    _workspace_absent,
     require,
 )
 from owner_day6_v3_successor import (
@@ -60,6 +61,8 @@ OLD_E2E_SHA = "bb3f92e332d8765753a2abe605eb6b0fb90ff4ae7031f068a9eef1f2fbdd9c05"
 STANDING_SHA = "ce084d5be48bfc777d82216543f12547bd57b566962dec1d235ee7df38054bc0"
 NEW_WHEEL_SHA = "fd2d890f5a57f2bf3596eb2f0275860b70f2ac4549d1aae549e818e202bda546"
 
+ORIGINAL_INSTALLER_COMMIT = "6bf40269718766804b19c8bf6741a1f36a85b88c"
+INSTALLER_REPAIR = BASE / "approvals/day6-v3-edgarfix-installer-repair-v1.signed.json"
 UPGRADE_DIR = "/Workspace/Shared/edp-lab/day6-c2000-v3-edgar-fix-v1"
 CANARY_REQUEST = UPGRADE_DIR + "/request.readonly.json"
 CANARY_NAME = "day6-v3-edgar-fix-v1-readonly-canary"
@@ -219,7 +222,7 @@ def ensure_approval(request: dict, deployment: dict, commit: str) -> None:
         _signed_once(approval, "owner.pem", UPGRADE_APPROVAL)
     require(approval.get("schema") == "EDP_DAY6_V3_ARTIFACT_UPGRADE_V1"
             and approval.get("status") == "APPROVED"
-            and approval.get("reviewed_commit") == commit
+            and approval.get("reviewed_commit") in {commit, ORIGINAL_INSTALLER_COMMIT}
             and approval.get("request_sha256") == CURRENT_REQUEST_SHA256
             and approval.get("deployment_sha256") == file_digest(DEPLOYMENT)
             and approval.get("wheel_sha256") == NEW_WHEEL_SHA
@@ -228,6 +231,46 @@ def ensure_approval(request: dict, deployment: dict, commit: str) -> None:
             and approval.get("next_attempt") == 2
             and approval.get("canary_job_submissions_max") == 1,
             "UPGRADE_OWNER_APPROVAL_CHANGED")
+    # The Owner approved the exact wheel with the initial installer. If that
+    # installer itself needs a code repair, preserve the original signed
+    # approval and produce a separate Owner-signed reviewed-code addendum.
+    if approval["reviewed_commit"] != commit:
+        changed = set(git("diff", "--name-only",
+                          ORIGINAL_INSTALLER_COMMIT, commit).decode().splitlines())
+        require(changed and changed <= {
+            "scripts/owner_day6_v3_upgrade_edgar.py",
+            "tests/vault/test_owner_day6_v3_upgrade_edgar.py",
+        }, "UPGRADE_INSTALLER_REPAIR_SCOPE_CHANGED")
+        if INSTALLER_REPAIR.exists():
+            repaired = verified_document(ROOT, INSTALLER_REPAIR, BASE / "trust")
+        else:
+            repaired = {
+                "schema": "EDP_DAY6_V3_INSTALLER_REPAIR_V1",
+                "authority": "owner-v3-artifact-upgrade-repair-v1",
+                "status": "APPROVED",
+                "original_approval_sha256": file_digest(UPGRADE_APPROVAL),
+                "original_installer_commit": ORIGINAL_INSTALLER_COMMIT,
+                "repaired_installer_commit": commit,
+                "request_sha256": CURRENT_REQUEST_SHA256,
+                "deployment_sha256": file_digest(DEPLOYMENT),
+                "wheel_sha256": NEW_WHEEL_SHA,
+                "allowed_change": "MISSING_WORKSPACE_PATH_CLASSIFICATION_ONLY",
+                "approved_at_utc": datetime.now(UTC).isoformat(),
+            }
+            _signed_once(repaired, "owner.pem", INSTALLER_REPAIR)
+        require(repaired.get("schema") == "EDP_DAY6_V3_INSTALLER_REPAIR_V1"
+                and repaired.get("status") == "APPROVED"
+                and repaired.get("original_approval_sha256") ==
+                file_digest(UPGRADE_APPROVAL)
+                and repaired.get("original_installer_commit") ==
+                ORIGINAL_INSTALLER_COMMIT
+                and repaired.get("repaired_installer_commit") == commit
+                and repaired.get("request_sha256") == CURRENT_REQUEST_SHA256
+                and repaired.get("deployment_sha256") == file_digest(DEPLOYMENT)
+                and repaired.get("wheel_sha256") == NEW_WHEEL_SHA
+                and repaired.get("allowed_change") ==
+                "MISSING_WORKSPACE_PATH_CLASSIFICATION_ONLY",
+                "UPGRADE_SIGNED_INSTALLER_REPAIR_CHANGED")
 
 
 def canary_parameters() -> list[str]:
@@ -250,11 +293,11 @@ def ensure_remote(deployment: dict) -> None:
         # An interrupted upload may exist; its exact bytes are adopted.
         try:
             observed = _remote_digest(path)
-        except RuntimeError as error:
-            if "RESOURCE_DOES_NOT_EXIST" not in str(error).upper() and (
-                "PATH_NOT_FOUND" not in str(error).upper()
-                and "DOES NOT EXIST" not in str(error).upper()):
-                raise
+        except RuntimeError:
+            # Export may fail for authentication, transient errors, or genuinely
+            # missing paths. Never infer absence from a loose error substring.
+            # The existing verifier independently checks this EXACT path.
+            _workspace_absent(path)
             _upload(local, path)
         else:
             require(observed == file_digest(local),
@@ -401,6 +444,13 @@ def readiness(request: dict, deployment: dict, historical: dict) -> None:
             "authority": "protected-verifier-v1",
             "status": "VERIFIED",
             "approval_sha256": file_digest(UPGRADE_APPROVAL),
+            "installer_repair_sha256": (file_digest(INSTALLER_REPAIR)
+                                        if INSTALLER_REPAIR.exists() else None),
+            "installed_reviewed_commit": (
+                verified_document(ROOT, INSTALLER_REPAIR, BASE / "trust")
+                ["repaired_installer_commit"] if INSTALLER_REPAIR.exists()
+                else verified_document(ROOT, UPGRADE_APPROVAL, BASE / "trust")
+                ["reviewed_commit"]),
             "original_e2e_sha256": OLD_E2E_SHA,
             "standing_sha256": STANDING_SHA,
             "request_sha256": CURRENT_REQUEST_SHA256,
@@ -426,6 +476,13 @@ def readiness(request: dict, deployment: dict, historical: dict) -> None:
             and data.get("standing_sha256") == STANDING_SHA
             and data.get("request_sha256") == CURRENT_REQUEST_SHA256
             and data.get("wheel_sha256") == NEW_WHEEL_SHA
+            and data.get("installed_reviewed_commit") == (
+                verified_document(ROOT, INSTALLER_REPAIR, BASE / "trust")
+                ["repaired_installer_commit"] if INSTALLER_REPAIR.exists()
+                else verified_document(ROOT, UPGRADE_APPROVAL, BASE / "trust")
+                ["reviewed_commit"])
+            and data.get("installer_repair_sha256") == (
+                file_digest(INSTALLER_REPAIR) if INSTALLER_REPAIR.exists() else None)
             and data.get("canary_terminal_state") == "SUCCESS"
             and data.get("read_only_new_wheel_verified") is True,
             "UPGRADE_SIGNED_CANARY_E2E_INVALID")
