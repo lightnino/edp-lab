@@ -1,0 +1,40 @@
+{
+  "schema": "EDP_DAY6_C2000_VAULT_FULL_PREPARATION_V2",
+  "status": "OWNER_SEMANTIC_AND_PROTECTED_SCOPE_DECISIONS_REQUIRED",
+  "cohort": "C2000",
+  "frozen_sources": 2000,
+  "candidate_data_rows": 321150341,
+  "historical_prototype_data_rows": 127,
+  "incremental_candidate_data_rows": 321150214,
+  "historical_checkpoint": "metadata/evaluations/day6_c2000_vault_pilot_checkpoint_v1.json",
+  "durable_runner_checkpoint": "runs/day6-vault-pilot/state/checkpoint.json",
+  "historical_stages_preserved": ["V0A", "V0", "V1", "V2_PARTIAL", "V3_PARTIAL"],
+  "next_stage": "V4",
+  "coverage": {
+    "path": "metadata/evaluations/day6_c2000_vault_full_source_coverage_v2.json",
+    "sha256": "897773ec8cb2f00a7b6ba683a01959c871c36974651dbdfcdbc49daca359ad8b"
+  },
+  "candidate_contracts": {
+    "path": "docs/vault_contract_candidates/c2000_full_source_contracts_v1.md",
+    "sha256": "9ac2f1fd8b7720fd84cde72de17a04dff70dc41856f7d13bf46d8fd1b01f9344"
+  },
+  "profile_evidence": {
+    "family_d1_d5": "356bf90e9fd0c230918fb6e30b6bbb3cb489abfa766772ca8a204d74f1834a50",
+    "thirteen_f_members": "2e497f0a431a906ab0a6e92a72dbd151a25d5e4e919fb9aad106bd00895300af",
+    "fsds_headers": "c8507bdfcee182b532dcc71780dda17f94f0bdef020374f3676134d129a6be3f",
+    "fsds_other_counts": "9902a600301c372f4bb88c04b713c0a935194b793a6e0d9da0328c6cd5ba0ef7",
+    "fsds_relationship_probe": "a497a07320dc5322b245c82fe44c91534dd6f5c68b9a0efb3204bf329a7334a0"
+  },
+  "new_delta_writes": 0,
+  "new_protected_grants": 0,
+  "full_scale_protected_service_installed": false,
+  "spark_runtime_deployed": false,
+  "v9_live_freeze_completed": false,
+  "owner_decisions": [
+    "FOUR_SOURCE_FAMILY_CONTRACTS",
+    "EXACT_FULL_C2000_WRITE_SCOPE_AND_TABLE_ALLOWLIST",
+    "PROTECTED_SPARK_JOBS_AUTHORITY_AND_RESOURCE_CEILING",
+    "PROTECTED_V9_LIVE_FREEZE_VERIFIER_AUTHORITY"
+  ],
+  "agent_generated_signature": null
+}
