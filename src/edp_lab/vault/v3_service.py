@@ -87,6 +87,40 @@ def status(root: Path, base: Path) -> dict:
             "e2e_sha256": file_digest(base / "receipts/day6-v3-e2e-ready-v1.signed.json")}
 
 
+def probe(root: Path, base: Path) -> dict:
+    """Exercise the fixed admission read path in the actual service process."""
+    _ready(root, base)
+    (successor, owner, pins, _, targets, workspace_absent,
+     require, admin_cli) = _imports()
+    from owner_day6_v3_one_shot import (
+        SERVICE_PRINCIPAL_ID,
+        _installed,
+        _remote_digest,
+        _source_rights,
+        _workspace_access,
+    )
+
+    owner(_commit(base))
+    number, state = _next_attempt(root, base)
+    require(state == "READY_FOR_DISTINCT_ATTEMPT", "V3_PROBE_CHECKPOINT_CHANGED")
+    successor.configure_attempt(number)
+    request, deployment = pins()
+    identity = admin_cli("current-user", "me")
+    require(str(identity.get("id")) == SERVICE_PRINCIPAL_ID,
+            "V3_UNATTENDED_IDENTITY_CHANGED")
+    _installed(request, deployment)
+    _workspace_access()
+    _source_rights()
+    require(_remote_digest(deployment["artifact"]["workspace_target_proposed"])
+            == deployment["artifact"]["sha256"], "V3_DEPLOYED_WHEEL_CHANGED")
+    targets(request)
+    workspace_absent(successor.REMOTE_REQUEST)
+    jobs = admin_cli("jobs", "list")
+    require(isinstance(jobs, list), "V3_UNATTENDED_JOBS_LIST_FAILED")
+    return {"status": "V3_UNATTENDED_ADMISSION_READS_VERIFIED",
+            "principal_id": SERVICE_PRINCIPAL_ID, "attempt_number": number}
+
+
 def run(root: Path, base: Path) -> dict:
     _ready(root, base)
     successor, owner, *_ = _imports()
@@ -399,6 +433,7 @@ def freeze(root: Path, base: Path) -> dict:
 
 def serve(root: Path, base: Path) -> None:
     os.environ["EDP_DAY6_REVIEWED_ROOT"] = str(root)
+    os.environ["EDP_DAY6_V3_SERVICE_CONTEXT"] = "1"
     _ready(root, base)
     socket_path = base / "day6-v3.sock"
     if socket_path.exists():
@@ -420,6 +455,8 @@ def serve(root: Path, base: Path) -> None:
                 request = json.loads(self.rfile.readline(4096))
                 if request == {"action": "status"}:
                     response = status(root, base)
+                elif request == {"action": "probe"}:
+                    response = probe(root, base)
                 elif request == {"action": "run"}:
                     response = run(root, base)
                 elif request == {"action": "reconcile"}:

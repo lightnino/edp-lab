@@ -11,7 +11,7 @@ SOCKET = "/private/var/db/edp-lab-day6-vault/day6-v3.sock"
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("action", choices=("status", "run", "reconcile", "freeze"))
+    parser.add_argument("action", choices=("status", "probe", "run", "reconcile", "freeze"))
     args = parser.parse_args()
     with socket.socket(socket.AF_UNIX) as client:
         client.settimeout(3600 if args.action in {"reconcile", "freeze"} else 120)

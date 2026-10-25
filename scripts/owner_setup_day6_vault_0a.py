@@ -48,8 +48,18 @@ def run(*args: str, admin: bool = False, capture: bool = True) -> subprocess.Com
 
 def admin_cli(*args: str, allow_empty: bool = False) -> dict | list | None:
     try:
-        result = run("/opt/homebrew/bin/databricks", *args, "-p", "edp-lab", "-o", "json",
-                     admin=True)
+        if os.environ.get("EDP_DAY6_V3_SERVICE_CONTEXT") == "1":
+            from edp_lab.vault.protected_sql import protected_environment
+
+            if os.geteuid() != 0:
+                raise RuntimeError("V3_SERVICE_ROOT_REQUIRED")
+            result = subprocess.run(
+                ["/opt/homebrew/bin/databricks", *args, "-p", "vault-dev", "-o", "json"],
+                env=protected_environment(ROOT, BASE), capture_output=True, text=True,
+                check=True, timeout=900)
+        else:
+            result = run("/opt/homebrew/bin/databricks", *args, "-p", "edp-lab", "-o", "json",
+                         admin=True)
     except subprocess.CalledProcessError as exc:
         # Never print argv: it can contain JSON bodies or protected secrets.
         message = exc.stderr or ""

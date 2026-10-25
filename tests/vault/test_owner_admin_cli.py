@@ -56,3 +56,22 @@ def test_cli_error_reports_status_and_sanitized_stderr_without_argv(monkeypatch)
     assert "private-body" not in message
     assert "eyJsecret" not in message
     assert "hidden-value" not in message
+
+
+def test_protected_service_uses_m2m_profile_without_sudo(monkeypatch):
+    calls = []
+    monkeypatch.setenv("EDP_DAY6_V3_SERVICE_CONTEXT", "1")
+    monkeypatch.setattr(setup.os, "geteuid", lambda: 0)
+    monkeypatch.setattr("edp_lab.vault.protected_sql.protected_environment",
+                        lambda *_args: {"DATABRICKS_CONFIG_FILE": "/protected/config"})
+
+    def invoke(argv, **kwargs):
+        calls.append((argv, kwargs))
+        return subprocess.CompletedProcess(argv, 0, '{"id":"72304318628585"}', "")
+
+    monkeypatch.setattr(setup.subprocess, "run", invoke)
+    assert setup.admin_cli("current-user", "me") == {"id": "72304318628585"}
+    argv, kwargs = calls[0]
+    assert argv[-5:] == ["current-user", "me", "-p", "vault-dev", "-o", "json"][-5:]
+    assert argv[:3] == ["/opt/homebrew/bin/databricks", "current-user", "me"]
+    assert kwargs["env"]["DATABRICKS_CONFIG_FILE"] == "/protected/config"

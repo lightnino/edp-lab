@@ -229,11 +229,20 @@ def _remote_digest(remote: str) -> str:
 
 
 def _workspace_absent(remote: str) -> None:
-    result = subprocess.run(
-        ["/usr/bin/sudo", "-n", "-u", "lightnino", "-H",
-         "/opt/homebrew/bin/databricks", "workspace", "get-status", remote,
-         "-p", "edp-lab", "-o", "json"],
-        capture_output=True, text=True, check=False, timeout=30)
+    if os.environ.get("EDP_DAY6_V3_SERVICE_CONTEXT") == "1":
+        from edp_lab.vault.protected_sql import protected_environment
+
+        require(os.geteuid() == 0, "V3_SERVICE_ROOT_REQUIRED")
+        argv = ["/opt/homebrew/bin/databricks", "workspace", "get-status", remote,
+                "-p", "vault-dev", "-o", "json"]
+        env = protected_environment(ROOT, BASE)
+    else:
+        argv = ["/usr/bin/sudo", "-n", "-u", "lightnino", "-H",
+                "/opt/homebrew/bin/databricks", "workspace", "get-status", remote,
+                "-p", "edp-lab", "-o", "json"]
+        env = None
+    result = subprocess.run(argv, env=env, capture_output=True, text=True,
+                            check=False, timeout=30)
     message = result.stderr.upper()
     missing_path = f"PATH ({remote.upper()}) DOESN'T EXIST."
     require(result.returncode != 0 and (
