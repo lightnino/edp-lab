@@ -39,8 +39,8 @@ from owner_day6_v3_one_shot import (
     _signed_once,
     _targets,
     _upload,
-    _workspace_access,
     _workspace_absent,
+    _workspace_access,
     require,
 )
 from owner_day6_v3_successor import (
