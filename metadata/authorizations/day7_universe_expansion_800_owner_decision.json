@@ -1,0 +1,38 @@
+{
+  "schema": "EDP_DAY7_UNIVERSE_EXPANSION_OWNER_DECISION_V1",
+  "decision": "APPROVE_ALL_REFERENCED_RETAINED_800_FOR_PROSPECTIVE_UNIVERSE_V2",
+  "owner_authorization_source": "Explicit owner instruction in the 2026-10-25 Day 7 planning conversation; this file records the decision but is not a cryptographic Owner signature or deployed grant",
+  "status": "APPROVED_MEMBERSHIP_DECISION_PUBLICATION_PENDING",
+  "scope": "Universe membership only; original historical freezes immutable",
+  "parent_universe_id": "EDP_LAB_ORIGINAL_SOURCE_UNIVERSE",
+  "parent_universe_version": "1",
+  "parent_manifest_path": "metadata/source_universes/approved_v1/manifest.json",
+  "parent_manifest_sha256": "2198f9bad9c864bf339eff515992526e22efc4230160614a8f86daf3143f463c",
+  "new_member_set": {
+    "description": "All 800 source instances retained from the 2026-10-21 incident, including 300 NOAA GSOD, 400 World Bank WDI and 100 US Treasury annual XML; approve exactly that original independently identifiable set and no other instances.",
+    "expected_count": 800,
+    "reference_incident_path": "docs/incidents/2026-10-21-source-universe/incident.md",
+    "source_reference_original_sha256": "13cdaf7a7be3f9c2a966b84769b459ea3eaa186e26f8f70257fbe999ffeadeae",
+    "reference_materialization": "PENDING_LOCATE_EXACT_800_MEMBER_LEDGER; do not derive identity from family counts"
+  },
+  "expected_new_total_members": 3821,
+  "preserved_holdout_count": 41,
+  "invariants": [
+    "Original v1 membership and owner authorization unchanged",
+    "Do not modify or reprocess frozen C2000",
+    "Exactly 800 unique source physical identities disjoint from all original 3021",
+    "Each prospective member binds original source ID, exact SHA-256 and size, actual Databricks RAW location, independent remote readback and provenance",
+    "Do not re-upload already verified retained RAW",
+    "Preserve all 41 holdouts and excluded development rights",
+    "Exact C2000 membership must be reconciled against original+new sets before selecting N1000",
+    "Only publish Uv2 when exact member and parent digests and independent verification agree"
+  ],
+  "does_not_authorize": [
+    "RAW upload/relocation",
+    "Semantic model correction",
+    "Mutating historical cohorts",
+    "Treating unsigned repository files as platform execution credentials",
+    "Skipping N1000/C3000 disjoint selection, Cohort P5 policy checks or P9/P10 validation"
+  ],
+  "result": "OWNER_MEMBERSHIP_APPROVED_U8_U10_VERIFICATION_AND_PUBLICATION_NOT_YET_EXECUTED"
+}
