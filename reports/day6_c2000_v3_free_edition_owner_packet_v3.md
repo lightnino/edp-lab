@@ -1,0 +1,38 @@
+# Day 6 bounded V3: Free Edition Owner authorization packet V3
+
+This succeeds the resource and deployment proposals in [V2](day6_c2000_v3_owner_authorization_packet_v2.md). The Owner-approved five semantic contract pins, frozen roster/bindings, selected source rows, 24 negatives, target DDL, historical V0A–V3 receipts and 127-row prototype remain unchanged. This is a **request**, not an installed grant or V3 PASS.
+
+## Exact bounded request
+
+Approve or decline one protected Free Edition serverless Python-wheel Job for 10 specified C2000 sources and 2,047 selected DATA occurrences, with at most 2,048 data rows, 24 isolated in-memory negative fixtures, and creation/insertion only into the 23 `v3_` tables in `workspace.edp_lab_day6_vault_proto`. The eight existing prototype tables are read-only. Allow one submission, one concurrent run, a 3,600-second timeout, zero task retries, **serverless auto-optimization retries disabled**, and no automatic uncertain-write replay. No new warehouse, cluster, RAW or frozen-C2000 mutation, Day 5 rerun, full V4, V9 or Day 7 work is included.
+
+| Immutable item | SHA-256 |
+| --- | --- |
+| [Bounded request](../metadata/operating/day6_c2000_vault_v3_bounded_request_v1.json) | `3b4b60121deb03a860e1dc7cee4ab593d8b564ea217f790866be061ec529fb8c` |
+| [Free Edition resource proposal](../metadata/operating/day6_c2000_vault_v3_resource_proposal_v1.json) | `bf0787775a4d7742773ff9e09b8d3fd4f46455c83510829ade1b59aa1d445e32` |
+| [Deployment proposal](../metadata/operating/day6_c2000_vault_v3_deployment_v1.json) | `cd58f130ebe53b41df653ae622b076c99c7bf5b01cdaca0d593f2cd15419256a` |
+| Local wheel `edp_lab-0.1.0-py3-none-any.whl` | `eada999db14a7db4b5590ab34b4296127e4231fe5289a04180bcf410238cafc9` |
+| Selection / negative oracles / DDL | `5b84f0a1dc088affc51f631bc34c66f0053b871b67efff13e770021a19a33259` / `54c2aa2add50504cca6a50beed480ef78fef96d962b7f9b6e6a4468ff34f72f2` / `9f92405043ddbe935bc9cf9518d31cb7d18a1b90da20f399519b4e39591ff7e1` |
+| Owner semantic unsigned source | `658612d41781f649f42529b9a3cdca34e9ab85d0a6fe7bb48a071fc2ff74f5df` |
+
+The prior 150 DBU / $60 planning figure is **withdrawn**: this is the Owner-confirmed no-cost, personal, non-commercial Free Edition workspace. It has serverless-only compute and fair-use limits, including at most **five concurrent Job tasks per account**. Published Free Edition documentation does not give a fixed remaining daily/monthly allowance or reset timestamp; those values remain unknown. No paid compute, upgrade, custom compute object or commercial spend approval is proposed. [Free Edition limits](https://docs.databricks.com/aws/en/getting-started/free-edition-limitations) state that quota exhaustion can shut down compute for the rest of a day or, exceptionally, a month while retaining data and settings.
+
+## Compatibility and protected identity gate
+
+Python-wheel tasks are supported on serverless Jobs in general, and serverless Jobs require Unity Catalog. [Databricks Jobs documentation](https://docs.databricks.com/aws/en/jobs/run-serverless-jobs) also says serverless auto-optimization retries are enabled by default, so `max_retries=0` alone is insufficient. The protected installer must verify that auto-optimization is disabled in the *actual saved task* before granting submission.
+
+The existing schema and eight historical tables were visible in an authenticated Unity Catalog metadata read. The proposed wheel path `/Workspace/Shared/edp-lab/day6-c2000-v3/edp_lab-0.1.0-py3-none-any.whl` returned `PATH_NOT_FOUND`, consistent with the uninstalled proposal. No Job or V3 tables were intentionally created. The cached CLI OAuth session later failed with `no cached credentials`; metadata, principal permissions, Jobs compatibility, and actual wheel deployment readback must be repeated after the Owner refreshes that session. `auth profiles` reporting a configured valid profile is not proof of a live API token.
+
+Free Edition [administrative limits](https://docs.databricks.com/aws/en/getting-started/free-edition-limitations) remove account-console and account-level API access and SCIM. They do not establish that a distinct service principal with the required workspace access exists here. A dedicated protected service-principal run-as is therefore **unverified**, not assumed. First inspect available workspace principals, Jobs run-as options and UC permissions read-only. If this Free Edition workspace cannot supply a distinct protected run-as, the smallest proposed alternative is an Owner-operated personal run-as whose authenticated submission remains exclusively behind the root-controlled issuer, exact signed operation grant, durable one-shot ledger and independent protected verifier. The agent's DEV CLI session must not submit the Job. If that separation cannot be demonstrated, execution stays blocked; no weaker direct DEV write is permitted.
+
+The installer must read back the exact uploaded wheel hash, workspace path and task environment dependency, request/selection/oracle/DDL hashes, task timeout, retries, disabled auto-optimization, run-as identity, target privileges and protected ledger before it may issue a grant. None of that installation evidence exists yet. The installed V2 broker's eight-table/1,000-row policy remains unchanged and cannot authorize V3.
+
+## Quota stop and checkpoint recovery for V3 and future V4
+
+On Free Edition quota shutdown, timeout, lost run ID or partial Delta results, mark the protected operation `UNCERTAIN_REQUIRES_READBACK`. Do not resubmit the same one-shot request. Independently reconcile the original Jobs run, protected ledger and every target's UC ID, Delta version/history, counts and selected occurrence hashes. Only verified committed units enter a new immutable checkpoint; missing or ambiguous units remain blocked. When capacity returns, a separately Owner-authorized continuation must pin the prior signed disposition, exact remaining source/table work, runtime hash, quota-aware batch limit and new one-shot ID. V3's current 23-table one-shot wheel does **not** implement safe mid-run continuation; the protected extension must implement and test this reconciliation/continuation path before execution authority. Future V4 must use smaller source/member batches with the same per-batch ledger and independently verified checkpoint rule, without rereading the whole corpus or starting under this V3 request.
+
+## Current evidence and remaining gates
+
+Local readiness confirms all unchanged historical, semantic-source, selection, oracle, DDL, wheel, deployment and resource pins and returns `AUTHORIZATION_REQUIRED`. The Owner says semantic signing was performed separately, but the signed envelope is in a root-only approvals directory. An agent read-only `sudo -n` verifier invocation was denied because a password is required; **the signature and envelope hash are not yet independently verified in this session**. The Owner Terminal must run the existing read-only readiness checker against that receipt and return its JSON and envelope SHA-256. It uses only the public trust key and does not inspect the private key.
+
+After Owner OAuth refresh, complete authenticated read-only Free Edition checks for V3 target absence, available serverless Jobs task settings, usable run-as identity, UC read/create/write scope for the proposed protected actor, and workspace wheel path and readback access. A protected V3 extension and quota-safe continuation mechanism must then be reviewed and separately authorized for installation. The later exact operation-specific signed grant, one-shot reservation and independent signed live readback remain separate gates. The V3 write, V4, V9 and Day 7 remain blocked.

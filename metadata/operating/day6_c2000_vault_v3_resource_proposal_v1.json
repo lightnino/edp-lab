@@ -1,19 +1,23 @@
 {
   "schema": "EDP_C2000_VAULT_V3_RESOURCE_PROPOSAL_V1",
-  "status": "OWNER_REVIEW_REQUIRED_NO_COMPUTE_AUTHORITY",
+  "status": "FREE_EDITION_OWNER_REVIEW_REQUIRED_NO_COMPUTE_AUTHORITY",
   "population": {"source_instances": 10, "physical_data_rows": 2047,
                  "isolated_in_memory_oracles": 24, "target_tables": 23},
-  "compute": {"service": "existing Databricks serverless Jobs",
+  "compute": {"service": "existing Databricks Free Edition serverless Jobs",
               "job_submissions_max": 1, "max_concurrent_runs": 1,
               "job_timeout_seconds": 3600, "task_max_retries": 0,
+              "serverless_auto_optimization_retries": false,
               "new_warehouse_or_cluster_creation": false},
-  "planning_ceiling": {"dbu": 150, "usd_list_price": 60,
-                       "assumed_usd_per_dbu": 0.40,
-                       "kind": "OWNER_SPEND_RISK_ENVELOPE_NOT_AN_ENFORCEABLE_LIVE_CAP"},
-  "cost_boundary": "Serverless usage is not synchronously metered for an exact stop-at-DBU threshold. Owner must accept the one-job/one-hour exposure under this planning ceiling or provide a verified rate-limited compute object and a new pinned configuration. Actual DBU and billed USD must be collected after execution; a higher actual value fails the resource evaluation and halts further work.",
+  "edition": "FREE_EDITION_PERSONAL_NON_COMMERCIAL",
+  "billing_limit": null,
+  "operational_quota": {"concurrent_job_tasks_account_max": 5,
+                        "daily_or_monthly_fair_use_remaining": null,
+                        "quota_reset_time": null,
+                        "no_custom_compute_configuration": true,
+                        "quota_exhaustion_action": "STOP_RECONCILE_REMOTE_EFFECTS_WAIT_FOR_RESET_THEN_NEW_OWNER_AUTHORIZED_CHECKPOINT_RESUME"},
+  "quota_boundary": "Free Edition is no-cost and quota-limited. A quota shutdown may interrupt the one-shot Job after some Delta commits. Treat the result as UNCERTAIN_REQUIRES_READBACK; independently inspect the protected ledger, Jobs run, all 23 target IDs, versions, histories, counts and lineage before deriving an exact remaining-work checkpoint. Never replay the original submission. A later continuation requires a separately signed operation-specific grant and immutable remaining-work manifest after capacity returns. If the installed V3 extension cannot provide this, V3 execution is blocked.",
   "sources": [
-    "https://www.databricks.com/product/pricing/product-pricing/instance-types",
-    "https://docs.databricks.com/aws/en/compute/serverless/manage-serverless-compute",
-    "https://docs.databricks.com/aws/en/compute/serverless"
+    "https://docs.databricks.com/aws/en/getting-started/free-edition-limitations",
+    "https://docs.databricks.com/aws/en/jobs/run-serverless-jobs"
   ]
 }

@@ -8,7 +8,11 @@
   "upstream_result_freeze_sha256": "942fa887ceea8cf5c9bc64c603c2044e1b643b01fcbc29909ce264c024b69374",
   "historical_prototype": {
     "status": "REUSE_ONLY_NO_REPEAT",
-    "source_ids": ["SRC000005", "SRC000054", "SRC000064"],
+    "source_ids": [
+      "SRC000005",
+      "SRC000054",
+      "SRC000064"
+    ],
     "fsds_num_data_rows": 127
   },
   "semantic_approval_request": {
@@ -19,7 +23,18 @@
   "selection": {
     "path": "metadata/evaluations/day6_c2000_vault_v3_selection_v1.json",
     "sha256": "5b84f0a1dc088affc51f631bc34c66f0053b871b67efff13e770021a19a33259",
-    "source_ids": ["SRC000005", "SRC000054", "SRC000064", "SRC000065", "SRC000107", "SRC010451", "SRC010452", "SRC010453", "SRC010454", "SRC010455"],
+    "source_ids": [
+      "SRC000005",
+      "SRC000054",
+      "SRC000064",
+      "SRC000065",
+      "SRC000107",
+      "SRC010451",
+      "SRC010452",
+      "SRC010453",
+      "SRC010454",
+      "SRC010455"
+    ],
     "physical_data_rows": 2047
   },
   "negative_oracles": {
@@ -27,8 +42,14 @@
     "sha256": "54c2aa2add50504cca6a50beed480ef78fef96d962b7f9b6e6a4468ff34f72f2",
     "isolated_fixture_count": 24
   },
-  "target_ddl": {"path": "metadata/operating/day6_c2000_vault_v3_ddl_v1.json", "sha256": "9f92405043ddbe935bc9cf9518d31cb7d18a1b90da20f399519b4e39591ff7e1"},
-  "resource_proposal": {"path": "metadata/operating/day6_c2000_vault_v3_resource_proposal_v1.json", "sha256": "9092012d96fcbfbeedc95b9b0bb70cc2d155888e6d50e3e32a1763a4b978d9f2"},
+  "target_ddl": {
+    "path": "metadata/operating/day6_c2000_vault_v3_ddl_v1.json",
+    "sha256": "9f92405043ddbe935bc9cf9518d31cb7d18a1b90da20f399519b4e39591ff7e1"
+  },
+  "resource_proposal": {
+    "path": "metadata/operating/day6_c2000_vault_v3_resource_proposal_v1.json",
+    "sha256": "bf0787775a4d7742773ff9e09b8d3fd4f46455c83510829ade1b59aa1d445e32"
+  },
   "target_namespace": "workspace.edp_lab_day6_vault_proto",
   "new_v3_table_allowlist": [
     "v3_h_13f_submission",
@@ -55,10 +76,19 @@
     "v3_s_treasury_entry_assertion",
     "v3_vault_reject_quarantine"
   ],
-  "existing_tables_read_only": ["h_filing", "h_concept", "l_fact_slot", "r_source_occurrence", "s_fact_assertion", "s_num_m2_value", "r_load_event", "vault_reject_quarantine"],
+  "existing_tables_read_only": [
+    "h_filing",
+    "h_concept",
+    "l_fact_slot",
+    "r_source_occurrence",
+    "s_fact_assertion",
+    "s_num_m2_value",
+    "r_load_event",
+    "vault_reject_quarantine"
+  ],
   "execution": {
     "kind": "ONE_PROTECTED_DATABRICKS_SPARK_JOB_WITH_SIGNED_READBACK",
-    "compute": "EXISTING_WORKSPACE_SERVERLESS_JOBS_IF_OWNER_APPROVED_AND_AVAILABLE",
+    "compute": "EXISTING_FREE_EDITION_SERVERLESS_JOBS_IF_READ_ONLY_COMPATIBILITY_VERIFIED_AND_OWNER_APPROVED",
     "warehouse_creation_allowed": false,
     "job_submissions_max": 1,
     "data_rows_max": 2048,
@@ -68,8 +98,19 @@
     "automatic_retries_max": 0,
     "uncertain_write_replay_allowed": false,
     "runtime_artifact_sha256": "eada999db14a7db4b5590ab34b4296127e4231fe5289a04180bcf410238cafc9",
-    "deployment_sha256": "2c5e3614c37d15aa2e03a879b6430f095e46820626aabcfddfa88bcc41d22001",
-    "protected_grant_id": null
+    "deployment_sha256": "cd58f130ebe53b41df653ae622b076c99c7bf5b01cdaca0d593f2cd15419256a",
+    "protected_grant_id": null,
+    "serverless_auto_optimization_retries": false,
+    "quota_resume": "STOP_AND_RECONCILE_THEN_SEPARATELY_GRANTED_EXACT_REMAINING_WORK_CHECKPOINT"
   },
-  "prohibited": ["RAW_MUTATION", "FROZEN_C2000_MUTATION", "DAY5_RERUN", "FULL_V4_LOAD", "V9_FREEZE", "CREDENTIAL_ROTATION", "OTHER_TABLE_WRITES", "AGENT_SIGNATURE"]
+  "prohibited": [
+    "RAW_MUTATION",
+    "FROZEN_C2000_MUTATION",
+    "DAY5_RERUN",
+    "FULL_V4_LOAD",
+    "V9_FREEZE",
+    "CREDENTIAL_ROTATION",
+    "OTHER_TABLE_WRITES",
+    "AGENT_SIGNATURE"
+  ]
 }

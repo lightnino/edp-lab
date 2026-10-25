@@ -27,13 +27,15 @@
     "max_retries": 0,
     "queue_enabled": false,
     "environment_key": "v3_fixed_runtime",
-    "compute": "existing workspace serverless Jobs compute, subject to Owner approval and protected identity verification",
-    "run_as": "Owner-approved protected service principal; not the Codex/DEV profile",
+    "compute": "existing Free Edition serverless Jobs compute; no custom compute object, warehouse or cluster",
+    "run_as": "Owner-approved protected principal only if verified supported in this Free Edition workspace; otherwise Owner-operated personal run-as behind the same root-controlled grant, one-shot ledger and independent verifier, never the Codex/DEV session",
+    "serverless_auto_optimization_retries": false,
+    "free_edition_compatibility_gate": "Read-only workspace verification of Jobs Python wheel support, run-as identity, Unity Catalog privileges, wheel workspace path and independent readback is required before installation authorization",
     "inputs": [
       "exact V3 request with later protected grant ID",
       "pinned selection manifest",
       "pinned 24-oracle manifest"
     ]
   },
-  "install_and_submit_boundary": "Owner authorization and protected extension are required; installer must rehash uploaded wheel and inputs, verify signed semantic record and operation-specific grant, reserve durable one-shot ledger, submit once, reconcile uncertain status and sign independent readback. Existing V2 policy is not modified."
+  "install_and_submit_boundary": "Owner authorization and protected extension are required; installer must rehash uploaded wheel and inputs, verify signed semantic record and operation-specific grant, disable serverless auto-optimization retries, reserve durable one-shot ledger, submit once, reconcile uncertain or quota-interrupted status and sign independent readback. A later quota continuation requires a new signed grant bound to verified remaining work. Existing V2 policy is not modified."
 }
