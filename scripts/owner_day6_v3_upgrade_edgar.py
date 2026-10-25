@@ -16,7 +16,7 @@ import os
 import socket
 import subprocess
 import time
-from datetime import UTC, datetime, timedelta
+from datetime import UTC, datetime
 from pathlib import Path
 
 from owner_day6_v3_one_shot import (
