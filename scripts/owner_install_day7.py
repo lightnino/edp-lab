@@ -552,13 +552,25 @@ def canary(expected_commit: str) -> dict:
     if notebook.get("object_type") != "NOTEBOOK" or not notebook.get("object_id"):
         raise RuntimeError("DAY7_CANARY_NOTEBOOK_IMPORT_UNVERIFIED")
     app_id = json.loads((BASE / "private/service-identity.json").read_bytes())["application_id"]
-    existing_acl = admin("api", "get",
-                         f"/api/2.0/permissions/notebooks/{notebook['object_id']}")
-    acl = [item for item in existing_acl.get("access_control_list", [])
-           if item.get("service_principal_name") != app_id]
-    acl.append({"service_principal_name": app_id, "permission_level": "CAN_READ"})
-    admin("permissions", "update", "notebooks", str(notebook["object_id"]),
-          "--json", json.dumps({"access_control_list": acl}))
+    notebook_acl_path = f"/api/2.0/permissions/notebooks/{notebook['object_id']}"
+    existing_acl = admin("api", "get", notebook_acl_path)
+    ours = [item for item in existing_acl.get("access_control_list", [])
+            if item.get("service_principal_name") == app_id]
+    if len(ours) > 1:
+        raise RuntimeError("DAY7_CANARY_NOTEBOOK_ACL_DUPLICATE")
+    if not ours or not any(p.get("permission_level") == "CAN_READ"
+                            for p in ours[0].get("all_permissions", [])):
+        admin("permissions", "update", "notebooks", str(notebook["object_id"]),
+              "--json", json.dumps({"access_control_list": [{
+                  "service_principal_name": app_id,
+                  "permission_level": "CAN_READ"}]}))
+    acl_readback = admin("api", "get", notebook_acl_path)
+    if not any(
+            entry.get("service_principal_name") == app_id
+            and any(p.get("permission_level") == "CAN_READ"
+                    for p in entry.get("all_permissions", []))
+            for entry in acl_readback.get("access_control_list", [])):
+        raise RuntimeError("DAY7_CANARY_NOTEBOOK_READ_ACCESS_UNVERIFIED")
     payload = {"idempotency_token": "day7-pr80-canary-" + expected_commit[:32],
                "run_name": "day7-pr80-protected-canary",
                "timeout_seconds": 1800,
