@@ -88,7 +88,7 @@ def test_frozen_raw_missing_is_nonmutating(monkeypatch, tmp_path):
     path = tmp_path / "frozen.json"
     path.write_text(json.dumps([{
         "source_instance_id": "SRC000065",
-        "raw_path": "data/raw/sec/does-not-exist.zip",
+        "raw_path": "data/raw/sec/sec_13f/frozen/2013q3_form13f.zip",
         "raw_sha256": "a" * 64,
     }]))
     import hashlib
