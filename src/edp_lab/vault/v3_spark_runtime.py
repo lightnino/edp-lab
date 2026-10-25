@@ -17,7 +17,7 @@ from pathlib import Path
 
 from edp_lab.vault.v3_ddl import COLUMNS, create_sql, insert_only_sql
 from edp_lab.vault.v3_input import c300_occurrence, treasury_entry
-from edp_lab.vault.v3_mapping import EDGAR_HEADER, FSDS_HEADERS, project
+from edp_lab.vault.v3_mapping import EDGAR_HEADER, FSDS_HEADERS, THIRTEEN_F_MEMBERS, project
 from edp_lab.vault.v3_oracles import evaluate as evaluate_oracles
 from edp_lab.vault.v3_readback import collect as collect_readback
 
@@ -52,7 +52,10 @@ def _member(binding: dict) -> str:
     if physical in FSDS_HEADERS:
         return physical
     if binding["source_instance_id"] == "SRC000065":
-        return Path(physical).name.upper()
+        member = Path(physical).name
+        if member in THIRTEEN_F_MEMBERS:
+            return member
+        raise ValueError("V3_UNEXPECTED_C300_MEMBER")
     if binding["source_instance_id"] == "SRC000107" and (
         physical == "" or physical.lower().endswith(".idx")
     ):
