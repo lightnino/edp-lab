@@ -88,6 +88,34 @@ def broker_health() -> None:
         "DAY7_V4_BROKER_HEALTH_NOT_VERIFIED")
 
 
+def broker_existing_u10_wire(referenced: dict) -> None:
+    """Read-only wire check bypasses broken OLD client, not Broker authority.
+
+    A signed U10 receipt already exists and was independently verified before
+    this call, so the protected server will check/reuse it, not issue a new one.
+    """
+    path = owner.BASE / "receipts/day7-u10-SRC000002.json"
+    protected(path)
+    original_digest = owner.file_digest(path)
+    with socket.socket(socket.AF_UNIX) as client:
+        client.settimeout(180)
+        client.connect(str(owner.BASE / "broker.sock"))
+        client.sendall(b'{"action":"resolve_handoff","identity":"SRC000002"}\n')
+        client.shutdown(socket.SHUT_WR)
+        response = json.loads(client.recv(8192))
+    need(response.get("status") == "VERIFIED",
+         "DAY7_V4_EXISTING_BROKER_WIRE_U10_NOT_VERIFIED:"
+         + str(response.get("reason", "UNKNOWN"))[:120])
+    result = response.get("result", {})
+    need(isinstance(result, dict)
+         and result.get("physical_identity") == "SRC000002"
+         and result.get("receipt_sha256") == referenced["receipt_sha256"]
+         and result.get("raw_sha256") == referenced["raw_sha256"]
+         and result.get("raw_bytes") == referenced["raw_bytes"]
+         and owner.file_digest(path) == original_digest,
+         "DAY7_V4_EXISTING_BROKER_WIRE_U10_NOT_PINNED")
+
+
 def owner_table_read() -> None:
     """Only a SELECT, not any GRANT or CREATE."""
     query = ("SELECT universe_sha256, owner_decision_sha256 FROM "
@@ -210,6 +238,9 @@ def check(expected_commit: str) -> tuple[dict, tuple[dict, dict, dict], dict]:
     need(not (owner.BASE / "receipts/day7-deployment.json").exists(),
          "DAY7_V4_DEPLOYMENT_ALREADY_SIGNED")
     broker_health()
+    # Test the actual old live daemon without its broken SRC client-side
+    # regex before any protected module upgrade or LaunchDaemon restart.
+    broker_existing_u10_wire(receipts[2])
     listing = owner.run("/bin/launchctl", "print", "system/" + owner.LABEL)
     need(owner.LABEL in listing,
          "DAY7_V4_LAUNCHDAEMON_NOT_REGISTERED")
