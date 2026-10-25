@@ -179,3 +179,41 @@ def test_c300_all_17_frozen_sec_bindings_are_discoverable():
     for sid, name in expected:
         _, binding = found[(sid, name)]
         assert binding["raw_sha256"] == selection["sources"][sid]["raw_sha256"]
+
+
+
+def test_real_standalone_edgar_c300_to_v3_projection_empty_member_is_valid():
+    """Regression for v3 canary run 588435072660254, INVALID_OCCURRENCE_LOCATOR."""
+    from edp_lab.vault.v3_keys import occurrence_key
+    from edp_lab.vault.v3_mapping import EDGAR_HEADER, project
+
+    fields = [{
+        "field_ordinal": n,
+        "original_name": name,
+        "disposition": "DIRECT_MAP",
+        "lexical_value": "edgar/data/1001/data.txt"
+        if name == "File Name" else "001",
+    } for n, name in enumerate(EDGAR_HEADER, 1)]
+    binding = {
+        "source_instance_id": "SRC000107", "archive_member": "",
+        "processing_status": "COMPLETE", "run_id": "r",
+        "binding_sha256": "c" * 64, "raw_sha256": "a" * 64,
+        "member_sha256": "b" * 64,
+    }
+    row = {
+        "record_kind": "DATA", "source_instance_id": "SRC000107",
+        "run_id": "r", "binding_sha256": "c" * 64,
+        "source_line": 2, "byte_offset": 50, "byte_length": 20,
+        "fields": fields,
+    }
+    before = copy.deepcopy(row), copy.deepcopy(binding)
+    source = c300_occurrence(row, binding, "a" * 64, EDGAR_HEADER)
+    assert source["physical_archive_member"] == ""
+    result = project(source)
+    assert result["business_status"] == "PROJECTED"
+    assert result["occurrence_hk"] == occurrence_key(
+        "SRC000107", "daily_master.idx", "b" * 64, 50, 20
+    )
+    assert all(item["archive_member"] == "" for item in result["rows"])
+    assert all(item["source_line"] == 2 for item in result["rows"])
+    assert (row, binding) == before
