@@ -22,6 +22,14 @@
 
 **Stop conditions:** Conflicting authority, invalid identity/profile, incomplete remote telemetry, inconsistent ledger/receipt/target, missing policy delegation, hard-limit exhaustion, unverified RAW handoff, uncertain effects, failed monitor or a proposed grant/semantic expansion. A stop produces a narrowly scoped owner decision packet; never an inferred new write.
 
+## Dependency-scoped model replay (only when Cohort P3/P4/P11 identifies impact)
+
+1. Start from the **unchanged frozen historical result** and the exact new-source observations. Profile and preserve witnesses for schema/field drift, identifier collision, late-arriving events, event/valid/ingestion times, parser exceptions and executed-rule defects. Do not call every late arrival a model correction.
+2. Classify under the Cohort/Model B1 router; generate the **exact dependency impact set** (source/record/field/rule/query/output), old/result hashes and version pins, affected/unaffected partitions, expected-delta tests and technical-versus-semantic boundary. A candidate new business meaning requires its existing approval gate; ordinary technical diagnosis does not.
+3. Select **minimal sufficient action** per Cohort §3: `NO_REPLAY → QUERY_ONLY → FROZEN_CLEAN_PROJECTION → TARGETED_CLEAN → TARGETED_RAW`. Old accepted snapshots remain immutable. Never use an unverified blanket full-cohort replay or RAW re-upload to resolve a model/projection issue.
+4. Verify exact previous remote write outcome and permissions before each required new external action; use a distinct authorized operation for a proved no-effect retry, not the original uncertain request. Make repeated native Delta writes idempotent or reuse completed checkpoints.
+5. After bounded action, run impacted positive/negative tests, affected expected-delta checks, **unaffected equivalence**, applicable Lossless P9 and old/new/combined Stability P10. Record replay boundaries, accepted result/provenance, false-positive repairs, human intervention and time in P12. If no replay is necessary, output `NOT_REQUIRED` with source evidence; never manufacture Agent-quality PASS.
+
 ## Routine execution and acceptance
 
 A technical timeout within supported idempotent work can follow an already-authorized bounded retry with immutable checkpoint reuse. Non-idempotent external writes require the independent classification above. Accepted source outputs and freeze receipts must be checked in the live target and against exact source/model/contract identities. Conclude a write task with branch, tests, CI, human P14 review/explicit merge approval (where applicable), and verified remote main SHA. A dry-run, local projection, owner-approved policy proposal or optimistic progress estimate is not an accepted live PASS.
