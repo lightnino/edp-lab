@@ -32,7 +32,9 @@ def test_original_src_canary_full_hash_before_any_write(monkeypatch, tmp_path):
     index = {
         "original_sources": [source],
         "known_original_locators": [{
-            **source,
+            "physical_identity": "SRC000002",
+            "sha256": source["raw_sha256"],
+            "bytes": source["raw_bytes"],
             "remote_path": "dbfs:/Volumes/workspace/edp_lab/raw/edp-native-v1/nasdaqlisted.txt",
         }],
     }
