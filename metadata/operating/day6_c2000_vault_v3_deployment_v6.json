@@ -1,0 +1,74 @@
+{
+  "schema": "EDP_C2000_VAULT_V3_DEPLOYMENT_PROPOSAL_V6",
+  "status": "UPGRADE_PROPOSED_REQUIRES_OWNER_APPROVAL",
+  "target_workspace": "existing edp-lab Databricks workspace",
+  "target_namespace": "workspace.edp_lab_day6_vault_proto",
+  "artifact": {
+    "kind": "PYTHON_WHEEL",
+    "file_name": "edp_lab-0.1.0-py3-none-any.whl",
+    "sha256": "0b26e3319bd453fc1a460d09d81326ee12abc22422cb41d268d5068f4cbcd88e",
+    "local_build_output_uncommitted": "/private/tmp/edp-day6-v3-edgar-locator-fix-wheel-v1/edp_lab-0.1.0-py3-none-any.whl",
+    "build_command": "UV_CACHE_DIR=/private/tmp/edp-day6-uv-cache uv build --wheel --offline -o /private/tmp/edp-day6-v3-edgar-locator-fix-wheel-v1",
+    "job_entry_point": "edp-day6-v3",
+    "workspace_target_proposed": "/Workspace/Shared/edp-lab/day6-c2000-v3-edgar-locator-fix-v4/edp_lab-0.1.0-py3-none-any.whl"
+  },
+  "pinned_documents": {
+    "selection_sha256": "5b84f0a1dc088affc51f631bc34c66f0053b871b67efff13e770021a19a33259",
+    "negative_oracles_sha256": "54c2aa2add50504cca6a50beed480ef78fef96d962b7f9b6e6a4468ff34f72f2",
+    "semantic_unsigned_payload_sha256": "658612d41781f649f42529b9a3cdca34e9ab85d0a6fe7bb48a071fc2ff74f5df",
+    "ddl_plan_sha256": "9f92405043ddbe935bc9cf9518d31cb7d18a1b90da20f399519b4e39591ff7e1"
+  },
+  "job_proposal": {
+    "task_kind": "serverless_python_wheel",
+    "task_entry_point": "edp-day6-v3",
+    "job_submissions_max": 1,
+    "max_concurrent_runs": 1,
+    "timeout_seconds": 3600,
+    "max_retries": 0,
+    "queue_enabled": false,
+    "environment_key": "v3_fixed_runtime",
+    "compute": "existing Free Edition serverless Jobs compute; no custom compute object, warehouse or cluster",
+    "run_as": "Owner-approved protected principal only if verified supported in this Free Edition workspace; otherwise Owner-operated personal run-as behind the same root-controlled grant, one-shot ledger and independent verifier, never the Codex/DEV session",
+    "serverless_auto_optimization_retries": false,
+    "free_edition_compatibility_gate": "Read-only workspace verification of Jobs Python wheel support, run-as identity, Unity Catalog privileges, wheel workspace path and independent readback is required before installation authorization",
+    "inputs": [
+      "exact V3 request with later protected grant ID",
+      "pinned selection manifest",
+      "pinned 24-oracle manifest"
+    ]
+  },
+  "install_and_submit_boundary": "Canary v3 terminal failure must receive independent protected signed no-effect reconciliation; Owner must approve the new exact wheel, workspace path, reviewed code and v4 read-only canary. Then a configuration-bound signed E2E readiness receipt is required before any distinct V3 write attempt. Existing grants, ledgers, source/semantic pins and historical Delta remain immutable.",
+  "upgrade_e2e": {
+    "new_signed_readiness_required": true,
+    "preserve_original_receipts": true,
+    "previous_terminal_failed_canary": {
+      "job_id": 790551653088925,
+      "run_id": 1057011099528821,
+      "task_run_id": 749464491620163,
+      "reason": "V3_C300_BINDING_COVERAGE_CHANGED",
+      "expected_affected_source": "SRC000065",
+      "immutable": true
+    },
+    "require_new_distinct_readonly_canary": true,
+    "failed_canary_2": {
+      "job_id": 552562574530819,
+      "run_id": 321745477125884,
+      "task_run_id": 299105441863960,
+      "reason": "V3_C300_SELECTED_LEXICAL_CHANGED",
+      "source_id": "SRC000065",
+      "member": "COVERPAGE.tsv",
+      "row_ordinal": 7,
+      "field_ordinal": 21,
+      "immutable": true
+    },
+    "proven_quote_equivalence": true,
+    "failed_canary_3": {
+      "job_id": 389618471873606,
+      "run_id": 588435072660254,
+      "task_run_id": 105664983922870,
+      "reason": "INVALID_OCCURRENCE_LOCATOR",
+      "remote_effect_state": "READ_ONLY_RECONCILED_UNSIGNED",
+      "immutable": true
+    }
+  }
+}
