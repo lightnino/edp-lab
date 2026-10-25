@@ -447,6 +447,8 @@ def _installed(request: dict, deployment: dict) -> dict:
         # an Owner-owned historical Job that it must not execute.
         from owner_reconcile_day6_v3_partial import (
             JOB_ID as ORIGINAL_JOB_ID,
+        )
+        from owner_reconcile_day6_v3_partial import (
             _original_ledger,
         )
         require(proof.get("job_id") == ORIGINAL_JOB_ID,
