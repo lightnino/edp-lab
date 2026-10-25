@@ -11,6 +11,7 @@ import copy
 import hashlib
 import json
 import os
+import re
 import socket
 import subprocess
 import tarfile
@@ -46,8 +47,17 @@ def run(*args: str, admin: bool = False, capture: bool = True) -> subprocess.Com
 
 
 def admin_cli(*args: str, allow_empty: bool = False) -> dict | list | None:
-    result = run("/opt/homebrew/bin/databricks", *args, "-p", "edp-lab", "-o", "json",
-                 admin=True)
+    try:
+        result = run("/opt/homebrew/bin/databricks", *args, "-p", "edp-lab", "-o", "json",
+                     admin=True)
+    except subprocess.CalledProcessError as exc:
+        # Never print argv: it can contain JSON bodies or protected secrets.
+        message = exc.stderr or ""
+        message = re.sub(r"(?i)(bearer\s+)\S+", r"\1[REDACTED]", message)
+        message = re.sub(r'(?i)(["\']?(?:access_token|refresh_token|client_secret|api_key|password|secret|token|authorization)["\']?\s*[:=]\s*["\']?)[^\s,"\']+',
+                         r"\1[REDACTED]", message)
+        message = re.sub(r"[\x00-\x1f\x7f]+", " ", message).strip()[:1200]
+        raise RuntimeError(f"DATABRICKS_CLI_EXIT_{exc.returncode}: {message or '[no stderr]'}") from None
     if allow_empty and not result.stdout.strip():
         return None
     return json.loads(result.stdout)

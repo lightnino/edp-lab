@@ -39,3 +39,20 @@ def test_optional_empty_still_parses_json(monkeypatch):
     monkeypatch.setattr(setup, "run", lambda *_args, **_kwargs:
                         subprocess.CompletedProcess([], 0, '{"ok": true}', ""))
     assert setup.admin_cli("grants", "update", allow_empty=True) == {"ok": True}
+
+
+def test_cli_error_reports_status_and_sanitized_stderr_without_argv(monkeypatch):
+    def failed(*_args, **_kwargs):
+        raise subprocess.CalledProcessError(
+            1, ["databricks", "jobs", "create", "--json", "private-body"],
+            stderr="Error: INVALID_PARAMETER_VALUE; Bearer eyJsecret "
+                   "client_secret=hidden-value\n")
+
+    monkeypatch.setattr(setup, "run", failed)
+    with pytest.raises(RuntimeError, match="DATABRICKS_CLI_EXIT_1") as exc:
+        setup.admin_cli("jobs", "create", "--json", "private-body")
+    message = str(exc.value)
+    assert "INVALID_PARAMETER_VALUE" in message
+    assert "private-body" not in message
+    assert "eyJsecret" not in message
+    assert "hidden-value" not in message

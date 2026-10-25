@@ -122,6 +122,74 @@ def test_unprivileged_owner_entry_stops_before_remote_call(monkeypatch):
                         pytest.fail("remote call before Owner root gate"))
     with pytest.raises(RuntimeError, match="OWNER_ROOT_TERMINAL_REQUIRED"):
         owner.install("0" * 40)
+    with pytest.raises(RuntimeError, match="OWNER_ROOT_TERMINAL_REQUIRED"):
+        owner.resume_install("0" * 40)
+
+
+def test_partial_resume_reuses_files_and_grants(tmp_path, monkeypatch):
+    request = json.loads(owner.REQUEST.read_bytes())
+    deployment = json.loads(owner.DEPLOYMENT.read_bytes())
+    derived = json.loads(owner.REQUEST.read_bytes())
+    derived["execution"]["protected_grant_id"] = owner.GRANT_ID
+    private = tmp_path / "private"
+    private.mkdir()
+    local = private / "day6-v3-request.granted.json"
+    local.write_bytes(owner.canonical(derived))
+    monkeypatch.setattr(owner, "BASE", tmp_path)
+    for name in ("INSTALL", "GRANT", "RESERVATION", "SUBMISSION"):
+        monkeypatch.setattr(owner, name, tmp_path / name.lower())
+    monkeypatch.setattr(owner, "_owner", lambda _commit: None)
+    monkeypatch.setattr(owner, "_pins", lambda: (request, deployment))
+    monkeypatch.setattr(owner, "_targets", lambda _request: {"old": "id"})
+    monkeypatch.setattr(owner, "_workspace_directory", lambda: None)
+    monkeypatch.setattr(owner, "_source_rights", lambda: None)
+    monkeypatch.setattr(owner, "_remote_digest", lambda remote: {
+        deployment["artifact"]["workspace_target_proposed"]: deployment["artifact"]["sha256"],
+        owner.WHEEL_DIR + "/selection.json": request["selection"]["sha256"],
+        owner.WHEEL_DIR + "/negative-oracles.json": request["negative_oracles"]["sha256"],
+        owner.WHEEL_DIR + "/request.granted.json": owner.file_digest(local),
+    }[remote])
+    monkeypatch.setattr(owner.os, "geteuid", lambda: 0)
+    original_stat = owner.Path.stat
+    monkeypatch.setattr(owner.Path, "stat", lambda path, *args, **kwargs:
+                        original_stat(path, *args, **kwargs) if path != local else
+                        type("Stat", (), {"st_uid": 0, "st_mode": 0o100600})())
+    calls = []
+
+    def cli(*args, **_kwargs):
+        calls.append(args)
+        if args[:2] == ("current-user", "me"):
+            return {"userName": "chengzhu13@gmail.com", "groups": [{"display": "admins"}]}
+        if args[:2] == ("service-principals", "get"):
+            return {"applicationId": owner.APP_ID, "active": True}
+        if args[:2] == ("jobs", "list"):
+            return []
+        raise AssertionError(args)
+
+    monkeypatch.setattr(owner, "admin_cli", cli)
+    monkeypatch.setattr(owner, "_finish_install", lambda *_args: {"status": "ready"})
+    assert owner.resume_install("reviewed") == {"status": "ready"}
+    assert ("jobs", "list") in calls
+    assert not any(args[:2] in (("workspace", "import"), ("grants", "update"))
+                   for args in calls)
+    monkeypatch.setattr(owner, "_remote_digest", lambda _remote: "0" * 64)
+    with pytest.raises(RuntimeError, match="V3_REMOTE_ARTIFACT_CHANGED"):
+        owner.resume_install("reviewed")
+    monkeypatch.setattr(owner, "admin_cli", lambda *args: [{"job_id": 123}]
+                        if args[:2] == ("jobs", "list") else cli(*args))
+    with pytest.raises(RuntimeError, match="V3_JOB_LIST_CHANGED"):
+        owner.resume_install("reviewed")
+
+
+def test_partial_resume_stops_if_receipt_present(tmp_path, monkeypatch):
+    monkeypatch.setattr(owner, "_owner", lambda _commit: None)
+    monkeypatch.setattr(owner, "_pins", lambda: ({}, {}))
+    monkeypatch.setattr(owner, "INSTALL", tmp_path / "existing-install")
+    owner.INSTALL.write_text("receipt")
+    monkeypatch.setattr(owner, "admin_cli", lambda *_args:
+                        pytest.fail("remote call after checkpoint mismatch"))
+    with pytest.raises(RuntimeError, match="V3_LATER_CHECKPOINT_ALREADY_EXISTS"):
+        owner.resume_install("reviewed")
 
 
 def test_failed_submission_consumes_reservation(tmp_path, monkeypatch):

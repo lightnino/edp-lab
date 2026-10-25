@@ -225,6 +225,34 @@ def _workspace_directory() -> None:
             and status.get("object_id"), "V3_WORKSPACE_DIRECTORY_UNVERIFIED")
 
 
+def _finish_install(expected_commit: str, request: dict, deployment: dict,
+                    baseline: dict, derived_sha: str) -> dict:
+    wheel = Path(deployment["artifact"]["local_build_output_uncommitted"])
+    created = admin_cli("jobs", "create", "--json",
+                        json.dumps(_job_settings(derived_sha, deployment)))
+    job_id = created.get("job_id") if isinstance(created, dict) else None
+    require(type(job_id) is int and job_id > 0, "V3_JOB_CREATE_UNCERTAIN_STOP")
+    saved = admin_cli("jobs", "get", str(job_id))
+    verify_saved_job(saved["settings"],
+                     wheel_path=deployment["artifact"]["workspace_target_proposed"],
+                     run_as={"service_principal_name": APP_ID},
+                     parameters=_job_parameters(derived_sha, deployment))
+    require(_targets(request) == baseline, "V3_HISTORICAL_BASELINE_CHANGED")
+    document = {"schema": "EDP_DAY6_V3_INSTALL_RECEIPT_V1",
+                "authority": "protected-verifier-v1", "status": "INSTALLED_NOT_GRANTED",
+                "commit": expected_commit, "job_id": job_id,
+                "request_sha256": file_digest(REQUEST),
+                "derived_request_sha256": derived_sha,
+                "deployment_sha256": file_digest(DEPLOYMENT),
+                "wheel_sha256": file_digest(wheel),
+                "semantic_receipt_sha256": file_digest(SEMANTIC),
+                "run_as": APP_ID, "historical_table_ids": baseline,
+                "installed_at_utc": datetime.now(UTC).isoformat()}
+    _signed_once(document, "verifier.pem", INSTALL)
+    return {"status": "V3_INSTALLED_NOT_GRANTED", "job_id": job_id,
+            "install_receipt_sha256": file_digest(INSTALL)}
+
+
 def install(expected_commit: str) -> dict:
     _owner(expected_commit)
     request, deployment = _pins()
@@ -269,29 +297,45 @@ def install(expected_commit: str) -> dict:
     ):
         _ensure_rights(securable, name, rights)
     _source_rights()
-    settings = _job_settings(derived_sha, deployment)
-    created = admin_cli("jobs", "create", "--json", json.dumps(settings))
-    job_id = created.get("job_id")
-    require(type(job_id) is int and job_id > 0, "V3_JOB_CREATE_UNCERTAIN_STOP")
-    saved = admin_cli("jobs", "get", str(job_id))
-    verify_saved_job(saved["settings"],
-                     wheel_path=deployment["artifact"]["workspace_target_proposed"],
-                     run_as={"service_principal_name": APP_ID},
-                     parameters=_job_parameters(derived_sha, deployment))
-    require(_targets(request) == baseline, "V3_HISTORICAL_BASELINE_CHANGED")
-    document = {"schema": "EDP_DAY6_V3_INSTALL_RECEIPT_V1",
-                "authority": "protected-verifier-v1", "status": "INSTALLED_NOT_GRANTED",
-                "commit": expected_commit, "job_id": job_id,
-                "request_sha256": file_digest(REQUEST),
-                "derived_request_sha256": derived_sha,
-                "deployment_sha256": file_digest(DEPLOYMENT),
-                "wheel_sha256": file_digest(wheel),
-                "semantic_receipt_sha256": file_digest(SEMANTIC),
-                "run_as": APP_ID, "historical_table_ids": baseline,
-                "installed_at_utc": datetime.now(UTC).isoformat()}
-    _signed_once(document, "verifier.pem", INSTALL)
-    return {"status": "V3_INSTALLED_NOT_GRANTED", "job_id": job_id,
-            "install_receipt_sha256": file_digest(INSTALL)}
+    return _finish_install(expected_commit, request, deployment, baseline, derived_sha)
+
+
+def resume_install(expected_commit: str) -> dict:
+    """Owner-only recovery from files and grants installed, before Job creation."""
+    _owner(expected_commit)
+    request, deployment = _pins()
+    require(not any(path.exists() for path in (INSTALL, GRANT, RESERVATION, SUBMISSION)),
+            "V3_LATER_CHECKPOINT_ALREADY_EXISTS")
+    derived = BASE / "private/day6-v3-request.granted.json"
+    require(derived.is_file() and not derived.is_symlink()
+            and derived.stat().st_uid == 0 and not derived.stat().st_mode & 0o077,
+            "V3_PROTECTED_DERIVED_REQUEST_REQUIRED")
+    expected = json.loads(REQUEST.read_bytes())
+    expected["execution"]["protected_grant_id"] = GRANT_ID
+    require(derived.read_bytes() == canonical(expected),
+            "V3_DERIVED_REQUEST_CHANGED")
+    derived_sha = file_digest(derived)
+    principal = admin_cli("current-user", "me")
+    require(principal.get("userName") == "chengzhu13@gmail.com"
+            and "admins" in {group.get("display") for group in principal.get("groups", [])},
+            "OWNER_ADMIN_SESSION_REQUIRED")
+    sp = admin_cli("service-principals", "get", SERVICE_PRINCIPAL_ID)
+    require(sp.get("applicationId") == APP_ID and sp.get("active") is True,
+            "EXISTING_PROTECTED_PRINCIPAL_CHANGED")
+    baseline = _targets(request)
+    require(admin_cli("jobs", "list") == [], "V3_JOB_LIST_CHANGED")
+    _workspace_directory()
+    for remote, local in (
+        (deployment["artifact"]["workspace_target_proposed"],
+         Path(deployment["artifact"]["local_build_output_uncommitted"])),
+        (WHEEL_DIR + "/selection.json", ROOT / request["selection"]["path"]),
+        (WHEEL_DIR + "/negative-oracles.json", ROOT / request["negative_oracles"]["path"]),
+        (WHEEL_DIR + "/request.granted.json", derived),
+    ):
+        require(_remote_digest(remote) == file_digest(local),
+                "V3_REMOTE_ARTIFACT_CHANGED:" + remote)
+    _source_rights()
+    return _finish_install(expected_commit, request, deployment, baseline, derived_sha)
 
 
 def _installed(request: dict, deployment: dict) -> dict:
@@ -409,10 +453,11 @@ def execute(expected_commit: str) -> dict:
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("action", choices=("install", "issue", "execute"))
+    parser.add_argument("action", choices=("install", "resume-install", "issue", "execute"))
     parser.add_argument("expected_commit")
     args = parser.parse_args()
-    result = {"install": install, "issue": issue, "execute": execute}[args.action](
+    result = {"install": install, "resume-install": resume_install,
+              "issue": issue, "execute": execute}[args.action](
         args.expected_commit)
     print(json.dumps(result, sort_keys=True))
 
