@@ -440,11 +440,24 @@ def _installed(request: dict, deployment: dict) -> dict:
     ):
         require(_remote_digest(remote) == expected, "V3_REMOTE_ARTIFACT_CHANGED:" + remote)
     _source_rights()
-    saved = admin_cli("jobs", "get", str(proof["job_id"]))
-    verify_saved_job(saved["settings"],
-                     wheel_path=original_deployment["artifact"]["workspace_target_proposed"],
-                     run_as={"service_principal_name": APP_ID},
-                     parameters=_job_parameters(proof["derived_request_sha256"], deployment))
+    if _service_context():
+        # The original Job is a terminal historical failure and is never
+        # resubmitted. The Owner-signed install + partial-failure evidence bind
+        # its exact ID/settings. Do not require the least-privilege SP to inspect
+        # an Owner-owned historical Job that it must not execute.
+        from owner_reconcile_day6_v3_partial import (
+            JOB_ID as ORIGINAL_JOB_ID,
+            _original_ledger,
+        )
+        require(proof.get("job_id") == ORIGINAL_JOB_ID,
+                "V3_ORIGINAL_INSTALL_JOB_PIN_CHANGED")
+        _original_ledger()
+    else:
+        saved = admin_cli("jobs", "get", str(proof["job_id"]))
+        verify_saved_job(saved["settings"],
+                         wheel_path=original_deployment["artifact"]["workspace_target_proposed"],
+                         run_as={"service_principal_name": APP_ID},
+                         parameters=_job_parameters(proof["derived_request_sha256"], deployment))
     require(_targets(request) == proof["historical_table_ids"],
             "V3_TARGET_OR_HISTORICAL_BASELINE_CHANGED")
     return proof
