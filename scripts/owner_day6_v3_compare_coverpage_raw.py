@@ -271,6 +271,15 @@ def diagnose() -> None:
                       for ordinal, fields, _, _ in remote])
     summary = diff_summary(header, original, remote)
     equivalence = quote_equivalence(header, original, remote)
+    projected = []
+    for ordinal, fields, _, _ in remote:
+        source = {"fields": [
+            {"name": item["original_name"], "text": item["lexical_value"]}
+            for item in fields
+        ]}
+        repaired = _coverpage_quote_exception(source, SOURCE_ID, MEMBER, ordinal)
+        projected.append([ordinal, [item["text"] for item in repaired["fields"]]])
+    projected_sha = _digest(projected)
     require(actual != expected, "COVERPAGE_NO_LONGER_MISMATCHED_REASSESS_RECOVERY")
     require(summary["differing_cells"] > 0,
             "COVERPAGE_M1_LEXICAL_DIGEST_CHANGED_WITH_EQUAL_FIELD_VALUES")
