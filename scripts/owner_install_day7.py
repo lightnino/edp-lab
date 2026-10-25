@@ -8,7 +8,6 @@ instead of replaying a potentially uncertain external write.
 from __future__ import annotations
 
 import argparse
-import base64
 import hashlib
 import json
 import os
@@ -91,16 +90,22 @@ def admin_sql(statement: str) -> dict:
 
 
 def _save_json(path: Path, obj: dict) -> None:
-    """Durable replace; never write credentials or volatile tokens to Git."""
+    """Root-owned durable journal; reconcile an interrupted identical write."""
     tmp = path.with_name(path.name + ".new")
     if tmp.exists():
-        raise RuntimeError("DAY7_PARTIAL_JOURNAL_WRITE_NEEDS_RECONCILIATION")
+        if (tmp.is_symlink() or tmp.stat().st_uid != 0
+                or _read_json(tmp) != obj):
+            raise RuntimeError("DAY7_PARTIAL_JOURNAL_WRITE_NEEDS_RECONCILIATION")
+        os.replace(tmp, path)
+        return
     with tmp.open("x") as stream:
         json.dump(obj, stream, sort_keys=True)
         stream.write("\n")
         stream.flush()
         os.fsync(stream.fileno())
+    tmp.chmod(0o600)
     os.replace(tmp, path)
+
 
 
 def _read_json(path: Path) -> dict:
@@ -338,24 +343,39 @@ def service_identity() -> tuple[str, str]:
         identity.chmod(0o600)
     config = BASE / "private/databrickscfg"
     if not config.exists():
-        # If OAuth secret creation returned but credentials were not durably
-        # stored, the secret cannot be retrieved. Stop instead of issuing a
-        # second orphan credential or silently escalating permissions.
+        # Recover a fully written protected temporary OAuth profile, but
+        # never regenerate a secret whose response was lost or incomplete.
+        from configparser import ConfigParser
+
         intent = BASE / "ledger/secret-creation-intent.json"
-        if intent.exists():
-            raise RuntimeError("DAY7_SECRET_UNCERTAIN_MANUAL_RECONCILIATION")
-        _save_json(intent, pinned)
-        secret = admin("service-principal-secrets-proxy", "create", sp_id,
-                       "--lifetime", "7776000")["secret"]
         temp = config.with_name("databrickscfg.new")
-        with temp.open("x") as stream:
-            stream.write("[edp-lab]\\n" + f"host = {HOST}\\n"
-                         + "auth_type = oauth-m2m\\n"
-                         + f"client_id = {app_id}\\nclient_secret = {secret}\\n")
-            stream.flush()
-            os.fsync(stream.fileno())
-        temp.chmod(0o600)
-        os.replace(temp, config)
+        if temp.exists():
+            if (temp.is_symlink() or temp.stat().st_uid != 0
+                    or temp.stat().st_mode & 0o077
+                    or not intent.is_file() or _read_json(intent) != pinned):
+                raise RuntimeError("DAY7_SECRET_TEMP_PROFILE_UNTRUSTED")
+            parsed = ConfigParser(interpolation=None)
+            parsed.read(temp)
+            if (parsed.get("edp-lab", "client_id", fallback="") != app_id
+                    or parsed.get("edp-lab", "host", fallback="") != HOST
+                    or parsed.get("edp-lab", "auth_type", fallback="") != "oauth-m2m"
+                    or not parsed.get("edp-lab", "client_secret", fallback="")):
+                raise RuntimeError("DAY7_SECRET_TEMP_PROFILE_MISMATCH")
+            os.replace(temp, config)
+        else:
+            if intent.exists():
+                raise RuntimeError("DAY7_SECRET_UNCERTAIN_MANUAL_RECONCILIATION")
+            _save_json(intent, pinned)
+            secret = admin("service-principal-secrets-proxy", "create", sp_id,
+                           "--lifetime", "7776000")["secret"]
+            with temp.open("x") as stream:
+                stream.write("[edp-lab]\\n" + f"host = {HOST}\\n"
+                             + "auth_type = oauth-m2m\\n"
+                             + f"client_id = {app_id}\\nclient_secret = {secret}\\n")
+                stream.flush()
+                os.fsync(stream.fileno())
+            temp.chmod(0o600)
+            os.replace(temp, config)
     if config.is_symlink() or config.stat().st_uid != 0 or config.stat().st_mode & 0o077:
         raise RuntimeError("DAY7_M2M_CONFIG_NOT_PROTECTED")
     _mark("service_identity", pinned)
@@ -471,7 +491,7 @@ def permissions(app_id: str) -> None:
                 elif isinstance(item, dict) and isinstance(item.get("privilege"), str):
                     result.add(item["privilege"])
                 else:
-                    raise RuntimeError("DAY7_GRANT_READBACK_SCHEMA_INVALID")
+                    raise TypeError("DAY7_GRANT_READBACK_SCHEMA_INVALID")
         return result
 
     if ("READ_VOLUME" not in privileges(raw)
