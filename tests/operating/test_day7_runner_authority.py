@@ -46,6 +46,21 @@ def test_single_active_manifest_pinned_to_owner_approval(tmp_path):
         gate.check("reserved", "b" * 64, "raw/reserved")
 
 
+def test_auto_loader_uses_one_active_manifest_and_cannot_fall_back(tmp_path, monkeypatch):
+    from edp_lab.ingestion import universe as u
+
+    manifest_sha, approval_sha = _installed(tmp_path)
+    # An installed active file without a protected deployment pin must stop.
+    with pytest.raises(ScopeDenied, match="ACTIVE_UNIVERSE_DEPLOYMENT_PIN_MISSING"):
+        UniverseGate.load(tmp_path)
+    monkeypatch.setattr(u, "ACTIVE_UNIVERSE_PIN", (manifest_sha, approval_sha))
+    assert UniverseGate.load(tmp_path).check(
+        "eligible", "a" * 64, "raw/eligible")["identity"] == "eligible"
+    (tmp_path / ACTIVE_AUTHORITY_PATH).write_text("mutated")
+    with pytest.raises(ScopeDenied, match="AUTHORITY_PIN_MISMATCH"):
+        UniverseGate.load(tmp_path)
+
+
 def test_active_manifest_cannot_follow_unpinned_latest(tmp_path):
     manifest_sha, approval_sha = _installed(tmp_path)
     path = tmp_path / ACTIVE_AUTHORITY_PATH
