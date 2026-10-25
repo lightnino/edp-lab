@@ -18,15 +18,38 @@ from zipfile import ZipFile
 
 import owner_day6_v3_upgrade_13f as predecessor
 from owner_day6_v3_one_shot import (
-    APP_ID, BASE, CURRENT_REQUEST_SHA256, DEPLOYMENT, ORIGINAL_ACTIVE_REQUEST,
-    REQUEST, ROOT, _installed, _owner, _pins, _remote_digest, _signed_once,
-    _targets, _workspace_access, require,
+    APP_ID,
+    BASE,
+    CURRENT_REQUEST_SHA256,
+    DEPLOYMENT,
+    ORIGINAL_ACTIVE_REQUEST,
+    REQUEST,
+    ROOT,
+    _installed,
+    _owner,
+    _pins,
+    _remote_digest,
+    _signed_once,
+    _targets,
+    _workspace_access,
+    require,
 )
-from owner_day6_v3_successor import E2E_READY, HISTORICAL_E2E, STANDING, UPGRADE_APPROVAL
+from owner_day6_v3_successor import (
+    E2E_READY,
+    HISTORICAL_E2E,
+    STANDING,
+    UPGRADE_APPROVAL,
+)
 from owner_day6_v3_upgrade_edgar import (
-    OLD_COMMIT, OLD_E2E_SHA, STANDING_SHA, git, install_runtime, socket_action,
+    OLD_COMMIT,
+    OLD_E2E_SHA,
+    STANDING_SHA,
+    git,
+    install_runtime,
+    socket_action,
 )
 from owner_setup_day6_vault_0a import admin_cli
+
 from edp_lab.operating.authority import canonical, file_digest, verified_document
 from edp_lab.vault.v3_one_shot_gate import verify_saved_job
 from edp_lab.vault.v3_service import _service_target_absent
