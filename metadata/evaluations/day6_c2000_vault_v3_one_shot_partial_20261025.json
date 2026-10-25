@@ -1,0 +1,158 @@
+{
+  "external_write_replay_allowed": false,
+  "failure": "Run-as service principal did not have access to Databricks Workspace before wheel execution",
+  "historical_row_counts_are_metadata_not_fresh_sql_readback": true,
+  "historical_table_present_count": 8,
+  "historical_tables": {
+    "h_concept": {
+      "format": "DELTA",
+      "last_update_version_property": "0",
+      "matches_listing": true,
+      "state": "PRESENT",
+      "stats_num_rows": "24",
+      "table_id": "81c704a6-b172-4e2b-8fde-5ed1088d8ab2"
+    },
+    "h_filing": {
+      "format": "DELTA",
+      "last_update_version_property": "0",
+      "matches_listing": true,
+      "state": "PRESENT",
+      "stats_num_rows": "20",
+      "table_id": "544c4864-620d-4b10-a99f-7563c3dc12c5"
+    },
+    "l_fact_slot": {
+      "format": "DELTA",
+      "last_update_version_property": "0",
+      "matches_listing": true,
+      "state": "PRESENT",
+      "stats_num_rows": "76",
+      "table_id": "306c4fb8-51f2-45fd-9191-19ac158ada32"
+    },
+    "r_load_event": {
+      "format": "DELTA",
+      "last_update_version_property": "0",
+      "matches_listing": true,
+      "state": "PRESENT",
+      "stats_num_rows": "127",
+      "table_id": "b1a54891-568f-4698-bd3c-d6342eac11e5"
+    },
+    "r_source_occurrence": {
+      "format": "DELTA",
+      "last_update_version_property": "0",
+      "matches_listing": true,
+      "state": "PRESENT",
+      "stats_num_rows": "127",
+      "table_id": "9e9e0e2c-8a20-4787-9a4d-399272149c1d"
+    },
+    "s_fact_assertion": {
+      "format": "DELTA",
+      "last_update_version_property": "0",
+      "matches_listing": true,
+      "state": "PRESENT",
+      "stats_num_rows": "127",
+      "table_id": "ac3908c2-b079-4a16-bfb8-d5e14ac5e3dd"
+    },
+    "s_num_m2_value": {
+      "format": "DELTA",
+      "last_update_version_property": "0",
+      "matches_listing": true,
+      "state": "PRESENT",
+      "stats_num_rows": "127",
+      "table_id": "cc9afd09-1540-4ca8-8577-91d10ce268bf"
+    },
+    "vault_reject_quarantine": {
+      "format": "DELTA",
+      "last_update_version_property": "0",
+      "matches_listing": true,
+      "state": "PRESENT",
+      "stats_num_rows": "6",
+      "table_id": "8e19e22d-06b8-4266-86bd-3e278c0fc910"
+    }
+  },
+  "job_id": 1067818802179598,
+  "job_terminal_state": "FAILED",
+  "job_termination_code": "UNAUTHORIZED_ERROR",
+  "namespace": "workspace.edp_lab_day6_vault_proto",
+  "observed_at_utc": "2026-10-25T08:28:28Z",
+  "protected_ledger": "ROOT_ONLY_UNAVAILABLE_TO_AGENT_REQUIRES_OWNER_VERIFIER_RECONCILIATION",
+  "run_id": 665044227934897,
+  "schema": "EDP_DAY6_V3_ONE_SHOT_PARTIAL_RECONCILIATION_V1",
+  "signed_v3_pass_receipt": null,
+  "status": "PARTIAL_RECONCILE_AND_STOP",
+  "subsequent_scoped_stages": "NOT_STARTED",
+  "task_attempt_number": 0,
+  "task_execution_duration_ms": 0,
+  "task_run_id": 844558996680731,
+  "v3_target_absent_count": 23,
+  "v3_targets": {
+    "v3_h_13f_submission": {
+      "state": "ABSENT"
+    },
+    "v3_h_concept": {
+      "state": "ABSENT"
+    },
+    "v3_h_edgar_file_reference": {
+      "state": "ABSENT"
+    },
+    "v3_h_filing": {
+      "state": "ABSENT"
+    },
+    "v3_h_treasury_feed": {
+      "state": "ABSENT"
+    },
+    "v3_h_treasury_observation": {
+      "state": "ABSENT"
+    },
+    "v3_l_fsds_presentation": {
+      "state": "ABSENT"
+    },
+    "v3_l_treasury_feed_observation": {
+      "state": "ABSENT"
+    },
+    "v3_r_load_event": {
+      "state": "ABSENT"
+    },
+    "v3_r_source_occurrence": {
+      "state": "ABSENT"
+    },
+    "v3_s_13f_coverpage_assertion": {
+      "state": "ABSENT"
+    },
+    "v3_s_13f_infotable_assertion": {
+      "state": "ABSENT"
+    },
+    "v3_s_13f_othermanager2_assertion": {
+      "state": "ABSENT"
+    },
+    "v3_s_13f_othermanager_assertion": {
+      "state": "ABSENT"
+    },
+    "v3_s_13f_signature_assertion": {
+      "state": "ABSENT"
+    },
+    "v3_s_13f_submission_assertion": {
+      "state": "ABSENT"
+    },
+    "v3_s_13f_summarypage_assertion": {
+      "state": "ABSENT"
+    },
+    "v3_s_edgar_index_assertion": {
+      "state": "ABSENT"
+    },
+    "v3_s_fsds_pre_assertion": {
+      "state": "ABSENT"
+    },
+    "v3_s_fsds_sub_assertion": {
+      "state": "ABSENT"
+    },
+    "v3_s_fsds_tag_assertion": {
+      "state": "ABSENT"
+    },
+    "v3_s_treasury_entry_assertion": {
+      "state": "ABSENT"
+    },
+    "v3_vault_reject_quarantine": {
+      "state": "ABSENT"
+    }
+  }
+}
