@@ -96,5 +96,48 @@ def test_frozen_raw_missing_is_nonmutating(monkeypatch, tmp_path):
     monkeypatch.setattr(probe, "FROZEN_BINDINGS", path)
     monkeypatch.setattr(probe, "EXPECTED_FROZEN_BINDING_SHA",
                         hashlib.sha256(path.read_bytes()).hexdigest())
-    with pytest.raises(RuntimeError, match="COVERPAGE_LOCAL_FROZEN_RAW_MISSING"):
+    monkeypatch.setattr(probe, "_candidate_paths", lambda _: [
+        tmp_path / "no-physical-raw.zip"
+    ])
+    with pytest.raises(RuntimeError, match="COVERPAGE_VERIFIED_LOCAL_RAW_NOT_FOUND"):
         probe.source_path()
+
+
+
+def test_other_edp_lab_checkout_located_by_exact_frozen_sha(tmp_path, monkeypatch):
+    import hashlib
+
+    root = tmp_path / "edp-lab-day6-vault-prototype"
+    root.mkdir()
+    sibling = tmp_path / "edp-lab"
+    raw = Path("data/raw/sec/sec_13f/hash-abc/2013q3_form13f.zip")
+    candidate = sibling / raw
+    candidate.parent.mkdir(parents=True)
+    candidate.write_bytes(b"original-verified-raw")
+    decoy = root / raw
+    decoy.parent.mkdir(parents=True)
+    decoy.write_bytes(b"bad-unverified-raw")
+    monkeypatch.setattr(probe, "ROOT", root)
+    monkeypatch.delenv("EDP_DAY6_FROZEN_RAW_ZIP", raising=False)
+
+    discovered = probe._candidate_paths(raw)
+    assert decoy in discovered
+    assert candidate in discovered
+    expected = hashlib.sha256(candidate.read_bytes()).hexdigest()
+    assert probe._verified_source_location(raw, expected) == candidate
+
+    with pytest.raises(RuntimeError, match="COVERPAGE_VERIFIED_LOCAL_RAW_NOT_FOUND"):
+        probe._verified_source_location(raw, "0" * 64)
+
+
+def test_explicit_original_raw_path_requires_exact_sha(tmp_path, monkeypatch):
+    import hashlib
+
+    path = tmp_path / "2013q3_form13f.zip"
+    path.write_bytes(b"byte-preserved")
+    monkeypatch.setenv("EDP_DAY6_FROZEN_RAW_ZIP", str(path))
+    raw = Path("data/raw/sec/sec_13f/freeze/2013q3_form13f.zip")
+    digest = hashlib.sha256(path.read_bytes()).hexdigest()
+    assert probe._verified_source_location(raw, digest) == path
+    with pytest.raises(RuntimeError, match="COVERPAGE_EXPLICIT_RAW_SHA_OR_LOCATION_INVALID"):
+        probe._verified_source_location(raw, "f" * 64)
