@@ -291,6 +291,8 @@ def diagnose() -> None:
     print("ACCEPTED_M1_SELECTED_LEXICAL_SHA256=" + actual)
     print("DIFFERENCE_SUMMARY=" + json.dumps(summary, sort_keys=True))
     print("CSV_QUOTE_EQUIVALENCE=" + json.dumps(equivalence, sort_keys=True))
+    print("V3_ADAPTER_NORMALIZED_SHA256=" + projected_sha)
+    print("V3_ADAPTER_NORMALIZED_MATCHES_FROZEN=" + str(projected_sha == expected).lower())
     print("NO_RAW_CONTENT_PRINTED_NO_DELTA_WRITE_NO_CANARY_RETRY")
 
 
