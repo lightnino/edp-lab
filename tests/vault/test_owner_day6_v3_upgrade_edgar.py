@@ -157,3 +157,131 @@ def test_successor_accepts_only_config_bound_signed_upgrade(monkeypatch):
     approval["wheel_sha256"] = "bad" * 21 + "b"
     with pytest.raises(RuntimeError, match="V3_UPGRADE_OWNER_APPROVAL_REQUIRED"):
         successor._admission(request, deployment)
+
+
+
+def test_missing_workspace_wheel_and_request_are_uploaded_only_after_exact_absence(
+        tmp_path, monkeypatch):
+    """Regression: Databricks reports 'Path (...) doesn't exist.'."""
+    import hashlib
+
+    wheel = tmp_path / "replacement.whl"
+    wheel.write_bytes(b"test-pinned-wheel")
+    expected_wheel = hashlib.sha256(wheel.read_bytes()).hexdigest()
+    deployment = json.loads(upgrade.DEPLOYMENT.read_bytes())
+    deployment["artifact"]["local_build_output_uncommitted"] = str(wheel)
+    remote = deployment["artifact"]["workspace_target_proposed"]
+    historical_deployment = json.loads(upgrade.ORIGINAL_ACTIVE_DEPLOYMENT.read_bytes())
+    old_remote = historical_deployment["artifact"]["workspace_target_proposed"]
+    known = {old_remote: historical_deployment["artifact"]["sha256"]}
+    absent_checks, uploads = [], []
+
+    monkeypatch.setattr(upgrade, "NEW_WHEEL_SHA", expected_wheel)
+
+    def digest(path):
+        if path not in known:
+            raise RuntimeError(f"DATABRICKS_CLI_EXIT_1: Path ({path}) doesn't exist.")
+        return known[path]
+
+    def verify_absent(path):
+        absent_checks.append(path)
+        assert path not in known
+
+    def upload(source, path):
+        uploads.append(path)
+        assert path in absent_checks
+        known[path] = upgrade.file_digest(source)
+
+    monkeypatch.setattr(upgrade, "_remote_digest", digest)
+    monkeypatch.setattr(upgrade, "_workspace_absent", verify_absent)
+    monkeypatch.setattr(upgrade, "_upload", upload)
+    monkeypatch.setattr(
+        upgrade, "admin_cli",
+        lambda *args, **kwargs: None if args[:2] == ("workspace", "mkdirs")
+        else pytest.fail("unexpected Databricks call"),
+    )
+
+    upgrade.ensure_remote(deployment)
+    assert uploads == absent_checks == [remote, upgrade.CANARY_REQUEST]
+    assert known[remote] == expected_wheel
+    assert known[upgrade.CANARY_REQUEST] == upgrade.file_digest(upgrade.REQUEST)
+
+
+def test_unexpected_export_error_must_verify_absence_before_upload(tmp_path, monkeypatch):
+    wheel = tmp_path / "replacement.whl"
+    wheel.write_bytes(b"test-pinned-wheel")
+    import hashlib
+
+    monkeypatch.setattr(
+        upgrade, "NEW_WHEEL_SHA", hashlib.sha256(wheel.read_bytes()).hexdigest())
+    deployment = json.loads(upgrade.DEPLOYMENT.read_bytes())
+    deployment["artifact"]["local_build_output_uncommitted"] = str(wheel)
+    previous = json.loads(upgrade.ORIGINAL_ACTIVE_DEPLOYMENT.read_bytes())
+    original = previous["artifact"]["workspace_target_proposed"]
+
+    def digest(path):
+        if path == original:
+            return previous["artifact"]["sha256"]
+        raise RuntimeError("DATABRICKS_CLI_EXIT_1: UNAUTHORIZED_ERROR")
+
+    monkeypatch.setattr(upgrade, "_remote_digest", digest)
+    monkeypatch.setattr(upgrade, "_workspace_absent", lambda _: (_ for _ in ()).throw(
+        RuntimeError("V3_REMOTE_FILE_ABSENCE_UNVERIFIED")))
+    monkeypatch.setattr(upgrade, "_upload",
+                        lambda *_: pytest.fail("write without proven absence"))
+    monkeypatch.setattr(upgrade, "admin_cli", lambda *_args, **_kwargs: None)
+    with pytest.raises(RuntimeError, match="V3_REMOTE_FILE_ABSENCE_UNVERIFIED"):
+        upgrade.ensure_remote(deployment)
+
+
+def test_installer_repair_keeps_signed_original_approval(tmp_path, monkeypatch):
+    original = tmp_path / "owner-original.signed.json"
+    original.write_text("immutable-original")
+    repair_path = tmp_path / "owner-repair.signed.json"
+    monkeypatch.setattr(upgrade, "UPGRADE_APPROVAL", original)
+    monkeypatch.setattr(upgrade, "INSTALLER_REPAIR", repair_path)
+    request = json.loads(upgrade.REQUEST.read_bytes())
+    deployment = json.loads(upgrade.DEPLOYMENT.read_bytes())
+    first = {
+        "schema": "EDP_DAY6_V3_ARTIFACT_UPGRADE_V1",
+        "status": "APPROVED",
+        "reviewed_commit": upgrade.ORIGINAL_INSTALLER_COMMIT,
+        "request_sha256": upgrade.CURRENT_REQUEST_SHA256,
+        "deployment_sha256": upgrade.file_digest(upgrade.DEPLOYMENT),
+        "wheel_sha256": upgrade.NEW_WHEEL_SHA,
+        "original_e2e_sha256": upgrade.OLD_E2E_SHA,
+        "standing_sha256": upgrade.STANDING_SHA,
+        "next_attempt": 2,
+        "canary_job_submissions_max": 1,
+    }
+    additions = {}
+
+    def verified(_root, path, _trust):
+        if path == original:
+            return first
+        if path == repair_path:
+            return additions["document"]
+        pytest.fail("unexpected trust document")
+
+    def sign(document, key, path):
+        assert key == "owner.pem"
+        assert path == repair_path
+        assert not path.exists()
+        additions["document"] = document
+        path.write_text("new-approval-addendum")
+
+    reviewed = "c" * 40
+    monkeypatch.setattr(upgrade, "verified_document", verified)
+    monkeypatch.setattr(upgrade, "_signed_once", sign)
+    monkeypatch.setattr(upgrade, "git", lambda *args: (
+        b"scripts/owner_day6_v3_upgrade_edgar.py\n"
+        b"tests/vault/test_owner_day6_v3_upgrade_edgar.py\n"))
+    before = original.read_bytes()
+    upgrade.ensure_approval(request, deployment, reviewed)
+    upgrade.ensure_approval(request, deployment, reviewed)
+    assert original.read_bytes() == before
+    assert additions["document"]["original_installer_commit"] == (
+        upgrade.ORIGINAL_INSTALLER_COMMIT)
+    assert additions["document"]["repaired_installer_commit"] == reviewed
+    assert additions["document"]["original_approval_sha256"] == (
+        upgrade.file_digest(original))
