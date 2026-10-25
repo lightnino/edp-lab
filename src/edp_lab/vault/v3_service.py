@@ -64,22 +64,20 @@ def _ready(root: Path, base: Path) -> None:
     standing = verified_document(root, base / "trust/day6-v3-standing-v1.signed.json",
                                  base / "trust")
     original = base / "receipts/day6-v3-e2e-ready-v1.signed.json"
-    upgrade = base / "receipts/day6-v3-e2e-ready-edgar-fix-v1.signed.json"
-    approval = base / "approvals/day6-v3-edgar-fix-upgrade-v1.signed.json"
+    upgrade = base / "receipts/day6-v3-e2e-ready-13f-fix-v2.signed.json"
+    approval = base / "approvals/day6-v3-13f-fix-upgrade-v2.signed.json"
     initial = verified_document(root, original, base / "trust")
     smoke = verified_document(root, upgrade, base / "trust")
     authorized = verified_document(root, approval, base / "trust")
-    addendum = base / "approvals/day6-v3-edgarfix-installer-repair-v1.signed.json"
-    repair = (verified_document(root, addendum, base / "trust")
-              if addendum.exists() else None)
     installed_commit = _commit(base)
-    reviewed_commit = (repair.get("repaired_installer_commit")
-                       if repair else authorized.get("reviewed_commit"))
-    if repair and (repair.get("schema") != "EDP_DAY6_V3_INSTALLER_REPAIR_V1"
-                   or repair.get("status") != "APPROVED"
-                   or repair.get("original_approval_sha256") != file_digest(approval)
-                   or repair.get("wheel_sha256") != authorized.get("wheel_sha256")):
-        raise RuntimeError("V3_UPGRADE_INSTALLER_REPAIR_NOT_VERIFIED")
+    reviewed_commit = authorized.get("reviewed_commit")
+    failed_canary_receipt = (
+        base / "receipts/day6-v3-edgarfix-canary-1-no-effect.signed.json"
+    )
+    old_failure = verified_document(root, failed_canary_receipt, base / "trust")
+    if (old_failure.get("schema") != "EDP_DAY6_V3_UPGRADE_CANARY_NO_EFFECT_V1"
+            or old_failure.get("status") != "TERMINAL_NO_REMOTE_EFFECT"):
+        raise RuntimeError("V3_PREVIOUS_CANARY_NO_EFFECT_NOT_SIGNED")
     from owner_day6_v3_one_shot import CURRENT_REQUEST_SHA256, DEPLOYMENT
     deployment = json.loads(DEPLOYMENT.read_bytes())
     if (standing.get("status") != "INSTALLED"
@@ -96,8 +94,11 @@ def _ready(root: Path, base: Path) -> None:
             or smoke.get("approval_sha256") != file_digest(approval)
             or smoke.get("installed_reviewed_commit") != installed_commit
             or smoke.get("installed_reviewed_commit") != reviewed_commit
-            or smoke.get("installer_repair_sha256") != (
-                file_digest(addendum) if repair else None)
+            or authorized.get("reviewed_commit") != installed_commit
+            or authorized.get("failed_canary_no_effect_sha256") != file_digest(
+                failed_canary_receipt)
+            or smoke.get("failed_canary_no_effect_sha256") != file_digest(
+                failed_canary_receipt)
             or smoke.get("request_sha256") != CURRENT_REQUEST_SHA256
             or smoke.get("wheel_sha256") != deployment["artifact"]["sha256"]
             or smoke.get("original_e2e_sha256") != file_digest(original)
@@ -145,7 +146,7 @@ def status(root: Path, base: Path) -> dict:
     return {"status": state, "next_attempt": number,
             "standing_sha256": file_digest(base / "trust/day6-v3-standing-v1.signed.json"),
             "e2e_sha256": file_digest(
-                base / "receipts/day6-v3-e2e-ready-edgar-fix-v1.signed.json")}
+                base / "receipts/day6-v3-e2e-ready-13f-fix-v2.signed.json")}
 
 
 def audit(root: Path, base: Path) -> dict:
