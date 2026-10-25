@@ -23,10 +23,15 @@ from owner_setup_day6_vault_0a import BASE, ROOT, admin_cli, run
 from edp_lab.operating.authority import canonical, file_digest, verified_document
 from edp_lab.vault.v3_one_shot_gate import SERVERLESS_ENVIRONMENT_VERSION, verify_saved_job
 
-REQUEST = ROOT / "metadata/operating/day6_c2000_vault_v3_bounded_request.json"
+# The original artifacts/receipts remain immutable. Only new V3 attempts use the
+# versioned EDGAR successor; the original signed standing scope is unchanged.
+REQUEST = ROOT / "metadata/operating/day6_c2000_vault_v3_bounded_request_edgar_fix_v1.json"
+ORIGINAL_ACTIVE_REQUEST = ROOT / "metadata/operating/day6_c2000_vault_v3_bounded_request.json"
+ORIGINAL_ACTIVE_REQUEST_SHA256 = "8617f4c12617cfefe892d0a40a71d291fa510213bed4284edf5459c3c616f5be"
 ORIGINAL_REQUEST_SHA256 = "dfe24b8e5aa15b07891892b93270aa73995f43d17a7d5f2d8c25323755cc684d"
-CURRENT_REQUEST_SHA256 = "8617f4c12617cfefe892d0a40a71d291fa510213bed4284edf5459c3c616f5be"
-DEPLOYMENT = ROOT / "metadata/operating/day6_c2000_vault_v3_deployment_v2.json"
+CURRENT_REQUEST_SHA256 = file_digest(REQUEST)
+DEPLOYMENT = ROOT / "metadata/operating/day6_c2000_vault_v3_deployment_v3.json"
+ORIGINAL_ACTIVE_DEPLOYMENT = ROOT / "metadata/operating/day6_c2000_vault_v3_deployment_v2.json"
 ORIGINAL_DEPLOYMENT = ROOT / "metadata/operating/day6_c2000_vault_v3_deployment_v1.json"
 SEMANTIC = BASE / "approvals/c2000-full-semantics-v1.signed.json"
 WHEEL_DIR = "/Workspace/Shared/edp-lab/day6-c2000-v3"
@@ -84,6 +89,20 @@ def _pins() -> tuple[dict, dict]:
             "REQUEST_PIN_CHANGED")
     require(file_digest(DEPLOYMENT) == request["execution"]["deployment_sha256"],
             "DEPLOYMENT_PIN_CHANGED")
+    historical = json.loads(ORIGINAL_ACTIVE_REQUEST.read_bytes())
+    require(file_digest(ORIGINAL_ACTIVE_REQUEST) == ORIGINAL_ACTIVE_REQUEST_SHA256,
+            "HISTORICAL_REQUEST_CHANGED")
+    require(all(request[key] == historical[key]
+                for key in historical if key not in {"status", "execution"})
+            and all(request["execution"][key] == historical["execution"][key]
+                    for key in historical["execution"] if key not in {
+                        "runtime_artifact_sha256", "deployment_sha256"})
+            and file_digest(ORIGINAL_ACTIVE_DEPLOYMENT)
+            == historical["execution"]["deployment_sha256"],
+            "V3_UPGRADE_SCOPE_CHANGED")
+    require(deployment["artifact"]["sha256"] ==
+            request["execution"]["runtime_artifact_sha256"],
+            "V3_UPGRADE_WHEEL_PIN_CHANGED")
     for field in ("selection", "negative_oracles", "target_ddl",
                   "semantic_approval_request", "resource_proposal"):
         pin = request[field]
