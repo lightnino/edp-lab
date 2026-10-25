@@ -216,3 +216,19 @@ def test_nonroot_read_only_preflight_does_not_require_root_or_write(monkeypatch)
     result = installer.read_only_preflight("pinned-sha")
     assert result["status"] == "DAY7_OWNER_READ_ONLY_PREFLIGHT_PASS"
     assert result["protected_deployment"] == "NOT_YET_EXECUTED"
+
+
+
+def test_nonroot_agent_can_reach_broker_without_exposing_secret_directories():
+    """Root may connect at 0700, but the normal staff agent cannot."""
+    parent = inspect.getsource(installer.configure_broker_socket_access)
+    create = inspect.getsource(installer.protected_files)
+    broker = inspect.getsource(installer.install_broker)
+    assert 'grp.getgrnam("staff").gr_gid' in parent
+    assert "BASE.chmod(0o710)" in parent
+    assert '("private", 0o700)' in create
+    assert '("trust", 0o700)' in create
+    assert '("ledger", 0o700)' in create
+    assert '"-u", "lightnino"' in broker
+    assert "DAY7_AGENT_BROKER_SOCKET_ACCESS_UNVERIFIED" in broker
+    assert "UNKNOWN_BROKER_ACTION" in broker
