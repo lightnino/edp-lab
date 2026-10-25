@@ -141,3 +141,50 @@ def test_explicit_original_raw_path_requires_exact_sha(tmp_path, monkeypatch):
     assert probe._verified_source_location(raw, digest) == path
     with pytest.raises(RuntimeError, match="COVERPAGE_EXPLICIT_RAW_SHA_OR_LOCATION_INVALID"):
         probe._verified_source_location(raw, "f" * 64)
+
+
+
+def test_original_csv_quote_escape_is_exact_and_not_quote_removal():
+    raw = 'freeform "quoted" notice'
+    physical = '"freeform ""quoted"" notice"'
+    assert probe._quoted_csv_cell_equivalent(raw, physical)
+    assert len(physical) == len(raw) + 4
+    assert raw.count('"') == 2
+    assert physical.count('"') == 6
+    assert not probe._quoted_csv_cell_equivalent(raw + "!", physical)
+    assert not probe._quoted_csv_cell_equivalent(raw, physical[:-1])
+    assert not probe._quoted_csv_cell_equivalent(raw, "freeform quoted notice")
+    assert not probe._quoted_csv_cell_equivalent(raw, '"freeform\t""quoted"" notice"')
+
+
+def test_quote_equivalence_requires_exact_member_row_field_and_one_difference():
+    header = [f"FIELD_{i}" for i in range(1, 21)] + ["ADDITIONALINFORMATION"]
+    originals = [(n, [f"v{n}_{i}" for i in range(1, 21)]
+                  + ['message "quote"']) for n in range(1, 17)]
+    remote = []
+    for ordinal, values in originals:
+        fields = [
+            {
+                "original_name": name, "field_ordinal": i,
+                "lexical_value": (
+                    '"message ""quote"""'
+                    if ordinal == 7 and i == 21 else value
+                ),
+            }
+            for i, (name, value) in enumerate(zip(header, values, strict=True), 1)
+        ]
+        remote.append((ordinal, fields, 10 * ordinal, ordinal))
+    ok = probe.quote_equivalence(header, originals, remote)
+    assert ok["only_difference_is_coverpage_row7_field21"]
+    assert ok["physical_quoted_field_csv_decode_equals_frozen_raw"]
+
+    remote[6][1][20]["lexical_value"] = '"message ""other"""'
+    invalid = probe.quote_equivalence(header, originals, remote)
+    assert invalid["only_difference_is_coverpage_row7_field21"]
+    assert not invalid["physical_quoted_field_csv_decode_equals_frozen_raw"]
+
+    remote[6][1][20]["lexical_value"] = '"message ""quote"""'
+    remote[3][1][5]["lexical_value"] = "OTHER"
+    multiple = probe.quote_equivalence(header, originals, remote)
+    assert not multiple["only_difference_is_coverpage_row7_field21"]
+    assert not multiple["physical_quoted_field_csv_decode_equals_frozen_raw"]
