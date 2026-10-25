@@ -87,3 +87,73 @@ def test_owner_mode_still_uses_admin_iam_check(monkeypatch):
     assert {call[1] for call in seen} == {
         "get-workspace-assignment-proxy", "get-workspace-access-detail-local",
     }
+
+
+def test_service_checks_exact_target_absence_without_owner_sudo(monkeypatch):
+    from edp_lab.vault import v3_service
+    import owner_setup_day6_vault_0a as setup
+
+    observed = []
+    def cli(*args, **_kwargs):
+        observed.append(args)
+        return [{"name": "v0a_day6_e2e_20261025"}]
+
+    monkeypatch.setattr(setup, "admin_cli", cli)
+    v3_service._service_target_absent(
+        "workspace.edp_lab_day6_vault_proto.new_v3_table")
+    assert observed == [("tables", "list", "workspace", "edp_lab_day6_vault_proto")]
+    with pytest.raises(RuntimeError, match="V3_TARGET_ALREADY_PRESENT"):
+        v3_service._service_target_absent(
+            "workspace.edp_lab_day6_vault_proto.v0a_day6_e2e_20261025")
+    with pytest.raises(RuntimeError, match="V3_TARGET_ABSENCE_SCOPE_INVALID"):
+        v3_service._service_target_absent("workspace.edp_lab.hidden_table")
+
+
+def test_audit_reports_multiple_read_only_errors_without_first_error_stop(monkeypatch):
+    from types import SimpleNamespace
+    from edp_lab.vault import v3_service
+    import owner_setup_day6_vault_0a as setup
+
+    monkeypatch.setattr(v3_service, "_ready", lambda *_: None)
+    monkeypatch.setattr(v3_service, "_commit", lambda *_: "commit")
+    monkeypatch.setattr(v3_service, "_next_attempt",
+                        lambda *_: (1, "READY_FOR_DISTINCT_ATTEMPT"))
+    monkeypatch.setattr(owner, "SOURCE_TABLES", ("fixed_source",))
+    monkeypatch.setattr(owner, "_installed", lambda *_: {"job_id": 2})
+    monkeypatch.setattr(owner, "_workspace_access", lambda: (_ for _ in ()).throw(
+        RuntimeError("WORKSPACE_READ_DENIED")))
+    monkeypatch.setattr(owner, "_source_rights", lambda: (_ for _ in ()).throw(
+        RuntimeError("UC_READ_DENIED")))
+    monkeypatch.setattr(owner, "_remote_digest", lambda *_: "correct")
+    monkeypatch.setattr(setup, "admin_sql", lambda *_: (_ for _ in ()).throw(
+        RuntimeError("SQL_WAREHOUSE_READ_DENIED")))
+
+    def cli(*args):
+        if args == ("current-user", "me"):
+            return {"id": owner.SERVICE_PRINCIPAL_ID}
+        if args == ("jobs", "list"):
+            raise RuntimeError("JOBS_LIST_DENIED")
+        return []
+
+    def required(cond, reason):
+        if not cond:
+            raise RuntimeError(reason)
+
+    successor = SimpleNamespace(
+        configure_attempt=lambda _: None,
+        REMOTE_REQUEST="/Workspace/Shared/test/absent",
+    )
+    monkeypatch.setattr(v3_service, "_imports", lambda: (
+        successor, lambda _: None,
+        lambda: ({}, {"artifact": {"workspace_target_proposed": "/wheel",
+                                  "sha256": "correct"}}),
+        None, lambda _: {}, lambda _: None, required, cli,
+    ))
+    report = v3_service.audit(Path("."), Path("."))
+    assert report["status"] == "V3_RUNTIME_CAPABILITY_AUDIT_BLOCKED"
+    assert report["attempt_number"] == 1
+    for label in ("owner_signed_workspace_scope", "source_table_metadata",
+                  "jobs_list", "sql_select:fixed_source"):
+        assert report["checks"][label]["status"] == "BLOCKED"
+    assert report["checks"]["identity"]["status"] == "PASS"
+    assert report["write_capabilities"] == "NOT_TESTED_NO_MUTATION"
