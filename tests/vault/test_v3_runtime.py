@@ -49,3 +49,62 @@ def test_readback_digest_is_order_invariant_and_payload_sensitive():
     other = dict(row, hk="c")
     assert _rows_digest([row, other]) == _rows_digest([other, row])
     assert _rows_digest([row]) != _rows_digest([dict(row, payload_json='{"x":"2"}')])
+
+
+
+def test_coverpage_quote_witness_exact_scope_decodes_and_preserves_raw_record():
+    """Only approved SRC000065 row7 field21 gets CSV-quote projection."""
+    import copy
+
+    from edp_lab.vault.v3_spark_runtime import _coverpage_quote_exception
+
+    raw = 'message "quoted" ' + "x" * (386 - len('message "quoted" '))
+    physical = '"' + raw.replace('"', '""') + '"'
+    assert len(raw) == 386 and raw.count('"') == 2
+    assert len(physical) == 390 and physical.count('"') == 6
+    fields = [{"name": f"FIELD{i}", "state": "PRESENT", "text": "v"}
+              for i in range(1, 22)]
+    fields[20] = {"name": "ADDITIONALINFORMATION", "state": "PRESENT",
+                  "text": physical}
+    occurrence = {"fields": fields}
+    original = copy.deepcopy(occurrence)
+
+    for sid, member, ordinal in (
+        ("SRC000054", "COVERPAGE.tsv", 7),
+        ("SRC000065", "SUBMISSION.tsv", 7),
+        ("SRC000065", "COVERPAGE.tsv", 6),
+        ("SRC000065", "COVERPAGE.tsv", 8),
+    ):
+        witness = copy.deepcopy(occurrence)
+        assert _coverpage_quote_exception(witness, sid, member, ordinal) == witness
+        assert witness == original
+
+    decoded = _coverpage_quote_exception(occurrence, "SRC000065",
+                                         "COVERPAGE.tsv", 7)
+    assert decoded["fields"][20]["text"] == raw
+    assert decoded["fields"][:20] == original["fields"][:20]
+    assert original["fields"][20]["text"] == physical
+
+
+def test_coverpage_quote_witness_rejects_nonexact_or_malformed_data():
+    import copy
+
+    from edp_lab.vault.v3_spark_runtime import _coverpage_quote_exception
+
+    raw = 'phrase "yes" ' + "k" * (386 - len('phrase "yes" '))
+    physical = '"' + raw.replace('"', '""') + '"'
+    fields = [{"name": f"F{i}", "state": "PRESENT", "text": ""}
+              for i in range(1, 22)]
+    fields[20] = {"name": "ADDITIONALINFORMATION", "state": "PRESENT",
+                  "text": physical}
+    for modify in (
+        lambda w: w["fields"][20].update(text=physical[:-1]),
+        lambda w: w["fields"][20].update(text=physical.replace('""', "XX", 1)),
+        lambda w: w["fields"][20].update(name="WRONG_COLUMN"),
+        lambda w: w["fields"].pop(),
+    ):
+        copy_witness = copy.deepcopy({"fields": fields})
+        modify(copy_witness)
+        with pytest.raises(ValueError, match="V3_13F_COVERPAGE_"):
+            _coverpage_quote_exception(copy_witness, "SRC000065",
+                                       "COVERPAGE.tsv", 7)
