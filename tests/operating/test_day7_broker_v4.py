@@ -109,6 +109,7 @@ def test_read_only_checks_prohibit_existing_upgrade_marker():
     assert "DAY7_V4_PRIOR_TABLE_GRANT_INTENT_CHANGED" in source
     assert "DAY7_V4_PUBLISHED_RECEIPTS_DRIFT" in source
     assert "broker_health()" in source
+    assert "broker_existing_u10_wire(receipts[2])" in source
     assert "owner_table_read()" in source
     assert 'owner.service("jobs", "get-run", CANARY_RUN_ID)' in source
 
@@ -194,3 +195,50 @@ def test_v4_checks_before_any_broker_runtime_write(monkeypatch, tmp_path):
     ]
     assert journal["reviewed_commit"] == "reviewed-new-commit"
     assert not any("jobs submit" in x for x in actions)
+
+
+
+def test_live_broker_wire_preflight_checks_existing_signed_u10(monkeypatch, tmp_path):
+    root = tmp_path / "protected"
+    (root / "receipts").mkdir(parents=True)
+    (root / "receipts/day7-u10-SRC000002.json").write_text("already-signed")
+
+    class Wire(FakeSocket):
+        def __init__(self, *_args, **_kwargs):
+            self.result = {
+                "status": "VERIFIED",
+                "result": {"physical_identity": "SRC000002",
+                           "receipt_sha256": "prior-signed-proof",
+                           "raw_sha256": "raw-hash", "raw_bytes": 349417},
+            }
+
+    monkeypatch.setattr(v4.owner, "BASE", root)
+    monkeypatch.setattr(v4, "protected", lambda _path: None)
+    monkeypatch.setattr(v4.owner, "file_digest", lambda _path: "same-unchanged-digest")
+    monkeypatch.setattr(socket, "socket", Wire)
+    v4.broker_existing_u10_wire({
+        "receipt_sha256": "prior-signed-proof",
+        "raw_sha256": "raw-hash", "raw_bytes": 349417,
+    })
+    assert json.loads(FakeSocket.sent) == {
+        "action": "resolve_handoff", "identity": "SRC000002"}
+    assert (root / "receipts/day7-u10-SRC000002.json").read_text() == "already-signed"
+
+
+def test_broker_wire_failure_is_not_mistaken_for_verification(monkeypatch, tmp_path):
+    root = tmp_path / "protected"
+    (root / "receipts").mkdir(parents=True)
+    (root / "receipts/day7-u10-SRC000002.json").write_text("signed")
+
+    class WireDenied(FakeSocket):
+        def __init__(self, *_args, **_kwargs):
+            self.result = {"status": "DENIED", "reason": "RAW_HANDOFF_INCOMPLETE"}
+
+    monkeypatch.setattr(v4.owner, "BASE", root)
+    monkeypatch.setattr(v4, "protected", lambda _path: None)
+    monkeypatch.setattr(v4.owner, "file_digest", lambda _path: "same-digest")
+    monkeypatch.setattr(socket, "socket", WireDenied)
+    with pytest.raises(RuntimeError, match="DAY7_V4_EXISTING_BROKER_WIRE_U10_NOT_VERIFIED"):
+        v4.broker_existing_u10_wire({
+            "receipt_sha256": "prior-proof",
+            "raw_sha256": "hash", "raw_bytes": 349417})
