@@ -1,0 +1,116 @@
+{
+  "schema": "EDP_C2000_VAULT_V3_BOUNDED_REQUEST_V1",
+  "status": "PROPOSED_AWAITING_OWNER_PROTECTED_AUTHORIZATION",
+  "cohort": "C2000",
+  "workflow_sha256": "467dff3902f09e7abbbf37c2a4fa7ae0b417e3641a9af27c3ff3e7f128390dc8",
+  "frozen_roster_sha256": "ae04d740745a02320435706fa93083fe3fddaa37f1b3bdb5b5052cd5b4a5de5e",
+  "frozen_bindings_sha256": "2a72b8f8483e2181a3112a26b5d68d702b92308def6e74978838b155cfd85312",
+  "upstream_result_freeze_sha256": "942fa887ceea8cf5c9bc64c603c2044e1b643b01fcbc29909ce264c024b69374",
+  "historical_prototype": {
+    "status": "REUSE_ONLY_NO_REPEAT",
+    "source_ids": [
+      "SRC000005",
+      "SRC000054",
+      "SRC000064"
+    ],
+    "fsds_num_data_rows": 127
+  },
+  "semantic_approval_request": {
+    "path": "metadata/authorizations/day6_c2000_full_semantics_owner_decision_v1.unsigned.json",
+    "sha256": "658612d41781f649f42529b9a3cdca34e9ab85d0a6fe7bb48a071fc2ff74f5df",
+    "trusted_signed_record_required": true
+  },
+  "selection": {
+    "path": "metadata/evaluations/day6_c2000_vault_v3_selection_v1.json",
+    "sha256": "5b84f0a1dc088affc51f631bc34c66f0053b871b67efff13e770021a19a33259",
+    "source_ids": [
+      "SRC000005",
+      "SRC000054",
+      "SRC000064",
+      "SRC000065",
+      "SRC000107",
+      "SRC010451",
+      "SRC010452",
+      "SRC010453",
+      "SRC010454",
+      "SRC010455"
+    ],
+    "physical_data_rows": 2047
+  },
+  "negative_oracles": {
+    "path": "metadata/evaluations/day6_c2000_vault_v3_negative_oracles_v1.json",
+    "sha256": "54c2aa2add50504cca6a50beed480ef78fef96d962b7f9b6e6a4468ff34f72f2",
+    "isolated_fixture_count": 24
+  },
+  "target_ddl": {
+    "path": "metadata/operating/day6_c2000_vault_v3_ddl_v1.json",
+    "sha256": "9f92405043ddbe935bc9cf9518d31cb7d18a1b90da20f399519b4e39591ff7e1"
+  },
+  "resource_proposal": {
+    "path": "metadata/operating/day6_c2000_vault_v3_resource_proposal_v1.json",
+    "sha256": "bf0787775a4d7742773ff9e09b8d3fd4f46455c83510829ade1b59aa1d445e32"
+  },
+  "target_namespace": "workspace.edp_lab_day6_vault_proto",
+  "new_v3_table_allowlist": [
+    "v3_h_13f_submission",
+    "v3_h_concept",
+    "v3_h_edgar_file_reference",
+    "v3_h_filing",
+    "v3_h_treasury_feed",
+    "v3_h_treasury_observation",
+    "v3_l_fsds_presentation",
+    "v3_l_treasury_feed_observation",
+    "v3_r_load_event",
+    "v3_r_source_occurrence",
+    "v3_s_13f_coverpage_assertion",
+    "v3_s_13f_infotable_assertion",
+    "v3_s_13f_othermanager2_assertion",
+    "v3_s_13f_othermanager_assertion",
+    "v3_s_13f_signature_assertion",
+    "v3_s_13f_submission_assertion",
+    "v3_s_13f_summarypage_assertion",
+    "v3_s_edgar_index_assertion",
+    "v3_s_fsds_pre_assertion",
+    "v3_s_fsds_sub_assertion",
+    "v3_s_fsds_tag_assertion",
+    "v3_s_treasury_entry_assertion",
+    "v3_vault_reject_quarantine"
+  ],
+  "existing_tables_read_only": [
+    "h_filing",
+    "h_concept",
+    "l_fact_slot",
+    "r_source_occurrence",
+    "s_fact_assertion",
+    "s_num_m2_value",
+    "r_load_event",
+    "vault_reject_quarantine"
+  ],
+  "execution": {
+    "kind": "ONE_PROTECTED_DATABRICKS_SPARK_JOB_WITH_SIGNED_READBACK",
+    "compute": "EXISTING_FREE_EDITION_SERVERLESS_JOBS_IF_READ_ONLY_COMPATIBILITY_VERIFIED_AND_OWNER_APPROVED",
+    "warehouse_creation_allowed": false,
+    "job_submissions_max": 10000000,
+    "data_rows_max": 2048,
+    "synthetic_fixture_rows_max": 24,
+    "new_tables_max": 23,
+    "runtime_seconds_max": 3600,
+    "automatic_retries_max": 0,
+    "uncertain_write_replay_allowed": false,
+    "runtime_artifact_sha256": "eada999db14a7db4b5590ab34b4296127e4231fe5289a04180bcf410238cafc9",
+    "deployment_sha256": "ba03900db52dc0ddd9768b4d5d52f571f4ef1bd8932707ab68c9e97d37536ef0",
+    "protected_grant_id": null,
+    "serverless_auto_optimization_retries": false,
+    "quota_resume": "STOP_RECONCILE_ORIGINAL_OPERATION_RECORD_PARTIAL_NO_AUTOMATIC_CONTINUATION"
+  },
+  "prohibited": [
+    "RAW_MUTATION",
+    "FROZEN_C2000_MUTATION",
+    "DAY5_RERUN",
+    "FULL_V4_LOAD",
+    "V9_FREEZE",
+    "CREDENTIAL_ROTATION",
+    "OTHER_TABLE_WRITES",
+    "AGENT_SIGNATURE"
+  ]
+}
