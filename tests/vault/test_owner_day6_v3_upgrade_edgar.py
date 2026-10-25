@@ -74,7 +74,8 @@ def test_upgrade_code_install_rejects_modified_existing_root_module(tmp_path, mo
 
 
 def test_upgrade_proposal_cannot_expand_source_or_target_population():
-    request = json.loads(upgrade.REQUEST.read_bytes())
+    request = json.loads((ROOT / "metadata/operating/"
+                          "day6_c2000_vault_v3_bounded_request_edgar_fix_v1.json").read_bytes())
     original = json.loads(upgrade.ORIGINAL_ACTIVE_REQUEST.read_bytes())
     assert request["selection"] == original["selection"]
     assert request["target_namespace"] == original["target_namespace"]
@@ -115,9 +116,10 @@ def test_successor_accepts_only_config_bound_signed_upgrade(monkeypatch):
         "schema": "EDP_DAY6_V3_ARTIFACT_UPGRADE_V1",
         "status": "APPROVED",
         "request_sha256": upgrade.CURRENT_REQUEST_SHA256,
-        "wheel_sha256": upgrade.NEW_WHEEL_SHA,
+        "wheel_sha256": deployment["artifact"]["sha256"],
         "original_e2e_sha256": stable_digest,
         "standing_sha256": stable_digest,
+        "failed_canary_no_effect_sha256": stable_digest,
     }
     ready = {
         "schema": "EDP_VAULT_E2E_UPGRADE_V1",
@@ -125,8 +127,9 @@ def test_successor_accepts_only_config_bound_signed_upgrade(monkeypatch):
         "approval_sha256": stable_digest,
         "original_e2e_sha256": stable_digest,
         "standing_sha256": stable_digest,
+        "failed_canary_no_effect_sha256": stable_digest,
         "request_sha256": upgrade.CURRENT_REQUEST_SHA256,
-        "wheel_sha256": upgrade.NEW_WHEEL_SHA,
+        "wheel_sha256": deployment["artifact"]["sha256"],
         "environment_version": "4",
         "target_namespace": request["target_namespace"],
         "run_as": upgrade.APP_ID,
