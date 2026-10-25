@@ -135,6 +135,11 @@ def test_partial_resume_reuses_files_and_grants(tmp_path, monkeypatch):
     private.mkdir()
     local = private / "day6-v3-request.granted.json"
     local.write_bytes(owner.canonical(derived))
+    wheel = Path(deployment["artifact"]["local_build_output_uncommitted"])
+    original_digest = owner.file_digest
+    monkeypatch.setattr(owner, "file_digest", lambda path:
+                        deployment["artifact"]["sha256"] if path == wheel else
+                        original_digest(path))
     monkeypatch.setattr(owner, "BASE", tmp_path)
     for name in ("INSTALL", "GRANT", "RESERVATION", "SUBMISSION"):
         monkeypatch.setattr(owner, name, tmp_path / name.lower())
