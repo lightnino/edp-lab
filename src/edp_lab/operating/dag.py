@@ -188,6 +188,14 @@ def compile_dag(root: Path, plan: dict) -> dict:
     if "sources" in plan:
         queue.update(sources=plan["sources"], previous_cohort=plan["previous_cohort"],
                      prior_receipt=plan["prior_receipt"])
+    if "raw_mode" in plan:
+        if plan["raw_mode"] != "VERIFIED_READ_ONLY" or "sources" not in plan:
+            raise Denied("INVALID_INCREMENT_RAW_MODE")
+        if any(not isinstance(source.get("remote_raw_path"), str)
+               or not source.get("raw_handoff_receipt_sha256")
+               for source in plan["sources"]):
+            raise Denied("INCREMENT_RAW_HANDOFF_REQUIRED")
+        queue["raw_mode"] = "VERIFIED_READ_ONLY"
     _ordered(tasks)
     return queue
 
