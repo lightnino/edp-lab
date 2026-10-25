@@ -74,3 +74,45 @@ def test_treasury_date_type_grain_and_missing_type():
     next(f for f in missing["fields"] if f["name"] == "RATE_TYPE")["text"] = ""
     assert project(missing, feed_id=feed_id)["business_status"] == (
         "MISSING_TREASURY_BUSINESS_IDENTITY")
+
+
+
+def test_standalone_edgar_empty_physical_archive_member_is_valid_key_alias():
+    """Real accepted SRC000107 has archive_member='', not a ZIP member."""
+    from edp_lab.vault.v3_keys import occurrence_key
+
+    data = source(
+        "daily_master.idx", EDGAR_HEADER,
+        sid="SRC000107", values={"File Name": "edgar/data/1001/file.txt"}, offset=50,
+    )
+    data["physical_archive_member"] = ""
+    before = copy.deepcopy(data)
+    value = project(data)
+    assert value["business_status"] == "PROJECTED"
+    expected_key = occurrence_key("SRC000107", "daily_master.idx",
+                                  "b" * 64, 50, 20)
+    assert value["occurrence_hk"] == expected_key
+    assert data == before
+    assert all(row["archive_member"] == "" for row in value["rows"])
+    assert all(row["member_sha256"] == "b" * 64 for row in value["rows"])
+    assert all(row["byte_offset"] == 50 and row["byte_length"] == 20
+               for row in value["rows"])
+    assert table_rows(value, "v3_s_edgar_index_assertion")
+
+
+def test_missing_archive_member_remains_invalid_outside_fixed_standalone_edgar():
+    import pytest
+
+    examples = [
+        source("pre.txt", FSDS_HEADERS["pre.txt"], sid="SRC000005"),
+        source("daily_master.idx", EDGAR_HEADER, sid="SRC000108"),
+        source("COVERPAGE.tsv", ("ACCESSION_NUMBER",), sid="SRC000065"),
+    ]
+    for data in examples:
+        data["physical_archive_member"] = ""
+        with pytest.raises(ValueError, match="INVALID_OCCURRENCE_LOCATOR"):
+            project(data)
+    bad_edgar = source("daily_master.idx", EDGAR_HEADER, sid="SRC000107")
+    bad_edgar["physical_archive_member"] = None
+    with pytest.raises(ValueError, match="INVALID_OCCURRENCE_LOCATOR"):
+        project(bad_edgar)
