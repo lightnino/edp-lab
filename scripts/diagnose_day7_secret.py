@@ -21,9 +21,9 @@ def safe_error(raw: str) -> str:
     message = re.sub(
         r"(?i)(client_secret|refresh_token|access_token|authorization|api_key|"
         r"password|secret)\s*[:=]\s*[^\s,]+",
-        r"\\1=[REDACTED]", message,
+        r"\1=[REDACTED]", message,
     )
-    message = re.sub(r"[\\x00-\\x1f\\x7f]+", " ", message).strip()
+    message = re.sub(r"[\x00-\x1f\x7f]+", " ", message).strip()
     return message[:360] if message else "[CLI returned no error text]"
 
 
