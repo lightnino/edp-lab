@@ -13,6 +13,9 @@ AUTHORITY_PATH = Path("metadata/source_universes/approved_v1/manifest.json")
 # Single active Universe entrypoint for future cohort runs. The legacy pinned
 # v1 path above remains read-only for previously accepted historical executions.
 ACTIVE_AUTHORITY_PATH = Path("metadata/source_universes/approved/manifest.json")
+# Bound at protected one-time deployment to the single approved active manifest.
+# None means there is no installed successor authority, not "trust latest".
+ACTIVE_UNIVERSE_PIN: tuple[str, str] | None = None
 APPROVED_AUTHORITY_SHA256 = "2198f9bad9c864bf339eff515992526e22efc4230160614a8f86daf3143f463c"
 APPROVAL_SHA256 = "3307ff5c234e20b48a7a2ced6de7c54d504eb475de8ae90d4509cfd49002823d"
 BINDINGS_PATH = Path("metadata/source_universes/historical_cohort_bindings_v1.json")
@@ -86,6 +89,13 @@ class UniverseGate:
 
     @classmethod
     def load(cls, root):
+        # Once a successor is published there is only ONE active authority.
+        # Never fall back to historical v1 if it is present but not trusted.
+        if (root / ACTIVE_AUTHORITY_PATH).exists():
+            if ACTIVE_UNIVERSE_PIN is None:
+                raise ScopeDenied("ACTIVE_UNIVERSE_DEPLOYMENT_PIN_MISSING")
+            return cls.load_active(root, manifest_sha256=ACTIVE_UNIVERSE_PIN[0],
+                                   approval_sha256=ACTIVE_UNIVERSE_PIN[1])
         try:
             raw = (root / AUTHORITY_PATH).read_bytes()
         except OSError:
