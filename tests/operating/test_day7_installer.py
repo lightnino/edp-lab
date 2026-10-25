@@ -2,11 +2,17 @@
 
 from __future__ import annotations
 
+import importlib.util
 import json
+from pathlib import Path
 
 import pytest
 
-from scripts import owner_install_day7 as installer
+SCRIPT = Path(__file__).resolve().parents[2] / "scripts/owner_install_day7.py"
+SPEC = importlib.util.spec_from_file_location("owner_install_day7", SCRIPT)
+assert SPEC is not None and SPEC.loader is not None
+installer = importlib.util.module_from_spec(SPEC)
+SPEC.loader.exec_module(installer)
 
 
 def test_canary_submit_restart_reuses_checkpoint(tmp_path, monkeypatch):
