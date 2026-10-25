@@ -59,7 +59,7 @@ def run_gold(root: Path, output: Path):
         table = read_registered(root, binding["source_instance_id"], binding["logical_table_name"],
                                 provenance=provenance)
         host = ProfilingAdapters({name: table}, {"local_user": {name}},
-                                 universe_gate=UniverseGate.load(root), cohort="GOLD_V2")
+                                 universe_gate=UniverseGate.load_historical(root), cohort="GOLD_V2")
         report = observe(host, name, "local_user", table.columns)
         evaluation = evaluate(host, report, table)
         replay = observe(host, name, "local_user", table.columns)

@@ -135,7 +135,7 @@ def read_registered(root: Path, source_instance_id: str, logical_table: str, *,
     accounting = {"HEADER": 0, "DATA": 0, "FOOTER": 0}
     config, columns = {}, ()
     try:
-        UniverseGate.load(root).verify_inventory(root)
+        UniverseGate.load_historical(root).verify_inventory(root)
         freeze_bytes = (root / FREEZE).read_bytes()
         freeze = json.loads(freeze_bytes)
         candidate = load_candidate(root)

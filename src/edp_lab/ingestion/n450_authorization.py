@@ -35,7 +35,7 @@ def _require(condition, reason):
 def validate_packet(root, *, _verified_gate=None):
     """Read-only evidence validation, without RAW reads or execution authority."""
     root = Path(root)
-    gate = UniverseGate.load(root) if _verified_gate is None else _verified_gate
+    gate = UniverseGate.load_historical(root) if _verified_gate is None else _verified_gate
     gate.verify_inventory(root)
     try:
         docs = {}
@@ -105,7 +105,7 @@ def authorize(root, action, bindings, *, cohort="N450"):
         grant = json.loads(raw)
         _require(grant["status"] == "OWNER_APPROVED", "INVALID_OWNER_GRANT")
         _require(grant["packet_sha256"] == PINS, "GRANT_PACKET_MISMATCH")
-        _require(grant["universe"] == UniverseGate.load(Path(root)).scope_reference(),
+        _require(grant["universe"] == UniverseGate.load_historical(Path(root)).scope_reference(),
                  "GRANT_UNIVERSE_MISMATCH")
         scope = grant["scopes"].get(action)
         _require(scope is not None and cohort == scope["cohort"], "ACTION_NOT_AUTHORIZED")
@@ -153,7 +153,7 @@ def verify_local_bytes(root):
 def verify_historical_bytes(root):
     """Resolve exact pinned physical inputs while preserving registry-relative aliases."""
     root = Path(root)
-    gate = UniverseGate.load(root)
+    gate = UniverseGate.load_historical(root)
     try:
         doc = gate.document()
         side = json.loads(gate.bindings)

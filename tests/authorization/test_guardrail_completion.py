@@ -17,7 +17,7 @@ ROOT = Path(__file__).resolve().parents[2]
 
 @pytest.mark.usefixtures("owner_evidence")
 def test_exact_owner_authority_and_frozen_compatibility():
-    gate = u.UniverseGate.load(ROOT)
+    gate = u.UniverseGate.load_historical(ROOT)
     gate.verify_inventory(ROOT)
     doc = gate.document()
     assert len(doc["members"]) == 3021
@@ -77,7 +77,7 @@ def test_actual_inspection_rejects_enlarged_physical_input_before_parser(monkeyp
     # An original approved GOLD source is still outside the selected C300 run.
     with pytest.raises(u.ScopeDenied, match="NOT_IN_PINNED_COHORT"):
         inspect(ROOT, {"bindings": [rows[0]]}, None)
-    holdout = next(m for m in u.UniverseGate.load(ROOT).document()["members"] if m["holdout"])
+    holdout = next(m for m in u.UniverseGate.load_historical(ROOT).document()["members"] if m["holdout"])
     with pytest.raises(u.ScopeDenied, match="RESERVED_HOLDOUT"):
         inspect(
             ROOT,

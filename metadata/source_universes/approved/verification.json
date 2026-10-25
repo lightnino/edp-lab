@@ -1,0 +1,16 @@
+{
+  "c2000_bindings_sha256": "2a72b8f8483e2181a3112a26b5d68d702b92308def6e74978838b155cfd85312",
+  "eligible_after_c2000": 1780,
+  "holdouts": 41,
+  "independent_remote_readback_sha256": "f749b1c5b778250ebd2c411196f5c6af9c9945c355102e50fae9583767f38f14",
+  "manifest_sha256": "dcc63767c88ae712eab8f5ba29d52a206b4262710740e591a4b233d9c04c699b",
+  "members": 3821,
+  "new_raw_bytes": 79225793,
+  "owner_decision_sha256": "416efc5f7ab18b2570ba9beab26bba33210c5e0a75ec813a92ccac953af36d74",
+  "parent_manifest_sha256": "2198f9bad9c864bf339eff515992526e22efc4230160614a8f86daf3143f463c",
+  "raw_uploads": 0,
+  "receipt_count": 800,
+  "retained_reference_sha256": "13cdaf7a7be3f9c2a966b84769b459ea3eaa186e26f8f70257fbe999ffeadeae",
+  "schema": "EDP_DAY7_UNIVERSE_PUBLICATION_RECONCILIATION_V1",
+  "status": "LOCAL_RECONCILED_PROTECTED_READBACK_PENDING"
+}

@@ -1,11 +1,12 @@
 """Host-owned experiment authority. Requests and RAW retention confer no authority.
 
-The deployment pin names the exact owner-approved Universe v1 artifact.
-Changing this pin is a human-reviewed code/configuration deployment, never a tool argument.
+The active digest must come from a protected deployment or signed grant, not
+from a mutable repository file or an agent-supplied request.
 """
 
 import hashlib
 import json
+import os
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -13,9 +14,6 @@ AUTHORITY_PATH = Path("metadata/source_universes/approved_v1/manifest.json")
 # Single active Universe entrypoint for future cohort runs. The legacy pinned
 # v1 path above remains read-only for previously accepted historical executions.
 ACTIVE_AUTHORITY_PATH = Path("metadata/source_universes/approved/manifest.json")
-# Bound at protected one-time deployment to the single approved active manifest.
-# None means there is no installed successor authority, not "trust latest".
-ACTIVE_UNIVERSE_PIN: tuple[str, str] | None = None
 APPROVED_AUTHORITY_SHA256 = "2198f9bad9c864bf339eff515992526e22efc4230160614a8f86daf3143f463c"
 APPROVAL_SHA256 = "3307ff5c234e20b48a7a2ced6de7c54d504eb475de8ae90d4509cfd49002823d"
 BINDINGS_PATH = Path("metadata/source_universes/historical_cohort_bindings_v1.json")
@@ -41,6 +39,31 @@ class ScopeDenied(ValueError):
 
 def sha(raw):
     return hashlib.sha256(raw).hexdigest()
+
+
+def _protected_active_pin(root: Path) -> tuple[str, str]:
+    """Read the installed, owner-signed pin from the root-owned Day 7 store."""
+    if os.environ.get("EDP_DAY7_PROTECTED") != "1" or os.geteuid() != 0:
+        raise ScopeDenied("ACTIVE_UNIVERSE_DEPLOYMENT_PIN_MISSING")
+    from edp_lab.operating.authority import verified_document
+
+    trust = Path("/private/var/db/edp-lab-day7/trust")
+    policy_path = trust / "policy.signed.json"
+    owner_key = trust / "owner_ed25519_public.pem"
+    protected = (trust, policy_path, owner_key)
+    if (not trust.is_dir() or not policy_path.is_file() or not owner_key.is_file()
+            or any(path.stat().st_uid != 0 or path.stat().st_mode & 0o022
+                   for path in protected)):
+        raise ScopeDenied("ACTIVE_UNIVERSE_DEPLOYMENT_PIN_MISSING")
+    try:
+        policy = verified_document(root, policy_path, trust)
+        if (policy.get("policy_id") != "edp-lab-standing-day7-c3000-v1"
+                or policy.get("universe_path") != str(ACTIVE_AUTHORITY_PATH)):
+            raise ValueError("Wrong protected policy")
+        return (policy["universe_sha256"],
+                policy["contracts"]["universe_approval"]["sha256"])
+    except (OSError, ValueError, KeyError, TypeError):
+        raise ScopeDenied("ACTIVE_UNIVERSE_DEPLOYMENT_PIN_INVALID") from None
 
 
 @dataclass(frozen=True)
@@ -77,9 +100,20 @@ class UniverseGate:
                 raise ValueError("Unsafe approval path")
             approval_raw = (root / approval_rel).read_bytes()
             approval = json.loads(approval_raw)
-            if (sha(approval_raw) != approval_sha256
-                    or approval.get("status") != "APPROVED"
-                    or approval.get("manifest_sha256") != manifest_sha256):
+            if sha(approval_raw) != approval_sha256:
+                raise ValueError("Owner decision digest changed")
+            if approval.get("schema") == "EDP_DAY7_UNIVERSE_EXPANSION_OWNER_DECISION_V1":
+                expansion = document["expansion"]
+                if (approval.get("decision") != "APPROVE_ALL_REFERENCED_RETAINED_800_FOR_PROSPECTIVE_UNIVERSE_V2"
+                        or approval.get("expected_new_total_members") != document["member_count"]
+                        or approval.get("parent_manifest_sha256") != document["parent_manifest_sha256"]
+                        or approval["new_member_set"]["source_reference_original_sha256"] != expansion["retained_reference_sha256"]
+                        or approval["new_member_set"]["expected_count"] != expansion["new_member_count"]
+                        or approval_sha256 != expansion["owner_decision_sha256"]
+                        or document["universe_version"] != "2"):
+                    raise ValueError("Owner decision does not bind expanded scope")
+            elif (approval.get("status") != "APPROVED"
+                  or approval.get("manifest_sha256") != manifest_sha256):
                 raise ValueError("Invalid owner approval")
         except (OSError, ValueError, KeyError, TypeError):
             raise ScopeDenied("INVALID_OWNER_OR_COHORT_EVIDENCE") from None
@@ -92,10 +126,14 @@ class UniverseGate:
         # Once a successor is published there is only ONE active authority.
         # Never fall back to historical v1 if it is present but not trusted.
         if (root / ACTIVE_AUTHORITY_PATH).exists():
-            if ACTIVE_UNIVERSE_PIN is None:
-                raise ScopeDenied("ACTIVE_UNIVERSE_DEPLOYMENT_PIN_MISSING")
-            return cls.load_active(root, manifest_sha256=ACTIVE_UNIVERSE_PIN[0],
-                                   approval_sha256=ACTIVE_UNIVERSE_PIN[1])
+            manifest_sha, approval_sha = _protected_active_pin(Path(root))
+            return cls.load_active(root, manifest_sha256=manifest_sha,
+                                   approval_sha256=approval_sha)
+        return cls.load_historical(root)
+
+    @classmethod
+    def load_historical(cls, root):
+        """Load the original pinned snapshot for old, immutable cohort entrypoints."""
         try:
             raw = (root / AUTHORITY_PATH).read_bytes()
         except OSError:
@@ -275,7 +313,7 @@ class UniverseGate:
 
 
 def enforce(root, identity, raw_sha256, raw_path, *, cohort=None):
-    gate = UniverseGate.load(root)
+    gate = UniverseGate.load_historical(root)
     gate.verify_inventory(root)
     return gate.check(identity, raw_sha256, raw_path, cohort=cohort)
 

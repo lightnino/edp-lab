@@ -27,6 +27,40 @@ from edp_lab.operating.authority import (
 )
 
 
+def _day7_candidate(root: Path, path: Path, queue: dict, selected: list[dict]) -> dict:
+    """Bind the future machine-selected roster without preapproving its identities."""
+    from edp_lab.operating.day7_protected import C2000_BINDINGS_SHA, C2000_FREEZE_SHA, MANIFEST_SHA
+
+    prefix = (root / "runs/day7/c3000").resolve()
+    if not path.is_relative_to(prefix):
+        raise Denied("DAY7_CANDIDATE_OUTSIDE_RUN")
+    candidate = json.loads(path.read_bytes())
+    if (candidate.get("schema") != "EDP_INCREMENTAL_COHORT_CANDIDATE_V1"
+            or candidate.get("status") != "PREPARED_NOT_ADMITTED"
+            or candidate.get("previous_cohort") != "C2000"
+            or candidate.get("cohort") != "C3000"
+            or candidate.get("expected_increment") != len(selected)
+            or candidate.get("universe_sha256") != MANIFEST_SHA
+            or candidate.get("previous_freeze_path") != "metadata/freezes/C2000_v1/freeze.json"
+            or candidate.get("previous_freeze_sha256") != C2000_FREEZE_SHA
+            or candidate.get("previous_bindings_path") != "metadata/freezes/C2000_v1/C2000.bindings.json"
+            or candidate.get("previous_bindings_sha256") != C2000_BINDINGS_SHA):
+        raise Denied("DAY7_CANDIDATE_SCOPE_INVALID")
+    new_path = (root / candidate["new_bindings_path"]).resolve(strict=True)
+    if (not new_path.is_relative_to(prefix)
+            or file_digest(new_path) != candidate["new_bindings_sha256"]):
+        raise Denied("DAY7_ROSTER_PIN_CHANGED")
+    new = json.loads(new_path.read_bytes())
+    if (len(new) != len(selected)
+            or {(item["source_identity"], item["raw_sha256"], item["remote_raw_path"],
+                  item["raw_handoff_receipt_sha256"]) for item in new}
+            != {(item["identity"], item["sha256"], item["remote_raw_path"],
+                 item["raw_handoff_receipt_sha256"]) for item in selected}):
+        raise Denied("DAY7_ROSTER_QUEUE_MISMATCH")
+    return {"version": "EDP_INCREMENTAL_COHORT_CANDIDATE_V1",
+            "sha256": file_digest(path)}
+
+
 def evaluate(root: Path, queue_path: Path, policy_path: Path, trust: Path) -> dict:
     """Evaluate an Agent-selected queue against the signed standing policy."""
     root = root.resolve()
@@ -44,9 +78,35 @@ def evaluate(root: Path, queue_path: Path, policy_path: Path, trust: Path) -> di
         raise Denied("POLICY_NOT_CURRENT")
     if policy["policy_id"] in json.loads((trust / "revoked_grants.json").read_bytes()):
         raise Denied("POLICY_REVOKED")
+    day7 = policy["policy_id"] == "edp-lab-standing-day7-c3000-v1"
+    if day7:
+        from edp_lab.operating.day7_protected import (
+            C2000_RECEIPT_SHA,
+            C2000_RESULT_SHA,
+            DECISION_SHA,
+            MANIFEST_SHA,
+        )
+
+        if (policy.get("cohort_pattern") != "C3000"
+                or policy.get("max_increment") != 1000
+                or policy.get("universe_path") != "metadata/source_universes/approved/manifest.json"
+                or policy.get("universe_sha256") != MANIFEST_SHA
+                or policy.get("contracts", {}).get("universe_approval", {}).get("sha256") != DECISION_SHA
+                or "raw_stage" in policy["operations"]):
+            raise Denied("DAY7_POLICY_SCOPE_INVALID")
+        publication = verified_document(root, trust.parent / "receipts/day7-universe.json", trust)
+        if (publication.get("status") != "UNIVERSE_PUBLISHED_AND_VERIFIED"
+                or publication.get("manifest_sha256") != MANIFEST_SHA
+                or publication.get("owner_decision_sha256") != DECISION_SHA):
+            raise Denied("DAY7_UNIVERSE_NOT_PROTECTED_VERIFIED")
     queue = json.loads(queue_path.read_bytes())
     if queue.get("schema") != "EDP_QUEUE_V1" or queue.get("simulation_only"):
         raise Denied("INVALID_LIVE_QUEUE")
+    if day7 and (queue.get("raw_mode") != "VERIFIED_READ_ONLY"
+                 or queue.get("previous_cohort") != "C2000"
+                 or queue.get("prior_receipt") != policy["prior_receipt_path"]
+                 or any(task["kind"] == "raw_stage" for task in queue["tasks"])):
+        raise Denied("DAY7_READ_ONLY_QUEUE_REQUIRED")
     if not re.fullmatch(policy["cohort_pattern"], queue["cohort"]):
         raise Denied("COHORT_OUT_OF_SCOPE")
     if queue.get("route") not in policy["routes"]:
@@ -62,6 +122,10 @@ def evaluate(root: Path, queue_path: Path, policy_path: Path, trust: Path) -> di
             or not isinstance(prior.get("identities"), list)
             or len(prior["identities"]) != len(set(prior["identities"]))):
         raise Denied("PRIOR_COHORT_NOT_VERIFIED")
+    if day7 and (prior.get("result_freeze_sha256") != C2000_RESULT_SHA
+                 or prior.get("accepted_result_receipt_sha256") != C2000_RECEIPT_SHA
+                 or len(prior["identities"]) != 2000):
+        raise Denied("DAY7_C2000_PRIOR_NOT_PINNED")
     universe_path = (root / policy["universe_path"]).resolve(strict=True)
     if (not universe_path.is_relative_to(root)
             or file_digest(universe_path) != policy["universe_sha256"]):
@@ -85,13 +149,23 @@ def evaluate(root: Path, queue_path: Path, policy_path: Path, trust: Path) -> di
         if (member is None or member["holdout"] or source["sha256"] != member["raw_sha256"]
                 or source["path"] != member["raw_path"]):
             raise Denied("SOURCE_OUT_OF_UNIVERSE_OR_HOLDOUT")
-        if file_digest(Path(source["path"])) != source["sha256"]:
+        if day7:
+            from edp_lab.operating.day7_protected import verify_handoff_receipt
+
+            verify_handoff_receipt(root, trust, member, source,
+                                   json.loads(universe_path.read_bytes()),
+                                   policy["contracts"]["source_evidence_index"]["sha256"])
+        elif file_digest(Path(source["path"])) != source["sha256"]:
             raise Denied("RAW_HASH_CHANGED")
         sources[source["identity"]] = source["sha256"]
     contracts = {"queue": {"version": "EDP_QUEUE_V1", "sha256": file_digest(queue_path)}}
+    if day7:
+        contracts["source_evidence_index"] = policy["contracts"]["source_evidence_index"]
     for name, pin in queue["contracts"].items():
         allowed = policy["contracts"].get(name)
         path = (root / pin["path"]).resolve(strict=True)
+        if day7 and name == "candidate" and allowed is None:
+            allowed = _day7_candidate(root, path, queue, selected)
         if (allowed is None or not path.is_relative_to(root)
                 or pin["version"] != allowed["version"]
                 or file_digest(path) != allowed["sha256"]
@@ -100,6 +174,10 @@ def evaluate(root: Path, queue_path: Path, policy_path: Path, trust: Path) -> di
         contracts[name] = allowed
     if not {"parser", "model", "rule", "registry"} <= set(contracts):
         raise Denied("MISSING_EXECUTION_CONTRACT")
+    if day7 and (not {"universe", "universe_approval", "source_evidence_index"} <= set(contracts)
+                 or any(task["kind"] == "cohort_admit" for task in queue["tasks"])
+                 and "candidate" not in contracts):
+        raise Denied("DAY7_EXECUTION_CONTRACT_MISSING")
     operations = set(policy["operations"])
     paths = set()
     tables = set()
@@ -107,6 +185,10 @@ def evaluate(root: Path, queue_path: Path, policy_path: Path, trust: Path) -> di
         if task["kind"] not in operations:
             raise Denied("OPERATION_OUT_OF_POLICY")
         source = task.get("source")
+        if (day7 and source is not None
+                and source["identity"] in prior["identities"]
+                and task["kind"] in {"databricks_write", "databricks_job_submit"}):
+            raise Denied("DAY7_HISTORICAL_RECOMPUTE_FORBIDDEN")
         if source is not None:
             member = members.get(source["identity"])
             if (member is None or source["identity"] not in sources
@@ -207,6 +289,26 @@ def request(socket_path: Path, queue: Path) -> Path:
     return Path(response["grant_path"])
 
 
+def resolve_handoff(socket_path: Path, physical_identity: str) -> dict:
+    """Ask the installed protected verifier for an existing RAW U10 receipt."""
+    # Canonical Day 7 identities are SRC-prefixed six-digit source IDs;
+    # retain legacy digest identifiers without widening to arbitrary strings.
+    if not isinstance(physical_identity, str) or not (
+            re.fullmatch(r"SRC[0-9]{6}", physical_identity)
+            or re.fullmatch(r"[0-9a-f]{64}", physical_identity)):
+        raise Denied("INVALID_PHYSICAL_IDENTITY")
+    with socket.socket(socket.AF_UNIX) as client:
+        client.settimeout(120)
+        client.connect(str(socket_path))
+        client.sendall(canonical({"action": "resolve_handoff",
+                                  "identity": physical_identity}))
+        client.shutdown(socket.SHUT_WR)
+        response = json.loads(client.recv(8192))
+    if response.get("status") != "VERIFIED":
+        raise Denied(response.get("reason", "RAW_HANDOFF_UNVERIFIED"))
+    return response["result"]
+
+
 def execute(socket_path: Path, grant_path: Path, operation: dict) -> dict:
     """Submit one exact operation to the protected credential and ledger holder."""
     with socket.socket(socket.AF_UNIX) as client:
@@ -266,10 +368,23 @@ def serve(socket_path: Path, root: Path, policy: Path, trust: Path, key: Path,
                     result = adapter(root, grant, operation, trust.parent / "ledger",
                                      execute=True)
                     response = {"status": "EXECUTED", "result": result}
+                elif query.get("action") == "resolve_handoff":
+                    if os.geteuid() != 0:
+                        raise Denied("DAY7_PROTECTED_IDENTITY_REQUIRED")
+                    from edp_lab.operating.day7_protected import attest_handoff
+
+                    verifier_key = Path(os.environ["EDP_DAY7_VERIFIER_KEY"])
+                    result = attest_handoff(root, policy, trust, verifier_key,
+                                            query["identity"])
+                    response = {"status": "VERIFIED", "result": result}
                 else:
                     raise Denied("UNKNOWN_BROKER_ACTION")
             except (Denied, OSError, ValueError, KeyError) as exc:
-                response = {"status": "DENIED", "reason": str(exc)}
+                reason = str(exc)
+                status = ("RAW_HANDOFF_INCOMPLETE"
+                          if query.get("action") == "resolve_handoff"
+                          and reason.startswith("RAW_HANDOFF_INCOMPLETE") else "DENIED")
+                response = {"status": status, "reason": reason}
             self.wfile.write(canonical(response))
 
     with socketserver.UnixStreamServer(str(socket_path), Handler) as server:
