@@ -108,6 +108,10 @@ def test_proposed_job_is_the_exact_saved_job_shape():
     request = json.loads(owner.REQUEST.read_bytes())
     deployment = json.loads(owner.DEPLOYMENT.read_bytes())
     settings = owner._job_settings("a" * 64, deployment)
+    assert not {"max_retries", "retry_on_timeout", "disable_auto_optimization"} & settings.keys()
+    assert settings["tasks"][0]["max_retries"] == 0
+    assert settings["tasks"][0]["retry_on_timeout"] is False
+    assert settings["tasks"][0]["disable_auto_optimization"] is True
     assert verify_saved_job(
         settings, wheel_path=deployment["artifact"]["workspace_target_proposed"],
         run_as={"service_principal_name": owner.APP_ID},

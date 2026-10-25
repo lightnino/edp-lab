@@ -15,9 +15,8 @@ def verify_saved_job(settings: dict, *, wheel_path: str, run_as: dict,
     tasks = settings.get("tasks")
     if (settings.get("max_concurrent_runs") != 1
             or settings.get("queue", {}).get("enabled") is not False
-            or settings.get("disable_auto_optimization") is not True
-            or settings.get("max_retries") != 0
-            or settings.get("retry_on_timeout") is not False
+            or any(key in settings for key in (
+                "disable_auto_optimization", "max_retries", "retry_on_timeout"))
             or settings.get("timeout_seconds") != 3600
             or settings.get("run_as") != run_as
             or any(settings.get(key) for key in ("schedule", "trigger", "continuous"))
@@ -27,6 +26,7 @@ def verify_saved_job(settings: dict, *, wheel_path: str, run_as: dict,
     if (task.get("task_key") != "day6_v3_one_shot"
             or task.get("max_retries") != 0
             or task.get("retry_on_timeout") is not False
+            or task.get("disable_auto_optimization") is not True
             or task.get("timeout_seconds") != 3600
             or task.get("python_wheel_task") != {
                 "package_name": "edp-lab",

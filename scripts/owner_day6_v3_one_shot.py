@@ -136,11 +136,10 @@ def _job_settings(request_sha: str, deployment: dict) -> dict:
     wheel = deployment["artifact"]["workspace_target_proposed"]
     return {"name": "day6-c2000-v3-one-shot", "max_concurrent_runs": 1,
             "queue": {"enabled": False}, "timeout_seconds": 3600,
-            "max_retries": 0, "retry_on_timeout": False,
-            "disable_auto_optimization": True,
             "run_as": {"service_principal_name": APP_ID},
             "tasks": [{"task_key": "day6_v3_one_shot", "timeout_seconds": 3600,
                        "max_retries": 0, "retry_on_timeout": False,
+                       "disable_auto_optimization": True,
                        "environment_key": "v3_fixed_runtime",
                        "python_wheel_task": {"package_name": "edp-lab",
                                              "entry_point": "edp-day6-v3",

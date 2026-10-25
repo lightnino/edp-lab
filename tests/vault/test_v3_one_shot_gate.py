@@ -12,10 +12,10 @@ def _saved():
     identity = {"service_principal_name": "87df13c2-1bb7-4a0b-b84a-84e01bdc1764"}
     settings = {
         "max_concurrent_runs": 1, "queue": {"enabled": False},
-        "disable_auto_optimization": True, "max_retries": 0,
-        "retry_on_timeout": False, "timeout_seconds": 3600, "run_as": identity,
+        "timeout_seconds": 3600, "run_as": identity,
         "tasks": [{"task_key": "day6_v3_one_shot", "max_retries": 0,
-                   "retry_on_timeout": False, "timeout_seconds": 3600,
+                   "retry_on_timeout": False,
+                   "disable_auto_optimization": True, "timeout_seconds": 3600,
                    "python_wheel_task": {"package_name": "edp-lab",
                                          "entry_point": "edp-day6-v3",
                                          "parameters": parameters},
@@ -33,11 +33,15 @@ def test_exact_saved_one_shot_job():
 
 
 @pytest.mark.parametrize("change", [
-    lambda value: value.update(disable_auto_optimization=False),
-    lambda value: value.update(max_retries=1),
+    lambda value: value.update(disable_auto_optimization=True),
+    lambda value: value.update(max_retries=0),
+    lambda value: value.update(retry_on_timeout=False),
     lambda value: value.update(queue={"enabled": True}),
     lambda value: value.update(schedule={"quartz_cron_expression": "* * * * * ?"}),
     lambda value: value["tasks"][0].update(max_retries=1),
+    lambda value: value["tasks"][0].update(retry_on_timeout=True),
+    lambda value: value["tasks"][0].update(disable_auto_optimization=False),
+    lambda value: value["tasks"][0].pop("disable_auto_optimization"),
     lambda value: value["tasks"][0].update(new_cluster={}),
     lambda value: value["environments"][0]["spec"].update(dependencies=["other.whl"]),
 ])
