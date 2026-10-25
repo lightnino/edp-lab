@@ -8,6 +8,7 @@ instead of replaying a potentially uncertain external write.
 from __future__ import annotations
 
 import argparse
+import base64
 import hashlib
 import json
 import os
@@ -22,6 +23,8 @@ ROOT = Path("/Users/lightnino/Projects/edp-lab-day7-universe")
 BASE = Path("/private/var/db/edp-lab-day7")
 DAY5 = Path("/private/var/db/edp-lab")
 POLICY = ROOT / "metadata/operating/day7_c3000_standing_policy_unsigned_v1.json"
+SOURCE_INDEX = ROOT / "metadata/source_universes/approved/source_evidence_index_v1.json"
+JOURNAL = BASE / "ledger/day7-install.json"
 POLICY_SHA = "add8ec782742bea6ed2d8dfaf1fb7281706e6b47cdc9390abe76892c5e235d33"
 SOURCE_INDEX_SHA = "981207077b3710e3f60c3d669a27dcd84b74cf6aafb341354737ed74e2f645fc"
 MANIFEST_SHA = "dcc63767c88ae712eab8f5ba29d52a206b4262710740e591a4b233d9c04c699b"
@@ -83,6 +86,81 @@ def admin_sql(statement: str) -> dict:
     return result
 
 
+
+def _save_json(path: Path, obj: dict) -> None:
+    """Durable replace; never write credentials or volatile tokens to Git."""
+    tmp = path.with_name(path.name + ".new")
+    if tmp.exists():
+        raise RuntimeError("DAY7_PARTIAL_JOURNAL_WRITE_NEEDS_RECONCILIATION")
+    with tmp.open("x") as stream:
+        json.dump(obj, stream, sort_keys=True)
+        stream.write("\\n")
+        stream.flush()
+        os.fsync(stream.fileno())
+    os.replace(tmp, path)
+
+
+def _read_json(path: Path) -> dict:
+    return json.loads(path.read_bytes())
+
+
+def _install_intent(expected_commit: str) -> dict:
+    return {
+        "schema": "EDP_DAY7_OWNER_INSTALL_JOURNAL_V1",
+        "reviewed_commit": expected_commit,
+        "universe_sha256": MANIFEST_SHA,
+        "source_evidence_sha256": SOURCE_INDEX_SHA,
+        "policy_sha256": POLICY_SHA,
+    }
+
+
+def _mark(name: str, detail: dict | None = None) -> None:
+    journal = _read_json(JOURNAL)
+    journal.setdefault("completed", {})[name] = detail or {"status": "VERIFIED"}
+    _save_json(JOURNAL, journal)
+
+
+def _completed(name: str) -> bool:
+    return name in _read_json(JOURNAL).get("completed", {})
+
+
+def verify_canary_raw_read_only() -> dict:
+    """Prove SRC000002 original RAW exists before ANY protected or cloud write.
+
+    The Owner's existing interactive identity is used exclusively for this
+    pre-deployment read; the deployed broker must independently re-verify via
+    its protected M2M identity before a U10 receipt is signed.
+    """
+    index = _read_json(SOURCE_INDEX)
+    sources = [row for row in index["original_sources"]
+               if row.get("physical_identity") == "SRC000002"]
+    if len(sources) != 1:
+        raise RuntimeError("DAY7_CANARY_IDENTITY_NOT_UNIQUE")
+    source = sources[0]
+    locators = [row for row in index.get("known_original_locators", [])
+                if (row.get("physical_identity") == "SRC000002"
+                    and row.get("sha256") == source["raw_sha256"]
+                    and row.get("bytes") == source["raw_bytes"])]
+    if len(locators) != 1:
+        raise RuntimeError("DAY7_CANARY_LOCATOR_NOT_PINNED")
+    locator = locators[0]["remote_path"]
+    if (not isinstance(locator, str)
+            or not locator.startswith("dbfs:/Volumes/workspace/edp_lab/raw/")
+            or ".." in locator.split("/")):
+        raise RuntimeError("DAY7_CANARY_REMOTE_PATH_INVALID")
+    result = subprocess.run(
+        ["/usr/bin/sudo", "-n", "-u", "lightnino", "-H",
+         CLI, "fs", "cat", locator, "-p", "edp-lab"],
+        capture_output=True, check=False, timeout=180,
+    )
+    if (result.returncode != 0
+            or len(result.stdout) != source["raw_bytes"]
+            or hashlib.sha256(result.stdout).hexdigest() != source["raw_sha256"]):
+        raise RuntimeError("DAY7_CANARY_REMOTE_FULL_HASH_READBACK_FAILED")
+    return {"physical_identity": "SRC000002", "remote_path": locator,
+            "raw_sha256": source["raw_sha256"], "raw_bytes": source["raw_bytes"]}
+
+
 def preflight(expected_commit: str) -> None:
     if os.geteuid() != 0 or Path(__file__).resolve().parents[1] != ROOT:
         raise RuntimeError("OWNER_ROOT_TERMINAL_AND_DAY7_WORKTREE_REQUIRED")
@@ -110,25 +188,43 @@ def preflight(expected_commit: str) -> None:
     if not PYTHON.is_file() or not all((DAY5 / "private" / (role + ".pem")).is_file()
                                        for role in ("owner", "broker", "verifier")):
         raise RuntimeError("EXISTING_COHORT_PROTECTED_INFRASTRUCTURE_REQUIRED")
-    if PLIST.exists() or BASE.exists():
-        raise RuntimeError("PARTIAL_OR_EXISTING_DAY7_INSTALL_RECONCILE_BEFORE_RETRY")
+    recovering = BASE.exists()
+    if recovering:
+        if not JOURNAL.exists() or _read_json(JOURNAL) != {
+                **_install_intent(expected_commit),
+                "completed": _read_json(JOURNAL).get("completed", {})}:
+            raise RuntimeError("DAY7_EXISTING_INSTALL_JOURNAL_PIN_MISMATCH")
+    elif PLIST.exists():
+        raise RuntimeError("DAY7_UNOWNED_LAUNCHDAEMON_EXISTS")
     principal = admin("current-user", "me")
     if (principal.get("userName") != "chengzhu13@gmail.com"
             or "admins" not in {group.get("display") for group in principal.get("groups", [])}):
         raise RuntimeError("OWNER_ADMIN_IDENTITY_REQUIRED")
-    existing = admin("service-principals", "list", "--filter",
-                     f'displayName sw "{SP_NAME}"')
-    if existing and (existing if isinstance(existing, list)
-                     else existing.get("Resources", existing.get("service_principals", []))):
+    existing = _find_exact_service_principals()
+    if existing and not recovering:
         raise RuntimeError("DAY7_SERVICE_PRINCIPAL_ALREADY_EXISTS")
+    if len(existing) > 1:
+        raise RuntimeError("DAY7_SERVICE_PRINCIPAL_DUPLICATE_UNSAFE")
     present = subprocess.run(["/usr/bin/sudo", "-n", "-u", "lightnino", "-H",
                               CLI, "schemas", "get", SCHEMA, "-p", "edp-lab",
                               "-o", "json"], capture_output=True, text=True,
                              check=False, timeout=30)
-    if present.returncode == 0:
+    if present.returncode == 0 and not recovering:
         raise RuntimeError("DAY7_TARGET_SCHEMA_ALREADY_EXISTS")
-    if "does not exist" not in present.stderr.lower():
+    if present.returncode != 0 and "does not exist" not in present.stderr.lower():
         raise RuntimeError("DAY7_TARGET_SCHEMA_ABSENCE_NOT_PROVEN")
+    # This must run before protected_files, SP creation, UC grants or any Job.
+    # The installer cannot assume that a documented legacy locator still exists.
+    verify_canary_raw_read_only()
+
+
+
+def _find_exact_service_principals() -> list[dict]:
+    found = admin("service-principals", "list", "--filter",
+                  f'displayName sw "{SP_NAME}"')
+    rows = found if isinstance(found, list) else found.get(
+        "Resources", found.get("service_principals", []))
+    return [item for item in rows if item.get("displayName") == SP_NAME]
 
 
 def protected_files(expected_commit: str) -> None:
