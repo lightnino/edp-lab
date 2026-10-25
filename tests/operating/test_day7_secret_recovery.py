@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import importlib.util
 import json
-import os
+import sys
 from pathlib import Path
 from types import SimpleNamespace
 
@@ -14,7 +14,7 @@ ROOT = Path(__file__).resolve().parents[2]
 SPEC = importlib.util.spec_from_file_location(
     "day7_secret_recovery", ROOT / "scripts/owner_recover_day7_secret_v1.py")
 assert SPEC and SPEC.loader
-import sys
+
 sys.path.insert(0, str(ROOT / "scripts"))
 recovery = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(recovery)
@@ -120,7 +120,7 @@ def test_failed_remote_secret_create_never_retries_or_writes_credentials(monkeyp
         return SimpleNamespace(returncode=1, stdout="",
                                stderr="PERMISSION_DENIED client_secret=very-private")
     monkeypatch.setattr(recovery.subprocess, "run", run)
-    monkeypatch.setattr(recovery, "_secret_metadata", lambda: [])
+    monkeypatch.setattr(recovery, "_secret_metadata", list)
     with pytest.raises(RuntimeError, match="NO_AUTOMATIC_RETRY") as err:
         recovery.recover("new-reviewed-commit")
     assert "very-private" not in str(err.value)
