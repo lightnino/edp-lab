@@ -94,3 +94,88 @@ def test_edgar_standalone_empty_member_preserves_lineage():
         _member(invalid)
     with pytest.raises(ValueError, match="V3_C300_MEMBER_OUT_OF_SCOPE"):
         c300_occurrence(row, invalid, "a" * 64, names)
+
+
+
+def test_thirteen_f_all_seven_members_preserve_lowercase_extension():
+    """Observed frozen 13F members use uppercase stem and lowercase .tsv."""
+    from edp_lab.vault.v3_mapping import THIRTEEN_F_MEMBERS
+    from edp_lab.vault.v3_spark_runtime import _member
+
+    assert len(THIRTEEN_F_MEMBERS) == 7
+    names = ("ACCESSION_NUMBER",)
+    row = {
+        "record_kind": "DATA", "source_instance_id": "SRC000065",
+        "run_id": "c300-run", "binding_sha256": "c" * 64,
+        "source_line": 2, "byte_offset": 50, "byte_length": 20,
+        "fields": [{
+            "field_ordinal": 1, "original_name": names[0],
+            "disposition": "DIRECT_MAP", "lexical_value": "000001",
+        }],
+    }
+    for member in THIRTEEN_F_MEMBERS:
+        binding = {
+            "source_instance_id": "SRC000065",
+            "archive_member": member,
+            "run_id": "c300-run",
+            "binding_sha256": "c" * 64,
+            "processing_status": "COMPLETE",
+            "raw_sha256": "a" * 64,
+            "member_sha256": "b" * 64,
+        }
+        assert _member(binding) == member
+        result = c300_occurrence(row, binding, "a" * 64, names)
+        assert result["archive_member"] == member
+        assert result["physical_archive_member"] == member
+        assert result["fields"][0]["text"] == "000001"
+
+        # Normalizing every character with .upper() breaks the frozen
+        # selection and must not silently normalize unknown case variants.
+        invalid = dict(binding, archive_member=member.upper())
+        with pytest.raises(ValueError, match="V3_UNEXPECTED_C300_MEMBER"):
+            _member(invalid)
+        with pytest.raises(ValueError, match="V3_C300_MEMBER_OUT_OF_SCOPE"):
+            c300_occurrence(row, invalid, "a" * 64, names)
+
+
+def test_c300_all_17_frozen_sec_bindings_are_discoverable():
+    """Regression for real read-only canary failure, previously 10/17."""
+    import json
+    from pathlib import Path
+    from types import SimpleNamespace
+
+    from edp_lab.vault.v3_spark_runtime import C300_TABLES, _bindings
+
+    root = Path(__file__).resolve().parents[2]
+    selection = json.loads((root / "metadata/evaluations/"
+                            "day6_c2000_vault_v3_selection_v1.json").read_bytes())
+    sec_ids = ("SRC000005", "SRC000054", "SRC000064", "SRC000065", "SRC000107")
+    expected = {(sid, name) for sid in sec_ids
+                for name in selection["sources"][sid]["members"]}
+    assert len(expected) == 17
+
+    rows = [{
+        "source_instance_id": sid,
+        "archive_member": ("" if sid == "SRC000107" else name),
+        "raw_sha256": selection["sources"][sid]["raw_sha256"],
+        "processing_status": "COMPLETE",
+    } for sid, name in sorted(expected)]
+    rows.append(dict(rows[0], archive_member="num.txt"))
+
+    class Spark:
+        def sql(self, query):
+            assert "VERSION AS OF 0" in query
+            selected = rows if C300_TABLES[0][1] in query else []
+            return SimpleNamespace(
+                collect=lambda: [
+                    SimpleNamespace(asDict=lambda recursive, row=row: row)
+                    for row in selected
+                ]
+            )
+
+    found = _bindings(Spark(), selection)
+    assert set(found) == expected
+    assert len(found) == 17
+    for sid, name in expected:
+        _, binding = found[(sid, name)]
+        assert binding["raw_sha256"] == selection["sources"][sid]["raw_sha256"]
