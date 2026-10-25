@@ -153,11 +153,14 @@ def evaluate(root: Path, queue_path: Path, policy_path: Path, trust: Path) -> di
             from edp_lab.operating.day7_protected import verify_handoff_receipt
 
             verify_handoff_receipt(root, trust, member, source,
-                                   json.loads(universe_path.read_bytes()))
+                                   json.loads(universe_path.read_bytes()),
+                                   policy["contracts"]["source_evidence_index"]["sha256"])
         elif file_digest(Path(source["path"])) != source["sha256"]:
             raise Denied("RAW_HASH_CHANGED")
         sources[source["identity"]] = source["sha256"]
     contracts = {"queue": {"version": "EDP_QUEUE_V1", "sha256": file_digest(queue_path)}}
+    if day7:
+        contracts["source_evidence_index"] = policy["contracts"]["source_evidence_index"]
     for name, pin in queue["contracts"].items():
         allowed = policy["contracts"].get(name)
         path = (root / pin["path"]).resolve(strict=True)
@@ -171,7 +174,7 @@ def evaluate(root: Path, queue_path: Path, policy_path: Path, trust: Path) -> di
         contracts[name] = allowed
     if not {"parser", "model", "rule", "registry"} <= set(contracts):
         raise Denied("MISSING_EXECUTION_CONTRACT")
-    if day7 and (not {"universe", "universe_approval"} <= set(contracts)
+    if day7 and (not {"universe", "universe_approval", "source_evidence_index"} <= set(contracts)
                  or any(task["kind"] == "cohort_admit" for task in queue["tasks"])
                  and "candidate" not in contracts):
         raise Denied("DAY7_EXECUTION_CONTRACT_MISSING")
@@ -373,7 +376,11 @@ def serve(socket_path: Path, root: Path, policy: Path, trust: Path, key: Path,
                 else:
                     raise Denied("UNKNOWN_BROKER_ACTION")
             except (Denied, OSError, ValueError, KeyError) as exc:
-                response = {"status": "DENIED", "reason": str(exc)}
+                reason = str(exc)
+                status = ("RAW_HANDOFF_INCOMPLETE"
+                          if query.get("action") == "resolve_handoff"
+                          and reason.startswith("RAW_HANDOFF_INCOMPLETE") else "DENIED")
+                response = {"status": status, "reason": reason}
             self.wfile.write(canonical(response))
 
     with socketserver.UnixStreamServer(str(socket_path), Handler) as server:

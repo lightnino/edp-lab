@@ -22,7 +22,8 @@ ROOT = Path("/Users/lightnino/Projects/edp-lab-day7-universe")
 BASE = Path("/private/var/db/edp-lab-day7")
 DAY5 = Path("/private/var/db/edp-lab")
 POLICY = ROOT / "metadata/operating/day7_c3000_standing_policy_unsigned_v1.json"
-POLICY_SHA = "a3ebfc053ce87914d7335e404b7baa9a1e265e61066088bcb7515e5ec18c4a6b"
+POLICY_SHA = "add8ec782742bea6ed2d8dfaf1fb7281706e6b47cdc9390abe76892c5e235d33"
+SOURCE_INDEX_SHA = "981207077b3710e3f60c3d669a27dcd84b74cf6aafb341354737ed74e2f645fc"
 MANIFEST_SHA = "dcc63767c88ae712eab8f5ba29d52a206b4262710740e591a4b233d9c04c699b"
 DECISION_SHA = "416efc5f7ab18b2570ba9beab26bba33210c5e0a75ec813a92ccac953af36d74"
 HOST = "https://dbc-23e7784b-bb6e.cloud.databricks.com"
@@ -93,6 +94,8 @@ def preflight(expected_commit: str) -> None:
         raise RuntimeError("DAY7_WORKTREE_NOT_CLEAN")
     pins = ((POLICY, POLICY_SHA),
             (ROOT / "metadata/source_universes/approved/manifest.json", MANIFEST_SHA),
+            (ROOT / "metadata/source_universes/approved/source_evidence_index_v1.json",
+             SOURCE_INDEX_SHA),
             (ROOT / "metadata/authorizations/day7_universe_expansion_800_owner_decision.json",
              DECISION_SHA))
     if any(file_digest(path) != sha for path, sha in pins):
@@ -102,13 +105,8 @@ def preflight(expected_commit: str) -> None:
         (ROOT / "metadata/freezes/C2000_v1/C2000.bindings.json").read_bytes())}
     eligible = [row for row in manifest["members"]
                 if not row["holdout"] and row["identity"] not in old]
-    remote_bound = [row for row in eligible
-                    if all(key in row for key in
-                           ("remote_raw_path", "remote_receipt_path",
-                            "remote_receipt_sha256", "raw_bytes"))]
-    if len(eligible) != 1780 or len(remote_bound) < 1000:
-        raise RuntimeError("DAY7_N1000_HANDOFF_COVERAGE_INSUFFICIENT_"
-                           f"{len(remote_bound)}_OF_1000")
+    if len(eligible) != 1780:
+        raise RuntimeError("DAY7_ELIGIBLE_UNIVERSE_COUNT_CHANGED")
     if not PYTHON.is_file() or not all((DAY5 / "private" / (role + ".pem")).is_file()
                                        for role in ("owner", "broker", "verifier")):
         raise RuntimeError("EXISTING_COHORT_PROTECTED_INFRASTRUCTURE_REQUIRED")
@@ -146,6 +144,9 @@ def protected_files(expected_commit: str) -> None:
         shutil.copyfile(DAY5 / "trust" / (role + "_ed25519_public.pem"),
                         BASE / "trust" / (role + "_ed25519_public.pem"))
     (BASE / "trust/revoked_grants.json").write_text("[]\n")
+    shutil.copyfile(ROOT / "metadata/source_universes/approved/source_evidence_index_v1.json",
+                    BASE / "source_evidence_index.json")
+    (BASE / "source_evidence_index.json").chmod(0o444)
     archive = subprocess.run(["/usr/bin/git", "-c", f"safe.directory={ROOT}",
                               "-C", str(ROOT), "archive", expected_commit,
                               "src/edp_lab"], capture_output=True, check=True,
@@ -192,9 +193,18 @@ def permissions(app_id: str) -> None:
     admin_sql(f"GRANT READ VOLUME ON VOLUME workspace.edp_lab.raw TO `{app_id}`")
     admin_sql("GRANT SELECT ON TABLE workspace.edp_lab."
               f"o_c2000_m2_result_frozen_day5_v1 TO `{app_id}`")
-    admin("permissions", "update", "warehouses", WAREHOUSE, "--json",
-          json.dumps({"access_control_list": [{"service_principal_name": app_id,
-                                                 "permission_level": "CAN_USE"}]}))
+    def merge_acl(resource: str, resource_id: str, subject: str,
+                  permission: str) -> None:
+        existing = admin("api", "get", f"/api/2.0/permissions/{resource}/{resource_id}")
+        acl = existing.get("access_control_list", [])
+        retained = [item for item in acl
+                    if item.get("service_principal_name") != subject]
+        retained.append({"service_principal_name": subject,
+                         "permission_level": permission})
+        admin("permissions", "update", resource, resource_id, "--json",
+              json.dumps({"access_control_list": retained}))
+
+    merge_acl("warehouses", WAREHOUSE, app_id, "CAN_USE")
     raw = admin("grants", "get-effective", "volume", "workspace.edp_lab.raw",
                 "--principal", app_id)
     old = admin("grants", "get-effective", "table",
@@ -211,6 +221,33 @@ def permissions(app_id: str) -> None:
             or "SELECT" not in privileges(old)
             or privileges(old) & {"MODIFY", "ALL_PRIVILEGES", "MANAGE"}):
         raise RuntimeError("DAY7_SERVICE_RAW_OR_PRIOR_PRIVILEGE_INVALID")
+
+
+def submit_canary_once(payload: dict, source_sha256: str) -> str:
+    """Submit with a durable intent and Databricks idempotency token."""
+    checkpoint = BASE / "ledger/canary-submit-intent.json"
+    intent = {"payload": payload, "source_sha256": source_sha256}
+    if checkpoint.exists():
+        if json.loads(checkpoint.read_bytes()) != intent:
+            raise RuntimeError("DAY7_CANARY_RESTART_INTENT_CHANGED")
+    else:
+        with checkpoint.open("x") as stream:
+            stream.write(json.dumps(intent, sort_keys=True))
+            stream.flush()
+            os.fsync(stream.fileno())
+    run_checkpoint = BASE / "ledger/canary-run-id"
+    if run_checkpoint.exists():
+        run_id = run_checkpoint.read_text().strip()
+        if not run_id.isdecimal():
+            raise RuntimeError("DAY7_CANARY_RUN_CHECKPOINT_INVALID")
+        return run_id
+    result = service("jobs", "submit", "--json", json.dumps(payload), "--no-wait")
+    run_id = str(result["run_id"])
+    with run_checkpoint.open("x") as stream:
+        stream.write(run_id + "\n")
+        stream.flush()
+        os.fsync(stream.fileno())
+    return run_id
 
 
 def publication() -> tuple[dict, dict, dict]:
@@ -233,7 +270,7 @@ def publication() -> tuple[dict, dict, dict]:
     from edp_lab.ingestion.universe import UniverseGate
 
     member = next(row for row in UniverseGate.load(ROOT).document()["members"]
-                  if "remote_raw_path" in row)
+                  if row.get("identity") == "SRC000002")
     handoff = attest_handoff(ROOT, policy, trust, key,
                              member["identity"], live_canary=True)
     return universe, prior, handoff
@@ -247,9 +284,13 @@ def canary(expected_commit: str) -> dict:
     if notebook.get("object_type") != "NOTEBOOK" or not notebook.get("object_id"):
         raise RuntimeError("DAY7_CANARY_NOTEBOOK_IMPORT_UNVERIFIED")
     app_id = json.loads((BASE / "private/service-identity.json").read_bytes())["application_id"]
+    existing_acl = admin("api", "get",
+                         f"/api/2.0/permissions/notebooks/{notebook['object_id']}")
+    acl = [item for item in existing_acl.get("access_control_list", [])
+           if item.get("service_principal_name") != app_id]
+    acl.append({"service_principal_name": app_id, "permission_level": "CAN_READ"})
     admin("permissions", "update", "notebooks", str(notebook["object_id"]),
-          "--json", json.dumps({"access_control_list": [{
-              "service_principal_name": app_id, "permission_level": "CAN_READ"}]}))
+          "--json", json.dumps({"access_control_list": acl}))
     payload = {"idempotency_token": "day7-pr80-canary-" + expected_commit[:32],
                "run_name": "day7-pr80-protected-canary",
                "timeout_seconds": 1800,
@@ -257,12 +298,8 @@ def canary(expected_commit: str) -> dict:
                           "max_retries": 0,
                           "notebook_task": {"notebook_path": NOTEBOOK,
                                             "source": "WORKSPACE"}}]}
-    checkpoint = BASE / "ledger/canary-submit-intent.json"
-    checkpoint.write_text(json.dumps({"payload": payload,
-                                      "source_sha256": file_digest(CANARY_SOURCE)}))
-    result = service("jobs", "submit", "--json", json.dumps(payload), "--no-wait")
-    run_id = str(result["run_id"])
-    (BASE / "ledger/canary-run-id").write_text(run_id)
+    # The stable token reconciles an uncertain submit to the same Databricks run.
+    run_id = submit_canary_once(payload, file_digest(CANARY_SOURCE))
     deadline = time.monotonic() + 1800
     while True:
         run_state = service("jobs", "get-run", run_id)

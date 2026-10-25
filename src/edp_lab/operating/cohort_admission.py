@@ -169,22 +169,39 @@ def _admit_incremental(root: Path, grant: dict, request: dict, ledger: Path,
             != {(r["identity"], r["sha256"], r["remote_raw_path"])
                 for r in queue["sources"]}):
         raise Denied("INCREMENT_QUEUE_SOURCE_MISMATCH")
-    plan = plan_increment(
-        previous, new, gate.document()["members"],
-        previous_cohort=candidate["previous_cohort"],
-        new_cohort=candidate["cohort"],
-        expected_increment=candidate["expected_increment"],
-        pinned_universe_sha256=gate.fingerprint,
-    )
+    try:
+        plan = plan_increment(
+            previous, new, gate.document()["members"],
+            previous_cohort=candidate["previous_cohort"],
+            new_cohort=candidate["cohort"],
+            expected_increment=candidate["expected_increment"],
+            pinned_universe_sha256=gate.fingerprint,
+        )
+    except Denied as exc:
+        if str(exc) == "RAW_HANDOFF_MISSING":
+            raise Denied("RAW_HANDOFF_INCOMPLETE: selected source has no protected remote handoff") from exc
+        raise
     # Verify exact protected U10 receipts, not agent-written "verified" booleans.
     from edp_lab.operating.day7_protected import verify_handoff_receipt
 
     trust = protected_trust_dir(root)
+    source_index_pin = grant["contracts"].get("source_evidence_index", {}).get("sha256")
+    source_index_path = trust.parent / "source_evidence_index.json"
+    if (not isinstance(source_index_pin, str)
+            or file_digest(source_index_path) != source_index_pin):
+        raise Denied("DAY7_SOURCE_EVIDENCE_INDEX_NOT_PINNED")
     receipt_hashes = {}
     members = {row["identity"]: row for row in gate.document()["members"]}
     for source in new:
-        receipt_hashes[source["source_identity"]] = verify_handoff_receipt(
-            root, trust, members[source["source_identity"]], source, gate.document())
+        try:
+            receipt_hashes[source["source_identity"]] = verify_handoff_receipt(
+                root, trust, members[source["source_identity"]], source, gate.document(),
+                source_index_pin)
+        except Denied as exc:
+            if str(exc).startswith(("RAW_HANDOFF_RECEIPT_NOT_PINNED",
+                                    "RAW_HANDOFF_EVIDENCE_INVALID")):
+                raise Denied("RAW_HANDOFF_INCOMPLETE: selected source lacks a valid protected U10 receipt") from exc
+            raise
 
     target = root / "metadata/freezes" / candidate["cohort"]
     alias = root / "metadata/cohorts" / (candidate["cohort"] + ".csv")

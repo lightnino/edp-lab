@@ -20,6 +20,8 @@ CONTRACTS = {
                  "metadata/source_universes/approved/manifest.json"),
     "universe_approval": ("EDP_DAY7_UNIVERSE_EXPANSION_OWNER_DECISION_V1",
                           "metadata/authorizations/day7_universe_expansion_800_owner_decision.json"),
+    "source_evidence_index": ("EDP_DAY7_SOURCE_EVIDENCE_INDEX_V1",
+                               "metadata/source_universes/approved/source_evidence_index_v1.json"),
     "prior_freeze": ("C2000_INPUT_FREEZE_V1", "metadata/freezes/C2000_v1/freeze.json"),
     "prior_result": ("O_C2000_M2_DATABRICKS_RESULT_FREEZE_V1",
                      "metadata/freezes/O_C2000_M2_v1/databricks_result_freeze_v1.json"),
@@ -60,6 +62,11 @@ def prepare() -> dict:
     if (policy["contracts"]["universe_approval"]["sha256"]
             != "416efc5f7ab18b2570ba9beab26bba33210c5e0a75ec813a92ccac953af36d74"):
         raise ValueError("Owner decision digest changed")
+    evidence = json.loads((ROOT / CONTRACTS["source_evidence_index"][1]).read_bytes())
+    if (evidence.get("schema") != "EDP_DAY7_SOURCE_EVIDENCE_INDEX_V1"
+            or evidence.get("status") != "PINNED_DISCOVERY_INPUTS_NOT_U10_VERIFIED"
+            or evidence.get("universe_sha256") != policy["universe_sha256"]):
+        raise ValueError("Source evidence index is not pinned to the active Universe")
     if "raw_stage" in policy["operations"]:
         raise ValueError("Cohort RAW mutation forbidden")
     encoded = canonical(policy)

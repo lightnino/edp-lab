@@ -19,6 +19,9 @@ def setup(tmp_path: Path, monkeypatch):
     (root / "inputs").mkdir()
     (root / "protected/trust").mkdir(parents=True)
     (root / "protected/receipts").mkdir()
+    source_index_path = root / "protected/source_evidence_index.json"
+    source_index_path.write_text("{}")
+    source_index_sha = file_digest(source_index_path)
     old = [{"source_instance_id": "SRC001", "source_identity": "original",
             "raw_sha256": "a" * 64, "raw_path": "raw/original"}]
     new = [{"source_instance_id": "SRC002", "source_identity": "fresh",
@@ -81,20 +84,22 @@ def setup(tmp_path: Path, monkeypatch):
              "contracts": {"universe": {"path": str(ACTIVE_AUTHORITY_PATH),
                                         "sha256": universe_sha}}}
     grant = {"contracts": {"universe": {"sha256": universe_sha},
-                           "universe_approval": {"sha256": approval_sha}}}
+                           "universe_approval": {"sha256": approval_sha},
+                           "source_evidence_index": {"sha256": source_index_sha}}}
     request = {"cohort": "C2", "operation_id": "day7-c2-admit",
                "contracts": {"queue": {"path": "inputs/queue.json"}}}
     monkeypatch.setattr(admission, "protected_trust_dir", lambda _: root / "protected/trust")
     monkeypatch.setattr("edp_lab.operating.day7_protected.verified_document", lambda *_: {
         "schema": "EDP_U10_RAW_HANDOFF_RECEIPT_V1",
         "authority": "protected-verifier-v1", "status": "VERIFIED",
-        "readback_mode": "PINNED_HISTORICAL_FULL_HASH",
-        "live_readback": False, "physical_identity": "fresh",
+        "readback_mode": "CURRENT_FULL_HASH",
+        "live_readback": True, "physical_identity": "fresh",
         "source_instance_id": "SRC002", "remote_sha256": "b" * 64,
         "remote_bytes": 123, "remote_path": "dbfs:/Volume/verified/fresh",
         "remote_receipt_sha256": "e" * 64,
         "historical_independent_readback_sha256": "f" * 64,
         "manifest_sha256": universe_sha,
+        "source_evidence_index_sha256": source_index_sha,
     })
     monkeypatch.setattr(admission, "_reserve", lambda *_: None)
     return root, grant, request, queue, candidate_path, candidate

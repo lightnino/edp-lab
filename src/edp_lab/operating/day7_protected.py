@@ -9,6 +9,7 @@ from __future__ import annotations
 import csv
 import json
 import subprocess
+from functools import lru_cache
 from pathlib import Path
 
 from edp_lab.ingestion.universe import ACTIVE_AUTHORITY_PATH, UniverseGate
@@ -58,7 +59,27 @@ def _policy(root: Path, policy_path: Path, trust: Path) -> dict:
             or "raw_stage" in policy.get("operations", [])
             or any("/raw/" in prefix.lower() for prefix in policy.get("databricks_path_prefixes", []))):
         raise Denied("DAY7_POLICY_SCOPE_INVALID")
+    index_pin = policy.get("contracts", {}).get("source_evidence_index", {})
+    index_path = trust.parent / "source_evidence_index.json"
+    if (index_pin.get("version") != "EDP_DAY7_SOURCE_EVIDENCE_INDEX_V1"
+            or not index_path.is_file()
+            or file_digest(index_path) != index_pin.get("sha256")):
+        raise Denied("DAY7_SOURCE_EVIDENCE_INDEX_NOT_PINNED")
     return policy
+
+
+def _source_index(policy: dict, trust: Path) -> tuple[dict, str]:
+    path = trust.parent / "source_evidence_index.json"
+    expected = policy["contracts"]["source_evidence_index"]["sha256"]
+    if file_digest(path) != expected:
+        raise Denied("DAY7_SOURCE_EVIDENCE_INDEX_NOT_PINNED")
+    index = json.loads(path.read_bytes())
+    if (index.get("schema") != "EDP_DAY7_SOURCE_EVIDENCE_INDEX_V1"
+            or index.get("status") != "PINNED_DISCOVERY_INPUTS_NOT_U10_VERIFIED"
+            or index.get("universe_sha256") != MANIFEST_SHA
+            or index.get("owner_decision_sha256") != DECISION_SHA):
+        raise Denied("DAY7_SOURCE_EVIDENCE_INDEX_SCOPE_INVALID")
+    return index, expected
 
 
 def _active(root: Path, policy: dict) -> dict:
@@ -204,40 +225,155 @@ def attest_prior(root: Path, policy_path: Path, trust: Path, key: Path,
 
 def _current_remote_bytes(remote: str) -> bytes:
     command = databricks_argv("fs", "cat", remote, "-p", "edp-lab")
-    response = subprocess.run(command, capture_output=True, timeout=180, check=False)
+    try:
+        response = subprocess.run(command, capture_output=True, timeout=180, check=False)
+    except (OSError, subprocess.TimeoutExpired) as exc:
+        raise Denied("RAW_HANDOFF_INCOMPLETE: remote RAW readback unavailable") from exc
     if response.returncode:
-        raise Denied("DAY7_RAW_CANARY_READBACK_FAILED")
+        raise Denied("RAW_HANDOFF_INCOMPLETE: remote RAW readback unavailable")
     return response.stdout
+
+
+@lru_cache(maxsize=10000)
+def _remote_listing(remote: str) -> tuple[dict, ...]:
+    command = databricks_argv("fs", "ls", remote, "-p", "edp-lab", "-o", "json")
+    try:
+        result = subprocess.run(command, capture_output=True, text=True,
+                                timeout=180, check=False)
+    except (OSError, subprocess.TimeoutExpired):
+        return ()
+    if result.returncode:
+        return ()
+    try:
+        parsed = json.loads(result.stdout)
+    except json.JSONDecodeError:
+        return ()
+    if isinstance(parsed, list):
+        return tuple(row for row in parsed if isinstance(row, dict))
+    if isinstance(parsed, dict) and isinstance(parsed.get("files"), list):
+        return tuple(row for row in parsed["files"] if isinstance(row, dict))
+    return ()
+
+
+@lru_cache(maxsize=16)
+def _historical_file_index(root_path: str, max_depth: int,
+                           max_entries: int) -> dict[str, tuple[str, ...]]:
+    pending = [(root_path.rstrip("/"), 0)]
+    visited: set[str] = set()
+    files: dict[str, list[str]] = {}
+    entry_count = 0
+    while pending and entry_count < max_entries:
+        directory, depth = pending.pop(0)
+        if directory in visited or depth > max_depth:
+            continue
+        visited.add(directory)
+        for entry in _remote_listing(directory):
+            entry_count += 1
+            path = entry.get("path") or entry.get("name")
+            if not isinstance(path, str):
+                continue
+            if not path.startswith("dbfs:"):
+                path = directory.rstrip("/") + "/" + path.lstrip("/")
+            if entry.get("is_dir", entry.get("directory", False)):
+                if depth < max_depth:
+                    pending.append((path, depth + 1))
+            else:
+                files.setdefault(Path(path.rstrip("/")).name, []).append(path)
+    return {name: tuple(paths) for name, paths in files.items()}
+
+
+def _candidate_original_locators(index: dict, source: dict) -> list[tuple[str, str]]:
+    identity = source["physical_identity"]
+    source_id = source.get("source_instance_id") or identity
+    candidates: list[tuple[str, str]] = []
+    for item in index.get("known_original_locators", []):
+        if (item.get("physical_identity") == identity
+                and item.get("sha256") == source["raw_sha256"]
+                and item.get("bytes") == source["raw_bytes"]):
+            candidates.append((item["remote_path"], "PINNED_HISTORICAL_LOCATOR"))
+    for item in index.get("historical_remote_receipts", []):
+        if (item.get("source_instance_id") == source_id
+                and item.get("sha256") == source["raw_sha256"]
+                and item.get("bytes") == source["raw_bytes"]):
+            candidates.append((item["remote_path"], "PINNED_HISTORICAL_RECEIPT"))
+    basename = Path(source["raw_path"]).name
+    for root in index.get("historical_locator_roots", []):
+        max_depth, max_entries = int(root.get("max_depth", 5)), int(root.get("max_entries", 10000))
+        files = _historical_file_index(root["path"], max_depth, max_entries)
+        for name in (identity, source_id, basename):
+            candidates.extend((path, "BOUNDED_HISTORICAL_IDENTITY_SHA_BYTE_SEARCH")
+                              for path in files.get(name, ()))
+    return list(dict.fromkeys(candidates))
 
 
 def attest_handoff(root: Path, policy_path: Path, trust: Path, key: Path,
                    identity: str, *, live_canary: bool = False) -> dict:
     policy = _policy(root, policy_path, trust)
     document = _active(root, policy)
-    additions, evidence_sha = _source_evidence(document)
+    additions, historical_readback_sha = _source_evidence(document)
+    index, index_sha = _source_index(policy, trust)
     member = additions.get(identity)
-    if member is None:
-        raise Denied("RAW_HANDOFF_REFERENCE_UNAVAILABLE")
-    if live_canary:
-        raw = _current_remote_bytes(member["remote_raw_path"])
-        if len(raw) != member["raw_bytes"] or digest(raw) != member["raw_sha256"]:
-            raise Denied("DAY7_RAW_CANARY_HASH_MISMATCH")
+    source = next((item for item in index.get("original_sources", [])
+                   if item.get("physical_identity") == identity), None)
+    provenance = "APPROVED_EXPANSION_RECEIPT"
+    if member is not None:
+        locators = [(member["remote_raw_path"],
+                     "CURRENT_FULL_HASH" if live_canary else "PINNED_HISTORICAL_FULL_HASH")]
+        source = {"physical_identity": identity,
+                  "source_instance_id": member["source_instance_id"],
+                  "raw_sha256": member["raw_sha256"], "raw_bytes": member["raw_bytes"]}
+    elif source is not None:
+        if (source.get("raw_sha256") != next(
+                (row["raw_sha256"] for row in document["members"]
+                 if row.get("identity") == identity), None)
+                or source.get("raw_path") != next(
+                    (row["raw_path"] for row in document["members"]
+                     if row.get("identity") == identity), None)):
+            raise Denied("DAY7_SOURCE_EVIDENCE_INDEX_MEMBER_MISMATCH")
+        locators = _candidate_original_locators(index, source)
+        provenance = "PINNED_SOURCE_EVIDENCE_INDEX"
+    else:
+        raise Denied("RAW_HANDOFF_INCOMPLETE: identity absent from pinned evidence index; Acquisition-only remediation")
+    verified: list[tuple[str, bytes, str]] = []
+    for locator, locator_source in locators:
+        try:
+            raw = _current_remote_bytes(locator)
+        except Denied:
+            continue
+        if len(raw) == source["raw_bytes"] and digest(raw) == source["raw_sha256"]:
+            verified.append((locator, raw, locator_source))
+    if not verified:
+        raise Denied("RAW_HANDOFF_INCOMPLETE: no locator independently read back with exact SHA-256 and bytes; Acquisition-only remediation")
+    remote, _, locator_source = verified[0]
+    if any(item[0] != remote for item in verified):
+        raise Denied("RAW_HANDOFF_AMBIGUOUS: multiple exact locators require independent reconciliation")
+    member_receipt_sha = member.get("remote_receipt_sha256") if member else None
     signed = {"schema": "EDP_U10_RAW_HANDOFF_RECEIPT_V1",
               "authority": "protected-verifier-v1", "status": "VERIFIED",
-              "live_readback": live_canary, "physical_identity": identity,
-              "source_instance_id": member["source_instance_id"],
-              "remote_sha256": member["raw_sha256"], "remote_bytes": member["raw_bytes"],
-              "remote_path": member["remote_raw_path"],
+              "live_readback": True, "physical_identity": identity,
+              "source_instance_id": source.get("source_instance_id") or identity,
+              "remote_sha256": source["raw_sha256"], "remote_bytes": source["raw_bytes"],
+              "remote_path": remote,
               "manifest_sha256": MANIFEST_SHA,
-              "historical_independent_readback_sha256": evidence_sha,
-              "remote_receipt_sha256": member["remote_receipt_sha256"],
-              "readback_mode": "CURRENT_FULL_HASH" if live_canary else "PINNED_HISTORICAL_FULL_HASH"}
+              "source_evidence_index_sha256": index_sha,
+              "historical_independent_readback_sha256": historical_readback_sha,
+              "remote_receipt_sha256": member_receipt_sha,
+              "locator_provenance": locator_source,
+              "evidence_provenance": provenance,
+              "readback_mode": "CURRENT_FULL_HASH"}
     output = trust.parent / "receipts" / f"day7-u10-{identity}.json"
-    return _receipt(root, trust, key, output, signed)
+    result = _receipt(root, trust, key, output, signed)
+    result.update({"physical_identity": identity,
+                   "source_instance_id": signed["source_instance_id"],
+                   "raw_sha256": signed["remote_sha256"],
+                   "raw_bytes": signed["remote_bytes"],
+                   "remote_raw_path": signed["remote_path"]})
+    return result
 
 
 def verify_handoff_receipt(root: Path, trust: Path, member: dict,
-                           source: dict, manifest: dict) -> str:
+                           source: dict, manifest: dict,
+                           source_evidence_index_sha256: str) -> str:
     """Verify the exact protected U10 receipt used at P5 and admission."""
     identity = member["identity"]
     path = Path(source["raw_handoff_receipt_path"])
@@ -248,20 +384,36 @@ def verify_handoff_receipt(root: Path, trust: Path, member: dict,
         raise Denied("RAW_HANDOFF_RECEIPT_NOT_PINNED")
     proof = verified_document(root, path, trust)
     mode = proof.get("readback_mode")
+    index_path = trust.parent / "source_evidence_index.json"
+    index_sha = file_digest(index_path) if index_path.is_file() else None
+    index_document = json.loads(index_path.read_bytes()) if index_path.is_file() else {}
+    original = next((row for row in index_document.get("original_sources", [])
+                     if row.get("physical_identity") == identity), None)
+    expected_delivery = (member.get("source_instance_id")
+                         or (original.get("source_instance_id") if original else None)
+                         or identity)
+    expected_expansion_sha = manifest.get("expansion", {}).get(
+        "independent_remote_readback_sha256")
     if (proof.get("schema") != "EDP_U10_RAW_HANDOFF_RECEIPT_V1"
             or proof.get("authority") != "protected-verifier-v1"
             or proof.get("status") != "VERIFIED"
-            or mode not in {"PINNED_HISTORICAL_FULL_HASH", "CURRENT_FULL_HASH"}
-            or proof.get("live_readback") is not (mode == "CURRENT_FULL_HASH")
+            or mode != "CURRENT_FULL_HASH"
+            or proof.get("live_readback") is not True
             or proof.get("physical_identity") != identity
-            or proof.get("source_instance_id") != member["source_instance_id"]
+            or proof.get("source_instance_id") != expected_delivery
             or proof.get("remote_sha256") != member["raw_sha256"]
-            or proof.get("remote_bytes") != member["raw_bytes"]
-            or proof.get("remote_path") != member["remote_raw_path"]
+            or proof.get("remote_bytes") != (member.get("raw_bytes")
+                                               or (original or {}).get("raw_bytes"))
             or proof.get("remote_path") != source["remote_raw_path"]
             or proof.get("manifest_sha256") != file_digest(root / ACTIVE_AUTHORITY_PATH)
-            or proof.get("historical_independent_readback_sha256")
-            != manifest["expansion"]["independent_remote_readback_sha256"]
-            or proof.get("remote_receipt_sha256") != member["remote_receipt_sha256"]):
+            or index_sha != source_evidence_index_sha256
+            or proof.get("source_evidence_index_sha256") != source_evidence_index_sha256
+            or ("remote_raw_path" in member
+                and (proof.get("remote_path") != member["remote_raw_path"]
+                     or proof.get("remote_receipt_sha256") != member["remote_receipt_sha256"]
+                     or proof.get("historical_independent_readback_sha256")
+                     != expected_expansion_sha))
+            or ("remote_raw_path" not in member
+                and proof.get("evidence_provenance") != "PINNED_SOURCE_EVIDENCE_INDEX")):
         raise Denied("RAW_HANDOFF_EVIDENCE_INVALID")
     return file_digest(path)
