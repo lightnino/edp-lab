@@ -63,7 +63,10 @@ def admin(*args: str) -> dict:
 
 
 def service(*args: str) -> dict:
-    env = dict(os.environ, EDP_DAY7_PROTECTED="1",
+    # Do not allow inherited Owner/U2M OAuth or PAT variables to supersede
+    # the protected M2M profile. Databricks env config takes precedence.
+    env = {k: v for k, v in os.environ.items() if not k.startswith("DATABRICKS_")}
+    env.update(EDP_DAY7_PROTECTED="1",
                DATABRICKS_CONFIG_FILE=str(BASE / "private/databrickscfg"),
                HOME=str(BASE / "private"))
     return json.loads(run(CLI, *args, "-p", "edp-lab", "-o", "json", env=env))
@@ -390,8 +393,8 @@ def verify_service_identity(sp_id: str, app_id: str) -> None:
 
 
 def permissions(app_id: str) -> None:
-    admin_sql(f"CREATE SCHEMA {SCHEMA}")
-    admin_sql(f"CREATE VOLUME {SCHEMA}.artifacts")
+    admin_sql(f"CREATE SCHEMA IF NOT EXISTS {SCHEMA}")
+    admin_sql(f"CREATE VOLUME IF NOT EXISTS {SCHEMA}.artifacts")
     admin_sql(f"GRANT USE CATALOG ON CATALOG workspace TO `{app_id}`")
     admin_sql(f"GRANT USE SCHEMA, CREATE TABLE ON SCHEMA {SCHEMA} TO `{app_id}`")
     admin_sql(f"GRANT READ VOLUME, WRITE VOLUME ON VOLUME {SCHEMA}.artifacts "
@@ -457,6 +460,13 @@ def submit_canary_once(payload: dict, source_sha256: str) -> str:
     return run_id
 
 
+def _check_current_identity_before_writes(sp_id: str) -> None:
+    # Exercise non-admin M2M identity before granting the new SP UC rights.
+    observed = service("current-user", "me")
+    if str(observed.get("id")) != sp_id:
+        raise RuntimeError("DAY7_SERVICE_PRINCIPAL_NOT_CURRENT_USER")
+
+
 def publication() -> tuple[dict, dict, dict]:
     from edp_lab.operating.day7_protected import (
         attest_handoff,
@@ -485,8 +495,11 @@ def publication() -> tuple[dict, dict, dict]:
 
 def canary(expected_commit: str) -> dict:
     admin("workspace", "mkdirs", str(Path(NOTEBOOK).parent))
+    # This notebook path is exclusive to the pinned Day 7 installer. On
+    # restart, upload exactly the same immutable source; never overwrite a
+    # pre-existing path from an unowned fresh installation.
     admin("workspace", "import", NOTEBOOK, "--file", str(CANARY_SOURCE),
-          "--format", "SOURCE", "--language", "PYTHON")
+          "--format", "SOURCE", "--language", "PYTHON", "--overwrite")
     notebook = admin("workspace", "get-status", NOTEBOOK)
     if notebook.get("object_type") != "NOTEBOOK" or not notebook.get("object_id"):
         raise RuntimeError("DAY7_CANARY_NOTEBOOK_IMPORT_UNVERIFIED")
@@ -525,10 +538,18 @@ def canary(expected_commit: str) -> dict:
     table = service("tables", "get", CANARY_TABLE)
     if table.get("full_name") != CANARY_TABLE or not table.get("table_id"):
         raise RuntimeError("DAY7_CANARY_REMOTE_TABLE_UNVERIFIED")
+    # Independently read the remote Delta payload as Owner, not solely via
+    # the SP-owned Job's notebook exit string.
+    readback = admin_sql(
+        "SELECT universe_sha256, owner_decision_sha256 FROM " + CANARY_TABLE)
+    rows = readback.get("result", {}).get("data_array")
+    if rows != [[MANIFEST_SHA, DECISION_SHA]]:
+        raise RuntimeError("DAY7_CANARY_OWNER_SQL_READBACK_MISMATCH")
     return {"job_run_id": run_id, "task_run_id": str(task["run_id"]),
             "table": CANARY_TABLE, "table_id": table["table_id"],
             "notebook_sha256": file_digest(CANARY_SOURCE),
-            "result": "DAY7_PROTECTED_CANARY_PASS"}
+            "result": "DAY7_PROTECTED_CANARY_PASS",
+            "independent_readback": "OWNER_SQL_EXACT_ONE_ROW"}
 
 
 def install_broker() -> None:
@@ -557,10 +578,26 @@ def install_broker() -> None:
            f"<key>StandardOutPath</key><string>{BASE}/broker.stdout.log</string>"
            f"<key>StandardErrorPath</key><string>{BASE}/broker.stderr.log</string>"
            "</dict></plist>\n")
-    PLIST.write_text(xml)
-    PLIST.chmod(0o644)
-    run("/bin/launchctl", "bootstrap", "system", str(PLIST))
+    if PLIST.exists():
+        if PLIST.read_text() != xml:
+            raise RuntimeError("DAY7_EXISTING_LAUNCHDAEMON_CHANGED")
+    else:
+        PLIST.write_text(xml)
+        PLIST.chmod(0o644)
+    existing = subprocess.run(
+        ["/bin/launchctl", "print", "system/" + LABEL],
+        capture_output=True, text=True, check=False, timeout=30)
+    if existing.returncode != 0:
+        run("/bin/launchctl", "bootstrap", "system", str(PLIST))
     run("/bin/launchctl", "print", "system/" + LABEL)
+    # Real request through the installed LaunchDaemon, not only a root
+    # installer subprocess. The broker must resolve/sign the pinned canary
+    # under its own protected OAuth profile.
+    from edp_lab.operating.policy_broker import resolve_handoff
+    receipt = resolve_handoff(BASE / "broker.sock", "SRC000002")
+    if (receipt.get("physical_identity") != "SRC000002"
+            or not receipt.get("receipt_sha256")):
+        raise RuntimeError("DAY7_BROKER_LIVE_U10_READBACK_INVALID")
 
 
 def main() -> None:
