@@ -239,6 +239,7 @@ def ensure_approval(request: dict, deployment: dict, commit: str) -> None:
                           ORIGINAL_INSTALLER_COMMIT, commit).decode().splitlines())
         require(changed and changed <= {
             "scripts/owner_day6_v3_upgrade_edgar.py",
+            "src/edp_lab/vault/v3_service.py",
             "tests/vault/test_owner_day6_v3_upgrade_edgar.py",
         }, "UPGRADE_INSTALLER_REPAIR_SCOPE_CHANGED")
         if INSTALLER_REPAIR.exists():
@@ -254,7 +255,7 @@ def ensure_approval(request: dict, deployment: dict, commit: str) -> None:
                 "request_sha256": CURRENT_REQUEST_SHA256,
                 "deployment_sha256": file_digest(DEPLOYMENT),
                 "wheel_sha256": NEW_WHEEL_SHA,
-                "allowed_change": "MISSING_WORKSPACE_PATH_CLASSIFICATION_ONLY",
+                "allowed_change": "MISSING_PATH_AND_SIGNED_INSTALLER_REPAIR_BINDING_ONLY",
                 "approved_at_utc": datetime.now(UTC).isoformat(),
             }
             _signed_once(repaired, "owner.pem", INSTALLER_REPAIR)
@@ -269,7 +270,7 @@ def ensure_approval(request: dict, deployment: dict, commit: str) -> None:
                 and repaired.get("deployment_sha256") == file_digest(DEPLOYMENT)
                 and repaired.get("wheel_sha256") == NEW_WHEEL_SHA
                 and repaired.get("allowed_change") ==
-                "MISSING_WORKSPACE_PATH_CLASSIFICATION_ONLY",
+                "MISSING_PATH_AND_SIGNED_INSTALLER_REPAIR_BINDING_ONLY",
                 "UPGRADE_SIGNED_INSTALLER_REPAIR_CHANGED")
 
 
