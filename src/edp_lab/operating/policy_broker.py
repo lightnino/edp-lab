@@ -291,7 +291,11 @@ def request(socket_path: Path, queue: Path) -> Path:
 
 def resolve_handoff(socket_path: Path, physical_identity: str) -> dict:
     """Ask the installed protected verifier for an existing RAW U10 receipt."""
-    if not re.fullmatch(r"[0-9a-f]{64}", physical_identity):
+    # Canonical Day 7 identities are SRC-prefixed six-digit source IDs;
+    # retain legacy digest identifiers without widening to arbitrary strings.
+    if not isinstance(physical_identity, str) or not (
+            re.fullmatch(r"SRC[0-9]{6}", physical_identity)
+            or re.fullmatch(r"[0-9a-f]{64}", physical_identity)):
         raise Denied("INVALID_PHYSICAL_IDENTITY")
     with socket.socket(socket.AF_UNIX) as client:
         client.settimeout(120)
