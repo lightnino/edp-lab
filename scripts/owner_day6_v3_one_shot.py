@@ -160,6 +160,22 @@ def _source_rights() -> None:
                 "V3_RUN_AS_PRIVILEGES_MISSING:" + name)
 
 
+def _workspace_access() -> None:
+    """A UC grant and active assignment do not authorize Jobs execution."""
+    assignment = admin_cli("workspace-iam-v2", "get-workspace-assignment-proxy",
+                           SERVICE_PRINCIPAL_ID)
+    access = admin_cli("workspace-iam-v2", "get-workspace-access-detail-local",
+                       SERVICE_PRINCIPAL_ID)
+    effective = assignment.get("effective_entitlements")
+    require(str(assignment.get("principal_id")) == SERVICE_PRINCIPAL_ID
+            and assignment.get("principal_type") == "SERVICE_PRINCIPAL"
+            and isinstance(effective, list) and "WORKSPACE_ACCESS" in effective
+            and str(access.get("principal_id")) == SERVICE_PRINCIPAL_ID
+            and access.get("principal_type") == "SERVICE_PRINCIPAL"
+            and access.get("status") == "ACTIVE",
+            "V3_RUN_AS_WORKSPACE_ACCESS_REQUIRED")
+
+
 def _effective_rights(securable: str, name: str) -> set[str]:
     grants = admin_cli("grants", "get-effective", securable, name,
                        "--principal", APP_ID)
@@ -265,6 +281,7 @@ def install(expected_commit: str) -> dict:
     sp = admin_cli("service-principals", "get", SERVICE_PRINCIPAL_ID)
     require(sp.get("applicationId") == APP_ID and sp.get("active") is True,
             "EXISTING_PROTECTED_PRINCIPAL_CHANGED")
+    _workspace_access()
     baseline = _targets(request)
     require(admin_cli("jobs", "list") == [], "V3_JOB_LIST_CHANGED")
     for remote in (deployment["artifact"]["workspace_target_proposed"],
@@ -322,6 +339,7 @@ def resume_install(expected_commit: str) -> dict:
     sp = admin_cli("service-principals", "get", SERVICE_PRINCIPAL_ID)
     require(sp.get("applicationId") == APP_ID and sp.get("active") is True,
             "EXISTING_PROTECTED_PRINCIPAL_CHANGED")
+    _workspace_access()
     baseline = _targets(request)
     require(admin_cli("jobs", "list") == [], "V3_JOB_LIST_CHANGED")
     _workspace_directory()
@@ -339,6 +357,7 @@ def resume_install(expected_commit: str) -> dict:
 
 
 def _installed(request: dict, deployment: dict) -> dict:
+    _workspace_access()
     proof = verified_document(ROOT, INSTALL, BASE / "trust")
     require(proof.get("schema") == "EDP_DAY6_V3_INSTALL_RECEIPT_V1"
             and proof.get("status") == "INSTALLED_NOT_GRANTED"

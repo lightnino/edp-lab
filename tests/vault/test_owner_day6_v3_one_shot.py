@@ -104,6 +104,39 @@ def test_grant_update_accepts_verified_effective_rights(monkeypatch):
     assert [call[0][1] for call in calls] == ["get-effective", "update", "get-effective"]
 
 
+@pytest.mark.parametrize("effective", [[], ["DATABRICKS_SQL_ACCESS"], None])
+def test_workspace_access_guard_rejects_sql_only_or_missing_entitlement(
+        monkeypatch, effective):
+    def cli(*args):
+        if args[:2] == ("workspace-iam-v2", "get-workspace-assignment-proxy"):
+            return {"principal_id": owner.SERVICE_PRINCIPAL_ID,
+                    "principal_type": "SERVICE_PRINCIPAL",
+                    "effective_entitlements": effective}
+        return {"principal_id": owner.SERVICE_PRINCIPAL_ID,
+                "principal_type": "SERVICE_PRINCIPAL", "status": "ACTIVE"}
+
+    monkeypatch.setattr(owner, "admin_cli", cli)
+    with pytest.raises(RuntimeError, match="V3_RUN_AS_WORKSPACE_ACCESS_REQUIRED"):
+        owner._workspace_access()
+
+
+def test_workspace_access_guard_requires_effective_entitlement_and_active_identity(monkeypatch):
+    assignment = {"principal_id": owner.SERVICE_PRINCIPAL_ID,
+                  "principal_type": "SERVICE_PRINCIPAL",
+                  "effective_entitlements": ["DATABRICKS_SQL_ACCESS", "WORKSPACE_ACCESS"]}
+    access = {"principal_id": owner.SERVICE_PRINCIPAL_ID,
+              "principal_type": "SERVICE_PRINCIPAL", "status": "ACTIVE"}
+
+    def cli(*args):
+        return assignment if args[1] == "get-workspace-assignment-proxy" else access
+
+    monkeypatch.setattr(owner, "admin_cli", cli)
+    owner._workspace_access()
+    access["status"] = "INACTIVE"
+    with pytest.raises(RuntimeError, match="V3_RUN_AS_WORKSPACE_ACCESS_REQUIRED"):
+        owner._workspace_access()
+
+
 def test_proposed_job_is_the_exact_saved_job_shape():
     request = json.loads(owner.REQUEST.read_bytes())
     deployment = json.loads(owner.DEPLOYMENT.read_bytes())
@@ -152,6 +185,7 @@ def test_partial_resume_reuses_files_and_grants(tmp_path, monkeypatch):
     monkeypatch.setattr(owner, "_pins", lambda: (request, deployment))
     monkeypatch.setattr(owner, "_targets", lambda _request: {"old": "id"})
     monkeypatch.setattr(owner, "_workspace_directory", lambda: None)
+    monkeypatch.setattr(owner, "_workspace_access", lambda: None)
     monkeypatch.setattr(owner, "_source_rights", lambda: None)
     monkeypatch.setattr(owner, "_remote_digest", lambda remote: {
         deployment["artifact"]["workspace_target_proposed"]: deployment["artifact"]["sha256"],
