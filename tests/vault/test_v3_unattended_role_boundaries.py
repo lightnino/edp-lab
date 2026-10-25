@@ -160,3 +160,22 @@ def test_audit_reports_multiple_read_only_errors_without_first_error_stop(monkey
         assert report["checks"][label]["status"] == "BLOCKED"
     assert report["checks"]["identity"]["status"] == "PASS"
     assert report["write_capabilities"] == "NOT_TESTED_NO_MUTATION"
+
+
+
+def test_owner_role_installer_does_not_gate_on_transient_old_probe_error():
+    import inspect
+
+    import owner_repair_day6_v3_service_roles as installer
+
+    source = inspect.getsource(installer.repair)
+    assert 'request("probe")' not in source
+    assert "V3_UNEXPECTED_PRE_REPAIR_PROBE_STATE" not in source
+    assert 'request("status")' in source
+    assert "NOT_EXPECTED_PARTIALLY_INSTALLED_COMMIT" in source
+    assert "INSTALLED_M2M_MODULE_CHANGED" in source
+    assert "V3_CHECKPOINT_CHANGED" in source
+    # The new deployment must still invoke a comprehensive read-only audit,
+    # never submit V3 as a side effect of repairing the service.
+    assert 'request("audit")' in source
+    assert 'request("run")' not in source

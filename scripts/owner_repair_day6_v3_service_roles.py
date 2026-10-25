@@ -91,13 +91,13 @@ def repair(expected_commit: str) -> dict:
     require(before.get("status") == "READY_FOR_DISTINCT_ATTEMPT"
             and before.get("next_attempt") == 1,
             "V3_CHECKPOINT_CHANGED")
-    # The original probe-shadow repair already wrote root-owned files.
-    # Confirm the reported next blocker, rather than repeating that repair.
-    old_probe = request("probe")
-    require(old_probe.get("status") == "BLOCKED"
-            and "This API is disabled for users without admin status"
-            in old_probe.get("reason", ""),
-            "V3_UNEXPECTED_PRE_REPAIR_PROBE_STATE")
+    # The installed file bytes, signed state and exact old pin above prove
+    # which revision is being repaired. A live read-only probe is DIAGNOSTIC,
+    # not a precondition: Databricks permission/API errors may change wording
+    # or even disappear between runs. Never make root deployment depend on
+    # a transient upstream error string or require a repeat sudo invocation.
+    # Do not call the old probe at all: the successor's comprehensive audit
+    # supplies the useful evidence after this bounded code-only repair.
 
     # No signed receipts, Data/Delta, grants or ledgers are touched.
     for name in FILES:
