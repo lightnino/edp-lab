@@ -123,6 +123,14 @@ def preflight(expected_commit: str) -> None:
     if existing and (existing if isinstance(existing, list)
                      else existing.get("Resources", existing.get("service_principals", []))):
         raise RuntimeError("DAY7_SERVICE_PRINCIPAL_ALREADY_EXISTS")
+    present = subprocess.run(["/usr/bin/sudo", "-n", "-u", "lightnino", "-H",
+                              CLI, "schemas", "get", SCHEMA, "-p", "edp-lab",
+                              "-o", "json"], capture_output=True, text=True,
+                             check=False, timeout=30)
+    if present.returncode == 0:
+        raise RuntimeError("DAY7_TARGET_SCHEMA_ALREADY_EXISTS")
+    if "does not exist" not in present.stderr.lower():
+        raise RuntimeError("DAY7_TARGET_SCHEMA_ABSENCE_NOT_PROVEN")
 
 
 def protected_files(expected_commit: str) -> None:
