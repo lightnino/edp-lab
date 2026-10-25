@@ -728,12 +728,23 @@ def install_broker() -> None:
     # No service credential material is exposed to this caller.
     def agent_broker_probe() -> None:
         script = (
-            "import socket, sys; "
+            "import json, socket, sys; "
             "s=socket.socket(socket.AF_UNIX); s.settimeout(5); "
-            "s.connect(sys.argv[1]); s.close()"
+            "s.connect(sys.argv[1]); "
+            "s.sendall(b'{\\\"action\\\":\\\"health\\\"}\\n'); "
+            "s.shutdown(socket.SHUT_WR); "
+            "reply=json.loads(s.recv(8192)); "
+            "assert reply.get('status')=='DENIED' "
+            "and reply.get('reason')=='UNKNOWN_BROKER_ACTION'"
         )
-        run("/usr/bin/sudo", "-n", "-u", "lightnino", "-H",
-            str(PYTHON), "-c", script, str(BASE / "broker.sock"))
+        for _ in range(30):
+            try:
+                run("/usr/bin/sudo", "-n", "-u", "lightnino", "-H",
+                    str(PYTHON), "-c", script, str(BASE / "broker.sock"))
+                return
+            except subprocess.CalledProcessError:
+                time.sleep(1)
+        raise RuntimeError("DAY7_AGENT_BROKER_SOCKET_ACCESS_UNVERIFIED")
 
     agent_broker_probe()
     # Real request through the installed LaunchDaemon, not only a root
