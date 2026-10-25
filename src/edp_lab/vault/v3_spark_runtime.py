@@ -9,6 +9,7 @@ This code independently checks the frozen source selection and writes only the
 from __future__ import annotations
 
 import argparse
+import csv
 import hashlib
 import json
 from collections import Counter, defaultdict
@@ -116,6 +117,41 @@ def _bindings(spark, selection: dict) -> dict:
     return found
 
 
+def _coverpage_quote_exception(occurrence: dict, sid: str,
+                               member: str, ordinal: int) -> dict:
+    """Decode only the RAW-proven, frozen COVERPAGE TSV quote-escape witness.
+
+    Accepted C300 retains the 390-character physical cell; frozen selection
+    used csv.reader and records its 386-character decoded value. The exact
+    accepted source, row, field, format and manifest digest remain gated.
+    """
+    if (sid, member, ordinal) != ("SRC000065", "COVERPAGE.tsv", 7):
+        return occurrence
+    fields = occurrence["fields"]
+    if (len(fields) != 21
+            or fields[20]["name"] != "ADDITIONALINFORMATION"):
+        raise ValueError("V3_13F_COVERPAGE_QUOTE_WITNESS_SHAPE_CHANGED")
+    physical = fields[20]["text"]
+    if (not isinstance(physical, str) or len(physical) != 390
+            or physical.count('"') != 6
+            or not physical.startswith('"') or not physical.endswith('"')
+            or '""' not in physical
+            or "\\n" in physical or "\\r" in physical or "\\t" in physical):
+        raise ValueError("V3_13F_COVERPAGE_QUOTE_WITNESS_CHANGED")
+    try:
+        parsed = list(csv.reader([physical], delimiter="\\t", strict=True))
+    except csv.Error as exc:
+        raise ValueError("V3_13F_COVERPAGE_CSV_QUOTE_INVALID") from exc
+    if (len(parsed) != 1 or len(parsed[0]) != 1
+            or len(parsed[0][0]) != 386
+            or parsed[0][0].count('"') != 2):
+        raise ValueError("V3_13F_COVERPAGE_CSV_QUOTE_INVALID")
+    # Only the bounded V3 projection changes; version-0 M1 is untouched.
+    # _sec_occurrences then compares the full selection against frozen SHA.
+    fields[20]["text"] = parsed[0][0]
+    return occurrence
+
+
 def _sec_occurrences(spark, selection: dict) -> list[dict]:
     found = _bindings(spark, selection)
     by_table = defaultdict(list)
@@ -148,6 +184,8 @@ def _sec_occurrences(spark, selection: dict) -> list[dict]:
             names = _expected_names(sid, member, row)
             normalized = c300_occurrence(row, binding,
                                          selection["sources"][sid]["raw_sha256"], names)
+            normalized = _coverpage_quote_exception(
+                normalized, sid, member, row["ordinal"])
             selected[(sid, member)].append((row["ordinal"], normalized))
         for sid, member, binding in items:
             spec = selection["sources"][sid]["members"][member]
