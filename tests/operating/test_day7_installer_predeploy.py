@@ -175,13 +175,18 @@ def test_protected_service_env_cannot_inherit_owner_pat(monkeypatch):
 
 def test_privilege_readback_supports_databricks_string_shape(monkeypatch):
     actions = []
+    acl = []
     monkeypatch.setattr(installer, "admin_sql", lambda statement: actions.append(
         ("SQL", statement)))
     def admin(*args):
         actions.append(args)
         if args[:3] == ("api", "get", f"/api/2.0/permissions/warehouses/{installer.WAREHOUSE}"):
-            return {"access_control_list": []}
+            return {"access_control_list": acl}
         if args[:3] == ("permissions", "update", "warehouses"):
+            change = json.loads(args[-1])["access_control_list"]
+            assert len(change) == 1
+            acl[:] = [{"service_principal_name": "app-id",
+                       "all_permissions": [{"permission_level": "CAN_USE"}]}]
             return {}
         if args[:3] == ("grants", "get-effective", "volume"):
             return {"privilege_assignments": [{"privileges": ["READ_VOLUME"]}]}
