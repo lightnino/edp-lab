@@ -22,6 +22,7 @@ import re
 import stat
 import subprocess
 import sys
+import time
 from configparser import ConfigParser
 from pathlib import Path
 
@@ -263,9 +264,22 @@ def recover(expected_commit: str) -> dict:
     _store_oauth_profile(identity, value)
 
     # Authenticate BEFORE migrating the journal pin or doing UC/Job writes.
-    observed = install.service("current-user", "me")
-    require(str(observed.get("id")) == SP_ID,
-            "DAY7_M2M_AUTHENTICATED_PRINCIPAL_CHANGED")
+    # Read-only retries allow for short OAuth secret propagation delays;
+    # NEVER create another credential on a temporary auth failure.
+    observed = None
+    for attempt in range(12):
+        try:
+            observed = install.service("current-user", "me")
+        except (OSError, ValueError, subprocess.CalledProcessError):
+            if attempt == 11:
+                raise RuntimeError("DAY7_M2M_AUTH_UNVERIFIED_NO_SECRET_RETRY") from None
+            time.sleep(5)
+            continue
+        if str(observed.get("id")) != SP_ID:
+            raise RuntimeError("DAY7_M2M_AUTHENTICATED_PRINCIPAL_CHANGED")
+        break
+    require(observed is not None,
+            "DAY7_M2M_AUTH_UNVERIFIED_NO_SECRET_RETRY")
     # Verify the newly issued secret is actually present without printing it.
     require(len(_secret_metadata()) == 1,
             "DAY7_SECRET_CREATION_REMOTE_READBACK_UNVERIFIED")
