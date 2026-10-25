@@ -60,7 +60,9 @@ def _candidate_paths(raw_path: Path) -> list[Path]:
         root13f = sibling / "data/raw/sec/sec_13f"
         if root13f.is_dir():
             locations.extend(sorted(root13f.glob("*/" + filename)))
-    downloads = Path.home() / "Downloads"
+    # sudo runs as root; derive the Owner home from the reviewed project
+    # location rather than accidentally looking in /var/root/Downloads.
+    downloads = ROOT.parent.parent / "Downloads"
     locations.append(downloads / filename)
     return list(dict.fromkeys(locations))
 
