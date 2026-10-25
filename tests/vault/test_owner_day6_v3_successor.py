@@ -15,7 +15,7 @@ import owner_day6_v3_successor as successor
 
 
 def test_successor_job_reuses_wheel_but_changes_request_identity():
-    deployment = json.loads((ROOT / "metadata/operating/day6_c2000_vault_v3_deployment_v2.json").read_bytes())
+    deployment = json.loads(successor.DEPLOYMENT.read_bytes())
     settings = successor._settings("a" * 64, deployment)
     assert settings["tasks"][0]["python_wheel_task"]["parameters"] == (
         successor._parameters("a" * 64))
@@ -103,7 +103,7 @@ def test_authorize_requires_original_signed_partial_before_any_new_remote_write(
 
 def test_admission_requires_installed_standing_and_live_smoke(monkeypatch):
     request = json.loads(successor.REQUEST.read_bytes())
-    deployment = json.loads((ROOT / "metadata/operating/day6_c2000_vault_v3_deployment_v2.json").read_bytes())
+    deployment = json.loads(successor.DEPLOYMENT.read_bytes())
     monkeypatch.setattr(successor, "verified_document", lambda *_args:
                         {"schema": "EDP_DAY6_V3_STANDING_AUTHORIZATION_V1",
                          "status": "PROPOSED"})
@@ -111,7 +111,7 @@ def test_admission_requires_installed_standing_and_live_smoke(monkeypatch):
         successor._admission(request, deployment)
     standing = {
         "schema": "EDP_DAY6_V3_STANDING_AUTHORIZATION_V1", "status": "INSTALLED",
-        "request_sha256": successor.CURRENT_REQUEST_SHA256,
+        "request_sha256": successor.ORIGINAL_ACTIVE_REQUEST_SHA256,
         "job_submissions_max": 10000000, "runtime_seconds_max": 3600,
         "run_as": successor.APP_ID, "target_namespace": request["target_namespace"],
         "source_ids": request["selection"]["source_ids"],
@@ -120,13 +120,28 @@ def test_admission_requires_installed_standing_and_live_smoke(monkeypatch):
     }
     monkeypatch.setattr(successor, "verified_document", lambda _root, path, _trust:
                         standing if path == successor.STANDING else {})
+    with pytest.raises(RuntimeError, match="V3_UPGRADE_OWNER_APPROVAL_REQUIRED"):
+        successor._admission(request, deployment)
+
+    upgrade = {
+        "schema": "EDP_DAY6_V3_ARTIFACT_UPGRADE_V1",
+        "status": "APPROVED",
+        "request_sha256": successor.CURRENT_REQUEST_SHA256,
+        "wheel_sha256": deployment["artifact"]["sha256"],
+        "original_e2e_sha256": "a" * 64,
+        "standing_sha256": "a" * 64,
+    }
+    monkeypatch.setattr(successor, "file_digest", lambda _: "a" * 64)
+    monkeypatch.setattr(successor, "verified_document", lambda _root, path, _trust:
+                        standing if path == successor.STANDING else (
+                            upgrade if path == successor.UPGRADE_APPROVAL else {}))
     with pytest.raises(RuntimeError, match="V3_SIGNED_E2E_READINESS_REQUIRED"):
         successor._admission(request, deployment)
 
 
 def test_distinct_execute_consumes_its_own_reservation_once(tmp_path, monkeypatch):
     request = json.loads(successor.REQUEST.read_bytes())
-    deployment = json.loads((ROOT / "metadata/operating/day6_c2000_vault_v3_deployment_v2.json").read_bytes())
+    deployment = json.loads(successor.DEPLOYMENT.read_bytes())
     baseline = {name: "unchanged-id" for name in request["existing_tables_read_only"]}
     now = datetime.now(UTC)
     job_id = successor.ORIGINAL_JOB_ID + 1
