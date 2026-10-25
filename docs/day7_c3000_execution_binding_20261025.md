@@ -40,6 +40,18 @@ Use `src/edp_lab/operating/runner.py` and existing DAG/broker/Databricks adapter
 - Agent V5 report uses the existing P2/P3/P4/P11/P12 trace: drift/collision/late-arrival cases actually observed, diagnosis accuracy against verified evidence, scope precision, tests/replay executed, unnecessary old recomputation, intervention/human minutes, remote write recovery and unresolved causes. Mark `NOT_OBSERVED` when no real model-evolution incident occurred; do not fake a benchmark.
 - Do not assume the docs alone install protected RAW handoff/adapters; the open Acquisition-only RAW-writer/handoff integration issue must be checked against the **actual** deployed runner. Reuse independently verified Databricks RAW and skip duplicate uploads.
 
+## Confirmed existing-code integration gaps (implementation work, not a new workflow)
+
+The current `main` runtime is **not** a parameter-only C3000 runner yet; do not call this Day 7 binding deployable until these narrow extensions and tests exist:
+
+- `src/edp_lab/ingestion/universe.py` uses a fixed `approved_v1/manifest.json` authority path and version-1 cohort binding checks. Resolve the **explicit approved v2 pin** without rewriting v1, preserve exact physical identity/hash/holdout checks, and test denial for v1-only/out-of-scope use.
+- `src/edp_lab/operating/cohort_admission.py` is hard-coded to `C2000` and `N500` output contracts. Generalize just the incremental admission operation to pinned prior C2000 + disjoint N1000 → C3000 and exclusive C3000 targets; retain frozen C2000 legacy behavior in regression tests.
+- `src/edp_lab/operating/runner.py` / `dag.py` can drive pinned queues/checkpoints, but their `raw_stage` route still exists. Day 7's cohort queue must be **read-only on Acquisition-verified RAW**, and there must be no unnecessary RAW copying/uploading. Validate actual installed actor rights rather than assuming prose enforces the separation; reuse existing verified remote locators.
+- `src/edp_lab/operating/databricks_jobs.py` already submits approved Jobs but requires Day 7 exact signed request/deployment pins. Add native Spark/Delta N1000 execution contracts and source-aware idempotent reconciliation only; keep upstream history pinned and don't hardcode C2000-only table names or Job paths.
+- Verify the actual one-time protected policy/broker admits published v2 + exact N1000/C3000 namespace and protected, noninteractive Databricks CLI authentication. This is an extension of existing 0A, **not** a new trust architecture or repeated per-Job Owner ceremony.
+
+Tests should demonstrate v1 remains unchanged, v2/800 exact admission, 41 holdouts excluded, N1000 disjointness, zero Cohort RAW writes, no duplicate old Delta work, targeted replay minimality, A/B2/C and safe restart. A local mock/dry run does not attest a live completed C3000.
+
 ## One-time Day 7 protected deployment / acceptance prep
 
 Prepare **one install action**, rather than repeated Owner approvals: use existing personal Databricks workspace and supported persistent noninteractive credentials for the actual background actor, verify workspace/UC effective rights, rebind the standing policy to **published Universe v2** (not v1), allowed `N1000` increment/C3000 outputs and pinned contracts, install minimal changed runner/executor only if necessary, and prove one full protected Job + readback path before executing the real increment. Where macOS root is actually required, present one exact Owner terminal command; do not infer that text approvals bypass the OS password. Do **not** reuse Day 6's four-family Vault service as a general C3000 Cohort executor without verified operation/target permissions.
