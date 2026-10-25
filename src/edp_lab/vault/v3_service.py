@@ -121,6 +121,18 @@ def probe(root: Path, base: Path) -> dict:
             "principal_id": SERVICE_PRINCIPAL_ID, "attempt_number": number}
 
 
+def evidence(root: Path, base: Path) -> dict:
+    """Expose only a verified, non-secret acceptance document to the agent."""
+    _ready(root, base)
+    number, state = _next_attempt(root, base)
+    if state != "V3_VERIFIED":
+        return {"status": state, "attempt_number": number}
+    path = base / f"receipts/day6-v3-attempt-{number}-readback.signed.json"
+    proof = verified_document(root, path, base / "trust")
+    return {"status": "V3_VERIFIED", "attempt_number": number,
+            "receipt_sha256": file_digest(path), "receipt": proof}
+
+
 def run(root: Path, base: Path) -> dict:
     _ready(root, base)
     successor, owner, *_ = _imports()
@@ -457,6 +469,8 @@ def serve(root: Path, base: Path) -> None:
                     response = status(root, base)
                 elif request == {"action": "probe"}:
                     response = probe(root, base)
+                elif request == {"action": "evidence"}:
+                    response = evidence(root, base)
                 elif request == {"action": "run"}:
                     response = run(root, base)
                 elif request == {"action": "reconcile"}:
