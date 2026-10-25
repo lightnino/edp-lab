@@ -39,6 +39,23 @@ artifacts, 23-table allowlist, and one-shot checkpoints are unchanged. The
 `servicePrincipal.user` denial remains an Owner-side prerequisite; this change
 does not grant that permission or select a different identity.
 
+The Owner's subsequent `resume-install` reached `jobs create` and returned
+`Either base environment or version must be provided for environment
+'v3_fixed_runtime'.` This is an Owner-reported API rejection, not an install
+receipt. Read-only authenticated reconciliation again found the full Jobs list
+and exact-name `day6-c2000-v3-one-shot` filter empty. Those checks establish
+no visible saved Job at the checked scope and time; the Owner resume must
+repeat its own absence and checkpoint checks before any distinct attempt.
+
+The proposed Job environment now pins `environment_version: "4"` alongside the
+same wheel dependency. The saved-Job verifier requires that exact spec and
+rejects a missing, different or additional base environment. Databricks lists
+version 4 as a supported serverless Jobs environment with Python 3.12.3,
+matching this wheel's `>=3.12,<3.13` requirement. The request and deployment
+manifests, uploaded artifacts, permissions, run-as, one-shot ledger and
+submission limits are unchanged. This code change alone does not authorize
+another Job creation attempt.
+
 `resume-install` starts at this exact checkpoint. It performs the usual reviewed
 commit, clean worktree, installed V2 trust and signed semantic checks; verifies
 the local protected derived request against the canonical request plus fixed

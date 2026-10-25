@@ -21,7 +21,7 @@ from pathlib import Path
 from owner_setup_day6_vault_0a import BASE, ROOT, admin_cli, run
 
 from edp_lab.operating.authority import canonical, file_digest, verified_document
-from edp_lab.vault.v3_one_shot_gate import verify_saved_job
+from edp_lab.vault.v3_one_shot_gate import SERVERLESS_ENVIRONMENT_VERSION, verify_saved_job
 
 REQUEST = ROOT / "metadata/operating/day6_c2000_vault_v3_bounded_request_v1.json"
 DEPLOYMENT = ROOT / "metadata/operating/day6_c2000_vault_v3_deployment_v1.json"
@@ -145,7 +145,8 @@ def _job_settings(request_sha: str, deployment: dict) -> dict:
                                              "entry_point": "edp-day6-v3",
                                              "parameters": _job_parameters(request_sha, deployment)}}],
             "environments": [{"environment_key": "v3_fixed_runtime",
-                              "spec": {"dependencies": [wheel]}}]}
+                              "spec": {"environment_version": SERVERLESS_ENVIRONMENT_VERSION,
+                                       "dependencies": [wheel]}}]}
 
 
 def _source_rights() -> None:

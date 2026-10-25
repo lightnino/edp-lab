@@ -21,7 +21,8 @@ def _saved():
                                          "parameters": parameters},
                    "environment_key": "v3_fixed_runtime"}],
         "environments": [{"environment_key": "v3_fixed_runtime",
-                          "spec": {"dependencies": [wheel]}}],
+                          "spec": {"environment_version": "4",
+                                   "dependencies": [wheel]}}],
     }
     return settings, wheel, identity, parameters
 
@@ -44,6 +45,9 @@ def test_exact_saved_one_shot_job():
     lambda value: value["tasks"][0].pop("disable_auto_optimization"),
     lambda value: value["tasks"][0].update(new_cluster={}),
     lambda value: value["environments"][0]["spec"].update(dependencies=["other.whl"]),
+    lambda value: value["environments"][0]["spec"].pop("environment_version"),
+    lambda value: value["environments"][0]["spec"].update(environment_version="5"),
+    lambda value: value["environments"][0]["spec"].update(base_environment="other"),
 ])
 def test_saved_job_drift_denied(change):
     settings, wheel, identity, parameters = _saved()

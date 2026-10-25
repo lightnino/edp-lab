@@ -8,6 +8,8 @@ from __future__ import annotations
 
 from edp_lab.operating.authority import Denied
 
+SERVERLESS_ENVIRONMENT_VERSION = "4"
+
 
 def verify_saved_job(settings: dict, *, wheel_path: str, run_as: dict,
                      parameters: list[str]) -> dict:
@@ -40,7 +42,10 @@ def verify_saved_job(settings: dict, *, wheel_path: str, run_as: dict,
     environments = settings.get("environments")
     if (not isinstance(environments, list) or len(environments) != 1
             or environments[0].get("environment_key") != "v3_fixed_runtime"
-            or environments[0].get("spec", {}).get("dependencies") != [wheel_path]):
+            or environments[0].get("spec") != {
+                "environment_version": SERVERLESS_ENVIRONMENT_VERSION,
+                "dependencies": [wheel_path],
+            }):
         raise Denied("VAULT_V3_SAVED_WHEEL_BOUND_CHANGED")
     return {"status": "SAVED_ONE_SHOT_SETTINGS_VERIFIED",
             "task_key": "day6_v3_one_shot", "run_as": run_as}

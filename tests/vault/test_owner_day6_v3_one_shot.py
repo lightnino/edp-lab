@@ -112,6 +112,7 @@ def test_proposed_job_is_the_exact_saved_job_shape():
     assert settings["tasks"][0]["max_retries"] == 0
     assert settings["tasks"][0]["retry_on_timeout"] is False
     assert settings["tasks"][0]["disable_auto_optimization"] is True
+    assert settings["environments"][0]["spec"]["environment_version"] == "4"
     assert verify_saved_job(
         settings, wheel_path=deployment["artifact"]["workspace_target_proposed"],
         run_as={"service_principal_name": owner.APP_ID},
