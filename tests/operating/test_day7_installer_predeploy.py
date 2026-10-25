@@ -41,6 +41,7 @@ def test_original_src_canary_full_hash_before_any_write(monkeypatch, tmp_path):
     index_path = tmp_path / "source.json"
     index_path.write_text(json.dumps(index))
     monkeypatch.setattr(installer, "SOURCE_INDEX", index_path)
+    monkeypatch.setattr(installer.os, "geteuid", lambda: 0)
     calls = []
 
     def run(argv, **_kwargs):
@@ -196,3 +197,23 @@ def test_privilege_readback_supports_databricks_string_shape(monkeypatch):
     monkeypatch.setattr(installer, "admin", admin)
     installer.permissions("app-id")
     assert any(item[0] == "SQL" for item in actions)
+
+
+
+def test_nonroot_read_only_preflight_does_not_require_root_or_write(monkeypatch):
+    monkeypatch.setattr(installer.os, "geteuid", lambda: 501)
+    observed = []
+    monkeypatch.setattr(installer, "run", lambda *args: (
+        "pinned-sha\\n" if args[-2:] == ("rev-parse", "HEAD") else ""))
+    monkeypatch.setattr(installer, "file_digest", lambda path: {
+        str(installer.POLICY): installer.POLICY_SHA,
+        str(installer.SOURCE_INDEX): installer.SOURCE_INDEX_SHA,
+        str(installer.ROOT / "metadata/source_universes/approved/manifest.json"): installer.MANIFEST_SHA,
+        str(installer.ROOT /
+            "metadata/authorizations/day7_universe_expansion_800_owner_decision.json"): installer.DECISION_SHA,
+    }[str(path)])
+    monkeypatch.setattr(installer, "verify_canary_raw_read_only",
+                        lambda: {"physical_identity": "SRC000002"})
+    result = installer.read_only_preflight("pinned-sha")
+    assert result["status"] == "DAY7_OWNER_READ_ONLY_PREFLIGHT_PASS"
+    assert result["protected_deployment"] == "NOT_YET_EXECUTED"
