@@ -113,7 +113,7 @@ def freeze_files(root, grant, admitted):
     roster = historical + increment
     auth._require(len(historical) == 300 and len(increment) == 450 and
                   len({r["source_instance_id"] for r in roster}) == 750, "C750_ROSTER_MISMATCH")
-    side = json.loads(UniverseGate.load(root).bindings)
+    side = json.loads(UniverseGate.load_historical(root).bindings)
     historical_bindings = [{"source_identity": b["delivery_identity"],
                             "source_instance_id": b["identity"], "raw_path": b["raw_path"],
                             "raw_sha256": b["raw_sha256"]} for b in side["bindings"]

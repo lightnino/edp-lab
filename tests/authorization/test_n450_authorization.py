@@ -70,7 +70,7 @@ def test_synthetic_host_grant_positive_and_exact_input_negative(tmp_path, monkey
     bindings = [{'source_instance_id': r['source_identity'], 'raw_path': r['raw_path'],
                  'raw_sha256': r['raw_sha256']} for r in roster]
     grant = {'status': 'OWNER_APPROVED', 'packet_sha256': auth.PINS,
-             'universe': auth.UniverseGate.load(ROOT).scope_reference(),
+             'universe': auth.UniverseGate.load_historical(ROOT).scope_reference(),
              'scopes': {'admission': {'cohort': 'N450', 'bindings': bindings}}}
     path = tmp_path / 'owner.json'
     path.write_text(json.dumps(grant))
@@ -120,7 +120,7 @@ def publication_context(tmp_path, monkeypatch):
              'raw_sha256': r['raw_sha256']} for r in roster]
     c750 = json.loads((tmp_path / auth.PACKET / 'c750-proposed.json').read_text())
     grant = {'status': 'OWNER_APPROVED', 'packet_sha256': dict(auth.PINS),
-             'universe': auth.UniverseGate.load(tmp_path).scope_reference(),
+             'universe': auth.UniverseGate.load_historical(tmp_path).scope_reference(),
              'admitted_at_utc': '2026-10-21T00:00:00Z',
              'registrations': [{'source_identity': r['source_identity'],
                                 'source_instance_id': f'SRC{900000+i:06d}'}
@@ -183,7 +183,7 @@ def test_publication_denials_before_writes(publication_context, action, failure,
         if failure == 'outside':
             bindings[0]['source_instance_id' if action == 'admission' else 'source_identity'] = 'SRC000705'
         elif failure == 'holdout':
-            held = next(m for m in auth.UniverseGate.load(root).document()['members'] if m['holdout'])
+            held = next(m for m in auth.UniverseGate.load_historical(root).document()['members'] if m['holdout'])
             bindings[0]['source_instance_id' if action == 'admission' else 'source_identity'] = held['identity']
         elif failure == 'path':
             bindings[0]['raw_path'] = '/unauthorized'
@@ -281,7 +281,7 @@ def historical_resolver(tmp_path, monkeypatch):
         side_raw = json.dumps(side).encode()
         monkeypatch.setattr(u, 'BINDINGS_SHA256', auth.sha(side_raw))
         gate = u.UniverseGate(raw, auth.sha(raw), side_raw)
-        monkeypatch.setattr(auth.UniverseGate, 'load', classmethod(lambda cls, root: gate))
+        monkeypatch.setattr(auth.UniverseGate, 'load_historical', classmethod(lambda cls, root: gate))
 
     install()
     return tmp_path, physical_root, members, bindings, inventory, install

@@ -1,7 +1,7 @@
 """Host-owned experiment authority. Requests and RAW retention confer no authority.
 
-The deployment pin names the exact owner-approved Universe v1 artifact.
-Changing this pin is a human-reviewed code/configuration deployment, never a tool argument.
+The active digest must come from a protected deployment or signed grant, not
+from a mutable repository file or an agent-supplied request.
 """
 
 import hashlib
@@ -77,9 +77,20 @@ class UniverseGate:
                 raise ValueError("Unsafe approval path")
             approval_raw = (root / approval_rel).read_bytes()
             approval = json.loads(approval_raw)
-            if (sha(approval_raw) != approval_sha256
-                    or approval.get("status") != "APPROVED"
-                    or approval.get("manifest_sha256") != manifest_sha256):
+            if sha(approval_raw) != approval_sha256:
+                raise ValueError("Owner decision digest changed")
+            if approval.get("schema") == "EDP_DAY7_UNIVERSE_EXPANSION_OWNER_DECISION_V1":
+                expansion = document["expansion"]
+                if (approval.get("decision") != "APPROVE_ALL_REFERENCED_RETAINED_800_FOR_PROSPECTIVE_UNIVERSE_V2"
+                        or approval.get("expected_new_total_members") != document["member_count"]
+                        or approval.get("parent_manifest_sha256") != document["parent_manifest_sha256"]
+                        or approval["new_member_set"]["source_reference_original_sha256"] != expansion["retained_reference_sha256"]
+                        or approval["new_member_set"]["expected_count"] != expansion["new_member_count"]
+                        or approval_sha256 != expansion["owner_decision_sha256"]
+                        or document["universe_version"] != "2"):
+                    raise ValueError("Owner decision does not bind expanded scope")
+            elif (approval.get("status") != "APPROVED"
+                  or approval.get("manifest_sha256") != manifest_sha256):
                 raise ValueError("Invalid owner approval")
         except (OSError, ValueError, KeyError, TypeError):
             raise ScopeDenied("INVALID_OWNER_OR_COHORT_EVIDENCE") from None
@@ -96,6 +107,11 @@ class UniverseGate:
                 raise ScopeDenied("ACTIVE_UNIVERSE_DEPLOYMENT_PIN_MISSING")
             return cls.load_active(root, manifest_sha256=ACTIVE_UNIVERSE_PIN[0],
                                    approval_sha256=ACTIVE_UNIVERSE_PIN[1])
+        return cls.load_historical(root)
+
+    @classmethod
+    def load_historical(cls, root):
+        """Load the original pinned snapshot for old, immutable cohort entrypoints."""
         try:
             raw = (root / AUTHORITY_PATH).read_bytes()
         except OSError:
@@ -275,7 +291,7 @@ class UniverseGate:
 
 
 def enforce(root, identity, raw_sha256, raw_path, *, cohort=None):
-    gate = UniverseGate.load(root)
+    gate = UniverseGate.load_historical(root)
     gate.verify_inventory(root)
     return gate.check(identity, raw_sha256, raw_path, cohort=cohort)
 

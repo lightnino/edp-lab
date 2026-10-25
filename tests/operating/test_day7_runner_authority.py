@@ -78,6 +78,23 @@ def test_active_owner_approval_cannot_be_changed(tmp_path):
                                  approval_sha256=approval_sha)
 
 
+def test_published_day7_manifest_binds_exact_owner_decision():
+    from pathlib import Path
+
+    root = Path(__file__).resolve().parents[2]
+    manifest_path = root / ACTIVE_AUTHORITY_PATH
+    decision_path = root / "metadata/authorizations/day7_universe_expansion_800_owner_decision.json"
+    gate = UniverseGate.load_active(root, manifest_sha256=sha(manifest_path.read_bytes()),
+                                    approval_sha256=sha(decision_path.read_bytes()))
+    members = gate.document()["members"]
+    assert len(members) == 3821
+    assert sum(member["holdout"] for member in members) == 41
+    assert sum("remote_raw_path" in member for member in members) == 800
+    with pytest.raises(ScopeDenied, match="INVALID_OWNER_OR_COHORT_EVIDENCE"):
+        UniverseGate.load_active(root, manifest_sha256=sha(manifest_path.read_bytes()),
+                                 approval_sha256="0" * 64)
+
+
 def test_active_universe_rejects_missing_install(tmp_path):
     with pytest.raises(ScopeDenied, match="MISSING_ACTIVE_UNIVERSE"):
         UniverseGate.load_active(tmp_path, manifest_sha256="a" * 64,

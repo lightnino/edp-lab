@@ -55,7 +55,7 @@ def check_scope(root: Path, binding, *, access=None):
     require(registered['source_identity'] == IDENTITY and all(
         registered[k] == binding[k] for k in ('raw_path', 'raw_sha256')),
         'SRC010128_REGISTERED_IDENTITY_OR_PATH_MISMATCH')
-    UniverseGate.load(root).check(IDENTITY, RAW_SHA, binding['raw_path'])
+    UniverseGate.load_historical(root).check(IDENTITY, RAW_SHA, binding['raw_path'])
     raw = root / binding['raw_path']
     require(raw.is_file() and not raw.is_symlink() and raw.stat().st_size == SIZE,
             'SRC010128_RAW_LOCATION_OR_SIZE_MISMATCH')

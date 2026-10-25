@@ -22,7 +22,7 @@ def verify_registry(root, manifest, *, check_raw=False, frozen=None):
     """Validate additive REAL admissions; CONTROLLED requires a future reviewed version."""
     from edp_lab.ingestion.source_identity import ID_RE, SHA_RE, _safe_path
 
-    UniverseGate.load(root).verify_inventory(root)
+    UniverseGate.load_historical(root).verify_inventory(root)
     rows = _csv_rows(manifest, HEADERS)
     old = _csv_rows(root / MANIFEST, HEADERS)
     require(rows[:len(old)] == old, "Historical GOLD rows changed")
@@ -95,8 +95,8 @@ def verify_nested(selections, selected):
 def prepare(root: Path, output: Path):
     """Verify existing draft bytes and evidence; reserve IDs without admitting them."""
     root = root.resolve()
-    UniverseGate.load(root).verify_inventory(root)
-    UniverseGate.load(root).feasibility(300, "C300")
+    UniverseGate.load_historical(root).verify_inventory(root)
+    UniverseGate.load_historical(root).feasibility(300, "C300")
     active_path = root / "runs/whole_lab/active-inventory.json"
     active = json.loads(active_path.read_bytes())
     inventory_path = sealed(Path(active["inventory"]), active["inventory_sha256"])
@@ -199,22 +199,22 @@ def prepare(root: Path, output: Path):
               "manifest_template": "Old rows unchanged; members REAL/FALSE, C300; actual UTC at admission",
               "proposed_manifest_sha256": file_sha256(output / "corpus_manifest_v3.proposed.csv"),
               "final_manifest_sha256": None}
-    packet.update(UniverseGate.load(root).scope_reference())
+    packet.update(UniverseGate.load_historical(root).scope_reference())
     write_new(output / "review.json", encoded(packet))
     return packet
 
 
 def freeze(root: Path, packet_path: Path, authorization: Path, output: Path):
     """Publish only against explicit authority naming the exact reviewed packet hash."""
-    UniverseGate.load(root).verify_inventory(root)
-    UniverseGate.load(root).feasibility(300, "C300")
+    UniverseGate.load_historical(root).verify_inventory(root)
+    UniverseGate.load_historical(root).feasibility(300, "C300")
     packet = json.loads(packet_path.read_bytes())
     authority = json.loads(authorization.read_bytes())
     require(authority.get("packet_sha256") == file_sha256(packet_path), "Authority scope mismatch")
     require(authority.get("admit_and_freeze") is True and authority.get("approved_by")
             and authority.get("authorization_text") and authority.get("authorized_at_utc"),
             "Explicit final authorization required")
-    gate = UniverseGate.load(root)
+    gate = UniverseGate.load_historical(root)
     if gate.bindings is not None:
         trusted = json.loads(gate.bindings)['evidence']['metadata/freezes/C300_v1/authorization.json']
         if file_sha256(authorization) != trusted:
@@ -228,7 +228,7 @@ def freeze(root: Path, packet_path: Path, authorization: Path, output: Path):
     for member in members:
         enforce(root, member["delivery_id"], member["raw_sha256"], str(root / member["raw_path"]), cohort="C300")
         enforce(root, member["source_instance_id"], member["raw_sha256"], member["raw_path"], cohort="C300")
-    UniverseGate.load(root).validate_inputs(members, "C300")
+    UniverseGate.load_historical(root).validate_inputs(members, "C300")
     stamp = datetime.now(UTC).isoformat().replace("+00:00", "Z")
     old = _csv_rows(root / MANIFEST, HEADERS)
     rows = list(old)
@@ -247,13 +247,13 @@ def freeze(root: Path, packet_path: Path, authorization: Path, output: Path):
     write_new(output / "review.json", packet_path.read_bytes())
     write_new(output / "authorization.json", authorization.read_bytes())
     verify_registry(root, output / "corpus_manifest_v3.csv", check_raw=True)
-    write_new(output / "universe_binding.json", encoded({**UniverseGate.load(root).scope_reference(),
+    write_new(output / "universe_binding.json", encoded({**UniverseGate.load_historical(root).scope_reference(),
               "corpus_manifest_sha256": file_sha256(output / "corpus_manifest_v3.csv"),
               "cohort_roster_sha256": file_sha256(output / "C300.csv")}))
     lock = {"version": VERSION, "status": "FROZEN", "frozen_at_utc": stamp,
             "files": {p.name: file_sha256(p) for p in output.iterdir()},
             "expansion_rule": "Every expansion must retain all C300 IDs and exact manifest rows"}
-    lock.update(UniverseGate.load(root).scope_reference())
+    lock.update(UniverseGate.load_historical(root).scope_reference())
     write_new(output / "freeze.json", encoded(lock))
     return lock
 

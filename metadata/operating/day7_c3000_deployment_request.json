@@ -9,9 +9,10 @@
     "source_v1_count": 3021,
     "new_owner_approved_retained_raw_count": 800,
     "membership_approval": "metadata/authorizations/day7_universe_expansion_800_owner_decision.json",
-    "manifest_sha256": null,
-    "approval_sha256": null,
-    "publish_gate": "Resolve exact 800 member identity/RAW hashes and reuse existing U10 remote readback evidence; publish one active manifest + digest and remove competing active versioned references, then pin."
+    "manifest_sha256": "dcc63767c88ae712eab8f5ba29d52a206b4262710740e591a4b233d9c04c699b",
+    "approval_sha256": "416efc5f7ab18b2570ba9beab26bba33210c5e0a75ec813a92ccac953af36d74",
+    "publication_evidence": "metadata/source_universes/approved/verification.json",
+    "publish_gate": "Local exact 800 receipt and historical remote readback reconciliation passed; independent protected active-manifest pin/readback and per-source U10 handoff remain pending."
   },
   "prior_cohort": {
     "cohort": "C2000",
@@ -49,6 +50,16 @@
     "authentication": "NONINTERACTIVE_CREDENTIALS_VERIFIED_IN_ACTUAL_BACKGROUND_ACTOR",
     "ops": "U8-U10 verified publication, Cohort P0-P14, native Spark Delta, liveness/recovery and Git CI/merge after acceptance",
     "owner_terminal_invocation": null,
+    "observed_installed_policy": "2026-10-26: /private/var/db/edp-lab/trust/standing_policy_v1.json remains signed for approved_v1 manifest SHA 2198f9ba..., max_increment 500, Day 5 targets and raw_stage; root-owned broker serves the Day 5 worktree.",
+    "observed_handoff_gap": "Protected receipts inventory contains 500 Day 5 RAW receipts and no protected U10 receipts for the retained 800. Historical acquisition/upload receipts and independent 800/800 readback are reconciled, but do not satisfy the current cohort_admission.py protected signed U10 receipt contract.",
+    "observed_authentication": "Interactive edp-lab Databricks CLI auth describe succeeded as lightnino using OS-keyring databricks-cli credentials. Protected broker service uses root-owned /private/var/db/edp-lab/private/databrickscfg; actual service-identity noninteractive authentication has not been verified.",
+    "observed_c2000_prior_receipt_gap": "Protected receipts include c2000-cohort.json and c2000-result-freeze.json, but no EDP_PRIOR_COHORT_RECEIPT_V1 for C2000; the broker's future prior_receipt check cannot yet pass.",
+    "deployment_blockers": [
+      "Owner-signed protected standing policy still binds Universe v1, max increment 500, Day 5 namespaces and RAW staging.",
+      "No protected signed U10 handoff resolver or receipts for the retained 800; historical receipts cannot be substituted for current protected receipt schema.",
+      "No verified C2000 prior-cohort receipt in the broker's required schema.",
+      "Actual protected service identity noninteractive Databricks authentication and Job/readback canary are unverified."
+    ],
     "no_per_job_approval": true,
     "stop_for": [
       "MISSING_PINNED_ACTIVE_MANIFEST",
