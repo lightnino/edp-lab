@@ -94,7 +94,7 @@ def _save_json(path: Path, obj: dict) -> None:
         raise RuntimeError("DAY7_PARTIAL_JOURNAL_WRITE_NEEDS_RECONCILIATION")
     with tmp.open("x") as stream:
         json.dump(obj, stream, sort_keys=True)
-        stream.write("\\n")
+        stream.write("\n")
         stream.flush()
         os.fsync(stream.fileno())
     os.replace(tmp, path)
@@ -231,51 +231,162 @@ def protected_files(expected_commit: str) -> None:
     from edp_lab.operating.authority import verified_document
     from edp_lab.operating.protected_verifier import _sign
 
-    BASE.mkdir(mode=0o755)
-    for name, mode in (("private", 0o700), ("trust", 0o755),
+    BASE.mkdir(mode=0o700, exist_ok=True)
+    for name, mode in (("private", 0o700), ("trust", 0o700),
                        ("receipts", 0o700), ("grants", 0o700),
-                       ("ledger", 0o700), ("runtime", 0o755)):
-        (BASE / name).mkdir(mode=mode)
+                       ("ledger", 0o700), ("runtime", 0o700)):
+        (BASE / name).mkdir(mode=mode, exist_ok=True)
+    if not JOURNAL.exists():
+        _save_json(JOURNAL, {**_install_intent(expected_commit), "completed": {}})
+    elif {k: v for k, v in _read_json(JOURNAL).items() if k != "completed"} != (
+            _install_intent(expected_commit)):
+        raise RuntimeError("DAY7_INSTALL_JOURNAL_PIN_MISMATCH")
+
+    if _completed("protected_files"):
+        verified_document(ROOT, BASE / "trust/policy.signed.json", BASE / "trust")
+        if file_digest(BASE / "source_evidence_index.json") != SOURCE_INDEX_SHA:
+            raise RuntimeError("DAY7_PROTECTED_INDEX_CHANGED")
+        return
     for role in ("owner", "broker", "verifier"):
-        shutil.copyfile(DAY5 / "trust" / (role + "_ed25519_public.pem"),
-                        BASE / "trust" / (role + "_ed25519_public.pem"))
-    (BASE / "trust/revoked_grants.json").write_text("[]\n")
-    shutil.copyfile(ROOT / "metadata/source_universes/approved/source_evidence_index_v1.json",
-                    BASE / "source_evidence_index.json")
-    (BASE / "source_evidence_index.json").chmod(0o444)
-    archive = subprocess.run(["/usr/bin/git", "-c", f"safe.directory={ROOT}",
-                              "-C", str(ROOT), "archive", expected_commit,
-                              "src/edp_lab"], capture_output=True, check=True,
-                             timeout=60).stdout
+        dest = BASE / "trust" / (role + "_ed25519_public.pem")
+        src = DAY5 / "trust" / (role + "_ed25519_public.pem")
+        if dest.exists() and dest.read_bytes() != src.read_bytes():
+            raise RuntimeError("DAY7_TRUST_KEY_CHANGED")
+        shutil.copyfile(src, dest)
+    revoked = BASE / "trust/revoked_grants.json"
+    if revoked.exists() and revoked.read_text() != "[]\\n":
+        raise RuntimeError("DAY7_REVOKED_GRANTS_CHANGED")
+    if not revoked.exists():
+        revoked.write_text("[]\\n")
+    index_dest = BASE / "source_evidence_index.json"
+    if index_dest.exists() and file_digest(index_dest) != SOURCE_INDEX_SHA:
+        raise RuntimeError("DAY7_PROTECTED_INDEX_CHANGED")
+    shutil.copyfile(SOURCE_INDEX, index_dest)
+    index_dest.chmod(0o444)
+    archive = subprocess.run(
+        ["/usr/bin/git", "-c", f"safe.directory={ROOT}",
+         "-C", str(ROOT), "archive", expected_commit, "src/edp_lab"],
+        capture_output=True, check=True, timeout=60,
+    ).stdout
     with tarfile.open(fileobj=BytesIO(archive)) as tar:
         tar.extractall(BASE / "runtime", filter="data")
-    for path in (BASE / "runtime").rglob("*"):
-        path.chmod(path.stat().st_mode & ~0o022)
-    policy = json.loads(POLICY.read_bytes())
-    _sign(policy, DAY5 / "private/owner.pem", BASE / "trust/policy.signed.json")
-    verified_document(ROOT, BASE / "trust/policy.signed.json", BASE / "trust")
+    for item in (BASE / "runtime").rglob("*"):
+        item.chmod(item.stat().st_mode & ~0o022)
+    signed = BASE / "trust/policy.signed.json"
+    if signed.exists():
+        prior = verified_document(ROOT, signed, BASE / "trust")
+        if prior != _read_json(POLICY):
+            raise RuntimeError("DAY7_PROTECTED_POLICY_CHANGED")
+    else:
+        _sign(_read_json(POLICY), DAY5 / "private/owner.pem", signed)
+    verified_document(ROOT, signed, BASE / "trust")
+    _mark("protected_files")
 
 
 def service_identity() -> tuple[str, str]:
-    created = admin("service-principals", "create", "--display-name", SP_NAME)
+    """Reconcile a uniquely named SP; do not regenerate lost OAuth secrets."""
+    matches = _find_exact_service_principals()
+    if len(matches) > 1:
+        raise RuntimeError("DAY7_DUPLICATE_SERVICE_PRINCIPAL")
+    if matches:
+        created = matches[0]
+    else:
+        created = admin("service-principals", "create", "--display-name", SP_NAME)
     sp_id, app_id = str(created["id"]), created["applicationId"]
-    # The secret is never printed or stored in the repository. A partial
-    # failure requires protected reconciliation, never a blind second create.
-    secret = admin("service-principal-secrets-proxy", "create", sp_id,
-                   "--lifetime", "7776000")["secret"]
-    config = BASE / "private/databrickscfg"
-    config.write_text("[edp-lab]\n" + f"host = {HOST}\n"
-                      + "auth_type = oauth-m2m\n"
-                      + f"client_id = {app_id}\nclient_secret = {secret}\n")
-    config.chmod(0o600)
-    principal = service("current-user", "me")
-    if principal.get("applicationId") != app_id:
-        raise RuntimeError("DAY7_M2M_IDENTITY_MISMATCH")
+    if not sp_id.isdecimal() or not app_id:
+        raise RuntimeError("DAY7_SP_IDENTITY_INVALID")
+    observed = admin("service-principals", "get", sp_id)
+    if (str(observed.get("id")) != sp_id
+            or observed.get("applicationId") != app_id
+            or observed.get("displayName") != SP_NAME):
+        raise RuntimeError("DAY7_SP_OWNER_IDENTITY_MISMATCH")
     identity = BASE / "private/service-identity.json"
-    identity.write_text(json.dumps({"service_principal_id": sp_id,
-                                    "application_id": app_id}, sort_keys=True))
-    identity.chmod(0o600)
+    pinned = {"service_principal_id": sp_id, "application_id": app_id}
+    if identity.exists():
+        if _read_json(identity) != pinned:
+            raise RuntimeError("DAY7_SP_IDENTITY_CHANGED")
+    else:
+        _save_json(identity, pinned)
+        identity.chmod(0o600)
+    config = BASE / "private/databrickscfg"
+    if not config.exists():
+        # If OAuth secret creation returned but credentials were not durably
+        # stored, the secret cannot be retrieved. Stop instead of issuing a
+        # second orphan credential or silently escalating permissions.
+        intent = BASE / "ledger/secret-creation-intent.json"
+        if intent.exists():
+            raise RuntimeError("DAY7_SECRET_UNCERTAIN_MANUAL_RECONCILIATION")
+        _save_json(intent, pinned)
+        secret = admin("service-principal-secrets-proxy", "create", sp_id,
+                       "--lifetime", "7776000")["secret"]
+        temp = config.with_name("databrickscfg.new")
+        with temp.open("x") as stream:
+            stream.write("[edp-lab]\\n" + f"host = {HOST}\\n"
+                         + "auth_type = oauth-m2m\\n"
+                         + f"client_id = {app_id}\\nclient_secret = {secret}\\n")
+            stream.flush()
+            os.fsync(stream.fileno())
+        temp.chmod(0o600)
+        os.replace(temp, config)
+    if config.is_symlink() or config.stat().st_uid != 0 or config.stat().st_mode & 0o077:
+        raise RuntimeError("DAY7_M2M_CONFIG_NOT_PROTECTED")
+    _mark("service_identity", pinned)
     return sp_id, app_id
+
+
+def ensure_workspace_access(sp_id: str) -> None:
+    """Owner-only IAM; never grant WORKSPACE_ADMIN to the execution SP."""
+    expected = {"WORKSPACE_ACCESS", "DATABRICKS_SQL_ACCESS"}
+    try:
+        assignment = admin("workspace-iam-v2", "get-workspace-assignment-proxy", sp_id)
+    except subprocess.CalledProcessError as exc:
+        # Fail closed unless the response specifically proves the principal
+        # is not yet workspace-assigned; do not conflate forbidden and missing.
+        message = (exc.stderr or "").upper()
+        if not any(token in message for token in
+                   ("RESOURCE_DOES_NOT_EXIST", "NOT_FOUND", "404")):
+            raise
+        admin("api", "post", "/api/2.0/identity/workspace-assignments",
+              "--json", json.dumps({"principal_id": int(sp_id),
+                                     "entitlements": sorted(expected)}))
+        assignment = admin("workspace-iam-v2", "get-workspace-assignment-proxy", sp_id)
+    if (str(assignment.get("principal_id")) != sp_id
+            or assignment.get("principal_type") != "SERVICE_PRINCIPAL"):
+        raise RuntimeError("DAY7_SP_WORKSPACE_ASSIGNMENT_ID_MISMATCH")
+    direct = set(assignment.get("entitlements", []))
+    effective = set(assignment.get("effective_entitlements", []))
+    if any(value in effective | direct for value in
+           ("WORKSPACE_ADMIN", "ALLOW_CLUSTER_CREATE", "ALLOW_INSTANCE_POOL_CREATE")):
+        raise RuntimeError("DAY7_SP_UNEXPECTED_ADMIN_OR_COMPUTE_ENTITLEMENT")
+    if not expected <= effective:
+        if direct - expected:
+            raise RuntimeError("DAY7_SP_ENTITLEMENT_SCOPE_CHANGE_REQUIRES_OWNER")
+        admin("workspace-iam-v2", "update-workspace-assignment-proxy",
+              sp_id, "entitlements", "--json",
+              json.dumps({"principal_id": int(sp_id),
+                          "entitlements": sorted(direct | expected)}))
+    after = admin("workspace-iam-v2", "get-workspace-assignment-proxy", sp_id)
+    if (str(after.get("principal_id")) != sp_id
+            or not expected <= set(after.get("effective_entitlements", []))
+            or "WORKSPACE_ADMIN" in after.get("effective_entitlements", [])):
+        raise RuntimeError("DAY7_SP_WORKSPACE_ENTITLEMENT_NOT_VERIFIED")
+    _mark("workspace_assignment",
+          {"principal_id": sp_id, "entitlements": sorted(expected)})
+
+
+def verify_service_identity(sp_id: str, app_id: str) -> None:
+    """CLI current-user is a SCIM resource with id, not applicationId."""
+    principal = service("current-user", "me")
+    if (str(principal.get("id")) != sp_id
+            or principal.get("active", True) is not True):
+        raise RuntimeError("DAY7_M2M_IDENTITY_MISMATCH")
+    # Application ID is verified independently against the Owner-scoped SP.
+    registered = admin("service-principals", "get", sp_id)
+    if (str(registered.get("id")) != sp_id
+            or registered.get("applicationId") != app_id):
+        raise RuntimeError("DAY7_M2M_APP_ID_MISMATCH")
+    _mark("service_auth", {"service_principal_id": sp_id,
+                          "application_id": app_id})
 
 
 def permissions(app_id: str) -> None:
