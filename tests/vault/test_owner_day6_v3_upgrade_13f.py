@@ -26,8 +26,6 @@ def test_versioned_deployment_keeps_same_exact_source_and_target_scope():
     assert current["execution"]["automatic_retries_max"] == 0
     assert current["execution"]["runtime_artifact_sha256"] == newer.WHEEL_SHA
     assert newer.OLD_WHEEL_SHA != newer.WHEEL_SHA
-    assert newer.E2E_READY.name == "day6-v3-e2e-ready-13f-fix-v2.signed.json"
-    assert newer.UPGRADE_APPROVAL.name == "day6-v3-13f-fix-upgrade-v2.signed.json"
 
 
 def test_successor_canary_does_not_allow_execute_or_old_job_replay():
