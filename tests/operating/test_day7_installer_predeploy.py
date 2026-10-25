@@ -297,3 +297,12 @@ def test_sp_secret_creation_requires_workspace_assignment_first():
         '"service-principal-secrets-proxy", "create"')
     assert source.index("ensure_workspace_access(sp_id)") < source.index(
         "_save_json(intent, pinned)")
+
+
+
+def test_owner_installer_imports_pinned_day7_modules_not_old_day5_package():
+    code = inspect.getsource(installer.main)
+    assert code.index("preflight(args.expected_commit)") < code.index(
+        'sys.path.insert(0, str(ROOT / "src"))')
+    assert code.index('sys.path.insert(0, str(ROOT / "src"))') < code.index(
+        "protected_files(args.expected_commit)")
