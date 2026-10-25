@@ -96,24 +96,62 @@ def test_workspace_entitlements_updated_by_owner_only(monkeypatch):
     current = {"principal_id": 1234, "principal_type": "SERVICE_PRINCIPAL",
                "entitlements": [], "effective_entitlements": []}
     events = []
+    uri = "/api/2.0/identity/workspace-assignments/1234"
 
     def admin(*args):
         events.append(args)
-        if args[:2] == ("workspace-iam-v2", "get-workspace-assignment-proxy"):
+        if args == ("api", "get", uri):
             return dict(current)
-        if args[:2] == ("workspace-iam-v2", "update-workspace-assignment-proxy"):
+        if args[:3] == ("api", "patch", uri + "?update_mask=entitlements"):
             payload = json.loads(args[-1])
             current["entitlements"] = payload["entitlements"]
             current["effective_entitlements"] = payload["entitlements"]
             return dict(current)
         raise AssertionError(args)
+
     monkeypatch.setattr(installer, "admin", admin)
     monkeypatch.setattr(installer, "_mark", lambda *_: None)
     installer.ensure_workspace_access("1234")
     assert current["effective_entitlements"] == [
         "DATABRICKS_SQL_ACCESS", "WORKSPACE_ACCESS"]
-    assert not any("WORKSPACE_ADMIN" in str(x) for x in events)
-    assert not any(str(x[0]).startswith("service") for x in events)
+    assert events == [
+        ("api", "get", uri),
+        ("api", "patch", uri + "?update_mask=entitlements", "--json",
+         json.dumps({"principal_id": 1234, "entitlements": [
+             "DATABRICKS_SQL_ACCESS", "WORKSPACE_ACCESS"]})),
+        ("api", "get", uri),
+    ]
+
+
+def test_missing_workspace_assignment_is_created_once_and_read_back(monkeypatch):
+    import subprocess
+
+    uri = "/api/2.0/identity/workspace-assignments/1234"
+    state = {"created": False}
+    events = []
+
+    def admin(*args):
+        events.append(args)
+        if args == ("api", "get", uri):
+            if not state["created"]:
+                raise subprocess.CalledProcessError(
+                    1, args, stderr="404 RESOURCE_DOES_NOT_EXIST")
+            return {"principal_id": 1234, "principal_type": "SERVICE_PRINCIPAL",
+                    "entitlements": ["DATABRICKS_SQL_ACCESS", "WORKSPACE_ACCESS"],
+                    "effective_entitlements": ["DATABRICKS_SQL_ACCESS",
+                                               "WORKSPACE_ACCESS"]}
+        if args[:3] == ("api", "post", "/api/2.0/identity/workspace-assignments"):
+            assert json.loads(args[-1])["principal_id"] == 1234
+            state["created"] = True
+            return {}
+        raise AssertionError(args)
+
+    monkeypatch.setattr(installer, "admin", admin)
+    monkeypatch.setattr(installer, "_mark", lambda *_: None)
+    installer.ensure_workspace_access("1234")
+    assert state["created"]
+    assert sum(args[1] == "post" for args in events) == 1
+    assert sum(args[1] == "get" for args in events) == 3
 
 
 def test_workspace_admin_entitlement_is_rejected(monkeypatch):
@@ -123,6 +161,23 @@ def test_workspace_admin_entitlement_is_rejected(monkeypatch):
         "effective_entitlements": ["WORKSPACE_ADMIN"]})
     with pytest.raises(RuntimeError, match="DAY7_SP_UNEXPECTED_ADMIN"):
         installer.ensure_workspace_access("1234")
+
+
+def test_incomplete_workspace_assignment_is_not_falsely_accepted(monkeypatch):
+    assignment = {"principal_id": 1234, "principal_type": "SERVICE_PRINCIPAL",
+                  "entitlements": [], "effective_entitlements": []}
+    calls = []
+    def admin(*args):
+        calls.append(args)
+        if args[1] == "get":
+            return dict(assignment)
+        if args[1] == "patch":
+            return {}
+        raise AssertionError(args)
+    monkeypatch.setattr(installer, "admin", admin)
+    with pytest.raises(RuntimeError, match="DAY7_SP_WORKSPACE_ENTITLEMENT_NOT_VERIFIED"):
+        installer.ensure_workspace_access("1234")
+    assert len(calls) == 3
 
 
 def test_secret_intent_without_recoverable_secret_stops(monkeypatch, tmp_path):
