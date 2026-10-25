@@ -65,9 +65,9 @@ RESERVATION = BASE / "ledger/day6-v3-distinct-one-shot-v1.json"
 SUBMISSION = BASE / "ledger/day6-v3-distinct-one-shot-submission-v1.json"
 STANDING = BASE / "trust/day6-v3-standing-v1.signed.json"
 # Upgrade receipt is additive; original readiness and signed attempt history stay intact.
-E2E_READY = BASE / "receipts/day6-v3-e2e-ready-edgar-fix-v1.signed.json"
+E2E_READY = BASE / "receipts/day6-v3-e2e-ready-13f-fix-v2.signed.json"
 HISTORICAL_E2E = BASE / "receipts/day6-v3-e2e-ready-v1.signed.json"
-UPGRADE_APPROVAL = BASE / "approvals/day6-v3-edgar-fix-upgrade-v1.signed.json"
+UPGRADE_APPROVAL = BASE / "approvals/day6-v3-13f-fix-upgrade-v2.signed.json"
 
 
 def configure_attempt(number: int) -> None:
@@ -107,7 +107,10 @@ def _admission(request: dict, deployment: dict) -> None:
             and approval.get("request_sha256") == CURRENT_REQUEST_SHA256
             and approval.get("wheel_sha256") == deployment["artifact"]["sha256"]
             and approval.get("original_e2e_sha256") == file_digest(HISTORICAL_E2E)
-            and approval.get("standing_sha256") == file_digest(STANDING),
+            and approval.get("standing_sha256") == file_digest(STANDING)
+            and approval.get("failed_canary_no_effect_sha256") ==
+            file_digest(BASE / "receipts/day6-v3-edgarfix-canary-1-no-effect.signed.json"),
+
             "V3_UPGRADE_OWNER_APPROVAL_REQUIRED")
     require(ready.get("schema") == "EDP_VAULT_E2E_UPGRADE_V1"
             and ready.get("status") == "VERIFIED"
