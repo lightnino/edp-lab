@@ -198,6 +198,8 @@ def preflight(expected_commit: str) -> None:
         raise RuntimeError("EXISTING_COHORT_PROTECTED_INFRASTRUCTURE_REQUIRED")
     recovering = BASE.exists()
     if recovering:
+        if (PLIST.exists() and (PLIST.is_symlink() or PLIST.stat().st_uid != 0)):
+            raise RuntimeError("DAY7_UNOWNED_LAUNCHDAEMON_CHANGED")
         if (BASE.is_symlink() or BASE.stat().st_uid != 0
                 or BASE.stat().st_mode & 0o077
                 or not JOURNAL.is_file() or JOURNAL.is_symlink()
@@ -445,9 +447,17 @@ def permissions(app_id: str) -> None:
                 "--principal", app_id)
 
     def privileges(response: dict) -> set[str]:
-        return {item.get("privilege", item) for assignment in
-                response.get("privilege_assignments", [])
-                for item in assignment.get("privileges", [])}
+        # Databricks returns privilege names as strings, not objects.
+        result: set[str] = set()
+        for assignment in response.get("privilege_assignments", []):
+            for item in assignment.get("privileges", []):
+                if isinstance(item, str):
+                    result.add(item)
+                elif isinstance(item, dict) and isinstance(item.get("privilege"), str):
+                    result.add(item["privilege"])
+                else:
+                    raise RuntimeError("DAY7_GRANT_READBACK_SCHEMA_INVALID")
+        return result
 
     if ("READ_VOLUME" not in privileges(raw)
             or privileges(raw) & {"WRITE_VOLUME", "ALL_PRIVILEGES", "MANAGE"}
