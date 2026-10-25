@@ -19,7 +19,7 @@ from pathlib import Path
 from owner_day6_v3_diagnose_lexical import SELECTION, bindings, selected_rows
 from owner_day6_v3_one_shot import ROOT, require
 
-from edp_lab.vault.v3_spark_runtime import _digest, _ordinals
+from edp_lab.vault.v3_spark_runtime import _coverpage_quote_exception, _digest, _ordinals
 
 SOURCE_ID = "SRC000065"
 MEMBER = "COVERPAGE.tsv"
