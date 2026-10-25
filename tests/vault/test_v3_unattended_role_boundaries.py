@@ -128,6 +128,7 @@ def test_audit_reports_multiple_read_only_errors_without_first_error_stop(monkey
     monkeypatch.setattr(owner, "_source_rights", lambda: (_ for _ in ()).throw(
         RuntimeError("UC_READ_DENIED")))
     monkeypatch.setattr(owner, "_remote_digest", lambda *_: "correct")
+    monkeypatch.setattr(owner, "_workspace_absent", lambda _path: None)
     monkeypatch.setattr(setup, "admin_sql", lambda *_: (_ for _ in ()).throw(
         RuntimeError("SQL_WAREHOUSE_READ_DENIED")))
 
@@ -179,3 +180,85 @@ def test_owner_role_installer_does_not_gate_on_transient_old_probe_error():
     # never submit V3 as a side effect of repairing the service.
     assert 'request("audit")' in source
     assert 'request("run")' not in source
+
+
+
+def test_workspace_request_absence_uses_m2m_workspace_path_not_uc_table(monkeypatch):
+    """Full audit must dispatch REMOTE_REQUEST to Workspace get-status verifier."""
+    from types import SimpleNamespace
+
+    import owner_setup_day6_vault_0a as setup
+
+    from edp_lab.vault import v3_service
+
+    remote = "/Workspace/Shared/edp-lab/day6-c2000-v3-distinct-1/request.granted.json"
+    called = []
+    monkeypatch.setattr(v3_service, "_ready", lambda *_: None)
+    monkeypatch.setattr(v3_service, "_commit", lambda *_: "fixed-commit")
+    monkeypatch.setattr(v3_service, "_next_attempt",
+                        lambda *_: (1, "READY_FOR_DISTINCT_ATTEMPT"))
+    monkeypatch.setattr(owner, "SOURCE_TABLES", ("fixed_source",))
+    monkeypatch.setattr(owner, "_installed", lambda *_: {"job_id": 2})
+    monkeypatch.setattr(owner, "_workspace_access", lambda: None)
+    monkeypatch.setattr(owner, "_source_rights", lambda: None)
+    monkeypatch.setattr(owner, "_remote_digest", lambda *_: "correct")
+    monkeypatch.setattr(owner, "_workspace_absent",
+                        lambda path: called.append(("workspace", path)))
+    monkeypatch.setattr(setup, "admin_sql",
+                        lambda *_: {"status": {"state": "SUCCEEDED"}})
+
+    def cli(*args):
+        if args == ("current-user", "me"):
+            return {"id": owner.SERVICE_PRINCIPAL_ID}
+        if args == ("jobs", "list"):
+            return []
+        raise AssertionError("Unexpected Databricks API: " + repr(args))
+
+    def require(condition, reason):
+        if not condition:
+            raise RuntimeError(reason)
+
+    successor = SimpleNamespace(
+        configure_attempt=lambda _: None, REMOTE_REQUEST=remote)
+    monkeypatch.setattr(v3_service, "_imports", lambda: (
+        successor, lambda _: None,
+        lambda: ({}, {"artifact": {
+            "workspace_target_proposed": "/wheel", "sha256": "correct"}}),
+        None, lambda _: {}, lambda _table: (_ for _ in ()).throw(
+            AssertionError("Workspace file was sent to UC table verifier")),
+        require, cli))
+    result = v3_service.audit(Path("."), Path("."))
+    assert result["status"] == "V3_UNATTENDED_ADMISSION_READS_VERIFIED"
+    assert result["checks_passed"] == result["checks_total"] == 9
+    assert called == [("workspace", remote)]
+    assert result["checks"]["distinct_request_absent"]["status"] == "PASS"
+
+
+def test_workspace_absent_sp_path_requires_service_context(monkeypatch):
+    """Existing helper must be non-admin service identity, never Owner OAuth."""
+    import subprocess
+
+    from edp_lab.vault import protected_sql
+
+    observed = []
+
+    def capture(argv, **kwargs):
+        observed.append((argv, kwargs))
+        return SimpleProcessResult()
+
+    class SimpleProcessResult:
+        returncode = 1
+        stderr = "RESOURCE_DOES_NOT_EXIST"
+    monkeypatch.setenv("EDP_DAY6_V3_SERVICE_CONTEXT", "1")
+    monkeypatch.setattr(owner.os, "geteuid", lambda: 0)
+    monkeypatch.setattr(protected_sql, "protected_environment",
+                        lambda *_: {"DATABRICKS_CONFIG_FILE": "/protected/mock"})
+    monkeypatch.setattr(subprocess, "run", capture)
+    owner._workspace_absent(
+        "/Workspace/Shared/edp-lab/day6-c2000-v3-distinct-1/request.granted.json")
+    assert len(observed) == 1
+    argv, kwargs = observed[0]
+    assert argv[:3] == ["/opt/homebrew/bin/databricks", "workspace", "get-status"]
+    assert "-p" in argv and "vault-dev" in argv
+    assert "/usr/bin/sudo" not in argv
+    assert kwargs["env"]["DATABRICKS_CONFIG_FILE"] == "/protected/mock"
