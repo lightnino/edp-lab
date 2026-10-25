@@ -336,7 +336,12 @@ def readiness(request: dict, deployment: dict, historical: dict) -> None:
     if E2E_READY.exists():
         data = verified_document(ROOT, E2E_READY, BASE / "trust")
     else:
-        ensure_remote(deployment)
+        # The Owner installed the immutable wheel; the runtime principal only
+        # verifies read access and then submits the separately authorized canary.
+        require(_remote_digest(deployment["artifact"]["workspace_target_proposed"])
+                == NEW_WHEEL_SHA
+                and _remote_digest(CANARY_REQUEST) == file_digest(REQUEST),
+                "UPGRADE_SERVICE_PRINCIPAL_ARTIFACT_READBACK_FAILED")
         job_id = ensure_canary_job(deployment)
         run_id = ensure_canary_run(job_id)
         canary = verify_canary(request, job_id, run_id, historical)
@@ -421,8 +426,9 @@ def activate(commit: str) -> dict:
     require(os.geteuid() == 0, "UPGRADE_OWNER_ROOT_REQUIRED")
     request, deployment, historical = preflight(commit)
     ensure_approval(request, deployment, commit)
-    # Service-context M2M is used for the canary and all remote verification;
-    # it never uses an agent-owned credential, role, key or ad-hoc SQL.
+    # Workspace upload is the explicit Owner installation act; the existing
+    # least-privilege service principal only reads and runs the canary.
+    ensure_remote(deployment)
     os.environ["EDP_DAY6_V3_SERVICE_CONTEXT"] = "1"
     _workspace_access()
     readiness(request, deployment, historical)
