@@ -53,7 +53,7 @@ def test_auto_loader_uses_one_active_manifest_and_cannot_fall_back(tmp_path, mon
     # An installed active file without a protected deployment pin must stop.
     with pytest.raises(ScopeDenied, match="ACTIVE_UNIVERSE_DEPLOYMENT_PIN_MISSING"):
         UniverseGate.load(tmp_path)
-    monkeypatch.setattr(u, "ACTIVE_UNIVERSE_PIN", (manifest_sha, approval_sha))
+    monkeypatch.setattr(u, "_protected_active_pin", lambda _: (manifest_sha, approval_sha))
     assert UniverseGate.load(tmp_path).check(
         "eligible", "a" * 64, "raw/eligible")["identity"] == "eligible"
     (tmp_path / ACTIVE_AUTHORITY_PATH).write_text("mutated")

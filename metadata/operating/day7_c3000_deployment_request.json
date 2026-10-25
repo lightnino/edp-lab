@@ -46,6 +46,17 @@
   },
   "one_time_owner_deployment": {
     "status": "NOT_INSTALLED",
+    "successor_unsigned_policy_path": "metadata/operating/day7_c3000_standing_policy_unsigned_v1.json",
+    "successor_unsigned_policy_sha256": "a3ebfc053ce87914d7335e404b7baa9a1e265e61066088bcb7515e5ec18c4a6b",
+    "owner_installer_path": "scripts/owner_install_day7.py",
+    "owner_installer_preflight": "FAIL_CLOSED_WITH_800_OF_1000_VERIFIED_HANDOFF_COVERAGE_BEFORE_ANY_PROTECTED_OR_REMOTE_WRITE",
+    "owner_installer_executed": false,
+    "protected_universe_receipt_sha256": null,
+    "protected_prior_receipt_sha256": null,
+    "protected_deployment_receipt_sha256": null,
+    "actual_service_principal_application_id": null,
+    "actual_canary_run_id": null,
+    "eligible_handoff_coverage": {"existing_verified_remote_additions": 800, "unused_originals_without_bound_remote_evidence": 980, "minimum_additional_verified_remote_sources_for_n1000": 200},
     "requires": "Existing Cohort protected policy/credentials/issuer/verifier update once after exact universe and source/target pins exist",
     "authentication": "NONINTERACTIVE_CREDENTIALS_VERIFIED_IN_ACTUAL_BACKGROUND_ACTOR",
     "ops": "U8-U10 verified publication, Cohort P0-P14, native Spark Delta, liveness/recovery and Git CI/merge after acceptance",
@@ -58,7 +69,8 @@
       "Owner-signed protected standing policy still binds Universe v1, max increment 500, Day 5 namespaces and RAW staging.",
       "No protected signed U10 handoff resolver or receipts for the retained 800; historical receipts cannot be substituted for current protected receipt schema.",
       "No verified C2000 prior-cohort receipt in the broker's required schema.",
-      "Actual protected service identity noninteractive Databricks authentication and Job/readback canary are unverified."
+      "Actual protected service identity noninteractive Databricks authentication and Job/readback canary are unverified.",
+      "Only 800 of 1,780 eligible sources have exact existing remote RAW locator/receipt/readback evidence in the active manifest. N1000 needs at least 200 more; no Cohort RAW upload or invented U10 receipt is allowed."
     ],
     "no_per_job_approval": true,
     "stop_for": [

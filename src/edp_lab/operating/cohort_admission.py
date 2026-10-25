@@ -177,23 +177,14 @@ def _admit_incremental(root: Path, grant: dict, request: dict, ledger: Path,
         pinned_universe_sha256=gate.fingerprint,
     )
     # Verify exact protected U10 receipts, not agent-written "verified" booleans.
+    from edp_lab.operating.day7_protected import verify_handoff_receipt
+
     trust = protected_trust_dir(root)
     receipt_hashes = {}
+    members = {row["identity"]: row for row in gate.document()["members"]}
     for source in new:
-        receipt = Path(source["raw_handoff_receipt_path"])
-        if receipt.parent.resolve() != (trust.parent / "receipts").resolve():
-            raise Denied("RAW_HANDOFF_OUTSIDE_PROTECTED_STORE")
-        if file_digest(receipt) != source["raw_handoff_receipt_sha256"]:
-            raise Denied("RAW_HANDOFF_DIGEST_MISMATCH")
-        proof = verified_document(root, receipt, trust)
-        if (proof.get("authority") != "protected-verifier-v1"
-                or proof.get("status") != "VERIFIED"
-                or proof.get("live_readback") is not True
-                or proof.get("physical_identity") != source["source_identity"]
-                or proof.get("remote_sha256") != source["raw_sha256"]
-                or proof.get("remote_path") != source["remote_raw_path"]):
-            raise Denied("RAW_HANDOFF_NOT_VERIFIED")
-        receipt_hashes[source["source_identity"]] = file_digest(receipt)
+        receipt_hashes[source["source_identity"]] = verify_handoff_receipt(
+            root, trust, members[source["source_identity"]], source, gate.document())
 
     target = root / "metadata/freezes" / candidate["cohort"]
     alias = root / "metadata/cohorts" / (candidate["cohort"] + ".csv")

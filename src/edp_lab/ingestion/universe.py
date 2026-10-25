@@ -6,6 +6,7 @@ from a mutable repository file or an agent-supplied request.
 
 import hashlib
 import json
+import os
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -13,9 +14,6 @@ AUTHORITY_PATH = Path("metadata/source_universes/approved_v1/manifest.json")
 # Single active Universe entrypoint for future cohort runs. The legacy pinned
 # v1 path above remains read-only for previously accepted historical executions.
 ACTIVE_AUTHORITY_PATH = Path("metadata/source_universes/approved/manifest.json")
-# Bound at protected one-time deployment to the single approved active manifest.
-# None means there is no installed successor authority, not "trust latest".
-ACTIVE_UNIVERSE_PIN: tuple[str, str] | None = None
 APPROVED_AUTHORITY_SHA256 = "2198f9bad9c864bf339eff515992526e22efc4230160614a8f86daf3143f463c"
 APPROVAL_SHA256 = "3307ff5c234e20b48a7a2ced6de7c54d504eb475de8ae90d4509cfd49002823d"
 BINDINGS_PATH = Path("metadata/source_universes/historical_cohort_bindings_v1.json")
@@ -41,6 +39,31 @@ class ScopeDenied(ValueError):
 
 def sha(raw):
     return hashlib.sha256(raw).hexdigest()
+
+
+def _protected_active_pin(root: Path) -> tuple[str, str]:
+    """Read the installed, owner-signed pin from the root-owned Day 7 store."""
+    if os.environ.get("EDP_DAY7_PROTECTED") != "1" or os.geteuid() != 0:
+        raise ScopeDenied("ACTIVE_UNIVERSE_DEPLOYMENT_PIN_MISSING")
+    from edp_lab.operating.authority import verified_document
+
+    trust = Path("/private/var/db/edp-lab-day7/trust")
+    policy_path = trust / "policy.signed.json"
+    owner_key = trust / "owner_ed25519_public.pem"
+    protected = (trust, policy_path, owner_key)
+    if (not trust.is_dir() or not policy_path.is_file() or not owner_key.is_file()
+            or any(path.stat().st_uid != 0 or path.stat().st_mode & 0o022
+                   for path in protected)):
+        raise ScopeDenied("ACTIVE_UNIVERSE_DEPLOYMENT_PIN_MISSING")
+    try:
+        policy = verified_document(root, policy_path, trust)
+        if (policy.get("policy_id") != "edp-lab-standing-day7-c3000-v1"
+                or policy.get("universe_path") != str(ACTIVE_AUTHORITY_PATH)):
+            raise ValueError("Wrong protected policy")
+        return (policy["universe_sha256"],
+                policy["contracts"]["universe_approval"]["sha256"])
+    except (OSError, ValueError, KeyError, TypeError):
+        raise ScopeDenied("ACTIVE_UNIVERSE_DEPLOYMENT_PIN_INVALID") from None
 
 
 @dataclass(frozen=True)
@@ -103,10 +126,9 @@ class UniverseGate:
         # Once a successor is published there is only ONE active authority.
         # Never fall back to historical v1 if it is present but not trusted.
         if (root / ACTIVE_AUTHORITY_PATH).exists():
-            if ACTIVE_UNIVERSE_PIN is None:
-                raise ScopeDenied("ACTIVE_UNIVERSE_DEPLOYMENT_PIN_MISSING")
-            return cls.load_active(root, manifest_sha256=ACTIVE_UNIVERSE_PIN[0],
-                                   approval_sha256=ACTIVE_UNIVERSE_PIN[1])
+            manifest_sha, approval_sha = _protected_active_pin(Path(root))
+            return cls.load_active(root, manifest_sha256=manifest_sha,
+                                   approval_sha256=approval_sha)
         return cls.load_historical(root)
 
     @classmethod

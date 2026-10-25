@@ -142,9 +142,21 @@ def authorize(grant: dict, request: dict, *, root: Path, used: dict | None = Non
         expected = grant["sources"].get(source["identity"])
         if expected is None or expected != source["sha256"]:
             raise Denied("SOURCE_OUT_OF_SCOPE")
-        raw = Path(source["path"]).resolve(strict=True)
-        if file_digest(raw) != expected:
-            raise Denied("RAW_HASH_CHANGED")
+        if grant["cohort"] == "C3000" and "universe" in grant["contracts"]:
+            active = root / "metadata/source_universes/approved/manifest.json"
+            if file_digest(active) != grant["contracts"]["universe"]["sha256"]:
+                raise Denied("ACTIVE_UNIVERSE_CHANGED")
+            members = {member["identity"]: member for member in json.loads(active.read_bytes())[
+                "members"]}
+            member = members.get(source["identity"])
+            if (member is None or member["holdout"]
+                    or member["raw_path"] != source["path"]
+                    or member["raw_sha256"] != expected):
+                raise Denied("SOURCE_OUT_OF_ACTIVE_UNIVERSE")
+        else:
+            raw = Path(source["path"]).resolve(strict=True)
+            if file_digest(raw) != expected:
+                raise Denied("RAW_HASH_CHANGED")
     for name, supplied in request.get("contracts", {}).items():
         expected = grant["contracts"].get(name)
         if expected is None or expected["version"] != supplied["version"]:
