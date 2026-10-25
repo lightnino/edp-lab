@@ -6,7 +6,7 @@
 
 ## Owner's Day 7 membership decision
 
-The owner explicitly approves **all 800 retained, independently identified and remotely hash-verified source instances from the 2026-10-21 source-universe incident** for prospective membership in an expanded Universe. This is a **new** Universe-v2 membership decision: no historical manifest/freeze or past incident is rewritten, and no RAW reupload follows merely from membership approval. The intended population is original approved v1 (`3,021`) plus the exact retained `800` (`3,821`), with the same protected `41` holdouts. Previously frozen source-preserving outputs remain frozen.
+The owner explicitly approves **all 800 retained, independently identified and remotely hash-verified source instances from the 2026-10-21 source-universe incident** for prospective membership in an expanded Universe. The versioned decision is recorded in [`metadata/authorizations/day7_universe_expansion_800_owner_decision.json`](../metadata/authorizations/day7_universe_expansion_800_owner_decision.json), without claiming an unsigned repository file is an installed grant. This is a **new** Universe-v2 membership decision: no historical manifest/freeze or past incident is rewritten, and no RAW reupload follows merely from membership approval. The intended population is original approved v1 (`3,021`) plus the exact retained `800` (`3,821`), with the same protected `41` holdouts. Previously frozen source-preserving outputs remain frozen.
 
 Evidence anchors to verify before publication:
 - `metadata/source_universes/approved_v1/manifest.json` (SHA-256 `2198f9bad9c864bf339eff515992526e22efc4230160614a8f86daf3143f463c`) and its separate owner authorization.
