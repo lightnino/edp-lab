@@ -11,8 +11,8 @@ from pathlib import Path
 
 import pytest
 
-from edp_lab.operating.authority import Denied
 from edp_lab.operating import policy_broker
+from edp_lab.operating.authority import Denied
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "scripts"))
