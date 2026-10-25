@@ -8,10 +8,12 @@ instead of replaying a potentially uncertain external write.
 from __future__ import annotations
 
 import argparse
+import grp
 import hashlib
 import json
 import os
 import shutil
+import stat
 import subprocess
 import tarfile
 import time
@@ -237,7 +239,9 @@ def preflight(expected_commit: str) -> None:
             JOURNAL if JOURNAL.exists()
             else JOURNAL.with_name(JOURNAL.name + ".new"))
         if (BASE.is_symlink() or BASE.stat().st_uid != 0
-                or BASE.stat().st_mode & 0o077
+                or stat.S_IMODE(BASE.stat().st_mode) not in (0o700, 0o710)
+                or (stat.S_IMODE(BASE.stat().st_mode) == 0o710
+                    and BASE.stat().st_gid != grp.getgrnam("staff").gr_gid)
                 or not journal_or_tmp.is_file() or journal_or_tmp.is_symlink()
                 or journal_or_tmp.stat().st_uid != 0
                 or {k: v for k, v in _read_json(journal_or_tmp).items()
@@ -290,11 +294,29 @@ def _find_exact_service_principals() -> list[dict]:
     return [item for item in rows if item.get("displayName") == SP_NAME]
 
 
+def configure_broker_socket_access() -> None:
+    """Allow staff to traverse BASE to its group-protected broker.sock only.
+
+    Credentials, trust, grants and the durable Owner journal remain in
+    owner-only subdirectories. Never make BASE group-readable or writable.
+    """
+    if os.geteuid() != 0 or BASE.is_symlink() or BASE.stat().st_uid != 0:
+        raise RuntimeError("DAY7_BROKER_PARENT_ROOT_REQUIRED")
+    staff_gid = grp.getgrnam("staff").gr_gid
+    os.chown(BASE, -1, staff_gid)
+    BASE.chmod(0o710)
+    observed = BASE.stat()
+    if (observed.st_gid != staff_gid
+            or stat.S_IMODE(observed.st_mode) != 0o710):
+        raise RuntimeError("DAY7_BROKER_PARENT_ACCESS_UNVERIFIED")
+
+
 def protected_files(expected_commit: str) -> None:
     from edp_lab.operating.authority import verified_document
     from edp_lab.operating.protected_verifier import _sign
 
     BASE.mkdir(mode=0o700, exist_ok=True)
+    configure_broker_socket_access()
     for name, mode in (("private", 0o700), ("trust", 0o700),
                        ("receipts", 0o700), ("grants", 0o700),
                        ("ledger", 0o700), ("runtime", 0o700)):
@@ -701,6 +723,19 @@ def install_broker() -> None:
     if existing.returncode != 0:
         run("/bin/launchctl", "bootstrap", "system", str(PLIST))
     run("/bin/launchctl", "print", "system/" + LABEL)
+    # Ensure access works for the actual non-root agent, not just for root.
+    # The same socket is group-staff 0660; BASE permits staff traverse (0710).
+    # No service credential material is exposed to this caller.
+    def agent_broker_probe() -> None:
+        script = (
+            "import socket, sys; "
+            "s=socket.socket(socket.AF_UNIX); s.settimeout(5); "
+            "s.connect(sys.argv[1]); s.close()"
+        )
+        run("/usr/bin/sudo", "-n", "-u", "lightnino", "-H",
+            str(PYTHON), "-c", script, str(BASE / "broker.sock"))
+
+    agent_broker_probe()
     # Real request through the installed LaunchDaemon, not only a root
     # installer subprocess. The broker must resolve/sign the pinned canary
     # under its own protected OAuth profile.
