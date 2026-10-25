@@ -238,6 +238,21 @@ def task_request(root: Path, queue: dict, queue_path: Path,
     return request
 
 
+def _validate_raw_mode(queue: dict, ordered: list[dict]) -> None:
+    """Prevent Cohort RAW writes before requesting/executing an operation."""
+    if queue.get("raw_mode") == "VERIFIED_READ_ONLY":
+        if any(task["kind"] == "raw_stage" for task in ordered):
+            raise Denied("COHORT_RAW_WRITE_FORBIDDEN")
+        if not queue.get("previous_cohort") or not queue.get("sources"):
+            raise Denied("INCREMENT_RAW_HANDOFF_REQUIRED")
+        for source in queue["sources"]:
+            if (not source.get("remote_raw_path")
+                    or not source.get("raw_handoff_receipt_sha256")):
+                raise Denied("INCREMENT_RAW_HANDOFF_REQUIRED")
+    elif "raw_mode" in queue and queue["raw_mode"] != "LEGACY_STAGE":
+        raise Denied("INVALID_RAW_MODE")
+
+
 def run(root: Path, queue_path: Path, envelope: Path, state_dir: Path,
         *, dry_run: bool = False, pause_after: int | None = None,
         pause_at_receipt_barrier: bool = False) -> dict:
@@ -265,6 +280,7 @@ def run(root: Path, queue_path: Path, envelope: Path, state_dir: Path,
             or file_digest(registry_file) != grant["contracts"]["registry"]["sha256"]):
         raise Denied("REGISTRY_HASH_CHANGED")
     ordered = _ordered(queue["tasks"])
+    _validate_raw_mode(queue, ordered)
     if any(t["kind"] == "budget_gate" for t in ordered):
         policy = queue.get("contracts", {}).get("budget_policy")
         if not policy or "budget_policy" not in grant["contracts"]:

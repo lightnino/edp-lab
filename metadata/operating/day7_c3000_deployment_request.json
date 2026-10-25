@@ -1,0 +1,62 @@
+{
+  "schema": "EDP_DAY7_C3000_DEPLOYMENT_REQUEST_V1",
+  "status": "PREPARED_NOT_DEPLOYED",
+  "scope": "Day7 C2000 plus disjoint N1000; native incremental Spark/Delta with no Cohort RAW mutation",
+  "approved_universe": {
+    "canonical_active_manifest_path": "metadata/source_universes/approved/manifest.json",
+    "member_count": 3821,
+    "holdouts_preserved": 41,
+    "source_v1_count": 3021,
+    "new_owner_approved_retained_raw_count": 800,
+    "membership_approval": "metadata/authorizations/day7_universe_expansion_800_owner_decision.json",
+    "manifest_sha256": null,
+    "approval_sha256": null,
+    "publish_gate": "Resolve exact 800 member identity/RAW hashes and reuse existing U10 remote readback evidence; publish one active manifest + digest and remove competing active versioned references, then pin."
+  },
+  "prior_cohort": {
+    "cohort": "C2000",
+    "size": 2000,
+    "input_freeze": "metadata/freezes/C2000_v1/freeze.json",
+    "input_freeze_sha256": "324ca5e416adabc443d18d8066fbccdf137f4cb50aa20934e645615f4ee77ff3",
+    "result_receipt": "metadata/freezes/O_C2000_M2_v1/receipts/c2000-result-freeze.json",
+    "result_receipt_sha256": "e1023289fedb3b682e0afe33bc350997e5d84c5aa27e9d00bf34bc760fe93830",
+    "historical_reprocess": false
+  },
+  "increment": {
+    "size": 1000,
+    "eligible_pool": 1780,
+    "cohort": "C3000",
+    "raw_mode": "VERIFIED_READ_ONLY",
+    "selection_roster_sha256": null,
+    "raw_handoff_receipt_index_sha256": null,
+    "negative_holdout_tests": true
+  },
+  "runner": {
+    "reuse": "src/edp_lab/operating/runner.py",
+    "admission": "src/edp_lab/operating/cohort_admission.py",
+    "model_workflow": "docs/workflows/cohort_model_lifecycle_v1.md",
+    "validation_workflow": "docs/workflows/validation_freeze_lifecycle_v1.md",
+    "force_no_cohort_raw_stage": true,
+    "incremental_delta_default": "NEW_N1000_PLUS_VERSION_PINNED_OLD_UNION_ALL",
+    "merge_only_if_business_key_update_semantics_approved": true,
+    "targeted_replay_only_if_dependency_impact_and_existing_semantic_authority": true,
+    "protected_job_source": "EXISTING_COHORT_0A_AFTER_PINNED_DEPLOYMENT",
+    "no_day6_vault_reuse_assumed": true
+  },
+  "one_time_owner_deployment": {
+    "status": "NOT_INSTALLED",
+    "requires": "Existing Cohort protected policy/credentials/issuer/verifier update once after exact universe and source/target pins exist",
+    "authentication": "NONINTERACTIVE_CREDENTIALS_VERIFIED_IN_ACTUAL_BACKGROUND_ACTOR",
+    "ops": "U8-U10 verified publication, Cohort P0-P14, native Spark Delta, liveness/recovery and Git CI/merge after acceptance",
+    "owner_terminal_invocation": null,
+    "no_per_job_approval": true,
+    "stop_for": [
+      "MISSING_PINNED_ACTIVE_MANIFEST",
+      "MISSING_U10_SIGNED_RAW_HANDOFF",
+      "UNVERIFIED_EXTERNAL_WRITE",
+      "NEW_BUSINESS_SEMANTICS",
+      "REAL_EXTERNAL_PERMISSIONS"
+    ]
+  },
+  "success": "ACTUAL_C3000_LIVE_FREEZE_AND_DAY7_P14_MAIN_MERGE"
+}

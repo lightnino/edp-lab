@@ -10,6 +10,12 @@ from dataclasses import dataclass
 from pathlib import Path
 
 AUTHORITY_PATH = Path("metadata/source_universes/approved_v1/manifest.json")
+# Single active Universe entrypoint for future cohort runs. The legacy pinned
+# v1 path above remains read-only for previously accepted historical executions.
+ACTIVE_AUTHORITY_PATH = Path("metadata/source_universes/approved/manifest.json")
+# Bound at protected one-time deployment to the single approved active manifest.
+# None means there is no installed successor authority, not "trust latest".
+ACTIVE_UNIVERSE_PIN: tuple[str, str] | None = None
 APPROVED_AUTHORITY_SHA256 = "2198f9bad9c864bf339eff515992526e22efc4230160614a8f86daf3143f463c"
 APPROVAL_SHA256 = "3307ff5c234e20b48a7a2ced6de7c54d504eb475de8ae90d4509cfd49002823d"
 BINDINGS_PATH = Path("metadata/source_universes/historical_cohort_bindings_v1.json")
@@ -46,7 +52,50 @@ class UniverseGate:
     bindings: bytes | None = None
 
     @classmethod
+    def load_active(cls, root, *, manifest_sha256: str, approval_sha256: str):
+        """Load exactly one active Universe, pinned by trusted deployment.
+
+        Pins must be supplied by the protected actor; never from an Agent's
+        untrusted run request. The active path contains no _v1/_v2 suffix.
+        """
+        import re
+
+        if not all(isinstance(pin, str) and re.fullmatch(r"[0-9a-f]{64}", pin)
+                   for pin in (manifest_sha256, approval_sha256)):
+            raise ScopeDenied("INVALID_ACTIVE_UNIVERSE_PIN")
+        path = root / ACTIVE_AUTHORITY_PATH
+        try:
+            raw = path.read_bytes()
+        except OSError:
+            raise ScopeDenied("MISSING_ACTIVE_UNIVERSE") from None
+        if sha(raw) != manifest_sha256:
+            raise ScopeDenied("AUTHORITY_PIN_MISMATCH")
+        try:
+            document = json.loads(raw)
+            approval_rel = Path(document["approval_reference"])
+            if approval_rel.is_absolute() or ".." in approval_rel.parts:
+                raise ValueError("Unsafe approval path")
+            approval_raw = (root / approval_rel).read_bytes()
+            approval = json.loads(approval_raw)
+            if (sha(approval_raw) != approval_sha256
+                    or approval.get("status") != "APPROVED"
+                    or approval.get("manifest_sha256") != manifest_sha256):
+                raise ValueError("Invalid owner approval")
+        except (OSError, ValueError, KeyError, TypeError):
+            raise ScopeDenied("INVALID_OWNER_OR_COHORT_EVIDENCE") from None
+        gate = cls(raw, manifest_sha256)
+        gate.document()  # Validate all members and collision/holdout shape.
+        return gate
+
+    @classmethod
     def load(cls, root):
+        # Once a successor is published there is only ONE active authority.
+        # Never fall back to historical v1 if it is present but not trusted.
+        if (root / ACTIVE_AUTHORITY_PATH).exists():
+            if ACTIVE_UNIVERSE_PIN is None:
+                raise ScopeDenied("ACTIVE_UNIVERSE_DEPLOYMENT_PIN_MISSING")
+            return cls.load_active(root, manifest_sha256=ACTIVE_UNIVERSE_PIN[0],
+                                   approval_sha256=ACTIVE_UNIVERSE_PIN[1])
         try:
             raw = (root / AUTHORITY_PATH).read_bytes()
         except OSError:
