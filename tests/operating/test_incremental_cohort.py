@@ -31,7 +31,8 @@ def invoke(old=None, incoming=None, members=None, *, expected_increment=1):
         original_old if old is None else old,
         original_incoming if incoming is None else incoming,
         original_members if members is None else members,
-        previous_cohort="C2000", new_cohort="C3000",
+        previous_cohort=f"C{len(original_old if old is None else old)}",
+        new_cohort=f"C{len(original_old if old is None else old) + len(original_incoming if incoming is None else incoming)}",
         expected_increment=expected_increment, pinned_universe_sha256="e" * 64,
     )
 
