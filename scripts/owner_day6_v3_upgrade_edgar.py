@@ -184,7 +184,6 @@ def ensure_approval(request: dict, deployment: dict, commit: str) -> None:
 
 
 def canary_parameters() -> list[str]:
-    request = json.loads(REQUEST.read_bytes())
     return ["--request", CANARY_REQUEST, "--request-sha256", file_digest(REQUEST),
             "--selection", "/Workspace/Shared/edp-lab/day6-c2000-v3/selection.json",
             "--negative-oracles",
