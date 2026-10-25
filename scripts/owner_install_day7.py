@@ -436,43 +436,58 @@ def service_identity() -> tuple[str, str]:
 
 
 def ensure_workspace_access(sp_id: str) -> None:
-    """Owner-only IAM; never grant WORKSPACE_ADMIN to the execution SP."""
-    expected = {"WORKSPACE_ACCESS", "DATABRICKS_SQL_ACCESS"}
+    """Grant only Workspace/SQL access through the documented Owner IAM API.
+
+    Workspace Assignment is admin-only. Its POST/PATCH operations are not
+    atomic, so every external outcome is independently read back.
+    """
+    required = {"WORKSPACE_ACCESS", "DATABRICKS_SQL_ACCESS"}
+    uri = f"/api/2.0/identity/workspace-assignments/{sp_id}"
+
+    def get_assignment() -> dict:
+        return admin("api", "get", uri)
+
     try:
-        assignment = admin("workspace-iam-v2", "get-workspace-assignment-proxy", sp_id)
+        assignment = get_assignment()
     except subprocess.CalledProcessError as exc:
-        # Fail closed unless the response specifically proves the principal
-        # is not yet workspace-assigned; do not conflate forbidden and missing.
         message = (exc.stderr or "").upper()
-        if not any(token in message for token in
+        if not any(term in message for term in
                    ("RESOURCE_DOES_NOT_EXIST", "NOT_FOUND", "404")):
             raise
+        # On an uncertain POST, a later Owner retry must GET and reconcile
+        # the same principal, never create a second identity.
         admin("api", "post", "/api/2.0/identity/workspace-assignments",
               "--json", json.dumps({"principal_id": int(sp_id),
-                                     "entitlements": sorted(expected)}))
-        assignment = admin("workspace-iam-v2", "get-workspace-assignment-proxy", sp_id)
+                                     "entitlements": sorted(required)}))
+        assignment = get_assignment()
+
     if (str(assignment.get("principal_id")) != sp_id
             or assignment.get("principal_type") != "SERVICE_PRINCIPAL"):
         raise RuntimeError("DAY7_SP_WORKSPACE_ASSIGNMENT_ID_MISMATCH")
+
     direct = set(assignment.get("entitlements", []))
     effective = set(assignment.get("effective_entitlements", []))
-    if any(value in effective | direct for value in
-           ("WORKSPACE_ADMIN", "ALLOW_CLUSTER_CREATE", "ALLOW_INSTANCE_POOL_CREATE")):
+    forbidden = {"WORKSPACE_ADMIN", "ALLOW_CLUSTER_CREATE",
+                 "ALLOW_INSTANCE_POOL_CREATE"}
+    if forbidden & (effective | direct):
         raise RuntimeError("DAY7_SP_UNEXPECTED_ADMIN_OR_COMPUTE_ENTITLEMENT")
-    if not expected <= effective:
-        if direct - expected:
+    if not required <= effective:
+        if direct - required:
             raise RuntimeError("DAY7_SP_ENTITLEMENT_SCOPE_CHANGE_REQUIRES_OWNER")
-        admin("workspace-iam-v2", "update-workspace-assignment-proxy",
-              sp_id, "entitlements", "--json",
-              json.dumps({"principal_id": int(sp_id),
-                          "entitlements": sorted(direct | expected)}))
-    after = admin("workspace-iam-v2", "get-workspace-assignment-proxy", sp_id)
+        # PATCH the exact direct entitlement set via supported REST API.
+        admin("api", "patch", uri + "?update_mask=entitlements",
+              "--json", json.dumps({"principal_id": int(sp_id),
+                                     "entitlements": sorted(direct | required)}))
+
+    after = get_assignment()
     if (str(after.get("principal_id")) != sp_id
-            or not expected <= set(after.get("effective_entitlements", []))
-            or "WORKSPACE_ADMIN" in after.get("effective_entitlements", [])):
+            or after.get("principal_type") != "SERVICE_PRINCIPAL"
+            or not required <= set(after.get("effective_entitlements", []))
+            or forbidden & set(after.get("effective_entitlements", []))):
         raise RuntimeError("DAY7_SP_WORKSPACE_ENTITLEMENT_NOT_VERIFIED")
     _mark("workspace_assignment",
-          {"principal_id": sp_id, "entitlements": sorted(expected)})
+          {"principal_id": sp_id, "entitlements": sorted(required)})
+
 
 
 def verify_service_identity(sp_id: str, app_id: str) -> None:
