@@ -7,7 +7,7 @@ from pathlib import Path
 
 import pytest
 
-from edp_lab.ingestion.universe import ACTIVE_AUTHORITY_PATH, sha
+from edp_lab.ingestion.universe import ACTIVE_AUTHORITY_PATH
 from edp_lab.operating import cohort_admission as admission
 from edp_lab.operating.authority import Denied, file_digest
 
