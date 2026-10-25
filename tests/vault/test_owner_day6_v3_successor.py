@@ -56,8 +56,13 @@ def test_entitle_adds_only_workspace_access_then_reads_back(monkeypatch):
     updates = [args for args, _ in calls if args[:2] == (
         "workspace-iam-v2", "update-workspace-assignment-proxy")]
     assert len(updates) == 1
-    assert json.loads(updates[0][-1])["entitlements"] == [
-        "DATABRICKS_SQL_ACCESS", "WORKSPACE_ACCESS"]
+    assert updates[0][:5] == (
+        "workspace-iam-v2", "update-workspace-assignment-proxy",
+        successor.SERVICE_PRINCIPAL_ID, "entitlements", "--json")
+    assert json.loads(updates[0][-1]) == {
+        "principal_id": int(successor.SERVICE_PRINCIPAL_ID),
+        "entitlements": ["DATABRICKS_SQL_ACCESS", "WORKSPACE_ACCESS"],
+    }
     successor.entitle("reviewed")
     assert len([args for args, _ in calls if args[:2] == (
         "workspace-iam-v2", "update-workspace-assignment-proxy")]) == 1

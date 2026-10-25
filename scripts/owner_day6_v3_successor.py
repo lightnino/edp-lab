@@ -128,7 +128,7 @@ def entitle(expected_commit: str) -> dict:
                 and set(direct) == {"DATABRICKS_SQL_ACCESS"},
                 "V3_RUN_AS_ENTITLEMENT_SCOPE_CHANGED")
         admin_cli("workspace-iam-v2", "update-workspace-assignment-proxy",
-                  SERVICE_PRINCIPAL_ID, "entitlements", SERVICE_PRINCIPAL_ID,
+                  SERVICE_PRINCIPAL_ID, "entitlements",
                   "--json", json.dumps({
                       "principal_id": int(SERVICE_PRINCIPAL_ID),
                       "entitlements": ["DATABRICKS_SQL_ACCESS", "WORKSPACE_ACCESS"]}),
