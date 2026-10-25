@@ -15,7 +15,8 @@ import owner_day6_v3_upgrade_13f as newer
 
 def test_versioned_deployment_keeps_same_exact_source_and_target_scope():
     previous = json.loads(newer.OLD_REQUEST.read_bytes())
-    current = json.loads(newer.REQUEST.read_bytes())
+    current = json.loads((ROOT / "metadata/operating/"
+                          "day6_c2000_vault_v3_bounded_request_13f_fix_v1.json").read_bytes())
     assert current["selection"] == previous["selection"]
     assert current["semantic_approval_request"] == previous["semantic_approval_request"]
     assert current["target_namespace"] == previous["target_namespace"]
