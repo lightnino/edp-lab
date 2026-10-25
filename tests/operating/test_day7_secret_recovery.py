@@ -88,8 +88,8 @@ def test_controlled_recovery_creates_exactly_one_secret_and_resumes(monkeypatch,
     monkeypatch.setattr(recovery.subprocess, "run", run)
     monkeypatch.setattr(recovery.install, "service",
                         lambda *_: {"id": recovery.SP_ID})
-    rows = [[], [{"id": "created-id", "status": "ACTIVE"}]]
-    monkeypatch.setattr(recovery, "_secret_metadata", lambda: rows.pop(0))
+    monkeypatch.setattr(recovery, "_secret_metadata",
+                        lambda: [{"id": "created-id", "status": "ACTIVE"}])
     executed = []
     monkeypatch.setattr(recovery.install, "main", lambda: executed.append(True))
 
