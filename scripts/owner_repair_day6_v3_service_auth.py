@@ -95,7 +95,7 @@ def repair(expected_commit: str) -> dict:
     for _ in range(30):
         try:
             last = request("probe")
-            if last.get("status") != "BLOCKED":
+            if last.get("status") == "V3_UNATTENDED_ADMISSION_READS_VERIFIED":
                 break
         except (OSError, ValueError):
             pass
