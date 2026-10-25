@@ -341,10 +341,10 @@ def protected_files(expected_commit: str) -> None:
             raise RuntimeError("DAY7_TRUST_KEY_CHANGED")
         shutil.copyfile(src, dest)
     revoked = BASE / "trust/revoked_grants.json"
-    if revoked.exists() and revoked.read_text() != "[]\\n":
+    if revoked.exists() and revoked.read_text() != "[]\n":
         raise RuntimeError("DAY7_REVOKED_GRANTS_CHANGED")
     if not revoked.exists():
-        revoked.write_text("[]\\n")
+        revoked.write_text("[]\n")
     index_dest = BASE / "source_evidence_index.json"
     if index_dest.exists() and file_digest(index_dest) != SOURCE_INDEX_SHA:
         raise RuntimeError("DAY7_PROTECTED_INDEX_CHANGED")
@@ -427,9 +427,9 @@ def service_identity() -> tuple[str, str]:
             secret = admin("service-principal-secrets-proxy", "create", sp_id,
                            "--lifetime", "7776000")["secret"]
             with temp.open("x") as stream:
-                stream.write("[edp-lab]\\n" + f"host = {HOST}\\n"
-                             + "auth_type = oauth-m2m\\n"
-                             + f"client_id = {app_id}\\nclient_secret = {secret}\\n")
+                stream.write("[edp-lab]\n" + f"host = {HOST}\n"
+                             + "auth_type = oauth-m2m\n"
+                             + f"client_id = {app_id}\nclient_secret = {secret}\n")
                 stream.flush()
                 os.fsync(stream.fileno())
             temp.chmod(0o600)
