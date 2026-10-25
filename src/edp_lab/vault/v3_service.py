@@ -64,15 +64,15 @@ def _ready(root: Path, base: Path) -> None:
     standing = verified_document(root, base / "trust/day6-v3-standing-v1.signed.json",
                                  base / "trust")
     original = base / "receipts/day6-v3-e2e-ready-v1.signed.json"
-    upgrade = base / "receipts/day6-v3-e2e-ready-13f-fix-v2.signed.json"
-    approval = base / "approvals/day6-v3-13f-fix-upgrade-v2.signed.json"
+    upgrade = base / "receipts/day6-v3-e2e-ready-coverpage-fix-v3.signed.json"
+    approval = base / "approvals/day6-v3-coverpage-fix-upgrade-v3.signed.json"
     initial = verified_document(root, original, base / "trust")
     smoke = verified_document(root, upgrade, base / "trust")
     authorized = verified_document(root, approval, base / "trust")
     installed_commit = _commit(base)
     reviewed_commit = authorized.get("reviewed_commit")
     failed_canary_receipt = (
-        base / "receipts/day6-v3-edgarfix-canary-1-no-effect.signed.json"
+        base / "receipts/day6-v3-13f-canary-2-no-effect.signed.json"
     )
     old_failure = verified_document(root, failed_canary_receipt, base / "trust")
     if (old_failure.get("schema") != "EDP_DAY6_V3_UPGRADE_CANARY_NO_EFFECT_V1"
@@ -146,7 +146,7 @@ def status(root: Path, base: Path) -> dict:
     return {"status": state, "next_attempt": number,
             "standing_sha256": file_digest(base / "trust/day6-v3-standing-v1.signed.json"),
             "e2e_sha256": file_digest(
-                base / "receipts/day6-v3-e2e-ready-13f-fix-v2.signed.json")}
+                base / "receipts/day6-v3-e2e-ready-coverpage-fix-v3.signed.json")}
 
 
 def audit(root: Path, base: Path) -> dict:
