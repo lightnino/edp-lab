@@ -9,8 +9,8 @@ reserved but unknown external mutation blocks replay until manual reconciliation
 
 from __future__ import annotations
 
-import ast
 import argparse
+import ast
 import hashlib
 import json
 import os
