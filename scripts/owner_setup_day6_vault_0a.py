@@ -63,6 +63,22 @@ def admin_cli(*args: str, allow_empty: bool = False) -> dict | list | None:
     return json.loads(result.stdout)
 
 
+def _sanitized_sql_error(result: dict) -> str:
+    status = result.get("status") or {}
+    error = status.get("error") or {}
+    identifier = re.sub(r"[^a-zA-Z0-9-]", "", str(result.get("statement_id") or "unknown"))[:64]
+    state = re.sub(r"[^A-Z_]", "", str(status.get("state") or "UNKNOWN"))[:40]
+    code = re.sub(r"[^A-Z0-9_]", "", str(error.get("error_code") or "UNKNOWN"))[:80]
+    sql_state = re.sub(r"[^A-Z0-9]", "", str(status.get("sql_state") or "UNKNOWN"))[:10]
+    message = str(error.get("message") or "[no server error message]")
+    message = re.sub(r"(?i)(bearer\s+)\S+", r"\1[REDACTED]", message)
+    message = re.sub(r'(?i)(["\']?(?:access_token|refresh_token|client_secret|api_key|password|secret|token|authorization)["\']?\s*[:=]\s*["\']?)[^\s,"\']+',
+                     r"\1[REDACTED]", message)
+    message = re.sub(r"[\x00-\x1f\x7f]+", " ", message).strip()[:1200]
+    return (f"OWNER_DDL_FAILED: statement_id={identifier} state={state} "
+            f"error_code={code} sql_state={sql_state} message={message}")
+
+
 def admin_sql(sql: str) -> dict:
     request = {"warehouse_id": ADMIN_WAREHOUSE, "statement": sql,
                "wait_timeout": "50s", "on_wait_timeout": "CONTINUE",
@@ -76,7 +92,7 @@ def admin_sql(sql: str) -> dict:
         time.sleep(4)
         result = admin_cli("api", "get", "/api/2.0/sql/statements/" + result["statement_id"])
     if result.get("status", {}).get("state") != "SUCCEEDED":
-        raise RuntimeError("OWNER_DDL_FAILED: " + result["statement_id"])
+        raise RuntimeError(_sanitized_sql_error(result))
     return result
 
 
