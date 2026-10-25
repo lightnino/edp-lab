@@ -11,6 +11,7 @@ import csv
 import hashlib
 import io
 import json
+import os
 import zipfile
 from collections import Counter
 from pathlib import Path
@@ -31,6 +32,60 @@ EXPECTED_SELECTION_SHA = (
 )
 
 
+def _candidate_paths(raw_path: Path) -> list[Path]:
+    """Locate a physical RAW delivery without copying it into the prototype.
+
+    The C2000 freeze is authoritative for identity; these are *locations only*.
+    A candidate is never trusted or opened as source evidence until SHA matches.
+    """
+    override = os.environ.get("EDP_DAY6_FROZEN_RAW_ZIP")
+    if override:
+        explicit = Path(override).expanduser()
+        require(explicit.is_absolute(), "COVERPAGE_RAW_OVERRIDE_NOT_ABSOLUTE")
+        return [explicit]
+
+    filename = raw_path.name
+    locations = [ROOT / raw_path]
+    # Other local edp-lab checkouts may contain the original large RAW corpus.
+    for sibling in sorted(ROOT.parent.iterdir()):
+        if not sibling.is_dir() or not sibling.name.startswith("edp-lab"):
+            continue
+        locations.extend((
+            sibling / raw_path,
+            sibling / "data/raw/sec" / filename,
+            sibling / "data/raw/sec/sec_13f" / filename,
+        ))
+        # Frozen deliveries can be stored under their source-identity
+        # directory or re-homed; scan only the SEC 13F RAW subtree.
+        root13f = sibling / "data/raw/sec/sec_13f"
+        if root13f.is_dir():
+            locations.extend(sorted(root13f.glob("*/" + filename)))
+    downloads = Path.home() / "Downloads"
+    locations.append(downloads / filename)
+    return list(dict.fromkeys(locations))
+
+
+def _verified_source_location(raw_path: Path, expected_sha: str) -> Path:
+    candidates = _candidate_paths(raw_path)
+    seen = 0
+    for path in candidates:
+        if not path.is_file():
+            continue
+        seen += 1
+        with path.open("rb") as stream:
+            if hashlib.file_digest(stream, "sha256").hexdigest() == expected_sha:
+                return path
+    if os.environ.get("EDP_DAY6_FROZEN_RAW_ZIP"):
+        raise RuntimeError("COVERPAGE_EXPLICIT_RAW_SHA_OR_LOCATION_INVALID")
+    raise RuntimeError(
+        "COVERPAGE_VERIFIED_LOCAL_RAW_NOT_FOUND:"
+        f"matching_candidates=0 scanned_existing_files={seen};"
+        " original source ZIP must be located or restored unchanged;"
+        " set EDP_DAY6_FROZEN_RAW_ZIP=/absolute/path/2013q3_form13f.zip"
+        " only for a SHA-matching original"
+    )
+
+
 def source_path() -> tuple[Path, str]:
     require(hashlib.sha256(FROZEN_BINDINGS.read_bytes()).hexdigest() ==
             EXPECTED_FROZEN_BINDING_SHA, "COVERPAGE_FROZEN_BINDINGS_CHANGED")
@@ -40,13 +95,10 @@ def source_path() -> tuple[Path, str]:
     binding = matches[0]
     raw_path = Path(binding["raw_path"])
     require(not raw_path.is_absolute() and ".." not in raw_path.parts
-            and "data" in raw_path.parts and "raw" in raw_path.parts,
+            and "data" in raw_path.parts and "raw" in raw_path.parts
+            and raw_path.name == "2013q3_form13f.zip",
             "COVERPAGE_FROZEN_RAW_PATH_UNEXPECTED")
-    path = ROOT / raw_path
-    require(path.is_file(), "COVERPAGE_LOCAL_FROZEN_RAW_MISSING:" + str(path))
-    with path.open("rb") as stream:
-        require(hashlib.file_digest(stream, "sha256").hexdigest() ==
-                binding["raw_sha256"], "COVERPAGE_FROZEN_RAW_SHA_CHANGED")
+    path = _verified_source_location(raw_path, binding["raw_sha256"])
     return path, binding["raw_sha256"]
 
 
