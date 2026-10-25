@@ -1,0 +1,24 @@
+{
+  "schema": "EDP_DAY6_C2000_VAULT_SEMANTIC_SUCCESSOR_V1",
+  "status": "ADDITIVE_SUCCESSOR_PREPARED_TRUST_AND_V3_AUTHORITY_PENDING",
+  "cohort": "C2000",
+  "predecessor_plan_sha256": "5ae087cd6d1fbb0f8f03f88ca93ab31c273969770dae6d411c7e761ab8ae4dd3",
+  "predecessor_checkpoint_sha256": "f950a43fdacefb228420e15980c596a90b7e460eb42c194fa8dd945f2b469ad9",
+  "predecessor_v2_receipt_sha256": "65d8b3c5a78e1bf9f7ed6803435e41058aab41a492b9208c456808e03a4aac2f",
+  "predecessor_v3_receipt_sha256": "22f655648382a0561f90f97c5307e898abd0503c563a96a01fc05e7fcbc19454",
+  "predecessor_stage_statuses": {
+    "V0A": "PASS_REUSED",
+    "V0": "PASS_REUSED",
+    "V1": "PASS_REUSED_WITH_MEMBER_SCOPE_ADDENDUM",
+    "V2": "HISTORICAL_PARTIAL_UNCHANGED",
+    "V3": "HISTORICAL_PARTIAL_UNCHANGED"
+  },
+  "successor_v2": "OWNER_BUSINESS_SEMANTICS_APPROVED_IN_CONVERSATION_AWAITING_TRUSTED_SIGNED_RECORD",
+  "successor_v3": "BOUNDED_PROTOTYPE_SELECTION_PREPARED_AWAITING_SEPARATE_WRITE_AUTHORITY",
+  "unsigned_semantic_request": "metadata/authorizations/day6_c2000_full_semantics_owner_decision_v1.unsigned.json",
+  "v3_selection": "metadata/evaluations/day6_c2000_vault_v3_selection_v1.json",
+  "v3_request": "metadata/operating/day6_c2000_vault_v3_bounded_request_v1.json",
+  "new_delta_writes": 0,
+  "agent_generated_signature": null,
+  "promotion_rule": "Only a distinct successor receipt verified against owner-controlled trust and later signed V3 live readback may supersede the historical PARTIAL outcome; never edit or reclassify the predecessor receipts."
+}

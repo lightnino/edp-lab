@@ -48,6 +48,18 @@ def test_pins_and_scope_fail_closed(tmp_path):
         load_plan(root, path)
 
 
+def test_additive_successor_cannot_replace_changed_historical_receipt(tmp_path):
+    root, plan_path = setup_plan(tmp_path)
+    plan = load_plan(root, plan_path)
+    historical = root / plan["stages"]["V2"]["receipt"]
+    historical.parent.mkdir(parents=True, exist_ok=True)
+    historical.write_text('{"historical":"partial"}\n')
+    successor = historical.with_name(historical.stem + "-successor-v1.json")
+    successor.write_text('{"predecessor_sha256":"' + "0" * 64 + '"}\n')
+    with pytest.raises(Denied, match="VAULT_SUCCESSOR_PREDECESSOR_CHANGED"):
+        _receipt(root, plan, "V2")
+
+
 def test_resume_does_not_repeat_or_accept_changed_receipt(tmp_path):
     root, path = setup_plan(tmp_path)
     state_dir = root / "state"

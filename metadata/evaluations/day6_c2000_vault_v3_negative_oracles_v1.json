@@ -1,0 +1,31 @@
+{
+  "schema": "EDP_C2000_VAULT_V3_NEGATIVE_ORACLES_V1",
+  "status": "PROPOSED_ISOLATED_FIXTURES_NO_WRITE_AUTHORITY",
+  "fixture_count": 24,
+  "rules": [
+    {"id": "FSDS_01", "condition": "same complete PRE context with changed plabel", "expected": "PRESERVE_SEPARATE_ASSERTIONS"},
+    {"id": "FSDS_02", "condition": "PRE adsh absent from SUB", "expected": "RETAIN_OCCURRENCE_BLOCK_BUSINESS_ASSOCIATION"},
+    {"id": "FSDS_03", "condition": "PRE tag/version absent from TAG", "expected": "RETAIN_OCCURRENCE_BLOCK_BUSINESS_ASSOCIATION"},
+    {"id": "FSDS_04", "condition": "blank required Filing reference", "expected": "RETAIN_OCCURRENCE_BLOCK_BUSINESS_IDENTITY"},
+    {"id": "FSDS_05", "condition": "exact duplicate PRE physical rows", "expected": "PRESERVE_BOTH_OCCURRENCES"},
+    {"id": "FSDS_06", "condition": "embedded TAB in quoted field", "expected": "PRESERVE_EXACT_LEXICAL_FIELD_AND_WIDTH"},
+    {"id": "EDGAR_01", "condition": "exact duplicate index row", "expected": "PRESERVE_BOTH_OCCURRENCES"},
+    {"id": "EDGAR_02", "condition": "same File Name in different rows", "expected": "PRESERVE_BOTH_ASSERTIONS_ONE_EXACT_REFERENCE"},
+    {"id": "EDGAR_03", "condition": "missing File Name", "expected": "RETAIN_OCCURRENCE_BLOCK_BUSINESS_IDENTITY"},
+    {"id": "EDGAR_04", "condition": "leading-zero CIK", "expected": "PRESERVE_LITERAL_CIK_NO_ISSUER_HUB"},
+    {"id": "EDGAR_05", "condition": "same File Name changed Company Name", "expected": "PRESERVE_BOTH_ASSERTIONS_NO_WINNER"},
+    {"id": "EDGAR_06", "condition": "accession-shaped path matches another family", "expected": "NO_CROSS_FAMILY_LINK"},
+    {"id": "13F_01", "condition": "member accession has no unique Submission parent", "expected": "RETAIN_OCCURRENCE_BLOCK_BUSINESS_ASSOCIATION"},
+    {"id": "13F_02", "condition": "exact duplicate member physical rows", "expected": "PRESERVE_BOTH_OCCURRENCES"},
+    {"id": "13F_03", "condition": "blank FIGI", "expected": "PRESERVE_SOURCE_STATE_NO_SECURITY_HUB"},
+    {"id": "13F_04", "condition": "padded CUSIP or leading-zero CIK", "expected": "PRESERVE_EXACT_LEXICAL_IDENTIFIER"},
+    {"id": "13F_05", "condition": "same member SK across two physical occurrences", "expected": "PRESERVE_BOTH_OCCURRENCES_NO_SK_BUSINESS_KEY"},
+    {"id": "13F_06", "condition": "one Submission has many INFOTABLE rows", "expected": "PRESERVE_MULTI_ACTIVE_FANOUT"},
+    {"id": "TREASURY_01", "condition": "missing required source date", "expected": "RETAIN_ENTRY_BLOCK_OBSERVATION_IDENTITY"},
+    {"id": "TREASURY_02", "condition": "missing RATE_TYPE where physically required", "expected": "RETAIN_ENTRY_BLOCK_OBSERVATION_IDENTITY"},
+    {"id": "TREASURY_03", "condition": "same date with distinct RATE_TYPE", "expected": "DISTINCT_OBSERVATION_IDENTITIES"},
+    {"id": "TREASURY_04", "condition": "missing optional tenor field", "expected": "PRESERVE_MISSING_STATE_NO_INTERPOLATION"},
+    {"id": "TREASURY_05", "condition": "empty present tenor field", "expected": "PRESERVE_EMPTY_DISTINCT_FROM_MISSING"},
+    {"id": "TREASURY_06", "condition": "matching dates in two feeds", "expected": "NO_CROSS_FEED_LINK"}
+  ]
+}

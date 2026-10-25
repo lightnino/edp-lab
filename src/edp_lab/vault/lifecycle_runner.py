@@ -67,10 +67,19 @@ def load_plan(root: Path, plan_path: Path) -> dict:
 
 
 def _receipt(root: Path, plan: dict, stage: str) -> dict | None:
-    path = root / plan["stages"][stage]["receipt"]
+    historical_path = root / plan["stages"][stage]["receipt"]
+    path = historical_path
+    successor = False
+    if stage in {"V2", "V3"} and historical_path.exists():
+        candidate = historical_path.with_name(historical_path.stem + "-successor-v1.json")
+        if candidate.exists():
+            path = candidate
+            successor = True
     if not path.exists():
         return None
     receipt = json.loads(path.read_bytes())
+    if successor and receipt.get("predecessor_sha256") != file_digest(historical_path):
+        raise Denied("VAULT_SUCCESSOR_PREDECESSOR_CHANGED:" + stage)
     if (receipt.get("schema") != "EDP_VAULT_LIFECYCLE_STAGE_V1"
             or receipt.get("cohort") != plan["cohort"]
             or receipt.get("stage") != stage
@@ -119,6 +128,44 @@ def _receipt(root: Path, plan: dict, stage: str) -> dict | None:
                     or decision.get("status") != "APPROVED"
                     or decision.get("contract_pins") != receipt["approved_contract_pins"]):
                 raise Denied("VAULT_OWNER_SEMANTIC_DECISION_INVALID")
+            if successor and (decision.get("frozen_roster_sha256") !=
+                              plan["inputs"]["roster"]["sha256"]
+                              or decision.get("frozen_bindings_sha256") !=
+                              plan["inputs"]["frozen_bindings"]["sha256"]):
+                raise Denied("VAULT_OWNER_SEMANTIC_POPULATION_MISMATCH")
+    if stage == "V3" and successor:
+        from edp_lab.operating.authority import protected_trust_dir, verified_document
+
+        signed = receipt.get("signed_live_receipt")
+        request_pin = receipt.get("v3_request_sha256")
+        if not signed or not request_pin:
+            raise Denied("VAULT_V3_SUCCESSOR_PROOF_REQUIRED")
+        v3_path = root / "metadata/operating/day6_c2000_vault_v3_bounded_request_v1.json"
+        if file_digest(v3_path) != request_pin:
+            raise Denied("VAULT_V3_SUCCESSOR_REQUEST_CHANGED")
+        request = json.loads(v3_path.read_bytes())
+        proof = verified_document(root, Path(signed), protected_trust_dir(root))
+        v2_effective = _receipt(root, plan, "V2")
+        if (receipt["status"] != "PASS"
+                or v2_effective is None or v2_effective["status"] != "PASS"
+                or proof.get("schema") != "EDP_VAULT_V3_PROTOTYPE_READBACK_V1"
+                or proof.get("authority") != "protected-verifier-v1"
+                or proof.get("status") != "VERIFIED"
+                or proof.get("cohort") != plan["cohort"]
+                or proof.get("v3_request_sha256") != request_pin
+                or proof.get("selected_data_rows") != request["selection"]["physical_data_rows"]
+                or proof.get("negative_oracles_passed") != request["negative_oracles"]["isolated_fixture_count"]
+                or proof.get("historical_prototype_unchanged") is not True
+                or set(proof.get("source_coverage", {})) != set(request["selection"]["source_ids"])
+                or any(value != "VERIFIED" for value in proof["source_coverage"].values())
+                or set(proof.get("tables", {})) != set(request["new_v3_table_allowlist"])
+                or any(not table.get("uc_table_id")
+                       or type(table.get("delta_version")) is not int
+                       or table["delta_version"] < 0
+                       or type(table.get("row_count")) is not int
+                       or table["row_count"] < 0
+                       for table in proof["tables"].values())):
+            raise Denied("VAULT_V3_SUCCESSOR_LIVE_READBACK_INVALID")
     if stage in PROTECTED:
         # A self-authored JSON status cannot establish a live write or freeze.
         from edp_lab.operating.authority import protected_trust_dir, verified_document
@@ -238,6 +285,14 @@ def advance(root: Path, plan_path: Path, state_dir: Path) -> dict:
             return state
         for stage in STAGES:
             receipt = _receipt(root, plan, stage)
+            if stage in {"V2", "V3"}:
+                historical = root / plan["stages"][stage]["receipt"]
+                successor = historical.with_name(historical.stem + "-successor-v1.json")
+                pinned = state.setdefault("successors", {}).get(stage)
+                if pinned and (not successor.exists() or file_digest(successor) != pinned):
+                    raise Denied("VAULT_COMPLETED_SUCCESSOR_CHANGED:" + stage)
+                if successor.exists() and pinned is None:
+                    state["successors"][stage] = file_digest(successor)
             if stage in state["completed"]:
                 if not receipt or file_digest(root / plan["stages"][stage]["receipt"]) != state["completed"][stage]:
                     raise Denied("VAULT_COMPLETED_EVIDENCE_CHANGED:" + stage)

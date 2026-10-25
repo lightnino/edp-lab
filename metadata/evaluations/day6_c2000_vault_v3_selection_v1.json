@@ -1,0 +1,344 @@
+{
+  "accepted_fsds_num_prototype_reused_data_rows": 127,
+  "frozen_bindings_sha256": "2a72b8f8483e2181a3112a26b5d68d702b92308def6e74978838b155cfd85312",
+  "schema": "EDP_C2000_VAULT_V3_SELECTION_V1",
+  "selected_data_rows": 2047,
+  "selected_source_count": 10,
+  "sources": {
+    "SRC000005": {
+      "members": {
+        "pre.txt": {
+          "data_row_ordinals": [
+            1,
+            16
+          ],
+          "header_sha256": "47ffbb93bfcb8e795b642616b833dc6f0b08d0d5ff2334ba7f8d463b23c557ad",
+          "selected_data_rows": 16,
+          "selected_lexical_sha256": "a7a915335df6072306c829fed81f177273a1e6a757ad50a2648dd0bd69466b07",
+          "selection_kind": "INCLUSIVE_FIRST_N_DATA_ROWS"
+        },
+        "sub.txt": {
+          "data_row_ordinals": [
+            1,
+            16
+          ],
+          "header_sha256": "0b488b309caf5179b5df632d8220ca5ecab3c9e3e4549b488535e80fdb5f005e",
+          "selected_data_rows": 16,
+          "selected_lexical_sha256": "eb991f6b2de92d3b5a7a4ccdcc1dedc301c0d3106665574c2aefd4fd722fc0b2",
+          "selection_kind": "INCLUSIVE_FIRST_N_DATA_ROWS"
+        },
+        "tag.txt": {
+          "data_row_ordinals": [
+            1,
+            16
+          ],
+          "header_sha256": "9e1ecab4d50d932e48081bd0407ae45487442406ea3e6dbc007d132ebbcc86cc",
+          "selected_data_rows": 16,
+          "selected_lexical_sha256": "3b2b686d3ac81c8833d19519944f7314ee539ca8cf65e8af37e81a33b952679d",
+          "selection_kind": "INCLUSIVE_FIRST_N_DATA_ROWS"
+        }
+      },
+      "raw_sha256": "e63b781a5e57e55d68e110a06d3f697e942a60e17f093bbdc1a16ac7152a7df5"
+    },
+    "SRC000054": {
+      "members": {
+        "pre.txt": {
+          "data_row_ordinals": [
+            1,
+            16
+          ],
+          "header_sha256": "47ffbb93bfcb8e795b642616b833dc6f0b08d0d5ff2334ba7f8d463b23c557ad",
+          "selected_data_rows": 16,
+          "selected_lexical_sha256": "32c919dc3325038eb50fab347195f413b157c7e9b8f728a31e97e77ccb36b49d",
+          "selection_kind": "INCLUSIVE_FIRST_N_DATA_ROWS"
+        },
+        "sub.txt": {
+          "data_row_ordinals": [
+            1,
+            16
+          ],
+          "header_sha256": "0b488b309caf5179b5df632d8220ca5ecab3c9e3e4549b488535e80fdb5f005e",
+          "selected_data_rows": 16,
+          "selected_lexical_sha256": "b2cde02bcd489472cdb793ed12f04ece983a7015f7340ced203ab52dfeb4b5b7",
+          "selection_kind": "INCLUSIVE_FIRST_N_DATA_ROWS"
+        },
+        "tag.txt": {
+          "data_row_ordinals": [
+            1,
+            16
+          ],
+          "header_sha256": "9e1ecab4d50d932e48081bd0407ae45487442406ea3e6dbc007d132ebbcc86cc",
+          "selected_data_rows": 16,
+          "selected_lexical_sha256": "6295ed8417071263142e8e578d16b2abd5db21aa155e2f739fecbf2dff9bf8f8",
+          "selection_kind": "INCLUSIVE_FIRST_N_DATA_ROWS"
+        }
+      },
+      "raw_sha256": "f028f1e8d24313e7619aa87c7c683a459452e7e81a8e5ba72d7ce39ddf62bda9"
+    },
+    "SRC000064": {
+      "members": {
+        "pre.txt": {
+          "data_row_ordinals": [
+            1,
+            16
+          ],
+          "header_sha256": "47ffbb93bfcb8e795b642616b833dc6f0b08d0d5ff2334ba7f8d463b23c557ad",
+          "selected_data_rows": 16,
+          "selected_lexical_sha256": "c5a311b7e7ce36b551f09a86ef4aa59c1b66c62bba5959511c0bc6675132a667",
+          "selection_kind": "INCLUSIVE_FIRST_N_DATA_ROWS"
+        },
+        "sub.txt": {
+          "data_row_ordinals": [
+            1,
+            16
+          ],
+          "header_sha256": "0b488b309caf5179b5df632d8220ca5ecab3c9e3e4549b488535e80fdb5f005e",
+          "selected_data_rows": 16,
+          "selected_lexical_sha256": "ad1345a7d37f10a47cfcc7825cc6bae17eb0a43a7c632d91d407d85f433eb2d5",
+          "selection_kind": "INCLUSIVE_FIRST_N_DATA_ROWS"
+        },
+        "tag.txt": {
+          "data_row_ordinals": [
+            1,
+            16
+          ],
+          "header_sha256": "9e1ecab4d50d932e48081bd0407ae45487442406ea3e6dbc007d132ebbcc86cc",
+          "selected_data_rows": 16,
+          "selected_lexical_sha256": "9055a37dc61f62ea0bc67682ba19e8c5bf4272fd212150abb52565235a78481d",
+          "selection_kind": "INCLUSIVE_FIRST_N_DATA_ROWS"
+        }
+      },
+      "raw_sha256": "2b36ac3850c022cf19edd882e31c3c453c7666677b9fdd2e1f7748fdb5768c6e"
+    },
+    "SRC000065": {
+      "members": {
+        "COVERPAGE.tsv": {
+          "data_row_ordinals": [
+            1,
+            16
+          ],
+          "header_sha256": "f0fa581dd5d425bdd5c73e69232a8f4b84d7f4541fc346e7427532cf31318f72",
+          "selected_data_rows": 16,
+          "selected_lexical_sha256": "f4f551ca35aae19737f0493d1afa24d215f3b05aa95fd902044c979533558a29",
+          "selection_kind": "INCLUSIVE_FIRST_N_DATA_ROWS"
+        },
+        "INFOTABLE.tsv": {
+          "data_row_ordinals": [
+            1,
+            16
+          ],
+          "header_sha256": "07ee897d566b8477d76b22d852a60642307a691ea264c183d01292e259b5061b",
+          "selected_data_rows": 16,
+          "selected_lexical_sha256": "ada1da418dac874e0cfd62dfbdff438a3b8cebfec013b6a48b7bbeb74b40fb86",
+          "selection_kind": "INCLUSIVE_FIRST_N_DATA_ROWS"
+        },
+        "OTHERMANAGER.tsv": {
+          "data_row_ordinals": [
+            1,
+            16
+          ],
+          "header_sha256": "01a6b4a0bce024feb15ac21f8a5e9b8a01aa71c23df213819b68cfb566b0b695",
+          "selected_data_rows": 16,
+          "selected_lexical_sha256": "d544448624ba858fe5b05ef6ddd1d5586574462f794ee3f249b990ccd169334d",
+          "selection_kind": "INCLUSIVE_FIRST_N_DATA_ROWS"
+        },
+        "OTHERMANAGER2.tsv": {
+          "data_row_ordinals": [
+            1,
+            16
+          ],
+          "header_sha256": "4cdb6401b993d8acc3d86aa4cdf32534e3d482ea0eec789537f2a7a6016c2ebe",
+          "selected_data_rows": 16,
+          "selected_lexical_sha256": "7bfe8c0f53358ac33d4e97428220520519c2a0d99a53d04c20ca0966d1db70ce",
+          "selection_kind": "INCLUSIVE_FIRST_N_DATA_ROWS"
+        },
+        "SIGNATURE.tsv": {
+          "data_row_ordinals": [
+            1,
+            16
+          ],
+          "header_sha256": "8ae5ad573a61fe83b76372f403dcd9e9cfe20fc1bca3b424698195b76bf86b46",
+          "selected_data_rows": 16,
+          "selected_lexical_sha256": "2aebdf0332f7abc8b9bd154b6621e110836698b85f71a3286a9ac2cafb93a011",
+          "selection_kind": "INCLUSIVE_FIRST_N_DATA_ROWS"
+        },
+        "SUBMISSION.tsv": {
+          "data_row_ordinals": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            87,
+            88,
+            89,
+            90,
+            210,
+            213,
+            214,
+            310,
+            313,
+            317,
+            318,
+            396,
+            397,
+            465,
+            466,
+            467,
+            696,
+            697,
+            698,
+            699,
+            725,
+            726,
+            727,
+            811,
+            855,
+            861,
+            3034,
+            3035,
+            3038,
+            3039
+          ],
+          "header_sha256": "ce5c61ce2d19a5e55ee676a89e65f8ea06d3cb96bf9ad36928184591007c6b0c",
+          "selected_child_accessions": 30,
+          "selected_data_rows": 46,
+          "selected_lexical_sha256": "2b71d28c7e50ca0c1a02725151628b22ff3222a2178cd7fd86626a49e66b7d8d",
+          "selection_kind": "FIRST_N_PLUS_EXACT_CHILD_ACCESSION_PARENTS"
+        },
+        "SUMMARYPAGE.tsv": {
+          "data_row_ordinals": [
+            1,
+            16
+          ],
+          "header_sha256": "54b44a28025ccecfa10896f7c1ea0b2e73ed101c4e6a0c963bf6f0291550016f",
+          "selected_data_rows": 16,
+          "selected_lexical_sha256": "d783939ca3b01539b5f63f12b4ec27658ff0cee77f23042a90ea35c52ded0c1e",
+          "selection_kind": "INCLUSIVE_FIRST_N_DATA_ROWS"
+        }
+      },
+      "raw_sha256": "aa20c79d552722cb7bae8cefe3e63cd61a0929a4d5234c0b5d9ce1c75309a616"
+    },
+    "SRC000107": {
+      "members": {
+        "daily_master.idx": {
+          "data_row_ordinals": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16,
+            437,
+            438
+          ],
+          "duplicate_witness_pair": [
+            437,
+            438
+          ],
+          "profile_decode": "LATIN1_REVERSIBLE_BYTE_DISPLAY",
+          "selected_data_rows": 18,
+          "selected_lexical_sha256": "6a0b6ccb3c74b934d0cf150b4b2ef4a927591b7aee1b0fce9b553454e79db92c"
+        }
+      },
+      "raw_sha256": "38243ad7b251273e52c1a772ff1708b98060b60b855dc5c9d6ef260d9847e101"
+    },
+    "SRC010451": {
+      "members": {
+        "atom.entry": {
+          "data_row_ordinals": [
+            1,
+            249
+          ],
+          "feed_id": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/pages/xml-item?data=daily_treasury_yield_curve",
+          "selected_data_rows": 249,
+          "selected_lexical_sha256": "9f6053449e2984c85643e2cc1185db03c056b219a868edba58877476ca1dc8f5",
+          "selection_kind": "ALL_FROZEN_XML_ENTRIES"
+        }
+      },
+      "raw_sha256": "fb2f64bcaa9c2041f5601460f5d67bf2ebf51083331e75192a7d48ece0db3ed9"
+    },
+    "SRC010452": {
+      "members": {
+        "atom.entry": {
+          "data_row_ordinals": [
+            1,
+            249
+          ],
+          "feed_id": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/pages/xml-item?data=daily_treasury_bill_rates",
+          "selected_data_rows": 249,
+          "selected_lexical_sha256": "e6da6ef5f43b830841b18dd4484f1b217577bd291cf2ccb2a9d9dc480ec32781",
+          "selection_kind": "ALL_FROZEN_XML_ENTRIES"
+        }
+      },
+      "raw_sha256": "5f20dd1fad2627facce863a2a3d3258278f2119fef61028e85e0cf75a244df16"
+    },
+    "SRC010453": {
+      "members": {
+        "atom.entry": {
+          "data_row_ordinals": [
+            1,
+            747
+          ],
+          "feed_id": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/pages/xml-item?data=daily_treasury_long_term_rate",
+          "selected_data_rows": 747,
+          "selected_lexical_sha256": "415ca5a3293796e753640b2d3782275c732a92610ab49f7147ce102cd0c85538",
+          "selection_kind": "ALL_FROZEN_XML_ENTRIES"
+        }
+      },
+      "raw_sha256": "c5ecec4d443cf0e160ea42e585e3f1abb237587c5a8094ee33ce7c9fc350b2f8"
+    },
+    "SRC010454": {
+      "members": {
+        "atom.entry": {
+          "data_row_ordinals": [
+            1,
+            249
+          ],
+          "feed_id": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/pages/xml-item?data=daily_treasury_real_yield_curve",
+          "selected_data_rows": 249,
+          "selected_lexical_sha256": "4ab447037d401157b0fc4d9a8a5120a65efb9b9b2e8a1308331d12e248f1a186",
+          "selection_kind": "ALL_FROZEN_XML_ENTRIES"
+        }
+      },
+      "raw_sha256": "68f58df186f47f20c349d276ae501b97c94cfb2a09cc36453f4c95288322ec66"
+    },
+    "SRC010455": {
+      "members": {
+        "atom.entry": {
+          "data_row_ordinals": [
+            1,
+            249
+          ],
+          "feed_id": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/pages/xml-item?data=daily_treasury_real_long_term",
+          "selected_data_rows": 249,
+          "selected_lexical_sha256": "69d1c81cb64e2e168392a4658e61df044e731046f31439aa7b8c8a1a79d151b0",
+          "selection_kind": "ALL_FROZEN_XML_ENTRIES"
+        }
+      },
+      "raw_sha256": "e58a45134fe5a857028f7ee3381d07fbc56a7aa248dfd45df5721478e67d5a1e"
+    }
+  },
+  "status": "PREPARED_NO_WRITE_AUTHORITY"
+}
