@@ -54,13 +54,12 @@ def raw_selected(path: Path, expected_ordinals: list[int]) -> tuple[list[str], l
     # Byte-exact same CSV decoding used in the original frozen selection generator.
     require(expected_ordinals == list(range(1, 17)),
             "COVERPAGE_SELECTION_ORDINALS_CHANGED")
-    with zipfile.ZipFile(path) as archive:
-        with archive.open(MEMBER) as stream:
-            reader = csv.reader(io.TextIOWrapper(
-                stream, encoding="latin-1", newline=""), delimiter="\t")
-            header = next(reader)
-            raw_rows = [(ordinal, row) for ordinal, row in zip(
-                expected_ordinals, (next(reader) for _ in expected_ordinals), strict=True)]
+    with zipfile.ZipFile(path) as archive, archive.open(MEMBER) as stream:
+        reader = csv.reader(io.TextIOWrapper(
+            stream, encoding="latin-1", newline=""), delimiter="\t")
+        header = next(reader)
+        raw_rows = [(ordinal, row) for ordinal, row in zip(
+            expected_ordinals, (next(reader) for _ in expected_ordinals), strict=True)]
     require(len(raw_rows) == 16
             and all(len(fields) == len(header) for _, fields in raw_rows),
             "COVERPAGE_RAW_WIDTH_OR_COUNT_CHANGED")
