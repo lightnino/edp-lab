@@ -136,10 +136,10 @@ def _coverpage_quote_exception(occurrence: dict, sid: str,
             or physical.count('"') != 6
             or not physical.startswith('"') or not physical.endswith('"')
             or '""' not in physical
-            or "\\n" in physical or "\\r" in physical or "\\t" in physical):
+            or "\n" in physical or "\r" in physical or "\t" in physical):
         raise ValueError("V3_13F_COVERPAGE_QUOTE_WITNESS_CHANGED")
     try:
-        parsed = list(csv.reader([physical], delimiter="\\t", strict=True))
+        parsed = list(csv.reader([physical], delimiter="\t", strict=True))
     except csv.Error as exc:
         raise ValueError("V3_13F_COVERPAGE_CSV_QUOTE_INVALID") from exc
     if (len(parsed) != 1 or len(parsed[0]) != 1
