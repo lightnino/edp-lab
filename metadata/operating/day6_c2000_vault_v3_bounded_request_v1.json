@@ -98,10 +98,10 @@
     "automatic_retries_max": 0,
     "uncertain_write_replay_allowed": false,
     "runtime_artifact_sha256": "eada999db14a7db4b5590ab34b4296127e4231fe5289a04180bcf410238cafc9",
-    "deployment_sha256": "cd58f130ebe53b41df653ae622b076c99c7bf5b01cdaca0d593f2cd15419256a",
+    "deployment_sha256": "ba03900db52dc0ddd9768b4d5d52f571f4ef1bd8932707ab68c9e97d37536ef0",
     "protected_grant_id": null,
     "serverless_auto_optimization_retries": false,
-    "quota_resume": "STOP_AND_RECONCILE_THEN_SEPARATELY_GRANTED_EXACT_REMAINING_WORK_CHECKPOINT"
+    "quota_resume": "STOP_RECONCILE_ORIGINAL_OPERATION_RECORD_PARTIAL_NO_AUTOMATIC_CONTINUATION"
   },
   "prohibited": [
     "RAW_MUTATION",

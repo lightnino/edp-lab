@@ -37,5 +37,5 @@
       "pinned 24-oracle manifest"
     ]
   },
-  "install_and_submit_boundary": "Owner authorization and protected extension are required; installer must rehash uploaded wheel and inputs, verify signed semantic record and operation-specific grant, disable serverless auto-optimization retries, reserve durable one-shot ledger, submit once, reconcile uncertain or quota-interrupted status and sign independent readback. A later quota continuation requires a new signed grant bound to verified remaining work. Existing V2 policy is not modified."
+  "install_and_submit_boundary": "Owner authorization and a V3-only protected submitter are required; installer must rehash uploaded wheel and inputs, verify signed semantic record and operation-specific grant, verify saved one-task Job settings and exact source/target permissions, reserve durable one-shot ledger, submit once, and obtain independent signed Delta readback. On interruption or uncertain effects, reconcile the original Job, ledger and all 23 targets, record PARTIAL and stop. No automatic continuation or replay. Existing V2 policy is not modified."
 }

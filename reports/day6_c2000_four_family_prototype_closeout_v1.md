@@ -20,7 +20,7 @@ The bounded [V3 request](../metadata/operating/day6_c2000_vault_v3_bounded_reque
 | V8 | Record actual prototype coverage, runtime, throughput, Free Edition quota interruptions/retries and human minutes; leave unavailable figures null | Local build/probe evidence reusable; live compute figures unavailable |
 | Scoped V9 | Independently verify and sign a **prototype-only** live freeze pinning exact UC/Delta IDs, versions, contract hashes, row coverage and unresolved scope, then PR/CI and explicit Owner merge approval | Protected freeze and live result absent; no full-C2000 freeze may be claimed |
 
-Free Edition quota exhaustion or interrupted Jobs must stop at `UNCERTAIN_REQUIRES_READBACK`. Reconcile the original run, ledger and every affected Delta target before creating an immutable remaining-work checkpoint. A later run requires a new exact Owner-authorized continuation; no automatic retry or original-request replay. Future full C2000 work, if ever requested, is a separate lifecycle scope and cannot inherit this prototype's grant or PASS.
+Free Edition quota exhaustion or interrupted Jobs must stop at `UNCERTAIN_REQUIRES_READBACK`. Reconcile the original run, ledger and every affected Delta target, record a terminal `PARTIAL` disposition and stop. No automatic retry, continuation or original-request replay is part of Day 6. Future full C2000 work, if ever requested, is a separate lifecycle scope and cannot inherit this prototype's grant or PASS.
 
 ## Observed boundary
 
