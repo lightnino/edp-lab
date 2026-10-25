@@ -135,6 +135,9 @@ def _admit_incremental(root: Path, grant: dict, request: dict, ledger: Path,
             or not isinstance(universe_pin.get("sha256"), str)
             or universe_pin.get("sha256") != grant["contracts"].get("universe", {}).get("sha256")):
         raise Denied("ACTIVE_UNIVERSE_NOT_PINNED")
+    if candidate.get("universe_approval_sha256") != grant["contracts"].get(
+            "universe_approval", {}).get("sha256"):
+        raise Denied("ACTIVE_UNIVERSE_APPROVAL_NOT_PINNED")
     gate = UniverseGate.load_active(root,
                                    manifest_sha256=universe_pin["sha256"],
                                    approval_sha256=candidate["universe_approval_sha256"])
@@ -156,8 +159,9 @@ def _admit_incremental(root: Path, grant: dict, request: dict, ledger: Path,
                              candidate["previous_bindings_sha256"])
     new = verified_json(candidate["new_bindings_path"],
                         candidate["new_bindings_sha256"])
-    if candidate.get("previous_freeze_sha256") != file_digest(
-            root / candidate["previous_freeze_path"]):
+    old_freeze = (root / candidate["previous_freeze_path"]).resolve(strict=True)
+    if (not old_freeze.is_relative_to(root)
+            or candidate.get("previous_freeze_sha256") != file_digest(old_freeze)):
         raise Denied("PRIOR_FROZEN_INPUT_CHANGED")
     plan = plan_increment(
         previous, new, gate.document()["members"],
