@@ -1,0 +1,19 @@
+{
+  "schema": "EDP_C2000_VAULT_V3_RESOURCE_PROPOSAL_V1",
+  "status": "OWNER_REVIEW_REQUIRED_NO_COMPUTE_AUTHORITY",
+  "population": {"source_instances": 10, "physical_data_rows": 2047,
+                 "isolated_in_memory_oracles": 24, "target_tables": 23},
+  "compute": {"service": "existing Databricks serverless Jobs",
+              "job_submissions_max": 1, "max_concurrent_runs": 1,
+              "job_timeout_seconds": 3600, "task_max_retries": 0,
+              "new_warehouse_or_cluster_creation": false},
+  "planning_ceiling": {"dbu": 150, "usd_list_price": 60,
+                       "assumed_usd_per_dbu": 0.40,
+                       "kind": "OWNER_SPEND_RISK_ENVELOPE_NOT_AN_ENFORCEABLE_LIVE_CAP"},
+  "cost_boundary": "Serverless usage is not synchronously metered for an exact stop-at-DBU threshold. Owner must accept the one-job/one-hour exposure under this planning ceiling or provide a verified rate-limited compute object and a new pinned configuration. Actual DBU and billed USD must be collected after execution; a higher actual value fails the resource evaluation and halts further work.",
+  "sources": [
+    "https://www.databricks.com/product/pricing/product-pricing/instance-types",
+    "https://docs.databricks.com/aws/en/compute/serverless/manage-serverless-compute",
+    "https://docs.databricks.com/aws/en/compute/serverless"
+  ]
+}

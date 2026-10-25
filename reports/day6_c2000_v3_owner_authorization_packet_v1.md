@@ -1,5 +1,7 @@
 # Day 6 C2000 — bounded V3 Owner authorization packet V1
 
+**Historical preparation packet:** fixed runtime, deployment hashes and final authority boundary are in [V2](day6_c2000_v3_owner_authorization_packet_v2.md). This V1 record is retained for audit.
+
 **Current state:** Owner approved four revised source-family *business semantics* on 2026-10-25. No new Delta write, grant, runtime deployment or compute expenditure is authorized. The completed V0A/V0/V1 receipts and historical V2/V3 `PARTIAL` receipts remain byte-for-byte unchanged. [Additive successor record](../metadata/evaluations/day6_c2000_vault_semantic_successor_v1.json) pins their hashes and cannot become V2 PASS until the trusted Owner signature is verified; V3 cannot PASS until actual bounded live evidence exists.
 
 ## Approved semantic contract pins

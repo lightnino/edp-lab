@@ -27,6 +27,8 @@
     "sha256": "54c2aa2add50504cca6a50beed480ef78fef96d962b7f9b6e6a4468ff34f72f2",
     "isolated_fixture_count": 24
   },
+  "target_ddl": {"path": "metadata/operating/day6_c2000_vault_v3_ddl_v1.json", "sha256": "9f92405043ddbe935bc9cf9518d31cb7d18a1b90da20f399519b4e39591ff7e1"},
+  "resource_proposal": {"path": "metadata/operating/day6_c2000_vault_v3_resource_proposal_v1.json", "sha256": "9092012d96fcbfbeedc95b9b0bb70cc2d155888e6d50e3e32a1763a4b978d9f2"},
   "target_namespace": "workspace.edp_lab_day6_vault_proto",
   "new_v3_table_allowlist": [
     "v3_h_13f_submission",
@@ -65,8 +67,8 @@
     "runtime_seconds_max": 3600,
     "automatic_retries_max": 0,
     "uncertain_write_replay_allowed": false,
-    "runtime_artifact_sha256": null,
-    "deployment_sha256": null,
+    "runtime_artifact_sha256": "eada999db14a7db4b5590ab34b4296127e4231fe5289a04180bcf410238cafc9",
+    "deployment_sha256": "2c5e3614c37d15aa2e03a879b6430f095e46820626aabcfddfa88bcc41d22001",
     "protected_grant_id": null
   },
   "prohibited": ["RAW_MUTATION", "FROZEN_C2000_MUTATION", "DAY5_RERUN", "FULL_V4_LOAD", "V9_FREEZE", "CREDENTIAL_ROTATION", "OTHER_TABLE_WRITES", "AGENT_SIGNATURE"]

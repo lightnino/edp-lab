@@ -44,5 +44,10 @@ def test_v3_selection_and_authority_boundary_are_exact():
     assert len(set(plan["new_v3_table_allowlist"])) == 23
     assert all(name.startswith("v3_") for name in plan["new_v3_table_allowlist"])
     assert plan["execution"]["automatic_retries_max"] == 0
-    assert plan["execution"]["runtime_artifact_sha256"] is None
+    deployment = "metadata/operating/day6_c2000_vault_v3_deployment_v1.json"
+    assert _sha(deployment) == plan["execution"]["deployment_sha256"]
+    assert (_load(deployment)["artifact"]["sha256"] ==
+            plan["execution"]["runtime_artifact_sha256"])
+    assert _sha(plan["target_ddl"]["path"]) == plan["target_ddl"]["sha256"]
+    assert _sha(plan["resource_proposal"]["path"]) == plan["resource_proposal"]["sha256"]
     assert plan["execution"]["protected_grant_id"] is None

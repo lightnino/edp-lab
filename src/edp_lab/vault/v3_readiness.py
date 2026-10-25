@@ -7,6 +7,7 @@ import json
 from pathlib import Path
 
 from edp_lab.operating.authority import Denied, protected_trust_dir, verified_document
+from edp_lab.vault.v3_ddl import plan as ddl_plan
 
 
 def _sha(path: Path) -> str:
@@ -29,6 +30,13 @@ def readiness(root: Path, signed_semantic_envelope: Path | None = None) -> dict:
         pin = plan[name]
         if _sha(root / pin["path"]) != pin["sha256"]:
             raise Denied("VAULT_V3_PIN_CHANGED:" + name)
+    for name in ("target_ddl", "resource_proposal"):
+        pin = plan[name]
+        if _sha(root / pin["path"]) != pin["sha256"]:
+            raise Denied("VAULT_V3_PIN_CHANGED:" + name)
+    ddl = json.loads((root / plan["target_ddl"]["path"]).read_bytes())
+    if ddl != ddl_plan(plan["new_v3_table_allowlist"]):
+        raise Denied("VAULT_V3_DDL_PLAN_CHANGED")
     semantic = json.loads((root / plan["semantic_approval_request"]["path"]).read_bytes())
     if (semantic.get("signature_status") != "PENDING_OWNER_CONTROLLED_SIGNATURE"
             or "signature_base64" in semantic):
@@ -49,9 +57,22 @@ def readiness(root: Path, signed_semantic_envelope: Path | None = None) -> dict:
         if proof != document:
             raise Denied("VAULT_SIGNED_SEMANTIC_DOCUMENT_MISMATCH")
     execution = plan["execution"]
+    deployment_path = root / "metadata/operating/day6_c2000_vault_v3_deployment_v1.json"
+    if _sha(deployment_path) != execution["deployment_sha256"]:
+        raise Denied("VAULT_V3_DEPLOYMENT_PIN_CHANGED")
+    deployment = json.loads(deployment_path.read_bytes())
+    if (deployment["artifact"]["sha256"] != execution["runtime_artifact_sha256"]
+            or deployment["pinned_documents"]["ddl_plan_sha256"] !=
+            plan["target_ddl"]["sha256"]):
+        raise Denied("VAULT_V3_RUNTIME_OR_DDL_PIN_CHANGED")
+    local_wheel = Path(deployment["artifact"]["local_build_output_uncommitted"])
+    if local_wheel.exists() and _sha(local_wheel) != execution["runtime_artifact_sha256"]:
+        raise Denied("VAULT_V3_LOCAL_WHEEL_CHANGED")
     for name in ("runtime_artifact_sha256", "deployment_sha256", "protected_grant_id"):
         if execution[name] is None:
             blockers.append(name.upper() + "_REQUIRED")
+    if deployment["status"] != "INSTALLED_BY_OWNER_PROTECTED_EXTENSION":
+        blockers.append("V3_PROTECTED_EXTENSION_INSTALL_REQUIRES_OWNER_AUTHORIZATION")
     if execution["job_submissions_max"] != 1 or execution["automatic_retries_max"] != 0:
         raise Denied("VAULT_V3_JOB_LIMIT_CHANGED")
     selected = json.loads((root / plan["selection"]["path"]).read_bytes())

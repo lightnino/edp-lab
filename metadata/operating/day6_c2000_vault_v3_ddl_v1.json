@@ -1,0 +1,171 @@
+{
+  "columns": [
+    {
+      "name": "hk",
+      "type": "STRING"
+    },
+    {
+      "name": "occurrence_hk",
+      "type": "STRING"
+    },
+    {
+      "name": "source_instance_id",
+      "type": "STRING"
+    },
+    {
+      "name": "archive_member",
+      "type": "STRING"
+    },
+    {
+      "name": "source_line",
+      "type": "BIGINT"
+    },
+    {
+      "name": "byte_offset",
+      "type": "BIGINT"
+    },
+    {
+      "name": "byte_length",
+      "type": "BIGINT"
+    },
+    {
+      "name": "raw_sha256",
+      "type": "STRING"
+    },
+    {
+      "name": "member_sha256",
+      "type": "STRING"
+    },
+    {
+      "name": "contract_version",
+      "type": "STRING"
+    },
+    {
+      "name": "payload_json",
+      "type": "STRING"
+    },
+    {
+      "name": "load_dts",
+      "type": "TIMESTAMP"
+    }
+  ],
+  "namespace": "workspace.edp_lab_day6_vault_proto",
+  "schema": "EDP_C2000_VAULT_V3_DDL_V1",
+  "tables": [
+    {
+      "create_sql": "CREATE TABLE workspace.edp_lab_day6_vault_proto.v3_h_13f_submission (hk STRING, occurrence_hk STRING, source_instance_id STRING, archive_member STRING, source_line BIGINT, byte_offset BIGINT, byte_length BIGINT, raw_sha256 STRING, member_sha256 STRING, contract_version STRING, payload_json STRING, load_dts TIMESTAMP) USING DELTA TBLPROPERTIES ('edp.vault.stage'='V3')",
+      "insert_only_sql": "MERGE INTO workspace.edp_lab_day6_vault_proto.v3_h_13f_submission t USING v3_stage_v3_h_13f_submission s ON t.hk=s.hk AND t.occurrence_hk=s.occurrence_hk WHEN NOT MATCHED THEN INSERT (hk, occurrence_hk, source_instance_id, archive_member, source_line, byte_offset, byte_length, raw_sha256, member_sha256, contract_version, payload_json, load_dts) VALUES (s.hk, s.occurrence_hk, s.source_instance_id, s.archive_member, s.source_line, s.byte_offset, s.byte_length, s.raw_sha256, s.member_sha256, s.contract_version, s.payload_json, s.load_dts)",
+      "name": "v3_h_13f_submission"
+    },
+    {
+      "create_sql": "CREATE TABLE workspace.edp_lab_day6_vault_proto.v3_h_concept (hk STRING, occurrence_hk STRING, source_instance_id STRING, archive_member STRING, source_line BIGINT, byte_offset BIGINT, byte_length BIGINT, raw_sha256 STRING, member_sha256 STRING, contract_version STRING, payload_json STRING, load_dts TIMESTAMP) USING DELTA TBLPROPERTIES ('edp.vault.stage'='V3')",
+      "insert_only_sql": "MERGE INTO workspace.edp_lab_day6_vault_proto.v3_h_concept t USING v3_stage_v3_h_concept s ON t.hk=s.hk AND t.occurrence_hk=s.occurrence_hk WHEN NOT MATCHED THEN INSERT (hk, occurrence_hk, source_instance_id, archive_member, source_line, byte_offset, byte_length, raw_sha256, member_sha256, contract_version, payload_json, load_dts) VALUES (s.hk, s.occurrence_hk, s.source_instance_id, s.archive_member, s.source_line, s.byte_offset, s.byte_length, s.raw_sha256, s.member_sha256, s.contract_version, s.payload_json, s.load_dts)",
+      "name": "v3_h_concept"
+    },
+    {
+      "create_sql": "CREATE TABLE workspace.edp_lab_day6_vault_proto.v3_h_edgar_file_reference (hk STRING, occurrence_hk STRING, source_instance_id STRING, archive_member STRING, source_line BIGINT, byte_offset BIGINT, byte_length BIGINT, raw_sha256 STRING, member_sha256 STRING, contract_version STRING, payload_json STRING, load_dts TIMESTAMP) USING DELTA TBLPROPERTIES ('edp.vault.stage'='V3')",
+      "insert_only_sql": "MERGE INTO workspace.edp_lab_day6_vault_proto.v3_h_edgar_file_reference t USING v3_stage_v3_h_edgar_file_reference s ON t.hk=s.hk AND t.occurrence_hk=s.occurrence_hk WHEN NOT MATCHED THEN INSERT (hk, occurrence_hk, source_instance_id, archive_member, source_line, byte_offset, byte_length, raw_sha256, member_sha256, contract_version, payload_json, load_dts) VALUES (s.hk, s.occurrence_hk, s.source_instance_id, s.archive_member, s.source_line, s.byte_offset, s.byte_length, s.raw_sha256, s.member_sha256, s.contract_version, s.payload_json, s.load_dts)",
+      "name": "v3_h_edgar_file_reference"
+    },
+    {
+      "create_sql": "CREATE TABLE workspace.edp_lab_day6_vault_proto.v3_h_filing (hk STRING, occurrence_hk STRING, source_instance_id STRING, archive_member STRING, source_line BIGINT, byte_offset BIGINT, byte_length BIGINT, raw_sha256 STRING, member_sha256 STRING, contract_version STRING, payload_json STRING, load_dts TIMESTAMP) USING DELTA TBLPROPERTIES ('edp.vault.stage'='V3')",
+      "insert_only_sql": "MERGE INTO workspace.edp_lab_day6_vault_proto.v3_h_filing t USING v3_stage_v3_h_filing s ON t.hk=s.hk AND t.occurrence_hk=s.occurrence_hk WHEN NOT MATCHED THEN INSERT (hk, occurrence_hk, source_instance_id, archive_member, source_line, byte_offset, byte_length, raw_sha256, member_sha256, contract_version, payload_json, load_dts) VALUES (s.hk, s.occurrence_hk, s.source_instance_id, s.archive_member, s.source_line, s.byte_offset, s.byte_length, s.raw_sha256, s.member_sha256, s.contract_version, s.payload_json, s.load_dts)",
+      "name": "v3_h_filing"
+    },
+    {
+      "create_sql": "CREATE TABLE workspace.edp_lab_day6_vault_proto.v3_h_treasury_feed (hk STRING, occurrence_hk STRING, source_instance_id STRING, archive_member STRING, source_line BIGINT, byte_offset BIGINT, byte_length BIGINT, raw_sha256 STRING, member_sha256 STRING, contract_version STRING, payload_json STRING, load_dts TIMESTAMP) USING DELTA TBLPROPERTIES ('edp.vault.stage'='V3')",
+      "insert_only_sql": "MERGE INTO workspace.edp_lab_day6_vault_proto.v3_h_treasury_feed t USING v3_stage_v3_h_treasury_feed s ON t.hk=s.hk AND t.occurrence_hk=s.occurrence_hk WHEN NOT MATCHED THEN INSERT (hk, occurrence_hk, source_instance_id, archive_member, source_line, byte_offset, byte_length, raw_sha256, member_sha256, contract_version, payload_json, load_dts) VALUES (s.hk, s.occurrence_hk, s.source_instance_id, s.archive_member, s.source_line, s.byte_offset, s.byte_length, s.raw_sha256, s.member_sha256, s.contract_version, s.payload_json, s.load_dts)",
+      "name": "v3_h_treasury_feed"
+    },
+    {
+      "create_sql": "CREATE TABLE workspace.edp_lab_day6_vault_proto.v3_h_treasury_observation (hk STRING, occurrence_hk STRING, source_instance_id STRING, archive_member STRING, source_line BIGINT, byte_offset BIGINT, byte_length BIGINT, raw_sha256 STRING, member_sha256 STRING, contract_version STRING, payload_json STRING, load_dts TIMESTAMP) USING DELTA TBLPROPERTIES ('edp.vault.stage'='V3')",
+      "insert_only_sql": "MERGE INTO workspace.edp_lab_day6_vault_proto.v3_h_treasury_observation t USING v3_stage_v3_h_treasury_observation s ON t.hk=s.hk AND t.occurrence_hk=s.occurrence_hk WHEN NOT MATCHED THEN INSERT (hk, occurrence_hk, source_instance_id, archive_member, source_line, byte_offset, byte_length, raw_sha256, member_sha256, contract_version, payload_json, load_dts) VALUES (s.hk, s.occurrence_hk, s.source_instance_id, s.archive_member, s.source_line, s.byte_offset, s.byte_length, s.raw_sha256, s.member_sha256, s.contract_version, s.payload_json, s.load_dts)",
+      "name": "v3_h_treasury_observation"
+    },
+    {
+      "create_sql": "CREATE TABLE workspace.edp_lab_day6_vault_proto.v3_l_fsds_presentation (hk STRING, occurrence_hk STRING, source_instance_id STRING, archive_member STRING, source_line BIGINT, byte_offset BIGINT, byte_length BIGINT, raw_sha256 STRING, member_sha256 STRING, contract_version STRING, payload_json STRING, load_dts TIMESTAMP) USING DELTA TBLPROPERTIES ('edp.vault.stage'='V3')",
+      "insert_only_sql": "MERGE INTO workspace.edp_lab_day6_vault_proto.v3_l_fsds_presentation t USING v3_stage_v3_l_fsds_presentation s ON t.hk=s.hk AND t.occurrence_hk=s.occurrence_hk WHEN NOT MATCHED THEN INSERT (hk, occurrence_hk, source_instance_id, archive_member, source_line, byte_offset, byte_length, raw_sha256, member_sha256, contract_version, payload_json, load_dts) VALUES (s.hk, s.occurrence_hk, s.source_instance_id, s.archive_member, s.source_line, s.byte_offset, s.byte_length, s.raw_sha256, s.member_sha256, s.contract_version, s.payload_json, s.load_dts)",
+      "name": "v3_l_fsds_presentation"
+    },
+    {
+      "create_sql": "CREATE TABLE workspace.edp_lab_day6_vault_proto.v3_l_treasury_feed_observation (hk STRING, occurrence_hk STRING, source_instance_id STRING, archive_member STRING, source_line BIGINT, byte_offset BIGINT, byte_length BIGINT, raw_sha256 STRING, member_sha256 STRING, contract_version STRING, payload_json STRING, load_dts TIMESTAMP) USING DELTA TBLPROPERTIES ('edp.vault.stage'='V3')",
+      "insert_only_sql": "MERGE INTO workspace.edp_lab_day6_vault_proto.v3_l_treasury_feed_observation t USING v3_stage_v3_l_treasury_feed_observation s ON t.hk=s.hk AND t.occurrence_hk=s.occurrence_hk WHEN NOT MATCHED THEN INSERT (hk, occurrence_hk, source_instance_id, archive_member, source_line, byte_offset, byte_length, raw_sha256, member_sha256, contract_version, payload_json, load_dts) VALUES (s.hk, s.occurrence_hk, s.source_instance_id, s.archive_member, s.source_line, s.byte_offset, s.byte_length, s.raw_sha256, s.member_sha256, s.contract_version, s.payload_json, s.load_dts)",
+      "name": "v3_l_treasury_feed_observation"
+    },
+    {
+      "create_sql": "CREATE TABLE workspace.edp_lab_day6_vault_proto.v3_r_load_event (hk STRING, occurrence_hk STRING, source_instance_id STRING, archive_member STRING, source_line BIGINT, byte_offset BIGINT, byte_length BIGINT, raw_sha256 STRING, member_sha256 STRING, contract_version STRING, payload_json STRING, load_dts TIMESTAMP) USING DELTA TBLPROPERTIES ('edp.vault.stage'='V3')",
+      "insert_only_sql": "MERGE INTO workspace.edp_lab_day6_vault_proto.v3_r_load_event t USING v3_stage_v3_r_load_event s ON t.hk=s.hk AND t.occurrence_hk=s.occurrence_hk WHEN NOT MATCHED THEN INSERT (hk, occurrence_hk, source_instance_id, archive_member, source_line, byte_offset, byte_length, raw_sha256, member_sha256, contract_version, payload_json, load_dts) VALUES (s.hk, s.occurrence_hk, s.source_instance_id, s.archive_member, s.source_line, s.byte_offset, s.byte_length, s.raw_sha256, s.member_sha256, s.contract_version, s.payload_json, s.load_dts)",
+      "name": "v3_r_load_event"
+    },
+    {
+      "create_sql": "CREATE TABLE workspace.edp_lab_day6_vault_proto.v3_r_source_occurrence (hk STRING, occurrence_hk STRING, source_instance_id STRING, archive_member STRING, source_line BIGINT, byte_offset BIGINT, byte_length BIGINT, raw_sha256 STRING, member_sha256 STRING, contract_version STRING, payload_json STRING, load_dts TIMESTAMP) USING DELTA TBLPROPERTIES ('edp.vault.stage'='V3')",
+      "insert_only_sql": "MERGE INTO workspace.edp_lab_day6_vault_proto.v3_r_source_occurrence t USING v3_stage_v3_r_source_occurrence s ON t.hk=s.hk AND t.occurrence_hk=s.occurrence_hk WHEN NOT MATCHED THEN INSERT (hk, occurrence_hk, source_instance_id, archive_member, source_line, byte_offset, byte_length, raw_sha256, member_sha256, contract_version, payload_json, load_dts) VALUES (s.hk, s.occurrence_hk, s.source_instance_id, s.archive_member, s.source_line, s.byte_offset, s.byte_length, s.raw_sha256, s.member_sha256, s.contract_version, s.payload_json, s.load_dts)",
+      "name": "v3_r_source_occurrence"
+    },
+    {
+      "create_sql": "CREATE TABLE workspace.edp_lab_day6_vault_proto.v3_s_13f_coverpage_assertion (hk STRING, occurrence_hk STRING, source_instance_id STRING, archive_member STRING, source_line BIGINT, byte_offset BIGINT, byte_length BIGINT, raw_sha256 STRING, member_sha256 STRING, contract_version STRING, payload_json STRING, load_dts TIMESTAMP) USING DELTA TBLPROPERTIES ('edp.vault.stage'='V3')",
+      "insert_only_sql": "MERGE INTO workspace.edp_lab_day6_vault_proto.v3_s_13f_coverpage_assertion t USING v3_stage_v3_s_13f_coverpage_assertion s ON t.hk=s.hk AND t.occurrence_hk=s.occurrence_hk WHEN NOT MATCHED THEN INSERT (hk, occurrence_hk, source_instance_id, archive_member, source_line, byte_offset, byte_length, raw_sha256, member_sha256, contract_version, payload_json, load_dts) VALUES (s.hk, s.occurrence_hk, s.source_instance_id, s.archive_member, s.source_line, s.byte_offset, s.byte_length, s.raw_sha256, s.member_sha256, s.contract_version, s.payload_json, s.load_dts)",
+      "name": "v3_s_13f_coverpage_assertion"
+    },
+    {
+      "create_sql": "CREATE TABLE workspace.edp_lab_day6_vault_proto.v3_s_13f_infotable_assertion (hk STRING, occurrence_hk STRING, source_instance_id STRING, archive_member STRING, source_line BIGINT, byte_offset BIGINT, byte_length BIGINT, raw_sha256 STRING, member_sha256 STRING, contract_version STRING, payload_json STRING, load_dts TIMESTAMP) USING DELTA TBLPROPERTIES ('edp.vault.stage'='V3')",
+      "insert_only_sql": "MERGE INTO workspace.edp_lab_day6_vault_proto.v3_s_13f_infotable_assertion t USING v3_stage_v3_s_13f_infotable_assertion s ON t.hk=s.hk AND t.occurrence_hk=s.occurrence_hk WHEN NOT MATCHED THEN INSERT (hk, occurrence_hk, source_instance_id, archive_member, source_line, byte_offset, byte_length, raw_sha256, member_sha256, contract_version, payload_json, load_dts) VALUES (s.hk, s.occurrence_hk, s.source_instance_id, s.archive_member, s.source_line, s.byte_offset, s.byte_length, s.raw_sha256, s.member_sha256, s.contract_version, s.payload_json, s.load_dts)",
+      "name": "v3_s_13f_infotable_assertion"
+    },
+    {
+      "create_sql": "CREATE TABLE workspace.edp_lab_day6_vault_proto.v3_s_13f_othermanager2_assertion (hk STRING, occurrence_hk STRING, source_instance_id STRING, archive_member STRING, source_line BIGINT, byte_offset BIGINT, byte_length BIGINT, raw_sha256 STRING, member_sha256 STRING, contract_version STRING, payload_json STRING, load_dts TIMESTAMP) USING DELTA TBLPROPERTIES ('edp.vault.stage'='V3')",
+      "insert_only_sql": "MERGE INTO workspace.edp_lab_day6_vault_proto.v3_s_13f_othermanager2_assertion t USING v3_stage_v3_s_13f_othermanager2_assertion s ON t.hk=s.hk AND t.occurrence_hk=s.occurrence_hk WHEN NOT MATCHED THEN INSERT (hk, occurrence_hk, source_instance_id, archive_member, source_line, byte_offset, byte_length, raw_sha256, member_sha256, contract_version, payload_json, load_dts) VALUES (s.hk, s.occurrence_hk, s.source_instance_id, s.archive_member, s.source_line, s.byte_offset, s.byte_length, s.raw_sha256, s.member_sha256, s.contract_version, s.payload_json, s.load_dts)",
+      "name": "v3_s_13f_othermanager2_assertion"
+    },
+    {
+      "create_sql": "CREATE TABLE workspace.edp_lab_day6_vault_proto.v3_s_13f_othermanager_assertion (hk STRING, occurrence_hk STRING, source_instance_id STRING, archive_member STRING, source_line BIGINT, byte_offset BIGINT, byte_length BIGINT, raw_sha256 STRING, member_sha256 STRING, contract_version STRING, payload_json STRING, load_dts TIMESTAMP) USING DELTA TBLPROPERTIES ('edp.vault.stage'='V3')",
+      "insert_only_sql": "MERGE INTO workspace.edp_lab_day6_vault_proto.v3_s_13f_othermanager_assertion t USING v3_stage_v3_s_13f_othermanager_assertion s ON t.hk=s.hk AND t.occurrence_hk=s.occurrence_hk WHEN NOT MATCHED THEN INSERT (hk, occurrence_hk, source_instance_id, archive_member, source_line, byte_offset, byte_length, raw_sha256, member_sha256, contract_version, payload_json, load_dts) VALUES (s.hk, s.occurrence_hk, s.source_instance_id, s.archive_member, s.source_line, s.byte_offset, s.byte_length, s.raw_sha256, s.member_sha256, s.contract_version, s.payload_json, s.load_dts)",
+      "name": "v3_s_13f_othermanager_assertion"
+    },
+    {
+      "create_sql": "CREATE TABLE workspace.edp_lab_day6_vault_proto.v3_s_13f_signature_assertion (hk STRING, occurrence_hk STRING, source_instance_id STRING, archive_member STRING, source_line BIGINT, byte_offset BIGINT, byte_length BIGINT, raw_sha256 STRING, member_sha256 STRING, contract_version STRING, payload_json STRING, load_dts TIMESTAMP) USING DELTA TBLPROPERTIES ('edp.vault.stage'='V3')",
+      "insert_only_sql": "MERGE INTO workspace.edp_lab_day6_vault_proto.v3_s_13f_signature_assertion t USING v3_stage_v3_s_13f_signature_assertion s ON t.hk=s.hk AND t.occurrence_hk=s.occurrence_hk WHEN NOT MATCHED THEN INSERT (hk, occurrence_hk, source_instance_id, archive_member, source_line, byte_offset, byte_length, raw_sha256, member_sha256, contract_version, payload_json, load_dts) VALUES (s.hk, s.occurrence_hk, s.source_instance_id, s.archive_member, s.source_line, s.byte_offset, s.byte_length, s.raw_sha256, s.member_sha256, s.contract_version, s.payload_json, s.load_dts)",
+      "name": "v3_s_13f_signature_assertion"
+    },
+    {
+      "create_sql": "CREATE TABLE workspace.edp_lab_day6_vault_proto.v3_s_13f_submission_assertion (hk STRING, occurrence_hk STRING, source_instance_id STRING, archive_member STRING, source_line BIGINT, byte_offset BIGINT, byte_length BIGINT, raw_sha256 STRING, member_sha256 STRING, contract_version STRING, payload_json STRING, load_dts TIMESTAMP) USING DELTA TBLPROPERTIES ('edp.vault.stage'='V3')",
+      "insert_only_sql": "MERGE INTO workspace.edp_lab_day6_vault_proto.v3_s_13f_submission_assertion t USING v3_stage_v3_s_13f_submission_assertion s ON t.hk=s.hk AND t.occurrence_hk=s.occurrence_hk WHEN NOT MATCHED THEN INSERT (hk, occurrence_hk, source_instance_id, archive_member, source_line, byte_offset, byte_length, raw_sha256, member_sha256, contract_version, payload_json, load_dts) VALUES (s.hk, s.occurrence_hk, s.source_instance_id, s.archive_member, s.source_line, s.byte_offset, s.byte_length, s.raw_sha256, s.member_sha256, s.contract_version, s.payload_json, s.load_dts)",
+      "name": "v3_s_13f_submission_assertion"
+    },
+    {
+      "create_sql": "CREATE TABLE workspace.edp_lab_day6_vault_proto.v3_s_13f_summarypage_assertion (hk STRING, occurrence_hk STRING, source_instance_id STRING, archive_member STRING, source_line BIGINT, byte_offset BIGINT, byte_length BIGINT, raw_sha256 STRING, member_sha256 STRING, contract_version STRING, payload_json STRING, load_dts TIMESTAMP) USING DELTA TBLPROPERTIES ('edp.vault.stage'='V3')",
+      "insert_only_sql": "MERGE INTO workspace.edp_lab_day6_vault_proto.v3_s_13f_summarypage_assertion t USING v3_stage_v3_s_13f_summarypage_assertion s ON t.hk=s.hk AND t.occurrence_hk=s.occurrence_hk WHEN NOT MATCHED THEN INSERT (hk, occurrence_hk, source_instance_id, archive_member, source_line, byte_offset, byte_length, raw_sha256, member_sha256, contract_version, payload_json, load_dts) VALUES (s.hk, s.occurrence_hk, s.source_instance_id, s.archive_member, s.source_line, s.byte_offset, s.byte_length, s.raw_sha256, s.member_sha256, s.contract_version, s.payload_json, s.load_dts)",
+      "name": "v3_s_13f_summarypage_assertion"
+    },
+    {
+      "create_sql": "CREATE TABLE workspace.edp_lab_day6_vault_proto.v3_s_edgar_index_assertion (hk STRING, occurrence_hk STRING, source_instance_id STRING, archive_member STRING, source_line BIGINT, byte_offset BIGINT, byte_length BIGINT, raw_sha256 STRING, member_sha256 STRING, contract_version STRING, payload_json STRING, load_dts TIMESTAMP) USING DELTA TBLPROPERTIES ('edp.vault.stage'='V3')",
+      "insert_only_sql": "MERGE INTO workspace.edp_lab_day6_vault_proto.v3_s_edgar_index_assertion t USING v3_stage_v3_s_edgar_index_assertion s ON t.hk=s.hk AND t.occurrence_hk=s.occurrence_hk WHEN NOT MATCHED THEN INSERT (hk, occurrence_hk, source_instance_id, archive_member, source_line, byte_offset, byte_length, raw_sha256, member_sha256, contract_version, payload_json, load_dts) VALUES (s.hk, s.occurrence_hk, s.source_instance_id, s.archive_member, s.source_line, s.byte_offset, s.byte_length, s.raw_sha256, s.member_sha256, s.contract_version, s.payload_json, s.load_dts)",
+      "name": "v3_s_edgar_index_assertion"
+    },
+    {
+      "create_sql": "CREATE TABLE workspace.edp_lab_day6_vault_proto.v3_s_fsds_pre_assertion (hk STRING, occurrence_hk STRING, source_instance_id STRING, archive_member STRING, source_line BIGINT, byte_offset BIGINT, byte_length BIGINT, raw_sha256 STRING, member_sha256 STRING, contract_version STRING, payload_json STRING, load_dts TIMESTAMP) USING DELTA TBLPROPERTIES ('edp.vault.stage'='V3')",
+      "insert_only_sql": "MERGE INTO workspace.edp_lab_day6_vault_proto.v3_s_fsds_pre_assertion t USING v3_stage_v3_s_fsds_pre_assertion s ON t.hk=s.hk AND t.occurrence_hk=s.occurrence_hk WHEN NOT MATCHED THEN INSERT (hk, occurrence_hk, source_instance_id, archive_member, source_line, byte_offset, byte_length, raw_sha256, member_sha256, contract_version, payload_json, load_dts) VALUES (s.hk, s.occurrence_hk, s.source_instance_id, s.archive_member, s.source_line, s.byte_offset, s.byte_length, s.raw_sha256, s.member_sha256, s.contract_version, s.payload_json, s.load_dts)",
+      "name": "v3_s_fsds_pre_assertion"
+    },
+    {
+      "create_sql": "CREATE TABLE workspace.edp_lab_day6_vault_proto.v3_s_fsds_sub_assertion (hk STRING, occurrence_hk STRING, source_instance_id STRING, archive_member STRING, source_line BIGINT, byte_offset BIGINT, byte_length BIGINT, raw_sha256 STRING, member_sha256 STRING, contract_version STRING, payload_json STRING, load_dts TIMESTAMP) USING DELTA TBLPROPERTIES ('edp.vault.stage'='V3')",
+      "insert_only_sql": "MERGE INTO workspace.edp_lab_day6_vault_proto.v3_s_fsds_sub_assertion t USING v3_stage_v3_s_fsds_sub_assertion s ON t.hk=s.hk AND t.occurrence_hk=s.occurrence_hk WHEN NOT MATCHED THEN INSERT (hk, occurrence_hk, source_instance_id, archive_member, source_line, byte_offset, byte_length, raw_sha256, member_sha256, contract_version, payload_json, load_dts) VALUES (s.hk, s.occurrence_hk, s.source_instance_id, s.archive_member, s.source_line, s.byte_offset, s.byte_length, s.raw_sha256, s.member_sha256, s.contract_version, s.payload_json, s.load_dts)",
+      "name": "v3_s_fsds_sub_assertion"
+    },
+    {
+      "create_sql": "CREATE TABLE workspace.edp_lab_day6_vault_proto.v3_s_fsds_tag_assertion (hk STRING, occurrence_hk STRING, source_instance_id STRING, archive_member STRING, source_line BIGINT, byte_offset BIGINT, byte_length BIGINT, raw_sha256 STRING, member_sha256 STRING, contract_version STRING, payload_json STRING, load_dts TIMESTAMP) USING DELTA TBLPROPERTIES ('edp.vault.stage'='V3')",
+      "insert_only_sql": "MERGE INTO workspace.edp_lab_day6_vault_proto.v3_s_fsds_tag_assertion t USING v3_stage_v3_s_fsds_tag_assertion s ON t.hk=s.hk AND t.occurrence_hk=s.occurrence_hk WHEN NOT MATCHED THEN INSERT (hk, occurrence_hk, source_instance_id, archive_member, source_line, byte_offset, byte_length, raw_sha256, member_sha256, contract_version, payload_json, load_dts) VALUES (s.hk, s.occurrence_hk, s.source_instance_id, s.archive_member, s.source_line, s.byte_offset, s.byte_length, s.raw_sha256, s.member_sha256, s.contract_version, s.payload_json, s.load_dts)",
+      "name": "v3_s_fsds_tag_assertion"
+    },
+    {
+      "create_sql": "CREATE TABLE workspace.edp_lab_day6_vault_proto.v3_s_treasury_entry_assertion (hk STRING, occurrence_hk STRING, source_instance_id STRING, archive_member STRING, source_line BIGINT, byte_offset BIGINT, byte_length BIGINT, raw_sha256 STRING, member_sha256 STRING, contract_version STRING, payload_json STRING, load_dts TIMESTAMP) USING DELTA TBLPROPERTIES ('edp.vault.stage'='V3')",
+      "insert_only_sql": "MERGE INTO workspace.edp_lab_day6_vault_proto.v3_s_treasury_entry_assertion t USING v3_stage_v3_s_treasury_entry_assertion s ON t.hk=s.hk AND t.occurrence_hk=s.occurrence_hk WHEN NOT MATCHED THEN INSERT (hk, occurrence_hk, source_instance_id, archive_member, source_line, byte_offset, byte_length, raw_sha256, member_sha256, contract_version, payload_json, load_dts) VALUES (s.hk, s.occurrence_hk, s.source_instance_id, s.archive_member, s.source_line, s.byte_offset, s.byte_length, s.raw_sha256, s.member_sha256, s.contract_version, s.payload_json, s.load_dts)",
+      "name": "v3_s_treasury_entry_assertion"
+    },
+    {
+      "create_sql": "CREATE TABLE workspace.edp_lab_day6_vault_proto.v3_vault_reject_quarantine (hk STRING, occurrence_hk STRING, source_instance_id STRING, archive_member STRING, source_line BIGINT, byte_offset BIGINT, byte_length BIGINT, raw_sha256 STRING, member_sha256 STRING, contract_version STRING, payload_json STRING, load_dts TIMESTAMP) USING DELTA TBLPROPERTIES ('edp.vault.stage'='V3')",
+      "insert_only_sql": "MERGE INTO workspace.edp_lab_day6_vault_proto.v3_vault_reject_quarantine t USING v3_stage_v3_vault_reject_quarantine s ON t.hk=s.hk AND t.occurrence_hk=s.occurrence_hk WHEN NOT MATCHED THEN INSERT (hk, occurrence_hk, source_instance_id, archive_member, source_line, byte_offset, byte_length, raw_sha256, member_sha256, contract_version, payload_json, load_dts) VALUES (s.hk, s.occurrence_hk, s.source_instance_id, s.archive_member, s.source_line, s.byte_offset, s.byte_length, s.raw_sha256, s.member_sha256, s.contract_version, s.payload_json, s.load_dts)",
+      "name": "v3_vault_reject_quarantine"
+    }
+  ]
+}

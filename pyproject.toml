@@ -9,6 +9,9 @@ description = "Deterministic EDP source integration learning lab"
 requires-python = ">=3.12,<3.13"
 dependencies = ["duckdb>=1.4,<3"]
 
+[project.scripts]
+edp-day6-v3 = "edp_lab.vault.v3_spark_runtime:main"
+
 [project.optional-dependencies]
 agents = ["openai>=2", "openai-agents>=0.2"]
 

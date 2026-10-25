@@ -1,0 +1,39 @@
+{
+  "schema": "EDP_C2000_VAULT_V3_DEPLOYMENT_PROPOSAL_V1",
+  "status": "BUILT_LOCALLY_NOT_INSTALLED_OR_AUTHORIZED",
+  "target_workspace": "existing edp-lab Databricks workspace",
+  "target_namespace": "workspace.edp_lab_day6_vault_proto",
+  "artifact": {
+    "kind": "PYTHON_WHEEL",
+    "file_name": "edp_lab-0.1.0-py3-none-any.whl",
+    "sha256": "eada999db14a7db4b5590ab34b4296127e4231fe5289a04180bcf410238cafc9",
+    "local_build_output_uncommitted": "/private/tmp/edp-day6-v3-wheel/edp_lab-0.1.0-py3-none-any.whl",
+    "build_command": "UV_CACHE_DIR=/private/tmp/edp-day6-uv-cache uv build --wheel --offline -o /private/tmp/edp-day6-v3-wheel",
+    "job_entry_point": "edp-day6-v3",
+    "workspace_target_proposed": "/Workspace/Shared/edp-lab/day6-c2000-v3/edp_lab-0.1.0-py3-none-any.whl"
+  },
+  "pinned_documents": {
+    "selection_sha256": "5b84f0a1dc088affc51f631bc34c66f0053b871b67efff13e770021a19a33259",
+    "negative_oracles_sha256": "54c2aa2add50504cca6a50beed480ef78fef96d962b7f9b6e6a4468ff34f72f2",
+    "semantic_unsigned_payload_sha256": "658612d41781f649f42529b9a3cdca34e9ab85d0a6fe7bb48a071fc2ff74f5df",
+    "ddl_plan_sha256": "9f92405043ddbe935bc9cf9518d31cb7d18a1b90da20f399519b4e39591ff7e1"
+  },
+  "job_proposal": {
+    "task_kind": "serverless_python_wheel",
+    "task_entry_point": "edp-day6-v3",
+    "job_submissions_max": 1,
+    "max_concurrent_runs": 1,
+    "timeout_seconds": 3600,
+    "max_retries": 0,
+    "queue_enabled": false,
+    "environment_key": "v3_fixed_runtime",
+    "compute": "existing workspace serverless Jobs compute, subject to Owner approval and protected identity verification",
+    "run_as": "Owner-approved protected service principal; not the Codex/DEV profile",
+    "inputs": [
+      "exact V3 request with later protected grant ID",
+      "pinned selection manifest",
+      "pinned 24-oracle manifest"
+    ]
+  },
+  "install_and_submit_boundary": "Owner authorization and protected extension are required; installer must rehash uploaded wheel and inputs, verify signed semantic record and operation-specific grant, reserve durable one-shot ledger, submit once, reconcile uncertain status and sign independent readback. Existing V2 policy is not modified."
+}
