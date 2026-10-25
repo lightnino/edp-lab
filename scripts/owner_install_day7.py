@@ -119,8 +119,13 @@ def _install_intent(expected_commit: str) -> dict:
 
 def _mark(name: str, detail: dict | None = None) -> None:
     journal = _read_json(JOURNAL)
-    journal.setdefault("completed", {})[name] = detail or {"status": "VERIFIED"}
-    _save_json(JOURNAL, journal)
+    value = detail or {"status": "VERIFIED"}
+    existing = journal.setdefault("completed", {}).get(name)
+    if existing is not None and existing != value:
+        raise RuntimeError("DAY7_INSTALLED_STAGE_EVIDENCE_CHANGED:" + name)
+    if existing is None:
+        journal["completed"][name] = value
+        _save_json(JOURNAL, journal)
 
 
 def _completed(name: str) -> bool:
@@ -193,9 +198,13 @@ def preflight(expected_commit: str) -> None:
         raise RuntimeError("EXISTING_COHORT_PROTECTED_INFRASTRUCTURE_REQUIRED")
     recovering = BASE.exists()
     if recovering:
-        if not JOURNAL.exists() or _read_json(JOURNAL) != {
-                **_install_intent(expected_commit),
-                "completed": _read_json(JOURNAL).get("completed", {})}:
+        if (BASE.is_symlink() or BASE.stat().st_uid != 0
+                or BASE.stat().st_mode & 0o077
+                or not JOURNAL.is_file() or JOURNAL.is_symlink()
+                or JOURNAL.stat().st_uid != 0
+                or {k: v for k, v in _read_json(JOURNAL).items()
+                    if k != "completed"} != _install_intent(expected_commit)
+                or not isinstance(_read_json(JOURNAL).get("completed"), dict)):
             raise RuntimeError("DAY7_EXISTING_INSTALL_JOURNAL_PIN_MISMATCH")
     elif PLIST.exists():
         raise RuntimeError("DAY7_UNOWNED_LAUNCHDAEMON_EXISTS")
@@ -216,6 +225,19 @@ def preflight(expected_commit: str) -> None:
         raise RuntimeError("DAY7_TARGET_SCHEMA_ALREADY_EXISTS")
     if present.returncode != 0 and "does not exist" not in present.stderr.lower():
         raise RuntimeError("DAY7_TARGET_SCHEMA_ABSENCE_NOT_PROVEN")
+    if not recovering:
+        notebook = subprocess.run(
+            ["/usr/bin/sudo", "-n", "-u", "lightnino", "-H",
+             CLI, "workspace", "get-status", NOTEBOOK,
+             "-p", "edp-lab", "-o", "json"],
+            capture_output=True, text=True, check=False, timeout=30)
+        if notebook.returncode == 0:
+            raise RuntimeError("DAY7_CANARY_NOTEBOOK_ALREADY_OWNED")
+        error = notebook.stderr.upper()
+        if not any(term in error for term in
+                   ("RESOURCE_DOES_NOT_EXIST", "PATH_NOT_FOUND", "DOESN'T EXIST",
+                    "DOES NOT EXIST")):
+            raise RuntimeError("DAY7_CANARY_NOTEBOOK_ABSENCE_UNVERIFIED")
     # This must run before protected_files, SP creation, UC grants or any Job.
     # The installer cannot assume that a documented legacy locator still exists.
     verify_canary_raw_read_only()
@@ -241,6 +263,7 @@ def protected_files(expected_commit: str) -> None:
         (BASE / name).mkdir(mode=mode, exist_ok=True)
     if not JOURNAL.exists():
         _save_json(JOURNAL, {**_install_intent(expected_commit), "completed": {}})
+        JOURNAL.chmod(0o600)
     elif {k: v for k, v in _read_json(JOURNAL).items() if k != "completed"} != (
             _install_intent(expected_commit)):
         raise RuntimeError("DAY7_INSTALL_JOURNAL_PIN_MISMATCH")
@@ -594,8 +617,14 @@ def install_broker() -> None:
     # installer subprocess. The broker must resolve/sign the pinned canary
     # under its own protected OAuth profile.
     from edp_lab.operating.policy_broker import resolve_handoff
-    receipt = resolve_handoff(BASE / "broker.sock", "SRC000002")
-    if (receipt.get("physical_identity") != "SRC000002"
+    receipt = None
+    for _ in range(30):
+        try:
+            receipt = resolve_handoff(BASE / "broker.sock", "SRC000002")
+            break
+        except (ConnectionError, FileNotFoundError):
+            time.sleep(1)
+    if (receipt is None or receipt.get("physical_identity") != "SRC000002"
             or not receipt.get("receipt_sha256")):
         raise RuntimeError("DAY7_BROKER_LIVE_U10_READBACK_INVALID")
 
@@ -604,35 +633,68 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("expected_commit")
     args = parser.parse_args()
+
+    # All feasible fixed-source checks and real RAW readback run BEFORE any
+    # protected directory, secret, IAM mutation, Job or remote write.
     preflight(args.expected_commit)
     from edp_lab.operating.authority import verified_document
     from edp_lab.operating.protected_verifier import _sign
 
     protected_files(args.expected_commit)
     sp_id, app_id = service_identity()
-    permissions(app_id)
+    ensure_workspace_access(sp_id)
+    verify_service_identity(sp_id, app_id)
+
+    # UC GRANT/CREATE are scoped and idempotent. Reconcile exact remote
+    # state after uncertain failures; never create another SP or secret.
+    if not _completed("permissions"):
+        permissions(app_id)
+        _mark("permissions", {"service_principal_id": sp_id, "verified": True})
     universe, prior, handoff = publication()
+    _mark("publication",
+          {"universe_receipt_sha256": universe["receipt_sha256"],
+           "prior_receipt_sha256": prior["receipt_sha256"],
+           "u10_canary_sha256": handoff["receipt_sha256"]})
     job = canary(args.expected_commit)
+    _mark("job_canary",
+          {"run_id": job["job_run_id"], "table_id": job["table_id"],
+           "readback": job["independent_readback"]})
     install_broker()
+    _mark("broker", {"launchd_label": LABEL, "live_m2m_u10": True})
+
     receipt = {"schema": "EDP_DAY7_DEPLOYMENT_RECEIPT_V1",
-               "authority": "protected-verifier-v1", "status": "RUNNER_DEPLOYED_AND_VERIFIED",
+               "authority": "protected-verifier-v1",
+               "status": "RUNNER_DEPLOYED_AND_VERIFIED",
                "commit": args.expected_commit,
                "policy_sha256": file_digest(BASE / "trust/policy.signed.json"),
+               "source_evidence_index_sha256": SOURCE_INDEX_SHA,
                "service_principal_id": sp_id, "service_application_id": app_id,
-               "service_auth": "OAUTH_M2M", "raw_write_volume_privilege": False,
-               "prior_modify_privilege": False, "universe": universe,
-               "prior": prior, "u10_canary": handoff, "job_canary": job}
-    _sign(receipt, DAY5 / "private/verifier.pem",
-          BASE / "receipts/day7-deployment.json")
-    verified_document(ROOT, BASE / "receipts/day7-deployment.json", BASE / "trust")
-    print(json.dumps({"status": receipt["status"],
-                      "deployment_receipt_sha256": file_digest(
-                          BASE / "receipts/day7-deployment.json"),
-                      "universe_receipt_sha256": universe["receipt_sha256"],
-                      "prior_receipt_sha256": prior["receipt_sha256"],
-                      "u10_canary_receipt_sha256": handoff["receipt_sha256"],
-                      "service_application_id": app_id,
-                      "canary_run_id": job["job_run_id"]}, sort_keys=True))
+               "service_auth": "OAUTH_M2M",
+               "service_workspace_access": "OWNER_VERIFIED_AND_M2M_PROBED",
+               "raw_write_volume_privilege": False,
+               "prior_modify_privilege": False,
+               "universe": universe, "prior": prior,
+               "u10_canary": handoff, "job_canary": job}
+    path = BASE / "receipts/day7-deployment.json"
+    if path.exists():
+        prior_receipt = verified_document(ROOT, path, BASE / "trust")
+        if prior_receipt != receipt:
+            raise RuntimeError("DAY7_DEPLOYMENT_RECEIPT_CHANGED")
+    else:
+        _sign(receipt, DAY5 / "private/verifier.pem", path)
+    verified_document(ROOT, path, BASE / "trust")
+    _mark("deployment", {"receipt_sha256": file_digest(path)})
+
+    print(json.dumps({
+        "status": receipt["status"],
+        "deployment_receipt_sha256": file_digest(path),
+        "universe_receipt_sha256": universe["receipt_sha256"],
+        "prior_receipt_sha256": prior["receipt_sha256"],
+        "u10_canary_receipt_sha256": handoff["receipt_sha256"],
+        "service_application_id": app_id,
+        "canary_run_id": job["job_run_id"],
+        "day7_autonomous_ready": "NOT_ASSERTED_C3000_U10_GATE_PENDING",
+    }, sort_keys=True))
 
 
 if __name__ == "__main__":
