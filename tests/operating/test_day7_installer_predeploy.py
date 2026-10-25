@@ -287,3 +287,13 @@ def test_nonroot_agent_can_reach_broker_without_exposing_secret_directories():
     assert '"-u", "lightnino"' in broker
     assert "DAY7_AGENT_BROKER_SOCKET_ACCESS_UNVERIFIED" in broker
     assert "UNKNOWN_BROKER_ACTION" in broker
+
+
+
+def test_sp_secret_creation_requires_workspace_assignment_first():
+    """Workspace OAuth secret proxy requires the SP assigned to this workspace."""
+    source = inspect.getsource(installer.service_identity)
+    assert source.index("ensure_workspace_access(sp_id)") < source.index(
+        '"service-principal-secrets-proxy", "create"')
+    assert source.index("ensure_workspace_access(sp_id)") < source.index(
+        "_save_json(intent, pinned)")
