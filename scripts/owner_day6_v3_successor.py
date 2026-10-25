@@ -66,6 +66,22 @@ STANDING = BASE / "trust/day6-v3-standing-v1.signed.json"
 E2E_READY = BASE / "receipts/day6-v3-e2e-ready-v1.signed.json"
 
 
+def configure_attempt(number: int) -> None:
+    """Select a separate protected identity; the service controls the number."""
+    global GRANT_ID, REMOTE_DIR, REMOTE_REQUEST, DERIVED
+    global SUCCESSOR_INSTALL, SUCCESSOR_GRANT, RESERVATION, SUBMISSION
+    require(type(number) is int and 1 <= number <= 10000000,
+            "V3_ATTEMPT_NUMBER_OUT_OF_SCOPE")
+    GRANT_ID = f"day6-c2000-v3-distinct-20261025-v{number}"
+    REMOTE_DIR = f"/Workspace/Shared/edp-lab/day6-c2000-v3-distinct-{number}"
+    REMOTE_REQUEST = REMOTE_DIR + "/request.granted.json"
+    DERIVED = BASE / f"private/day6-v3-distinct-{number}-request.granted.json"
+    SUCCESSOR_INSTALL = BASE / f"receipts/day6-v3-distinct-{number}-install.signed.json"
+    SUCCESSOR_GRANT = BASE / f"grants/day6-v3-distinct-{number}-grant.signed.json"
+    RESERVATION = BASE / f"ledger/day6-v3-distinct-{number}-reservation.json"
+    SUBMISSION = BASE / f"ledger/day6-v3-distinct-{number}-submission.json"
+
+
 def _admission(request: dict, deployment: dict) -> None:
     """Require installed standing scope and an independently signed live smoke."""
     standing = verified_document(ROOT, STANDING, BASE / "trust")
@@ -122,7 +138,7 @@ def _parameters(derived_sha: str) -> list[str]:
 
 def _settings(derived_sha: str, deployment: dict) -> dict:
     saved = _job_settings(derived_sha, deployment)
-    saved["name"] = "day6-c2000-v3-distinct-one-shot"
+    saved["name"] = "day6-c2000-v3-" + GRANT_ID
     saved["tasks"][0]["python_wheel_task"]["parameters"] = _parameters(derived_sha)
     return saved
 
@@ -188,6 +204,8 @@ def authorize(expected_commit: str) -> dict:
             "V3_ORIGINAL_INSTALLED_JOB_CHANGED")
     _workspace_access()
     _source_rights()
+    require(_remote_digest(deployment["artifact"]["workspace_target_proposed"])
+            == deployment["artifact"]["sha256"], "V3_DEPLOYED_WHEEL_CHANGED")
     baseline = _targets(request)
     require(baseline == original["historical_table_ids"],
             "V3_HISTORICAL_BASELINE_CHANGED")

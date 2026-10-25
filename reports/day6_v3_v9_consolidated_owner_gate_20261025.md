@@ -1,6 +1,8 @@
 # Day 6 V3–V9: consolidated protected installation and acceptance gate
 
-**Status: BLOCKED before another external write.** PR #75 has been synchronized with the merged Vault workflow and Operating Contract. The canonical active request is `metadata/operating/day6_c2000_vault_v3_bounded_request.json` (SHA-256 `9ec93415c5523b8e32c0ef518308b820f5a37dfb961e0fbe8bcaa72e35f88981`, `job_submissions_max=10000000`). This is a standing ceiling for independently reconciled attempts, not permission to spend 10 million submissions. Each current grant remains limited to one submission, 3,600 seconds, and zero task retries. The installed budget and remaining usage must be checked independently before each attempt.
+**Superseded for execution:** The Owner has approved the Day 6 technical scope. The actual Workspace entitlement repair, deployed wheel and single required OS terminal command are recorded in [the V0A deployment checkpoint](day6_v0a_deployment_checkpoint_20261025.md). The requirements below remain an audit record, not a new approval request.
+
+**Status: BLOCKED before another external write.** PR #75 has been synchronized with the merged Vault workflow and Operating Contract. The canonical active request is `metadata/operating/day6_c2000_vault_v3_bounded_request.json` (SHA-256 `8617f4c12617cfefe892d0a40a71d291fa510213bed4284edf5459c3c616f5be`, `job_submissions_max=10000000`). This is a standing ceiling for independently reconciled attempts, not permission to spend 10 million submissions. Each current grant remains limited to one submission, 3,600 seconds, and zero task retries. The installed budget and remaining usage must be checked independently before each attempt.
 
 ## Preserved baseline and failure
 

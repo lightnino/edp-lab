@@ -25,8 +25,9 @@ from edp_lab.vault.v3_one_shot_gate import SERVERLESS_ENVIRONMENT_VERSION, verif
 
 REQUEST = ROOT / "metadata/operating/day6_c2000_vault_v3_bounded_request.json"
 ORIGINAL_REQUEST_SHA256 = "dfe24b8e5aa15b07891892b93270aa73995f43d17a7d5f2d8c25323755cc684d"
-CURRENT_REQUEST_SHA256 = "9ec93415c5523b8e32c0ef518308b820f5a37dfb961e0fbe8bcaa72e35f88981"
-DEPLOYMENT = ROOT / "metadata/operating/day6_c2000_vault_v3_deployment_v1.json"
+CURRENT_REQUEST_SHA256 = "8617f4c12617cfefe892d0a40a71d291fa510213bed4284edf5459c3c616f5be"
+DEPLOYMENT = ROOT / "metadata/operating/day6_c2000_vault_v3_deployment_v2.json"
+ORIGINAL_DEPLOYMENT = ROOT / "metadata/operating/day6_c2000_vault_v3_deployment_v1.json"
 SEMANTIC = BASE / "approvals/c2000-full-semantics-v1.signed.json"
 WHEEL_DIR = "/Workspace/Shared/edp-lab/day6-c2000-v3"
 GRANT_ID = "day6-c2000-v3-one-shot-20261025-v1"
@@ -200,9 +201,14 @@ def _targets(request: dict) -> dict:
     tables = admin_cli("tables", "list", "workspace", "edp_lab_day6_vault_proto")
     require(isinstance(tables, list), "V3_TARGET_LIST_UNVERIFIED")
     existing = {item["name"]: item for item in tables}
-    require(set(existing) == set(request["existing_tables_read_only"]),
+    smoke = "v0a_day6_e2e_20261025"
+    allowed = set(request["existing_tables_read_only"]) | {smoke}
+    require(set(request["existing_tables_read_only"]) <= set(existing)
+            and set(existing) <= allowed
+            and (smoke not in existing or existing[smoke].get("data_source_format") == "DELTA"),
             "V3_TARGET_OR_HISTORICAL_TABLE_SET_CHANGED")
-    return {name: existing[name]["table_id"] for name in sorted(existing)}
+    return {name: existing[name]["table_id"]
+            for name in sorted(request["existing_tables_read_only"])}
 
 
 def _upload(path: Path, remote: str) -> None:
@@ -364,15 +370,16 @@ def _installed(request: dict, deployment: dict) -> dict:
     require(proof.get("schema") == "EDP_DAY6_V3_INSTALL_RECEIPT_V1"
             and proof.get("status") == "INSTALLED_NOT_GRANTED"
             and proof.get("request_sha256") == ORIGINAL_REQUEST_SHA256
-            and proof.get("deployment_sha256") == file_digest(DEPLOYMENT)
+            and proof.get("deployment_sha256") == file_digest(ORIGINAL_DEPLOYMENT)
             and proof.get("semantic_receipt_sha256") == file_digest(SEMANTIC)
             and proof.get("run_as") == APP_ID,
             "V3_INSTALL_RECEIPT_CHANGED")
     derived = BASE / "private/day6-v3-request.granted.json"
     require(file_digest(derived) == proof["derived_request_sha256"],
             "V3_DERIVED_REQUEST_CHANGED")
+    original_deployment = json.loads(ORIGINAL_DEPLOYMENT.read_bytes())
     for remote, expected in (
-        (deployment["artifact"]["workspace_target_proposed"], proof["wheel_sha256"]),
+        (original_deployment["artifact"]["workspace_target_proposed"], proof["wheel_sha256"]),
         (WHEEL_DIR + "/selection.json", request["selection"]["sha256"]),
         (WHEEL_DIR + "/negative-oracles.json", request["negative_oracles"]["sha256"]),
         (WHEEL_DIR + "/request.granted.json", proof["derived_request_sha256"]),
@@ -381,7 +388,7 @@ def _installed(request: dict, deployment: dict) -> dict:
     _source_rights()
     saved = admin_cli("jobs", "get", str(proof["job_id"]))
     verify_saved_job(saved["settings"],
-                     wheel_path=deployment["artifact"]["workspace_target_proposed"],
+                     wheel_path=original_deployment["artifact"]["workspace_target_proposed"],
                      run_as={"service_principal_name": APP_ID},
                      parameters=_job_parameters(proof["derived_request_sha256"], deployment))
     require(_targets(request) == proof["historical_table_ids"],

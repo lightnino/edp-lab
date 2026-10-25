@@ -300,7 +300,7 @@ def _write_once(spark, table_rows: dict[str, list[dict]], allowed_tables: list[s
 
 
 def run(spark, request: dict, selection: dict, oracle_spec: dict,
-        *, execute: bool = False) -> dict:
+        *, execute: bool = False, verify_only: bool = False) -> dict:
     """Run bounded source checks; writes require an independently verified grant."""
     if (request.get("schema") != "EDP_C2000_VAULT_V3_BOUNDED_REQUEST_V1"
             or selection.get("schema") != "EDP_C2000_VAULT_V3_SELECTION_V1"
@@ -319,6 +319,14 @@ def run(spark, request: dict, selection: dict, oracle_spec: dict,
     sources.extend(_treasury_occurrences(spark, selection))
     rows, per_source = _prepare_rows(sources, selection,
                                      request["new_v3_table_allowlist"])
+    if verify_only:
+        if execute:
+            raise ValueError("V3_VERIFY_ONLY_CANNOT_EXECUTE")
+        candidate = collect_readback(spark, rows, per_source)
+        return {"status": "INDEPENDENT_V3_READBACK_CANDIDATE",
+                "per_source": per_source,
+                "isolated_negative_oracles_passed": sorted(oracle_results),
+                "readback_candidate": candidate}
     if not execute:
         return {"status": "READ_ONLY_PREPARED", "per_source": per_source,
                 "expected_table_rows": {name: len(items) for name, items in rows.items()},
@@ -333,6 +341,23 @@ def run(spark, request: dict, selection: dict, oracle_spec: dict,
             "readback_candidate": candidate}
 
 
+def v0a_smoke(spark, request: dict) -> dict:
+    """Persist one isolated row through the same wheel and serverless identity."""
+    table = request["target_namespace"] + ".v0a_day6_e2e_20261025"
+    if request["target_namespace"] != "workspace.edp_lab_day6_vault_proto":
+        raise ValueError("V0A_SMOKE_NAMESPACE_CHANGED")
+    spark.sql(f"CREATE TABLE {table} (probe_id STRING, probe_value STRING) USING DELTA")
+    spark.sql(f"INSERT INTO {table} VALUES ('day6-v0a', 'ready')")
+    detail = spark.sql("DESCRIBE DETAIL " + table).first().asDict(recursive=True)
+    rows = spark.sql("SELECT probe_id, probe_value FROM " + table).collect()
+    if (detail.get("format", "").lower() != "delta" or not detail.get("id")
+            or [(row["probe_id"], row["probe_value"]) for row in rows]
+            != [("day6-v0a", "ready")]):
+        raise ValueError("V0A_SMOKE_PERSISTED_READBACK_FAILED")
+    return {"status": "V0A_SMOKE_PERSISTED_REQUIRES_INDEPENDENT_READBACK",
+            "table": table, "delta_id": detail["id"], "row_count": len(rows)}
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--request", type=Path, required=True)
@@ -340,14 +365,22 @@ def main() -> None:
     parser.add_argument("--selection", type=Path, required=True)
     parser.add_argument("--negative-oracles", type=Path, required=True)
     parser.add_argument("--execute", action="store_true")
+    parser.add_argument("--v0a-smoke", action="store_true")
+    parser.add_argument("--verify-only", action="store_true")
     args = parser.parse_args()
     request = _load(args.request, args.request_sha256)
     selection = _load(args.selection, request["selection"]["sha256"])
     oracle_spec = _load(args.negative_oracles, request["negative_oracles"]["sha256"])
     from pyspark.sql import SparkSession
 
+    if args.v0a_smoke:
+        if args.execute or args.verify_only:
+            raise ValueError("V0A_SMOKE_AND_V3_EXECUTION_ARE_EXCLUSIVE")
+        print(json.dumps(v0a_smoke(SparkSession.builder.getOrCreate(), request),
+                         sort_keys=True))
+        return
     output = run(SparkSession.builder.getOrCreate(), request, selection, oracle_spec,
-                 execute=args.execute)
+                 execute=args.execute, verify_only=args.verify_only)
     print(json.dumps(output, sort_keys=True))
 
 

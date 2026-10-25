@@ -97,8 +97,8 @@
     "runtime_seconds_max": 3600,
     "automatic_retries_max": 0,
     "uncertain_write_replay_allowed": false,
-    "runtime_artifact_sha256": "eada999db14a7db4b5590ab34b4296127e4231fe5289a04180bcf410238cafc9",
-    "deployment_sha256": "ba03900db52dc0ddd9768b4d5d52f571f4ef1bd8932707ab68c9e97d37536ef0",
+    "runtime_artifact_sha256": "7812da896eec9a3152bc4a213113d0152930c3724ff6e52ff292b504301f025e",
+    "deployment_sha256": "b8099c998b1bc1b52d546f486bc6979d48e8a4b70afa4c303b2081ad684e72fa",
     "protected_grant_id": null,
     "serverless_auto_optimization_retries": false,
     "quota_resume": "STOP_RECONCILE_ORIGINAL_OPERATION_RECORD_PARTIAL_NO_AUTOMATIC_CONTINUATION"

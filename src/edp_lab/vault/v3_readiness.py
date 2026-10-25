@@ -57,7 +57,7 @@ def readiness(root: Path, signed_semantic_envelope: Path | None = None) -> dict:
         if proof != document:
             raise Denied("VAULT_SIGNED_SEMANTIC_DOCUMENT_MISMATCH")
     execution = plan["execution"]
-    deployment_path = root / "metadata/operating/day6_c2000_vault_v3_deployment_v1.json"
+    deployment_path = root / "metadata/operating/day6_c2000_vault_v3_deployment_v2.json"
     if _sha(deployment_path) != execution["deployment_sha256"]:
         raise Denied("VAULT_V3_DEPLOYMENT_PIN_CHANGED")
     deployment = json.loads(deployment_path.read_bytes())

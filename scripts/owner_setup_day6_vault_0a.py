@@ -20,7 +20,7 @@ from datetime import UTC, datetime
 from io import BytesIO
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(os.environ.get("EDP_DAY6_REVIEWED_ROOT", Path(__file__).resolve().parents[1]))
 BASE = Path("/private/var/db/edp-lab-day6-vault")
 ADMIN_USER = "lightnino"
 ADMIN_WAREHOUSE = "589e80595c7c8cb8"

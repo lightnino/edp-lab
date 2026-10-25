@@ -17,6 +17,20 @@ sys.path.insert(0, str(ROOT / "scripts"))
 import owner_day6_v3_one_shot as owner
 
 
+def test_target_inventory_allows_only_isolated_smoke_beside_historical(monkeypatch):
+    request = json.loads(owner.REQUEST.read_bytes())
+    historical = [{"name": name, "table_id": name, "data_source_format": "DELTA"}
+                  for name in request["existing_tables_read_only"]]
+    smoke = {"name": "v0a_day6_e2e_20261025", "table_id": "smoke-id",
+             "data_source_format": "DELTA"}
+    monkeypatch.setattr(owner, "admin_cli", lambda *_args: [*historical, smoke])
+    assert set(owner._targets(request)) == set(request["existing_tables_read_only"])
+    monkeypatch.setattr(owner, "admin_cli", lambda *_args: [*historical, smoke,
+                       {"name": "v3_h_filing", "table_id": "unapproved"}])
+    with pytest.raises(RuntimeError, match="V3_TARGET_OR_HISTORICAL_TABLE_SET_CHANGED"):
+        owner._targets(request)
+
+
 @pytest.mark.parametrize(
     ("returncode", "stderr", "accepted"),
     [

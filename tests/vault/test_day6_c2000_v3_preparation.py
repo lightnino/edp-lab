@@ -45,7 +45,7 @@ def test_v3_selection_and_authority_boundary_are_exact():
     assert all(name.startswith("v3_") for name in plan["new_v3_table_allowlist"])
     assert plan["execution"]["automatic_retries_max"] == 0
     assert plan["execution"]["job_submissions_max"] == 10000000
-    deployment = "metadata/operating/day6_c2000_vault_v3_deployment_v1.json"
+    deployment = "metadata/operating/day6_c2000_vault_v3_deployment_v2.json"
     assert _sha(deployment) == plan["execution"]["deployment_sha256"]
     assert (_load(deployment)["artifact"]["sha256"] ==
             plan["execution"]["runtime_artifact_sha256"])
