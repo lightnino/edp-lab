@@ -54,7 +54,7 @@ def complete_secret_inventory() -> list[dict]:
                 "DAY7_SECRET_METADATA_INCOMPLETE_OR_UNEXPECTED")
         rows = response["secrets"]
     else:
-        raise RuntimeError("DAY7_SECRET_METADATA_INCOMPLETE_OR_UNEXPECTED")
+        raise TypeError("DAY7_SECRET_METADATA_INCOMPLETE_OR_UNEXPECTED")
     require(isinstance(rows, list) and all(
         isinstance(item, dict) and isinstance(item.get("id"), str)
         and item["id"] for item in rows),
