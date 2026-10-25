@@ -19,6 +19,7 @@ from owner_day6_v3_one_shot import (
     BASE,
     CURRENT_REQUEST_SHA256,
     ORIGINAL_ACTIVE_REQUEST_SHA256,
+    DEPLOYMENT,
     GRANT,
     INSTALL,
     REQUEST,
