@@ -49,13 +49,19 @@ def plan_increment(
     Exactly one canonical Universe snapshot is passed by the trusted caller.
     The executor separately verifies source hash/path and signed U10 RAW handoff.
     """
-    if (not isinstance(previous_cohort, str) or not previous_cohort
-            or not isinstance(new_cohort, str) or not new_cohort
+    import re
+
+    if (not isinstance(previous_cohort, str)
+            or re.fullmatch(r"C[1-9][0-9]*", previous_cohort) is None
+            or not isinstance(new_cohort, str)
+            or re.fullmatch(r"C[1-9][0-9]*", new_cohort) is None
             or previous_cohort == new_cohort
             or type(expected_increment) is not int or expected_increment <= 0):
         raise Denied("INVALID_INCREMENT_SCOPE")
     universe_pin = _sha(pinned_universe_sha256)
-    if not previous or len(incoming) != expected_increment:
+    if (not previous or len(incoming) != expected_increment
+            or len(previous) != int(previous_cohort[1:])
+            or len(previous) + expected_increment != int(new_cohort[1:])):
         raise Denied("INCREMENT_COUNT_MISMATCH")
 
     eligible: dict[str, Mapping] = {}
@@ -90,8 +96,7 @@ def plan_increment(
         # New cohort consumes existing remotely verified RAW, never stages it.
         if not isinstance(item.get("remote_raw_path"), str) or not item["remote_raw_path"]:
             raise Denied("RAW_HANDOFF_MISSING")
-        if _sha(item.get("raw_handoff_receipt_sha256")) is None:
-            raise Denied("RAW_HANDOFF_MISSING")
+        _sha(item.get("raw_handoff_receipt_sha256"))
 
     old_names = {row["source_instance_id"] for row in previous}
     return {
