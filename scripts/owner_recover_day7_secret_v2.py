@@ -44,6 +44,24 @@ def trusted_file(path: Path, mode: int | None = None) -> None:
                 'DAY7_ROOT_PROTECTED_MODE_CHANGED:' + path.name)
 
 
+def complete_secret_inventory() -> list[dict]:
+    """Read only: accept explicit, unpaginated secret metadata, never a missing key."""
+    response = install.admin("service-principal-secrets-proxy", "list", SP_ID)
+    if isinstance(response, list):
+        rows = response
+    elif isinstance(response, dict):
+        require("secrets" in response and not response.get("next_page_token"),
+                "DAY7_SECRET_METADATA_INCOMPLETE_OR_UNEXPECTED")
+        rows = response["secrets"]
+    else:
+        raise RuntimeError("DAY7_SECRET_METADATA_INCOMPLETE_OR_UNEXPECTED")
+    require(isinstance(rows, list) and all(
+        isinstance(item, dict) and isinstance(item.get("id"), str)
+        and item["id"] for item in rows),
+        "DAY7_SECRET_METADATA_INCOMPLETE_OR_UNEXPECTED")
+    return rows
+
+
 def verify_old_partial_state(expected_commit: str) -> tuple[dict, dict]:
     require(os.geteuid() == 0, 'DAY7_ROOT_REQUIRED')
     require(len(expected_commit) == 40 and all(c in '0123456789abcdef' for c in expected_commit)
@@ -144,7 +162,7 @@ def verify_old_partial_state(expected_commit: str) -> tuple[dict, dict]:
             {'WORKSPACE_ACCESS', 'DATABRICKS_SQL_ACCESS'} <= effective and
             'WORKSPACE_ADMIN' not in effective,
             'DAY7_WORKSPACE_ASSIGNMENT_CHANGED')
-    require(len(previous._secret_metadata()) == 0,
+    require(len(complete_secret_inventory()) == 0,
             'DAY7_SECRET_EXISTS_STOP_NO_CREATE')
     install.verify_canary_raw_read_only()
     return journal, identity
@@ -203,8 +221,22 @@ def main() -> None:
         authenticated = True
         break
     require(authenticated, 'DAY7_M2M_AUTH_NOT_VERIFIED_NO_SECRET_RETRY')
-    require(len(previous._secret_metadata()) == 1,
-            'DAY7_SECRET_METADATA_READBACK_CHANGED')
+    # Independently prove this exact credential was created; merely seeing
+    # one unrelated existing secret is not sufficient.
+    created_id = reply.get("id")
+    require(isinstance(created_id, str) and created_id,
+            "DAY7_SECRET_CREATE_RESPONSE_ID_MISSING_NO_RETRY")
+    matched = False
+    for attempt in range(12):
+        rows = complete_secret_inventory()
+        require(not rows or (len(rows) == 1 and rows[0]["id"] == created_id),
+                "DAY7_SECRET_METADATA_ID_MISMATCH_NO_RETRY")
+        if len(rows) == 1:
+            matched = True
+            break
+        if attempt < 11:
+            time.sleep(5)
+    require(matched, "DAY7_SECRET_METADATA_READBACK_UNVERIFIED_NO_RETRY")
 
     # The old installer wrote the two literal characters backslash+n, not
     # a real newline. Repair only this root-owned trust list, atomically.
