@@ -10,7 +10,7 @@ import pytest
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "scripts"))
 
-import owner_day6_v3_one_shot as owner  # noqa: E402
+import owner_day6_v3_one_shot as owner
 
 
 def test_service_identity_checks_are_nonadmin(monkeypatch):
@@ -90,8 +90,9 @@ def test_owner_mode_still_uses_admin_iam_check(monkeypatch):
 
 
 def test_service_checks_exact_target_absence_without_owner_sudo(monkeypatch):
-    from edp_lab.vault import v3_service
     import owner_setup_day6_vault_0a as setup
+
+    from edp_lab.vault import v3_service
 
     observed = []
     def cli(*args, **_kwargs):
@@ -111,8 +112,10 @@ def test_service_checks_exact_target_absence_without_owner_sudo(monkeypatch):
 
 def test_audit_reports_multiple_read_only_errors_without_first_error_stop(monkeypatch):
     from types import SimpleNamespace
-    from edp_lab.vault import v3_service
+
     import owner_setup_day6_vault_0a as setup
+
+    from edp_lab.vault import v3_service
 
     monkeypatch.setattr(v3_service, "_ready", lambda *_: None)
     monkeypatch.setattr(v3_service, "_commit", lambda *_: "commit")
