@@ -125,11 +125,12 @@ def audit(root: Path, base: Path) -> dict:
         _installed,
         _remote_digest,
         _source_rights,
+        _workspace_absent,
         _workspace_access,
     )
     from owner_setup_day6_vault_0a import admin_sql
 
-    successor, owner, pins, _, targets, workspace_absent, require, cli = _imports()
+    successor, owner, pins, _, targets, _, require, cli = _imports()
     owner(_commit(base))
     number, state = _next_attempt(root, base)
     if state != "READY_FOR_DISTINCT_ATTEMPT":
@@ -173,7 +174,10 @@ def audit(root: Path, base: Path) -> dict:
     check("installed_job_and_pins", verify_history)
     check("wheel_export", verify_wheel)
     check("historical_table_ids", verify_targets)
-    check("distinct_request_absent", lambda: workspace_absent(successor.REMOTE_REQUEST))
+    # REMOTE_REQUEST is a Databricks Workspace file, not a UC/Delta table.
+    # The existing service-context verifier uses the protected M2M profile
+    # and fails closed unless the exact remote file is demonstrably absent.
+    check("distinct_request_absent", lambda: _workspace_absent(successor.REMOTE_REQUEST))
     check("jobs_list", verify_jobs)
 
     # Fixed SELECT-only real M2M SQL calls: verify both shared warehouse CAN_USE
