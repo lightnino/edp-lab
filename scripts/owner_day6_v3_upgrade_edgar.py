@@ -10,6 +10,7 @@ reserved but unknown external mutation blocks replay until manual reconciliation
 from __future__ import annotations
 
 import argparse
+import ast
 import hashlib
 import json
 import os
@@ -18,6 +19,7 @@ import subprocess
 import time
 from datetime import UTC, datetime
 from pathlib import Path
+from zipfile import ZipFile
 
 from owner_day6_v3_one_shot import (
     APP_ID,
@@ -53,6 +55,7 @@ from edp_lab.vault.v3_one_shot_gate import verify_saved_job
 from edp_lab.vault.v3_service import _service_target_absent
 
 OLD_COMMIT = "9556295e1669fd53e258dacec80698e68222d385"
+WHEEL_SOURCE_COMMIT = "32acbc5210dbc474c49ce312261e9f1f29c12233"
 OLD_E2E_SHA = "bb3f92e332d8765753a2abe605eb6b0fb90ff4ae7031f068a9eef1f2fbdd9c05"
 STANDING_SHA = "ce084d5be48bfc777d82216543f12547bd57b566962dec1d235ee7df38054bc0"
 NEW_WHEEL_SHA = "fd2d890f5a57f2bf3596eb2f0275860b70f2ac4549d1aae549e818e202bda546"
@@ -97,11 +100,52 @@ def socket_action(action: str) -> dict:
     return json.loads(data)
 
 
+def verify_wheel_provenance(deployment: dict) -> None:
+    """The cloud wheel contains the reviewed parser fix, not the later service edits.
+
+    Reusing the original persisted-write smoke is allowed only when the
+    Delta DDL/write functions and readback/oracle implementation are identical.
+    """
+    wheel = Path(deployment["artifact"]["local_build_output_uncommitted"])
+    require(file_digest(wheel) == NEW_WHEEL_SHA, "UPGRADE_WHEEL_BYTES_CHANGED")
+    modules = ("v3_spark_runtime.py", "v3_input.py")
+    untouched = ("v3_ddl.py", "v3_mapping.py", "v3_oracles.py",
+                 "v3_readback.py")
+    with ZipFile(wheel) as archive:
+        for module in modules:
+            wheel_data = archive.read("edp_lab/vault/" + module)
+            git_data = git("show", f"{WHEEL_SOURCE_COMMIT}:src/edp_lab/vault/{module}")
+            require(wheel_data == git_data,
+                    "UPGRADE_WHEEL_SOURCE_PROVENANCE_CHANGED:" + module)
+        for module in untouched:
+            wheel_data = archive.read("edp_lab/vault/" + module)
+            previous = git("show", f"{OLD_COMMIT}:src/edp_lab/vault/{module}")
+            require(wheel_data == previous,
+                    "UPGRADE_WRITE_OR_VERIFIER_IMPLEMENTATION_CHANGED:" + module)
+
+        original = git("show", f"{OLD_COMMIT}:src/edp_lab/vault/v3_spark_runtime.py")
+        repaired = archive.read("edp_lab/vault/v3_spark_runtime.py")
+
+        def function(name: str, source: bytes) -> str:
+            candidate = next(
+                (node for node in ast.parse(source).body
+                 if isinstance(node, ast.FunctionDef) and node.name == name),
+                None,
+            )
+            require(candidate is not None, "UPGRADE_EXPECTED_SPARK_FUNCTION_MISSING")
+            return ast.dump(candidate, include_attributes=False)
+
+        for name in ("_write_once", "v0a_smoke"):
+            require(function(name, original) == function(name, repaired),
+                    "UPGRADE_PERSISTED_WRITE_PATH_CHANGED:" + name)
+
+
 def preflight(commit: str) -> tuple[dict, dict, dict]:
     _owner(commit)
     require(git("rev-parse", "HEAD").decode().strip() == commit,
             "UPGRADE_UNREVIEWED_HEAD")
     request, deployment = _pins()
+    verify_wheel_provenance(deployment)
     require(request["execution"]["runtime_artifact_sha256"] == NEW_WHEEL_SHA
             and deployment["artifact"]["sha256"] == NEW_WHEEL_SHA
             and deployment["artifact"]["workspace_target_proposed"]
@@ -157,6 +201,8 @@ def ensure_approval(request: dict, deployment: dict, commit: str) -> None:
             "request_sha256": CURRENT_REQUEST_SHA256,
             "deployment_sha256": file_digest(DEPLOYMENT),
             "wheel_sha256": NEW_WHEEL_SHA,
+            "wheel_source_commit": WHEEL_SOURCE_COMMIT,
+            "reused_write_path_provenance": "EXACT_OLD_DDL_WRITE_AND_READBACK_FUNCTIONS",
             "standing_sha256": STANDING_SHA,
             "original_e2e_sha256": OLD_E2E_SHA,
             "original_commit": OLD_COMMIT,
