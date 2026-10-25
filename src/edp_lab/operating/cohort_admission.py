@@ -163,6 +163,12 @@ def _admit_incremental(root: Path, grant: dict, request: dict, ledger: Path,
     if (not old_freeze.is_relative_to(root)
             or candidate.get("previous_freeze_sha256") != file_digest(old_freeze)):
         raise Denied("PRIOR_FROZEN_INPUT_CHANGED")
+    if (len(queue.get("sources", [])) != len(new)
+            or {(r["source_identity"], r["raw_sha256"], r["remote_raw_path"])
+                for r in new}
+            != {(r["identity"], r["sha256"], r["remote_raw_path"])
+                for r in queue["sources"]}):
+        raise Denied("INCREMENT_QUEUE_SOURCE_MISMATCH")
     plan = plan_increment(
         previous, new, gate.document()["members"],
         previous_cohort=candidate["previous_cohort"],
@@ -217,8 +223,8 @@ def _admit_incremental(root: Path, grant: dict, request: dict, ledger: Path,
             stream.write(data.getvalue())
             stream.flush()
             os.fsync(stream.fileno())
-    freeze = {"schema": "EDP_INCREMENTAL_INPUT_FREEZE_V1",
-              "status": "FROZEN_INPUT_NOT_RESULT", **plan,
+    freeze = {**plan, "schema": "EDP_INCREMENTAL_INPUT_FREEZE_V1",
+              "status": "FROZEN_INPUT_NOT_RESULT",
               "candidate_sha256": file_digest(candidate_path),
               "queue_sha256": file_digest(
                   root / request["contracts"]["queue"]["path"]),
