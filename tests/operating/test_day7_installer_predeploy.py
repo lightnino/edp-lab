@@ -202,7 +202,6 @@ def test_privilege_readback_supports_databricks_string_shape(monkeypatch):
 
 def test_nonroot_read_only_preflight_does_not_require_root_or_write(monkeypatch):
     monkeypatch.setattr(installer.os, "geteuid", lambda: 501)
-    observed = []
     monkeypatch.setattr(installer, "run", lambda *args: (
         "pinned-sha" if args[-2:] == ("rev-parse", "HEAD") else ""))
     monkeypatch.setattr(installer, "file_digest", lambda path: {
