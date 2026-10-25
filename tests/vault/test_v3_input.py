@@ -44,3 +44,53 @@ def test_treasury_entry_regroups_properties_and_keeps_byte_lineage():
     props[1]["property_ordinal"] = 3
     with pytest.raises(ValueError, match="PROPERTY_LINEAGE_CHANGED"):
         treasury_entry(props, "a" * 64)
+
+
+def test_edgar_standalone_empty_member_preserves_lineage():
+    from edp_lab.vault.v3_spark_runtime import _member
+
+    names = ("CIK", "Company Name", "Form Type",
+             "Date Filed", "File Name")
+    binding = {
+        "source_instance_id": "SRC000107",
+        "archive_member": "",
+        "processing_status": "COMPLETE",
+        "run_id": "r",
+        "binding_sha256": "c" * 64,
+        "raw_sha256": "a" * 64,
+        "member_sha256": "b" * 64,
+    }
+    row = {
+        "record_kind": "DATA",
+        "source_instance_id": "SRC000107",
+        "run_id": "r",
+        "binding_sha256": "c" * 64,
+        "source_line": 2,
+        "byte_offset": 50,
+        "byte_length": 20,
+        "fields": [
+            {
+                "field_ordinal": i,
+                "original_name": name,
+                "disposition": "DIRECT_MAP",
+                "lexical_value": "001",
+            }
+            for i, name in enumerate(names, 1)
+        ],
+    }
+
+    assert _member(binding) == "daily_master.idx"
+    result = c300_occurrence(row, binding, "a" * 64, names)
+    assert result["archive_member"] == "daily_master.idx"
+    assert result["physical_archive_member"] == ""
+    assert result["member_sha256"] == "b" * 64
+    assert result["byte_offset"] == 50
+
+    with pytest.raises(ValueError, match="V3_C300_BINDING_OR_RAW_MISMATCH"):
+        c300_occurrence(row, binding, "x" * 64, names)
+
+    invalid = dict(binding, archive_member="unrelated.csv")
+    with pytest.raises(ValueError, match="V3_UNEXPECTED_C300_MEMBER"):
+        _member(invalid)
+    with pytest.raises(ValueError, match="V3_C300_MEMBER_OUT_OF_SCOPE"):
+        c300_occurrence(row, invalid, "a" * 64, names)

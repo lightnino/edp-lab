@@ -53,7 +53,9 @@ def _member(binding: dict) -> str:
         return physical
     if binding["source_instance_id"] == "SRC000065":
         return Path(physical).name.upper()
-    if binding["source_instance_id"] == "SRC000107" and physical.lower().endswith(".idx"):
+    if binding["source_instance_id"] == "SRC000107" and (
+        physical == "" or physical.lower().endswith(".idx")
+    ):
         return "daily_master.idx"
     raise ValueError("V3_UNEXPECTED_C300_MEMBER")
 

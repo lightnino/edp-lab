@@ -24,7 +24,9 @@ def c300_occurrence(row: dict, binding: dict, raw_sha256: str,
         logical = physical
     elif Path(physical).name.upper() in THIRTEEN_F_MEMBERS:
         logical = Path(physical).name.upper()
-    elif physical.lower().endswith(".idx"):
+    elif binding["source_instance_id"] == "SRC000107" and (
+        physical == "" or physical.lower().endswith(".idx")
+    ):
         logical = "daily_master.idx"
     else:
         raise ValueError("V3_C300_MEMBER_OUT_OF_SCOPE")
