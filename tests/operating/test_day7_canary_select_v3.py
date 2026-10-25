@@ -73,6 +73,7 @@ def test_sql_success_inline_row(monkeypatch):
 
 def test_write_intent_before_single_grant_and_only_then_broker(monkeypatch, tmp_path):
     journal = {"reviewed_commit": v3.OLD_COMMIT, "completed": {}}
+    (tmp_path / "receipts").mkdir()
     current = tmp_path / "owner-journal.json"
     intent = tmp_path / "owner-grant-intent.json"
     receipts = [
