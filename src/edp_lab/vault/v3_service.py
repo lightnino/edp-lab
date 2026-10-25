@@ -24,10 +24,33 @@ from edp_lab.operating.authority import canonical, file_digest, verified_documen
 def _imports():
     import owner_day6_v3_successor as successor
     from owner_day6_v3_one_shot import _owner, _pins, _signed_once, _targets, require
-    from owner_reconcile_day6_v3_partial import _target_absent
     from owner_setup_day6_vault_0a import admin_cli
 
-    return successor, _owner, _pins, _signed_once, _targets, _target_absent, require, admin_cli
+    return successor, _owner, _pins, _signed_once, _targets, _service_target_absent, require, admin_cli
+
+
+def _service_target_absent(full_name: str) -> None:
+    """Read-only, SP-authenticated absence check; never sudo into Owner OAuth.
+
+    The fixed approved schema is checked by a list read; CREATE TABLE remains
+    exclusive-create, so a hidden existing table cannot be replaced.
+    """
+    import re
+    from owner_setup_day6_vault_0a import admin_cli
+
+    prefix = "workspace.edp_lab_day6_vault_proto."
+    if (not isinstance(full_name, str)
+            or not full_name.startswith(prefix)
+            or re.fullmatch(r"[a-z][a-z0-9_]*", full_name[len(prefix):]) is None):
+        raise RuntimeError("V3_TARGET_ABSENCE_SCOPE_INVALID")
+    objects = admin_cli("tables", "list", "workspace", "edp_lab_day6_vault_proto")
+    if not isinstance(objects, list):
+        raise RuntimeError("V3_TARGET_LIST_UNVERIFIED")
+    existing = {obj.get("name") for obj in objects}
+    if not all(isinstance(name, str) for name in existing):
+        raise RuntimeError("V3_TARGET_LIST_UNVERIFIED")
+    if full_name[len(prefix):] in existing:
+        raise RuntimeError("V3_TARGET_ALREADY_PRESENT:" + full_name)
 
 
 def _no_effect_path(base: Path, number: int) -> Path:
