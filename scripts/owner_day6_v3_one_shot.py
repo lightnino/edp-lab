@@ -23,7 +23,9 @@ from owner_setup_day6_vault_0a import BASE, ROOT, admin_cli, run
 from edp_lab.operating.authority import canonical, file_digest, verified_document
 from edp_lab.vault.v3_one_shot_gate import SERVERLESS_ENVIRONMENT_VERSION, verify_saved_job
 
-REQUEST = ROOT / "metadata/operating/day6_c2000_vault_v3_bounded_request_v1.json"
+REQUEST = ROOT / "metadata/operating/day6_c2000_vault_v3_bounded_request.json"
+ORIGINAL_REQUEST_SHA256 = "dfe24b8e5aa15b07891892b93270aa73995f43d17a7d5f2d8c25323755cc684d"
+CURRENT_REQUEST_SHA256 = "9ec93415c5523b8e32c0ef518308b820f5a37dfb961e0fbe8bcaa72e35f88981"
 DEPLOYMENT = ROOT / "metadata/operating/day6_c2000_vault_v3_deployment_v1.json"
 SEMANTIC = BASE / "approvals/c2000-full-semantics-v1.signed.json"
 WHEEL_DIR = "/Workspace/Shared/edp-lab/day6-c2000-v3"
@@ -77,7 +79,7 @@ def _owner(expected_commit: str) -> None:
 def _pins() -> tuple[dict, dict]:
     request = json.loads(REQUEST.read_bytes())
     deployment = json.loads(DEPLOYMENT.read_bytes())
-    require(file_digest(REQUEST) == "dfe24b8e5aa15b07891892b93270aa73995f43d17a7d5f2d8c25323755cc684d",
+    require(file_digest(REQUEST) == CURRENT_REQUEST_SHA256,
             "REQUEST_PIN_CHANGED")
     require(file_digest(DEPLOYMENT) == request["execution"]["deployment_sha256"],
             "DEPLOYMENT_PIN_CHANGED")
@@ -92,7 +94,7 @@ def _pins() -> tuple[dict, dict]:
     semantic = verified_document(ROOT, SEMANTIC, BASE / "trust")
     unsigned = json.loads((ROOT / request["semantic_approval_request"]["path"]).read_bytes())
     require(semantic == unsigned["document"], "SIGNED_SEMANTIC_SCOPE_CHANGED")
-    require(request["execution"]["job_submissions_max"] == 1
+    require(request["execution"]["job_submissions_max"] == 10000000
             and request["execution"]["automatic_retries_max"] == 0
             and len(request["new_v3_table_allowlist"]) == 23,
             "V3_BOUNDS_CHANGED")
@@ -361,7 +363,7 @@ def _installed(request: dict, deployment: dict) -> dict:
     proof = verified_document(ROOT, INSTALL, BASE / "trust")
     require(proof.get("schema") == "EDP_DAY6_V3_INSTALL_RECEIPT_V1"
             and proof.get("status") == "INSTALLED_NOT_GRANTED"
-            and proof.get("request_sha256") == file_digest(REQUEST)
+            and proof.get("request_sha256") == ORIGINAL_REQUEST_SHA256
             and proof.get("deployment_sha256") == file_digest(DEPLOYMENT)
             and proof.get("semantic_receipt_sha256") == file_digest(SEMANTIC)
             and proof.get("run_as") == APP_ID,

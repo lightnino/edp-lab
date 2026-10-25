@@ -28,7 +28,7 @@ def test_unsigned_owner_document_pins_all_contracts_and_no_execution_grant():
 
 
 def test_v3_selection_and_authority_boundary_are_exact():
-    plan = _load("metadata/operating/day6_c2000_vault_v3_bounded_request_v1.json")
+    plan = _load("metadata/operating/day6_c2000_vault_v3_bounded_request.json")
     selected = plan["selection"]
     assert _sha(selected["path"]) == selected["sha256"]
     manifest = _load(selected["path"])
@@ -44,6 +44,7 @@ def test_v3_selection_and_authority_boundary_are_exact():
     assert len(set(plan["new_v3_table_allowlist"])) == 23
     assert all(name.startswith("v3_") for name in plan["new_v3_table_allowlist"])
     assert plan["execution"]["automatic_retries_max"] == 0
+    assert plan["execution"]["job_submissions_max"] == 10000000
     deployment = "metadata/operating/day6_c2000_vault_v3_deployment_v1.json"
     assert _sha(deployment) == plan["execution"]["deployment_sha256"]
     assert (_load(deployment)["artifact"]["sha256"] ==

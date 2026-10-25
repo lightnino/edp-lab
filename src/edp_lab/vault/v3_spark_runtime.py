@@ -306,6 +306,7 @@ def run(spark, request: dict, selection: dict, oracle_spec: dict,
             or selection.get("schema") != "EDP_C2000_VAULT_V3_SELECTION_V1"
             or request["selection"]["physical_data_rows"] != 2047
             or request["execution"]["data_rows_max"] != 2048
+            or request["execution"]["job_submissions_max"] != 10000000
             or request["execution"]["automatic_retries_max"] != 0
             or len(request["new_v3_table_allowlist"]) != 23):
         raise ValueError("V3_RUNTIME_SCOPE_INVALID")

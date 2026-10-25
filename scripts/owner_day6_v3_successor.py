@@ -17,6 +17,7 @@ from datetime import UTC, datetime, timedelta
 from owner_day6_v3_one_shot import (
     APP_ID,
     BASE,
+    CURRENT_REQUEST_SHA256,
     GRANT,
     INSTALL,
     REQUEST,
@@ -61,6 +62,39 @@ SUCCESSOR_INSTALL = BASE / "receipts/day6-v3-distinct-install-v1.signed.json"
 SUCCESSOR_GRANT = BASE / "grants/day6-v3-distinct-one-shot-v1.signed.json"
 RESERVATION = BASE / "ledger/day6-v3-distinct-one-shot-v1.json"
 SUBMISSION = BASE / "ledger/day6-v3-distinct-one-shot-submission-v1.json"
+STANDING = BASE / "trust/day6-v3-standing-v1.signed.json"
+E2E_READY = BASE / "receipts/day6-v3-e2e-ready-v1.signed.json"
+
+
+def _admission(request: dict, deployment: dict) -> None:
+    """Require installed standing scope and an independently signed live smoke."""
+    standing = verified_document(ROOT, STANDING, BASE / "trust")
+    ready = verified_document(ROOT, E2E_READY, BASE / "trust")
+    require(standing.get("schema") == "EDP_DAY6_V3_STANDING_AUTHORIZATION_V1"
+            and standing.get("status") == "INSTALLED"
+            and standing.get("request_sha256") == CURRENT_REQUEST_SHA256
+            and standing.get("job_submissions_max") == 10000000
+            and standing.get("runtime_seconds_max") == 3600
+            and standing.get("run_as") == APP_ID
+            and standing.get("target_namespace") == request["target_namespace"]
+            and standing.get("source_ids") == request["selection"]["source_ids"]
+            and standing.get("table_allowlist") == request["new_v3_table_allowlist"]
+            and standing.get("distinct_no_effect_recovery_allowed") is True,
+            "V3_INSTALLED_STANDING_AUTHORITY_REQUIRED")
+    require(ready.get("schema") == "EDP_VAULT_E2E_READY_V1"
+            and ready.get("status") == "VERIFIED"
+            and ready.get("standing_sha256") == file_digest(STANDING)
+            and ready.get("request_sha256") == CURRENT_REQUEST_SHA256
+            and ready.get("run_as") == APP_ID
+            and ready.get("wheel_sha256") == deployment["artifact"]["sha256"]
+            and ready.get("environment_version") == "4"
+            and ready.get("target_namespace") == request["target_namespace"]
+            and ready.get("smoke_terminal_state") == "SUCCESS"
+            and ready.get("isolated_persisted_readback") is True
+            and ready.get("signed_readback_sha256")
+            and ready.get("workspace_access_verified") is True
+            and ready.get("effective_uc_access_verified") is True,
+            "V3_SIGNED_E2E_READINESS_REQUIRED")
 
 
 def _partial() -> dict:
@@ -148,6 +182,7 @@ def authorize(expected_commit: str) -> dict:
     _owner(expected_commit)
     request, deployment = _pins()
     partial = _partial()
+    _admission(request, deployment)
     original = _installed(request, deployment)
     require(original["job_id"] == ORIGINAL_JOB_ID,
             "V3_ORIGINAL_INSTALLED_JOB_CHANGED")
@@ -217,6 +252,7 @@ def execute(expected_commit: str) -> dict:
     _owner(expected_commit)
     request, deployment = _pins()
     _partial()
+    _admission(request, deployment)
     original = _installed(request, deployment)
     install = verified_document(ROOT, SUCCESSOR_INSTALL, BASE / "trust")
     grant = verified_document(ROOT, SUCCESSOR_GRANT, BASE / "trust")

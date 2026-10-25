@@ -10,7 +10,7 @@ from edp_lab.vault.v3_ddl import create_sql, insert_only_sql, plan
 
 def test_rendered_ddl_matches_allowlist_and_never_updates():
     root = Path(__file__).resolve().parents[2]
-    request = json.loads((root / "metadata/operating/day6_c2000_vault_v3_bounded_request_v1.json").read_bytes())
+    request = json.loads((root / "metadata/operating/day6_c2000_vault_v3_bounded_request.json").read_bytes())
     expected = json.loads((root / "metadata/operating/day6_c2000_vault_v3_ddl_v1.json").read_bytes())
     assert plan(request["new_v3_table_allowlist"]) == expected
     assert len(expected["tables"]) == 23

@@ -140,7 +140,7 @@ def _receipt(root: Path, plan: dict, stage: str) -> dict | None:
         request_pin = receipt.get("v3_request_sha256")
         if not signed or not request_pin:
             raise Denied("VAULT_V3_SUCCESSOR_PROOF_REQUIRED")
-        v3_path = root / "metadata/operating/day6_c2000_vault_v3_bounded_request_v1.json"
+        v3_path = root / "metadata/operating/day6_c2000_vault_v3_bounded_request.json"
         if file_digest(v3_path) != request_pin:
             raise Denied("VAULT_V3_SUCCESSOR_REQUEST_CHANGED")
         request = json.loads(v3_path.read_bytes())

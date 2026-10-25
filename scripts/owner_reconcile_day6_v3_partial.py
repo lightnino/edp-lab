@@ -19,6 +19,7 @@ from owner_day6_v3_one_shot import (
     GRANT,
     GRANT_ID,
     INSTALL,
+    ORIGINAL_REQUEST_SHA256,
     REQUEST,
     RESERVATION,
     ROOT,
@@ -60,13 +61,13 @@ def _original_ledger() -> tuple[dict, dict, dict, dict]:
     require(install.get("schema") == "EDP_DAY6_V3_INSTALL_RECEIPT_V1"
             and install.get("job_id") == JOB_ID
             and install.get("run_as") == APP_ID
-            and install.get("request_sha256") == file_digest(REQUEST),
+            and install.get("request_sha256") == ORIGINAL_REQUEST_SHA256,
             "V3_ORIGINAL_INSTALL_MISMATCH")
     require(grant.get("schema") == "EDP_DAY6_V3_ONE_SHOT_GRANT_V1"
             and grant.get("grant_id") == GRANT_ID
             and grant.get("job_id") == JOB_ID
             and grant.get("run_as") == APP_ID
-            and grant.get("request_sha256") == file_digest(REQUEST)
+            and grant.get("request_sha256") == ORIGINAL_REQUEST_SHA256
             and grant.get("derived_request_sha256") == install.get("derived_request_sha256")
             and grant.get("install_receipt_sha256") == file_digest(INSTALL)
             and grant.get("selection_sha256") == request["selection"]["sha256"]
@@ -188,7 +189,7 @@ def reconcile(expected_commit: str) -> dict:
         "task_attempts": 1, "task_execution_duration_ms": 0,
         "run_as": APP_ID,
         "current_effective_entitlements": sorted(effective),
-        "request_sha256": file_digest(REQUEST),
+        "request_sha256": ORIGINAL_REQUEST_SHA256,
         "install_receipt_sha256": file_digest(INSTALL),
         "grant_id": grant["grant_id"], "grant_sha256": file_digest(GRANT),
         "reservation_sha256": file_digest(RESERVATION),

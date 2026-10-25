@@ -101,6 +101,29 @@ def test_authorize_requires_original_signed_partial_before_any_new_remote_write(
         successor.authorize("reviewed")
 
 
+def test_admission_requires_installed_standing_and_live_smoke(monkeypatch):
+    request = json.loads(successor.REQUEST.read_bytes())
+    deployment = json.loads((ROOT / "metadata/operating/day6_c2000_vault_v3_deployment_v1.json").read_bytes())
+    monkeypatch.setattr(successor, "verified_document", lambda *_args:
+                        {"schema": "EDP_DAY6_V3_STANDING_AUTHORIZATION_V1",
+                         "status": "PROPOSED"})
+    with pytest.raises(RuntimeError, match="V3_INSTALLED_STANDING_AUTHORITY_REQUIRED"):
+        successor._admission(request, deployment)
+    standing = {
+        "schema": "EDP_DAY6_V3_STANDING_AUTHORIZATION_V1", "status": "INSTALLED",
+        "request_sha256": successor.CURRENT_REQUEST_SHA256,
+        "job_submissions_max": 10000000, "runtime_seconds_max": 3600,
+        "run_as": successor.APP_ID, "target_namespace": request["target_namespace"],
+        "source_ids": request["selection"]["source_ids"],
+        "table_allowlist": request["new_v3_table_allowlist"],
+        "distinct_no_effect_recovery_allowed": True,
+    }
+    monkeypatch.setattr(successor, "verified_document", lambda _root, path, _trust:
+                        standing if path == successor.STANDING else {})
+    with pytest.raises(RuntimeError, match="V3_SIGNED_E2E_READINESS_REQUIRED"):
+        successor._admission(request, deployment)
+
+
 def test_distinct_execute_consumes_its_own_reservation_once(tmp_path, monkeypatch):
     request = json.loads(successor.REQUEST.read_bytes())
     deployment = json.loads((ROOT / "metadata/operating/day6_c2000_vault_v3_deployment_v1.json").read_bytes())
@@ -138,6 +161,7 @@ def test_distinct_execute_consumes_its_own_reservation_once(tmp_path, monkeypatc
     monkeypatch.setattr(successor, "_owner", lambda _sha: None)
     monkeypatch.setattr(successor, "_pins", lambda: (request, deployment))
     monkeypatch.setattr(successor, "_partial", dict)
+    monkeypatch.setattr(successor, "_admission", lambda *_args: None)
     monkeypatch.setattr(successor, "_installed", lambda *_args: {
         "job_id": successor.ORIGINAL_JOB_ID, "historical_table_ids": baseline})
     monkeypatch.setattr(successor, "verified_document", lambda _root, path, _trust:

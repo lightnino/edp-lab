@@ -34,7 +34,7 @@ def test_edgar_and_parent_ordinals_are_exact():
 
 def test_ddl_exact_table_allowlist():
     request = json.loads((ROOT / "metadata/operating/"
-                          "day6_c2000_vault_v3_bounded_request_v1.json").read_bytes())
+                          "day6_c2000_vault_v3_bounded_request.json").read_bytes())
     assert tuple(request["new_v3_table_allowlist"]) == TABLES
     assert len(plan(request["new_v3_table_allowlist"])["tables"]) == 23
     with pytest.raises(ValueError, match="V3_TABLE_ALLOWLIST_CHANGED"):

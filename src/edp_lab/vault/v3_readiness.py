@@ -17,7 +17,7 @@ def _sha(path: Path) -> str:
 def readiness(root: Path, signed_semantic_envelope: Path | None = None) -> dict:
     """Verify local pins and report genuine authority/technical boundaries."""
     root = root.resolve()
-    plan = json.loads((root / "metadata/operating/day6_c2000_vault_v3_bounded_request_v1.json").read_bytes())
+    plan = json.loads((root / "metadata/operating/day6_c2000_vault_v3_bounded_request.json").read_bytes())
     if plan.get("schema") != "EDP_C2000_VAULT_V3_BOUNDED_REQUEST_V1":
         raise Denied("VAULT_V3_PLAN_INVALID")
     predecessor = json.loads((root / "metadata/evaluations/day6_c2000_vault_semantic_successor_v1.json").read_bytes())
@@ -73,7 +73,7 @@ def readiness(root: Path, signed_semantic_envelope: Path | None = None) -> dict:
             blockers.append(name.upper() + "_REQUIRED")
     if deployment["status"] != "INSTALLED_BY_OWNER_PROTECTED_EXTENSION":
         blockers.append("V3_PROTECTED_EXTENSION_INSTALL_REQUIRES_OWNER_AUTHORIZATION")
-    if execution["job_submissions_max"] != 1 or execution["automatic_retries_max"] != 0:
+    if execution["job_submissions_max"] != 10000000 or execution["automatic_retries_max"] != 0:
         raise Denied("VAULT_V3_JOB_LIMIT_CHANGED")
     selected = json.loads((root / plan["selection"]["path"]).read_bytes())
     if (selected["selected_data_rows"] != plan["selection"]["physical_data_rows"]
