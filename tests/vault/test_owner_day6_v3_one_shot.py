@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import subprocess
 import sys
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
@@ -14,6 +15,30 @@ from edp_lab.vault.v3_one_shot_gate import verify_saved_job
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "scripts"))
 import owner_day6_v3_one_shot as owner
+
+
+@pytest.mark.parametrize(
+    ("returncode", "stderr", "accepted"),
+    [
+        (1, "Error: Path (/Workspace/Shared/target.whl) doesn't exist.\n", True),
+        (0, "Path (/Workspace/Shared/target.whl) doesn't exist.", False),
+        (1, "Path (/Workspace/Shared/other.whl) doesn't exist.", False),
+        (1, "Permission denied for /Workspace/Shared/target.whl", False),
+        (1, "Authentication failed", False),
+        (1, "Permission denied. Path (/Workspace/Shared/target.whl) doesn't exist.", False),
+        (1, "Unexpected workspace error", False),
+    ],
+)
+def test_workspace_absence_requires_matching_not_found_response(
+        monkeypatch, returncode, stderr, accepted):
+    remote = "/Workspace/Shared/target.whl"
+    monkeypatch.setattr(owner.subprocess, "run", lambda *_args, **_kwargs:
+                        subprocess.CompletedProcess([], returncode, "", stderr))
+    if accepted:
+        owner._workspace_absent(remote)
+    else:
+        with pytest.raises(RuntimeError, match="V3_REMOTE_FILE_ABSENCE_UNVERIFIED"):
+            owner._workspace_absent(remote)
 
 
 def test_proposed_job_is_the_exact_saved_job_shape():

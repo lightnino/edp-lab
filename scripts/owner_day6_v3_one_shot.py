@@ -194,8 +194,11 @@ def _workspace_absent(remote: str) -> None:
          "-p", "edp-lab", "-o", "json"],
         capture_output=True, text=True, check=False, timeout=30)
     message = result.stderr.upper()
-    require(result.returncode != 0 and any(code in message for code in
-            ("PATH_NOT_FOUND", "RESOURCE_DOES_NOT_EXIST", "DOES NOT EXIST")),
+    missing_path = f"PATH ({remote.upper()}) DOESN'T EXIST."
+    require(result.returncode != 0 and (
+        any(code in message for code in
+            ("PATH_NOT_FOUND", "RESOURCE_DOES_NOT_EXIST", "DOES NOT EXIST"))
+        or message.strip() in (missing_path, "ERROR: " + missing_path)),
             "V3_REMOTE_FILE_ABSENCE_UNVERIFIED:" + remote)
 
 
