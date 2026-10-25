@@ -36,6 +36,7 @@ def _service_target_absent(full_name: str) -> None:
     exclusive-create, so a hidden existing table cannot be replaced.
     """
     import re
+
     from owner_setup_day6_vault_0a import admin_cli
 
     prefix = "workspace.edp_lab_day6_vault_proto."
@@ -45,7 +46,7 @@ def _service_target_absent(full_name: str) -> None:
         raise RuntimeError("V3_TARGET_ABSENCE_SCOPE_INVALID")
     objects = admin_cli("tables", "list", "workspace", "edp_lab_day6_vault_proto")
     if not isinstance(objects, list):
-        raise RuntimeError("V3_TARGET_LIST_UNVERIFIED")
+        raise TypeError("V3_TARGET_LIST_UNVERIFIED")
     existing = {obj.get("name") for obj in objects}
     if not all(isinstance(name, str) for name in existing):
         raise RuntimeError("V3_TARGET_LIST_UNVERIFIED")
@@ -119,8 +120,12 @@ def audit(root: Path, base: Path) -> dict:
     """
     _ready(root, base)
     from owner_day6_v3_one_shot import (
-        SERVICE_PRINCIPAL_ID, SOURCE_TABLES, _installed, _remote_digest,
-        _source_rights, _workspace_access,
+        SERVICE_PRINCIPAL_ID,
+        SOURCE_TABLES,
+        _installed,
+        _remote_digest,
+        _source_rights,
+        _workspace_access,
     )
     from owner_setup_day6_vault_0a import admin_sql
 
