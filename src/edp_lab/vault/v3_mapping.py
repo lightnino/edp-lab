@@ -94,8 +94,18 @@ def _technical(source: dict) -> str:
             or type(source.get("byte_length")) is not int
             or source["byte_offset"] < 0 or source["byte_length"] < 1):
         raise ValueError("V3_BYTE_LOCATOR_INVALID")
-    return occurrence_key(source["source_instance_id"],
-                          source.get("physical_archive_member", source["archive_member"]),
+    physical = source.get("physical_archive_member", source["archive_member"])
+    # The accepted M1 EDGAR daily master is a standalone file: its physical
+    # archive_member is exactly "", not a missing byte locator. Only this
+    # frozen logical member may supply a nonempty technical key component.
+    # _row still preserves the physical "" in archive_member and full lineage.
+    if (source["source_instance_id"] == "SRC000107"
+            and source["archive_member"] == "daily_master.idx"
+            and physical == ""):
+        key_member = "daily_master.idx"
+    else:
+        key_member = physical
+    return occurrence_key(source["source_instance_id"], key_member,
                           source["member_sha256"], source["byte_offset"],
                           source["byte_length"])
 
