@@ -17,10 +17,10 @@ PROFILE = "edp-lab"
 
 def safe_error(raw: str) -> str:
     """Avoid printing bearer tokens or secret fields from unexpected errors."""
-    message = re.sub(r"(?i)(bearer\\s+)\\S+", r"\\1[REDACTED]", raw)
+    message = re.sub(r"(?i)(bearer\s+)\S+", r"\1[REDACTED]", raw)
     message = re.sub(
         r"(?i)(client_secret|refresh_token|access_token|authorization|api_key|"
-        r"password|secret)\\s*[:=]\\s*[^\\s,]+",
+        r"password|secret)\s*[:=]\s*[^\s,]+",
         r"\\1=[REDACTED]", message,
     )
     message = re.sub(r"[\\x00-\\x1f\\x7f]+", " ", message).strip()
