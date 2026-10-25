@@ -4,10 +4,13 @@
 reviewable Owner recovery path, not an installation receipt or V3 result.
 
 The Owner reported that the original `jobs create` returned exit 1 after the
-source and target privilege checks. The original CLI helper captured stderr
-but raised an exception that did not display or retain it. The exact historical
-Jobs API error is therefore **UNRESOLVED**; an empty Jobs list does not by
-itself prove that the original request had no effect. Do not rerun `install`.
+source and target privilege checks. The later Owner-provided error identifies
+unknown-field warnings for Job-level `max_retries`, `retry_on_timeout`, and
+`disable_auto_optimization`, followed by denial because the Owner lacks
+`servicePrincipal.user` on the existing run-as principal. The original CLI
+helper did not retain stderr, so this error account remains Owner-provided
+rather than independently recovered from the original call. An empty Jobs list
+alone does not prove that the request had no effect. Do not rerun `install`.
 
 Read-only authenticated reconciliation on 2026-10-25 found:
 
@@ -23,6 +26,19 @@ Read-only authenticated reconciliation on 2026-10-25 found:
 | Effective source/target rights | `USE_CATALOG`, both required `USE_SCHEMA` rights, target `CREATE_TABLE`, and `SELECT` on each of five named source tables |
 | Protected local state | Root-owned private/receipt/ledger directories are inaccessible to the agent. Owner reported no V3 installation receipt. The resume command must check the derived request bytes, protected permissions and absence of later V3 receipt/grant/ledger records itself. |
 
+A fresh read-only check on 2026-10-25 used the Owner Databricks profile and
+observed both the full Jobs list and the exact-name
+`day6-c2000-v3-one-shot` filter empty. This supports absence at the visible
+scope and time of the check; the Owner resume must repeat its own checks.
+
+PR #75 commit `73cb6c696dc934bf1a5a71e1cc02ac13bffc3d7a` moves all three
+retry/optimization fields to the supported task level and makes saved-Job
+verification require `max_retries=0`, `retry_on_timeout=false`, and
+`disable_auto_optimization=true` there. The run-as principal, grants, uploaded
+artifacts, 23-table allowlist, and one-shot checkpoints are unchanged. The
+`servicePrincipal.user` denial remains an Owner-side prerequisite; this change
+does not grant that permission or select a different identity.
+
 `resume-install` starts at this exact checkpoint. It performs the usual reviewed
 commit, clean worktree, installed V2 trust and signed semantic checks; verifies
 the local protected derived request against the canonical request plus fixed
@@ -34,9 +50,10 @@ historical table IDs, and write a signed install receipt. Any mismatch stops.
 An uncertain create response, failed saved-Job readback or missing receipt
 requires fresh Owner reconciliation; the command has no automatic retry.
 
-The Owner must review the original CLI stderr and decide whether a distinct
-Job creation attempt is safe under the [Operating Contract recovery matrix](../docs/workflows/agent_operating_contract_v1.md#recovery-decision-matrix).
-The repaired helper will expose the exit status and sanitized stderr on a
-future failure. A local code fix cannot reconstruct the original stderr.
+The Owner must independently settle the run-as permission prerequisite and
+decide whether a distinct Job creation attempt is safe under the
+[Operating Contract recovery matrix](../docs/workflows/agent_operating_contract_v1.md#recovery-decision-matrix).
+The helper will expose the exit status and sanitized stderr on a future
+failure. A local code fix cannot reconstruct the original stderr.
 `issue`, `execute`, the independent signed Delta readback and V3 acceptance
 remain separate blocked gates. No source, target or semantic scope changed.
