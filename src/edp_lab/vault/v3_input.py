@@ -22,8 +22,9 @@ def c300_occurrence(row: dict, binding: dict, raw_sha256: str,
     physical = binding["archive_member"]
     if physical in {"sub.txt", "tag.txt", "pre.txt"}:
         logical = physical
-    elif Path(physical).name.upper() in THIRTEEN_F_MEMBERS:
-        logical = Path(physical).name.upper()
+    elif (binding["source_instance_id"] == "SRC000065"
+          and Path(physical).name in THIRTEEN_F_MEMBERS):
+        logical = Path(physical).name
     elif binding["source_instance_id"] == "SRC000107" and (
         physical == "" or physical.lower().endswith(".idx")
     ):
