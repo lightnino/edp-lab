@@ -25,12 +25,12 @@ from edp_lab.vault.v3_one_shot_gate import SERVERLESS_ENVIRONMENT_VERSION, verif
 
 # The original artifacts/receipts remain immutable. Only new V3 attempts use the
 # versioned EDGAR successor; the original signed standing scope is unchanged.
-REQUEST = ROOT / "metadata/operating/day6_c2000_vault_v3_bounded_request_edgar_fix_v1.json"
+REQUEST = ROOT / "metadata/operating/day6_c2000_vault_v3_bounded_request_13f_fix_v1.json"
 ORIGINAL_ACTIVE_REQUEST = ROOT / "metadata/operating/day6_c2000_vault_v3_bounded_request.json"
 ORIGINAL_ACTIVE_REQUEST_SHA256 = "8617f4c12617cfefe892d0a40a71d291fa510213bed4284edf5459c3c616f5be"
 ORIGINAL_REQUEST_SHA256 = "dfe24b8e5aa15b07891892b93270aa73995f43d17a7d5f2d8c25323755cc684d"
 CURRENT_REQUEST_SHA256 = file_digest(REQUEST)
-DEPLOYMENT = ROOT / "metadata/operating/day6_c2000_vault_v3_deployment_v3.json"
+DEPLOYMENT = ROOT / "metadata/operating/day6_c2000_vault_v3_deployment_v4.json"
 ORIGINAL_ACTIVE_DEPLOYMENT = ROOT / "metadata/operating/day6_c2000_vault_v3_deployment_v2.json"
 ORIGINAL_DEPLOYMENT = ROOT / "metadata/operating/day6_c2000_vault_v3_deployment_v1.json"
 SEMANTIC = BASE / "approvals/c2000-full-semantics-v1.signed.json"
