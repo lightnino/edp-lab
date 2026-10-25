@@ -1,0 +1,46 @@
+{
+  "schema": "EDP_C2000_VAULT_V3_DEPLOYMENT_PROPOSAL_V3",
+  "status": "UPGRADE_PROPOSED_REQUIRES_OWNER_APPROVAL",
+  "target_workspace": "existing edp-lab Databricks workspace",
+  "target_namespace": "workspace.edp_lab_day6_vault_proto",
+  "artifact": {
+    "kind": "PYTHON_WHEEL",
+    "file_name": "edp_lab-0.1.0-py3-none-any.whl",
+    "sha256": "fd2d890f5a57f2bf3596eb2f0275860b70f2ac4549d1aae549e818e202bda546",
+    "local_build_output_uncommitted": "/private/tmp/edp-day6-v3-edgar-fix-wheel/edp_lab-0.1.0-py3-none-any.whl",
+    "build_command": "UV_CACHE_DIR=/private/tmp/edp-day6-uv-cache uv build --wheel --offline -o /private/tmp/edp-day6-v3-edgar-fix-wheel",
+    "job_entry_point": "edp-day6-v3",
+    "workspace_target_proposed": "/Workspace/Shared/edp-lab/day6-c2000-v3-edgar-fix-v1/edp_lab-0.1.0-py3-none-any.whl"
+  },
+  "pinned_documents": {
+    "selection_sha256": "5b84f0a1dc088affc51f631bc34c66f0053b871b67efff13e770021a19a33259",
+    "negative_oracles_sha256": "54c2aa2add50504cca6a50beed480ef78fef96d962b7f9b6e6a4468ff34f72f2",
+    "semantic_unsigned_payload_sha256": "658612d41781f649f42529b9a3cdca34e9ab85d0a6fe7bb48a071fc2ff74f5df",
+    "ddl_plan_sha256": "9f92405043ddbe935bc9cf9518d31cb7d18a1b90da20f399519b4e39591ff7e1"
+  },
+  "job_proposal": {
+    "task_kind": "serverless_python_wheel",
+    "task_entry_point": "edp-day6-v3",
+    "job_submissions_max": 1,
+    "max_concurrent_runs": 1,
+    "timeout_seconds": 3600,
+    "max_retries": 0,
+    "queue_enabled": false,
+    "environment_key": "v3_fixed_runtime",
+    "compute": "existing Free Edition serverless Jobs compute; no custom compute object, warehouse or cluster",
+    "run_as": "Owner-approved protected principal only if verified supported in this Free Edition workspace; otherwise Owner-operated personal run-as behind the same root-controlled grant, one-shot ledger and independent verifier, never the Codex/DEV session",
+    "serverless_auto_optimization_retries": false,
+    "free_edition_compatibility_gate": "Read-only workspace verification of Jobs Python wheel support, run-as identity, Unity Catalog privileges, wheel workspace path and independent readback is required before installation authorization",
+    "inputs": [
+      "exact V3 request with later protected grant ID",
+      "pinned selection manifest",
+      "pinned 24-oracle manifest"
+    ]
+  },
+  "install_and_submit_boundary": "Owner authorization and a V3-only protected submitter are required; installer must rehash uploaded wheel and inputs, verify signed semantic record and operation-specific grant, verify saved one-task Job settings and exact source/target permissions, reserve durable one-shot ledger, submit once, and obtain independent signed Delta readback. On interruption or uncertain effects, reconcile the original Job, ledger and all 23 targets, record PARTIAL and stop. No automatic continuation or replay. Existing V2 policy is not modified.",
+  "upgrade_e2e": {
+    "smoke_table": "workspace.edp_lab_day6_vault_proto.v0a_day6_e2e_edgarfix_v1",
+    "new_signed_readiness_required": true,
+    "preserve_original_receipts": true
+  }
+}
