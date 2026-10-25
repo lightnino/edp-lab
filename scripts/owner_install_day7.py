@@ -15,6 +15,7 @@ import os
 import shutil
 import stat
 import subprocess
+import sys
 import tarfile
 import time
 from io import BytesIO
@@ -794,6 +795,11 @@ def main() -> None:
     # All feasible fixed-source checks and real RAW readback run BEFORE any
     # protected directory, secret, IAM mutation, Job or remote write.
     preflight(args.expected_commit)
+    # The existing protected Python interpreter may have an older Day 5
+    # edp_lab installed. Load the exact clean, git-pinned Day 7 worktree
+    # for installation; the LaunchDaemon later loads the git-archived
+    # root-owned copy from BASE/runtime/src.
+    sys.path.insert(0, str(ROOT / "src"))
     from edp_lab.operating.authority import verified_document
     from edp_lab.operating.protected_verifier import _sign
 
