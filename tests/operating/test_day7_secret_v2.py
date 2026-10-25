@@ -3,7 +3,11 @@
 from __future__ import annotations
 
 import ast
+import importlib.util
+import sys
 from pathlib import Path
+
+import pytest
 
 SCRIPT = Path(__file__).resolve().parents[2] / "scripts/owner_recover_day7_secret_v2.py"
 
@@ -52,3 +56,37 @@ def test_signed_historical_protections_and_journal_are_preserved() -> None:
     assert "DAY7_OLD_JOURNAL_COMMIT_OR_POLICY_CHANGED" in source
     assert "install._save_json(install.JOURNAL, journal)" in source
     assert "install.main()" in source
+
+
+def test_strict_secret_inventory_and_exact_id(monkeypatch) -> None:
+    root = SCRIPT.parents[2]
+    scripts = str(root / "scripts")
+    if scripts not in sys.path:
+        sys.path.insert(0, scripts)
+    spec = importlib.util.spec_from_file_location("day7_v2_audit", SCRIPT)
+    assert spec is not None and spec.loader is not None
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+
+    def read(payload):
+        monkeypatch.setattr(module.install, "admin", lambda *_args: payload)
+        return module.complete_secret_inventory()
+
+    assert read({"secrets": []}) == []
+    secret = {"id": "abc", "status": "ACTIVE"}
+    assert read({"secrets": [secret]}) == [secret]
+    with pytest.raises(RuntimeError, match="DAY7_SECRET_METADATA_INCOMPLETE"):
+        read({})
+    with pytest.raises(RuntimeError, match="DAY7_SECRET_METADATA_INCOMPLETE"):
+        read({"secrets": [], "next_page_token": "more"})
+    with pytest.raises(RuntimeError, match="DAY7_SECRET_METADATA_INCOMPLETE"):
+        read({"secrets": [{"status": "ACTIVE"}]})
+
+
+def test_created_secret_exact_id_gate_before_journal_migration() -> None:
+    source = _source()
+    assert 'created_id = reply.get("id")' in source
+    assert 'rows[0]["id"] == created_id' in source
+    assert source.index('rows[0]["id"] == created_id') < source.index(
+        "journal['reviewed_commit'] = args.expected_commit")
+    assert "DAY7_SECRET_METADATA_ID_MISMATCH_NO_RETRY" in source
