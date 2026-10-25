@@ -418,6 +418,10 @@ def service_identity() -> tuple[str, str]:
         else:
             if intent.exists():
                 raise RuntimeError("DAY7_SECRET_UNCERTAIN_MANUAL_RECONCILIATION")
+            # Databricks secret proxy requires the SP to be assigned to the
+            # workspace first. Establish/read back scoped Owner IAM before
+            # creating any nonrecoverable M2M secret.
+            ensure_workspace_access(sp_id)
             _save_json(intent, pinned)
             secret = admin("service-principal-secrets-proxy", "create", sp_id,
                            "--lifetime", "7776000")["secret"]
