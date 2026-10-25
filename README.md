@@ -2,7 +2,7 @@
 
 **Independent, experimental Enterprise Data Platform preflight lab** built with public financial-data sources and Databricks. It explores whether agent-assisted workflows can take data through **RAW → CLEAN → QUERYABLE** while keeping provenance, correctness evidence, source authority, and historical compatibility explicit.
 
-This is a research/prototype repository, **not a production platform**, an institutional data model, or a benchmark proving throughput for an enterprise team. It does not include private institutional data.
+This is a research/prototype repository, **not a production platform**, an institutional data model, or a benchmark proving throughput for an enterprise team. It is designed around public-source experiments; publication of the complete repository and its history still requires separate privacy and secret review.
 
 ## What it tests
 
