@@ -452,10 +452,10 @@ def serve(root: Path, base: Path) -> None:
         info = socket_path.lstat()
         if not stat.S_ISSOCK(info.st_mode) or info.st_uid != 0:
             raise RuntimeError("V3_SOCKET_UNTRUSTED")
-        with socket.socket(socket.AF_UNIX) as probe:
-            probe.settimeout(2)
+        with socket.socket(socket.AF_UNIX) as existing_socket:
+            existing_socket.settimeout(2)
             try:
-                probe.connect(str(socket_path))
+                existing_socket.connect(str(socket_path))
             except ConnectionRefusedError:
                 socket_path.unlink()
             else:
