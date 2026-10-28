@@ -236,6 +236,7 @@ def reconcile(request: dict) -> dict:
             "V4_CANARY_3_REMOTE_ARTIFACT_CHANGED")
     job = admin_cli("jobs", "get", str(JOB_ID))
     run = admin_cli("jobs", "get-run", str(RUN_ID))
+    task = admin_cli("jobs", "get-run", str(TASK_ID))
     parameters = [
         "--request", V3_REMOTE_REQUEST,
         "--request-sha256", V3_REQUEST_SHA,
@@ -264,12 +265,36 @@ def reconcile(request: dict) -> dict:
     )
     params = run["tasks"][0]["python_wheel_task"]["parameters"]
     require(params == parameters, "V4_CANARY_3_RUN_PARAMETERS_CHANGED")
+    require(task.get("job_id") == JOB_ID
+            and task.get("run_id") == TASK_ID
+            and all(task.get(key) == expected for key, expected in (
+                ("parent_run_id", RUN_ID),
+                ("creator_user_name", APP_ID),
+                ("run_as_user_name", APP_ID),
+                ("task_key", "day6_v3_one_shot"),
+                ("attempt_number", 0),
+                ("environment_key", "v3_fixed_runtime"),
+            ) if key in task),
+            "V4_CANARY_3_TASK_RUN_IDENTITY_CHANGED")
+    require(("python_wheel_task" not in task
+             or isinstance(task["python_wheel_task"], dict)
+             and task["python_wheel_task"].get("parameters") == parameters)
+            and task.get("state", {}).get("result_state") == "FAILED"
+            and ("status" not in task
+                 or task["status"].get("state") == "TERMINATED"),
+            "V4_CANARY_3_TASK_RUN_IDENTITY_CHANGED")
     output = admin_cli("jobs", "get-run-output", str(TASK_ID))
-    task_metadata = output.get("metadata") or {}
-    require(task_metadata.get("job_id") == JOB_ID
-            and task_metadata.get("run_id") == TASK_ID
-            and task_metadata.get("creator_user_name") == APP_ID
-            and task_metadata.get("python_wheel_task", {}).get("parameters") == parameters,
+    task_metadata = output.get("metadata", {})
+    require(isinstance(task_metadata, dict)
+            and all(task_metadata[key] == expected for key, expected in (
+                ("job_id", JOB_ID), ("run_id", TASK_ID),
+                ("parent_run_id", RUN_ID), ("creator_user_name", APP_ID),
+                ("task_key", "day6_v3_one_shot"),
+            ) if key in task_metadata)
+            and ("python_wheel_task" not in task_metadata
+                 or isinstance(task_metadata["python_wheel_task"], dict)
+                 and ("parameters" not in task_metadata["python_wheel_task"]
+                      or task_metadata["python_wheel_task"]["parameters"] == parameters)),
             "V4_CANARY_3_TASK_OUTPUT_IDENTITY_CHANGED")
     require(output.get("error") == "ValueError: INVALID_OCCURRENCE_LOCATOR"
             and "_prepare_rows" in output.get("error_trace", "")
