@@ -131,15 +131,30 @@ def _remote(monkeypatch, change=None):
                       "attempt_number": 0, "environment_key": "v3_fixed_runtime",
                       "python_wheel_task": {"parameters": params +
                                              (["--execute"] if change == "run_params" else [])}}]}
+    task = {"job_id": gate.JOB_ID, "run_id": gate.TASK_ID,
+            "parent_run_id": gate.RUN_ID, "task_key": "day6_v3_one_shot",
+            "attempt_number": 0, "environment_key": "v3_fixed_runtime",
+            "python_wheel_task": {"parameters": params.copy()},
+            "state": {"result_state": "FAILED"},
+            "status": {"state": "TERMINATED"}}
+    if change == "task_job": task["job_id"] += 1
+    if change == "task_parent": task["parent_run_id"] += 1
+    if change == "task_params": task["python_wheel_task"]["parameters"] += ["--execute"]
+    if change == "task_key": task["task_key"] = "foreign"
     result = {"error": "ValueError: INVALID_OCCURRENCE_LOCATOR",
               "error_trace": "run -> _prepare_rows -> project -> occurrence_key",
-              "metadata": {"job_id": gate.JOB_ID,
-                           "run_id": gate.TASK_ID,
-                           "creator_user_name": gate.APP_ID,
-                           "python_wheel_task": {"parameters": params}}}
-    if change == "output_meta": result["metadata"]["run_id"] += 1
+              "metadata": {}}
+    if change == "output_meta": result["metadata"]["run_id"] = gate.TASK_ID + 1
+    if change == "output_job": result["metadata"]["job_id"] = gate.JOB_ID + 1
+    if change == "output_parent": result["metadata"]["parent_run_id"] = gate.RUN_ID + 1
+    if change == "output_creator": result["metadata"]["creator_user_name"] = "foreign"
+    if change == "output_params":
+        result["metadata"]["python_wheel_task"] = {"parameters": params + ["--execute"]}
+    if change == "output_malformed": result["metadata"] = []
     def cli(*args):
-        return {("jobs", "get"): job, ("jobs", "get-run"): run,
+        if args[:2] == ("jobs", "get-run"):
+            return task if args[2] == str(gate.TASK_ID) else run
+        return {("jobs", "get"): job,
                 ("jobs", "get-run-output"): result, ("tables", "list"): listed}[args[:2]]
     monkeypatch.setattr(gate, "admin_cli", cli)
     return {"new_v3_table_allowlist": targets}
@@ -153,10 +168,50 @@ def test_exact_ledgers_saved_job_run_and_absent_targets(monkeypatch):
     assert proof["v3_request_sha256"] == gate.V3_REQUEST_SHA
 
 
+@pytest.mark.parametrize("metadata", [
+    {},
+    {"job_id": gate.JOB_ID, "run_id": gate.TASK_ID,
+     "creator_user_name": gate.APP_ID,
+     "python_wheel_task": {"parameters": [
+         "--request", gate.V3_REMOTE_REQUEST, "--request-sha256", gate.V3_REQUEST_SHA,
+         "--selection", "/Workspace/Shared/edp-lab/day6-c2000-v3/selection.json",
+         "--negative-oracles",
+         "/Workspace/Shared/edp-lab/day6-c2000-v3/negative-oracles.json"]}},
+])
+def test_output_metadata_optional_consistent_fields(monkeypatch, metadata):
+    request = _remote(monkeypatch)
+    original_cli = gate.admin_cli
+    def cli(*args):
+        value = original_cli(*args)
+        if args[:2] == ("jobs", "get-run-output"):
+            return {**value, "metadata": metadata}
+        return value
+    monkeypatch.setattr(gate, "admin_cli", cli)
+    assert gate.reconcile(request)["status"] == "TERMINAL_NO_REMOTE_EFFECT"
+
+
+def test_get_run_output_without_metadata_and_minimal_task_run(monkeypatch):
+    request = _remote(monkeypatch)
+    original_cli = gate.admin_cli
+    def cli(*args):
+        value = original_cli(*args)
+        if args[:2] == ("jobs", "get-run-output"):
+            return {key: item for key, item in value.items() if key != "metadata"}
+        if args[:2] == ("jobs", "get-run") and args[2] == str(gate.TASK_ID):
+            return {"job_id": gate.JOB_ID, "run_id": gate.TASK_ID,
+                    "state": {"result_state": "FAILED"}}
+        return value
+    monkeypatch.setattr(gate, "admin_cli", cli)
+    assert gate.reconcile(request)["status"] == "TERMINAL_NO_REMOTE_EFFECT"
+
+
 @pytest.mark.parametrize("change", ["target", "historical_version", "state",
                                     "job_ledger", "run_ledger", "reservation",
                                     "wheel", "saved_job", "saved_params", "run_as",
-                                    "foreign_job", "foreign_run", "run_params", "output_meta"])
+                                    "foreign_job", "foreign_run", "run_params",
+                                    "task_job", "task_parent", "task_params", "task_key",
+                                    "output_meta", "output_job", "output_parent",
+                                    "output_creator", "output_params", "output_malformed"])
 def test_tampered_ledger_remote_job_or_run_blocks_signature(monkeypatch, change):
     with pytest.raises((RuntimeError, ValueError, Denied), match="V4_|VAULT_V3_"):
         gate.reconcile(_remote(monkeypatch, change))
