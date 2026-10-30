@@ -11,6 +11,7 @@ import copy
 import hashlib
 import json
 import os
+import re
 import socket
 import subprocess
 import tarfile
@@ -19,7 +20,7 @@ from datetime import UTC, datetime
 from io import BytesIO
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(os.environ.get("EDP_DAY6_REVIEWED_ROOT", Path(__file__).resolve().parents[1]))
 BASE = Path("/private/var/db/edp-lab-day6-vault")
 ADMIN_USER = "lightnino"
 ADMIN_WAREHOUSE = "589e80595c7c8cb8"
@@ -45,10 +46,47 @@ def run(*args: str, admin: bool = False, capture: bool = True) -> subprocess.Com
     return subprocess.run(argv, capture_output=capture, text=True, check=True, timeout=900)
 
 
-def admin_cli(*args: str) -> dict:
-    result = run("/opt/homebrew/bin/databricks", *args, "-p", "edp-lab", "-o", "json",
-                 admin=True)
+def admin_cli(*args: str, allow_empty: bool = False) -> dict | list | None:
+    try:
+        if os.environ.get("EDP_DAY6_V3_SERVICE_CONTEXT") == "1":
+            from edp_lab.vault.protected_sql import protected_environment
+
+            if os.geteuid() != 0:
+                raise RuntimeError("V3_SERVICE_ROOT_REQUIRED")
+            result = subprocess.run(
+                ["/opt/homebrew/bin/databricks", *args, "-p", "vault-dev", "-o", "json"],
+                env=protected_environment(ROOT, BASE), capture_output=True, text=True,
+                check=True, timeout=900)
+        else:
+            result = run("/opt/homebrew/bin/databricks", *args, "-p", "edp-lab", "-o", "json",
+                         admin=True)
+    except subprocess.CalledProcessError as exc:
+        # Never print argv: it can contain JSON bodies or protected secrets.
+        message = exc.stderr or ""
+        message = re.sub(r"(?i)(bearer\s+)\S+", r"\1[REDACTED]", message)
+        message = re.sub(r'(?i)(["\']?(?:access_token|refresh_token|client_secret|api_key|password|secret|token|authorization)["\']?\s*[:=]\s*["\']?)[^\s,"\']+',
+                         r"\1[REDACTED]", message)
+        message = re.sub(r"[\x00-\x1f\x7f]+", " ", message).strip()[:1200]
+        raise RuntimeError(f"DATABRICKS_CLI_EXIT_{exc.returncode}: {message or '[no stderr]'}") from None
+    if allow_empty and not result.stdout.strip():
+        return None
     return json.loads(result.stdout)
+
+
+def _sanitized_sql_error(result: dict) -> str:
+    status = result.get("status") or {}
+    error = status.get("error") or {}
+    identifier = re.sub(r"[^a-zA-Z0-9-]", "", str(result.get("statement_id") or "unknown"))[:64]
+    state = re.sub(r"[^A-Z_]", "", str(status.get("state") or "UNKNOWN"))[:40]
+    code = re.sub(r"[^A-Z0-9_]", "", str(error.get("error_code") or "UNKNOWN"))[:80]
+    sql_state = re.sub(r"[^A-Z0-9]", "", str(status.get("sql_state") or "UNKNOWN"))[:10]
+    message = str(error.get("message") or "[no server error message]")
+    message = re.sub(r"(?i)(bearer\s+)\S+", r"\1[REDACTED]", message)
+    message = re.sub(r'(?i)(["\']?(?:access_token|refresh_token|client_secret|api_key|password|secret|token|authorization)["\']?\s*[:=]\s*["\']?)[^\s,"\']+',
+                     r"\1[REDACTED]", message)
+    message = re.sub(r"[\x00-\x1f\x7f]+", " ", message).strip()[:1200]
+    return (f"OWNER_DDL_FAILED: statement_id={identifier} state={state} "
+            f"error_code={code} sql_state={sql_state} message={message}")
 
 
 def admin_sql(sql: str) -> dict:
@@ -64,7 +102,7 @@ def admin_sql(sql: str) -> dict:
         time.sleep(4)
         result = admin_cli("api", "get", "/api/2.0/sql/statements/" + result["statement_id"])
     if result.get("status", {}).get("state") != "SUCCEEDED":
-        raise RuntimeError("OWNER_DDL_FAILED: " + result["statement_id"])
+        raise RuntimeError(_sanitized_sql_error(result))
     return result
 
 

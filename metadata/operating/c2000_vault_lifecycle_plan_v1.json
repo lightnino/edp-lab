@@ -1,0 +1,32 @@
+{
+  "schema": "EDP_VAULT_LIFECYCLE_PLAN_V1",
+  "cohort": "C2000",
+  "workflow": "docs/workflows/vault_model_integration_lifecycle_v1.md",
+  "workflow_sha256": "467dff3902f09e7abbbf37c2a4fa7ae0b417e3641a9af27c3ff3e7f128390dc8",
+  "namespace": "workspace.edp_lab_day6_vault_proto",
+  "warehouse_id": "589e80595c7c8cb8",
+  "tables": ["h_filing", "h_concept", "l_fact_slot", "r_source_occurrence", "s_fact_assertion", "s_num_m2_value", "r_load_event", "vault_reject_quarantine"],
+  "inputs": {
+    "vault_0a_acceptance": {"path": "metadata/evaluations/vault_0a_v2_readiness_v1.json", "sha256": "2683acc7707e66966669a211c79a9cb74e6bfc60d367c96eb9f0eead5c150b42"},
+    "step0_evaluation": {"path": "metadata/evaluations/day6_step0_c2000_v1.json", "sha256": "4567f40afafd2af6237d89931cc32dfae5b94e39d490e99845d83ccf36cf87d0"},
+    "frozen_bindings": {"path": "metadata/freezes/C2000_v1/C2000.bindings.json", "sha256": "2a72b8f8483e2181a3112a26b5d68d702b92308def6e74978838b155cfd85312"},
+    "contract_approval": {"path": "metadata/authorizations/day6_vault_load_contract_v1_owner_approval.json", "sha256": "9fc0ac0ef84b3cdeedfdae5cbf9b57e79af5f2f93eed4a595e69abe549910bda"},
+    "roster": {"path": "metadata/cohorts/C2000.csv", "sha256": "ae04d740745a02320435706fa93083fe3fddaa37f1b3bdb5b5052cd5b4a5de5e"},
+    "cohort_freeze": {"path": "metadata/freezes/C2000_v1/freeze.json", "sha256": "324ca5e416adabc443d18d8066fbccdf137f4cb50aa20934e645615f4ee77ff3"},
+    "upstream_result": {"path": "metadata/freezes/O_C2000_M2_v1/databricks_result_freeze_v1.json", "sha256": "942fa887ceea8cf5c9bc64c603c2044e1b643b01fcbc29909ce264c024b69374"},
+    "approved_contract": {"path": "docs/vault_load_contract_v1.md", "sha256": "681c3f6a9a4446b5357c3ab6c6534e6fd5b8cf944f967ea9ab27dcc2c8b5aabe"},
+    "step2": {"path": "metadata/evaluations/day6_c2000_vault_step2_v2.json", "sha256": "0ed110c14d7c5d9399f1bd963c606d5522ed335d8285bfc46288a605b94cb677"}
+  },
+  "stages": {
+    "V0A": {"kind": "evidence", "receipt": "runs/day6-vault-pilot/v0a.json"},
+    "V0": {"kind": "evidence", "receipt": "runs/day6-vault-pilot/v0.json"},
+    "V1": {"kind": "evidence", "receipt": "runs/day6-vault-pilot/v1.json"},
+    "V2": {"kind": "evidence", "receipt": "runs/day6-vault-pilot/v2.json"},
+    "V3": {"kind": "evidence", "receipt": "runs/day6-vault-pilot/v3.json"},
+    "V4": {"kind": "protected", "receipt": "runs/day6-vault-pilot/v4.json"},
+    "V5": {"kind": "evidence", "receipt": "runs/day6-vault-pilot/v5.json"},
+    "V6": {"kind": "evidence", "receipt": "runs/day6-vault-pilot/v6.json"},
+    "V8": {"kind": "evidence", "receipt": "runs/day6-vault-pilot/v8.json"},
+    "V9": {"kind": "protected", "receipt": "runs/day6-vault-pilot/v9.json"}
+  }
+}

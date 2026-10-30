@@ -1,0 +1,38 @@
+{
+  "schema": "EDP_UNSIGNED_OWNER_DOCUMENT_REQUEST_V1",
+  "signature_status": "PENDING_OWNER_CONTROLLED_SIGNATURE",
+  "document": {
+    "schema": "EDP_VAULT_C2000_SEMANTIC_DECISION_V1",
+    "decision_id": "DAY6_C2000_FULL_SOURCE_BUSINESS_SEMANTICS_2026_10_25_V1",
+    "authority": "requesting-owner-vault-day6",
+    "status": "APPROVED",
+    "decision_date": "2026-10-25",
+    "cohort": "C2000",
+    "frozen_roster_sha256": "ae04d740745a02320435706fa93083fe3fddaa37f1b3bdb5b5052cd5b4a5de5e",
+    "frozen_bindings_sha256": "2a72b8f8483e2181a3112a26b5d68d702b92308def6e74978838b155cfd85312",
+    "contract_pins": [
+      {"version": "VAULT_LOAD_CONTRACT_V1", "path": "docs/vault_load_contract_v1.md", "sha256": "681c3f6a9a4446b5357c3ab6c6534e6fd5b8cf944f967ea9ab27dcc2c8b5aabe"},
+      {"version": "FSDS_OTHER_V1", "path": "docs/vault_contracts/fsds_other_v1.md", "sha256": "99eeee6d28189512fb6d1a978493cc5ef3d0a50e57bc2b6d3e78a8f974c89035"},
+      {"version": "EDGAR_MASTER_V1", "path": "docs/vault_contracts/edgar_master_v1.md", "sha256": "84871b7e126adfac1eb8c514ad5845c2c4cfe5f8d2c936b3887bb0d90132f8fd"},
+      {"version": "SEC_13F_V1", "path": "docs/vault_contracts/sec_13f_v1.md", "sha256": "7e35c24bd3592ef571b8e9baffe921386046951f74ebb54c396ae7fa46ac682b"},
+      {"version": "TREASURY_FEEDS_V1", "path": "docs/vault_contracts/treasury_feeds_v1.md", "sha256": "75f8bbae9c7b3b875262fb47b2685d5093d9d8cf9b18a156639e74b774017a51"}
+    ],
+    "supersedes_candidate_alternatives_sha256": "9ac2f1fd8b7720fd84cde72de17a04dff70dc41856f7d13bf46d8fd1b01f9344",
+    "revisions": [
+      "FSDS_OTHER reuses Filing and Concept Hubs and creates complete-context Presentation Link with three multi-active assertion Satellites",
+      "EDGAR_MASTER has exact File Name Hub and occurrence assertion Satellite; no EDGAR listing Link or CIK Hub",
+      "SEC_13F has exact accession Submission Hub and seven member-specific multi-active assertion Satellites; no member Business Link",
+      "TREASURY_FEEDS has verified source-native feed identity, feed/date-field/value/RATE_TYPE observation identity, feed-observation Link and entry assertion Satellite"
+    ],
+    "exclusions": [
+      "new Delta writes",
+      "protected policy modification or grant issuance",
+      "V3 or Full V4 execution",
+      "V9 signing",
+      "additional compute expenditure",
+      "cross-family entity equivalence",
+      "arbitrary deduplication or amendment winner",
+      "economic normalization or inferred effective time"
+    ]
+  }
+}

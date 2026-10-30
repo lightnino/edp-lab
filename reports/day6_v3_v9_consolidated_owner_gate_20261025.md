@@ -1,0 +1,29 @@
+# Day 6 V3–V9: consolidated protected installation and acceptance gate
+
+**Superseded for execution:** The Owner has approved the Day 6 technical scope. The actual Workspace entitlement repair, deployed wheel and single required OS terminal command are recorded in [the V0A deployment checkpoint](day6_v0a_deployment_checkpoint_20261025.md). The requirements below remain an audit record, not a new approval request.
+
+**Status: BLOCKED before another external write.** PR #75 has been synchronized with the merged Vault workflow and Operating Contract. The canonical active request is `metadata/operating/day6_c2000_vault_v3_bounded_request.json` (SHA-256 `8617f4c12617cfefe892d0a40a71d291fa510213bed4284edf5459c3c616f5be`, `job_submissions_max=10000000`). This is a standing ceiling for independently reconciled attempts, not permission to spend 10 million submissions. Each current grant remains limited to one submission, 3,600 seconds, and zero task retries. The installed budget and remaining usage must be checked independently before each attempt.
+
+## Preserved baseline and failure
+
+- V0–V2 reuse the verified C2000 selection, approved five contract pins, accepted 127-row FSDS NUM prototype and eight historical Delta tables. No upstream or historical load is scheduled again.
+- Original V3 request SHA-256 `dfe24b8e5aa15b07891892b93270aa73995f43d17a7d5f2d8c25323755cc684d`, Job `1067818802179598`, run `665044227934897`, task run `844558996680731`, original grant, reservation and submission remain unchanged. The failed run's `UNAUTHORIZED_ERROR` and the read-only 23-target absence/eight-table metadata inventory are recorded in the existing PARTIAL evidence. Those observations do not replace a protected signed PARTIAL receipt or fresh independent readback.
+- The run-as principal requires effective Workspace access. An agent cannot install that entitlement, sign the original failure, inspect the root-only ledger, or infer no remote effect from the Jobs error alone.
+
+## One Owner installation decision
+
+Approve or decline, as one bounded installation, the already approved semantic/source/table scope under the current canonical request and existing Free Edition compute. The protected Owner process must:
+
+1. Reconcile the original ledger, terminal Job and all 23 target names with visibility limitations resolved; sign and retain a distinct original PARTIAL/failure receipt linked to the historical request SHA and immutable original grant/reservation/submission hashes.
+2. Install only the needed `WORKSPACE_ACCESS` entitlement for the existing run-as principal and verify effective Workspace and exact source/target UC rights. Verify the existing wheel, environment version `4`, one-task Job settings and original/historical table IDs; do not replace the wheel, approved semantics, selection, DDL, negative oracles or accepted prototype.
+3. Install a protected, signed `EDP_DAY6_V3_STANDING_AUTHORIZATION_V1` bound to canonical request SHA, ten source IDs, 23-table allowlist, namespace, run-as, 3,600-second per-attempt limit, cumulative resource budget and independently proven no-effect recovery delegation. The policy/issuer/ledger must retain and link all attempts; an editable repository file or this packet cannot install it.
+4. Run an **isolated, separately authorized, non-destructive E2E smoke** on the real protected submitter/run-as/serverless wheel path through terminal Job, persistence and independent signed readback. Sign `EDP_VAULT_E2E_READY_V1` with the current standing-policy hash, request/wheel/environment/identity/namespace pins, Workspace and UC access checks, successful terminal state and signed persisted readback. Do not consume a V3 production attempt for the smoke.
+5. Only then issue a distinct, linked V3 grant and submit through protected admission. Before any later attempt, independently classify the preceding attempt under the Operating Contract recovery matrix. Adopt verified committed results; authorize a distinct attempt only for a signed terminal no-effect failure with remaining scope and budget. Keep uncertain or partial effects blocked pending exact reconciliation. Never rerun completed loads or the original Job.
+
+The current successor entry point now rejects missing installed standing authority or E2E receipt before it creates a new Job or grant. It does not install either receipt or provide an automatic multi-attempt scheduler. Those protected facilities must exist before autonomous live recovery can be claimed. The old one-shot scripts remain historical, with their original digest separately pinned.
+
+## Downstream acceptance after installation
+
+V3 requires terminal successful Job evidence and an independent signed readback of all 23 Delta IDs, versions/histories, exact counts/digests, 2,047 selected occurrences, 24 negatives and unchanged eight-table baseline. V4 adopts those persisted results without loading. V5 runs applicable Vault Lossless 1–6 and distortion controls on that live result; V6 checks applicable historical-prototype stability; V7 records actual diagnosis/recovery if triggered. V8 reports exact source/occurrence coverage, runtime, retries, compute and human effort with unmeasured figures null. V9 requires an actual scoped live freeze with signed IDs/versions and Day 6 audit/closeout. This remains a four-family bounded prototype; full C2000 integration is not claimed. CI and PR review follow, with explicit final Owner merge approval and remote `main` SHA verification.
+
+**Current evidence:** Local pinned readiness reports `AUTHORIZATION_REQUIRED` because no protected semantic envelope was supplied to the local command, no grant ID is installed in the unsigned request, and no V3 extension is installed through that command. Root-only `ledger/` and `receipts/` cannot be read by this agent. No signed standing/E2E proof or V3 PASS receipt has been provided, so V3–V9 live PASS and freeze cannot yet be asserted.
