@@ -375,7 +375,8 @@ def ensure_canary_run(job_id: int) -> int:
     return run_id
 
 
-def verify_canary(request: dict, job_id: int, run_id: int, historical: dict) -> dict:
+def verify_canary(request: dict, job_id: int, run_id: int, historical: dict,
+                  verify_tables=None) -> dict:
     deadline = time.monotonic() + 3600
     while True:
         item = admin_cli("jobs", "get-run", str(run_id))
@@ -407,10 +408,13 @@ def verify_canary(request: dict, job_id: int, run_id: int, historical: dict) -> 
             and all(type(n) is int and n >= 0 for n in counts.values())
             and len(candidate.get("isolated_negative_oracles_passed", [])) == 24,
             "UPGRADE_CANARY_SCOPE_OR_NEGATIVES_CHANGED")
-    require(_targets(request) == historical["historical_table_ids"],
-            "UPGRADE_CANARY_HISTORICAL_DELTA_CHANGED")
-    for name in request["new_v3_table_allowlist"]:
-        _service_target_absent(request["target_namespace"] + "." + name)
+    if verify_tables is None:
+        require(_targets(request) == historical["historical_table_ids"],
+                "UPGRADE_CANARY_HISTORICAL_DELTA_CHANGED")
+        for name in request["new_v3_table_allowlist"]:
+            _service_target_absent(request["target_namespace"] + "." + name)
+    else:
+        verify_tables(request, historical)
     return {
         "canary_job_id": job_id,
         "canary_run_id": run_id,
